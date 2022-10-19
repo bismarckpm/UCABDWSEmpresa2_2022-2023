@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProyectD.Models
+namespace ServicesDeskUCABWS.Models
 {
     public class Votos_Ticket
     {

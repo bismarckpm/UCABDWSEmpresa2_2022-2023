@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace ProyectD.Models
+namespace ServicesDeskUCABWS.Models
 {
     public class Estado
     {
+
         public Guid Id { get; set; }
         public string nombre { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;

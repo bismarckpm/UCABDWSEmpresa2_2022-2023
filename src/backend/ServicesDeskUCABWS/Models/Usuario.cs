@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProyectD.Models
+namespace ServicesDeskUCABWS.Models
 {
     public class Usuario
     {

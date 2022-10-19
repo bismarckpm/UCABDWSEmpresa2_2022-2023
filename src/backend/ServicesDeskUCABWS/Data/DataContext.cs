@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProyectD.Models;
+using ServicesDeskUCABWS.Models;
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -18,5 +18,12 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
+        public DbSet<Votos_Ticket> Votos_Tickets { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Etiqueta> Etiquetas { get; set; }
+        public DbSet<Grupo> Grupos { get; set; }
+        public DbSet<PlantillaNotificacion> PlantillasNotificaciones { get; set; }
+        public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
+
     }
 }
