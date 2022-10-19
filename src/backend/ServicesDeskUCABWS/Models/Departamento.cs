@@ -7,24 +7,24 @@ namespace ServicesDeskUCABWS.Models
     public class Departamento
     {
         [Key]
-        public Guid Id { get; set; }
+        private Guid Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string nombre { get; set; } = string.Empty;
+        private string nombre { get; set; } = string.Empty;
 
         [Required]
         [StringLength(150)]
-        public string descripcion { get; set; } = string.Empty;
+        private string descripcion { get; set; } = string.Empty;
 
         [Required]
-        public DateTime fecha_creacion { get; set; }
+        private DateTime fecha_creacion { get; set; }
 
         [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
-        public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Tipo_Ticket> Tipo_Ticket { get; set; }
-        public HashSet<Cargo> Cargo { get; set; }
-        public Grupo Grupo { get; set; }
-        public HashSet<Estado> Estado { get; set; }
+        private DateTime fecha_ultima_edicion { get; set; }
+        private DateTime? fecha_eliminacion { get; set; }
+        private HashSet<Tipo_Ticket> Tipo_Ticket { get; set; }
+        private HashSet<Cargo> Cargo { get; set; }
+        private Grupo Grupo { get; set; }
+        private HashSet<Estado> Estado { get; set; }
     }
 }

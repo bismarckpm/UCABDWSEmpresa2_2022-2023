@@ -7,19 +7,21 @@ namespace ServicesDeskUCABWS.Models
     {
 
         [Key]
-        public Guid Id { get; set; }
+        private Guid Id { get; set; }
         [Required]
         [MaxLength(20)]
         [MinLength(3)]
-        public string nombre { get; set; } = string.Empty;
+        private string nombre { get; set; } = string.Empty;
         [Required]
         [MaxLength(70)]
         [MinLength(3)]
-        public string descripcion { get; set; } = string.Empty;
+        private string descripcion { get; set; } = string.Empty;
         [Required]
-        public DateTime fecha_creacion { get; set; }
+        private DateTime fecha_creacion { get; set; }
         [Required]
-        public DateTime fecha_ultima_edic { get; set; }
+        private DateTime fecha_ultima_edic { get; set; }
+        [Required]
+        private Tipo_Estado Estado_Padre { get; set; }
 
     }
 }

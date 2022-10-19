@@ -8,8 +8,8 @@ namespace ServicesDeskUCABWS.Models
     public class Familia_Ticket
     {
         [Required]
-        public Guid Id { get; set; }
+        private Guid Id { get; set; }
         [Required]
-        public List<Ticket> Lista_Ticket { get; set; }
+        private List<Ticket> Lista_Ticket { get; set; }
     }
 }
