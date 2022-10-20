@@ -6,9 +6,14 @@ namespace ServicesDeskUCABWS.Models
     public class Bitacora_Ticket
     {
         [Key]
-        private Guid Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
-        private DateTime Fecha_Inicio { get; set; }
-        private DateTime Fecha_Fin { get; set; }
+        public Estado Estado { get; set; }
+        [Required]
+        public Ticket Ticket { get; set; }
+        [Required]
+        public DateTime Fecha_Inicio { get; set; }
+        public DateTime Fecha_Fin { get; set; }
+       
     }
 }

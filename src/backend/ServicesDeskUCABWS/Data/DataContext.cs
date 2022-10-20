@@ -14,6 +14,9 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Administrador> Administradores { get; set; }
+        public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Tipo_Ticket> Tipos_Tickets { get; set; }
         public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
@@ -24,6 +27,10 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<PlantillaNotificacion> PlantillasNotificaciones { get; set; }
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
+        public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
+        public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
+        public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
 
+        
     }
 }

@@ -20,5 +20,7 @@ namespace ServicesDeskUCABWS.Models
         public HashSet<Etiqueta> Etiqueta { get; set; }
 
         public PlantillaNotificacion PlantillaNotificacion { get; set; }
+        
+        public HashSet<Estado> ListaEstadosDerivados { get; set; }
     }
 }
