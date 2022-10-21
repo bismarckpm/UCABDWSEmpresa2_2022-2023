@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServicesDeskUCABWS.Data;
 
@@ -11,9 +12,10 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221019134118_CreateOthersEntities")]
+    partial class CreateOthersEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,48 +37,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Tipo_TicketId");
 
                     b.ToTable("DepartamentoTipo_Ticket");
-                });
-
-            modelBuilder.Entity("EtiquetaTipo_Estado", b =>
-                {
-                    b.Property<Guid>("EtiquetaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ListaEstadosrelacionadosId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("EtiquetaId", "ListaEstadosrelacionadosId");
-
-                    b.HasIndex("ListaEstadosrelacionadosId");
-
-                    b.ToTable("EtiquetaTipo_Estado");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Bitacora_Ticket", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EstadoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("Fecha_Fin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Fecha_Inicio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("TicketId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstadoId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("Bitacora_Tickets");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Cargo", b =>
@@ -158,13 +118,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("DepartamentoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Estado_PadreId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
@@ -173,15 +128,11 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DepartamentoId");
-
-                    b.HasIndex("Estado_PadreId");
 
                     b.ToTable("Estados");
                 });
@@ -190,6 +141,9 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Tipo_EstadoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("descripcion")
@@ -204,18 +158,9 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Tipo_EstadoId");
+
                     b.ToTable("Etiquetas");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Familia_Ticket", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Familia_Tickets");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Flujo_Aprobacion", b =>
@@ -300,9 +245,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_descripcion")
                         .HasColumnType("datetime2");
@@ -311,7 +254,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -325,34 +267,17 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Departamento_DestinoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("EmpleadoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("EstadoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Familia_TicketId")
+                    b.Property<Guid?>("PrioridadId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("IDEstado")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("PrioridadId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Ticket_PadreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Tipo_TicketId")
+                    b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
@@ -360,24 +285,14 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("titulo")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                    b.Property<string>("nombre")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Departamento_DestinoId");
-
-                    b.HasIndex("EmpleadoId");
-
                     b.HasIndex("EstadoId");
 
-                    b.HasIndex("Familia_TicketId");
-
                     b.HasIndex("PrioridadId");
-
-                    b.HasIndex("Ticket_PadreId");
 
                     b.HasIndex("Tipo_TicketId");
 
@@ -447,7 +362,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("PlantillaNotificacionId");
 
-                    b.ToTable("Tipo_Estado");
+                    b.ToTable("Tipos_Estados");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Ticket", b =>
@@ -456,13 +371,8 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Minimo_Aprobado")
-                        .HasColumnType("int");
-
                     b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
@@ -474,12 +384,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("tipo")
-                        .HasColumnType("int");
+                    b.Property<string>("tipo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -492,15 +400,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("cedula")
                         .HasColumnType("int");
 
                     b.Property<string>("correo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_creacion")
@@ -515,38 +418,31 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("gender")
+                    b.Property<string>("genero")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("primer_apellido")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("primer_nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("rol")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("segundo_apellido")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("segundo_nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Votos_Ticket", b =>
@@ -555,17 +451,14 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmpleadoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TicketId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("aprobado")
-                        .HasColumnType("int");
+                    b.Property<bool>("aprobado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("comentario")
                         .HasColumnType("nvarchar(max)");
@@ -575,42 +468,11 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpleadoId");
-
                     b.HasIndex("TicketId");
 
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Votos_Tickets");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Administrador", b =>
-                {
-                    b.HasBaseType("ServicesDeskUCABWS.Models.Usuario");
-
-                    b.Property<int>("NumeroDeCuentasBloqueadas")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Administrador");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Cliente", b =>
-                {
-                    b.HasBaseType("ServicesDeskUCABWS.Models.Usuario");
-
-                    b.HasDiscriminator().HasValue("Cliente");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Empleado", b =>
-                {
-                    b.HasBaseType("ServicesDeskUCABWS.Models.Usuario");
-
-                    b.Property<Guid?>("CargoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("CargoId");
-
-                    b.HasDiscriminator().HasValue("Empleado");
                 });
 
             modelBuilder.Entity("DepartamentoTipo_Ticket", b =>
@@ -626,40 +488,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasForeignKey("Tipo_TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EtiquetaTipo_Estado", b =>
-                {
-                    b.HasOne("ServicesDeskUCABWS.Models.Etiqueta", null)
-                        .WithMany()
-                        .HasForeignKey("EtiquetaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", null)
-                        .WithMany()
-                        .HasForeignKey("ListaEstadosrelacionadosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Bitacora_Ticket", b =>
-                {
-                    b.HasOne("ServicesDeskUCABWS.Models.Estado", "Estado")
-                        .WithMany("Bitacora_Tickets")
-                        .HasForeignKey("EstadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServicesDeskUCABWS.Models.Ticket", "Ticket")
-                        .WithMany("Bitacora_Tickets")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estado");
-
-                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Cargo", b =>
@@ -683,14 +511,13 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasOne("ServicesDeskUCABWS.Models.Departamento", null)
                         .WithMany("Estado")
                         .HasForeignKey("DepartamentoId");
+                });
 
-                    b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", "Estado_Padre")
-                        .WithMany("ListaEstadosDerivados")
-                        .HasForeignKey("Estado_PadreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estado_Padre");
+            modelBuilder.Entity("ServicesDeskUCABWS.Models.Etiqueta", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", null)
+                        .WithMany("Etiqueta")
+                        .HasForeignKey("Tipo_EstadoId");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Flujo_Aprobacion", b =>
@@ -710,47 +537,21 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Ticket", b =>
                 {
-                    b.HasOne("ServicesDeskUCABWS.Models.Departamento", "Departamento_Destino")
-                        .WithMany("ListaTickets")
-                        .HasForeignKey("Departamento_DestinoId");
-
-                    b.HasOne("ServicesDeskUCABWS.Models.Empleado", null)
-                        .WithMany("Lista_Ticket")
-                        .HasForeignKey("EmpleadoId");
-
                     b.HasOne("ServicesDeskUCABWS.Models.Estado", "Estado")
-                        .WithMany("ListaTickets")
+                        .WithMany()
                         .HasForeignKey("EstadoId");
-
-                    b.HasOne("ServicesDeskUCABWS.Models.Familia_Ticket", "Familia_Ticket")
-                        .WithMany("Lista_Ticket")
-                        .HasForeignKey("Familia_TicketId");
 
                     b.HasOne("ServicesDeskUCABWS.Models.Prioridad", "Prioridad")
                         .WithMany()
-                        .HasForeignKey("PrioridadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ServicesDeskUCABWS.Models.Ticket", "Ticket_Padre")
-                        .WithMany()
-                        .HasForeignKey("Ticket_PadreId");
+                        .HasForeignKey("PrioridadId");
 
                     b.HasOne("ServicesDeskUCABWS.Models.Tipo_Ticket", "Tipo_Ticket")
                         .WithMany()
-                        .HasForeignKey("Tipo_TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departamento_Destino");
+                        .HasForeignKey("Tipo_TicketId");
 
                     b.Navigation("Estado");
 
-                    b.Navigation("Familia_Ticket");
-
                     b.Navigation("Prioridad");
-
-                    b.Navigation("Ticket_Padre");
 
                     b.Navigation("Tipo_Ticket");
                 });
@@ -773,30 +574,17 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Votos_Ticket", b =>
                 {
-                    b.HasOne("ServicesDeskUCABWS.Models.Empleado", null)
-                        .WithMany("Votos_Ticket")
-                        .HasForeignKey("EmpleadoId");
-
                     b.HasOne("ServicesDeskUCABWS.Models.Ticket", "Ticket")
                         .WithMany("Votos_Ticket")
                         .HasForeignKey("TicketId");
 
                     b.HasOne("ServicesDeskUCABWS.Models.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Votos_Ticket")
                         .HasForeignKey("UsuarioId");
 
                     b.Navigation("Ticket");
 
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Empleado", b =>
-                {
-                    b.HasOne("ServicesDeskUCABWS.Models.Cargo", "Cargo")
-                        .WithMany()
-                        .HasForeignKey("CargoId");
-
-                    b.Navigation("Cargo");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Cargo", b =>
@@ -809,20 +597,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Cargo");
 
                     b.Navigation("Estado");
-
-                    b.Navigation("ListaTickets");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Estado", b =>
-                {
-                    b.Navigation("Bitacora_Tickets");
-
-                    b.Navigation("ListaTickets");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Familia_Ticket", b =>
-                {
-                    b.Navigation("Lista_Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Grupo", b =>
@@ -832,8 +606,6 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Ticket", b =>
                 {
-                    b.Navigation("Bitacora_Tickets");
-
                     b.Navigation("Votos_Ticket");
                 });
 
@@ -844,7 +616,7 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Estado", b =>
                 {
-                    b.Navigation("ListaEstadosDerivados");
+                    b.Navigation("Etiqueta");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Ticket", b =>
@@ -852,10 +624,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Flujo_Aprobacion");
                 });
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Empleado", b =>
+            modelBuilder.Entity("ServicesDeskUCABWS.Models.Usuario", b =>
                 {
-                    b.Navigation("Lista_Ticket");
-
                     b.Navigation("Votos_Ticket");
                 });
 #pragma warning restore 612, 618
