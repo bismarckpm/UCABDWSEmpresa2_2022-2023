@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Models;
 using System.Threading.Tasks;
 
@@ -9,7 +9,6 @@ namespace ServicesDeskUCABWS.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
 
         //Creacion de los DbSeT
         public DbSet<Estado> Estados { get; set; }
