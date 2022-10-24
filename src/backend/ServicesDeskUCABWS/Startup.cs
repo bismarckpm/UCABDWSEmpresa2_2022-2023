@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<UsuarioServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger

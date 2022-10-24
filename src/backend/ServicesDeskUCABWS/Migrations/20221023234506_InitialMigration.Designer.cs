@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221020144920_CreacionClasesRestantes")]
-    partial class CreacionClasesRestantes
+    [Migration("20221023234506_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,7 +206,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Etiquetas");
+                    b.ToTable("Etiqueta");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Familia_Ticket", b =>
@@ -502,7 +502,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("correo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("fecha_creacion")
@@ -522,16 +521,13 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("primer_apellido")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("primer_nombre")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -540,7 +536,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("segundo_nombre")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

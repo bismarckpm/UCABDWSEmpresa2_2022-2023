@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Models;
+using System.Diagnostics.Contracts;
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -9,11 +10,25 @@ namespace ServicesDeskUCABWS.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+
+            modelBuilder.Entity<Usuario>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<Administrador>("1")
+                .HasValue<Empleado>("2")
+                .HasValue<Cliente>("3");
+        }
+
         //Creacion de los DbSeT
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Administrador> Administrador { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
@@ -23,7 +38,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
         public DbSet<Votos_Ticket> Votos_Tickets { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
-        public DbSet<Etiqueta> Etiquetas { get; set; }
+        public DbSet<Etiqueta> Etiqueta { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<PlantillaNotificacion> PlantillasNotificaciones { get; set; }
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }

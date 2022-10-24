@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class first_migration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Etiquetas",
+                name: "Etiqueta",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -19,7 +19,7 @@ namespace ServicesDeskUCABWS.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Etiquetas", x => x.Id);
+                    table.PrimaryKey("PK_Etiqueta", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -221,9 +221,9 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     table.PrimaryKey("PK_EtiquetaTipo_Estado", x => new { x.EtiquetaId, x.ListaEstadosrelacionadosId });
                     table.ForeignKey(
-                        name: "FK_EtiquetaTipo_Estado_Etiquetas_EtiquetaId",
+                        name: "FK_EtiquetaTipo_Estado_Etiqueta_EtiquetaId",
                         column: x => x.EtiquetaId,
-                        principalTable: "Etiquetas",
+                        principalTable: "Etiqueta",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -263,14 +263,14 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     cedula = table.Column<int>(type: "int", nullable: false),
-                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     fecha_nacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     gender = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -565,7 +565,7 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Votos_Tickets");
 
             migrationBuilder.DropTable(
-                name: "Etiquetas");
+                name: "Etiqueta");
 
             migrationBuilder.DropTable(
                 name: "Tipos_Cargos");
