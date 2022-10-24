@@ -11,7 +11,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
 		{
 			CreateMap<Departamento, DepartamentoDto>();
 			CreateMap<DepartamentoDto, Departamento>();
-
 		}
 	}
 }

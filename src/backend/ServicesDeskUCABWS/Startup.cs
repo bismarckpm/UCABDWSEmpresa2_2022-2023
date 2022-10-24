@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,9 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddScoped<DepartamentoServices>();
+			services.AddScoped<GrupoServices>();
+			services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
