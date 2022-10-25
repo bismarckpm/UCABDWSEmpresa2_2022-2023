@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class FirstMigracion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,6 +75,18 @@ namespace ServicesDeskUCABWS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prioridades", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,6 +325,30 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RolUsuario",
+                columns: table => new
+                {
+                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuariosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RolUsuario", x => new { x.RolesId, x.UsuariosId });
+                    table.ForeignKey(
+                        name: "FK_RolUsuario_Roles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RolUsuario_Usuarios_UsuariosId",
+                        column: x => x.UsuariosId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
                 {
@@ -482,6 +518,11 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RolUsuario_UsuariosId",
+                table: "RolUsuario",
+                column: "UsuariosId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Departamento_DestinoId",
                 table: "Tickets",
                 column: "Departamento_DestinoId");
@@ -562,6 +603,9 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Flujos_Aprobaciones");
 
             migrationBuilder.DropTable(
+                name: "RolUsuario");
+
+            migrationBuilder.DropTable(
                 name: "Votos_Tickets");
 
             migrationBuilder.DropTable(
@@ -569,6 +613,9 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tipos_Cargos");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Tickets");

@@ -13,6 +13,7 @@ using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS
@@ -31,6 +32,8 @@ namespace ServicesDeskUCABWS
         {
             services.AddScoped<UsuarioServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>

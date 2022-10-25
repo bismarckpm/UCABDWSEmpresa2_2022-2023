@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221023234506_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221025004711_FirstMigracion")]
+    partial class FirstMigracion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,21 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("ListaEstadosrelacionadosId");
 
                     b.ToTable("EtiquetaTipo_Estado");
+                });
+
+            modelBuilder.Entity("RolUsuario", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuariosId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RolesId", "UsuariosId");
+
+                    b.HasIndex("UsuariosId");
+
+                    b.ToTable("RolUsuario");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Bitacora_Ticket", b =>
@@ -321,6 +336,20 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Prioridades");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Models.Rol", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Ticket", b =>
                 {
                     b.Property<Guid>("Id")
@@ -588,14 +617,14 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<int>("NumeroDeCuentasBloqueadas")
                         .HasColumnType("int");
 
-                    b.HasDiscriminator().HasValue("Administrador");
+                    b.HasDiscriminator().HasValue("1");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Cliente", b =>
                 {
                     b.HasBaseType("ServicesDeskUCABWS.Models.Usuario");
 
-                    b.HasDiscriminator().HasValue("Cliente");
+                    b.HasDiscriminator().HasValue("3");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Empleado", b =>
@@ -607,7 +636,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("CargoId");
 
-                    b.HasDiscriminator().HasValue("Empleado");
+                    b.HasDiscriminator().HasValue("2");
                 });
 
             modelBuilder.Entity("DepartamentoTipo_Ticket", b =>
@@ -636,6 +665,21 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", null)
                         .WithMany()
                         .HasForeignKey("ListaEstadosrelacionadosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RolUsuario", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Models.Rol", null)
+                        .WithMany()
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UsuariosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

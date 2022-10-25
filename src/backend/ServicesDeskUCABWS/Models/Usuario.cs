@@ -41,6 +41,7 @@ namespace ServicesDeskUCABWS.Models
 
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime fecha_eliminacion { get; set; }
-       
+        public ICollection<Rol> Roles { get; set; }
+
     }
 }

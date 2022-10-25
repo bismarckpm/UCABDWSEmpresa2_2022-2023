@@ -13,7 +13,6 @@ namespace ServicesDeskUCABWS.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
             modelBuilder.Entity<Usuario>()
                 .HasDiscriminator<string>("Discriminator")
                 .HasValue<Administrador>("1")
@@ -22,6 +21,7 @@ namespace ServicesDeskUCABWS.Data
         }
 
         //Creacion de los DbSeT
+        public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Administrador> Administrador { get; set; }
         public DbSet<Cliente> Cliente { get; set; }

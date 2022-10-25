@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
@@ -24,7 +25,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
         [HttpGet]
         public async Task<IEnumerable<Usuario>> Get()
         {
-            return await _usuarioServices.GetAll();
+            using (var context = _dataContext)
+            {
+                var result = (List<Usuario>)_dataContext.Usuarios
+                    .Include(ur => ur.Roles)
+                    .ToList();
+                return result;
+            }
+            return null;
         }
 
         [HttpGet("{id}")]
@@ -37,6 +45,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
 
             return usuario;
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
