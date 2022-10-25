@@ -15,4 +15,6 @@ namespace ServicesDeskUCABWS.Models
         [StringLength(150)]
         public string descripcion { get; set; } = string.Empty;
         }
+
+        
 }
