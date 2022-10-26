@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -27,7 +29,19 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options =>
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddTransient<IPlantillaNotificacionDAO, PlantillaNotificacionService>();
+            services.AddTransient<IDataContext, DataContext>();
+
+            //Se agrega en generador de Swagger
+            services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo
+				{ Title = "Empresa B", Version = "v1" });
+			});
+
+			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 
             services.AddControllers();
@@ -42,7 +56,16 @@ namespace ServicesDeskUCABWS
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+			//Habilitar swagger
+			app.UseSwagger();
+
+			//indica la ruta para generar la configuración de swagger
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
+			});
+
+			app.UseHttpsRedirection();
 
             app.UseRouting();
 

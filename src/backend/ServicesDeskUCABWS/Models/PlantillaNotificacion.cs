@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServicesDeskUCABWS.Models
 {
@@ -8,13 +9,15 @@ namespace ServicesDeskUCABWS.Models
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(50)]
-        public string titulo { get; set; } = string.Empty;
+        public string Titulo { get; set; }
 
         [Required]
-        [StringLength(150)]
-        public string descripcion { get; set; } = string.Empty;
-        }
-
+        public string Descripcion { get; set; }
         
+        public Guid? TipoEstadoId { get; set; }
+
+        public Tipo_Estado? TipoEstado { get; set; }
+
+    }
+
 }

@@ -3,13 +3,12 @@ using ServicesDeskUCABWS.Models;
 
 namespace ServicesDeskUCABWS.Data
 {
-    public class DataContext: DbContext, IDataContext
+    public interface IDataContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        DbContext DbContext
         {
+            get;
         }
-
-        //Creacion de los DbSeT
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
@@ -30,6 +29,5 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
-        public DbContext DbContext { get; }
     }
 }

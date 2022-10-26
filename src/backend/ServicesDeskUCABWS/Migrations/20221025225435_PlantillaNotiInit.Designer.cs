@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221020144920_CreacionClasesRestantes")]
-    partial class CreacionClasesRestantes
+    [Migration("20221025225435_PlantillaNotiInit")]
+    partial class PlantillaNotiInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -280,17 +280,22 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("descripcion")
+                    b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("titulo")
+                    b.Property<Guid?>("TipoEstadoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TipoEstadoId")
+                        .IsUnique()
+                        .HasFilter("[TipoEstadoId] IS NOT NULL");
 
                     b.ToTable("PlantillasNotificaciones");
                 });
@@ -432,9 +437,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PlantillaNotificacionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -446,8 +448,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlantillaNotificacionId");
 
                     b.ToTable("Tipo_Estado");
                 });
@@ -710,6 +710,15 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Tipo_Ticket");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Models.PlantillaNotificacion", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", "TipoEstado")
+                        .WithOne("PlantillaNotificacion")
+                        .HasForeignKey("ServicesDeskUCABWS.Models.PlantillaNotificacion", "TipoEstadoId");
+
+                    b.Navigation("TipoEstado");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Ticket", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Models.Departamento", "Departamento_Destino")
@@ -762,15 +771,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasOne("ServicesDeskUCABWS.Models.Cargo", null)
                         .WithMany("Tipo_Cargo")
                         .HasForeignKey("CargoId");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Estado", b =>
-                {
-                    b.HasOne("ServicesDeskUCABWS.Models.PlantillaNotificacion", "PlantillaNotificacion")
-                        .WithMany()
-                        .HasForeignKey("PlantillaNotificacionId");
-
-                    b.Navigation("PlantillaNotificacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Votos_Ticket", b =>
@@ -847,6 +847,8 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Estado", b =>
                 {
                     b.Navigation("ListaEstadosDerivados");
+
+                    b.Navigation("PlantillaNotificacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Ticket", b =>
