@@ -42,5 +42,25 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
+        //GET: Controlador para consultar una plantilla notificacion en especifico
+        [HttpGet]
+        [Route("Consulta/{id}")]
+        public ActionResult<ApplicationResponse<PlantillaNotificacionSearchDTO>> GetByGuidCtrl(Guid id)
+        {
+            var response = new ApplicationResponse<PlantillaNotificacionSearchDTO>();
+
+            try
+            {
+                response.Data = _plantilla.ConsultarPlantillaGUID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+            
+        }
     }
 }
