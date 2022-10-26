@@ -90,5 +90,26 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
                 throw new ExceptionsControl("No se pudo actualizar la plantilla", ex);
             }
         }
+
+        //DELETE: Servicio para eliminar plantilla notificacion
+        public Boolean EliminarPlantilla(Guid id)
+        {
+            try
+            {
+                //var plantillaExist = ConsultarPlantillaGUID(id);
+                //var plantilla = _mapper.Map<PlantillaNotificacion>(plantillaExist);
+                //plantillaExist = null;
+                var plantilla = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Id == id).Single();
+                Console.WriteLine(plantilla);
+                _plantillaContext.PlantillasNotificaciones.Remove(plantilla);
+                _plantillaContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo eliminar la plantilla", ex);
+            }
+        
+        }
     }
 }

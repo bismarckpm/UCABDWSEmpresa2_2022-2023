@@ -128,5 +128,24 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
         }
+
+        //DELETE: Controlador para eliminar plantilla notificacion
+        [HttpDelete]
+        [Route("Eliminar/{id}")]
+        public ApplicationResponse<String> EliminarPlantillaCtrl(Guid id)
+        {
+            var response = new ApplicationResponse<String>();
+            try
+            {
+                response.Data = _plantilla.EliminarPlantilla(id).ToString();
+            }
+            catch(ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
     }
 }
