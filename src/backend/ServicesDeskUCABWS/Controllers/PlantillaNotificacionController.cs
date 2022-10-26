@@ -6,6 +6,8 @@ using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.Models.DTO.PlantillaDTO;
 using ServicesDeskUCABWS.Responses;
 using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.Models;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -61,6 +63,51 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
             
+        }
+
+        //GET: Controlador para consultar una plantilla notificacion por un título específico
+        [HttpGet]
+        [Route("Consulta/Titulo/({titulo}")]
+        public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> GetByTituloCtrl(string titulo)
+        {
+            var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
+            try
+            {
+                response.Data = _plantilla.ConsultarPlantillaTitulo(titulo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //POST: Controlador para crear plantilla notificacion
+        [HttpPost]
+        [Route("Registro/")]
+        public ApplicationResponse<String> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
+        {
+            var response = new ApplicationResponse<String>();
+            try
+            {
+                var plantilla = new PlantillaNotificacion
+                {
+                    Id = Guid.NewGuid(),
+                    Titulo = plantillaDTO.Titulo,
+                    Descripcion = plantillaDTO.Descripcion,
+                    TipoEstadoId = plantillaDTO.TipoEstadoId
+                };
+                response.Data = _plantilla.RegistroPlantilla(plantilla).ToString();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
     }
 }

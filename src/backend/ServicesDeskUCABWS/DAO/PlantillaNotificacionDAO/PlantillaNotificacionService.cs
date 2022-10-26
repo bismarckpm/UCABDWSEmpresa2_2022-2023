@@ -7,6 +7,7 @@ using ServicesDeskUCABWS.Models.DTO.PlantillaDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
 {
@@ -43,6 +44,35 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
                 throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
             }
             
+        }
+
+        //GET: Servicio para consultar una plantilla notificacion por un título específico
+        public List<PlantillaNotificacionSearchDTO> ConsultarPlantillaTitulo(string titulo)
+        {
+            try
+            {
+                var data = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Titulo == titulo);
+                var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
+                return plantillaSearchDTO.ToList();
+            }catch(Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese título", ex);
+            } 
+        }
+
+        //POST: Servicio para crear plantilla notificacion
+        public Boolean RegistroPlantilla(PlantillaNotificacion plantilla)
+        {
+            try
+            {
+                _plantillaContext.PlantillasNotificaciones.Add(plantilla);
+                _plantillaContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo registrar la plantilla", ex);
+            }
         }
     }
 }

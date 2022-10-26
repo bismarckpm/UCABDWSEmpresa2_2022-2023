@@ -3,6 +3,7 @@ using ServicesDeskUCABWS.Models.DTO.PlantillaDTO;
 using ServicesDeskUCABWS.Responses;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
 {
@@ -10,5 +11,7 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
     {
         public List<PlantillaNotificacionSearchDTO> ConsultaPlantillas();
         public PlantillaNotificacionSearchDTO ConsultarPlantillaGUID(Guid id);
+        public List<PlantillaNotificacionSearchDTO> ConsultarPlantillaTitulo(string titulo);
+        public Boolean RegistroPlantilla(PlantillaNotificacion plantilla);
     }
 }
