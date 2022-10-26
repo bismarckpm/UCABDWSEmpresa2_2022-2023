@@ -109,5 +109,24 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
         }
+
+        //PUT: Controlador para modificar plantilla notificacion
+        [HttpPut]
+        [Route("Actualizar/{id}")]
+        public ApplicationResponse<String> ActualizarPlantillaCtrl(PlantillaNotificacionUpdateDTO plantillaDTO)
+        {
+            var response = new ApplicationResponse<String>();
+            try
+            {
+                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO).ToString();                
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
     }
 }

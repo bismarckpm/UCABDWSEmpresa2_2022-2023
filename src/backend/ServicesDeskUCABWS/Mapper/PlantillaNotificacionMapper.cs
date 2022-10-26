@@ -13,6 +13,9 @@ namespace ServicesDeskUCABWS.Mapper
             CreateMap<PlantillaNotificacion, PlantillaNotificacionSearchDTO>();
             CreateMap<PlantillaNotificacionSearchDTO, PlantillaNotificacion>();
 
+            CreateMap<PlantillaNotificacion, PlantillaNotificacionUpdateDTO>();
+            CreateMap<PlantillaNotificacionUpdateDTO, PlantillaNotificacion>();
+
         }
     }
 }

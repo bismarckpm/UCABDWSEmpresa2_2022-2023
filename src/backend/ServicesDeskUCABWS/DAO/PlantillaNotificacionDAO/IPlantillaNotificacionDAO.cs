@@ -13,5 +13,6 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
         public PlantillaNotificacionSearchDTO ConsultarPlantillaGUID(Guid id);
         public List<PlantillaNotificacionSearchDTO> ConsultarPlantillaTitulo(string titulo);
         public Boolean RegistroPlantilla(PlantillaNotificacion plantilla);
+        public Boolean ActualizarPlantilla(PlantillaNotificacionUpdateDTO plantilla);
     }
 }

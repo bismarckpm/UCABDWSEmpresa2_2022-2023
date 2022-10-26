@@ -22,7 +22,7 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
             _mapper = mapper;
         }
 
-        //GET: Controlador para consultar todas las plantillas
+        //GET: Servicio para consultar todas las plantillas
         public List<PlantillaNotificacionSearchDTO> ConsultaPlantillas()
         {
             var data = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado);
@@ -72,6 +72,22 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
             catch(Exception ex)
             {
                 throw new ExceptionsControl("No se pudo registrar la plantilla", ex);
+            }
+        }
+
+        //PUT: Servicio para modificar plantilla notificacion
+        public Boolean ActualizarPlantilla(PlantillaNotificacionUpdateDTO plantilla)
+        {
+            try
+            {
+                var plantillaUpdate = _mapper.Map<PlantillaNotificacion>(plantilla);
+                _plantillaContext.PlantillasNotificaciones.Update(plantillaUpdate);
+                _plantillaContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo actualizar la plantilla", ex);
             }
         }
     }
