@@ -8,10 +8,10 @@ namespace ServicesDeskUCABWS.Persistence.Req1.DAOs
 {
     public class Tipo_TicketDAO
     {
-        // Inyeccion de dependencias DBcontext
+        // Inyeccion de dependencias DBcontext para hacer los mock
         private readonly IDataContext _context;
 
-        //
+        //Constructor  del DAO
         public Tipo_TicketDAO(IDataContext context)
         {
             _context = context;
@@ -20,7 +20,7 @@ namespace ServicesDeskUCABWS.Persistence.Req1.DAOs
         // Update Tipo Ticket
         public async Task<Tipo_Ticket> Edit([Bind("Id,nombre,descripcion,tipo,fecha_creacion,fecha_ult_edic,fecha_elim,Minimo_Aprobado")] Tipo_Ticket tipo_Ticket)
         {
-            _context.Update(tipo_Ticket);
+            _context.Tipos_Tickets.Update(tipo_Ticket);
             await _context.SaveChangesAsync();
             return tipo_Ticket;
         }
