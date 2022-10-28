@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Models;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Data
 
@@ -16,6 +17,10 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Tipo_Ticket> Tipos_Tickets { get; set; }
+
+        Task SaveChangesAsync();
+        void Update(Tipo_Ticket tipo_Ticket);
+
         public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
@@ -29,7 +34,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
 
-
+        void Add(Tipo_Ticket tipo_Ticket);
     }
 }
 }
