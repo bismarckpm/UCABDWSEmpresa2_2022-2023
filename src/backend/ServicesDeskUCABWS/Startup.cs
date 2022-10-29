@@ -7,11 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ServicesDeskUCABWS.Persistence.Database;
+using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
@@ -36,11 +38,20 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddJsonOptions(x=>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+            services.AddScoped<DepartamentoServices>();
+			services.AddScoped<GrupoServices>();
+			services.AddAutoMapper(typeof(Startup).Assembly);
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
-			services.AddScoped<DepartamentoServices>();
-		
+			//Se agrega en generador de Swagger
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo
+				{ Title = "Empresa B", Version = "v1" });
+			});
+
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 
