@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class PlantillaNotiInit : Migration
+    public partial class tipoEstadoMigrationRelation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -484,9 +484,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PlantillasNotificaciones_TipoEstadoId",
                 table: "PlantillasNotificaciones",
-                column: "TipoEstadoId",
-                unique: true,
-                filter: "[TipoEstadoId] IS NOT NULL");
+                column: "TipoEstadoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Departamento_DestinoId",

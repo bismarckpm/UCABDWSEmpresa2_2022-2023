@@ -9,11 +9,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
+<<<<<<< HEAD
 using ServicesDeskUCABWS.DAO.EtiquetaDAO;
+=======
+using ServicesDeskUCABWS.DAO.TipoEstadoDAO;
+>>>>>>> adfa009428ee28ca537ccc8c290004949fc3bbdc
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS
@@ -30,10 +35,14 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+      
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<IPlantillaNotificacionDAO, PlantillaNotificacionService>();
+<<<<<<< HEAD
             services.AddTransient<IEtiquetaDAO, EtiquetaService>();
+=======
+            services.AddTransient<ITipoEstadoDAO, TipoEstadoService>();
+>>>>>>> adfa009428ee28ca537ccc8c290004949fc3bbdc
             services.AddTransient<IDataContext, DataContext>();
 
             //Se agrega en generador de Swagger
