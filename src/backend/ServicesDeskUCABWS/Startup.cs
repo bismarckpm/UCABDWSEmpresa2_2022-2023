@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace ServicesDeskUCABWS
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<IPlantillaNotificacionDAO, PlantillaNotificacionService>();
+            services.AddTransient<IEtiquetaDAO, EtiquetaService>();
             services.AddTransient<IDataContext, DataContext>();
 
             //Se agrega en generador de Swagger
