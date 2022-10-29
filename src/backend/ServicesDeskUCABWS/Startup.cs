@@ -14,19 +14,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+
 using ServicesDeskUCABWS.Persistence.DAO.Interface;
 using ServicesDeskUCABWS.Persistence.DAO.Implementation;
+
 
 namespace ServicesDeskUCABWS
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+
+	
+
+		public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
+
+          
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -48,7 +55,13 @@ namespace ServicesDeskUCABWS
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo
+				{ Title = "Api Caduca REST", Version = "v1" });
+			});
+
+			services.AddControllers();
             
         }
 
@@ -63,7 +76,7 @@ namespace ServicesDeskUCABWS
 			//Habilitar swagger
 			app.UseSwagger();
 
-			//indica la ruta para generar la configuración de swagger
+			//indica la ruta para generar la configuraciÃ³n de swagger
 			app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
