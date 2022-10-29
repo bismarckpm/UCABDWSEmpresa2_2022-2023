@@ -9,12 +9,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ServicesDeskUCABWS.Persistence.DAO.Interface;
+using ServicesDeskUCABWS.Persistence.DAO.Implementation;
 
 namespace ServicesDeskUCABWS
 {
@@ -33,8 +34,8 @@ namespace ServicesDeskUCABWS
             services.AddControllers().AddJsonOptions(x=>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-            services.AddScoped<DepartamentoServices>();
-			services.AddScoped<GrupoServices>();
+            services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
+			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger
@@ -45,7 +46,7 @@ namespace ServicesDeskUCABWS
 			});
 
 			services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
             

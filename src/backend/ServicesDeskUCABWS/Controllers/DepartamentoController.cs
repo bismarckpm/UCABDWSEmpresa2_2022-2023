@@ -1,92 +1,126 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Models;
-using ServicesDeskUCABWS.Models.DTO;
-using ServicesDeskUCABWS.Services;
+using ServicesDeskUCABWS.Persistence.DAO.Interface;
+using ServicesDeskUCABWS.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("Departamento")]
 	[ApiController]
 	public class DepartamentoController : ControllerBase
 	{
-		private readonly DepartamentoServices _services;
+		private readonly IDepartamentoDAO _departamentoDAO;
+        private readonly ILogger<DepartamentoController> _log;
 
-		//Constructor
-		public DepartamentoController(DepartamentoServices services)
+        //Constructor
+        public DepartamentoController(IDepartamentoDAO departamentoDAO, ILogger<DepartamentoController> log)
 		{
-			_services = services;
+			_departamentoDAO = departamentoDAO;
+			_log = log;
 		}
 
+		//Crear Departamento
 		[HttpPost]
-		public async Task<IActionResult>RegistrarDepartamento(DepartamentoDto depDto) {
+        [Route("CrearDepartamento/")]
+        public ActionResult<DepartamentoDto> CrearDepartamento([FromBody] DepartamentoDto dto1)
+        {
+            try
+            {
+                var dao = _departamentoDAO.AgregarDepartamentoDAO(DepartamentoMapper.MapperDTOToEntity(dto1));
+                return dao;
 
-			var otraVar = await _services.Create(depDto);
-			return CreatedAtAction(null, new { otraVar.Id }, otraVar);
-		}
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
 
-		[HttpGet]
-		public async Task<IEnumerable<Departamento>> ListarDepartamento()
-		{
-			return await _services.GetAll();
-		}
+        [HttpGet]
+        [Route("ConsultarDepartamento/")]
+        public ActionResult<List<DepartamentoDto>> ConsultarDepartamentos()
+        {
+            try
+            {
+                return _departamentoDAO.ConsultarDepartamentos();
+            }
+            catch (Exception ex)
+            {
 
-		[HttpDelete("{Guid}")]
-		public async Task<IActionResult> EliminarDepartamento(DepartamentoDto depDto)
-		{
+                throw ex.InnerException!;
+            }
+        }
 
-			var existeDep = await _services.GetById(depDto.Id);
+        [HttpGet]
+        [Route("ConsultarDepartamentoPorID/{id}")]
+        public ActionResult<DepartamentoDto> ConsultarPorID([FromRoute] Guid id)
+        {
+            try
+            {
+                return _departamentoDAO.ConsultarPorID(id);
+            }
+            catch (Exception ex)
+            {
 
-			if (existeDep is not null)
-			{
+                throw ex.InnerException!;
+            }
+        }
 
-				await _services.Delete(depDto.Id);
-				return Ok();
-			}
-			else
-			{
-				return NotFound();
-			}
-		}
+        [HttpDelete]
+        [Route("EliminarDepartamento/{id}")]
+        public ActionResult<DepartamentoDto> EliminarDepartamento([FromRoute] Guid id)
+        {
+            try
+            {
+                return _departamentoDAO.eliminarDepartamento(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
+        }
 
-		[HttpPut("{Guid}")]
-		public async Task<IActionResult> ModificarDepartamento(DepartamentoDto depDto)
-		{
+        [HttpPut]
+        [Route("ActualizarDepartamento/")]
+        public ActionResult<DepartamentoDto_Update> ActualizarDireccion([FromBody] DepartamentoDto_Update departamento)
+        {
+            try
+            {
+                return _departamentoDAO.ActualizarDepartamento(DepartamentoMapper.MapperDTOToEntityModificar(departamento));
+                //Cambiar parametros cuando realicemos frontend
 
-			var existeDep = await _services.GetById(depDto.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
+        }
 
-			if (existeDep is not null)
-			{
-				await _services.Update(depDto);
-				
-				return NoContent();
-			}
-			else
-			{
-				return NotFound(depDto);
-			}
-		}
+        //[HttpGet("{idGrupo}")]
+        //public async Task<ActionResult<IEnumerable<Departamento>>> ListaDepartamento(Guid idGrupo)
+        //{
 
-		[HttpGet("{idGrupo}")]
-		public async Task<ActionResult<IEnumerable<Departamento>>> ListaDepartamento(Guid idGrupo)
-		{
+        //	/*var listaDepartamentos = _dataContext.Grupos
+        //	   .Include(grup => grup.Departamento)
+        //	   .FirstOrDefault(dept => dept.Id == idGrupo);
 
-			/*var listaDepartamentos = _dataContext.Grupos
-			   .Include(grup => grup.Departamento)
-			   .FirstOrDefault(dept => dept.Id == idGrupo);
-
-			if (listaDepartamentos is null)
-				return NotFound(idGrupo);*/
-
+        //	if (listaDepartamentos is null)
+        //		return NotFound(idGrupo);*/
 
 
-			return await _services.GetByIdDepartamento(idGrupo);
-		}
 
-	}
+        //	return await _services.GetByIdDepartamento(idGrupo);
+        //}
+
+    }
 }

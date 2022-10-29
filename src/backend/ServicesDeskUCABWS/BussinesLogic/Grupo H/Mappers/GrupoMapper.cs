@@ -1,5 +1,4 @@
-﻿using ServicesDeskUCABWS.Models.DTO;
-using ServicesDeskUCABWS.Models;
+﻿using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
 using AutoMapper;
 using System;
 
