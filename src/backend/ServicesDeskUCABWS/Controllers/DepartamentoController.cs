@@ -72,5 +72,21 @@ namespace ServicesDeskUCABWS.Controllers
 			}
 		}
 
+		[HttpGet("{idGrupo}")]
+		public async Task<ActionResult<IEnumerable<Departamento>>> ListaDepartamento(Guid idGrupo)
+		{
+
+			/*var listaDepartamentos = _dataContext.Grupos
+			   .Include(grup => grup.Departamento)
+			   .FirstOrDefault(dept => dept.Id == idGrupo);
+
+			if (listaDepartamentos is null)
+				return NotFound(idGrupo);*/
+
+
+
+			return await _services.GetByIdDepartamento(idGrupo);
+		}
+
 	}
 }

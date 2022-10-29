@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.Models;
 using ServicesDeskUCABWS.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Services
@@ -24,7 +25,15 @@ namespace ServicesDeskUCABWS.Services
 		//Registrar un Departamento
 		public async Task<Departamento> Create(DepartamentoDto depDto)
 		{
-			var nuevoDepartamento = _mapper.Map<Departamento>(depDto);
+
+			var nuevoDepartamento = new Departamento
+			{
+				Id = Guid.NewGuid(),
+				descripcion = depDto.descripcion,
+				nombre = depDto.nombre,
+				fecha_creacion = depDto.fecha_creacion
+			};
+
 			_dataContext.Departamentos.Add(nuevoDepartamento);
 			await _dataContext.SaveChangesAsync();
 
@@ -71,6 +80,10 @@ namespace ServicesDeskUCABWS.Services
 			}
 		}
 
-
+		//Listar departamentos por el identificador de un grupo
+		public async Task<List<Departamento>> GetByIdDepartamento(Guid idGrupo)
+		{
+			return await _dataContext.Departamentos.Where(grupo => grupo.Grupo.Id == idGrupo).ToListAsync();
+		}
 	}
 }

@@ -5,6 +5,8 @@ using ServicesDeskUCABWS.Models;
 using ServicesDeskUCABWS.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Services
@@ -24,7 +26,14 @@ namespace ServicesDeskUCABWS.Services
 		//Registar un grupo
 		public async Task<Grupo> Create(GrupoDto grupoDto) {
 
-			var nuevoGrupo = _mapper.Map<Grupo>(grupoDto);
+			var nuevoGrupo = new Grupo()
+			{
+				Id = grupoDto.Id,
+				nombre = grupoDto.nombre,
+				descripcion = grupoDto.descripcion,
+				fecha_creacion = grupoDto.fecha_creacion
+			};
+
 			_dataContext.Grupos.Add(nuevoGrupo);
 			await _dataContext.SaveChangesAsync();
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.Models
 {
@@ -20,11 +21,13 @@ namespace ServicesDeskUCABWS.Models
         public DateTime fecha_creacion { get; set; }
 
         [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+		[JsonIgnore]
+		public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public HashSet<Tipo_Ticket> Tipo_Ticket { get; set; }
         public HashSet<Cargo> Cargo { get; set; }
-        public Grupo Grupo { get; set; }
+
+		public Grupo Grupo { get; set; }
         public HashSet<Estado> Estado { get; set; }
         public HashSet<Ticket> ListaTickets { get; set; }
     }
