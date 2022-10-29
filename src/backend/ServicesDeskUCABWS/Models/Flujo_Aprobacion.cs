@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace ProyectD.Models
+namespace ServicesDeskUCABWS.Models
 {
     public class Flujo_Aprobacion
     {

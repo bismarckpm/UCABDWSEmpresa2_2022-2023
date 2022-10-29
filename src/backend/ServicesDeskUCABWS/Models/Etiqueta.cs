@@ -1,21 +1,23 @@
-﻿using System;
+﻿using ProyectD.Models;
 using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
 
 namespace ServicesDeskUCABWS.Models
 {
-    public class Prioridad
+    public class Etiqueta
     {
         [Key]
         public Guid Id { get; set; }
         [Required]
+        [StringLength(50)]
         public string nombre { get; set; } = string.Empty;
+
         [Required]
-        [MaxLength(100)]
-        [MinLength(4)]
+        [StringLength(100)]
         public string descripcion { get; set; } = string.Empty;
-        [Required]
-        public DateTime fecha_descripcion { get; set; }
-        [Required]
-        public DateTime fecha_ultima_edic { get; set; }
+
+        public HashSet<Tipo_Estado> ListaEstadosrelacionados { get; set; }
+
     }
 }
