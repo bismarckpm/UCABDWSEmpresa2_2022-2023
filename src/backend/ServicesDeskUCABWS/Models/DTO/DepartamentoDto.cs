@@ -18,5 +18,8 @@ namespace ServicesDeskUCABWS.Models.DTO
 		public DateTime fecha_creacion { get; set; }
 		public DateTime fecha_ultima_edicion { get; set; }
 		public DateTime? fecha_eliminacion { get; set; }
+
+
+		public Grupo Grupo { get; set; }
 	}
 }

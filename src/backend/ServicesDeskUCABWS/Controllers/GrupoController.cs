@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models;
 using ServicesDeskUCABWS.Models.DTO;
 using ServicesDeskUCABWS.Services;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
@@ -14,10 +18,12 @@ namespace ServicesDeskUCABWS.Controllers
 	{
 
 		private readonly GrupoServices _services;
+		private readonly DataContext _dataContext;
 
-		public GrupoController(GrupoServices services)
+		public GrupoController(GrupoServices services, DataContext data)
 		{
 			_services = services;
+			_dataContext = data;
 		}
 
 		[HttpPost]
@@ -53,7 +59,7 @@ namespace ServicesDeskUCABWS.Controllers
 		}
 
 		[HttpPut("{Guid}")]
-		public async Task<IActionResult> Update(GrupoDto grupoDto)
+		public async Task<IActionResult> ModificarGrupo(GrupoDto grupoDto)
 		{
 
 			var existeDep = await _services.GetById(grupoDto.Id);
