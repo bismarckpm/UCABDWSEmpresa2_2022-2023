@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.Models
 {
@@ -41,7 +44,6 @@ namespace ServicesDeskUCABWS.Models
 
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime fecha_eliminacion { get; set; }
-        public ICollection<Rol> Roles { get; set; }
-
+        public ICollection<RolUsuario> Roles { get; set; }
     }
 }

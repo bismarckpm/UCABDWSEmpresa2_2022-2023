@@ -10,11 +10,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Models.DTO;
+using ServicesDeskUCABWS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Services;
 
 namespace ServicesDeskUCABWS
 {
@@ -31,6 +34,7 @@ namespace ServicesDeskUCABWS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<UsuarioServices>();
+            services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -41,7 +45,6 @@ namespace ServicesDeskUCABWS
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{ Title = "Empresa B", Version = "v1" });
 			});
-
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 

@@ -38,7 +38,6 @@ namespace ServicesDeskUCABWS.Models.DTO
         public string password { get; set; } = string.Empty;
         [Required]
         public DateTime fecha_creacion { get; set; }
-        [Required]
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime fecha_eliminacion { get; set; }
     }

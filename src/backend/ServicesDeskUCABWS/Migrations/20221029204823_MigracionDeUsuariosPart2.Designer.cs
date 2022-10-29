@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServicesDeskUCABWS.Data;
 
@@ -11,9 +12,10 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221029204823_MigracionDeUsuariosPart2")]
+    partial class MigracionDeUsuariosPart2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -328,7 +330,12 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Roles");
                 });
@@ -732,6 +739,13 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Tipo_Ticket");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Models.Rol", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Models.Usuario", null)
+                        .WithMany("RolesU")
+                        .HasForeignKey("UsuarioId");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Models.RolUsuario", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Models.Rol", "Rol")
@@ -903,6 +917,8 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Usuario", b =>
                 {
                     b.Navigation("Roles");
+
+                    b.Navigation("RolesU");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Empleado", b =>

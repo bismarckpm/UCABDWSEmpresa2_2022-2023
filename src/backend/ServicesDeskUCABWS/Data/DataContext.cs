@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Models;
 using System.Diagnostics.Contracts;
+using static ServicesDeskUCABWS.Models.RolUsuario;
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -18,9 +19,23 @@ namespace ServicesDeskUCABWS.Data
                 .HasValue<Administrador>("1")
                 .HasValue<Empleado>("2")
                 .HasValue<Cliente>("3");
+
+            modelBuilder.Entity<RolUsuario>().HasKey(sc => new { sc.UserId, sc.RolId });
+
+            modelBuilder.Entity<RolUsuario>()
+                .HasOne<Usuario>(sc => sc.User)
+                .WithMany(s => s.Roles)
+                .HasForeignKey(sc => sc.UserId);
+
+
+            modelBuilder.Entity<RolUsuario>()
+                .HasOne<Rol>(sc => sc.Rol)
+                .WithMany(s => s.Usuarios)
+                .HasForeignKey(sc => sc.RolId);
         }
 
         //Creacion de los DbSeT
+        public DbSet<RolUsuario> RolUsuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Administrador> Administrador { get; set; }

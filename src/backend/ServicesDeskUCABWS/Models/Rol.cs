@@ -10,7 +10,7 @@ namespace ServicesDeskUCABWS.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
-        public ICollection<Usuario> Usuarios { get; set; }
+        public ICollection<RolUsuario> Usuarios { get; set; }
     }
     public enum JsonIgnoreCondition
     {
