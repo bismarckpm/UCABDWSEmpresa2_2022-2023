@@ -291,9 +291,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoEstadoId")
-                        .IsUnique()
-                        .HasFilter("[TipoEstadoId] IS NOT NULL");
+                    b.HasIndex("TipoEstadoId");
 
                     b.ToTable("PlantillasNotificaciones");
                 });
@@ -685,7 +683,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasForeignKey("DepartamentoId");
 
                     b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", "Estado_Padre")
-                        .WithMany("ListaEstadosDerivados")
+                        .WithMany()
                         .HasForeignKey("Estado_PadreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -711,8 +709,8 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Models.PlantillaNotificacion", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Models.Tipo_Estado", "TipoEstado")
-                        .WithOne("PlantillaNotificacion")
-                        .HasForeignKey("ServicesDeskUCABWS.Models.PlantillaNotificacion", "TipoEstadoId");
+                        .WithMany()
+                        .HasForeignKey("TipoEstadoId");
 
                     b.Navigation("TipoEstado");
                 });
@@ -840,13 +838,6 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Cargo", b =>
                 {
                     b.Navigation("Flujo_Aprobacion");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Estado", b =>
-                {
-                    b.Navigation("ListaEstadosDerivados");
-
-                    b.Navigation("PlantillaNotificacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Models.Tipo_Ticket", b =>

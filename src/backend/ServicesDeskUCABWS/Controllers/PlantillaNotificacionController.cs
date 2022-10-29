@@ -67,13 +67,51 @@ namespace ServicesDeskUCABWS.Controllers
 
         //GET: Controlador para consultar una plantilla notificacion por un título específico
         [HttpGet]
-        [Route("Consulta/Titulo/({titulo}")]
+        [Route("Consulta/Titulo/{titulo}")]
         public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> GetByTituloCtrl(string titulo)
         {
             var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
             try
             {
                 response.Data = _plantilla.ConsultarPlantillaTitulo(titulo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //GET: Controlador para consultar una plantilla notificacion por un tipo estado específico mediante su ID
+        [HttpGet]
+        [Route("Consulta/PlantillaTipoEstadoID/{id}")]
+        public ApplicationResponse<PlantillaNotificacionSearchDTO> GetByTipoEstadoIdCtrl(Guid id)
+        {
+            var response = new ApplicationResponse<PlantillaNotificacionSearchDTO>();
+            try
+            {
+                response.Data = _plantilla.ConsultarPlantillaTipoEstadoID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //GET: Controlador para consultar una plantilla notificacion por un tipo estado específico mediante su nombre
+        [HttpGet]
+        [Route("Consulta/PlantillaTipoEstadoNombre/{tipo_Estado}")]
+        public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> GetByTipoEstadoCtrl(string tipo_Estado)
+        {
+            var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
+            try
+            {
+                response.Data = _plantilla.ConsultarPlantillaTipoEstadoTitulo(tipo_Estado);
             }
             catch (ExceptionsControl ex)
             {

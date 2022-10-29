@@ -25,7 +25,7 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
         //GET: Servicio para consultar todas las plantillas
         public List<PlantillaNotificacionSearchDTO> ConsultaPlantillas()
         {
-            var data = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado);
+            var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado);
             var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
             return plantillaSearchDTO.ToList();
         }
@@ -35,7 +35,7 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var data = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Id == id).Single();
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).Where(p => p.Id == id).Single();
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionSearchDTO>(data);
                 return plantillaSearchDTO;
             }
@@ -51,13 +51,43 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var data = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Titulo == titulo);
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).Where(p => p.Titulo == titulo);
                 var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
                 return plantillaSearchDTO.ToList();
             }catch(Exception ex)
             {
                 throw new ExceptionsControl("No existe la plantilla con ese título", ex);
             } 
+        }
+
+        //GET: Servicio para consultar una plantilla notificacion por un tipo estado específico mediante su nombre
+        public List<PlantillaNotificacionSearchDTO> ConsultarPlantillaTipoEstadoTitulo(string tituloTipoEstado)
+        {
+            try
+            {
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).Where(p => p.TipoEstado.nombre == tituloTipoEstado);
+                var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
+                return plantillaSearchDTO.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese tipo estado", ex);
+            }
+        }
+
+        //GET: Servicio para consultar una plantilla notificacion por un tipo estado específico mediante su ID
+        public PlantillaNotificacionSearchDTO ConsultarPlantillaTipoEstadoID(Guid id)
+        {
+            try
+            {
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).Where(p => p.TipoEstado.Id == id).Single();
+                var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionSearchDTO>(data);
+                return plantillaSearchDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese tipo estado", ex);
+            }
         }
 
         //POST: Servicio para crear plantilla notificacion
@@ -96,11 +126,9 @@ namespace ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                //var plantillaExist = ConsultarPlantillaGUID(id);
-                //var plantilla = _mapper.Map<PlantillaNotificacion>(plantillaExist);
-                //plantillaExist = null;
-                var plantilla = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Id == id).Single();
-                Console.WriteLine(plantilla);
+                var plantillaExist = ConsultarPlantillaGUID(id);
+                var plantilla = _mapper.Map<PlantillaNotificacion>(plantillaExist);
+                //var plantilla = _plantillaContext.PlantillasNotificaciones.Include(p => p.TipoEstado).Where(p => p.Id == id).Single();
                 _plantillaContext.PlantillasNotificaciones.Remove(plantilla);
                 _plantillaContext.SaveChanges();
                 return true;
