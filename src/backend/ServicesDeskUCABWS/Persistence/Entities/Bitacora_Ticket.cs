@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Bitacora_Ticket
     {
@@ -14,6 +14,6 @@ namespace ServicesDeskUCABWS.Models
         [Required]
         public DateTime Fecha_Inicio { get; set; }
         public DateTime Fecha_Fin { get; set; }
-       
+
     }
 }

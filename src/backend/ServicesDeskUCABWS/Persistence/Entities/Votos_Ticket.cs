@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Votos_Ticket
     {

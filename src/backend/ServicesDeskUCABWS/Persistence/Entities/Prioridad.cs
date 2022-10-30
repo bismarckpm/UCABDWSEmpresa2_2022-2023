@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Prioridad
     {

@@ -1,9 +1,8 @@
-﻿using ServicesDeskUCABWS.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Familia_Ticket
     {

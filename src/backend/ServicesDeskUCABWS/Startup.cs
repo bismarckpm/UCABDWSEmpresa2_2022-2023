@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Services;
+using ServicesDeskUCABWS.Persistence.DAOs.Interface;
+using ServicesDeskUCABWS.Persistence.DAOs.Implementation;
 
 namespace ServicesDeskUCABWS
 {
@@ -33,8 +35,8 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<UsuarioServices>();
-            services.AddScoped<AsignacionRolServices>();
+            services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

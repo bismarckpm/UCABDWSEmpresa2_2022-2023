@@ -1,4 +1,4 @@
-namespace ProyectD.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class ErrorViewModel
     {

@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Flujo_Aprobacion
     {

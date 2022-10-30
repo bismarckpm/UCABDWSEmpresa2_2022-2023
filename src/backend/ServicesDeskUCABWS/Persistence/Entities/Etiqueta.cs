@@ -1,9 +1,9 @@
-﻿using ProyectD.Models;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Etiqueta
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.Models;
 using ServicesDeskUCABWS.Models.DTO;
+using ServicesDeskUCABWS.Persistence.Entities;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class Ticket
     {
@@ -21,10 +21,10 @@ namespace ServicesDeskUCABWS.Models
         public DateTime fecha_creacion { get; set; }
         [Required]
         public DateTime fecha_eliminacion { get; set; }
-        
+
         [ForeignKey("FK_Estado")]
         public int? IDEstado { get; set; }
-        
+
         public Estado Estado { get; set; }
         [Required]
         public Prioridad Prioridad { get; set; }

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
-
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
-    public class Grupo
+    public class Tipo_Estado
     {
         [Key]
         public Guid Id { get; set; }
@@ -18,12 +17,10 @@ namespace ServicesDeskUCABWS.Models
         [StringLength(150)]
         public string descripcion { get; set; } = string.Empty;
 
-        [Required]
-        public DateTime fecha_creacion { get; set; }
+        public HashSet<Etiqueta> Etiqueta { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
-        public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Departamento> Departamento { get; set; }
+        public PlantillaNotificacion PlantillaNotificacion { get; set; }
+
+        public HashSet<Estado> ListaEstadosDerivados { get; set; }
     }
 }

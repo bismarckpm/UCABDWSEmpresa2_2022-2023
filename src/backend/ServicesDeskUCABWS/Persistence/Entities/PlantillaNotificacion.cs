@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace ServicesDeskUCABWS.Models
+namespace ServicesDeskUCABWS.Persistence.Entities
 {
     public class PlantillaNotificacion
     {
@@ -14,5 +14,5 @@ namespace ServicesDeskUCABWS.Models
         [Required]
         [StringLength(150)]
         public string descripcion { get; set; } = string.Empty;
-        }
+    }
 }

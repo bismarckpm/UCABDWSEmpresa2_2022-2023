@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models;
 using ServicesDeskUCABWS.Models.DTO;
+using ServicesDeskUCABWS.Persistence.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
 {
+    /*
     public class UsuarioServices
     {
         private readonly DataContext _context;
@@ -57,6 +59,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
                 correo = newUserDto.correo,
                 password = newUserDto.password,
                 fecha_creacion = newUserDto.fecha_creacion,
+                fecha_eliminacion = newUserDto.fecha_eliminacion,
+                fecha_ultima_edicion = newUserDto.fecha_ultima_edicion, 
             };
 
             _context.Usuarios.Add(Usuario);
@@ -89,5 +93,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller
         }
         
 
-    }
+    }*/
 }
