@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221029183227_CRUD_Departamento")]
-    partial class CRUD_Departamento
+    [Migration("20221030022626_CRUD_Departamento_Grupo")]
+    partial class CRUD_Departamento_Grupo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,12 +44,17 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("id_grupo")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("id_grupo");
 
                     b.ToTable("Departamentos");
                 });
@@ -71,7 +76,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
@@ -82,6 +87,20 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grupos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Departamento", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Grupo", "grupo")
+                        .WithMany("departamentos")
+                        .HasForeignKey("id_grupo");
+
+                    b.Navigation("grupo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
+                {
+                    b.Navigation("departamentos");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ServicesDeskUCABWS.Persistence.Database;
+using ServicesDeskUCABWS.Data;
 
 #nullable disable
 
@@ -42,12 +42,17 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("id_grupo")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("id_grupo");
 
                     b.ToTable("Departamentos");
                 });
@@ -69,7 +74,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
@@ -80,6 +85,20 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grupos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Departamento", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Grupo", "grupo")
+                        .WithMany("departamentos")
+                        .HasForeignKey("id_grupo");
+
+                    b.Navigation("grupo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
+                {
+                    b.Navigation("departamentos");
                 });
 #pragma warning restore 612, 618
         }

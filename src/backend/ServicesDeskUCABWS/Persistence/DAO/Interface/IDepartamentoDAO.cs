@@ -13,9 +13,7 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Interface
         public DepartamentoDto ConsultarPorID(Guid id);
         public DepartamentoDto eliminarDepartamento(Guid id);
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento);
-
-        //public Task<List<Departamento>> GetByIdDepartamento(Guid idGrupo);
-
-
-    }
+        public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo);
+        public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept);
+	}
 }

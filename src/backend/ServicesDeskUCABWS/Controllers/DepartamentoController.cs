@@ -57,7 +57,6 @@ namespace ServicesDeskUCABWS.Controllers
             }
             catch (Exception ex)
             {
-
                 throw ex.InnerException!;
             }
         }
@@ -94,7 +93,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPut]
         [Route("ActualizarDepartamento/")]
-        public ActionResult<DepartamentoDto_Update> ActualizarDireccion([FromBody] DepartamentoDto_Update departamento)
+        public ActionResult<DepartamentoDto_Update> ActualizarDepartamento([FromBody] DepartamentoDto_Update departamento)
         {
             try
             {
@@ -109,21 +108,31 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        //[HttpGet("{idGrupo}")]
-        //public async Task<ActionResult<IEnumerable<Departamento>>> ListaDepartamento(Guid idGrupo)
-        //{
+        [HttpGet("AsignarGrupoToDepartamento/{idGrupo}")]
+        public  ActionResult<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
+        {
+			try
+			{
+				return _departamentoDAO.GetByIdDepartamento(idGrupo);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
-        //	/*var listaDepartamentos = _dataContext.Grupos
-        //	   .Include(grup => grup.Departamento)
-        //	   .FirstOrDefault(dept => dept.Id == idGrupo);
+		[HttpPost("ConsultarDepartamentosPorIdGrupo/{idGrupo}/{idDept}")]
+		public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+		{
+			try
+			{
+				return _departamentoDAO.AsignarGrupoToDepartamento(idGrupo, idDept);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
-        //	if (listaDepartamentos is null)
-        //		return NotFound(idGrupo);*/
-
-
-
-        //	return await _services.GetByIdDepartamento(idGrupo);
-        //}
-
-    }
+	}
 }

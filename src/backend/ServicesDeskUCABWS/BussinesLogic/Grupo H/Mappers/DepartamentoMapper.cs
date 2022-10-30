@@ -42,7 +42,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
 			};
 		}
 
-        public static Departamento MapperDTOToEntityModificar(DepartamentoDto_Update dept)
+		public static Departamento MapperDTOToEntityModificar(DepartamentoDto_Update dept)
         {
             return new Departamento
             {
@@ -50,8 +50,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
                 nombre = dept.nombre,
                 descripcion = dept.descripcion,
                 fecha_creacion = dept.fecha_creacion,
-                fecha_ultima_edicion = dept.fecha_ultima_edicion
+                fecha_ultima_edicion = dept.fecha_ultima_edicion,
+                id_grupo = dept.id_grupo
             };
         }
-    }
+	}
 }
