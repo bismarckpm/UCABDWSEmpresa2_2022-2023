@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper;
 using ServicesDeskUCABWS.Data;

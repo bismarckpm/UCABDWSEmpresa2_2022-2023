@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models.DTO;
 using ServicesDeskUCABWS.Models;
@@ -17,7 +16,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Services;
 using ServicesDeskUCABWS.Persistence.DAOs.Interface;
 using ServicesDeskUCABWS.Persistence.DAOs.Implementation;
 
@@ -36,6 +34,7 @@ namespace ServicesDeskUCABWS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            services.AddTransient<IUserRol, UserRolDAO>();
             //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers().AddJsonOptions(x =>
