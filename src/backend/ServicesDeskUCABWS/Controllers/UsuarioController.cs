@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Controller;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models.DTO;
@@ -50,7 +51,7 @@ namespace ServicesDeskUCABWS.Controllers
         {
             try
             {
-                var dao = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDto(Usuario));
+                var dao = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
                 return dao;
 
             }
@@ -65,7 +66,7 @@ namespace ServicesDeskUCABWS.Controllers
         {
             try
             {
-                var dao = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDto(Usuario));
+                var dao = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
                 return dao;
 
             }
@@ -81,7 +82,7 @@ namespace ServicesDeskUCABWS.Controllers
         {
             try
             {
-                var dao = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDto(Usuario));
+                var dao = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
                 return dao;
 
             }
@@ -98,6 +99,40 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 return _usuarioDAO.eliminarUsuario(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
+        }
+
+        [HttpPut]
+        [Route("ActualizarUsuario/")]
+        public ActionResult<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
+        {
+            try
+            {
+                return _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
+                //Cambiar parametros cuando realicemos frontend
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
+        }
+
+        [HttpPut]
+        [Route("ActualizarUsuarioPassword/")]
+        public ActionResult<UserPasswordDto> ActualizarPassword([FromBody] UserPasswordDto usuario)
+        {
+            try
+            {
+                return _usuarioDAO.ActualizarUsuarioPassword(UserMapper.MapperEntityToDtoUpdatePassword(usuario));
+                //Cambiar parametros cuando realicemos frontend
+
             }
             catch (Exception ex)
             {

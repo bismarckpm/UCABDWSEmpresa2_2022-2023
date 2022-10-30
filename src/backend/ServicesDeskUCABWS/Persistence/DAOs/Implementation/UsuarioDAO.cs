@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto;
 using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Models.DTO;
@@ -182,6 +183,67 @@ namespace ServicesDeskUCABWS.Persistence.DAOs.Implementation
             {
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
+            }
+        }
+
+        public UserDto_Update ActualizarUsuario(Usuario usuario)
+        {
+            try
+            {
+
+
+                _dataContext.Usuarios.Update(usuario);
+                _dataContext.SaveChanges();
+
+                    var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
+                        user => new UserDto_Update
+                        {
+                            id = user.Id,
+                            cedula = user.cedula,
+                            segundo_nombre = user.segundo_nombre,
+                            segundo_apellido = user.segundo_apellido,
+                            primer_nombre = user.primer_nombre,
+                            primer_apellido = user.primer_apellido,
+                            fecha_nacimiento = user.fecha_nacimiento,
+                        }
+
+                    );
+                    return data.First();
+  
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
+                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
+            }
+        }
+
+        public UserPasswordDto ActualizarUsuarioPassword(Usuario usuario)
+        {
+            try
+            {
+
+
+                _dataContext.Usuarios.Update(usuario);
+                _dataContext.SaveChanges();
+
+                var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
+                    user => new UserPasswordDto
+                    {
+                        id = user.Id,
+                        password = user.password,
+                    }
+
+                );
+                return data.First();
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
+                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
             }
         }
     }

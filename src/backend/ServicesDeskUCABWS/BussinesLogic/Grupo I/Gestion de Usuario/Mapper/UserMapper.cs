@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto;
 using ServicesDeskUCABWS.Models.DTO;
 using ServicesDeskUCABWS.Persistence.Entities;
 using System;
@@ -7,7 +8,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper
 {
     public class UserMapper : Profile
     {
-        public static Administrador MapperEntityToDto(UsuarioDto user)
+        public static Administrador MapperEntityToDtoAdmin(UsuarioDto user)
         {
             return new Administrador
             {
@@ -24,6 +25,44 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper
 
             };
             
+        }
+
+        public static Cliente MapperEntityToDtoClient(UsuarioDto user)
+        {
+            return new Cliente
+            {
+                Id = Guid.NewGuid(),
+                cedula = user.cedula,
+                primer_nombre = user.primer_nombre,
+                segundo_nombre = user.segundo_nombre,
+                primer_apellido = user.primer_apellido,
+                segundo_apellido = user.segundo_apellido,
+                correo = user.correo,
+                password = user.password,
+                fecha_creacion = user.fecha_creacion,
+                gender = user.gender,
+
+            };
+
+        }
+
+        public static Empleado MapperEntityToDtoEmp(UsuarioDto user)
+        {
+            return new Empleado
+            {
+                Id = Guid.NewGuid(),
+                cedula = user.cedula,
+                primer_nombre = user.primer_nombre,
+                segundo_nombre = user.segundo_nombre,
+                primer_apellido = user.primer_apellido,
+                segundo_apellido = user.segundo_apellido,
+                correo = user.correo,
+                password = user.password,
+                fecha_creacion = user.fecha_creacion,
+                gender = user.gender,
+
+            };
+
         }
 
         public static UsuarioDto MapperEntityToDto(Usuario user)
@@ -43,6 +82,30 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper
 
             };
 
+        }
+
+        public static Usuario MapperEntityToDtoUpdate (UserDto_Update user)
+        {
+            return new Usuario
+            {
+                Id= user.id,
+                primer_apellido = user.primer_apellido,
+                primer_nombre = user.primer_nombre,
+                segundo_apellido = user.segundo_apellido,
+                segundo_nombre = user.segundo_nombre,
+                cedula = user.cedula,
+                fecha_nacimiento = user.fecha_nacimiento,
+
+            };
+        }
+
+        public static Usuario MapperEntityToDtoUpdatePassword(UserPasswordDto user)
+        {
+            return new Usuario
+            {
+                Id = user.id,
+                password = user.password,
+            };
         }
     }
 }

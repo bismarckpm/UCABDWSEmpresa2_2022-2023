@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.Persistence.Entities
 {
-    public abstract class Usuario
+    public class Usuario
     {
         [Key]
         public Guid Id { get; set; }
