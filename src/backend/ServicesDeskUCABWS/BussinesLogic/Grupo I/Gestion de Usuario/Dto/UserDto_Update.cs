@@ -5,8 +5,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto
 {
     public class UserDto_Update
     {
+        [Required]
         public Guid id { get; set; }
-
+        [Required]
         public int cedula { get; set; }
 
         [MaxLength(50)]
@@ -23,7 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto
         [MaxLength(50)]
         [MinLength(3)]
         public string segundo_apellido { get; set; } = string.Empty;
-
+        [Required]
         public DateTime fecha_nacimiento { get; set; }
     }
 }
