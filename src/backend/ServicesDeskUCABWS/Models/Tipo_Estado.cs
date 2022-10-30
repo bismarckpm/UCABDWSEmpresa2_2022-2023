@@ -18,11 +18,6 @@ namespace ServicesDeskUCABWS.Models
         public string descripcion { get; set; }
 
         public HashSet<Etiqueta> Etiqueta { get; set; }
-<<<<<<< HEAD
 
-        public PlantillaNotificacion PlantillaNotificacion { get; set; }
-=======
-        
->>>>>>> adfa009428ee28ca537ccc8c290004949fc3bbdc
     }
 }
