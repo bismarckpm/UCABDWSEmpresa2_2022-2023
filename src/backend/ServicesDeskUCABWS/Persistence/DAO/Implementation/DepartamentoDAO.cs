@@ -16,13 +16,11 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
     public class DepartamentoDAO : IDepartamentoDAO
     {
         private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
 
         //Constructor
-        public DepartamentoDAO(DataContext dataContext, IMapper mapeador)
+        public DepartamentoDAO(DataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapeador;
         }
 
         //Registrar un Departamento
@@ -51,8 +49,6 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
             }
-            
-
         }
 
         //Eliminar un Departamento
@@ -144,10 +140,40 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
         }
 
         //Listar departamentos por el identificador de un grupo
-        //public async Task<List<Departamento>> GetByIdDepartamento(Guid idGrupo)
-        //{
-        //    return await _dataContext.Departamentos.Where(grupo => grupo.Grupo.Id == idGrupo).ToListAsync();
-        //}
+       public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
+        {
+            var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
+					d => new DepartamentoDto
+					{
+						Id = d.id,
+						nombre = d.nombre,
+						descripcion = d.descripcion,
+						fecha_creacion = d.fecha_creacion,
+						fecha_ultima_edicion = d.fecha_ultima_edicion,
+						fecha_eliminacion = d.fecha_eliminacion
+					}
+                 );
+			return departamentos.ToList();
+        }
 
-    }
+        public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept) {
+			try
+			{
+				Departamento result = (from dept in _dataContext.Departamentos
+								 where dept.id == idDept select dept).SingleOrDefault();
+
+                if (result is not null) {
+					result.id_grupo = idGrupo;
+					_dataContext.SaveChanges();
+				}
+
+				return result;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message + " || " + ex.StackTrace);
+				throw new Exception("Fallo al asignar grupo: " + idGrupo + "al departamento"+ idDept, ex);
+			}
+		}
+	}
 }

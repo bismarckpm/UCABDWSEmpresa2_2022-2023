@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServicesDeskUCABWS.Persistence.Entities
 {
@@ -24,8 +25,10 @@ namespace ServicesDeskUCABWS.Persistence.Entities
         public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
 
-        
-        //public Grupo Grupo { get; set; }
-        
-    }
+	    public Guid? id_grupo { get; set; }
+
+	    [ForeignKey("id_grupo")]
+	    public Grupo grupo { get; set; }
+
+}
 }

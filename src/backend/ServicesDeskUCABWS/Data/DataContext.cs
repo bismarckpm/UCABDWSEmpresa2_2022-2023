@@ -11,10 +11,7 @@ namespace ServicesDeskUCABWS.Data
 
         //Creacion de los DbSeT
         public DbSet<Departamento> Departamentos { get; set; }
-     
         public DbSet<Grupo> Grupos { get; set; }
      
-
-        
     }
 }

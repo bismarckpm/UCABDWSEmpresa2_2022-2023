@@ -55,12 +55,6 @@ namespace ServicesDeskUCABWS
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo
-				{ Title = "Api Caduca REST", Version = "v1" });
-			});
-
 			services.AddControllers();
             
         }
