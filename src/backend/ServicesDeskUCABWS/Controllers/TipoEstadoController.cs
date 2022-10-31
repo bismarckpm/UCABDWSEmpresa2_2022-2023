@@ -101,9 +101,28 @@ namespace ServicesDeskUCABWS.Controllers
                     Id = Guid.NewGuid(),
                     nombre = tipoEstadoDTO.nombre,
                     descripcion = tipoEstadoDTO.descripcion,
-                    Etiqueta = _mapper.Map<HashSet<Etiqueta>>(tipoEstadoDTO.Etiqueta),
+                    //Etiqueta = _mapper.Map<HashSet<Etiqueta>>(tipoEstadoDTO.Etiqueta),
                 };
                 response.Data = _tipoEstado.RegistroTipoEstado(tipoEstado).ToString();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //PUT: Controlador para modificar tipo estado
+        [HttpPut]
+        [Route("Actualizar/{id}")]
+        public ApplicationResponse<String> ActualizarTipoEstadoCtrl(TipoEstadoSearchDTO tipoEstadoDTO)
+        {
+            var response = new ApplicationResponse<String>();
+            try
+            {
+                response.Data = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO).ToString();
             }
             catch (ExceptionsControl ex)
             {

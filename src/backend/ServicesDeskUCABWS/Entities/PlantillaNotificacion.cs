@@ -16,6 +16,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public Guid? TipoEstadoId { get; set; }
 
+        
         public Tipo_Estado TipoEstado { get; set; }
 
     }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinessLogic.Exceptions;
@@ -38,6 +39,10 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionSearchDTO>(data);
                 return plantillaSearchDTO;
             }
+            //catch (SqlException ex)
+            //{
+            //  throw new ExceptionsControl(Resources.Mensaje, Resource.CodError, ex)
+            //}
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No existe la plantilla con ese ID", ex);

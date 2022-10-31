@@ -81,6 +81,23 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
             }
         }
 
+        //PUT: Servicio para actualizar tipo estado
+        public Boolean ActualizarTipoEstado(TipoEstadoSearchDTO tipoEstadoAct)
+        {
+            try
+            {
+                var tipoEstadoUpdate = _mapper.Map<Tipo_Estado>(tipoEstadoAct);
+                _tipoEstadoContext.Tipos_Estados.Update(tipoEstadoUpdate);
+                _tipoEstadoContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo actualizar el tipo de estado", ex);
+            }
+
+        }
+
         //DELETE: Servicio para eliminar el tipo estado
         public Boolean EliminarTipoEstado(Guid id)
         {
