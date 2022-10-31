@@ -1,5 +1,5 @@
 ﻿using ServicesDeskUCABWS.Models;
-using ServicesDeskUCABWS.Models.DTO.EtiquetaDTO;
+using ServicesDeskUCABWS.Models.DTO.EtiquetasDTO;
 using ServicesDeskUCABWS.Responses;
 using System;
 using System.Collections.Generic;

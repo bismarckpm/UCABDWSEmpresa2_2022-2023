@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ServicesDeskUCABWS.Models.DTO.EtiquetasDTO;
+using System.Collections.Generic;
 
 namespace ServicesDeskUCABWS.Models.DTO.TipoEstadoDTO
 {
@@ -6,6 +7,6 @@ namespace ServicesDeskUCABWS.Models.DTO.TipoEstadoDTO
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public HashSet<Etiqueta> Etiqueta { get; set; }
+        public HashSet<EtiquetaDTO> Etiqueta { get; set; }
     }
 }

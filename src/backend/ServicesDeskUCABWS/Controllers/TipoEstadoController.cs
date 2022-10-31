@@ -101,7 +101,7 @@ namespace ServicesDeskUCABWS.Controllers
                     Id = Guid.NewGuid(),
                     nombre = tipoEstadoDTO.nombre,
                     descripcion = tipoEstadoDTO.descripcion,
-                    Etiqueta = tipoEstadoDTO.Etiqueta,
+                    Etiqueta = _mapper.Map<HashSet<Etiqueta>>(tipoEstadoDTO.Etiqueta),
                 };
                 response.Data = _tipoEstado.RegistroTipoEstado(tipoEstado).ToString();
             }

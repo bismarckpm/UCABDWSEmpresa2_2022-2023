@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Exceptions;
 using ServicesDeskUCABWS.Models;
-using ServicesDeskUCABWS.Models.DTO.EtiquetaDTO;
+using ServicesDeskUCABWS.Models.DTO.EtiquetasDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using ServicesDeskUCABWS.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.Models.DTO.EtiquetaDTO;
+using ServicesDeskUCABWS.Models.DTO.EtiquetasDTO;
 using ServicesDeskUCABWS.Responses;
 using ServicesDeskUCABWS.Exceptions;
 using ServicesDeskUCABWS.Models;
