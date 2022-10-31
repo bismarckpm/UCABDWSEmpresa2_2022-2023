@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Persistence.DAO.Interface;
-using ServicesDeskUCABWS.Persistence.Entities;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
     public class DepartamentoDAO : IDepartamentoDAO
     {
@@ -51,7 +51,7 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
             }
-            
+
 
         }
 
@@ -80,7 +80,7 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento)
         {
             try
-            {               
+            {
                 _dataContext.Departamentos.Update(departamento);
                 _dataContext.SaveChanges();
 
@@ -90,7 +90,7 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
                         Id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
-                        fecha_creacion  = d.fecha_creacion,
+                        fecha_creacion = d.fecha_creacion,
                         fecha_ultima_edicion = d.fecha_ultima_edicion //Arreglar
                     }
 
@@ -113,9 +113,9 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
             return DepartamentoMapper.MapperEntityToDtoDefault(departamento);
         }
 
-        
+
         //Consultar departamentos
-       
+
         public List<DepartamentoDto> ConsultarDepartamentos()
         {
             try
@@ -129,7 +129,7 @@ namespace ServicesDeskUCABWS.Persistence.DAO.Implementation
                         fecha_creacion = d.fecha_creacion,
                         fecha_ultima_edicion = d.fecha_ultima_edicion,
                         fecha_eliminacion = d.fecha_eliminacion
-                        
+
                     }
                 );
 

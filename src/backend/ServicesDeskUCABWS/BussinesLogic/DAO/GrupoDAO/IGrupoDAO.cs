@@ -1,10 +1,10 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using ServicesDeskUCABWS.Persistence.Entities;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.Persistence.DAO.Interface
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
     public interface IGrupoDAO
     {

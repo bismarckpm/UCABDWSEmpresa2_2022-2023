@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Persistence.DAO.Interface;
-using ServicesDeskUCABWS.Persistence.Entities;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

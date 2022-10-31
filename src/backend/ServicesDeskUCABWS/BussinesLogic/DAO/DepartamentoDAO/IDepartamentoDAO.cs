@@ -1,12 +1,12 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using ServicesDeskUCABWS.Persistence.Entities;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.Persistence.DAO.Interface
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
-    public interface IDepartamentoDAO 
+    public interface IDepartamentoDAO
     {
         public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento);
         public List<DepartamentoDto> ConsultarDepartamentos();

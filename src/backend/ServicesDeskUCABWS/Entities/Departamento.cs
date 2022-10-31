@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Text.Json.Serialization;
 
-namespace ServicesDeskUCABWS.Persistence.Entities
+namespace ServicesDeskUCABWS.Entities
 {
     public class Departamento
     {

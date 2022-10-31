@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Persistence.Entities;
+using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.Data
 {

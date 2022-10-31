@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using ServicesDeskUCABWS.Persistence.Entities;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
+namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 {
     public class DepartamentoMapper:Profile
 	{

@@ -1,7 +1,6 @@
-﻿using ServicesDeskUCABWS.Persistence.Entities;
-using System;
+﻿using System;
 
-namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
 {
     public class DepartamentoDto
     {
@@ -24,7 +23,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO
         public DateTime? fecha_ultima_edicion { get; set; } = DateTime.Now.Date;
         public DateTime? fecha_eliminacion { get; set; }
 
-        
+
     }
 
 }

@@ -1,8 +1,8 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.Grupo_H.DTO;
-using AutoMapper;
+﻿using AutoMapper;
 using System;
+using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 
-namespace ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers
+namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 {
 	public class GrupoMapper:Profile
 	{

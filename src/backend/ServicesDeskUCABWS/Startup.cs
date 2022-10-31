@@ -14,8 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ServicesDeskUCABWS.Persistence.DAO.Interface;
-using ServicesDeskUCABWS.Persistence.DAO.Implementation;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -35,7 +35,7 @@ namespace ServicesDeskUCABWS
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
-			services.AddScoped<IGrupoDAO, GrupoDAO>();
+			services.AddTransient<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger
