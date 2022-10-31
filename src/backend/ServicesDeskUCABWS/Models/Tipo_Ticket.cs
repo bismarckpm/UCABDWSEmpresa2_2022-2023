@@ -24,8 +24,7 @@ namespace ServicesDeskUCABWS.Models
         public DateTime fecha_creacion { get; set; }
         [Required]
         public DateTime fecha_ult_edic { get; set; }
-        [Required]
-        public DateTime fecha_elim { get; set; }
+        public DateTime? fecha_elim { get; set; }
         public HashSet<Flujo_Aprobacion> Flujo_Aprobacion { get; set; }
         public HashSet<Departamento> Departamento { get; set; }
         public int? Minimo_Aprobado { get; set; }

@@ -8,10 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS
@@ -29,20 +31,31 @@ namespace ServicesDeskUCABWS
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-			//Se agrega en generador de Swagger
-			services.AddSwaggerGen(c =>
+            // services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //Se agrega en generador de Swagger
+            services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{ Title = "Empresa B", Version = "v1" });
 			});
 
-			services.AddDbContext<DataContext>(options =>
+            services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 
             services.AddControllers();
-            
+
+            services.AddScoped<ITipo_TicketDAO, Tipo_TicketService>();
+            services.AddScoped<IDataContext, DataContext>();
+
+
+            services.AddScoped<IDataContext, DataContext>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class first_migration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
