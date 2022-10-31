@@ -1,0 +1,13 @@
+﻿using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+using System;
+
+namespace ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla
+{
+    public class PlantillaNotificacionSearchDTO
+    {
+        public Guid Id { get; set; }
+        public string Titulo { get; set; }
+        public string Descripcion { get; set; }
+        public TipoEstadoSearchDTO TipoEstado { get; set; }
+    }
+}

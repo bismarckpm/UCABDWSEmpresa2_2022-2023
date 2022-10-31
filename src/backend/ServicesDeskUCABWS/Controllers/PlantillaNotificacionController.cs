@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
-using ServicesDeskUCABWS.Models.DTO.PlantillaDTO;
-using ServicesDeskUCABWS.Responses;
-using ServicesDeskUCABWS.Exceptions;
-using ServicesDeskUCABWS.Models;
-using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.Response;
+using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -15,10 +14,10 @@ namespace ServicesDeskUCABWS.Controllers
     [ApiController]
     public class PlantillaNotificacionController:ControllerBase
     {
-        private readonly IPlantillaNotificacionDAO _plantilla;
+        private readonly IPlantillaNotificacion _plantilla;
         private readonly IMapper _mapper;
 
-        public PlantillaNotificacionController(IPlantillaNotificacionDAO plantilla, IMapper mapper)
+        public PlantillaNotificacionController(IPlantillaNotificacion plantilla, IMapper mapper)
         {
             _plantilla = plantilla;
             _mapper = mapper;   

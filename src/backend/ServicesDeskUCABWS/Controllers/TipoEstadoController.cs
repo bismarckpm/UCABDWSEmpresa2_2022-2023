@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
-using ServicesDeskUCABWS.DAO.TipoEstadoDAO;
-using ServicesDeskUCABWS.Exceptions;
-using ServicesDeskUCABWS.Models;
-using ServicesDeskUCABWS.Models.DTO.PlantillaDTO;
-using ServicesDeskUCABWS.Models.DTO.TipoEstadoDTO;
-using ServicesDeskUCABWS.Responses;
+using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.Entities;
+using ServicesDeskUCABWS.Response;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -17,11 +17,11 @@ namespace ServicesDeskUCABWS.Controllers
     [ApiController]
     public class TipoEstadoController:ControllerBase
     {
-        private readonly ITipoEstadoDAO _tipoEstado;
-        private readonly IPlantillaNotificacionDAO _plantilla;
+        private readonly ITipoEstado _tipoEstado;
+        private readonly IPlantillaNotificacion _plantilla;
         private readonly IMapper _mapper;
 
-        public TipoEstadoController(ITipoEstadoDAO tipoEstadoContext, IPlantillaNotificacionDAO plantilla, IMapper mapper)
+        public TipoEstadoController(ITipoEstado tipoEstadoContext, IPlantillaNotificacion plantilla, IMapper mapper)
         {
             _tipoEstado = tipoEstadoContext;
             _plantilla = plantilla;
@@ -122,18 +122,31 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<String>();
             try
             {
-                var plantillaTipoTicket = _plantilla.ConsultarPlantillaTipoEstadoID(id);
-                var plantillaUpdate = _mapper.Map<PlantillaNotificacionUpdateDTO>(plantillaTipoTicket);
-                plantillaUpdate.TipoEstadoId = null;
-                _plantilla.ActualizarPlantilla(plantillaUpdate);
-                response.Data = _tipoEstado.EliminarTipoEstado(id).ToString();
+                try
+                {
+
+                    var plantillaTipoTicket = _plantilla.ConsultarPlantillaTipoEstadoID(id);
+                    var plantillaUpdate = _mapper.Map<PlantillaNotificacionUpdateDTO>(plantillaTipoTicket);
+                    plantillaUpdate.TipoEstadoId = null;
+                    _plantilla.ActualizarPlantilla(plantillaUpdate);
+                }
+                catch (InvalidOperationException)
+                {
+                    response.Message = "No hay plantilla asociada a este tipo de estado";
+                }
+                finally
+                {
+                    response.Data = _tipoEstado.EliminarTipoEstado(id).ToString();
+                 
+                }   
+
             }
             catch (ExceptionsControl ex)
             {
                 response.Success = false;
                 response.Message = ex.Mensaje;
                 response.Exception = ex.Excepcion.ToString();
-            }
+            } 
             return response;
         }
 

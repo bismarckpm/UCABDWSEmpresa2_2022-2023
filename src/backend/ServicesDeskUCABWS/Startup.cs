@@ -1,22 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ServicesDeskUCABWS.DAO.PlantillaNotificacionDAO;
-using ServicesDeskUCABWS.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS
 {
@@ -34,11 +28,11 @@ namespace ServicesDeskUCABWS
         {
       
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddTransient<IPlantillaNotificacionDAO, PlantillaNotificacionService>();
+            services.AddTransient<IPlantillaNotificacion, PlantillaNotificacionService>();
 
-            services.AddTransient<IEtiquetaDAO, EtiquetaService>();
+            services.AddTransient<IEtiqueta, EtiquetaService>();
 
-            services.AddTransient<ITipoEstadoDAO, TipoEstadoService>();
+            services.AddTransient<ITipoEstado, TipoEstadoService>();
 
             services.AddTransient<IDataContext, DataContext>();
 

@@ -2,15 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.Models.DTO.EtiquetasDTO;
-using ServicesDeskUCABWS.Responses;
-using ServicesDeskUCABWS.Exceptions;
-using ServicesDeskUCABWS.Models;
-using System.Threading.Tasks;
-
-
-
+using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.Response;
+using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinessLogic.Exceptions;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -18,10 +13,10 @@ namespace ServicesDeskUCABWS.Controllers
         [ApiController]
         public class EtiquetaController : ControllerBase
         {
-            private readonly IEtiquetaDAO _etiqueta;
+            private readonly IEtiqueta _etiqueta;
             private readonly IMapper _mapper;
 
-            public EtiquetaController(IEtiquetaDAO etiqueta, IMapper mapper)
+            public EtiquetaController(IEtiqueta etiqueta, IMapper mapper)
             {
                 _etiqueta = etiqueta;
                 _mapper = mapper;

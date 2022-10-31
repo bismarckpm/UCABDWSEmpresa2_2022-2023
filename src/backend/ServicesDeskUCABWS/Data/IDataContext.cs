@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Models;
+using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.Data
 {
