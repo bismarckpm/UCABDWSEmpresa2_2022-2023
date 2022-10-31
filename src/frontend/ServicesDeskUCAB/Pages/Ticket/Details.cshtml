@@ -1,0 +1,97 @@
+<h1>Detalles</h1>
+<div class="row">
+    <div class="col-6">
+        <h3>Ticket ID:234213uyg2ruy3fr2r</h3>
+    </div>
+    <div class="col-6">
+        <h3>Asunto</h3>
+    </div>
+
+
+    <hr />
+    <div class="col-6">
+        Estado:
+    </div>
+
+    <div class="col-6">
+        Departamento:
+    </div>
+    <hr />
+    <div class="col-6">
+        Tipo ticket:
+    </div>
+
+    <div class="col-6">
+        Prioridad:
+    </div>
+    <hr />
+    <div class="col-6">
+        Fecha de creación:
+    </div>
+    <div class="col-6">
+        Usuario:
+    </div>
+    <hr />
+    <div class="col-12">
+        Descripción:
+    </div>
+</div>
+<h2 class="text-center">Bitacora del ticket</h2>
+<div style="margin-top:20px">
+    <table id="table_id">
+        <thead>
+            <tr>
+                <th>ESTADO</th>
+                <th>FECHA INICIO</th>
+                <th>FECHA FIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Por abrobar</td>
+                <td>10/11/2022</td>
+                <td>10/12/2022</td>
+            </tr>
+            <tr>
+                <td>Por abrobar</td>
+                <td>10/11/2022</td>
+                <td>10/12/2022</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button type="button" class="btn btn-primary text-center" asp-area="" asp-controller="Ticket" asp-action="Index">Aceptar</button>
+
+
+@section Scripts{
+    <script>$(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            },);
+        });</script>
+
+}
