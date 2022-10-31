@@ -2,15 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_H.Mappers;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Dto;
-using ServicesDeskUCABWS.BussinesLogic.Grupo_I.Gestion_de_Usuario.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Models;
-using ServicesDeskUCABWS.Models.DTO;
-using ServicesDeskUCABWS.Persistence.DAOs.Implementation;
-using ServicesDeskUCABWS.Persistence.DAOs.Interface;
-using ServicesDeskUCABWS.Persistence.Entities;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

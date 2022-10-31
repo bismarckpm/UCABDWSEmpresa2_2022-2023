@@ -9,15 +9,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.Data;
-using ServicesDeskUCABWS.Models.DTO;
-using ServicesDeskUCABWS.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ServicesDeskUCABWS.Persistence.DAOs.Interface;
-using ServicesDeskUCABWS.Persistence.DAOs.Implementation;
+using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 
 namespace ServicesDeskUCABWS
 {

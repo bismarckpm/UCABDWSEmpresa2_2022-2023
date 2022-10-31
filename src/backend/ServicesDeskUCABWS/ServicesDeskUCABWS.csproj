@@ -19,8 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BussinesLogic\Exceptions\" />
+    <Folder Include="BussinesLogic\Response\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Persistence\Database\" />
   </ItemGroup>
 
 

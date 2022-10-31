@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Persistence.Entities;
+using ServicesDeskUCABWS.Entities;
 using System.Diagnostics.Contracts;
-using static ServicesDeskUCABWS.Persistence.Entities.RolUsuario;
+using static ServicesDeskUCABWS.Entities.RolUsuario;
 
 namespace ServicesDeskUCABWS.Data
 {
