@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado;
 using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinessLogic.Exceptions;
@@ -91,19 +93,36 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado **
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearTipoEstadoCtrl(TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var tipoEstado = new Tipo_Estado
+                
+
+                var tipoEstadoCreate = new Tipo_Estado
                 {
                     Id = Guid.NewGuid(),
                     nombre = tipoEstadoDTO.nombre,
                     descripcion = tipoEstadoDTO.descripcion,
-                    //Etiqueta = _mapper.Map<HashSet<Etiqueta>>(tipoEstadoDTO.Etiqueta),
+                    
                 };
-                response.Data = _tipoEstado.RegistroTipoEstado(tipoEstado).ToString();
+
+                var lista = new HashSet<EtiquetaTipoEstado>();
+                foreach(EtiquetaTipoEstadoDTO i in tipoEstadoDTO.etiquetaTipoEstado)
+                {
+                    var item = new EtiquetaTipoEstado();
+                    item.tipoEstadoID = tipoEstadoCreate.Id;
+                    item.etiquetaID = i.etiquetaID;
+                    lista.Add(item);
+                    
+                    
+                }
+                tipoEstadoCreate.etiquetaTipoEstado = lista;
+
+                response.Data = _tipoEstado.RegistroTipoEstado(tipoEstadoCreate).ToString();
+
+                
             }
             catch (ExceptionsControl ex)
             {

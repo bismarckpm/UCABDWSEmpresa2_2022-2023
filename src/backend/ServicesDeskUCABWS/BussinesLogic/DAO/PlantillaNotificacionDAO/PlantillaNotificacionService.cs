@@ -25,7 +25,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
         //GET: Servicio para consultar todas las plantillas
         public List<PlantillaNotificacionSearchDTO> ConsultaPlantillas()
         {
-            var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.Etiqueta);
+            var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.etiquetaTipoEstado);
             var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
             return plantillaSearchDTO.ToList();
         }
@@ -35,7 +35,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
         {
             try
             {
-                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.Etiqueta).Where(p => p.Id == id).Single();
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.etiquetaTipoEstado).Where(p => p.Id == id).Single();
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionSearchDTO>(data);
                 return plantillaSearchDTO;
             }
@@ -55,7 +55,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
         {
             try
             {
-                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.Etiqueta).Where(p => p.Titulo == titulo);
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.etiquetaTipoEstado).Where(p => p.Titulo == titulo);
                 var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
                 return plantillaSearchDTO.ToList();
             }catch(Exception ex)
@@ -70,7 +70,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
             try
             {
                 
-                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.Etiqueta).Where(p => p.TipoEstado.nombre == tituloTipoEstado);
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.etiquetaTipoEstado).Where(p => p.TipoEstado.nombre == tituloTipoEstado);
                 var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionSearchDTO>>(data);
                 return plantillaSearchDTO.ToList();
             }
@@ -86,7 +86,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
             try
             {
                 
-                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.Etiqueta).Where(p => p.TipoEstado.Id == id).Single();
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(e => e.etiquetaTipoEstado).Where(p => p.TipoEstado.Id == id).Single();
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionSearchDTO>(data);
                 return plantillaSearchDTO;
             }

@@ -15,9 +15,9 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         private readonly DataContext _tipoEstadoContext;
         private readonly IMapper _mapper;
 
-        public TipoEstadoService(DataContext plantillaContext, IMapper mapper)
+        public TipoEstadoService(DataContext tipoestadoContext, IMapper mapper)
         {
-            _tipoEstadoContext = plantillaContext;
+            _tipoEstadoContext = tipoestadoContext;
             _mapper = mapper;
         }
 
@@ -26,7 +26,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.Etiqueta);
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado);
                 var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoSearchDTO>>(data);
                 return tipoEstadoSearchDTO.ToList();
             }catch(Exception ex)
@@ -40,7 +40,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.Etiqueta).Where(t => t.Id == id).Single();
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
                 var tipoEstadoSearchDTO = _mapper.Map<TipoEstadoSearchDTO>(data);
                 return tipoEstadoSearchDTO;
             }
@@ -56,7 +56,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.Etiqueta).Where(t => t.nombre == titulo);
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).Where(t => t.nombre == titulo);
                 var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoSearchDTO>>(data);
                 return tipoEstadoSearchDTO.ToList();
             }
@@ -103,7 +103,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var tipoEstado = _tipoEstadoContext.Tipo_Estados.Include(t => t.Etiqueta).Where(t => t.Id == id).Single();
+                var tipoEstado = _tipoEstadoContext.Tipo_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
                 _tipoEstadoContext.Tipo_Estados.Remove(tipoEstado);
                 _tipoEstadoContext.SaveChanges();
                 return true;

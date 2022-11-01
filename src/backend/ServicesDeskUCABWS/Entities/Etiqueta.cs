@@ -16,7 +16,7 @@ namespace ServicesDeskUCABWS.Entities
         [StringLength(100)]
         public string descripcion { get; set; } = string.Empty;
 
-        public HashSet<Tipo_Estado> ListaEstadosrelacionados { get; set; }
+        public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
 
     }
 }
