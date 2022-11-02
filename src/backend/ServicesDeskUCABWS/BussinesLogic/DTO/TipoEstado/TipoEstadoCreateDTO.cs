@@ -9,6 +9,6 @@ namespace ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public HashSet<EtiquetaTipoEstadoDTO> etiquetaTipoEstado { get; set; }
+        public HashSet<EtiquetaDTO> etiqueta { get; set; }
     }
 }

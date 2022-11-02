@@ -7,11 +7,11 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
 {
     public interface ITipoEstado
     {
-        public List<TipoEstadoSearchDTO> ConsultaTipoEstados();
-        public TipoEstadoSearchDTO ConsultarTipoEstadoGUID(Guid id);
-        public List<TipoEstadoSearchDTO> ConsultarTipoEstadoTitulo(string titulo);
-        public Boolean RegistroTipoEstado(Tipo_Estado tipoEstado);
-        public Boolean ActualizarTipoEstado(TipoEstadoSearchDTO tipoEstadoAct);
+        public List<TipoEstadoDTO> ConsultaTipoEstados();
+        public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id);
+        public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo);
+        public Boolean RegistroTipoEstado(TipoEstadoDTO tipoEstado);
+        public Boolean ActualizarTipoEstado(TipoEstadoDTO tipoEstadoAct, Guid id);
         public Boolean EliminarTipoEstado(Guid id);
     }
 }

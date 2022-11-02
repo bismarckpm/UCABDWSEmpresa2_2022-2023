@@ -12,6 +12,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado
 
         //public EtiquetaDTO etiqueta { get; set; }
 
-        //public TipoEstadoSearchDTO tipoEstado { get; set; }
+        public TipoEstadoDTO tipoEstado { get; set; }
     }
 }

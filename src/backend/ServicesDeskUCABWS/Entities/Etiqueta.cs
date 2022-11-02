@@ -6,6 +6,11 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Etiqueta
     {
+        public Etiqueta()
+        {
+            this.etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>();
+        }
+
         [Key]
         public Guid Id { get; set; }
         [Required]

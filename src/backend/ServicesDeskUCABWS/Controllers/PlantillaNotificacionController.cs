@@ -26,9 +26,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar todas las plantillas
         [HttpGet]
         [Route("Consulta/")]
-        public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> ConsultaPlantillasCtrl()
+        public ApplicationResponse<List<PlantillaNotificacionDTO>> ConsultaPlantillasCtrl()
         {
-            var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
+            var response = new ApplicationResponse<List<PlantillaNotificacionDTO>>();
 
             try
             {
@@ -46,9 +46,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una plantilla notificacion en especifico
         [HttpGet]
         [Route("Consulta/{id}")]
-        public ActionResult<ApplicationResponse<PlantillaNotificacionSearchDTO>> GetByGuidCtrl(Guid id)
+        public ActionResult<ApplicationResponse<PlantillaNotificacionDTO>> GetByGuidCtrl(Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionSearchDTO>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
 
             try
             {
@@ -67,9 +67,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una plantilla notificacion por un título específico
         [HttpGet]
         [Route("Consulta/Titulo/{titulo}")]
-        public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> GetByTituloCtrl(string titulo)
+        public ApplicationResponse<PlantillaNotificacionDTO> GetByTituloCtrl(string titulo)
         {
-            var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 response.Data = _plantilla.ConsultarPlantillaTitulo(titulo);
@@ -86,9 +86,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una plantilla notificacion por un tipo estado específico mediante su ID
         [HttpGet]
         [Route("Consulta/PlantillaTipoEstadoID/{id}")]
-        public ApplicationResponse<PlantillaNotificacionSearchDTO> GetByTipoEstadoIdCtrl(Guid id)
+        public ApplicationResponse<PlantillaNotificacionDTO> GetByTipoEstadoIdCtrl(Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionSearchDTO>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 response.Data = _plantilla.ConsultarPlantillaTipoEstadoID(id);
@@ -105,9 +105,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una plantilla notificacion por un tipo estado específico mediante su nombre
         [HttpGet]
         [Route("Consulta/PlantillaTipoEstadoNombre/{tipo_Estado}")]
-        public ApplicationResponse<List<PlantillaNotificacionSearchDTO>> GetByTipoEstadoCtrl(string tipo_Estado)
+        public ApplicationResponse<PlantillaNotificacionDTO> GetByTipoEstadoCtrl(string tipo_Estado)
         {
-            var response = new ApplicationResponse<List<PlantillaNotificacionSearchDTO>>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 response.Data = _plantilla.ConsultarPlantillaTipoEstadoTitulo(tipo_Estado);
@@ -124,19 +124,14 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear plantilla notificacion
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
+        public ApplicationResponse<String> CrearPlantillaCtrl(PlantillaNotificacionDTO plantillaDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var plantilla = new PlantillaNotificacion
-                {
-                    Id = Guid.NewGuid(),
-                    Titulo = plantillaDTO.Titulo,
-                    Descripcion = plantillaDTO.Descripcion,
-                    TipoEstadoId = plantillaDTO.TipoEstadoId
-                };
-                response.Data = _plantilla.RegistroPlantilla(plantilla).ToString();
+                
+                response.Data = _plantilla.RegistroPlantilla(plantillaDTO).ToString();
+
             }
             catch (ExceptionsControl ex)
             {
@@ -150,12 +145,14 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar plantilla notificacion
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarPlantillaCtrl(PlantillaNotificacionUpdateDTO plantillaDTO)
+        public ApplicationResponse<String> ActualizarPlantillaCtrl( [FromBody]PlantillaNotificacionDTO plantillaDTO, [FromRoute] Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO).ToString();                
+               
+                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO,id).ToString();
+
             }
             catch (ExceptionsControl ex)
             {

@@ -20,22 +20,20 @@ namespace ServicesDeskUCABWS.Controllers
     public class TipoEstadoController:ControllerBase
     {
         private readonly ITipoEstado _tipoEstado;
-        private readonly IPlantillaNotificacion _plantilla;
-        private readonly IMapper _mapper;
+        
 
-        public TipoEstadoController(ITipoEstado tipoEstadoContext, IPlantillaNotificacion plantilla, IMapper mapper)
+        public TipoEstadoController(ITipoEstado tipoEstadoContext)
         {
             _tipoEstado = tipoEstadoContext;
-            _plantilla = plantilla;
-            _mapper = mapper;
+            
         }
 
         //GET: Controlador para consultar todas los tipos estados
         [HttpGet]
         [Route("Consulta/")]
-        public ApplicationResponse<List<TipoEstadoSearchDTO>> ConsultaTipoEstadosCtrl()
+        public ApplicationResponse<List<TipoEstadoDTO>> ConsultaTipoEstadosCtrl()
         {
-            var response = new ApplicationResponse<List<TipoEstadoSearchDTO>>();
+            var response = new ApplicationResponse<List<TipoEstadoDTO>>();
 
             try
             {
@@ -53,9 +51,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar un tipo estado en especifico
         [HttpGet]
         [Route("Consulta/{id}")]
-        public ActionResult<ApplicationResponse<TipoEstadoSearchDTO>> GetByGuidCtrl(Guid id)
+        public ActionResult<ApplicationResponse<TipoEstadoDTO>> GetByGuidCtrl(Guid id)
         {
-            var response = new ApplicationResponse<TipoEstadoSearchDTO>();
+            var response = new ApplicationResponse<TipoEstadoDTO>();
 
             try
             {
@@ -74,9 +72,9 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una tipo estado por un título específico
         [HttpGet]
         [Route("Consulta/Titulo/{titulo}")]
-        public ApplicationResponse<List<TipoEstadoSearchDTO>> GetByTituloCtrl(string titulo)
+        public ApplicationResponse<TipoEstadoDTO> GetByTituloCtrl(string titulo)
         {
-            var response = new ApplicationResponse<List<TipoEstadoSearchDTO>>();
+            var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
                 response.Data = _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
@@ -93,34 +91,14 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado **
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoDTO tipoEstadoDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                
 
-                var tipoEstadoCreate = new Tipo_Estado
-                {
-                    Id = Guid.NewGuid(),
-                    nombre = tipoEstadoDTO.nombre,
-                    descripcion = tipoEstadoDTO.descripcion,
-                    
-                };
 
-                var lista = new HashSet<EtiquetaTipoEstado>();
-                foreach(EtiquetaTipoEstadoDTO i in tipoEstadoDTO.etiquetaTipoEstado)
-                {
-                    var item = new EtiquetaTipoEstado();
-                    item.tipoEstadoID = tipoEstadoCreate.Id;
-                    item.etiquetaID = i.etiquetaID;
-                    lista.Add(item);
-                    
-                    
-                }
-                tipoEstadoCreate.etiquetaTipoEstado = lista;
-
-                response.Data = _tipoEstado.RegistroTipoEstado(tipoEstadoCreate).ToString();
+                response.Data = _tipoEstado.RegistroTipoEstado(tipoEstadoDTO).ToString();
 
                 
             }
@@ -136,12 +114,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarTipoEstadoCtrl(TipoEstadoSearchDTO tipoEstadoDTO)
+        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO).ToString();
+                response.Data = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id).ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -160,24 +138,8 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<String>();
             try
             {
-                try
-                {
-
-                    var plantillaTipoTicket = _plantilla.ConsultarPlantillaTipoEstadoID(id);
-                    var plantillaUpdate = _mapper.Map<PlantillaNotificacionUpdateDTO>(plantillaTipoTicket);
-                    plantillaUpdate.TipoEstadoId = null;
-                    _plantilla.ActualizarPlantilla(plantillaUpdate);
-                }
-                catch (InvalidOperationException)
-                {
-                    response.Message = "No hay plantilla asociada a este tipo de estado";
-                }
-                finally
-                {
-                    response.Data = _tipoEstado.EliminarTipoEstado(id).ToString();
-                 
-                }   
-
+                response.Data = _tipoEstado.EliminarTipoEstado(id).ToString();
+                      
             }
             catch (ExceptionsControl ex)
             {

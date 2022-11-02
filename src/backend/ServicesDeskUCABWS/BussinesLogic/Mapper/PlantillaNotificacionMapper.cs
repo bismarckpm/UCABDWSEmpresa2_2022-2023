@@ -9,14 +9,14 @@ namespace ServicesDeskUCABWS.BussinessLogic.Mapper
         public PlantillaNotificacionMapper()
         {
 
-            CreateMap<PlantillaNotificacion, PlantillaNotificacionSearchDTO>();
-            CreateMap<PlantillaNotificacionSearchDTO, PlantillaNotificacion>();
+            CreateMap<PlantillaNotificacion, PlantillaNotificacionDTO>();
+            CreateMap<PlantillaNotificacionDTO, PlantillaNotificacion>();
 
             CreateMap<PlantillaNotificacion, PlantillaNotificacionUpdateDTO>();
             CreateMap<PlantillaNotificacionUpdateDTO, PlantillaNotificacion>();
 
-            CreateMap<PlantillaNotificacionSearchDTO, PlantillaNotificacionUpdateDTO>();
-            CreateMap<PlantillaNotificacionUpdateDTO, PlantillaNotificacionSearchDTO>();
+            CreateMap<PlantillaNotificacionDTO, PlantillaNotificacionUpdateDTO>();
+            CreateMap<PlantillaNotificacionUpdateDTO, PlantillaNotificacionDTO>();
 
         }
     }
