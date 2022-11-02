@@ -9,10 +9,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.Data;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -28,8 +32,12 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            services.AddTransient<IUserRol, UserRolDAO>();
+            //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
@@ -37,7 +45,6 @@ namespace ServicesDeskUCABWS
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{ Title = "Empresa B", Version = "v1" });
 			});
-
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 
