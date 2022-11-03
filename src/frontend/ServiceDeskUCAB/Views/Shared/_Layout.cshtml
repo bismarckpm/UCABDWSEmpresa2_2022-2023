@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/Tablas.styles.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="~/css/sb-admin-2.css" />
-  
+
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -49,44 +49,21 @@
                 Menú
             </div>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/">
+                <li class="nav-item">
+                <a class="nav-link collapsed" data-toggle="collapse"  asp-area="" asp-controller="Home" asp-action="">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Departamento</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/TipoTicket">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Cargos</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/TipoTicket"> <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Tipo Ticket</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/TipoTicket">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Ticket</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/TipoTicket">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Prioridad</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-page="/TipoTicket">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestionar Notificaciones</span>
-                </a>
-            </li>
+                        Ticket
+                    </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link collapsed" data-toggle="collapse"  asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
+                        <i class="fas fa-fw fa-cog"></i>
+                        Gestionar Tipo Ticket
+                     </a>
+                </li>
 
+ 
 
-           
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -134,11 +111,7 @@
                     </main>
                 </div>
             </div>
-            <footer class="border-top footer text-muted">
-                <div class="container">
-                    &copy; 2022 - Tablas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-            </footer>
+           
         </div>
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -148,5 +121,3 @@
         @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-

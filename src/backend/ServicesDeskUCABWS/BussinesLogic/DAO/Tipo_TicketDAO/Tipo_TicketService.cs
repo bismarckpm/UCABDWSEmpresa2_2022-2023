@@ -7,6 +7,7 @@ using System;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_Ticket;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {
@@ -33,12 +34,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             return (IEnumerable<Tipo_TicketDTO>)tipo_tickets;
         }
 
-        public async Task<Tipo_Ticket?> ConsultarTipoTicketGUID(Guid id)
+        /*public async Task<Tipo_Ticket?> ConsultarTipoTicketGUID(Guid id)
         {
             return await _TipoTicketContext.Tipos_Tickets.FindAsync(id);
 
 
 
+        }*/
+
+        public Tipo_Ticket ConsultarTipoTicketGUID(Guid id)
+        {
+            var data = _TipoTicketContext.Tipos_Tickets.Include(p => p.Departamento).Include(fa => fa.Flujo_Aprobacion).Where(p => p.Id == id).Single();
+            return data;
+        }
+
+
+        public Boolean EliminarTipoTicket(Guid id)
+        {
+            
+
+                _TipoTicketContext.Tipos_Tickets.Remove(_TipoTicketContext.Tipos_Tickets.Find(id));
+                _TipoTicketContext.SaveChanges();
+                return true;
         }
         /*public IEnumerable<Tipo_Ticket> ConsultarNombreTipoTicket(String nombre)
         {
