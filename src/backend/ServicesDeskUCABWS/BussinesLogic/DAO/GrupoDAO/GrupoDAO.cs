@@ -1,108 +1,132 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using Microsoft.EntityFrameworkCore;
-
+using System.Linq;
+using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
     public class GrupoDAO : IGrupoDAO
     {
-        //private readonly DataContext _dataContext;
-        //private readonly IMapper _mapper;
+        private readonly DataContext _dataContext;
 
-        //public GrupoDAO(DataContext dataContext, IMapper mapper)
-        //{
-        //    _dataContext = dataContext;
-        //    _mapper = mapper;
-        //}
-
-        ////Registar un grupo
-        //public async Task<Grupo> Create(GrupoDto grupoDto)
-        //{
-
-        //    var nuevoGrupo = new Grupo()
-        //    {
-        //        Id = grupoDto.Id,
-        //        nombre = grupoDto.nombre,
-        //        descripcion = grupoDto.descripcion,
-        //        fecha_creacion = grupoDto.fecha_creacion
-        //    };
-
-        //    _dataContext.Grupos.Add(nuevoGrupo);
-        //    await _dataContext.SaveChangesAsync();
-
-        //    return nuevoGrupo;
-        //}
-
-        ////Listar Grupos
-        //public async Task<IEnumerable<Grupo>> GetAll()
-        //{
-
-        //    return await _dataContext.Grupos.ToListAsync();
-        //}
-
-        ////Buscar un Grupo
-        //public async Task<Grupo> GetById(Guid idGrupo)
-        //{
-        //    return await _dataContext.Grupos.FindAsync(idGrupo);
-        //}
-
-        ////Eliminar un Grupo
-        //public async Task Delete(Guid idGrupo)
-        //{
-
-        //    var existeGrup = await GetById(idGrupo);
-
-        //    if (existeGrup is not null)
-        //    {
-        //        _dataContext.Grupos.Remove(existeGrup);
-        //        await _dataContext.SaveChangesAsync();
-        //    }
-        //}
-
-        ////Modificar un Grupo
-        //public async Task Update(GrupoDto grupDto)
-        //{
-
-        //    var existeGrup = await _dataContext.Grupos.FindAsync(grupDto.Id);
-
-        //    if (existeGrup is not null)
-        //    {
-        //        existeGrup.descripcion = grupDto.descripcion;
-        //        existeGrup.nombre = grupDto.nombre;
-
-        //        await _dataContext.SaveChangesAsync();
-        //    }
-
-        //}
-        public Task<Grupo> Create(GrupoDto grupoDto)
+        //Constructor
+        public GrupoDAO(DataContext dataContext)
         {
-            throw new NotImplementedException();
+            _dataContext = dataContext;
         }
 
-        public Task Delete(Guid idGrupo)
+        //Agregar Grupo
+        public GrupoDto AgregarGrupoDao(Grupo grupo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dataContext.Grupos.Add(grupo);
+                _dataContext.SaveChanges();
+
+                var nuevoGrupo = _dataContext.Grupos.Where(d => d.Id == grupo.Id)
+                                        .Select(d => new GrupoDto
+                                        {
+                                            Id = d.Id,
+                                            descripcion = d.descripcion,
+                                            nombre = d.nombre,
+                                            fecha_creacion = d.fecha_creacion
+                                        });
+                return nuevoGrupo.First();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
         }
 
-        public Task<IEnumerable<Grupo>> GetAll()
+        //Consultar Grupo
+        public List<GrupoDto> ConsultarGruposDao()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var lista = _dataContext.Grupos.Select(
+                    d => new GrupoDto
+                    {
+                        Id = d.Id,
+                        nombre = d.nombre,
+                        descripcion = d.descripcion,
+                        fecha_creacion = d.fecha_creacion,
+                        fecha_ultima_edicion = d.fecha_ultima_edicion,
+                        fecha_eliminacion = d.fecha_eliminacion
+                    }
+                );
+                return lista.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
         }
 
-        public Task<Grupo> GetById(Guid idGrupo)
+        //Consultar por ID 
+        public GrupoDto ConsultarPorIdDao(Guid idGrupo)
         {
-            throw new NotImplementedException();
+            var grupo = _dataContext.Grupos
+                        .Where(d => d.Id == idGrupo).First();
+
+            return GrupoMapper.MapperEntityToDtoDefault(grupo);
         }
 
-        public Task Update(GrupoDto grupDto)
+        //Eliminar Grupo
+        public GrupoDto EliminarGrupoDao(Guid idGrupo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var grupo = _dataContext.Grupos
+                .Where(d => d.Id == idGrupo).First();
+
+                _dataContext.Grupos.Remove(grupo);
+                _dataContext.SaveChanges();
+
+                return GrupoMapper.MapperEntityToDto(grupo);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
+                throw new Exception("Fallo al eliminar por id: " + idGrupo, ex);
+            }
+        }
+
+        //Modificar Grupo
+        public GrupoDto_Update ModificarGrupoDao(Grupo grupo)
+        {
+            try
+            {
+                _dataContext.Grupos.Update(grupo);
+                _dataContext.SaveChanges();
+
+                var data = _dataContext.Grupos.Where(d => d.Id == grupo.Id).Select(
+                    d => new GrupoDto_Update
+                    {
+                        Id = d.Id,
+                        nombre = d.nombre,
+                        descripcion = d.descripcion,
+                        fecha_creacion = d.fecha_creacion,
+                        fecha_ultima_edicion = d.fecha_ultima_edicion 
+                    }
+
+                );
+                return data.First();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
+                throw new Exception("Fallo al actualizar: " + grupo.Id, ex);
+            }
         }
     }
 }

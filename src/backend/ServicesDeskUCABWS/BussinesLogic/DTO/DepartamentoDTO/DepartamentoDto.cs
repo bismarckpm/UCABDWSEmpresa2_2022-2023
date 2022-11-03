@@ -10,8 +10,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-
-        //public Grupo Grupo { get; set; }
     }
 
     public class DepartamentoDto_Update
@@ -22,8 +20,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_ultima_edicion { get; set; } = DateTime.Now.Date;
         public DateTime? fecha_eliminacion { get; set; }
-
-
+        public Guid? id_grupo { get; set; }
     }
-
 }

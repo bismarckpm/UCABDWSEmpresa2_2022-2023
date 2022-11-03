@@ -2,33 +2,36 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 {
     [Route("Departamento")]
-	[ApiController]
-	public class DepartamentoController : ControllerBase
-	{
-		private readonly IDepartamentoDAO _departamentoDAO;
+    [ApiController]
+    public class DepartamentoController : ControllerBase
+    {
+        private readonly IDepartamentoDAO _departamentoDAO;
         private readonly ILogger<DepartamentoController> _log;
 
         //Constructor
         public DepartamentoController(IDepartamentoDAO departamentoDAO, ILogger<DepartamentoController> log)
-		{
-			_departamentoDAO = departamentoDAO;
-			_log = log;
-		}
+        {
+            _departamentoDAO = departamentoDAO;
+            _log = log;
+        }
 
-		//Crear Departamento
-		[HttpPost]
+
+        //Crear Departamento
+        [HttpPost]
         [Route("CrearDepartamento/")]
         public ActionResult<DepartamentoDto> CrearDepartamento([FromBody] DepartamentoDto dto1)
         {
@@ -54,7 +57,6 @@ namespace ServicesDeskUCABWS.Controllers
             }
             catch (Exception ex)
             {
-
                 throw ex.InnerException!;
             }
         }
@@ -91,7 +93,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPut]
         [Route("ActualizarDepartamento/")]
-        public ActionResult<DepartamentoDto_Update> ActualizarDireccion([FromBody] DepartamentoDto_Update departamento)
+        public ActionResult<DepartamentoDto_Update> ActualizarDepartamento([FromBody] DepartamentoDto_Update departamento)
         {
             try
             {
@@ -106,21 +108,31 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        //[HttpGet("{idGrupo}")]
-        //public async Task<ActionResult<IEnumerable<Departamento>>> ListaDepartamento(Guid idGrupo)
-        //{
+        [HttpGet("AsignarGrupoToDepartamento/{idGrupo}")]
+        public ActionResult<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
+        {
+            try
+            {
+                return _departamentoDAO.GetByIdDepartamento(idGrupo);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
 
-        //	/*var listaDepartamentos = _dataContext.Grupos
-        //	   .Include(grup => grup.Departamento)
-        //	   .FirstOrDefault(dept => dept.Id == idGrupo);
-
-        //	if (listaDepartamentos is null)
-        //		return NotFound(idGrupo);*/
-
-
-
-        //	return await _services.GetByIdDepartamento(idGrupo);
-        //}
+        [HttpPost("ConsultarDepartamentosPorIdGrupo/{idGrupo}/{idDept}")]
+        public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+        {
+            try
+            {
+                return _departamentoDAO.AsignarGrupoToDepartamento(idGrupo, idDept);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
 
     }
 }

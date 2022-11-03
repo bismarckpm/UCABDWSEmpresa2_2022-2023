@@ -22,9 +22,44 @@ namespace ServicesDeskUCABWS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Departamento", b =>
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
                 {
                     b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("fecha_creacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("fecha_eliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("fecha_ultima_edicion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("id_grupo")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_grupo");
+
+                    b.ToTable("Departamentos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
+                {
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -47,39 +82,23 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("id");
-
-                    b.ToTable("Departamentos");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime>("fecha_creacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("fecha_eliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("fecha_ultima_edicion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Grupos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Grupo", "grupo")
+                        .WithMany("departamentos")
+                        .HasForeignKey("id_grupo");
+
+                    b.Navigation("grupo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
+                {
+                    b.Navigation("departamentos");
                 });
 #pragma warning restore 612, 618
         }

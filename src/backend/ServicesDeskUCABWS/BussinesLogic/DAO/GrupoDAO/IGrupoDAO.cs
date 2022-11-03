@@ -8,10 +8,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
     public interface IGrupoDAO
     {
-        public Task<Grupo> Create(GrupoDto grupoDto);
-        public Task<IEnumerable<Grupo>> GetAll();
-        public Task<Grupo> GetById(Guid idGrupo);
-        public Task Delete(Guid idGrupo);
-        public Task Update(GrupoDto grupDto);
+        public GrupoDto AgregarGrupoDao(Grupo grupo);
+        public List<GrupoDto> ConsultarGruposDao();
+        public GrupoDto ConsultarPorIdDao(Guid idGrupo);
+        public GrupoDto EliminarGrupoDao(Guid idGrupo);
+        public GrupoDto_Update ModificarGrupoDao(Grupo grupo);
     }
 }
