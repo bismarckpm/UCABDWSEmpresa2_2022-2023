@@ -21,8 +21,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_apellido = user.segundo_apellido,
                 correo = user.correo,
                 password = user.password,
-                fecha_creacion = user.fecha_creacion,
+                fecha_creacion = DateTime.Now.Date,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -40,8 +41,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_apellido = user.segundo_apellido,
                 correo = user.correo,
                 password = user.password,
-                fecha_creacion = user.fecha_creacion,
+                fecha_creacion = DateTime.Now.Date,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -59,8 +61,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_apellido = user.segundo_apellido,
                 correo = user.correo,
                 password = user.password,
-                fecha_creacion = user.fecha_creacion,
+                fecha_creacion = DateTime.Now.Date,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -78,8 +81,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_apellido = user.segundo_apellido,
                 correo = user.correo,
                 password = user.password,
-                fecha_creacion = user.fecha_creacion,
+                fecha_creacion = DateTime.Now.Date,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 

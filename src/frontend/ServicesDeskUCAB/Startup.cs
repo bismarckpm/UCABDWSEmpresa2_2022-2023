@@ -23,8 +23,10 @@ namespace ServicesDeskUCAB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-
+            services.AddHttpClient("BackEnd", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44392");
+            });
             services.AddRazorPages();
         }
 

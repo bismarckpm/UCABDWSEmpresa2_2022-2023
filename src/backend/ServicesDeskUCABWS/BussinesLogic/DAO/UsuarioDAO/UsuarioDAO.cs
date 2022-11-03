@@ -89,7 +89,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                                             gender = UserDto.gender,
                                             correo = UserDto.correo,
                                             password = UserDto.password,
-                                            fecha_creacion = UserDto.fecha_creacion,
+                                            fecha_creacion = new DateTime(),
                                         });
 
                 return nuevoUsuario.First();
