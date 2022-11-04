@@ -1,0 +1,230 @@
+﻿@model List<Tipo>
+
+<div class="row">
+    <div class="col-8">
+        <h1 id="ti">Gestionar Tipo Ticket</h1>
+    </div>
+    <div class="col-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar Tipo Ticket</button>
+    </div>
+</div>
+
+<div class="alert alert-success d-none" role="alert">
+    "Algun mensaje de confirmación luego de hacer una acción"
+</div>
+
+<div style="margin-top:30px;">
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Tipo Modelo Aprobación</th>
+                <th>Departamentos Asociados</th>
+                <th>Cargos Asociados</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Id</td>
+                    <td>@item.nombre</td>
+                    <td>@item.descripcion</td>
+                    <td>@item.tipo</td>
+                    <td>@item.Departamento</td>
+                   
+                    <td></td>
+                    
+                 
+                    <td>
+                        <div class="dropdown" style="float: right">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal">Modificar</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Nueva prioridad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <div class="mb-2">
+                            <h6>Registro Modelo Aprobacion:</h6>
+                            <label class="form-label">Tipo Modelo Aprobación:</label>
+                            <select class="form-select form-select-sm">
+                                <option selected disabled>-- Seleccionar --</option>
+                                <option value="Paralelo">Paralelo</option>
+                                <option value="Jerarquico">Jerarquico</option>
+                                <option value="Default">Default</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Departamentos Asociados:</label>
+                        <br>
+                        <select multiple="multiple" style="width=100%;" id="lista">
+                            <option selected disabled>-- Seleccionar --</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Cargos Asociados:</label>
+                        <br>
+                        <select multiple="multiple" style="width=100%;" id="lista">
+                            <option selected disabled>-- Seleccionar --</option>
+
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Modificar Tipo Ticket "nombre"</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Descripción:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                    <div class="container p-2 my-2 border">
+                        <div class="mb-2">
+                            <h6>Modificar Modelo Aprobacion:</h6>
+                            <label class="form-label">Tipo Modelo Aprobación:</label>
+                            <select class="form-select form-select-sm">
+                                <option selected disabled>-- Seleccionar --</option>
+                                <option value="Paralelo">Paralelo</option>
+                                <option value="Jerarquico">Jerarquico</option>
+                                <option value="Default">Default</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Departamentos Asociados:</label>
+                        <br>
+                        <select multiple="multiple" style="width=100%;" id="lista">
+                            <option selected disabled>-- Seleccionar --</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Cargos Asociados:</label>
+                        <br>
+                        <select multiple="multiple" style="width=100%;" id="lista">
+                            <option selected disabled>-- Seleccionar --</option>
+
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "nombre"</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "nombre del tipo"?</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });</script>
+}

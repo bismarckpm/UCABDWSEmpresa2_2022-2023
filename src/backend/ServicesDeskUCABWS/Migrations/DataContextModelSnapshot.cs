@@ -467,7 +467,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_elim")
+                    b.Property<DateTime?>("fecha_elim")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("fecha_ult_edic")
