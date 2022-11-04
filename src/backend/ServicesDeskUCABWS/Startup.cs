@@ -40,7 +40,7 @@ namespace ServicesDeskUCABWS
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
-			services.AddTransient<IGrupoDAO, GrupoDAO>();
+			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger
