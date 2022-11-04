@@ -5,10 +5,7 @@ namespace ServicesDeskUCABWS.Data
 {
     public interface IDataContext
     {
-        DbContext DbContext
-        {
-            get;
-        }
+        DbContext DbContext { get; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

@@ -9,16 +9,17 @@ using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
 {
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {
-        private readonly DataContext _plantillaContext;
+        private readonly IDataContext _plantillaContext;
         private readonly IMapper _mapper;
         private readonly ITipoEstado _tipoEstado;
 
-        public PlantillaNotificacionService(DataContext plantillaContext, IMapper mapper, ITipoEstado tipoEstado)
+        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, ITipoEstado tipoEstado)
         {
             _plantillaContext = plantillaContext;
             _mapper = mapper;
@@ -118,7 +119,21 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
                     plantillaEntity.TipoEstado = null;
                 }
                 _plantillaContext.PlantillasNotificaciones.Add(plantillaEntity);
-                _plantillaContext.SaveChanges();
+                _plantillaContext.DbContext.SaveChanges();
+
+                //
+                //Comienza Prueba reemplazo de descripcion plantilla
+                var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
+                                                      .Include(t => t.Tipo_Ticket)
+                                                      .Include(t => t.Prioridad)
+                                                      .Include(t => t.Departamento_Destino)
+                                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
+
+                var reemplazo = ReemplazoEtiqueta(ticket, plantillaEntity.Descripcion);
+                Console.WriteLine(reemplazo);
+
+                //Finaliza la prueba
+                //
                 return true;
             }
             catch(DbUpdateException ex)
@@ -150,7 +165,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
                 }
                 //plantillaEntity.TipoEstado = null;
                 _plantillaContext.PlantillasNotificaciones.Update(plantillaEntity);
-                _plantillaContext.SaveChanges();
+                _plantillaContext.DbContext.SaveChanges();
                 return true;
             }
             
@@ -171,7 +186,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
             {
                 
                 _plantillaContext.PlantillasNotificaciones.Remove(_plantillaContext.PlantillasNotificaciones.Find(id));
-                _plantillaContext.SaveChanges();
+                _plantillaContext.DbContext.SaveChanges();
                 return true;
             }
             catch (ArgumentNullException ex)
@@ -185,6 +200,32 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
         
         }
 
-        
+
+        public String ReemplazoEtiqueta(Ticket ticket, string descripciomPlantilla)
+        {
+            //var usuario = _plantillaContext.Empleados.Include(e => e.Lista_Ticket).Where(t => t.Lista_Ticket.Contains(ticket) == true).Single();
+            Dictionary<string, string> etiquetas = new Dictionary<string, string>()
+            {
+                { "@Ticket", ticket.titulo.ToString() },
+                { "@Estado", ticket.Estado.nombre.ToString() },
+                { "@Departamento", ticket.Departamento_Destino.nombre.ToString() },
+                { "@Grupo", ticket.Departamento_Destino.Grupo.nombre.ToString() },
+                { "@Prioridad", ticket.Prioridad.nombre.ToString() },
+                //{ "@Cargo", usuario.Cargo.nombre_departamental.ToString() },
+                //{ "@Usuario", usuario.primer_nombre.ToString() + usuario.primer_apellido.ToString() },
+                { "@TipoTicket", ticket.Tipo_Ticket.nombre.ToString() },
+                //{ "@ComentarioVoto" ticket.Votos_Ticket }
+            };
+
+            string input = descripciomPlantilla;
+            foreach (KeyValuePair<string, string> etiqueta in etiquetas)
+            {
+                input = Regex.Replace(input, etiqueta.Key, etiqueta.Value);
+            }
+
+            return input;
+        }
+
+
     }
 }

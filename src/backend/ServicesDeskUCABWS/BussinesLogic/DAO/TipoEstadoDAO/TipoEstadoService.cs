@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
@@ -12,6 +13,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
 {
@@ -177,8 +179,6 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         {
             try
             {
-
-
                 foreach (EtiquetaDTO i in etiquetas)
                 {
 
@@ -196,6 +196,5 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
                 
             }
         }
-
     }
 }
