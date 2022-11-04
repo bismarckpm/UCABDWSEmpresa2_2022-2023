@@ -1,32 +1,32 @@
 <div class="row">
     <div class="col-8">
         <h1>Tickets</h1>
+        <div class="text-center" style="margin-top:30px">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Crear ticket</button>
+        </div>
     </div>
     <div class="col-4">
         <div class="text-right">
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
                         Tickets abiertos
                         <span class="badge bg-primary rounded-pill">14</span>
                     </div>
                 </a>
                 <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
                         Tickets cerrados
                         <span class="badge bg-primary rounded-pill">1000</span>
                     </div>
                 </a>
                 <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
                         Tickets cancelados
                         <span class="badge bg-primary rounded-pill">2</span>
                     </div>
                 </a>
             </div>
-        </div>
-        <div class="text-center" style="margin-top:30px">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Crear ticket</button>
         </div>
     </div>
 </div>
@@ -59,7 +59,6 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details">Ver detalles</a></li>
                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reenviarModal">Reenviar</a></li>
-                                <li><a class="dropdown-item" href="#">Cambiar estado</a></li>
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge">Merge</a></li>
                             </ul>
                         </div>
@@ -76,7 +75,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Nuevo ticket</h5>
+                <h4 class="modal-title text-center" id="exampleModalLabel">Nuevo ticket</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -109,7 +108,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <label for="recipient-name" class="col-form-label">Asunto:</label>
                         <input type="text" class="form-control" id="recipient-name">
                     </div>
                     <div class="mb-3">
@@ -130,7 +129,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel"> ticket</h5>
+                <h4 class="modal-title text-center" id="exampleModalLabel">Reenviar ticket</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -163,7 +162,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <label for="recipient-name" class="col-form-label">Asunto:</label>
                         <input type="text" class="form-control" id="recipient-name">
                     </div>
                     <div class="mb-3">
@@ -173,7 +172,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary">Enviar</button>
             </div>
         </div>
