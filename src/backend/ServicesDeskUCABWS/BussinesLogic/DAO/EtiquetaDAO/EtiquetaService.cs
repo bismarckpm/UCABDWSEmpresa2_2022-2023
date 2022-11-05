@@ -6,7 +6,7 @@ using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
 {
@@ -22,22 +22,19 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
         }
 
         //GET: Servicio para consultar todas las etiquetas
-        public List<EtiquetaDTO> ConsultaEtiquetas()
+        public async Task<List<EtiquetaDTO>> ConsultaEtiquetas()
         {
-            //var data = _EtiquetaContext.Etiquetas.Include(p => p.ListaEstadosrelacionados);
-            var data = _EtiquetaContext.Etiquetas.AsNoTracking();
+            var data = await _EtiquetaContext.Etiquetas.AsNoTracking().ToListAsync();
             var etiDTO = _mapper.Map<List<EtiquetaDTO>>(data);
-            return etiDTO.ToList();
+            return etiDTO;
         }
 
         //GET: Servicio para consultar una plantilla notificacion en especifico
-
-        public EtiquetaDTO ConsultarEtiquetaGUID(Guid id)
+        public async Task<EtiquetaDTO> ConsultarEtiquetaGUID(Guid id)
         {
             try
             {
-                
-                var data = _EtiquetaContext.Etiquetas.AsNoTracking().Where(p => p.Id == id).Single();
+                var data = await _EtiquetaContext.Etiquetas.AsNoTracking().Where(p => p.Id == id).SingleAsync();
                 var etiDTO = _mapper.Map<EtiquetaDTO>(data);
                 return etiDTO;
             }
@@ -47,9 +44,5 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
             }
 
         }
-
-
-
-
     }
 }

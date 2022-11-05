@@ -1,17 +1,19 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
+using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
 {
     public interface ITipoEstado
     {
-        public List<TipoEstadoDTO> ConsultaTipoEstados();
-        public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id);
-        public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo);
-        public Boolean RegistroTipoEstado(TipoEstadoDTO tipoEstado);
-        public Boolean ActualizarTipoEstado(TipoEstadoDTO tipoEstadoAct, Guid id);
-        public Boolean EliminarTipoEstado(Guid id);
+        public Task<List<TipoEstadoDTO>> ConsultaTipoEstados();
+        public Task<TipoEstadoDTO> ConsultarTipoEstadoGUID(Guid id);
+        public Task<TipoEstadoDTO> ConsultarTipoEstadoTitulo(string titulo);
+        public Task<Boolean> RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
+        public Task<Boolean> ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id);
+        public Task<Boolean> EliminarTipoEstado(Guid id);
     }
 }

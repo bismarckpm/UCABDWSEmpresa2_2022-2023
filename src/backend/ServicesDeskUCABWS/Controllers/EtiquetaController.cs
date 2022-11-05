@@ -6,6 +6,7 @@ using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.Response;
 using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -25,13 +26,13 @@ namespace ServicesDeskUCABWS.Controllers
             //GET: Controlador para consultar todas las etiquetas
             [HttpGet]
             [Route("Consulta/")]
-            public ApplicationResponse<List<EtiquetaDTO>> ConsultaEtiquetasCtrl()
+            public async Task<ApplicationResponse<List<EtiquetaDTO>>> ConsultaEtiquetasCtrl()
             {
                 var response = new ApplicationResponse<List<EtiquetaDTO>>();
 
                 try
                 {
-                    response.Data = _etiqueta.ConsultaEtiquetas();
+                    response.Data = await _etiqueta.ConsultaEtiquetas();
                 }
                 catch (ExceptionsControl ex)
                 {
@@ -45,13 +46,13 @@ namespace ServicesDeskUCABWS.Controllers
             //GET: Controlador para consultar una etiqueta en especifico
             [HttpGet]
             [Route("Consulta/{id}")]
-            public ActionResult<ApplicationResponse<EtiquetaDTO>> GetEtiquetaByGuidCtrl(Guid id)
+            public async Task<ActionResult<ApplicationResponse<EtiquetaDTO>>> GetEtiquetaByGuidCtrl(Guid id)
         {
                 var response = new ApplicationResponse<EtiquetaDTO>();
 
                 try
                 {
-                    response.Data = _etiqueta.ConsultarEtiquetaGUID(id);
+                    response.Data = await _etiqueta.ConsultarEtiquetaGUID(id);
                 }
                 catch (ExceptionsControl ex)
                 {

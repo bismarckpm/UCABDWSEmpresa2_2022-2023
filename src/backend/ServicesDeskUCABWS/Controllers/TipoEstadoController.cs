@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
@@ -11,7 +12,7 @@ using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.Response;
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -31,13 +32,13 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar todas los tipos estados
         [HttpGet]
         [Route("Consulta/")]
-        public ApplicationResponse<List<TipoEstadoDTO>> ConsultaTipoEstadosCtrl()
+        public async Task<ApplicationResponse<List<TipoEstadoDTO>>> ConsultaTipoEstadosCtrl()
         {
             var response = new ApplicationResponse<List<TipoEstadoDTO>>();
 
             try
             {
-                response.Data = _tipoEstado.ConsultaTipoEstados();
+                response.Data = await _tipoEstado.ConsultaTipoEstados();
             }
             catch (ExceptionsControl ex)
             {
@@ -51,13 +52,13 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar un tipo estado en especifico
         [HttpGet]
         [Route("Consulta/{id}")]
-        public ActionResult<ApplicationResponse<TipoEstadoDTO>> GetByGuidCtrl(Guid id)
+        public async Task<ActionResult<ApplicationResponse<TipoEstadoDTO>>> GetByGuidCtrl(Guid id)
         {
             var response = new ApplicationResponse<TipoEstadoDTO>();
 
             try
             {
-                response.Data = _tipoEstado.ConsultarTipoEstadoGUID(id);
+                response.Data = await _tipoEstado.ConsultarTipoEstadoGUID(id);
             }
             catch (ExceptionsControl ex)
             {
@@ -72,12 +73,12 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una tipo estado por un título específico
         [HttpGet]
         [Route("Consulta/Titulo/{titulo}")]
-        public ApplicationResponse<TipoEstadoDTO> GetByTituloCtrl(string titulo)
+        public async Task<ApplicationResponse<TipoEstadoDTO>> GetByTituloCtrl(string titulo)
         {
             var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
-                response.Data = _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
+                response.Data = await _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
             }
             catch (ExceptionsControl ex)
             {
@@ -91,16 +92,13 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado **
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoDTO tipoEstadoDTO)
+        public async Task<ApplicationResponse<String>> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-
-
-                response.Data = _tipoEstado.RegistroTipoEstado(tipoEstadoDTO).ToString();
-
-                
+                var resultSevice = await _tipoEstado.RegistroTipoEstado(tipoEstadoDTO);
+                response.Data = resultSevice.ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -114,12 +112,13 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public async Task<ApplicationResponse<String>> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id).ToString();
+                var resultSevice = await _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);
+                response.Data = resultSevice.ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -133,12 +132,13 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar tipo estado
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public ApplicationResponse<String> EliminarTipoEstadoCtrl(Guid id)
+        public async Task<ApplicationResponse<String>> EliminarTipoEstadoCtrl(Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _tipoEstado.EliminarTipoEstado(id).ToString();
+                var resultSevice = await _tipoEstado.EliminarTipoEstado(id);
+                response.Data = resultSevice.ToString();
                       
             }
             catch (ExceptionsControl ex)
