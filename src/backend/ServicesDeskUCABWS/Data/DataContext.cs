@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.Entities;
+
+namespace ServicesDeskUCABWS.Data
+{
+    public class DataContext: DbContext
+    {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        }
+
+        //Creacion de los DbSeT
+        public DbSet<Departamento> Departamentos { get; set; }
+     
+        public DbSet<Grupo> Grupos { get; set; }
+
+        public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
+
+        public DbSet<Cargo> Cargos { get; set; }
+
+
+
+    }
+}
