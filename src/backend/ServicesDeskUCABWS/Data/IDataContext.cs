@@ -3,19 +3,9 @@ using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.Data
 {
-    public class DataContext: DbContext, IDataContext
+    public interface IDataContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
-            modelBuilder.Entity<Prioridad>().HasIndex(u => u.Id).IsUnique();
-        }
-
-        //Creacion de los DbSeT
+        DbContext DbContext { get; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
@@ -36,7 +26,5 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
-
-        public DbContext DbContext => throw new System.NotImplementedException();
     }
 }
