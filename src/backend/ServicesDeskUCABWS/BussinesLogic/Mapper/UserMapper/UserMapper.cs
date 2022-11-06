@@ -108,5 +108,24 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 password = user.password,
             };
         }
+
+        public static UserLoginDto MapperUserLogin ( Usuario user)
+        {
+            return new UserLoginDto
+            {
+                correo = user.correo,
+                password = user.password
+            };
+
+        }
+        public static Usuario MapperDtoToEntityUserLogin(UserLoginDto user)
+        {
+            return new Usuario
+            {
+                correo = user.correo,
+                password = user.password
+            };
+
+        }
     }
 }

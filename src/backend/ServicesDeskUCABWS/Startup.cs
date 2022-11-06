@@ -17,6 +17,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -33,6 +34,7 @@ namespace ServicesDeskUCABWS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            services.AddTransient<IUserLoginDAO, UserLoginDAO>();
             services.AddTransient<IUserRol, UserRolDAO>();
             //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);

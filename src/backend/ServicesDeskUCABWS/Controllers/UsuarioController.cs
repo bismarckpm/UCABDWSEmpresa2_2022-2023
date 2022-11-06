@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
@@ -19,13 +20,15 @@ namespace ServicesDeskUCABWS.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioDAO _usuarioDAO;
+        private readonly IUserLoginDAO _userLoginDAO;
         private readonly ILogger<UsuarioController> _log;
 
 
-        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log)
+        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, IUserLoginDAO userLogin)
         {
             _usuarioDAO = usuarioDao;
             _log = log;
+            _userLoginDAO = userLogin; 
         }
 
         [HttpGet]
@@ -134,6 +137,22 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
+            }
+        }
+
+        [HttpPost]
+        [Route("login/")]
+        public ActionResult<UserLoginDto> UserLogin([FromBody]  UserLoginDto usuario )
+        {
+            try
+            {
+                return _userLoginDAO.UserLogin(UserMapper.MapperDtoToEntityUserLogin(usuario));
+            }
+            catch (Exception e )
+            {
+                Console.WriteLine(e.Message);
+
+                throw e.InnerException!;
             }
         }
     }
