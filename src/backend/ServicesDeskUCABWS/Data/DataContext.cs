@@ -13,6 +13,7 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>().HasIndex(u=>u.correo).IsUnique();
 
             modelBuilder.Entity<Usuario>()
                 .HasDiscriminator<string>("Discriminator")

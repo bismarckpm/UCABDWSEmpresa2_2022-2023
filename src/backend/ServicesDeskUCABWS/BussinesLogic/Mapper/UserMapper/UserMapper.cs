@@ -104,6 +104,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
             };
         }
 
+        public static Usuario MapperEntityToDtoGmail(UserGmail user)
+        {
+            return new Usuario
+            {
+                Id = user.id,
+                correo = user.correo,
+            };
+        }
+
+        public static UserGmail MapperEntityToDtoGmailUser(Usuario user)
+        {
+            return new UserGmail
+            {
+                id = user.Id,
+                correo = user.correo,
+            };
+        }
         public static Usuario MapperEntityToDtoUpdatePassword(UserPasswordDto user)
         {
             return new Usuario

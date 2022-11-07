@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -18,89 +20,128 @@ namespace ServicesDeskUCABWS.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        private readonly DataContext _dataContext;
         private readonly IUsuarioDAO _usuarioDAO;
         private readonly ILogger<UsuarioController> _log;
 
 
-        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log)
+        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, DataContext dataContext)
         {
             _usuarioDAO = usuarioDao;
             _log = log;
+            _dataContext = dataContext;
         }
 
         [HttpGet]
-        public ActionResult<List<Usuario>> ConsultarUsuarios()
+        public ApplicationResponse<List<Usuario>> ConsultarUsuarios()
         {
+            var response = new ApplicationResponse<List<Usuario>>();
             try
             {
-                return _usuarioDAO.ObtenerUsuarios();
+                response.Data= _usuarioDAO.ObtenerUsuarios();
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("CrearAdministrador/")]
-        public ActionResult<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<String> CrearAdministrador([FromBody] UsuarioDto Usuario)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                var dao = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
-                return dao;
+                var resultService = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
+                response.Data = resultService.ToString();
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
         [HttpPost]
         [Route("CrearCliente/")]
-        public ActionResult<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<String> CrearCliente([FromBody] UsuarioDto Usuario)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                var dao = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
-                return dao;
+                var resultService = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
+                response.Data = resultService.ToString();
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("CrearEmpleado/")]
-        public ActionResult<Empleado> CrearEmpleado([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<String> CrearEmpleado([FromBody] UsuarioDto Usuario)
+        {
+            var response = new ApplicationResponse<String>();
+            try
+            {
+                var resultService = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
+                response.Data = resultService.ToString();
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPost]
+        [Route("RecuperarClave/{Gmail}")]
+        public ActionResult<string> RecuperarClave([FromRoute] string Gmail)
         {
             try
             {
-                var dao = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
-                return dao;
-
+                _usuarioDAO.RecuperarClave(Gmail);
+                return "Mensaje enviado";
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                return "El correo no existe";
             }
+
         }
 
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
-        public ActionResult<UsuarioDto> EliminarDepartamento([FromRoute] Guid id)
+        public ApplicationResponse<String> EliminarDepartamento([FromRoute] Guid id)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                return _usuarioDAO.eliminarUsuario(id);
+                var resultService = _usuarioDAO.eliminarUsuario(id);
+                response.Data = resultService.ToString();
+
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPut]
