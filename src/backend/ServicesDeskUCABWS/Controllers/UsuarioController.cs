@@ -146,36 +146,42 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPut]
         [Route("ActualizarUsuario/")]
-        public ActionResult<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
+        public ApplicationResponse<String> ActualizarUsuario([FromBody] UserDto_Update usuario)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                return _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
-                //Cambiar parametros cuando realicemos frontend
+                var resultService = _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
+                response.Data = resultService.ToString();
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPut]
         [Route("ActualizarUsuarioPassword/")]
-        public ActionResult<UserPasswordDto> ActualizarPassword([FromBody] UserPasswordDto usuario)
+        public ApplicationResponse<String> ActualizarPassword([FromBody] UserPasswordDto usuario)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                return _usuarioDAO.ActualizarUsuarioPassword(UserMapper.MapperEntityToDtoUpdatePassword(usuario));
-                //Cambiar parametros cuando realicemos frontend
+                var resultService = _usuarioDAO.ActualizarUsuarioPassword(UserMapper.MapperEntityToDtoUpdatePassword(usuario));
+                response.Data = resultService.ToString();
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
     }
 }

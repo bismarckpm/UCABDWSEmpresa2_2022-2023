@@ -219,8 +219,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
+                throw new ExceptionsControl("Uno de los campos esta vacio", ex);
             }
         }
 
@@ -248,8 +247,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
+                throw new ExceptionsControl("La id de usuario no existe", ex);
             }
         }
 
@@ -290,21 +288,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
 
         }
-
-        /*string EmailOrigen = "diegocumares@gmail.com";
-        string EmailDestino = Email;
-        string Clave = "avatar123";
-        MailMessage oMailMessage = new MailMessage(EmailOrigen, EmailDestino, "Prueba", "<p>Tamos locos</p>");
-        oMailMessage.IsBodyHtml = true;
-        SmtpClient oSmtpClient = new SmtpClient("smtp.gmail.com");
-        oSmtpClient.EnableSsl = true;
-        oSmtpClient.UseDefaultCredentials = false;
-        oSmtpClient.Host = "smtp.gmail.com";
-        oSmtpClient.Port = 587;
-        oSmtpClient.Credentials = new System.Net.NetworkCredential(EmailOrigen, Clave);
-        oSmtpClient.Send(oMailMessage);
-        oSmtpClient.Dispose();
-        return "Chido";*/
     }
 }
 

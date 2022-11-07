@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
-
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -41,10 +42,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 return nuevoRolUsuario.First();
             }
 
+            catch (ExceptionsControl ex)
+            {
+                throw new ExceptionsControl("Se esta intentando asociar a un rol que no existe", ex);
+            }
+            catch (SqlException ex) 
+            {
+                throw new ExceptionsControl("Se esta intentando asociar el mismo rol mas de una vez", ex);
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("No se pudo registrar el tipo estado", ex);
             }
 
 
@@ -64,8 +72,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al eliminar por id: " + user, ex);
+                throw new ExceptionsControl("Uno de los id (Usuario o rol) es invalido", ex);
             }
         }
 
