@@ -8,8 +8,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
     {
         public TicketMapper()
         {
-            CreateMap<Ticket, TicketDTO>();
-            CreateMap<TicketDTO, Ticket>();
+            //CreateMap<Ticket, TicketDTO>();
+            //CreateMap<TicketDTO, Ticket>();
         }
     }
 }
