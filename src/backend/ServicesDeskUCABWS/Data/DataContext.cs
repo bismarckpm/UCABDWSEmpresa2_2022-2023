@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
-<<<<<<< HEAD
 using System.Diagnostics.Contracts;
 using static ServicesDeskUCABWS.Entities.RolUsuario;
-=======
->>>>>>> departamento_merge_develop
+
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -38,7 +36,7 @@ namespace ServicesDeskUCABWS.Data
         }
 
         //Creacion de los DbSeT
-<<<<<<< HEAD
+
         public DbSet<RolUsuario> RolUsuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
@@ -58,9 +56,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Votos_Ticket> Votos_Tickets { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<Etiqueta> Etiqueta { get; set; }
-=======
-        public DbSet<Departamento> Departamentos { get; set; }
->>>>>>> departamento_merge_develop
+
         public DbSet<Grupo> Grupos { get; set; }
      
     }

@@ -2,10 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Entities/Grupo.cs
-=======
-
->>>>>>> departamento_merge_develop:src/backend/ServicesDeskUCABWS/Models/Grupo.cs
 namespace ServicesDeskUCABWS.Entities
 {
     public class Grupo

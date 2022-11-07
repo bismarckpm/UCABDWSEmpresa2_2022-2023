@@ -30,8 +30,6 @@ namespace ServiceDeskUCAB.Controllers
 
                     var responseStreamG = await _clientG.Content.ReadAsStreamAsync();
                     listGrupos = await JsonSerializer.DeserializeAsync<List<GrupoDto>>(responseStreamG);
-
-
                 }
                 var tupla = new Tuple<List<DepartamentoDto>, List<GrupoDto>>(listDepartamentos, listGrupos);
 

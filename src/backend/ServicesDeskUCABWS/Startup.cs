@@ -15,13 +15,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-<<<<<<< HEAD
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
-=======
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
->>>>>>> departamento_merge_develop
 
 namespace ServicesDeskUCABWS
 {
@@ -42,21 +39,21 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
+
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
             services.AddTransient<IUserRol, UserRolDAO>();
             //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers().AddJsonOptions(x =>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-=======
+
             services.AddControllers().AddJsonOptions(x=>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
->>>>>>> departamento_merge_develop
+
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
