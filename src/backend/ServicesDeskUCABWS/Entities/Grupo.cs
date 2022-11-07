@@ -1,8 +1,11 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
+<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Entities/Grupo.cs
+=======
+
+>>>>>>> departamento_merge_develop:src/backend/ServicesDeskUCABWS/Models/Grupo.cs
 namespace ServicesDeskUCABWS.Entities
 {
     public class Grupo
@@ -20,9 +23,11 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+       
+        public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Departamento> Departamento { get; set; }
-    }
+
+		public virtual List<Departamento> departamentos { get; set; }
+
+	}
 }

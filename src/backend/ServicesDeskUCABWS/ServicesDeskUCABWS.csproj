@@ -24,5 +24,11 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BussinesLogic\Exceptions\" />
+    <Folder Include="BussinesLogic\Response\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 
 </Project>

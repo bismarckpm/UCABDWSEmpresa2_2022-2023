@@ -22,8 +22,9 @@ namespace ServicesDeskUCABWS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DepartamentoTipo_Ticket", b =>
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
                 {
+<<<<<<< HEAD
                     b.Property<Guid>("DepartamentoId")
                         .HasColumnType("uniqueidentifier");
 
@@ -88,6 +89,12 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("DepartamentoId")
                         .HasColumnType("uniqueidentifier");
 
+=======
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+>>>>>>> departamento_merge_develop
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -99,9 +106,10 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
+<<<<<<< HEAD
                     b.Property<string>("nombre_departamental")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -118,37 +126,24 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+=======
+                    b.Property<Guid?>("id_grupo")
+>>>>>>> departamento_merge_develop
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GrupoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime>("fecha_creacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("fecha_eliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("fecha_ultima_edicion")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("GrupoId");
+                    b.HasIndex("id_grupo");
 
                     b.ToTable("Departamentos");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Estado", b =>
                 {
                     b.Property<Guid>("Id")
@@ -243,6 +238,9 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
+=======
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
+>>>>>>> departamento_merge_develop
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,7 +257,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
@@ -272,6 +270,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Grupos");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.PlantillaNotificacion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -635,10 +634,20 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("CargoId");
 
                     b.HasDiscriminator().HasValue("2");
+=======
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Grupo", "grupo")
+                        .WithMany("departamentos")
+                        .HasForeignKey("id_grupo");
+
+                    b.Navigation("grupo");
+>>>>>>> departamento_merge_develop
                 });
 
-            modelBuilder.Entity("DepartamentoTipo_Ticket", b =>
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
                 {
+<<<<<<< HEAD
                     b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Departamento", null)
                         .WithMany()
                         .HasForeignKey("DepartamentoId")
@@ -910,6 +919,9 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Lista_Ticket");
 
                     b.Navigation("Votos_Ticket");
+=======
+                    b.Navigation("departamentos");
+>>>>>>> departamento_merge_develop
                 });
 #pragma warning restore 612, 618
         }
