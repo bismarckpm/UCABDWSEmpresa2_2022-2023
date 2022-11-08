@@ -13,7 +13,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new DepartamentoDto
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre = dept.nombre,
                 descripcion = dept.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -24,7 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new DepartamentoDto
             {
-                Id = dept.id,
+                id = dept.id,
                 nombre = dept.nombre,
                 descripcion = dept.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -46,7 +46,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new Departamento
             {
-                id = dept.Id,
+                id = dept.id,
                 nombre = dept.nombre,
                 descripcion = dept.descripcion,
                 fecha_creacion = dept.fecha_creacion,
