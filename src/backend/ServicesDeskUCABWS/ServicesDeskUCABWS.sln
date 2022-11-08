@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCABWS", "ServicesDeskUCABWS.csproj", "{E844259A-1F94-4B1E-B152-5B60C7B1F886}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCAB", "..\..\frontend\ServicesDeskUCAB\ServicesDeskUCAB.csproj", "{9352D29B-966F-4E7E-AA57-26AE8BF4B81B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{E844259A-1F94-4B1E-B152-5B60C7B1F886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E844259A-1F94-4B1E-B152-5B60C7B1F886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E844259A-1F94-4B1E-B152-5B60C7B1F886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9352D29B-966F-4E7E-AA57-26AE8BF4B81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9352D29B-966F-4E7E-AA57-26AE8BF4B81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9352D29B-966F-4E7E-AA57-26AE8BF4B81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9352D29B-966F-4E7E-AA57-26AE8BF4B81B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
