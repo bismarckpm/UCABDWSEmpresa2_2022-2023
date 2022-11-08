@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
 {
     public class DepartamentoDto
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public DateTime fecha_creacion { get; set; }
@@ -14,12 +15,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
 
     public class DepartamentoDto_Update
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_ultima_edicion { get; set; } = DateTime.Now.Date;
         public DateTime? fecha_eliminacion { get; set; }
-        public Guid? id_grupo { get; set; }
+
+        [JsonIgnore]
+        public Guid? id_grupo { get; set; } = null;
     }
 }
