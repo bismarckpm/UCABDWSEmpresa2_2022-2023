@@ -1,0 +1,140 @@
+﻿@model Tuple<List<ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO.DepartamentoDto>,List<ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO.GrupoDto>>
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
+@{
+    ViewData["Title"] = "Gestion Departamento";
+}
+
+<!-- Scripts para mostrar ventanas emergentes -->
+@section scripts{
+
+    <!-- Script para mostrar ventana Agregar Departamento -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderAgregar');
+            $('#btnAgregar').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('footer').empty();
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Script para mostrar ventana Eliminar Departamento -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderEliminar');
+            $("#btnEliminar, .btn-danger").click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idDepartamento", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);                    
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Script para mostrar ventana Modificar Departamento -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderModificar');
+            $("#btnEditar, .btn-primary").click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idDepartamento", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+}
+
+<!-- Placeholders de las ventanas emergentes (Departamento)-->
+<div id="PlaceHolderAgregar"></div>
+<div id="PlaceHolderEliminar"></div>
+<div id="PlaceHolderModificar"></div>
+
+
+<!-- Boton Agregar Departamento -->
+<button id=btnAgregar type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
+    Crear departamento
+</button>
+<br />
+<br />
+
+
+<!-- Tabla Departamentos -->
+<table class="table">
+    <tr>       
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripcion
+        </th>
+            <th>
+
+            </th>
+
+    </tr>
+
+    @foreach (var item in Model.Item1)
+    {
+        <tr>
+            <td class="id" style="display:none";>
+                @Html.DisplayFor(i => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.descripcion)
+            </td>
+            <td>
+                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="ajax-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
+                    Editar
+                </button>
+                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="ajax-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!-- Tabla Grupos -->
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripcion
+        </th>
+        
+
+    </tr>
+
+    @foreach (var item in Model.Item2)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(i => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.descripcion)
+            </td>
+            
+        </tr>
+    }
+
+</table>
