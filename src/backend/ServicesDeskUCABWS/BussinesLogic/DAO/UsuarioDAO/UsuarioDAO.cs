@@ -100,10 +100,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
                 return nuevoUsuario.First();
             }
-            catch (DbUpdateException ex)
+            /*catch (DbUpdateException ex)
             {
                 throw new ExceptionsControl("El correo electronico ya existe", ex);
-            }
+            }*/
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No se pudo registrar el cliente", ex);

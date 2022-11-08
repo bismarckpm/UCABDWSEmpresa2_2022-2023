@@ -22,22 +22,6 @@ namespace ServicesDeskUCABWS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
-                {
-
-                    b.Property<Guid>("DepartamentoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Tipo_TicketId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("DepartamentoId", "Tipo_TicketId");
-
-                    b.HasIndex("Tipo_TicketId");
-
-                    b.ToTable("DepartamentoTipo_Ticket");
-                });
-
             modelBuilder.Entity("EtiquetaTipo_Estado", b =>
                 {
                     b.Property<Guid>("EtiquetaId")
@@ -77,7 +61,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("Bitacora_Tickets");
+                    b.ToTable("Bitacora_Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
@@ -86,11 +70,37 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DepartamentoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
+                    b.Property<DateTime>("fecha_creacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("fecha_eliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("fecha_ultima_edicion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("nombre_departamental")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cargos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
+                {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("descripcion")
@@ -107,25 +117,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("nombre_departamental")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartamentoId");
-
-                    b.ToTable("Cargos");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<Guid?>("id_grupo")
-
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("nombre")
@@ -134,6 +126,8 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Tipo_TicketId");
 
                     b.HasIndex("id_grupo");
 
@@ -144,9 +138,6 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DepartamentoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("Estado_PadreId")
@@ -169,8 +160,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartamentoId");
 
                     b.HasIndex("Estado_PadreId");
 
@@ -206,7 +195,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Familia_Tickets");
+                    b.ToTable("Familia_Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
@@ -233,10 +222,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Flujos_Aprobaciones");
                 });
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
-
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
-
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +250,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grupos");
-                }));
+                });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.PlantillaNotificacion", b =>
                 {
@@ -284,7 +270,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlantillasNotificaciones");
+                    b.ToTable("PlantillaNotificacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Prioridad", b =>
@@ -348,7 +334,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Departamento_DestinoId")
+                    b.Property<Guid?>("Departamento_Destinoid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("EmpleadoId")
@@ -390,7 +376,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Departamento_DestinoId");
+                    b.HasIndex("Departamento_Destinoid");
 
                     b.HasIndex("EmpleadoId");
 
@@ -633,297 +619,254 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("CargoId");
 
                     b.HasDiscriminator().HasValue("2");
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Entities.Grupo", "grupo")
-                                .WithMany("departamentos")
-                                .HasForeignKey("id_grupo");
-
-                            b.Navigation("grupo");
-
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
-                        {
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Departamento", null)
-                                .WithMany()
-                                .HasForeignKey("DepartamentoId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Ticket", null)
-                                .WithMany()
-                                .HasForeignKey("Tipo_TicketId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("EtiquetaTipo_Estado", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Etiqueta", null)
-                                .WithMany()
-                                .HasForeignKey("EtiquetaId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Estado", null)
-                                .WithMany()
-                                .HasForeignKey("ListaEstadosrelacionadosId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Bitacora_Ticket", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Estado", "Estado")
-                                .WithMany("Bitacora_Tickets")
-                                .HasForeignKey("EstadoId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Ticket", "Ticket")
-                                .WithMany("Bitacora_Tickets")
-                                .HasForeignKey("TicketId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.Navigation("Estado");
-
-                            b.Navigation("Ticket");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Cargo", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Departamento", null)
-                                .WithMany("Cargo")
-                                .HasForeignKey("DepartamentoId");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Departamento", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Grupo", "Grupo")
-                                .WithMany("Departamento")
-                                .HasForeignKey("GrupoId");
-
-                            b.Navigation("Grupo");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Estado", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Departamento", null)
-                                .WithMany("Estado")
-                                .HasForeignKey("DepartamentoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Estado", "Estado_Padre")
-                                .WithMany("ListaEstadosDerivados")
-                                .HasForeignKey("Estado_PadreId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.Navigation("Estado_Padre");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Flujo_Aprobacion", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Cargo", "Tipo_Cargo")
-                                .WithMany("Flujo_Aprobacion")
-                                .HasForeignKey("Tipo_CargoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Ticket", "Tipo_Ticket")
-                                .WithMany("Flujo_Aprobacion")
-                                .HasForeignKey("Tipo_TicketId");
-
-                            b.Navigation("Tipo_Cargo");
-
-                            b.Navigation("Tipo_Ticket");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.RolUsuario", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Rol", "Rol")
-                                .WithMany("Usuarios")
-                                .HasForeignKey("RolId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Usuario", "User")
-                                .WithMany("Roles")
-                                .HasForeignKey("UserId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.Navigation("Rol");
-
-                            b.Navigation("User");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Ticket", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Departamento", "Departamento_Destino")
-                                .WithMany("ListaTickets")
-                                .HasForeignKey("Departamento_DestinoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Empleado", null)
-                                .WithMany("Lista_Ticket")
-                                .HasForeignKey("EmpleadoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Estado", "Estado")
-                                .WithMany("ListaTickets")
-                                .HasForeignKey("EstadoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Familia_Ticket", "Familia_Ticket")
-                                .WithMany("Lista_Ticket")
-                                .HasForeignKey("Familia_TicketId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Prioridad", "Prioridad")
-                                .WithMany()
-                                .HasForeignKey("PrioridadId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Ticket", "Ticket_Padre")
-                                .WithMany()
-                                .HasForeignKey("Ticket_PadreId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Tipo_Ticket", "Tipo_Ticket")
-                                .WithMany()
-                                .HasForeignKey("Tipo_TicketId")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
-                            b.Navigation("Departamento_Destino");
-
-                            b.Navigation("Estado");
-
-                            b.Navigation("Familia_Ticket");
-
-                            b.Navigation("Prioridad");
-
-                            b.Navigation("Ticket_Padre");
-
-                            b.Navigation("Tipo_Ticket");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Tipo_Cargo", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Cargo", null)
-                                .WithMany("Tipo_Cargo")
-                                .HasForeignKey("CargoId");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Tipo_Estado", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.PlantillaNotificacion", "PlantillaNotificacion")
-                                .WithMany()
-                                .HasForeignKey("PlantillaNotificacionId");
-
-                            b.Navigation("PlantillaNotificacion");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Votos_Ticket", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Empleado", null)
-                                .WithMany("Votos_Ticket")
-                                .HasForeignKey("EmpleadoId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Ticket", "Ticket")
-                                .WithMany("Votos_Ticket")
-                                .HasForeignKey("TicketId");
-
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Usuario", "Usuario")
-                                .WithMany()
-                                .HasForeignKey("UsuarioId");
-
-                            b.Navigation("Ticket");
-
-                            b.Navigation("Usuario");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Empleado", b =>
-                        {
-                            b.HasOne("ServicesDeskUCABWS.Persistence.Entities.Cargo", "Cargo")
-                                .WithMany()
-                                .HasForeignKey("CargoId");
-
-                            b.Navigation("Cargo");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Cargo", b =>
-                        {
-                            b.Navigation("Tipo_Cargo");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Departamento", b =>
-                        {
-                            b.Navigation("Cargo");
-
-                            b.Navigation("Estado");
-
-                            b.Navigation("ListaTickets");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Estado", b =>
-                        {
-                            b.Navigation("Bitacora_Tickets");
-
-                            b.Navigation("ListaTickets");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Familia_Ticket", b =>
-                        {
-                            b.Navigation("Lista_Ticket");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Grupo", b =>
-                        {
-                            b.Navigation("Departamento");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Rol", b =>
-                        {
-                            b.Navigation("Usuarios");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Ticket", b =>
-                        {
-                            b.Navigation("Bitacora_Tickets");
-
-                            b.Navigation("Votos_Ticket");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Tipo_Cargo", b =>
-                        {
-                            b.Navigation("Flujo_Aprobacion");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Tipo_Estado", b =>
-                        {
-                            b.Navigation("ListaEstadosDerivados");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Tipo_Ticket", b =>
-                        {
-                            b.Navigation("Flujo_Aprobacion");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Usuario", b =>
-                        {
-                            b.Navigation("Roles");
-                        });
-
-                    modelBuilder.Entity("ServicesDeskUCABWS.Persistence.Entities.Empleado", b =>
-                        {
-                            b.Navigation("Lista_Ticket");
-
-                            b.Navigation("Votos_Ticket");
-
-                            b.Navigation("departamentos");
-                        });
-#pragma warning restore 612, 618
                 });
-                
-    }
+
+            modelBuilder.Entity("EtiquetaTipo_Estado", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Etiqueta", null)
+                        .WithMany()
+                        .HasForeignKey("EtiquetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Estado", null)
+                        .WithMany()
+                        .HasForeignKey("ListaEstadosrelacionadosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Bitacora_Ticket", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Estado", "Estado")
+                        .WithMany("Bitacora_Tickets")
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Ticket", "Ticket")
+                        .WithMany("Bitacora_Tickets")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estado");
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", null)
+                        .WithMany("Departamento")
+                        .HasForeignKey("Tipo_TicketId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Grupo", "grupo")
+                        .WithMany("departamentos")
+                        .HasForeignKey("id_grupo");
+
+                    b.Navigation("grupo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Estado", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Estado", "Estado_Padre")
+                        .WithMany("ListaEstadosDerivados")
+                        .HasForeignKey("Estado_PadreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Estado_Padre");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "Tipo_Cargo")
+                        .WithMany("Flujo_Aprobacion")
+                        .HasForeignKey("Tipo_CargoId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", "Tipo_Ticket")
+                        .WithMany("Flujo_Aprobacion")
+                        .HasForeignKey("Tipo_TicketId");
+
+                    b.Navigation("Tipo_Cargo");
+
+                    b.Navigation("Tipo_Ticket");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.RolUsuario", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Rol", "Rol")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Usuario", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Ticket", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Departamento", "Departamento_Destino")
+                        .WithMany()
+                        .HasForeignKey("Departamento_Destinoid");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Empleado", null)
+                        .WithMany("Lista_Ticket")
+                        .HasForeignKey("EmpleadoId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Estado", "Estado")
+                        .WithMany("ListaTickets")
+                        .HasForeignKey("EstadoId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Familia_Ticket", "Familia_Ticket")
+                        .WithMany("Lista_Ticket")
+                        .HasForeignKey("Familia_TicketId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Prioridad", "Prioridad")
+                        .WithMany()
+                        .HasForeignKey("PrioridadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Ticket", "Ticket_Padre")
+                        .WithMany()
+                        .HasForeignKey("Ticket_PadreId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", "Tipo_Ticket")
+                        .WithMany()
+                        .HasForeignKey("Tipo_TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departamento_Destino");
+
+                    b.Navigation("Estado");
+
+                    b.Navigation("Familia_Ticket");
+
+                    b.Navigation("Prioridad");
+
+                    b.Navigation("Ticket_Padre");
+
+                    b.Navigation("Tipo_Ticket");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Cargo", null)
+                        .WithMany("Tipo_Cargo")
+                        .HasForeignKey("CargoId");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Estado", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.PlantillaNotificacion", "PlantillaNotificacion")
+                        .WithMany()
+                        .HasForeignKey("PlantillaNotificacionId");
+
+                    b.Navigation("PlantillaNotificacion");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Votos_Ticket", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Empleado", null)
+                        .WithMany("Votos_Ticket")
+                        .HasForeignKey("EmpleadoId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Ticket", "Ticket")
+                        .WithMany("Votos_Ticket")
+                        .HasForeignKey("TicketId");
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId");
+
+                    b.Navigation("Ticket");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Empleado", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Cargo", "Cargo")
+                        .WithMany()
+                        .HasForeignKey("CargoId");
+
+                    b.Navigation("Cargo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
+                {
+                    b.Navigation("Tipo_Cargo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Estado", b =>
+                {
+                    b.Navigation("Bitacora_Tickets");
+
+                    b.Navigation("ListaTickets");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Familia_Ticket", b =>
+                {
+                    b.Navigation("Lista_Ticket");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Grupo", b =>
+                {
+                    b.Navigation("departamentos");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Rol", b =>
+                {
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Ticket", b =>
+                {
+                    b.Navigation("Bitacora_Tickets");
+
+                    b.Navigation("Votos_Ticket");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
+                {
+                    b.Navigation("Flujo_Aprobacion");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Estado", b =>
+                {
+                    b.Navigation("ListaEstadosDerivados");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Ticket", b =>
+                {
+                    b.Navigation("Departamento");
+
+                    b.Navigation("Flujo_Aprobacion");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Usuario", b =>
+                {
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Empleado", b =>
+                {
+                    b.Navigation("Lista_Ticket");
+
+                    b.Navigation("Votos_Ticket");
+                });
+#pragma warning restore 612, 618
+        }
     }
 }
