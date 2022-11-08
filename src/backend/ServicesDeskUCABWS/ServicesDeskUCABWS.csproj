@@ -18,7 +18,6 @@
   <ItemGroup>
     <Folder Include="BussinesLogic\Exceptions\" />
     <Folder Include="BussinesLogic\Response\" />
-    <Folder Include="Controllers\ControllerTipo_Cargo\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
