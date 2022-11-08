@@ -34,7 +34,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
                                         .Select(d => new DepartamentoDto
                                         {
-                                            Id = d.id,
+                                            id = d.id,
                                             descripcion = d.descripcion,
                                             nombre = d.nombre,
                                             fecha_creacion = d.fecha_creacion
@@ -82,7 +82,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
                     {
-                        Id = d.id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_ultima_edicion = d.fecha_ultima_edicion
@@ -117,7 +117,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var lista = _dataContext.Departamentos.Select(
                     d => new DepartamentoDto
                     {
-                        Id = d.id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
@@ -143,7 +143,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
                     d => new DepartamentoDto
                     {
-                        Id = d.id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
