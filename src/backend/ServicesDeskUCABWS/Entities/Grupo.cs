@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
@@ -20,9 +19,11 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+       
+        public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Departamento> Departamento { get; set; }
-    }
+
+		public virtual List<Departamento> departamentos { get; set; }
+
+	}
 }
