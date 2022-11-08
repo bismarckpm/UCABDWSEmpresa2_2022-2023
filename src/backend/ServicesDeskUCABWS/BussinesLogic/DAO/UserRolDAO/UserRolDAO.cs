@@ -9,6 +9,7 @@ using ServicesDeskUCABWS.Entities;
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
@@ -42,17 +43,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 return nuevoRolUsuario.First();
             }
 
-            catch (ExceptionsControl ex)
-            {
-                throw new ExceptionsControl("Se esta intentando asociar a un rol que no existe", ex);
-            }
-            catch (SqlException ex) 
-            {
-                throw new ExceptionsControl("Se esta intentando asociar el mismo rol mas de una vez", ex);
-            }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo registrar el tipo estado", ex);
+                throw new ExceptionsControl("Uno de los id (Usuario o rol) es invalido", ex);
             }
 
 
@@ -94,8 +87,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("Algo salio mal en la consulta", ex);
             }
         }
     }

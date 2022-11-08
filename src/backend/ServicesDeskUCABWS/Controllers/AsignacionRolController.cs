@@ -74,7 +74,7 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<List<RolUsuarioDTO>>();
             try
             {
-                var resultService = _userRol.ObtenerUsuariosRoles();
+                response.Data = _userRol.ObtenerUsuariosRoles();
             }
             catch (ExceptionsControl ex)
             {
