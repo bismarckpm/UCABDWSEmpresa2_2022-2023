@@ -1,27 +1,22 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace ServicesDeskUCAB.Models
 {
     public class Prioridad
     {
+        [Key,Required]
+        public int PrioridadID { get; set; }
         [Required]
-        public int ID { get; set; }
-
-        [Required,MinLength(4),MaxLength(100)]
         public string Nombre { get; set; }
-
-        [Required, MinLength(4), MaxLength(100)]
+        [Required]
         public string Descripcion { get; set; }
-
-        [Required,MinLength(1),MaxLength(30)]
+        [Required]
         public string Estado { get; set; }
-
-        [DataType(DataType.Date)]
         public DateTime FechaDescripcion { get; set; }
-
-        [DataType(DataType.Date)]
         public DateTime FechaUltimaEdic { get; set; }
     }
+   
 }
 
