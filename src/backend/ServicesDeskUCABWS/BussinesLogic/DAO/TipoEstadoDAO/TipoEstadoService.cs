@@ -101,10 +101,6 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
             {
                 throw new ExceptionsControl("Se esta intentando asociar a una etiqueta que no existe", ex);
             }
-            catch (InvalidOperationException ex)
-            {
-                throw new ExceptionsControl("Se esta intentando asociar a la misma etiqueta mas de una vez", ex);
-            }
             catch (DbUpdateException ex)
             {
                 throw new ExceptionsControl("alguno de los campos requeridos del tipo de estado está vacio", ex);
@@ -168,6 +164,10 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
                 _tipoEstadoContext.Tipo_Estados.Remove(tipoEstado);
                 await _tipoEstadoContext.DbContext.SaveChangesAsync();
                 return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new ExceptionsControl("Un ticket está utilizado este tipo de estado, por lo tanto no se puede eliminar", ex);
             }
             catch (Exception ex)
             {

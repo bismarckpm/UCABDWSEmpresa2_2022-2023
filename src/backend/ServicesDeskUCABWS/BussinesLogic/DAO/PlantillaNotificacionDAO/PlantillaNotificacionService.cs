@@ -130,16 +130,16 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
 
                 //
                 //Comienza Prueba reemplazo de descripcion plantilla
-                var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
-                                                      .Include(t => t.Tipo_Ticket)
-                                                      .Include(t => t.Prioridad)
-                                                      .Include(t => t.empleado)
-                                                      .Include(t => t.cliente)
-                                                      .Include(t => t.Departamento_Destino)
-                                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
+                //var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
+                //                                      .Include(t => t.Tipo_Ticket)
+                //                                      .Include(t => t.Prioridad)
+                //                                      .Include(t => t.empleado)
+                //                                      .Include(t => t.cliente)
+                //                                      .Include(t => t.Departamento_Destino)
+                //                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
 
-                var reemplazo = ReemplazoEtiqueta(ticket, plantillaEntity.Descripcion);
-                var mail = EnviarCorreo(plantillaEntity.Titulo, reemplazo, "alexguastaferro1@gmail.com");
+                //var reemplazo = ReemplazoEtiqueta(ticket, plantillaEntity.Descripcion);
+                //var mail = EnviarCorreo(plantillaEntity.Titulo, reemplazo, "alexguastaferro1@gmail.com");
 
                 //Finaliza la prueba
                 //
