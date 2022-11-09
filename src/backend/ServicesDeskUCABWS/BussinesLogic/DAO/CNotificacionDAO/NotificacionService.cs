@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CNotificacionDAO
 {
-    public class NotificacionDAO : INotificacionDAO
+    public class NotificacionService : INotificacionDAO
     {
         public bool EnviarNotificacion(Empleado empleado, Estado estado)
         {

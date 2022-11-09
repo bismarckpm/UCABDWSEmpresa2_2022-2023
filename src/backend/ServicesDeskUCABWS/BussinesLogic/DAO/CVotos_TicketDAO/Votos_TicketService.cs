@@ -16,12 +16,12 @@ using System.Text.Json;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CVotos_TicketDAO
 {
-    public class Votos_TicketDAO : IVotos_TicketDAO
+    public class Votos_TicketService : IVotos_TicketDAO
     {
         private readonly IDataContext contexto;
 
 
-        public Votos_TicketDAO(IDataContext Context)
+        public Votos_TicketService(IDataContext Context)
         {
             contexto = Context;
         }

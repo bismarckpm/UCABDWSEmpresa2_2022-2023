@@ -10,19 +10,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnitTest_GrupoE.DataSeed;
+using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTest_GrupoE.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 {
     [TestClass]
     public class TestValidarTipoTicket
     {
         Mock<IDataContext> context;
-        private readonly Tipo_TicketDAO TipoticketDAO;
+        private readonly Tipo_TicketService TipoticketDAO;
         public TestValidarTipoTicket()
         {
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketDAO(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object);
             context.SetupDbContextData();
         }
 
@@ -114,7 +114,7 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
             {
                 actualException = ex;
             }
-            
+
             Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
             Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
         }
@@ -315,7 +315,7 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
                 tipo = "Modelo_Paralelo",
-                
+
                 Departamento = new List<string>
                 {
                     "CCACD411-1B46-4117-AA84-73EA64DEAC87",
@@ -614,7 +614,7 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
                     "CCACD411-1B46-4117-AA84-73EA64DEAC87",
                     "19C117F4-9C2A-49B1-A633-969686E0B57E"
                 }
-                
+
             };
 
             ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.ERROR_SEC_ORDEN_APROB);

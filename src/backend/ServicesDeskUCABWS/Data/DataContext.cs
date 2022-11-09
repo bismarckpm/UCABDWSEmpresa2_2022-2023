@@ -82,5 +82,15 @@ namespace ServicesDeskUCABWS.Data
         {
             throw new NotImplementedException();
         }
+
+        public Task SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Tipo_Ticket tipo_Ticket)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

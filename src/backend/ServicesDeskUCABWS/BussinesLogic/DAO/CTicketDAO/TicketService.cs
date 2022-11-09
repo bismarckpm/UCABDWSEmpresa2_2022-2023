@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO
 {
-    public class TicketDAO : ITicketDAO
+    public class TicketService : ITicketDAO
     {
         private readonly IDataContext contexto;
         private List<Ticket> listaTickets;
 
-        public TicketDAO(IDataContext context)
+        public TicketService(IDataContext context)
         {
             contexto = context;
         }

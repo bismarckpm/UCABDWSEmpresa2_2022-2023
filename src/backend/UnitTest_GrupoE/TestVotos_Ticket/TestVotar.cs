@@ -7,21 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnitTest_GrupoE.DataSeed;
+using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTest_GrupoE.TestVotos_Ticket
+namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 {
 
     [TestClass]
     public class TestVotar
     {
         Mock<IDataContext> context;
-        private readonly Votos_TicketDAO VotoDAO;
+        private readonly Votos_TicketService VotoDAO;
 
         public TestVotar()
         {
             context = new Mock<IDataContext>();
-            VotoDAO = new Votos_TicketDAO(context.Object);
+            VotoDAO = new Votos_TicketService(context.Object);
             context.SetupDbContextData();
         }
 
@@ -35,14 +35,14 @@ namespace UnitTest_GrupoE.TestVotos_Ticket
                 IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
                 comentario = "Excelente",
                 voto = "Aprobado"
-                
+
             };
             //act
             var result = VotoDAO.Votar(Voto);
             //assert
 
             Assert.IsTrue(result.Success == true);
-            
+
         }
     }
 }

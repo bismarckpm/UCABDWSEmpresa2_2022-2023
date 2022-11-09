@@ -16,13 +16,13 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO
 {
-    public class Tipo_TicketDAO : ITipo_TicketDAO
+    public class Tipo_TicketService : ITipo_TicketDAO
     {
         // Inyeccion de dependencias DBcontext
         private IDataContext context;
         Mapper mapper = new Mapper(new MapperConfiguration(c => c.CreateMap<Tipo_TicketDTOUpdate, Tipo_TicketDTOCreate>()));
         //
-        public Tipo_TicketDAO(IDataContext Context)
+        public Tipo_TicketService(IDataContext Context)
         {
             context = Context;
         }

@@ -13,7 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using ServicesDeskUCABWS.Entities;
 
-namespace UnitTest_GrupoE.DataSeed
+namespace UnitTestServicesDeskUCABWS.DataSeed
 {
     public static class DataSeed
     {
@@ -242,7 +242,7 @@ namespace UnitTest_GrupoE.DataSeed
                 //Jefes D1
                 new Empleado(123456, "Jose", "Vargas", "Rojas", DateTime.Parse("20/12/1999"), 'M', "jmvargas@gmail.com", "1234", "Maria")
                 {
-                    
+
                     Cargo=ListaCargo[0]
                 },
                 new Empleado(654321, "Jose2", "Vargas2", "Rojas2", DateTime.Parse("20/12/1999"), 'M', "jmvargas2@gmail.com", "1234", "Maria2")
@@ -363,7 +363,7 @@ namespace UnitTest_GrupoE.DataSeed
             //_mockContext.Tipos_Tickets.AddRange(ListaTipoTickets);
             //_mockContext.Flujos_Aprobaciones.AddRange(ListaFlujoAprobacion);
             _mockContext.Setup(c => c.Tipos_Tickets).Returns(ListaTipoTickets.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Tipos_Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoTickets.Where(x => (Guid)x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Tipos_Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoTickets.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Tickets.Add(It.IsAny<Tipo_Ticket>())).Callback<Tipo_Ticket>(ListaTipoTickets.Add);
             _mockContext.Setup(set => set.Tipos_Tickets.AddRange(It.IsAny<IEnumerable<Tipo_Ticket>>())).Callback<IEnumerable<Tipo_Ticket>>(ListaTipoTickets.AddRange);
 

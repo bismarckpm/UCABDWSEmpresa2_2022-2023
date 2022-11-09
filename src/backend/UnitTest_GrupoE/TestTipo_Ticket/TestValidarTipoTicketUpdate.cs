@@ -11,20 +11,20 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnitTest_GrupoE.DataSeed;
+using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTest_GrupoE.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 {
     [TestClass]
     public class TestValidarTipoTicketUpdate
     {
         Mock<IDataContext> context;
-        private readonly Tipo_TicketDAO TipoticketDAO;
+        private readonly Tipo_TicketService TipoticketDAO;
 
         public TestValidarTipoTicketUpdate()
         {
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketDAO(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object);
             context.SetupDbContextData();
         }
 
@@ -168,11 +168,11 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
 
 
             //act
-            
+
             TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
-            
+
             //assert
-            
+
 
         }
 
@@ -227,6 +227,6 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
             Assert.IsTrue(typeof(FormatException) == actualException.Excepcion.GetType());
 
         }
-    
+
     }
 }

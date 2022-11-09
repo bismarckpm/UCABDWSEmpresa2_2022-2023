@@ -10,20 +10,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnitTest_GrupoE.DataSeed;
+using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTest_GrupoE.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 {
     [TestClass]
     public class TestUpdateTipoTicket
     {
         Mock<IDataContext> context;
-        private readonly Tipo_TicketDAO TipoticketDAO;
+        private readonly Tipo_TicketService TipoticketDAO;
 
         public TestUpdateTipoTicket()
         {
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketDAO(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object);
             context.SetupDbContextData();
         }
 
@@ -114,7 +114,7 @@ namespace UnitTest_GrupoE.TestTipo_Ticket
 
             //act
             var result = TipoticketDAO.ActualizarTipo_Ticket(entrada);
-            
+
 
             Assert.AreEqual(expectedException.Mensaje, result.Message);
             Assert.AreEqual(false, result.Success);
