@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using ServicesDeskUCABWS.Entities;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -8,6 +12,17 @@ namespace ServicesDeskUCABWS.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+        }
+
+        public DataContext()
+        {
+        }
+
+        //
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
+            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
         }
 
         //Creacion de los DbSeT
@@ -32,19 +47,40 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
 
-        public void Add(Tipo_Ticket tipo_Ticket)
-        {
-            throw new System.NotImplementedException();
+        public DbContext DbContext { get
+            {
+                return this;
+            }
         }
 
-        public Task SaveChangesAsync()
+        Task<EntityEntry> IDbContext.AddAsync(object entity, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void Update(Tipo_Ticket tipo_Ticket)
+        Task<EntityEntry<TEntity>> IDbContext.AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        Task<TEntity> IDbContext.FindAsync<TEntity>(params object[] keyValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<object> IDbContext.FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<TEntity> IDbContext.FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<object> IDbContext.FindAsync(Type entityType, params object[] keyValues)
+        {
+            throw new NotImplementedException();
         }
     }
 }

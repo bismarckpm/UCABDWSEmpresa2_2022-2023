@@ -1,0 +1,25 @@
+﻿@using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model Votos_TicketDTOCreate
+@{
+    ViewData["Title"] = "Registro_Voto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Votar
+    </div>
+    <div class="card-body">
+        <form asp-action= "GuardarCambios" asp-controller="Tickets" method="post"></form>
+        
+        <div class="b-2">
+            <label class= "form-label">Identificador del usuario</label>
+            <input type="text" class="form-control form-control-sm" asp-for="comentario"/>
+        </div>
+
+        <button type= "submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+    </div>
+</div>
+

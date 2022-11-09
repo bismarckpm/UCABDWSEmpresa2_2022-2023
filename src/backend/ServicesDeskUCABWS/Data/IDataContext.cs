@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Models;
+using ServicesDeskUCABWS.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Data
 
 {
-    public interface IDataContext
+    public interface IDataContext : IDbContext
     {
+
 
         //Creacion de los DbSeT
         public DbSet<Estado> Estados { get; set; }
@@ -34,7 +36,9 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
 
-        void Add(Tipo_Ticket tipo_Ticket);
+        public DbContext DbContext { get; }
+
+
     }
 }
 
