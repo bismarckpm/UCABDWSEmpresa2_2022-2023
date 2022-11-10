@@ -14,7 +14,9 @@ namespace ServicesDeskUCAB.Models
         public string Descripcion { get; set; }
         [Required]
         public string Estado { get; set; }
+        [Required]
         public DateTime FechaDescripcion { get; set; }
+        [Required]
         public DateTime FechaUltimaEdic { get; set; }
     }
     

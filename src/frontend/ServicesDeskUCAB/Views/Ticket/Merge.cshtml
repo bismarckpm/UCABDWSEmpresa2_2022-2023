@@ -1,179 +1,149 @@
-﻿<div class="row">
-    <div class="col-8">
-        <h1>Tickets</h1>
-        <div class="text-center" style="margin-top:30px">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Crear ticket</button>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="text-right">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
-                        Tickets abiertos
-                        <span class="badge bg-primary rounded-pill">14</span>
-                    </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
-                        Tickets cerrados
-                        <span class="badge bg-primary rounded-pill">1000</span>
-                    </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between" style="font-size: 1.2vw;">
-                        Tickets cancelados
-                        <span class="badge bg-primary rounded-pill">2</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+﻿<div style="margin:30px 0px">
+    <h2>Merge ticket</h2>
 </div>
+<div class="container">
+    <div class="row" style="margin-top:30px">
+        <div class="col-8">
+        </div>
+        <div class="col-4 text-right">
+            <h6><span class="badge bg-primary rounded-pill"><a>Ticket reenviado</a></span> por Usuario</h6>
+        </div>
+        <div class="col-6">
+            ID:
+        </div>
+        <div class="col-6">
+            Asunto:
+        </div>
+        <hr />
+        <div class="col-6">
+            Estado:
+        </div>
+        <div class="col-6">
+            Departamento:
+        </div>
+        <hr />
+        <div class="col-6">
+            Tipo ticket:
+        </div>
 
+        <div class="col-6">
+            Prioridad:
+        </div>
+        <hr />
+        <div class="col-6">
+            Fecha de creación:
+        </div>
+        <div class="col-6">
+            Usuario:
+        </div>
+        <hr />
+        <div class="col-12">
+            Descripción:
+        </div>
+    </div>
 
-<div class="container" style="margin-top:30px;">
     <div>
-        <table id="table_id" class="display">
-            <thead>
-                <tr>
-                    <th>TICKET ID</th>
-                    <th>TIPO TICKET</th>
-                    <th>PRIORIDAD</th>
-                    <th>ESTADO</th>
-                    <th>FECHA DE CREACIÓN</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Solicitud</td>
-                    <td>Alta</td>
-                    <td>Por aprobar</td>
-                    <td>10/11/2022</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details">Ver detalles</a></li>
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#reenviarModal">Reenviar</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge">Merge</a></li>
-                            </ul>
+        <form>
+            <div class="col text-center" style="margin:30px 0px">
+                <h3>Seleccione los tickets a unir y presione Merge</h3>
+                <button type="submit" class="btn btn-success">Merge</button>
+            </div>
+            <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>SELECCIONAR</th>
+                        <th>TICKET ID</th>
+                        <th>TIPO TICKET</th>
+                        <th>PRIORIDAD</th>
+                        <th>ESTADO</th>
+                        <th>FECHA DE CREACIÓN</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:none">
+                        <td id="element1">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-check col-6">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                                        <label class="form-check-label" for="flexCheckIndeterminate">
+                                            U
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>1</td>
+                        <td>Solicitud</td>
+                        <td>Alta</td>
+                        <td>Por aprobar</td>
+                        <td>10/11/2022</td>
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#detallarModal">Ver detalles</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+    <div class="modal fade" id="detallarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Detalles ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h3>Asunto</h3>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
+                        <div class="col-6">
+                            <h3>Ticket ID</h3>
+                        </div>
+                        <hr />
+                        <div class="col-6">
+                            Estado:
+                        </div>
 
+                        <div class="col-6">
+                            Departamento:
+                        </div>
+                        <hr />
+                        <div class="col-6">
+                            Tipo ticket:
+                        </div>
 
-<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-center" id="exampleModalLabel">Nuevo ticket</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Departamento:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione un tipo de ticket</option>
-                            <option value="1">Departamento 1</option>
-                            <option value="2">Departamento 2</option>
-                            <option value="3">Departamento 3</option>
-                        </select>
+                        <div class="col-6">
+                            Prioridad:
+                        </div>
+                        <hr />
+                        <div class="col-6">
+                            Fecha de creación:
+                        </div>
+                        <div class="col-6">
+                            Usuario:
+                        </div>
+                        <hr />
+                        <div class="col-12">
+                            Descripción:
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Tipo ticket:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione un tipo de ticket</option>
-                            <option value="1">Tipo ticket 1</option>
-                            <option value="2">Tipo ticket 2</option>
-                            <option value="3">Tipo ticket 3</option>
-                        </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Prioridad:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione una prioridad</option>
-                            <option value="1">Prioridad 1</option>
-                            <option value="2">Prioridad 2</option>
-                            <option value="3">Prioridad 3</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Asunto:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Enviar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="reenviarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title text-center" id="exampleModalLabel">Reenviar ticket</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Departamento:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione un tipo de ticket</option>
-                            <option value="1">Departamento 1</option>
-                            <option value="2">Departamento 2</option>
-                            <option value="3">Departamento 3</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Tipo ticket:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione un tipo de ticket</option>
-                            <option value="1">Tipo ticket 1</option>
-                            <option value="2">Tipo ticket 2</option>
-                            <option value="3">Tipo ticket 3</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Prioridad:</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Seleccione una prioridad</option>
-                            <option value="1">Prioridad 1</option>
-                            <option value="2">Prioridad 2</option>
-                            <option value="3">Prioridad 3</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Asunto:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Enviar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -207,7 +177,7 @@
                     }
                 }
 
-            },);
+            });
         });</script>
 
 }
