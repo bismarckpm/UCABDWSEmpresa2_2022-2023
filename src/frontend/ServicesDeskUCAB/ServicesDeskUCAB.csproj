@@ -16,12 +16,15 @@
   <ItemGroup>
     <None Remove="Models\" />
     <None Remove="Servicios\" />
-    <None Remove="Pages\Prioridad\" />
+    <None Remove="Views\Prioridad\" />
+    <None Remove="Views\Ticket\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Servicios\" />
-    <Folder Include="Pages\Prioridad\" />
     <Folder Include="Servicios\" />
+    <Folder Include="Servicios\" />
+    <Folder Include="Views\Prioridad\" />
+    <Folder Include="Views\Ticket\" />
   </ItemGroup>
 </Project>

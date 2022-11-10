@@ -10,13 +10,13 @@ namespace ServicesDeskUCAB.Models
         public int PrioridadID { get; set; }
         [Required]
         public string Nombre { get; set; }
-        [Required]
+        [Required,MinLength(4),MaxLength(100)]
         public string Descripcion { get; set; }
         [Required]
         public string Estado { get; set; }
         public DateTime FechaDescripcion { get; set; }
         public DateTime FechaUltimaEdic { get; set; }
     }
-   
+    
 }
 
