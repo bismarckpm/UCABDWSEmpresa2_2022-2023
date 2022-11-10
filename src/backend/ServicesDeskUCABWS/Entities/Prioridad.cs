@@ -6,18 +6,17 @@ namespace ServicesDeskUCABWS.Entities
     public class Prioridad
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid ID { get; set; }
         [Required]
-        public string nombre { get; set; } = string.Empty;
+        public string Nombre { get; set; } = string.Empty;
+        [Required, MaxLength(100), MinLength(4)]
+        public string Descripcion { get; set; } = string.Empty;
         [Required]
-        [MaxLength(100)]
-        [MinLength(4)]
-        public string descripcion { get; set; } = string.Empty;
+        public string Estado { get; set; }
         [Required]
-        public DateTime fecha_descripcion { get; set; }
+        public DateTime FechaDescripcion { get; set; }
         [Required]
-        public DateTime fecha_ultima_edic { get; set; }
-        [Required]
-        public string estado { get; set; }
+        public DateTime FechaUltimaEdic { get; set; }
+        
     }
 }

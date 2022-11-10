@@ -20,7 +20,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             _mapper = mapper;
         }
 
-        public string crearPrioridad(PrioridadDTO prioridadDTO)
+        public string CrearPrioridad(PrioridadDTO prioridadDTO)
         {
             try
             {
@@ -38,18 +38,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             }
         }
 
-        public List<PrioridadDTO> obtenerPrioridades()
+        public List<PrioridadDTO> ObtenerPrioridades()
         {
             var data = _dataContext.Prioridad.AsNoTracking();
             var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO.ToList();
         }
 
-        public PrioridadDTO obtenerPrioridadPorNombre(string nombre)
+        public PrioridadDTO ObtenerPrioridadPorNombre(string nombre)
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.nombre == nombre).Single();
+                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.Nombre == nombre).Single();
                 var prioridadDTO = _mapper.Map<PrioridadDTO>(data);
                 return prioridadDTO;
             }
@@ -59,11 +59,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             }
         }
 
-        public List<PrioridadDTO> obtenerPrioridadesPorEstado(string estado)
+        public List<PrioridadDTO> ObtenerPrioridadesPorEstado(string estado)
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.estado == estado);
+                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.Estado == estado);
                 var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
                 return prioridadDTO;
             }
@@ -73,16 +73,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             }
         }
 
-        public string modificarPrioridad(PrioridadDTO prioridadDTO)
+        public string ModificarPrioridad(PrioridadDTO prioridadDTO)
         {
             try
             {
-                var prioridad = _dataContext.Prioridad.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
-                prioridad.nombre = prioridadDTO.nombre;
-                prioridad.descripcion = prioridadDTO.descripcion;
-                prioridad.estado = prioridadDTO.estado;
-                prioridad.fecha_descripcion = prioridadDTO.fecha_descripcion;
-                prioridad.fecha_ultima_edic = prioridadDTO.fecha_ultima_edic;
+                var prioridad = _dataContext.Prioridad.AsNoTracking().Where(p => p.ID == prioridadDTO.ID).Single();
+                prioridad.Nombre = prioridadDTO.Nombre;
+                prioridad.Descripcion = prioridadDTO.Descripcion;
+                prioridad.Estado = prioridadDTO.Estado;
+                prioridad.FechaDescripcion = prioridadDTO.FechaDescripcion;
+                prioridad.FechaUltimaEdic = prioridadDTO.FechaUltimaEdic;
                 _dataContext.Prioridad.Update(prioridad);
                 _dataContext.SaveChanges();
                 return "Prioridad modificada exitosamente";

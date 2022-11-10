@@ -11,8 +11,8 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
-            modelBuilder.Entity<Prioridad>().HasIndex(u => u.Id).IsUnique();
+            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.ID });
+            modelBuilder.Entity<Prioridad>().HasIndex(u => u.ID).IsUnique();
         }
 
         //Creacion de los DbSeT

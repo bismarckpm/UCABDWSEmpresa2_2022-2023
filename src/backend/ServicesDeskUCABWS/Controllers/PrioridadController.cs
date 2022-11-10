@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace ServicesDeskUCABWS.Controllers
 {
-    [Route("prioridad")]
-    [ApiController]
+    [Route("Prioridad"), ApiController]
     public class PrioridadController : ControllerBase
     {
 
@@ -23,14 +22,13 @@ namespace ServicesDeskUCABWS.Controllers
             _mapper=mapper;
         }
 
-        [HttpPost]
-        [Route("crearPrioridad")]
+        [HttpPost, Route("Guardar")]
         public ApplicationResponse<string> crearPrioridadCtrl([FromBody]PrioridadDTO prioridadDTO)
         {
             var respuesta = new ApplicationResponse<String>();
             try
             {
-                respuesta.Data = _prioridadDAO.crearPrioridad(prioridadDTO);
+                respuesta.Data = _prioridadDAO.CrearPrioridad(prioridadDTO);
             }
             catch (Exception ex)
             {
@@ -42,14 +40,13 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
 
-        [HttpGet]
-        [Route("getprioridades")]
-        public ApplicationResponse<List<PrioridadDTO>> obtenerPrioridadesCtrl()
+        [HttpGet, Route("Lista")]
+        public ApplicationResponse<List<PrioridadDTO>> ObtenerPrioridadesCtrl()
         {
             var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
             try
             {
-                respuesta.Data = _prioridadDAO.obtenerPrioridades();
+                respuesta.Data = _prioridadDAO.ObtenerPrioridades();
                 return respuesta;
             } 
             catch (System.IO.IOException ex)
@@ -62,14 +59,13 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("getprioridades/nombre/{nombre}")]
-        public ActionResult<ApplicationResponse<PrioridadDTO>> obtenerPrioridadPorNombreCtrl(string nombre)
+        [HttpGet, Route("Lista/{Nombre}")]
+        public ActionResult<ApplicationResponse<PrioridadDTO>> ObtenerPrioridadPorNombreCtrl(string nombre)
         {
             var respuesta = new ApplicationResponse<PrioridadDTO>();
             try
             {
-                respuesta.Data = _prioridadDAO.obtenerPrioridadPorNombre(nombre);
+                respuesta.Data = _prioridadDAO.ObtenerPrioridadPorNombre(nombre);
                 return respuesta;
             }
             catch (System.IO.IOException ex)
@@ -82,14 +78,13 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("getprioridad/estado/{estado}")]
-        public ApplicationResponse<List<PrioridadDTO>> obtenerPrioridadesPorEstadoCtrl(string estado)
+        [HttpGet, Route("Lista/{Estado}")]
+        public ApplicationResponse<List<PrioridadDTO>> ObtenerPrioridadesPorEstadoCtrl(string estado)
         {
             var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
             try
             {
-                respuesta.Data = _prioridadDAO.obtenerPrioridadesPorEstado(estado);
+                respuesta.Data = _prioridadDAO.ObtenerPrioridadesPorEstado(estado);
                 return respuesta;
             }
             catch (System.IO.IOException ex)
@@ -102,14 +97,13 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("modificarprioridad")]
-        public ApplicationResponse<String> modificarPrioridadEstadoPorNombreCtrl([FromBody] PrioridadDTO prioridadDTO)
+        [HttpPut, Route("Editar")]
+        public ApplicationResponse<String> ModificarPrioridadEstadoPorNombreCtrl([FromBody] PrioridadDTO prioridadDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _prioridadDAO.modificarPrioridad(prioridadDTO);
+                response.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
                 response.Success = true;
                 response.Message = "Cambios Realizados con Éxito";
             }
