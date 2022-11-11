@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
+using ServicesDeskUCABWS.BussinesLogic.Notification;
 
 namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
 {
@@ -20,13 +21,13 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
     {
         private readonly IDataContext _plantillaContext;
         private readonly IMapper _mapper;
-        private readonly ITipoEstado _tipoEstado;
+       
 
-        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, ITipoEstado tipoEstado)
+        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper)
         {
             _plantillaContext = plantillaContext;
             _mapper = mapper;
-            _tipoEstado = tipoEstado;
+            
         }
 
         //GET: Servicio para consultar todas las plantillas
@@ -36,7 +37,13 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
             {
                 var data = await _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToListAsync();
                 var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionDTO>>(data);
+                if (plantillaSearchDTO == null || plantillaSearchDTO.Count() == 0)
+                    throw new ExceptionsControl("No existen plantillas registradas");
                 return plantillaSearchDTO;
+            }
+            catch(ExceptionsControl ex)
+            {
+                throw new ExceptionsControl("No existen plantillas registradas",ex);
             }
             catch (Exception ex)
             {
@@ -130,16 +137,17 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
 
                 //
                 //Comienza Prueba reemplazo de descripcion plantilla
-                //var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
-                //                                      .Include(t => t.Tipo_Ticket)
-                //                                      .Include(t => t.Prioridad)
-                //                                      .Include(t => t.empleado)
-                //                                      .Include(t => t.cliente)
-                //                                      .Include(t => t.Departamento_Destino)
-                //                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
-
-                //var reemplazo = ReemplazoEtiqueta(ticket, plantillaEntity.Descripcion);
-                //var mail = EnviarCorreo(plantillaEntity.Titulo, reemplazo, "alexguastaferro1@gmail.com");
+                var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
+                                                      .Include(t => t.Tipo_Ticket)
+                                                      .Include(t => t.Prioridad)
+                                                      .Include(t => t.empleado)
+                                                      .Include(t => t.cliente)
+                                                      .Include(t => t.Departamento_Destino)
+                                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
+                var notificacion = new Notificacion(_plantillaContext);
+                var consulta = await ConsultarPlantillaTipoEstadoTitulo("Aprobado");
+                var reemplazo = notificacion.ReemplazoEtiqueta(ticket,consulta);
+                var mail = notificacion.EnviarCorreo( consulta.Titulo, reemplazo, "alexguastaferro1@gmail.com");
 
                 //Finaliza la prueba
                 //
@@ -198,92 +206,8 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
         }
 
 
-        public String ReemplazoEtiqueta(Ticket ticket, string descripciomPlantilla)
-        {
-            Dictionary<string, string> etiquetas = new Dictionary<string, string>();
-            Empleado empleado = null;
-            var usuario = _plantillaContext.Usuarios.Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
-            if (usuario == null)
-            {
-               usuario = _plantillaContext.Usuarios.Where(u => u.Id == ticket.cliente.Id).FirstOrDefault();
-            }
-            else
-            {
-                 empleado = _plantillaContext.Empleados.Include(e => e.Cargo).Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
-                etiquetas.Add("@Cargo", empleado.Cargo.nombre_departamental.ToString());
-            }
-            try 
-            {
-
-
-                etiquetas.Add("@Ticket", ticket.titulo.ToString());
-                if (ticket.Estado != null)
-                    etiquetas.Add("@Estado", ticket.Estado.nombre.ToString());
-                if(ticket.Departamento_Destino != null)
-                    etiquetas.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
-                etiquetas.Add("@Grupo", ticket.Departamento_Destino.Grupo.nombre.ToString());
-                etiquetas.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
-                etiquetas.Add("@Usuario", usuario.primer_nombre.ToString() + " " + usuario.primer_apellido.ToString());
-                etiquetas.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
-
-                if (ticket.Votos_Ticket != null)
-                    etiquetas.Add("@ComentarioVoto", ticket.Votos_Ticket.ToString()); 
-                   
-
-                string input = descripciomPlantilla;
-                foreach (KeyValuePair<string, string> etiqueta in etiquetas)
-                {
-                    input = Regex.Replace(input, etiqueta.Key, etiqueta.Value);
-                }
-
-                return input;
-            }
-            catch(Exception ex)
-            {
-                throw new ExceptionsControl("No se pudo hacer el reemplazo de las etiquetas en la plantilla", ex);
-            }
-
-            
-            
-        }
-
-        const string correo = "ajguastaferro.13@est.ucab.edu.ve";
-        const string clave = "vcrwtnmtilsgjbjo";
-        const string alias = "ServiceDeskUCAB";
-        const string host = "smtp.gmail.com";
-        const int puerto = 587;
-
-        public Boolean EnviarCorreo(string tituloPlantilla, string body, string correoDestino )
-        {
-            try
-            {
-                var credenciales = new NetworkCredential(correo, clave);
-                var mail = new MailMessage()
-                {
-                    From = new MailAddress(correo, alias),
-                    Subject = tituloPlantilla,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-
-                mail.To.Add(new MailAddress(correoDestino));
-                var clienteServidor = new SmtpClient()
-                {
-                    Host = host,
-                    Port = puerto,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    EnableSsl = true
-                };
-
-                clienteServidor.Send(mail);
-                return true;
-            }
-            catch(Exception ex)
-            {
-                throw new ExceptionsControl("No se pudo enviar el correo", ex);
-            }
-        }
+        
+        
 
 
 
