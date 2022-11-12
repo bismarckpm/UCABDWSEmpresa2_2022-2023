@@ -14,7 +14,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CVotos_TicketDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 {
     public class Votos_TicketService : IVotos_TicketDAO
     {

@@ -14,17 +14,51 @@ using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {
     public class Tipo_TicketService : ITipo_TicketDAO
     {
         // Inyeccion de dependencias DBcontext
         private IDataContext context;
+       private readonly IMapper _mapper;
+
+
         Mapper mapper = new Mapper(new MapperConfiguration(c => c.CreateMap<Tipo_TicketDTOUpdate, Tipo_TicketDTOCreate>()));
+        // Mapper mappers = new Mapper(new MapperConfiguration(d => d.CreateMap<Tipo_Ticket, Tipo_TicketDTOSearch>()));
+
         //
+
         public Tipo_TicketService(IDataContext Context)
         {
             context = Context;
+        
+        }
+        public Tipo_TicketService(IDataContext Context, IMapper mapper)
+        {
+            context = Context;
+            _mapper = mapper;
+        }
+
+
+        //GET: Servicio para consultar la lista de tipo ticket
+        public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicket()
+        {
+            try
+            {
+                var tipo = context.Tipos_Tickets
+                .Include(dep => dep.Departamento)
+                .Include(fa => fa.Flujo_Aprobacion)
+                .ThenInclude(fb => fb.Tipo_Cargo)
+                .Where(fa => fa.fecha_elim == null)
+                .ToList();
+                var tipo_tickets = _mapper.Map<HashSet<Tipo_TicketDTOSearch>>(tipo);
+                return (IEnumerable<Tipo_TicketDTOSearch>)tipo_tickets;
+            }
+
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Hubo un problema al consultar la lista de Tipos de Tickets", ex);
+            }
         }
 
 
@@ -96,25 +130,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO
         }
 
 
-
-        // Delete Tipo Ticket
-        public async Task Delete(Guid id)
-
-        {
-            var tipo_Ticket = await context.Tipos_Tickets.FindAsync(id);
-            if (tipo_Ticket != null)
-            {
-                context.Tipos_Tickets.Remove(tipo_Ticket);
-            }
-
-            //await _context.SaveChangesAsync();
-
-        }
-
-        public Task<bool> EliminarTipo_Ticket(Guid Id)
-        {
-            throw new NotImplementedException();
-        }
 
         public ApplicationResponse<Tipo_Ticket> RegistroTipo_Ticket(Tipo_TicketDTOCreate Tipo_TicketDTO)
         {
@@ -327,5 +342,65 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO
 
 
         }
+        //GET: Servicio para consultar un tipo de ticket por un ID en específico
+
+        public async Task<Tipo_TicketDTOSearch> ConsultarTipoTicketGUID(Guid id)
+        {
+            try
+            {
+                var data = context.Tipos_Tickets
+                   .Include(p => p.Departamento)
+                   .Include(fa => fa.Flujo_Aprobacion)
+                   .ThenInclude(_fa => _fa.Tipo_Cargo)
+                   .Where(p => p.Id == id).Single();
+                var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
+                return tipoticketSearchDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe el tipo de ticket con ese ID", ex);
+            }
+
+        }
+
+        //GET: Servicio para consultar un tipo de ticket por un nombre en específico
+        public async Task<Tipo_TicketDTOSearch> ConsultarTipoTicketNomb(string nombre)
+        {
+            try
+            {
+                var data = await context.Tipos_Tickets.AsNoTracking()
+                   .Include(p => p.Departamento)
+                   .Include(fa => fa.Flujo_Aprobacion)
+                   .ThenInclude(_fa => _fa.Tipo_Cargo).Where(t => t.nombre == nombre).SingleAsync();
+                var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
+                return tipoticketSearchDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe el tipo de ticket con ese nombre", ex);
+            }
+        }
+        //DELETE: Servicio para eliminar un tipo de ticket por un id en especifico
+        public Boolean EliminarTipoTicket(Guid id)
+        {
+            try
+            {
+                var tipo_ticket = context.Tipos_Tickets.Find(id);
+
+                tipo_ticket.fecha_elim = DateTime.UtcNow;
+                context.SaveChanges();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo eliminar el tipo de ticket", ex);
+            }
+
+
+
+
+        }
+
     }
 }

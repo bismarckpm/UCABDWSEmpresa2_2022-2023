@@ -1,6 +1,6 @@
 ﻿namespace ServiceDeskUCAB.Models
 {
-    public class Depa
+    public class TipoCargo
     {
         public Guid Id { get; set; }
 

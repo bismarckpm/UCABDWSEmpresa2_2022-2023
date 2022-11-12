@@ -20,7 +20,8 @@ namespace ServiceDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;
 
         }
-         
+
+
         // Método para consumir la lista de Tipo Ticket desde el front
         public async Task<List<Tipo>> Lista()
         {
@@ -31,18 +32,25 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("Tipo_Ticket/Consulta/");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("Api/Tipo_Ticket/Consulta/");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
-                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(json_respuesta);
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta["data"].ToString();
+
+                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
 
                 lista = resultado;
             }
+
+
             return lista;
         }
+
 
         //Método para eliminar desde el front
         public async Task<bool> Eliminar(int idProducto)

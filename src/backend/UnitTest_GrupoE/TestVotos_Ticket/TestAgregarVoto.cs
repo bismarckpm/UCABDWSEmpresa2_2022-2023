@@ -1,6 +1,6 @@
 ﻿using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;

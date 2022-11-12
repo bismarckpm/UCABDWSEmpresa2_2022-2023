@@ -3,7 +3,7 @@ using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CVotos_TicketDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 {
     public interface IVotos_TicketDAO
     {

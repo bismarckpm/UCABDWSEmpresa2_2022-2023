@@ -12,7 +12,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public class TicketService : ITicketDAO
     {

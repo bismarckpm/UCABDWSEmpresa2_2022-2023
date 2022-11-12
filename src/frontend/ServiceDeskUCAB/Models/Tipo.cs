@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServiceDeskUCAB.Models
 {
@@ -11,9 +12,12 @@ namespace ServiceDeskUCAB.Models
         public string descripcion { get; set; }
 
         public string tipo { get; set; }
-        public Depa[] Departamento { get; set; }
+
+        public List<Departament> Departamento { get; set; }
+        public List<TipoFlujo> Flujo_Aprobacion  { get; set; }
 
         public int? Minimo_Aprobado { get; set; }
+
         
     }
     

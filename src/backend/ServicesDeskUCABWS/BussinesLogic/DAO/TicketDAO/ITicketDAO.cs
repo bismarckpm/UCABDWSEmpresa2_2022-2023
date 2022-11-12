@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public interface ITicketDAO
     {

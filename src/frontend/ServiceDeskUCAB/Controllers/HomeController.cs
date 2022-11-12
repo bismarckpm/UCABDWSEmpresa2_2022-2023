@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ViewModel;
 using ServiceDeskUCAB.Servicios;
 using System.Diagnostics;
 using System.Dynamic;
@@ -17,14 +18,20 @@ namespace ServiceDeskUCAB.Controllers
             _servicioApi = servicioApi;
         }
 
+
         public async Task<IActionResult> VistaTipoTicket()
         {
-            List<Tipo> lista = await _servicioApi.Lista();
+            TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
 
-      
+            tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
+            tipoNuevoViewModel.tipo = new();
+            tipoNuevoViewModel.tipoCargoNuevo = new();
 
-            return View(lista);
+
+            return View(tipoNuevoViewModel);
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> EliminarTipoTicket(int idProducto)
