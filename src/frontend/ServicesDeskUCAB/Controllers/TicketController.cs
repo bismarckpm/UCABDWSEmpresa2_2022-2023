@@ -12,7 +12,10 @@ namespace ServicesDeskUCAB.Controllers
         {
             return View();
         }
-
+        public IActionResult CrearTicket()
+        {
+            return View();
+        }
         public IActionResult Merge()
         {
             return View();

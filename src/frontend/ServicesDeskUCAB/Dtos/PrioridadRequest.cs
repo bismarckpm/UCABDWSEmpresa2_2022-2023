@@ -1,16 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 
-namespace ServicesDeskUCAB.Models
+namespace ServicesDeskUCAB.Dtos
 {
-    public class Prioridad
+    public class PrioridadRequest
     {
-        [ Required]
-        public int ID { get; set; }
         [Required]
         public string Nombre { get; set; }
-        [Required,MinLength(4),MaxLength(100)]
+        [Required, MinLength(4), MaxLength(100)]
         public string Descripcion { get; set; }
         [Required]
         public string Estado { get; set; }
@@ -19,6 +16,5 @@ namespace ServicesDeskUCAB.Models
         [Required]
         public DateTime FechaUltimaEdic { get; set; }
     }
-    
 }
 

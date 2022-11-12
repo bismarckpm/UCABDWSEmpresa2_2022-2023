@@ -16,13 +16,25 @@
 
   <ItemGroup>
     <None Remove="Models\" />
-    <None Remove="Servicios\" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="ViewModels\" />
+    <None Remove="Dtos\" />
+    <None Remove="Servicios\" />
+    <None Remove="ViewModels\Ticket\" />
+    <None Remove="ViewModels\Prioridad\" />
+    <None Remove="Servicios\Prioridad\" />
+    <None Remove="Servicios\Ticket\" />
+    <None Remove="Models\Prioridad\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Dtos\" />
     <Folder Include="Servicios\" />
-    <Folder Include="Servicios\" />
-    <Folder Include="Servicios\" />
+    <Folder Include="ViewModels\Ticket\" />
+    <Folder Include="ViewModels\Prioridad\" />
+    <Folder Include="Servicios\Prioridad\" />
+    <Folder Include="Servicios\Ticket\" />
+    <Folder Include="Models\Prioridad\" />
   </ItemGroup>
 </Project>

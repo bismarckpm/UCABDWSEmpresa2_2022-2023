@@ -1,4 +1,5 @@
-﻿<div class="row">
+﻿@model List<ServicesDeskUCAB.Dtos.PrioridadesDTO>
+<div class="row">
     <div class="col">
         <h1 id="ti">Prioridad</h1>
     </div>
@@ -25,7 +26,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.PrioridadID</td>
+                    <td>@item.ID</td>
                     <td>@item.Nombre </td>
                     <td>@item.Descripcion </td>
                     <td>@item.Estado</td>
@@ -34,14 +35,14 @@
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.PrioridadID">Modificar</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Modificar</a></li>
                                 @if (@item.Estado == "habilitado")
                                 {
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deshabilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.PrioridadID">Deshabilitar</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deshabilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Deshabilitar</a></li>
                                 }
                                 else
                                 {
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#habilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.PrioridadID">Habilitar</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#habilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Habilitar</a></li>
                                 }
                             </ul>
                         </div>
@@ -50,35 +51,6 @@
             }
         </tbody>
     </table>
-</div>
-
-
-
-<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Nueva prioridad</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -154,7 +126,8 @@
 </div>
 
 @section Scripts{
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             $('#table_id').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",
@@ -182,5 +155,6 @@
                 }
 
             });
-        });</script>
+        });
+    </script>
 }
