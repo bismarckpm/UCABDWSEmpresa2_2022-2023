@@ -1,0 +1,71 @@
+﻿@model List<ServiceDeskUCAB.Models.Usuarios>
+@{
+    ViewData["Title"] = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<head>
+    <link rel ="stylesheet" href="~/css/usuario.css" />
+</head> 
+<h1>Usuarios</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            Nombres 
+        </th>
+        <th>
+            Apellidos
+        </th>
+        <th>
+            Cedula
+        </th>
+        <th>
+            Genero
+        </th>
+        <th>
+            Fecha de nacimiento
+        </th>
+        <th>
+            Fecha de creacion
+        </th>
+        <th>
+
+        </th>
+
+
+    </tr>
+
+    @foreach (var item in Model.ToList())
+    {
+        <tr>
+            <td class="id" style="display:none" ;>
+                @Html.DisplayFor(i => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.primer_nombre) @Html.DisplayFor(i => item.segundo_nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.primer_apellido) @Html.DisplayFor(i => item.segundo_apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.gender)
+            </td>
+                        <td>
+                @Html.DisplayFor(i => item.fecha_nacimiento) 
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.fecha_creacion) 
+            </td>
+            <td>
+                <!--<a asp-action="PlantillaEditar" asp-controller="PlantillaNotificacion" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Editar</a>-->
+                <a data-bs-toggle="modal" data-bs-target="#modal-@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+    }
+
+</table>

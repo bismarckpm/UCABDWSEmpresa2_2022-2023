@@ -1,7 +1,10 @@
+using ServiceDeskUCAB.Servicios;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
 
 var app = builder.Build();
 
