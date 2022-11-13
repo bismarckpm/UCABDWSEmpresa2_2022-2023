@@ -1,14 +1,7 @@
-using ServiceDeskUCAB.Servicios.ModuloDepartamento;
-using ServiceDeskUCAB.Servicios.ModuloGrupo;
-using Microsoft.Extensions.DependencyInjection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
-builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 var app = builder.Build();
 

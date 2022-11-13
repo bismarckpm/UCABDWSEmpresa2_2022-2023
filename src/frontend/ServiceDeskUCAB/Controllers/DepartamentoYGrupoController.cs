@@ -1,137 +1,122 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Servicios.ModuloDepartamento;
+using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using System.Text.Json;
 
 namespace ServiceDeskUCAB.Controllers
 {
-    public class DepartamentoYGrupoController : Controller
+	public class DepartamentoYGrupoController : Controller
     {
-        public async Task<IActionResult> DepartamentoGrupo()
-        {
-            
-            try
-            {
-                List<DepartamentoDto> listDepartamentos = new List<DepartamentoDto>();
-                HttpClient client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44392/Departamento/ConsultarDepartamento");
-                var _client = await client.SendAsync(request);
+		//Declaración de variables
+		private readonly ILogger<DepartamentoYGrupoController> _logger;
+		private readonly IServicioGrupo_API _servicioApiGrupo;
+		private readonly IServicioDepartamento_API _servicioApiDepartamento;
 
-                List<GrupoDto> listGrupos = new List<GrupoDto>();
-                HttpClient clientG = new HttpClient();
-                var requestG = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44392/Grupo/ConsultarGrupo");
-                var _clientG = await clientG.SendAsync(requestG);
+		//Constructor
+		public DepartamentoYGrupoController(ILogger<DepartamentoYGrupoController> logger, IServicioGrupo_API servicioApiGrupo, IServicioDepartamento_API servicioApiDepartamento)
+		{
+			_logger = logger;
+			_servicioApiGrupo = servicioApiGrupo;
+			_servicioApiDepartamento = servicioApiDepartamento;
+		}
 
-                if (_client.IsSuccessStatusCode && _clientG.IsSuccessStatusCode)
-                {
-                    var responseStream = await _client.Content.ReadAsStreamAsync();
-                    listDepartamentos = await JsonSerializer.DeserializeAsync<List<DepartamentoDto>>(responseStream);
+		//Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
+		public async Task<IActionResult> DepartamentoGrupo()
+		{
+			var tupla = new Tuple<List<DepartamentoDto>, List<GrupoDto>>(null,null);
+			tupla = await _servicioApiDepartamento.ListaDepartamentoGrupo();
+			return View(tupla);
+		}
 
-                    var responseStreamG = await _clientG.Content.ReadAsStreamAsync();
-                    listGrupos = await JsonSerializer.DeserializeAsync<List<GrupoDto>>(responseStreamG);                 
-                    
-                    
-                }
-                var tupla = new Tuple<List<DepartamentoDto>, List<GrupoDto>>(listDepartamentos, listGrupos);
+		//Retorna el modal para registrar un departamento nuevo
+		public IActionResult AgregarDepartamento()
+		{
+			try
+			{
+				return PartialView();
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
-                return View(tupla);              
+		//Almacena la información referente a un nuevo departamento
+		[HttpPost]
+		public async Task<IActionResult> GuardarDepartamento(DepartamentoDto departamento)
+		{
 
-                
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+			JObject respuesta;
 
-        
-        public async Task<IActionResult> RegistrarDepartamento(DepartamentoDto dept)
-        {
-            try
-            {                
-                HttpClient client = new HttpClient();
-                var _client = await client.PostAsJsonAsync<DepartamentoDto>("https://localhost:44392/Departamento/CrearDepartamento", dept);
-                return RedirectToAction("DepartamentoGrupo");
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+			try
+			{
+				respuesta = await _servicioApiDepartamento.RegistrarDepartamento(departamento);
 
-        public IActionResult AgregarDepartamento()
-        {
-            try
-            {
-                return PartialView();
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+				if ((bool)respuesta["success"])
+				{
+					return RedirectToAction("DepartamentoGrupo");
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+			return NoContent();
+		}
 
-        public IActionResult VentanaEliminarDepartamento(Guid id)
-        {
-            try
-            {
-                return PartialView(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+		//Retorna el modal para eliminar un departamento
+		public IActionResult VentanaEliminarDepartamento(Guid id)
+		{
+			try
+			{
+				return PartialView(id);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
-        public async Task<IActionResult> EliminarDepartamento(Guid id)
-        {
-            try
-            {
-                HttpClient client = new HttpClient();
-                var _client = await client.DeleteAsync("https://localhost:44392/Departamento/EliminarDepartamento/" + id.ToString());
-                return RedirectToAction("DepartamentoGrupo");
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+		//Elimina a un departamento que ha sido seleccionado previamente
+		[HttpGet]
+		public async Task<IActionResult> EliminarDepartamento(Guid id)
+		{
+			JObject respuesta;
+			respuesta = await _servicioApiDepartamento.EliminarDepartamento(id);
+			if ((bool)respuesta["success"])
+				return RedirectToAction("DepartamentoGrupo", new { message = "Se ha eliminado correctamente" });
+			else
+				return NoContent();
+		}
 
-        public async Task<IActionResult> VentanaEditarDepartamento(Guid id)
-        {
-            try
-            {
-                DepartamentoModel departamento = new DepartamentoModel();
-                HttpClient client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:44392/Departamento/ConsultarDepartamentoPorID/" + id.ToString());
-                var _client = await client.SendAsync(request);
-                if (_client.IsSuccessStatusCode)
-                {
-                    var responseStream = await _client.Content.ReadAsStreamAsync();
-                    departamento = await JsonSerializer.DeserializeAsync<DepartamentoModel>(responseStream);
-                }
-                return PartialView(departamento);
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+		public async Task<IActionResult> VentanaEditarDepartamento(Guid id) {
+			try
+			{
+				DepartamentoModel departamento = new DepartamentoModel();
+				departamento = await _servicioApiDepartamento.MostrarInfoDepartamento(id);
+				return PartialView(departamento);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
-        public async Task<IActionResult> EditarDepartamento(DepartamentoDto_Update departamento)
-        {
-            try
-            {
-                HttpClient client = new HttpClient();
-                var _client = await client.PutAsJsonAsync("https://localhost:44392/Departamento/ActualizarDepartamento", departamento);
-                return RedirectToAction("DepartamentoGrupo");
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
-    }
-    
+		public async Task<IActionResult> ModificarDepartamento(DepartamentoDto_Update dept) {
+			try
+			{
+				JObject respuesta;
+				respuesta = await _servicioApiDepartamento.EditarDepartamento(dept);
+				if ((bool)respuesta["success"])
+					return RedirectToAction("DepartamentoGrupo", new { message = "Se ha modificado correctamente" });
+			}
+			catch (Exception ex) {
+				Console.WriteLine(ex.ToString());
+			}
+			return NoContent();
+		}
+	}
 }

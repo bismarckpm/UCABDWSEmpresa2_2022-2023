@@ -20,7 +20,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
             };
         }
 
-        public static DepartamentoDto MapperEntityToDtoDefault(Departamento dept)
+		public static DepartamentoDto MapperEntityToDtoDefault(Departamento dept)
         {
             return new DepartamentoDto
             {
@@ -54,5 +54,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
                 id_grupo = dept.id_grupo
             };
         }
-    }
+	}
 }
