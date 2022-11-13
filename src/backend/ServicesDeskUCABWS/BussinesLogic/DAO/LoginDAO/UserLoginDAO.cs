@@ -2,11 +2,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
+using ServicesDeskUCABWS.Tools;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Security.Claims;
+using System.Text;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
 {
@@ -14,20 +22,24 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
+        private readonly AppSettings _appSettings;
       
 
-        public UserLoginDAO(DataContext dataContext, IMapper mapper)
+        public UserLoginDAO(DataContext dataContext, IMapper mapper, IOptions<AppSettings> appSettings) 
         {
             _dataContext = dataContext;
             _mapper = mapper;
+            _appSettings = appSettings.Value; 
         }
 
-        public UserLoginDto UserLogin(Usuario user)
+        public UserResponseLoginDTO UserLogin(UserLoginDto user)
         {
             try
             {
-               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == user.password).FirstOrDefault();
-                return UserMapper.MapperUserLogin(usuario);
+               var passwordEncrypt = Encrypt.GetSHA256(user.password);
+               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == passwordEncrypt).FirstOrDefault();
+                
+               return UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
             }
             catch (System.Exception)
             {
@@ -36,6 +48,32 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
             }
            
 
+        }
+
+        private  string GetToken (Usuario usuario)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var rol = _dataContext.RolUsuarios.Where(u=> u.UserId  == usuario.Id).FirstOrDefault();
+            var nombreRol = _dataContext.Roles.Where(r => r.Id == rol.RolId).FirstOrDefault();
+
+
+            var llave = Encoding.ASCII.GetBytes(_appSettings.Secreto);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                    new Claim[]
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                        new Claim(ClaimTypes.Email, usuario.correo),
+                        new Claim("Rol", nombreRol.Name)
+                    }
+                    ),
+                Expires = DateTime.UtcNow.AddMinutes(20),
+                SigningCredentials = new SigningCredentials ( new SymmetricSecurityKey(llave), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }

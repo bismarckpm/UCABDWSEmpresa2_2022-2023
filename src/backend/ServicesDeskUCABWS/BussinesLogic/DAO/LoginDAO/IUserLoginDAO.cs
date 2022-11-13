@@ -6,6 +6,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
     public interface IUserLoginDAO
     {
 
-        public UserLoginDto UserLogin(Usuario user);
+        public UserResponseLoginDTO UserLogin(UserLoginDto user);
     }
 }

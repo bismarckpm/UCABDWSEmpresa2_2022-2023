@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
+using ServicesDeskUCABWS.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,7 @@ namespace ServicesDeskUCABWS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioDAO _usuarioDAO;
@@ -31,8 +34,11 @@ namespace ServicesDeskUCABWS.Controllers
             _userLoginDAO = userLogin; 
         }
 
+
+      
         [HttpGet]
-        public ActionResult<List<Usuario>> ConsultarUsuarios()
+        [Authorize]
+         public ActionResult<List<Usuario>> ConsultarUsuarios()
         {
             try
             {
@@ -60,6 +66,7 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         [Route("CrearCliente/")]
         public ActionResult<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
         {
@@ -107,6 +114,7 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPut]
+   
         [Route("ActualizarUsuario/")]
         public ActionResult<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
         {
@@ -142,17 +150,18 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("login/")]
-        public ActionResult<UserLoginDto> UserLogin([FromBody]  UserLoginDto usuario )
+        public ActionResult<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
         {
             try
             {
-                return _userLoginDAO.UserLogin(UserMapper.MapperDtoToEntityUserLogin(usuario));
+         
+                  return _userLoginDAO.UserLogin(usuario);
             }
             catch (Exception e )
             {
                 Console.WriteLine(e.Message);
 
-                throw e.InnerException!;
+                throw;
             }
         }
     }

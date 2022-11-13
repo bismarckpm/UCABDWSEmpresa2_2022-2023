@@ -18,6 +18,10 @@ using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
+using ServicesDeskUCABWS.Tools;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ServicesDeskUCABWS
 {
@@ -33,6 +37,30 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            //JWT
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var llave = Encoding.ASCII.GetBytes(appSettings.Secreto);
+            services.AddAuthentication(d =>
+            {
+                d.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                d.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(d =>
+            {
+                d.RequireHttpsMetadata = false;
+                d.SaveToken = true;
+                d.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(llave),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+
+            });
+
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
             services.AddTransient<IUserLoginDAO, UserLoginDAO>();
             services.AddTransient<IUserRol, UserRolDAO>();
@@ -51,6 +79,8 @@ namespace ServicesDeskUCABWS
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
 
             services.AddControllers();
+
+         
             
         }
 
@@ -75,7 +105,11 @@ namespace ServicesDeskUCABWS
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
+
+           
 
             app.UseEndpoints(endpoints =>
             {
