@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
@@ -30,7 +30,6 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             TipoticketDAO = new Tipo_TicketService(context.Object);
             context.SetupDbContextData();
         }
-
 
 
         [TestMethod]

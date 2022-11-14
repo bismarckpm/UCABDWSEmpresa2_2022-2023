@@ -1,5 +1,5 @@
 ﻿using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CVotos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.Data;
 using System;
