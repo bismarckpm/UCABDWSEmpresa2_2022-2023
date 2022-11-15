@@ -6,7 +6,7 @@ namespace ServicesDeskUCAB.Models
 {
     public class Prioridad
     {
-        [ Required]
+        [Required]
         public int ID { get; set; }
         [Required]
         public string Nombre { get; set; }
