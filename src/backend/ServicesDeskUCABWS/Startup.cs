@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -41,11 +44,19 @@ namespace ServicesDeskUCABWS
             //Conectar Interface DAO con su implementacion
             services.AddTransient<ITicketDAO, TicketService>();
             services.AddTransient<ITipo_TicketDAO, Tipo_TicketService>();
+
+            // DAO Grupo Departamento
+            services.AddTransient<IGrupoDAO, GrupoDAO>();
+            services.AddTransient<IDepartamentoDAO, DepartamentoDAO>();
+
+            // DAO Grupo Prioridad
+            services.AddTransient<IPrioridadDAO, PrioridadDAO>();
+
             services.AddTransient<IDataContext, DataContext>();
 
             //Generar Conexion a BD
             services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //Para evitar errores de ciclos dentro de las consultas
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

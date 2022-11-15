@@ -1,0 +1,37 @@
+﻿@model VotarTicket
+@{
+    ViewData["Title"] = "Votar Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Modificar Tipo Ticket
+    </div>
+    <div class="card-body">
+
+        <form asp-action="VotarTicket" asp-controller="Home" method="post">
+            <input type="hidden" asp-for="IdUsuario" required />
+            <input type="hidden" asp-for="IdTicket" required />
+
+            <div class="mb-2">
+                <label class="form-label">Voto</label>
+                <select type="text" class="form-control form-control-sm" asp-for="voto" required>
+                    <option value="A">Aprobado</option>
+                    <option value="D">Denegado</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Comentario</label>
+                <textarea type="text" class="form-control form-control-sm" asp-for="comentario" required />
+            </div>
+
+            <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+            <a asp-action="VistaTicket" asp-controller="Home" class="btn btn-warning btn-sm">Volver a lista</a>
+        </form>
+
+    </div>
+
+</div>
+
+

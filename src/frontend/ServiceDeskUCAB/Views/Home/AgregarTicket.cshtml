@@ -1,0 +1,58 @@
+﻿@model Ticket
+@{
+    ViewData["Title"] = "Agregar Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Modificar Tipo Ticket
+    </div>
+    <div class="card-body">
+
+        <form asp-action="AregarTicket" asp-route-Emisor="usuario" asp-controller="Home" method="post">
+            <input type="hidden" asp-for="Id" required />
+
+            <div class="mb-2">
+                <label class="form-label">Titulo</label>
+                <input type="text" class="form-control form-control-sm" asp-for="titulo" required />
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Descripción</label>
+                <textarea type="text" class="form-control form-control-sm" asp-for="descripcion" required></textarea>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Prioridad</label>
+                <select type="text" class="form-control form-control-sm" asp-for="Prioridad" required >
+                   <!--@foreach (var item in ViewData["Prioridades"] as List<Prioridad>)
+                    {
+                            <option value=@item.Id.ToString()>@item.nombre</option>
+                    }-->
+                </select> 
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Tipo de Ticket</label>
+                <select type="text" class="form-control form-control-sm" asp-for="Tipo_Ticket" required >
+                    @foreach (var item in ViewData["Tipos"] as List<Tipo>)
+                    {
+                        <option value=@item.Id.ToString()>@item.nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Departamento Destino</label>
+                <select type="text" class="form-control form-control-sm" asp-for="Departamento_Destino" required >
+                    @foreach (var item in ViewData["Departamentos"] as List<Depa>)
+                    {
+                            <option value=@item.Id.ToString()>@item.nombre</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+            <a asp-action="VistaTicket" asp-controller="Home" class="btn btn-warning btn-sm">Volver a lista</a>
+        </form>
+
+    </div>
+
+</div>

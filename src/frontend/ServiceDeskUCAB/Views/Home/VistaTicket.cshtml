@@ -1,11 +1,11 @@
-﻿@model List<Tipo>
+﻿@model List<Ticket>
 
 <div class="row">
     <div class="col-8">
-        <h1 id="ti">Gestionar Tipo Ticket</h1>
+        <h1 id="ti">Gestionar Tickets</h1>
     </div>
     <div class="col-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar Tipo Ticket</button>
+        <a type="button" class="btn btn-primary" asp-action="AgregarTicket" asp-controller="Home">Agregar Ticket</a>
     </div>
 </div>
 
@@ -18,12 +18,12 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nombre</th>
+                <th>Titulo</th>
                 <th>Descripción</th>
-                <th>Tipo Modelo Aprobación</th>
-                <th>Departamentos Asociados</th>
-                <th>Cargos Asociados</th>
-                <th></th>
+                <th>Tipo</th>
+                <th>Prioridad</th>
+                <th>Departamento</th>
+                <th>Emisor</th>
             </tr>
         </thead>
         <tbody>
@@ -32,21 +32,26 @@
                 <tr>
 
                     <td>@item.Id</td>
-                    <td>@item.nombre</td>
+                    <td>@item.titulo</td>
                     <td>@item.descripcion</td>
-                    <td>@item.tipo</td>
-                    <td>@item.Departamento</td>
+                    <td>@item.Tipo_Ticket</td>
+                    <td>@item.Prioridad</td>
+                    <td>@item.Departamento_Destino</td>
+                    <td>@item.Emisor</td>
                    
                     <td></td>
                     
                  
-                    <td>ObtenerTipoTicket
+                    <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li>
-                        <a asp-action="ModificarTipoTicket" asp-controller="Home" asp-route-idProducto="@item.Id.ToString()" class="btn btn-primary btn-sm">Editar</a></li>
+                                 <li>
+                                    <a asp-action="VistaVotarTicket" asp-controller="Home" asp-route-idTicket="@item.Id.ToString()" asp-route-idUsuario="usuario" class="btn btn-primary btn-sm">
+                                        Votar
+                                    </a>
+                                 </li>
                                 <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</a></li>
                             </ul>
                         </div>
@@ -60,8 +65,6 @@
         </tbody>
     </table>
 </div>
-
-
 
 <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -119,7 +122,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="votarModalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -127,38 +130,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form  asp-action="ModificarTipoTicket" asp-controller="Home" method="post">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="recipient-name"> <!--asp-for="Nombre"-->
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea> <!--asp-for="Descripcion"-->
-                    </div>
+                <form asp-action="VotarTicket" asp-controller="Home" method="post">
                     <div class="container p-2 my-2 border">
                         <div class="mb-2">
                             <h6>Modificar Modelo Aprobacion:</h6>
                             <label class="form-label">Tipo Modelo Aprobación:</label>
-                            <select class="form-select form-select-sm">  <!--asp-for="tipo"-->
+                            <select id="voto" class="form-select form-select-sm"> <!--asp-for="voto" -->
                                 <option selected disabled>-- Seleccionar --</option>
-                                <option value="Paralelo">Paralelo</option>
-                                <option value="Jerarquico">Jerarquico</option>
-                                <option value="Default">Default</option>
+                                <option value="Aprobado">Aprobado</option>
+                                <option value="Rechazado">Rechazado</option>
                             </select>
                         </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label">Departamentos Asociados:</label>
-                        <br>
-                        <select multiple="multiple" style="width=100%;" id="lista">  <!--asp-for="depa"-->
-                            <option selected disabled>-- Seleccionar --</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="number" class="form-control" id="minimo_aprobado"> <!--asp-for="Minimo_aprobado"-->
-                         
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Comentario:</label>
+                        <textarea class="form-control"  id="comentario"></textarea> <!--asp-for="comentario"-->
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
