@@ -18,5 +18,8 @@ namespace ServicesDeskUCABWS.BussinessLogic.Exceptions
             Mensaje = _mensaje;
         }
 
+        public ExceptionsControl()
+        {
+        }
     }
 }
