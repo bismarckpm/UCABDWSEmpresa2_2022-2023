@@ -1,4 +1,6 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
+﻿
+
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO
 {
@@ -6,6 +8,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO
     {
         public int OrdenAprobacion { get; set; }
 
-        public Tipo_CargoDTOSearch Tipo_Cargo { get; set; }
+        public TipoCargoDTO Tipo_Cargo { get; set; }
     }
 }

@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -41,6 +43,13 @@ namespace ServicesDeskUCABWS
             //Conectar Interface DAO con su implementacion
             services.AddTransient<ITicketDAO, TicketService>();
             services.AddTransient<ITipo_TicketDAO, Tipo_TicketService>();
+
+            services.AddScoped<IDepartamentoDAO, DepartamentoService>();
+            services.AddScoped<IDataContext, DataContext>();
+
+            services.AddScoped<ITipo_CargoDAO, Tipo_CargoService>();
+            services.AddScoped<IDataContext, DataContext>();
+
             services.AddTransient<IDataContext, DataContext>();
 
             //Generar Conexion a BD

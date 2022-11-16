@@ -6,7 +6,14 @@ namespace ServiceDeskUCAB.Servicios
     {
 
         Task<List<Tipo>> Lista();
-        Task<bool> Eliminar(int idProducto);
 
+        Task<bool> Guardar(TipoNuevo tipo);
+
+       
+        Task<bool> Eliminar(Guid id);
+
+        Task<List<Departament>> ListaDepa();
+
+        Task<List<TipoCargo>> ListaCargos();
     }
 }

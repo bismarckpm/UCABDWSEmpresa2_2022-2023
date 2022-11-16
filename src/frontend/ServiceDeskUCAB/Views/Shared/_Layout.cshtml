@@ -55,13 +55,14 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Index" asp-action="Index">
+                   <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
+              
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Departamentos</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
+                <a class="nav-link" asp-area="" asp-controller="TipoTicket" asp-action="VistaTipo">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gestionar Tipo Ticket</span>
                 </a>
@@ -111,7 +112,6 @@
 
             @*  <!-- Divider -->
             <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
             Addons
@@ -174,7 +174,7 @@
                     </main>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -197,4 +197,5 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
 

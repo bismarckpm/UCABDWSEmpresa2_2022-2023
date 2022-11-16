@@ -1,4 +1,6 @@
-﻿namespace ServiceDeskUCAB.Models.ViewModel
+﻿using ServiceDeskUCAB.Models;
+
+namespace ServiceDeskUCAB.ViewModel
 {
     public class TipoNuevoViewModel
     {
@@ -10,6 +12,5 @@
         public List<Departament> ListaDepartamento { get; set; }
 
         public List<TipoCargo> ListaCargos { get; set; }
-
     }
 }
