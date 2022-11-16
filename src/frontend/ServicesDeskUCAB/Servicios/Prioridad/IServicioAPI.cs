@@ -8,11 +8,13 @@ namespace ServicesDeskUCAB.Servicios.Prioridad
     {
         Task<List<Models.Prioridad>> Lista();
 
+        Task<List<Models.Prioridad>> ListaEstado(string cadena);
+
         Task<Models.Prioridad> Obtener(int PrioridadID);
 
-        Task<bool> Guardar(Models.Prioridad Prioridad);
+        Task<bool> Guardar(Models.Prioridad Objeto);
 
-        Task<Models.Prioridad> Editar(int PrioridadID);
+        Task<bool> Editar(Models.Prioridad Objeto);
     }
 }
 

@@ -1,10 +1,11 @@
 ﻿@model List<ServicesDeskUCAB.Models.Prioridad>
+ 
 <div class="row">
     <div class="col">
         <h1 id="ti">Prioridad</h1>
     </div>
     <div class="text-center">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar prioridad</button>
+        <button type="button" class="btn btn-primary" asp-action="" asp-controller="Prioridad" asp-route-prioridadID="0">Agregar prioridad</button>
     </div>
 </div>
 
@@ -19,36 +20,33 @@
                 <th>PRIORIDAD ID</th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCIÓN</th>
+                <th>ESTADO</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ID</td>
-                    <td>@item.Nombre </td>
-                    <td>@item.Descripcion </td>
-                    <td>@item.Estado</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Modificar</a></li>
-                                @if (@item.Estado == "habilitado")
-                                {
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deshabilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Deshabilitar</a></li>
-                                }
-                                else
-                                {
-                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#habilitarModal" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Habilitar</a></li>
-                                }
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            }
+            @if (Model.Count() > 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.ID</td>
+                            <td>@item.nombre </td>
+                            <td>@item.descripcion </td>
+                            <td>@item.estado</td>
+                            <td>
+                                <div class="dropdown" style="float: right">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item"asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Modificar</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
         </tbody>
     </table>
 </div>
@@ -61,14 +59,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
                         <input type="text" class="form-control" id="recipient-name">
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textareaclass="form-control" id="message-text"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -89,7 +87,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">¿Seguro que desea habilitar la prioridad "nombre de la prioridad"?</label>
                     </div>
@@ -111,7 +109,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar la prioridad "nombre de la prioridad"?</label>
                     </div>

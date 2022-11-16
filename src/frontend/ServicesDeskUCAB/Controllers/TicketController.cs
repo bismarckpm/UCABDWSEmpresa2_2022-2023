@@ -25,6 +25,11 @@ namespace ServicesDeskUCAB.Controllers
         {
             return View();
         }
+
+        public IActionResult GuardarCambios()
+        {
+            return View();
+        }
     }
 }
 

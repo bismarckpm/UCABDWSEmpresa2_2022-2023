@@ -9,15 +9,15 @@ namespace ServicesDeskUCAB.Models
         [Required]
         public int ID { get; set; }
         [Required]
-        public string Nombre { get; set; }
+        public string nombre { get; set; }
         [Required,MinLength(4),MaxLength(100)]
-        public string Descripcion { get; set; }
+        public string descripcion { get; set; }
         [Required]
-        public string Estado { get; set; }
+        public string estado { get; set; }
         [Required]
-        public DateTime FechaDescripcion { get; set; }
+        public DateTime fechaDescripcion { get; set; }
         [Required]
-        public DateTime FechaUltimaEdic { get; set; }
+        public DateTime fechaUltimaEdic { get; set; }
     }
     
 }
