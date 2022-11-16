@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
@@ -282,6 +282,40 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+        }
+
+        [TestMethod]
+        public void RegistroTipoTicketSinDepartamento()
+        {
+
+            //arrange
+            Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
+            {
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_No_Aprobacion",
+                
+            };
+
+            Tipo_Ticket expected = new Tipo_Ticket()
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_No_Aprobacion",
+                fecha_creacion = DateTime.UtcNow,
+                fecha_ult_edic = DateTime.UtcNow,
+                fecha_elim = null,
+                
+            };
+
+            //act
+            var result = TipoticketDAO.RegistroTipo_Ticket(entrada);
+
+            //assert
+            Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.IsTrue(result.Data.Departamento.Count == 0);
+            Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == 0);
         }
         [TestMethod]
         public void RegistroTipoTicketExcepcion()

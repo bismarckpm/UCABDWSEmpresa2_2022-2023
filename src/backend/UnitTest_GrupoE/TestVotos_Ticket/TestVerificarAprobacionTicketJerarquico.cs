@@ -11,14 +11,13 @@ using UnitTestServicesDeskUCABWS.DataSeed;
 
 namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 {
-
     [TestClass]
-    public class TestVotar
+    public class TestVerificarAprobacionTicketJerarquico
     {
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
 
-        public TestVotar()
+        public TestVerificarAprobacionTicketJerarquico()
         {
             context = new Mock<IDataContext>();
             VotoDAO = new Votos_TicketService(context.Object);
@@ -26,34 +25,12 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         }
 
         [TestMethod]
-        public void CaminoFelizVotarJerarquico()
+        public void RechazadoJerarquico()
         {
             //arrange
             var Voto = new Votos_TicketDTOCreate()
             {
                 IdTicket = "5992E4A2-4737-42FB-88E2-FBC37EF26751",
-                IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
-                comentario = "Excelente",
-                voto = "Aprobado"
-
-            };
-            //act
-            var result = VotoDAO.Votar(Voto);
-            //assert
-
-            Assert.IsTrue(result.Success == true);
-            Assert.AreEqual(result.Data.comentario, Voto.comentario);
-            Assert.AreEqual(result.Data.voto, Voto.voto);
-
-        }
-
-        [TestMethod]
-        public void CaminoFelizVotarParalelo()
-        {
-            //arrange
-            var Voto = new Votos_TicketDTOCreate()
-            {
-                IdTicket = "132A191C-95AE-4538-8E78-C5EDD3092552",
                 IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
                 comentario = "Muy Mal",
                 voto = "Rechazado"
@@ -70,26 +47,33 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         }
 
         [TestMethod]
-        public void EntrarExceptionsControl()
+        public void TicketPendiente()
         {
             //arrange
-            var Voto = new Votos_TicketDTOCreate()
-            {
-                IdTicket = "5992E4A2-4737-42FB-88E2-FBC37EF26751",
-                IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
-                comentario = "Excelente",
-                voto = "Aprobadojyh"
 
-            };
+            var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
+
             //act
-            var result = VotoDAO.Votar(Voto);
-            //assert
+            var result = VotoDAO.VerificarAprobacionTicketJerarquico(entrada);
 
-            Assert.IsTrue(result.Success == false);
-            Assert.IsTrue(result.Data == null);
+            //assert
+            Assert.AreEqual(result, "Pendiente");
         }
 
-        
+        [TestMethod]
+        public void EntraEnLaExcepccionDevuelveFallido()
+        {
+            //arrange
+
+            var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
+            context.Setup(c => c.Tickets).Throws(new Exception());
+
+            //act
+            var result = VotoDAO.VerificarAprobacionTicketJerarquico(entrada);
+
+            //assert
+            Assert.AreEqual(result, "Fallido");
+        }
 
     }
 }

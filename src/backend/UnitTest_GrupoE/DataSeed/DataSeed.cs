@@ -12,6 +12,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using ServicesDeskUCABWS.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace UnitTestServicesDeskUCABWS.DataSeed
 {
@@ -47,6 +48,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tipo_Estados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoEstados.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipo_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
             _mockContext.Setup(set => set.Tipo_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
+            _mockContext.Setup(set => set.Update(It.IsAny<Tipo_Estado>));
             //_mockContext.Setup(set => set.Tipo_Estados.ToList().Contains(It.IsAny<object>())).Returns((object input) => ListaTipoEstados.Contains(input));
             /*_mockContext.Setup(mr => mr.Tipo_Estados.Update(It.IsAny<Tipo_Estado >()))
                    .Callback((Tipo_Estado e) => {
@@ -271,6 +273,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 //Becarios D1
                 new Empleado(45678, "Jorge", "Perez", "Bosquejo", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
                 {
+                    Id = Guid.Parse("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
                     Cargo=ListaCargo[3]
                 },
                 new Empleado(87654, "Jorge2", "Perez2", "Bosquejo2", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo2@gmail.com", "1234", "Valentino2")
@@ -313,7 +316,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                         ListaDepartamento[0]
                     }
                 },
-                new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", null, null)
+                new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
                     Departamento= new List<Departamento>
@@ -326,30 +329,30 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaFlujoAprobacion = new List<Flujo_Aprobacion>
             {
+                new Flujo_Aprobacion(ListaTipoTickets[1].Id,ListaTipoCargo[0].Id, null,null,null)
+                {
+                    Tipo_Ticket = ListaTipoTickets[1],
+                    Tipo_Cargo = ListaTipoCargo[0]
+                },
                 new Flujo_Aprobacion(ListaTipoTickets[1].Id,ListaTipoCargo[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoTickets[1].Id,ListaTipoCargo[2].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoTickets[2].Id,ListaTipoCargo[0].Id, 2,1,1)
                 {
-                    Tipo_Ticket = ListaTipoTickets[1],
-                    Tipo_Cargo = ListaTipoCargo[2]
+                    Tipo_Ticket = ListaTipoTickets[2],
+                    Tipo_Cargo = ListaTipoCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoTickets[1].Id,ListaTipoCargo[1].Id, 2,1,1)
+                new Flujo_Aprobacion(ListaTipoTickets[2].Id,ListaTipoCargo[1].Id, 1,1,1)
                 {
-                    Tipo_Ticket = ListaTipoTickets[1],
+                    Tipo_Ticket = ListaTipoTickets[2],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoTickets[1].Id,ListaTipoCargo[2].Id, 1,1,1)
-                {
-                    Tipo_Ticket = ListaTipoTickets[1],
-                    Tipo_Cargo = ListaTipoCargo[2]
-                },
-                new Flujo_Aprobacion(ListaTipoTickets[3].Id,ListaTipoCargo[2].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoTickets[3].Id,ListaTipoCargo[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[3],
-                    Tipo_Cargo = ListaTipoCargo[2]
+                    Tipo_Cargo = ListaTipoCargo[1]
                 }
             };
 
@@ -366,6 +369,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tipos_Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoTickets.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Tickets.Add(It.IsAny<Tipo_Ticket>())).Callback<Tipo_Ticket>(ListaTipoTickets.Add);
             _mockContext.Setup(set => set.Tipos_Tickets.AddRange(It.IsAny<IEnumerable<Tipo_Ticket>>())).Callback<IEnumerable<Tipo_Ticket>>(ListaTipoTickets.AddRange);
+            _mockContext.Setup(set => set.Update(It.IsAny<Tipo_Ticket>));
+
 
             _mockContext.Setup(c => c.Flujos_Aprobaciones).Returns(ListaFlujoAprobacion.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.Flujos_Aprobaciones.Add(It.IsAny<Flujo_Aprobacion>())).Callback<Flujo_Aprobacion>(ListaFlujoAprobacion.Add);
@@ -375,6 +380,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             {
                 new Ticket("Peticion 1", "Descripcion de la peticion 1")
                 {
+                    Id = Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"),
                     Tipo_Ticket=ListaTipoTickets[1],
                     Emisor= (Empleado) ListaUsuario[6],
                     Departamento_Destino= ListaDepartamento[1],
@@ -461,6 +467,16 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     voto = "Pendiente",
                     Turno = 1
                 },
+
+                new Votos_Ticket()
+                {
+                    Ticket = ListaTickets[1],
+                    Empleado = (Empleado) ListaUsuario[6],
+                    IdTicket = ListaTickets[1].Id,
+                    IdUsuario = ListaUsuario[6].Id,
+                    voto = "Pendiente",
+                    Turno = 4
+                },
             };
 
             //_mockContext.Tickets.AddRange(ListaTickets);
@@ -469,10 +485,15 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTickets.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tickets.Add(It.IsAny<Ticket>())).Callback<Ticket>(ListaTickets.Add);
             _mockContext.Setup(set => set.Tickets.AddRange(It.IsAny<IEnumerable<Ticket>>())).Callback<IEnumerable<Ticket>>(ListaTickets.AddRange);
+            _mockContext.Setup(set => set.Update(It.IsAny<Ticket>()));
+                /*.Returns((Ticket input) => {
+                return 1;
+            });*/
 
             _mockContext.Setup(c => c.Votos_Tickets).Returns(ListaVotos.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.Votos_Tickets.Add(It.IsAny<Votos_Ticket>())).Callback<Votos_Ticket>(ListaVotos.Add);
             _mockContext.Setup(set => set.Votos_Tickets.AddRange(It.IsAny<IEnumerable<Votos_Ticket>>())).Callback<IEnumerable<Votos_Ticket>>(ListaVotos.AddRange);
+            _mockContext.Setup(set => set.Update(It.IsAny<Votos_Ticket>));
         }
     }
 }

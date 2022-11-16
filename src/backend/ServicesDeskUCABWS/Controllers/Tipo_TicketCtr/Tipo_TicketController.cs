@@ -59,7 +59,7 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
         // PUT: api/Tipo_Ticket/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public ApplicationResponse<Tipo_TicketDTOUpdate> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
+        public ApplicationResponse<Tipo_Ticket> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
         {
             var response = _ticketDAO.ActualizarTipo_Ticket(tipo_Ticket);
             return response;

@@ -5,14 +5,7 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Flujo_Aprobacion
     {
-        /*public Flujo_Aprobacion(Guid idTicket, Guid idCargo, Tipo_Ticket Tipo_Ticket, Tipo_Cargo Tipo_Cargo)
-        {
-            this.IdTipo_cargo = idCargo;
-            this.IdTicket=idTicket;
-            this.Tipo_Ticket = Tipo_Ticket;
-            this.Tipo_Cargo = Tipo_Cargo;
-
-        }*/
+        
 
         public Tipo_Cargo Tipo_Cargo { get; set; }
 

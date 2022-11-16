@@ -35,10 +35,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
 
 
-        public ApplicationResponse<Votos_TicketDTOCreate> Votar(Votos_TicketDTOCreate votoDTO)
+        public ApplicationResponse<Votos_Ticket> Votar(Votos_TicketDTOCreate votoDTO)
         {
 
-            var response = new ApplicationResponse<Votos_TicketDTOCreate>();
+            var response = new ApplicationResponse<Votos_Ticket>();
             try
             {
                 ValidarDatosEntradaVotos(votoDTO);
@@ -72,7 +72,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 }
 
                 contexto.SaveChanges();
-                response.Data = votoDTO;
+                response.Data = voto;
 
             }
             catch (ExceptionsControl ex)
@@ -85,53 +85,43 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             return response;
         }
 
-        private void ValidarDatosEntradaVotos(Votos_TicketDTOCreate votosDTO)
+        public void ValidarDatosEntradaVotos(Votos_TicketDTOCreate votosDTO)
         {
-            try
+            if (votosDTO.comentario.Length > 300)
             {
-
-                if (votosDTO.comentario.Length > 300)
-                {
-                    throw new ExceptionsControl(ErroresVotos.COMENTARIO_FUERA_RANGO);
-                }
-
-                var VotosPermitidos = new string[] { "Aprobado", "Rechazado", "Pendiente" };
-                if (!VotosPermitidos.Contains(votosDTO.voto))
-                {
-                    throw new ExceptionsControl(ErroresVotos.VOTO_NO_VALIDO);
-                }
-                var ticket = contexto.Tickets.Include(x => x.Tipo_Ticket).Where(x => x.Id == Guid.Parse(votosDTO.IdTicket)).First();
-
-                if (ticket == null)
-                {
-                    throw new ExceptionsControl(ErroresVotos.ERROR_TICKET_DESC);
-                }
-                if (contexto.Usuarios.Find(Guid.Parse(votosDTO.IdUsuario)) == null)
-                {
-                    throw new ExceptionsControl(ErroresVotos.ERROR_USUARIO_DESC);
-                }
-                var voto = contexto.Votos_Tickets.Where(x => x.IdTicket.ToString().ToUpper() == votosDTO.IdTicket &&
-                     x.IdUsuario.ToString().ToUpper() == votosDTO.IdUsuario.ToUpper()).First();
-                if (voto == null)
-                {
-                    throw new ExceptionsControl(ErroresVotos.VOTO_NO_PERMITIDO);
-                }
-
-                if (ticket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
-                {
-                    if (ticket.nro_cargo_actual != voto.Turno)
-                    {
-                        throw new ExceptionsControl(ErroresVotos.VOTACION_EXPIRADA);
-                    }
-                }
+                throw new ExceptionsControl(ErroresVotos.COMENTARIO_FUERA_RANGO);
             }
-            catch (FormatException ex)
+                
+            var VotosPermitidos = new string[] { "Aprobado", "Rechazado", "Pendiente" };
+            if (!VotosPermitidos.Contains(votosDTO.voto))
             {
-                throw new ExceptionsControl(ErroresVotos.FORMATO_NO_VALIDO, ex);
+                throw new ExceptionsControl(ErroresVotos.VOTO_NO_VALIDO);
+            }
+            var ticket = contexto.Tickets.Include(x => x.Tipo_Ticket).Where(x => x.Id.ToString().ToUpper() == votosDTO.IdTicket.ToUpper()).FirstOrDefault();
+
+            if (ticket == null)
+            {
+                throw new ExceptionsControl(ErroresVotos.ERROR_TICKET_DESC);
+            }
+            if (contexto.Usuarios.Where(c=> c.Id.ToString().ToUpper()==votosDTO.IdUsuario.ToUpper()).FirstOrDefault() == null)
+            {
+                throw new ExceptionsControl(ErroresVotos.ERROR_USUARIO_DESC);
+            }
+                
+            var voto = contexto.Votos_Tickets.Where(x => x.IdTicket.ToString().ToUpper() == votosDTO.IdTicket &&
+                    x.IdUsuario.ToString().ToUpper() == votosDTO.IdUsuario.ToUpper()).FirstOrDefault();
+            if (voto == null)
+            {
+                throw new ExceptionsControl(ErroresVotos.VOTO_NO_PERMITIDO);
             }
 
-
-
+            if (ticket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+            {
+                if (ticket.nro_cargo_actual != voto.Turno)
+                {
+                    throw new ExceptionsControl(ErroresVotos.VOTACION_EXPIRADA);
+                }
+            }
         }
 
         public string VerificarAprobacionTicketParalelo(Guid Id)
@@ -140,12 +130,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             try
             {
                 var tipo_ticket = contexto.Tickets.Include(x => x.Tipo_Ticket)
-                    .Where(x => x.Id == Id).First();
+                    .Where(x => x.Id == Id).FirstOrDefault();
 
                 var ticket = contexto.Tickets
                     .Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
                     .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Where(x => x.Id == Id).First();
+                    .Where(x => x.Id == Id).FirstOrDefault();
 
                 var votosfavor = contexto.Votos_Tickets.Where(x => x.IdTicket == Id
                 && x.voto == "Aprobado").Count();
@@ -171,9 +161,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     return "Rechazado";
                 }
 
-                contexto.SaveChanges();
+                //contexto.SaveChanges();
             }
-            catch (ExceptionsControl ex)
+            catch (Exception ex)
             {
                 return "Fallido";
             }
@@ -189,8 +179,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     Where(s => s.Estado_Padre.nombre == Estado &&
                     s.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id)
                     .FirstOrDefault();
-                var vticket = contexto.Tickets.Update(ticket);
-                vticket.State = EntityState.Modified;
+                contexto.Tickets.Update(ticket);
+
 
             }
             catch (ExceptionsControl ex)
@@ -271,7 +261,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
                 contexto.SaveChanges();
             }
-            catch (ExceptionsControl ex)
+            catch (Exception ex)
             {
                 return "Fallido";
             }
@@ -293,8 +283,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     .ThenInclude(x => x.Cargos_Asociados)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id &&
-                        x.OrdenAprobacion == ticket.nro_cargo_actual)
-                    .OrderBy(x => x.OrdenAprobacion).First();
+                        x.OrdenAprobacion == ticket.nro_cargo_actual).FirstOrDefault();
 
 
             var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
