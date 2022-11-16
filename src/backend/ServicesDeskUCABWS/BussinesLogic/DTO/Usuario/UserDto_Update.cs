@@ -21,6 +21,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Usuario
         [MaxLength(50)]
         public string segundo_apellido { get; set; } = string.Empty;
         [Required]
-        public DateTime fecha_nacimiento { get; set; }
+        public string fecha_nacimiento { get; set; }
     }
 }

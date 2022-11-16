@@ -10,5 +10,6 @@ namespace ServiceDeskUCAB.Servicios
     public interface IServicioUsuario_API
     {
         Task<List<Usuarios>> Lista();
+        Task<JObject> Guardar(Usuarios usuarios);
     }
 }

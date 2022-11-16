@@ -70,13 +70,12 @@ namespace ServicesDeskUCABWS.Controllers
         }
         [HttpPost]
         [Route("CrearCliente/")]
-        public ApplicationResponse<String> CrearCliente([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Usuario> CrearCliente([FromBody] UsuarioDto Usuario)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<Usuario>();
             try
             {
-                var resultService = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
-                response.Data = resultService.ToString();
+                response.Data = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
 
             }
             catch (ExceptionsControl ex)

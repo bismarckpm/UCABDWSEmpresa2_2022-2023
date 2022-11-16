@@ -1,13 +1,8 @@
-﻿using ServicesDeskUCABWS.Entities;
-using Microsoft.Extensions.Configuration;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using ServiceDeskUCAB.Models;
 
 namespace ServiceDeskUCAB.Servicios
@@ -18,10 +13,42 @@ namespace ServiceDeskUCAB.Servicios
         private JObject _json_respuesta;
         public ServicioUsuario_API()
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.Development.json").Build();
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
+
+        public async Task<JObject> Guardar(Usuarios usuarios)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            string json = await Task.Run(() => JsonConvert.SerializeObject(usuarios));
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Console.WriteLine(JsonConvert.SerializeObject(usuarios));
+
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/CrearCliente", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+        }
+
         public async Task<List<Usuarios>> Lista()
         {
             List<Usuarios> listaUsuarios = new();

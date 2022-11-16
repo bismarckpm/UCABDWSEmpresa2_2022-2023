@@ -7,6 +7,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models;
+using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCAB.Controllers
 {
@@ -26,6 +27,43 @@ namespace ServicesDeskUCAB.Controllers
             List<Usuarios> ListaPlantillas = await _servicioApiUsuarios.Lista();
             return View(ListaPlantillas);
         }
+
+        public IActionResult GuardarUsuarioView()
+        {
+            return View("GuardarUsuario");
+        }
+
+        public IActionResult RegistrarUsuario()
+        {
+            return View("~/Views/Login/SingUp");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GuardarUsuario(Usuarios plantilla)
+        {
+
+            JObject respuesta;
+
+            try
+            {
+                respuesta = await _servicioApiUsuarios.Guardar(plantilla);
+
+                if ((bool)respuesta["success"])
+                {
+                    return RedirectToAction("Usuarios");
+                }
+                else
+                {
+                    return RedirectToAction("Usuarios", new { message = (string)respuesta["message"] });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
 
 
     }
