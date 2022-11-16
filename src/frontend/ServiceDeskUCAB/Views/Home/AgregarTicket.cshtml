@@ -42,7 +42,7 @@
             <div class="mb-2">
                 <label class="form-label">Departamento Destino</label>
                 <select type="text" class="form-control form-control-sm" asp-for="Departamento_Destino" required >
-                    @foreach (var item in ViewData["Departamentos"] as List<Depa>)
+                    @foreach (var item in ViewData["Departamentos"] as List<Departament>)
                     {
                             <option value=@item.Id.ToString()>@item.nombre</option>
                     }

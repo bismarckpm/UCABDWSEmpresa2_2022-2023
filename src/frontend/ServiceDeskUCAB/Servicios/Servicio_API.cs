@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("api/Tipo_Ticket");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("api/Tipo_Ticket/Consulta");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -56,7 +57,7 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync($"api/Tipo_Ticket/{id_tipo}");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync($"api/Tipo_Ticket/Consulta/{id_tipo}");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -93,11 +94,9 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
         }
 
+
         //Método para Editar desde el front
         public async Task<bool> Modificar(Tipo tipo_ticket)
-
-        //Método para eliminar desde el front
-        public async Task<bool> Eliminar(int idProducto)
         {
             bool respuesta = false;
 
@@ -128,7 +127,7 @@ namespace ServiceDeskUCAB.Servicios
             cliente.BaseAddress = new Uri(_baseUrl);
 
 
-            var response = await cliente.DeleteAsync($"api/Tipo_Ticket/Eliminar/{idProducto}");
+            var response = await cliente.DeleteAsync($"api/Tipo_Ticket/Elimina/{idProducto}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -182,9 +181,9 @@ namespace ServiceDeskUCAB.Servicios
             return respuesta;
         }
 
-        public async Task<List<Depa>> ObtenerDepartamentos()
+        public async Task<List<Departament>> ObtenerDepartamentos()
         {
-            var lista = new List<Depa>();
+            var lista = new List<Departament>();
             
             var cliente = new HttpClient();
 
@@ -196,7 +195,7 @@ namespace ServiceDeskUCAB.Servicios
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Depa>>>(json_respuesta);
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Departament>>>(json_respuesta);
 
                 lista = resultado.Data;
             }

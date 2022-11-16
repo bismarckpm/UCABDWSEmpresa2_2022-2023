@@ -14,7 +14,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<Tipo> ObtenerTipoTicket(string id_tipo);
 
-        Task<List<Depa>> ObtenerDepartamentos();
+        Task<List<Departament>> ObtenerDepartamentos();
         Task<List<Prioridad>> ObtenerPrioridades();
 
 

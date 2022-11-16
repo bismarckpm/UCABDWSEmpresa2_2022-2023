@@ -30,7 +30,7 @@
                 <br>
                 <select multiple="multiple" style="width=100%;" id="lista" asp-for="Departamento" required>
                     
-                    @foreach (var item in ViewData["Departamentos"] as List<Depa>)
+                    @foreach (var item in ViewData["Departamentos"] as List<Departament>)
                     {
                             <option value=@item.Id.ToString()>@item.nombre</option>
                     }

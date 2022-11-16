@@ -1,7 +1,5 @@
 ﻿@model ServiceDeskUCAB.Models.ViewModel.TipoNuevoViewModel;
 
-
-
 <div class="row">
     <div class="col-8">
         <h1 id="ti">Gestionar Tipo Ticket</h1>
@@ -42,14 +40,14 @@
                     <td>
                         @foreach (var departamento in item.Departamento)
                         {
-                            <p> @departamento.nombre</p>
+                            <p> @departamento</p>
                         }
                     </td>
                     <td>
                         @foreach (var cargos in item.Flujo_Aprobacion)
                         {
 
-                            <p> @cargos.Tipo_Cargo.nombre</p>
+                            <p> @cargos</p>
 
                         }
                     </td>
@@ -92,7 +90,7 @@
 
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text" asp-for="tipo.descripcion" name="descripcion"></textarea>
+                        <textarea class="form-control" asp-for="tipo.descripcion" id="message-text" name="descripcion"></textarea>
                     </div>
                     <div class="container p-2 my-2 border">
                         <div class="mb-3">

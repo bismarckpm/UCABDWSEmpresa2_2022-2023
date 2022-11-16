@@ -21,18 +21,18 @@ namespace ServiceDeskUCAB.Controllers
         {
             TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
 
-            return View(lista);
+            tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
+            tipoNuevoViewModel.tipo = new();
+            tipoNuevoViewModel.tipoCargoNuevo = new();
+
+            return View(tipoNuevoViewModel);
         }
 
         public async Task<IActionResult> VistaTicket()
         {
             List<Ticket> lista = await _servicioApi.ListaTickets();
-            tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
-            tipoNuevoViewModel.tipo = new();
-            tipoNuevoViewModel.tipoCargoNuevo = new();
 
-
-            return View(tipoNuevoViewModel);
+            return View(lista);
         }
 
 

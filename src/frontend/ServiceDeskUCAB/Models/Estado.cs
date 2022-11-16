@@ -14,7 +14,7 @@ namespace ServiceDeskUCAB.Models
         public DateTime fecha_ultima_edic { get; set; }
         public List<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public List<Ticket> ListaTickets { get; set; }
-        public Depa Departamento { get; set; }
+        public Departament Departamento { get; set; }
 
         public Estado(string nombre, string descripcion)
         {
