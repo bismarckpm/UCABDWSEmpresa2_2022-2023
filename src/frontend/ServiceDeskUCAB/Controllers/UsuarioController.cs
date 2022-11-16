@@ -38,6 +38,22 @@ namespace ServicesDeskUCAB.Controllers
             return View("~/Views/Login/SingUp");
         }
 
+        public IActionResult VentanaEliminarUsuario(Guid id)
+        {
+            return PartialView(id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EliminarUsuario(Guid id)
+        {
+            JObject respuesta;
+            respuesta = await _servicioApiUsuarios.Eliminar(id);
+            if ((bool)respuesta["success"])
+                return RedirectToAction("DepartamentoGrupo", new { message = "Se ha eliminado correctamente" });
+            else
+                return NoContent();
+        }
+
         [HttpPost]
         public async Task<IActionResult> GuardarUsuario(Usuarios plantilla)
         {

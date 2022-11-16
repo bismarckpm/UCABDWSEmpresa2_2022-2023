@@ -5,6 +5,7 @@ namespace ServiceDeskUCAB.Models
 {
     public class Usuarios
     {
+        public Guid id { get; set; }    
         public int cedula { get; set; }
         public string primer_nombre { get; set; } 
         public string segundo_nombre { get; set; } 

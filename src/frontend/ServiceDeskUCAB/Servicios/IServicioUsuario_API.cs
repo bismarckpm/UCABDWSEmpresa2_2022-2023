@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServiceDeskUCAB.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -11,5 +12,6 @@ namespace ServiceDeskUCAB.Servicios
     {
         Task<List<Usuarios>> Lista();
         Task<JObject> Guardar(Usuarios usuarios);
+        Task<JObject> Eliminar(Guid id);
     }
 }

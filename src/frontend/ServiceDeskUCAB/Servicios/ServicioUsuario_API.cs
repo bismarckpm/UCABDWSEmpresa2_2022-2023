@@ -18,6 +18,20 @@ namespace ServiceDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
+        public async Task<JObject> Eliminar(Guid id)
+        {
+            HttpClient usuario = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            var response = await usuario.DeleteAsync($"api/Usuario/EliminarUsuario{id}");
+
+            var respuesta = await response.Content.ReadAsStringAsync();
+            JObject json_respuesta = JObject.Parse(respuesta);
+
+            return json_respuesta;
+        }
+
         public async Task<JObject> Guardar(Usuarios usuarios)
         {
             HttpClient cliente = new()

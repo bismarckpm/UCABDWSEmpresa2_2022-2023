@@ -5,9 +5,28 @@
 }
 
 
+
 <head>
     <link rel ="stylesheet" href="~/css/usuario.css" />
 </head> 
+
+@section scripts {
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderEliminarUsuario');
+            $('button[data-toggle="eliminarUsuario-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idUsuario", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+}
+ <div id="PlaceHolderEliminarUsuario"></div>
+
 <h1>Usuarios</h1>
 
 <div class="d-flex justify-content-end">
@@ -43,6 +62,7 @@
     {
         <tr>
             <td class="id" style="display:none" ;>
+                @Html.DisplayFor(i => item.id) @Html.DisplayFor(i => item.segundo_nombre)
             </td>
             <td>
                 @Html.DisplayFor(i => item.primer_nombre) @Html.DisplayFor(i => item.segundo_nombre)
@@ -57,8 +77,9 @@
                 @Html.DisplayFor(i => item.gender)
             </td>
             <td>
-               
-             
+                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
+                    Eliminar
+                </button>
             </td>
         </tr>
     }
