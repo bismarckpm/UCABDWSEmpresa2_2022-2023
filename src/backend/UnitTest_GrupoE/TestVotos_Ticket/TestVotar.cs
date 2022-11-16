@@ -35,7 +35,6 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
                 IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
                 comentario = "Excelente",
                 voto = "Aprobado"
-
             };
             //act
             var result = VotoDAO.Votar(Voto);

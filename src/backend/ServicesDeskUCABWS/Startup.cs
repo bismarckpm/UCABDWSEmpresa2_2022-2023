@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace ServicesDeskUCABWS
             services.AddTransient<ITicketDAO, TicketService>();
             services.AddTransient<ITipo_TicketDAO, Tipo_TicketService>();
             services.AddTransient<IDataContext, DataContext>();
+            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
             //Generar Conexion a BD
             services.AddDbContext<DataContext>(options =>

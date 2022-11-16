@@ -121,7 +121,6 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
         [HttpPut("votos")]
         public ApplicationResponse<Votos_Ticket> Registro_Voto(Votos_TicketDTOCreate votos_TicketDTO)
         {
-
             var response = _votos_ticketDAO.Votar(votos_TicketDTO);
             return response;
         }

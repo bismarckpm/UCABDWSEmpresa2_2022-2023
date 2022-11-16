@@ -42,11 +42,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             try
             {
                 ValidarDatosEntradaVotos(votoDTO);
-                var v = new Tipo_Estado("NombrePrueba", "Descripcion Prueba")
-                {
-                    Id = Guid.Parse("822D08E6-713D-4F03-A634-520693D31E96")
-                };
-                contexto.Tipo_Estados.Update(v);
+                
                 //actualizamos el voto 
                 var voto = contexto.Votos_Tickets
                     .Where(x => x.IdTicket.ToString().ToUpper() == votoDTO.IdTicket &&
@@ -60,15 +56,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 var temp = contexto.Tickets.Include(x => x.Tipo_Ticket)
                     .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket.tipo;
 
-
+                string veredicto;
                 if (temp == "Modelo_Paralelo")
                 {
-                    var veredicto = VerificarAprobacionTicketParalelo(Guid.Parse(votoDTO.IdTicket));
+                    veredicto = VerificarAprobacionTicketParalelo(Guid.Parse(votoDTO.IdTicket));
                 }
                 if (temp == "Modelo_Jerarquico")
                 {
-                    var veredicto = VerificarAprobacionTicketJerarquico(Guid.Parse(votoDTO.IdTicket));
-
+                    veredicto = VerificarAprobacionTicketJerarquico(Guid.Parse(votoDTO.IdTicket));
                 }
 
                 contexto.SaveChanges();
@@ -171,7 +166,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             return "Pendiente";
         }
 
-        private bool CambiarEstado(Ticket ticket, string Estado)
+        public bool CambiarEstado(Ticket ticket, string Estado)
         {
             try
             {
@@ -183,7 +178,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
 
             }
-            catch (ExceptionsControl ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -282,12 +277,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     .Include(x => x.Tipo_Cargo)
                     .ThenInclude(x => x.Cargos_Asociados)
                     .ThenInclude(x => x.Departamento)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id &&
+                    .Where(x => x.IdTicket.ToString().ToUpper() == ticket.Tipo_Ticket.Id.ToString().ToUpper() &&
                         x.OrdenAprobacion == ticket.nro_cargo_actual).FirstOrDefault();
 
 
             var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
-                .Where(x => x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).First();
+                .Where(x => x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).FirstOrDefault();
 
 
             var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
