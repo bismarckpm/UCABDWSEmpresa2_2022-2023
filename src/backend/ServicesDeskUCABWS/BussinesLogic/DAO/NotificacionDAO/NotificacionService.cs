@@ -1,7 +1,7 @@
 ﻿using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.CNotificacionDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
     public class NotificacionService : INotificacionDAO
     {

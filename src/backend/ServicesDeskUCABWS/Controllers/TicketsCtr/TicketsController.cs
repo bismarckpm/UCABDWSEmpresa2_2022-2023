@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTicketDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CVotos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
@@ -119,9 +119,8 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
 
         //  api/Tickets/votos
         [HttpPut("votos")]
-        public ApplicationResponse<Votos_TicketDTOCreate> Registro_Voto(Votos_TicketDTOCreate votos_TicketDTO)
+        public ApplicationResponse<Votos_Ticket> Registro_Voto(Votos_TicketDTOCreate votos_TicketDTO)
         {
-
             var response = _votos_ticketDAO.Votar(votos_TicketDTO);
             return response;
         }

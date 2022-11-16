@@ -10,6 +10,9 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -53,6 +56,7 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
 
             services.AddTransient<IDataContext, DataContext>();
+            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
             //Generar Conexion a BD
             services.AddDbContext<DataContext>(options =>

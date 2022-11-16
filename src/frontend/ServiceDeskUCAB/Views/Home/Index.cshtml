@@ -1,2 +1,66 @@
-﻿
+﻿<!DOCTYPE html>
+<html>
+<head>
+	
+</head>
+<body>
+    <form action="index.php" method="post">
+        Estado actual:
+        <select id="status" name="status" onChange="mostrar(this.value);">
+            <option value="estudiante">Estudiante</option>
+            <option value="trabajador">Trabajador</option>
+            <option value="autonomo">Autónomo</option>
+            <option value="paro">En el paro</option>
+        </select>
+    </form>
+
+    <div id="estudiante" style="display: none;">
+        <h2>Si eres estudiante...</h2>
+        <form action="index.php" method="post">
+            <p>
+                Nombre:<br />
+                <input type="text" name="nombre" />
+            </p>
+            <p>
+                Centro:<br />
+                <input type="text" name="centro" />
+            </p>
+            <input type="submit" name="send" value="Enviar" />
+        </form>
+    </div>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        function mostrar(id) {
+            if (id == "estudiante") {
+                $("#estudiante").show();
+                $("#trabajador").hide();
+                $("#autonomo").hide();
+                $("#paro").hide();
+            }
+
+            if (id == "trabajador") {
+                $("#estudiante").hide();
+                $("#trabajador").show();
+                $("#autonomo").hide();
+                $("#paro").hide();
+            }
+
+            if (id == "autonomo") {
+                $("#estudiante").hide();
+                $("#trabajador").hide();
+                $("#autonomo").show();
+                $("#paro").hide();
+            }
+
+            if (id == "paro") {
+                $("#estudiante").hide();
+                $("#trabajador").hide();
+                $("#autonomo").hide();
+                $("#paro").show();
+            }
+        }
+    </script>
+</body>
+</html>
 

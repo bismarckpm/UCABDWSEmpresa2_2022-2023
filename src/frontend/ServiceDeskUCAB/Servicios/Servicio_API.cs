@@ -19,7 +19,6 @@ namespace ServiceDeskUCAB.Servicios
         }
 
 
-         
         // Método para consumir la lista de Tipo Ticket desde el front
         public async Task<List<Tipo>> Lista()
         {
@@ -36,10 +35,16 @@ namespace ServiceDeskUCAB.Servicios
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
-                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(json_respuesta);
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta["data"].ToString();
+
+                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
 
                 lista = resultado;
             }
+
+
             return lista;
         }
 
@@ -90,6 +95,9 @@ namespace ServiceDeskUCAB.Servicios
 
         //Método para Editar desde el front
         public async Task<bool> Modificar(Tipo tipo_ticket)
+
+        //Método para eliminar desde el front
+        public async Task<bool> Eliminar(int idProducto)
         {
             bool respuesta = false;
 

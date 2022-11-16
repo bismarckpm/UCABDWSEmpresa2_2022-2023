@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinesLogic.DAO.CTipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -21,52 +23,43 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
     {
         private readonly DataContext _context;
         private readonly ITipo_TicketDAO _ticketDAO;
+        private readonly IMapper _mapper;
 
-        public Tipo_TicketController(ITipo_TicketDAO ticketDAO, DataContext context)
+        public Tipo_TicketController(ITipo_TicketDAO ticketDAO, DataContext context, IMapper mapper)
         {
             _context = context;
             _ticketDAO = ticketDAO;
+            _mapper = mapper;
 
         }
 
-        // GET: api/Tipo_Ticket
+
+        //GET: Controlador para consultar la tipo ticket 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FlujoAprobacionDTO>>> GetTipos_Tickets()
+        [Route("Consulta/")]
+        public ApplicationResponse<IEnumerable<Tipo_TicketDTOSearch>> ConsultarTipoTicketCtrl()
         {
-            //_Tipo_ticketDAO.ConsultaListaTickets();
+            var response = new ApplicationResponse<IEnumerable<Tipo_TicketDTOSearch>>();
 
-            var tipo = _context.Tipos_Tickets.Join(_context.Flujos_Aprobaciones,
-                p => p.Id,
-                e => e.IdTicket,
-                (p, e) => new FlujoAprobacionDTO()
-                {
-                    IdTipoTicket = p.Id,
-                    nombreTipoTicket = p.nombre,
-                    tipo = p.tipo,
-                    IdTipoCargo = e.Tipo_Cargo.Id,
-                    tipo_cargo = e.Tipo_Cargo.nombre
-                }).ToListAsync();
-            return await tipo;
-        }
-
-        // GET: api/Tipo_Ticket/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Tipo_Ticket>> GetTipo_Ticket(Guid id)
-        {
-            var tipo_Ticket = await _context.Tipos_Tickets.FindAsync(id);
-
-            if (tipo_Ticket == null)
+            try
             {
-                return NotFound();
+                response.Data = _ticketDAO.ConsultarTipoTicket();
             }
 
-            return tipo_Ticket;
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
         }
 
         // PUT: api/Tipo_Ticket/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public ApplicationResponse<Tipo_TicketDTOUpdate> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
+        public ApplicationResponse<Tipo_Ticket> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
         {
             var response = _ticketDAO.ActualizarTipo_Ticket(tipo_Ticket);
             return response;
@@ -80,8 +73,70 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
             var response = _ticketDAO.RegistroTipo_Ticket(tipo_TicketDTO);
             return response;
         }
+        //GET: Controlador para consultar tipo ticket por un id
+        [HttpGet]
+        [Route("Consulta/(\"{id}\")")]
+        public async Task<ActionResult<ApplicationResponse<Tipo_TicketDTOSearch>>> GetByGuidCtrl(Guid id)
+
+        {
+            var response = new ApplicationResponse<Tipo_TicketDTOSearch>();
+            try
+            {
+                response.Data = await _ticketDAO.ConsultarTipoTicketGUID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+
+        //GET: Controlador para consultar una tipo de ticket por un nombre específico
+        [HttpGet]
+        [Route("Consulta/{nombre}")]
+        public async Task<ApplicationResponse<Tipo_TicketDTOSearch>> GetBynombreCtrl(string nombre)
+        {
+            var response = new ApplicationResponse<Tipo_TicketDTOSearch>();
+            try
+            {
+                response.Data = await _ticketDAO.ConsultarTipoTicketNomb(nombre);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //DELETE: Controlador para eliminar tipo ticket
+        [HttpDelete]
+        [Route("Elimina/(\"{id}\")")]
+        public async Task<ApplicationResponse<String>> EliminarTipoTicketCtrl(Guid id)
+        {
+            var response = new ApplicationResponse<String>();
+
+            try
+            {
+
+                var result = _ticketDAO.EliminarTipoTicket(id);
+                response.Data = result.ToString();
+            }
+
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
 
 
+        }
 
         // DELETE: api/Tipo_Ticket/5
         /*[HttpDelete("{id}")]
