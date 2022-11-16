@@ -16,12 +16,10 @@ namespace ServicesDeskUCABWS.Controllers
     public class PlantillaNotificacionController:ControllerBase
     {
         private readonly IPlantillaNotificacion _plantilla;
-        private readonly IMapper _mapper;
 
-        public PlantillaNotificacionController(IPlantillaNotificacion plantilla, IMapper mapper)
+        public PlantillaNotificacionController(IPlantillaNotificacion plantilla)
         {
-            _plantilla = plantilla;
-            _mapper = mapper;   
+            _plantilla = plantilla; 
         }
 
         //GET: Controlador para consultar todas las plantillas
