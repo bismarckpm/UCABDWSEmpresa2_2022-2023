@@ -77,6 +77,85 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         }
 
         [TestMethod]
+        public void CaminoFelizUpdateTicketSinDepartamentos()
+        {
+            //arrange
+            Tipo_TicketDTOUpdate expected = new Tipo_TicketDTOUpdate()
+            {
+                Id = "36B2054E-BC66-4EA7-A5CC-7BA9137BC20E",
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_Jerarquico",
+                Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        OrdenAprobacion=2,
+                        Minimo_aprobado_nivel=1,
+                        Maximo_Rechazado_nivel=1
+                    },
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        OrdenAprobacion=1,
+                        Minimo_aprobado_nivel=1,
+                        Maximo_Rechazado_nivel=1
+                    }
+                },
+                
+            };
+            //TipoticketDAO.Setup(x => x.ValidarDatosEntradaTipo_Ticket(ticketDTO));
+
+            //act
+            var result = TipoticketDAO.ActualizarTipo_Ticket(expected);
+
+            //assert
+
+            Assert.AreEqual(result.Data.Departamento.Count(), 0);
+            Assert.AreEqual(result.Data.Flujo_Aprobacion.Count(), 2);
+
+            Assert.AreEqual(result.Data.nombre, "Mantenimiento");
+            Assert.AreEqual(result.Data.descripcion, "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento");
+            Assert.AreEqual(result.Data.tipo, "Modelo_Jerarquico");
+            Assert.IsNull(result.Data.Maximo_Rechazado);
+            Assert.IsNull(result.Data.Minimo_Aprobado);
+        }
+
+        [TestMethod]
+        public void CaminoFelizUpdateTicketModeloNoAprobacion()
+        {
+            //arrange
+            Tipo_TicketDTOUpdate expected = new Tipo_TicketDTOUpdate()
+            {
+                Id = "36B2054E-BC66-4EA7-A5CC-7BA9137BC20E",
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_No_Aprobacion",
+                
+                Departamento = new List<string>
+                {
+                    "CCACD411-1B46-4117-AA84-73EA64DEAC87",
+                    "19C117F4-9C2A-49B1-A633-969686E0B57E"
+                }
+            };
+            //TipoticketDAO.Setup(x => x.ValidarDatosEntradaTipo_Ticket(ticketDTO));
+
+            //act
+            var result = TipoticketDAO.ActualizarTipo_Ticket(expected);
+
+            //assert
+
+            Assert.AreEqual(result.Data.Departamento.Count(), 2);
+            Assert.AreEqual(result.Data.Flujo_Aprobacion.Count(), 0);
+
+            Assert.AreEqual(result.Data.nombre, "Mantenimiento");
+            Assert.AreEqual(result.Data.descripcion, "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento");
+            Assert.AreEqual(result.Data.tipo, "Modelo_No_Aprobacion");
+            Assert.IsNull(result.Data.Maximo_Rechazado);
+            Assert.IsNull(result.Data.Minimo_Aprobado);
+        }
+
+        [TestMethod]
         public void EntrarExceptionControl()
         {
             //arrange

@@ -7,7 +7,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 {
     public interface IVotos_TicketDAO
     {
-        public ApplicationResponse<Votos_TicketDTOCreate> Votar(Votos_TicketDTOCreate votoDTO);
+        public ApplicationResponse<Votos_Ticket> Votar(Votos_TicketDTOCreate votoDTO);
         bool AgregarVoto(List<Votos_Ticket> ListaVotos);
     }
 }
