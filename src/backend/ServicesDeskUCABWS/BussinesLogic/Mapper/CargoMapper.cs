@@ -12,7 +12,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
         {
             return new CargoDto
             {
-                id = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 nombre_departamental = car.nombre_departamental,
                 descripcion = car.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -23,7 +23,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
         {
             return new CargoDto
             {
-                id = car.id,
+                Id = car.id,
                 nombre_departamental = car.nombre_departamental,
                 descripcion = car.descripcion,
                 fecha_creacion = DateTime.Now.Date

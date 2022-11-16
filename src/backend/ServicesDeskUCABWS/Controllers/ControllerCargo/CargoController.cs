@@ -1,17 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
+
 
 namespace ServicesDeskUCABWS.Controllers.ControllerCargo
 {
-    [Route("api/[controller]")]
+    [Route("Cargo")]
     [ApiController]
     public class CargoController : ControllerBase
     {
@@ -28,7 +32,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
         //Crear Cargo
         [HttpPost]
         [Route("CrearCargo/")]
-        public ActionResult<CargoDto> CrearCargo([FromBody] CargoDto dto1)
+        public CargoDto CrearCargo([FromBody] CargoDto dto1)
         {
             try
             {
@@ -43,7 +47,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
         }
 
         [HttpGet]
-        [Route("ConsultarCargo/")]
+        [Route("consultarcargo/")]
         public ActionResult<List<CargoDto>> ConsultarCargos()
         {
             try
@@ -58,7 +62,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
         }
 
         [HttpGet]
-        [Route("ConsultarCargoPorID/{id}")]
+        [Route("consultarcargoporid/{id}")]
         public ActionResult<CargoDto> ConsultarPorID([FromRoute] Guid id)
         {
             try
@@ -73,7 +77,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
         }
 
         [HttpDelete]
-        [Route("EliminarCargo/{id}")]
+        [Route("eliminarcargo/{id}")]
         public ActionResult<CargoDto> EliminarCargo([FromRoute] Guid id)
         {
             try
@@ -86,8 +90,5 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
                 throw ex.InnerException!;
             }
         }
-
-
-
     }
 }

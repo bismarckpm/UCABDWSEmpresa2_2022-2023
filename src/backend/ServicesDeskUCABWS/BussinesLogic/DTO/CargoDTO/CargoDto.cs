@@ -5,7 +5,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO
     public class CargoDto
     {
         
-            public Guid id { get; set; }
+            public Guid Id { get; set; }
             public string nombre_departamental { get; set; }
             public string descripcion { get; set; }
             public DateTime fecha_creacion { get; set; }

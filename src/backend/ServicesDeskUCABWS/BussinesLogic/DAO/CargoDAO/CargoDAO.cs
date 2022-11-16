@@ -25,7 +25,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         }
 
         //Registrar un Cargo
-        public new CargoDto AgregarCargoDAO(Cargo cargo)
+        public CargoDto AgregarCargoDAO(Cargo cargo)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var nuevoCargo = _dataContext.Cargos.Where(c => c.id == cargo.id)
                                         .Select(c => new CargoDto
                                         {
-                                            id = c.id,
+                                            Id = c.id,
                                             nombre_departamental = c.nombre_departamental,
                                             descripcion = c.descripcion,
                                             fecha_creacion = c.fecha_creacion,
@@ -126,7 +126,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var lista = _dataContext.Cargos.Select(
                     c => new CargoDto
                     {
-                        id = c.id,
+                        Id = c.id,
                         nombre_departamental = c.nombre_departamental,
                         descripcion = c.descripcion,
                         fecha_creacion = c.fecha_creacion,

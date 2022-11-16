@@ -16,6 +16,8 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -36,7 +38,10 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddTransient<IGrupoDAO, GrupoDAO>();
-			services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddTransient<ICargoDAO, CargoDAO>();
+            services.AddTransient<ITipo_CargoDAO, Tipo_CargoDAO>();
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
