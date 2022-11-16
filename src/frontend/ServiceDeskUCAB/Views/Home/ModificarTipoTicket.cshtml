@@ -15,26 +15,30 @@
 
             <div class="mb-2">
                 <label class="form-label">Nombre</label>
-                <input type="text" class="form-control form-control-sm" asp-for="nombre" />
+                <input type="text" class="form-control form-control-sm" asp-for="nombre" required/>
             </div>
             <div class="mb-2">
                 <label class="form-label">Descripción</label>
-                <input type="text" class="form-control form-control-sm" asp-for="descripcion" />
+                <input type="text" class="form-control form-control-sm" asp-for="descripcion" required/>
             </div>
             <div class="mb-2">
                 <label class="form-label">Marca</label>
-                <input type="text" class="form-control form-control-sm" asp-for="tipo"/>
+                <input type="text" class="form-control form-control-sm" asp-for="tipo" required/>
             </div>
             <div class="mb-2">
                 <label class="form-label">Departamentos Asociados:</label>
                 <br>
-                <select multiple="multiple" style="width=100%;" id="lista" asp-for="Departamento">
-                    <option selected disabled>-- Seleccionar --</option>
+                <select multiple="multiple" style="width=100%;" id="lista" asp-for="Departamento" required>
+                    
+                    @foreach (var item in ViewData["Departamentos"] as List<Depa>)
+                    {
+                            <option value=@item.Id.ToString()>@item.nombre</option>
+                    }
                 </select>
             </div>
             <div class="mb-2">
-                <label class="form-label">Precio</label>
-                <input type="number" class="form-control form-control-sm" asp-for="Minimo_Aprobado" />
+                <label class="form-label">Minomo Aprobado</label>
+                <input type="number" class="form-control form-control-sm" asp-for="Minimo_Aprobado" required/>
             </div>
 
             <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>

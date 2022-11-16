@@ -70,12 +70,13 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ModificarTipoTicket(string id_tipo)
+        public async Task<IActionResult> ModificarTipoTicket(Tipo tipoTicket)
         {
 
-            var tipo = await _servicioApi.ObtenerTipoTicket(id_tipo);
+            var departamentos = await _servicioApi.ObtenerDepartamentos();
+            ViewData["Departamentos"] = departamentos;
 
-            return View(tipo);
+            return View(tipoTicket);
         }
 
         [HttpPost]

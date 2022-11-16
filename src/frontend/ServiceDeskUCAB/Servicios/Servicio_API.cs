@@ -30,7 +30,7 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("Tipo_Ticket/Consulta/");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("api/Tipo_Ticket");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -51,7 +51,7 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync($"Tipo_Ticket/Consulta/{id_tipo}");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync($"api/Tipo_Ticket/{id_tipo}");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -75,7 +75,7 @@ namespace ServiceDeskUCAB.Servicios
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("Tickets/");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -100,7 +100,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(tipo_ticket), Encoding.UTF8, "application/json");
 
 
-            var response = await cliente.PutAsync($"Tipo_Ticket/{tipo_ticket.Id.ToString()}", content);
+            var response = await cliente.PutAsync($"api/Tipo_Ticket/{tipo_ticket.Id.ToString()}", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -120,7 +120,7 @@ namespace ServiceDeskUCAB.Servicios
             cliente.BaseAddress = new Uri(_baseUrl);
 
 
-            var response = await cliente.DeleteAsync($"Tipo_Ticket/Eliminar/{idProducto}");
+            var response = await cliente.DeleteAsync($"api/Tipo_Ticket/Eliminar/{idProducto}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -142,7 +142,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(ticket), Encoding.UTF8, "application/json");
 
 
-            var response = await cliente.PutAsync($"Tickets", content);
+            var response = await cliente.PutAsync($"api/Tickets", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -164,7 +164,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(voto_ticket), Encoding.UTF8, "application/json");
 
 
-            var response = await cliente.PutAsync($"Tickets/votos", content);
+            var response = await cliente.PutAsync($"api/Tickets/votos", content);
 
             if (response.IsSuccessStatusCode)
             {
