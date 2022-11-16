@@ -82,6 +82,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                         Id = t.Id,
                         nombre = t.nombre,
                         descripcion = t.descripcion,
+                        nivel_jerarquia = t.nivel_jerarquia,
                         fecha_ult_edic = t.fecha_ult_edic
                     }
 

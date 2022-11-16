@@ -18,7 +18,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public string nivel_jerarquia { get; set; }
-        public DateTime fecha_creacion { get; set; }
+        public DateTime? fecha_creacion { get; set; }
         public DateTime? fecha_ult_edic { get; set; } = DateTime.Now.Date;
         public DateTime? fecha_eliminacion { get; set; }
 

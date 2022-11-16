@@ -87,7 +87,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
 
         [HttpPut]
         [Route("ActualizarTipo_Cargo/")]
-        public ActionResult<Tipo_CargoDto_Update> ActualizarTipo_Cargo([FromBody] Tipo_CargoDto_Update tipo)
+        public ActionResult<Tipo_CargoDto_Update> ActualizarTipo([FromBody] Tipo_CargoDto_Update tipo)
         {
             try
             {

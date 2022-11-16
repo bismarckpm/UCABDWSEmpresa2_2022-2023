@@ -49,12 +49,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
         {
             return new Tipo_Cargo
             {
-                Id = Guid.NewGuid(),
+                Id = tip.Id,
                 nombre = tip.nombre,
                 descripcion = tip.descripcion,
-                nivel_jerarquia = tip.nivel_jerarquia,
-                fecha_creacion = tip.fecha_creacion,
-                fecha_ult_edic = (DateTime)tip.fecha_ult_edic,
+                nivel_jerarquia = tip.nivel_jerarquia,               
+                fecha_ult_edic = (DateTime)tip.fecha_ult_edic
 
             };
         }
