@@ -87,7 +87,11 @@ namespace ServiceDeskUCAB.Servicios
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
-                var resultado = JsonConvert.DeserializeObject<List<Ticket>>(json_respuesta);
+                JArray dataRespuesta = JArray.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta.ToString();
+
+                var resultado = JsonConvert.DeserializeObject<List<Ticket>>(stringDataRespuesta);
 
                 lista = resultado;
             }

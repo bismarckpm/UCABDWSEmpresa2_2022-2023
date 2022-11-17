@@ -26,16 +26,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
+            @foreach (var item in Model) {
                 <tr>
                     <td>@item.titulo</td>
                     <td>@item.descripcion</td>
-                    <td>@item.Tipo_Ticket.nombre</td>
-                    <td>@item.Prioridad.nombre</td>
-                    <td>@item.Departamento_Destino.nombre</td>
-                    <td>@item.Emisor.correo</td>
-                    
+                    <!--<td>@item.Tipo_Ticket?.nombre</td>
+                    <td>@item.Prioridad?.nombre</td>
+                    <td>@item.Departamento_Destino?.nombre</td>
+                    <td>@item.Emisor?.correo</td>-->
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
