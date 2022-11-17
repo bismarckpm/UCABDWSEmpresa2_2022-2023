@@ -32,13 +32,13 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar todas los tipos estados
         [HttpGet]
         [Route("Consulta/")]
-        public async Task<ApplicationResponse<List<TipoEstadoDTO>>> ConsultaTipoEstadosCtrl()
+        public ApplicationResponse<List<TipoEstadoDTO>> ConsultaTipoEstadosCtrl()
         {
             var response = new ApplicationResponse<List<TipoEstadoDTO>>();
 
             try
             {
-                response.Data = await _tipoEstado.ConsultaTipoEstados();
+                response.Data = _tipoEstado.ConsultaTipoEstados();
             }
             catch (ExceptionsControl ex)
             {
@@ -52,13 +52,13 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar un tipo estado en especifico
         [HttpGet]
         [Route("Consulta/{id}")]
-        public async Task<ActionResult<ApplicationResponse<TipoEstadoDTO>>> GetByGuidCtrl(Guid id)
+        public ApplicationResponse<TipoEstadoDTO> GetByGuidCtrl(Guid id)
         {
             var response = new ApplicationResponse<TipoEstadoDTO>();
 
             try
             {
-                response.Data = await _tipoEstado.ConsultarTipoEstadoGUID(id);
+                response.Data = _tipoEstado.ConsultarTipoEstadoGUID(id);
             }
             catch (ExceptionsControl ex)
             {
@@ -73,12 +73,12 @@ namespace ServicesDeskUCABWS.Controllers
         //GET: Controlador para consultar una tipo estado por un título específico
         [HttpGet]
         [Route("Consulta/Titulo/{titulo}")]
-        public async Task<ApplicationResponse<TipoEstadoDTO>> GetByTituloCtrl(string titulo)
+        public ApplicationResponse<TipoEstadoDTO> GetByTituloCtrl(string titulo)
         {
             var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
-                response.Data = await _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
+                response.Data = _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
             }
             catch (ExceptionsControl ex)
             {
@@ -89,15 +89,15 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
-        //POST: Controlador para crear tipo estado **
+        //POST: Controlador para crear tipo estado
         [HttpPost]
         [Route("Registro/")]
-        public async Task<ApplicationResponse<String>> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var resultSevice = await _tipoEstado.RegistroTipoEstado(tipoEstadoDTO);
+                var resultSevice = _tipoEstado.RegistroTipoEstado(tipoEstadoDTO);
                 response.Data = resultSevice.ToString();
             }
             catch (ExceptionsControl ex)
@@ -112,12 +112,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public async Task<ApplicationResponse<String>> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var resultSevice = await _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);
+                var resultSevice = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);
                 response.Data = resultSevice.ToString();
             }
             catch (ExceptionsControl ex)
@@ -132,12 +132,12 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar tipo estado
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public async Task<ApplicationResponse<String>> EliminarTipoEstadoCtrl(Guid id)
+        public ApplicationResponse<String> EliminarTipoEstadoCtrl(Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var resultSevice = await _tipoEstado.EliminarTipoEstado(id);
+                var resultSevice = _tipoEstado.EliminarTipoEstado(id);
                 response.Data = resultSevice.ToString();
                       
             }

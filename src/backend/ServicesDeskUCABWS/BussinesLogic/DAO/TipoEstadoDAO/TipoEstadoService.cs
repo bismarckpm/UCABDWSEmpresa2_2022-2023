@@ -35,11 +35,11 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //GET: Servicio para consultar todos los tipos estados
-        public async Task<List<TipoEstadoDTO>> ConsultaTipoEstados()
+        public List<TipoEstadoDTO> ConsultaTipoEstados()
         {
             try
             {
-                var data = await _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToListAsync();
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList();
                 var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoDTO>>(data);
                 return tipoEstadoSearchDTO;
             }catch(Exception ex)
@@ -49,11 +49,11 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //GET: Servicio para consultar una plantilla notificacion en especifico
-        public async Task<TipoEstadoDTO> ConsultarTipoEstadoGUID(Guid id)
+        public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id)
         {
             try
             {
-                var data = await _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.Id == id).SingleAsync();
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.Id == id).Single();
                 var tipoEstadoSearchDTO = _mapper.Map<TipoEstadoDTO>(data);
                 return tipoEstadoSearchDTO;
             }
@@ -65,11 +65,11 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //GET: Servicio para consultar una tipo estado por un título específico
-        public async Task<TipoEstadoDTO> ConsultarTipoEstadoTitulo(string titulo)
+        public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo)
         {
             try
             {
-                var data = await _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.nombre == titulo).SingleAsync();
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.nombre == titulo).Single();
                 var tipoEstadoSearchDTO = _mapper.Map<TipoEstadoDTO>(data);
                 return tipoEstadoSearchDTO;
             }
@@ -80,7 +80,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //POST: Servicio para crear tipo estado
-        public async Task<Boolean> RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
+        public Boolean RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
 
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
 
-                await _tipoEstadoContext.DbContext.SaveChangesAsync();
+                _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
             }
             catch (ExceptionsControl ex)
@@ -112,12 +112,12 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //PUT: Servicio para actualizar tipo estado
-        public async Task<Boolean> ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
+        public Boolean ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
         {
             try
             {
                
-                var tipoEstadoEntity = await _tipoEstadoContext.Tipos_Estados.Include(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(et => et.Id == id).SingleAsync();
+                var tipoEstadoEntity = _tipoEstadoContext.Tipos_Estados.Include(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(et => et.Id == id).Single();
                 tipoEstadoEntity.etiquetaTipoEstado.Clear();
 
                 if (tipoEstadoAct.etiqueta!=null && tipoEstadoAct.etiqueta.Count() > 0 )
@@ -126,7 +126,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
                 tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
                 tipoEstadoEntity.descripcion = tipoEstadoAct.descripcion;
                 _tipoEstadoContext.Tipos_Estados.Update(tipoEstadoEntity);
-                await _tipoEstadoContext.DbContext.SaveChangesAsync();
+                _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
             }
             catch (ExceptionsControl ex)
@@ -135,11 +135,11 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
             }
             catch (InvalidOperationException ex)
             {
-                throw new ExceptionsControl("Se esta intentando asociar a la misma etiqueta mas de una vez", ex);
+                throw new ExceptionsControl("Se esta intentando asociar a la misma etiqueta más de una vez", ex);
             }
             catch (DbUpdateException ex)
             {
-                throw new ExceptionsControl("alguno de los campos requeridos del tipo de estado está vacio", ex);
+                throw new ExceptionsControl("Alguno de los campos requeridos del tipo de estado está vacio", ex);
             }
             catch (Exception ex)
             {
@@ -149,20 +149,20 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //DELETE: Servicio para eliminar el tipo estado
-        public async Task<Boolean> EliminarTipoEstado(Guid id)
+        public Boolean EliminarTipoEstado(Guid id)
         {
             try
             {
               
-                var plantilla = await _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefaultAsync();
+                var plantilla = _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefault();
                 if (plantilla != null)
                 {
                     plantilla.TipoEstadoId = null;
                     _tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
                 }
-                var tipoEstado = await _tipoEstadoContext.Tipo_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).SingleAsync();
+                var tipoEstado = _tipoEstadoContext.Tipo_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
                 _tipoEstadoContext.Tipo_Estados.Remove(tipoEstado);
-                await _tipoEstadoContext.DbContext.SaveChangesAsync();
+                _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
             }
             catch (DbUpdateException ex)
