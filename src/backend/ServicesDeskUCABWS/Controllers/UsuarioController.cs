@@ -123,6 +123,24 @@ namespace ServicesDeskUCABWS.Controllers
 
         }
 
+        [HttpGet]
+        [Route("Consulta/Usuario/{id}")]
+        public ApplicationResponse<Usuario> GetByTipoEstadoIdCtrl(Guid id)
+        {
+            var response = new ApplicationResponse<Usuario>();
+            try
+            {
+                response.Data = _usuarioDAO.consularUsuarioID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
         public ApplicationResponse<String> EliminarDepartamento([FromRoute] Guid id)

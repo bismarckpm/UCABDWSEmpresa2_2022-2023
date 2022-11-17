@@ -25,6 +25,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             _mapper = mapper;
         }
 
+        public Usuario consularUsuarioID(Guid id)
+        {
+            try
+            {
+                var data = _dataContext.Usuarios.AsNoTracking().Where(p => p.Id == id).Single();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
+            }
+            
+        }    
+
         public Administrador AgregarAdminstrador(Usuario usuario)
         {
             try
