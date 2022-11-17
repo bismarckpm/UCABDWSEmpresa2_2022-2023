@@ -89,7 +89,7 @@
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input required type="text" asp-for="tipo.nombre" name="nombre"/>
+                        <input required type="text" asp-for="tipo.nombre" name="nombre" />
 
 
                     </div>
@@ -98,6 +98,7 @@
                         <label for="message-text" class="col-form-label">Descripción:</label>
                         <textarea class="form-control" id="message-text" asp-for="tipo.descripcion" name="descripcion"></textarea>
                     </div>
+
                     <div class="container p-2 my-2 border">
                         <div class="mb-3">
                             <h6>Registro Modelo Aprobacion:</h6>
@@ -121,6 +122,30 @@
                                             <input name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.idTipoCargo" class="form-check-input" value="@cargos.Id" type="checkbox" id="@cargos.Id">
                                             <label class="form-check-label">@cargos.nombre</label>
                                             <br />
+
+                                        </div>
+                                    }
+
+                                    Mínimo Aprobado:
+                                    <input required type="text" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado"></input>
+
+                                    Máximo Rechazado:
+                                    <input required type="text" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado"></input>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="Modelo_Jerarquico" style="display: none;">
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">Cargos Asociados:</label>
+                                    @foreach (var cargos in Model.ListaCargos)
+                                    {
+
+                                        <div class="form-check form-switch">
+                                            <input name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.idTipoCargo" class="form-check-input" value="@cargos.Id" type="checkbox" id="@cargos.Id">
+                                            <label class="form-check-label">@cargos.nombre</label>
+                                            <br />
                                             Orden Aprobación:
                                             <input type="text" name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.ordenAprobacion" class="form-control" style="width : 60px">
                                             Mínimo Aprobado Nivel:
@@ -130,47 +155,34 @@
 
                                         </div>
                                     }
-                                Mínimo Aprobado:
-                                 <input required type="text" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado"></input>
 
-                                Máximo Rechazado:
-                                <input required type="text" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado"></input>
-                            </div>
-
-
-                            <div class="mb-3" id="Modelo_Jerarquico" style="display: none;">
-
-
-                                <div class="mb-3">
-                                    <label class="form-label">Cargos Asociados:</label>
-                                    @foreach (var cargos in Model.ListaCargos){
-
-                                        <div class="form-check form-switch">
-                                            <input name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.idTipoCargo" class="form-check-input" value="@cargos.Id" type="checkbox" id="@cargos.Id">
-                                            <label class="form-check-label">@cargos.nombre</label>
-                                            <br />
-                                            Orden Aprobación:
-                                            <input type="text" name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.ordenAprobacion" class="form-control" style="width : 60px">
-                                            Mínimo Aprobado Nivel:
-                                             <input name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.minimo_aprobado_nivel" type="text" class="form-control" style="width : 60px">
-                                            Máximo Rechazado Nivel:
-                                            <input name="flujoAprobacion.idTipoCargo" asp-for="tipoCargoNuevo.maximo_Rechazado_nivel" type="text" class="form-control" style="width : 60px">
-
-                                        </div>
-                                    }
-                                    
                                 </div>
 
 
-                                
+
 
                             </div>
                             <div class="mb-3" id="Modelo_No_Aprobacion" style="display: none;">
-                                No requiere Aprobación
+                                <div class="mb-3">
+                                    No requiere aprobacion
+                                </div>
 
                             </div>
 
+                            <div class="mb-2">
+                                <label class="form-label">Departamentos Asociados:</label>
+                                @foreach (var departamentos in Model.ListaDepartamento)
+                                {
 
+                                    <br>
+
+                                    <div class="form-check form-switch">
+                                        <input name="departamentos" class="form-check-input" value="@departamentos.Id" type="checkbox" id="@departamentos.Id">
+                                        <label class="form-check-label">@departamentos.nombre</label>
+
+                                    </div>
+                                }
+                            </div>
 
 
 
@@ -199,23 +211,11 @@
 
                             </script>
 
+
                         </div>
-                      
 
-                        <div class="mb-2">
-                        <label class="form-label">Departamentos Asociados:</label>
-                            @foreach (var departamentos in Model.ListaDepartamento)
-                            {
-                               
-                                <br>
 
-                                <div class="form-check form-switch">
-                                    <input name="departamentos" class="form-check-input" value="@departamentos.Id" type="checkbox" id="@departamentos.Id">
-                                    <label class="form-check-label">@departamentos.nombre</label>
 
-                                </div>
-                            }
-                        </div>
                     </div>
 
 
