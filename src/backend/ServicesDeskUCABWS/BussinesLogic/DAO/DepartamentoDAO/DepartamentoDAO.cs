@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
@@ -9,6 +10,7 @@ using ServicesDeskUCABWS.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
@@ -60,12 +62,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				var departamento = _dataContext.Departamentos
                            .Where(d => d.id == id).First();
 
-				if (ExisteDepartamento(departamento) == false)
-				{
+
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
 					_dataContext.SaveChanges();
-				}
+
 				return DepartamentoMapper.MapperEntityToDto(departamento);
 
             }
@@ -80,10 +81,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
-                if (ExisteDepartamento(departamento) == false) {
                     _dataContext.Departamentos.Update(departamento);
                     _dataContext.SaveChanges();
-                }
 
                 var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
@@ -106,7 +105,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         //Consultar Departamento por ID
         public DepartamentoDto ConsultarPorID(Guid id)
         {
-           
             try {
 
 				var departamento = _dataContext.Departamentos
@@ -119,9 +117,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-
         //Consulta todos los departamentos (Eliminados y disponibles)
-
         public List<DepartamentoDto> ConsultarDepartamentos()
         {
             try
@@ -236,5 +232,48 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
             return existe;
 		}
-	}
+
+        public List<DepartamentoDto> NoAsociado()
+        {
+			try
+			{
+				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null).Select(
+					d => new DepartamentoDto
+					{
+						id = d.id,
+						nombre = d.nombre,
+						descripcion = d.descripcion,
+						fecha_creacion = d.fecha_creacion,
+						fecha_ultima_edicion = d.fecha_ultima_edicion,
+						fecha_eliminacion = d.fecha_eliminacion
+					}
+				);
+				return lista.ToList();
+			}
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("No hay departamentos registrados", ex);
+			}
+		}
+
+		public IEnumerable<SelectListItem> ListaDepartamentoGrupo()
+        {
+			IEnumerable<SelectListItem> listaDept;
+            try
+            {
+				listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion == null)
+	                .Select(x => new SelectListItem
+	                   {    
+		                    Text = x.nombre,
+		                    Value = Convert.ToString(x.id)
+	                    }).ToList();
+
+			}
+            catch (Exception ex)
+            {
+				throw new ExceptionsControl("Algo salio mal", ex);
+			}
+			return listaDept;
+        }
+    }
 }

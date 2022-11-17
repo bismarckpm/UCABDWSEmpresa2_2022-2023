@@ -109,6 +109,12 @@
     </script>
 }
 
+    <!-- Placeholders de las ventanas emergentes (Grupo)-->
+    <div id="PlaceHolderAgregarGrupo"></div>
+    <div id="PlaceHolderEliminarGrupo"></div>
+    <div id="PlaceHolderModificarGrupo"></div>
+    <div id="PlaceHolderVisualizarGrupo"></div>
+
     <!-- Placeholders de las ventanas emergentes (Departamento)-->
      <div id="PlaceHolderAgregarDepartamento"></div>
     <div id="PlaceHolderEliminarDepartamento"></div>
@@ -156,18 +162,10 @@
 
 </table>
 
-<!-- Placeholders de las ventanas emergentes (Grupo)-->
-<div id="PlaceHolderAgregarGrupo"></div>
-<div id="PlaceHolderEliminarGrupo"></div>
-<div id="PlaceHolderModificarGrupo"></div>
-<div id="PlaceHolderVisualizarGrupo"></div>
-
 <!-- Boton Agregar Grupo -->
 <button id=btnAgregarGrupo type="button" class="btn btn-primary" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("AgregarGrupo")">
     Crear Grupo
 </button>
-<br />
-<br />
 
 <!-- Tabla Grupos -->
 <table class="table">
@@ -178,14 +176,13 @@
         <th>
             Descripcion
         </th>
-
     </tr>
 
     @foreach (var item in Model.Item2)
     {
         <tr>
             <td class="id" style="display:none" ;>
-                @Html.DisplayFor(i => item.Id)
+                @Html.DisplayFor(i => item.id)
             </td>
             <td>
                 @Html.DisplayFor(i => item.nombre)
@@ -194,19 +191,16 @@
                 @Html.DisplayFor(i => item.descripcion)
             </td>
             <td>
-                <button id=btnVisualizar type="button" class="btn btn-success btn-sm" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamentoAsociado","DepartamentoYGrupo",new { id = "idGrupo"})">
+                <button id=btnVisualizar type="button" class="btn btn-success btn-sm" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","DepartamentoYGrupo",new { id = "idGrupo"})">
                     Visualizar
                 </button>
-                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","DepartamentoYGrupo",new { id = "idGrupo" })">
+                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
                     Editar
                 </button>
-                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","DepartamentoYGrupo",new { id = "idGrupo" })">
+                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
                     Eliminar
                 </button>
             </td>
- 
         </tr>
     }
 </table>
-
-

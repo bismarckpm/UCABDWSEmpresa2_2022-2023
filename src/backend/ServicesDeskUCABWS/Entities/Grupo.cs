@@ -8,7 +8,7 @@ namespace ServicesDeskUCABWS.Entities
     public class Grupo
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         [Required]
         [StringLength(50)]
         public string nombre { get; set; } = string.Empty;
