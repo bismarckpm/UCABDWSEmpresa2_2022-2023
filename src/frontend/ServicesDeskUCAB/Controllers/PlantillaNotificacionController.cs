@@ -124,7 +124,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
                 return RedirectToAction("PlantillasNotificacion", new { message = "Se ha eliminado correctamente" });
                 //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
-                return NoContent();
+                return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
         }
     }
 }

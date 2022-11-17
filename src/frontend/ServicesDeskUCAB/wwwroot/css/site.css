@@ -16,3 +16,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+div#tabla_id_paginate a {
+    border: solid 1px #ccc;
+}
+
+div#tabla_id_paginate a.current {
+    background: #272727;
+    color: white !important;
+}
+
+div#tabla_id_paginate a.current:hover {
+    background: #272727;
+    color: white !important;
+}
+
+div#tabla_id_paginate a:hover, div#tabla_id_paginate a:active {
+    background: #eee;
+    color: #272727 !important;
+    box-shadow: none;
+}
