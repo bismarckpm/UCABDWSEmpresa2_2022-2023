@@ -25,7 +25,7 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarUsuario(Usuarios plantilla)
+        public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 
             JObject respuesta;

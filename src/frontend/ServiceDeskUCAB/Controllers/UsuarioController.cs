@@ -7,7 +7,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models;
-using ServicesDeskUCABWS.Entities;
+using ServiceDeskUCAB.Models.Enums;
 
 namespace ServicesDeskUCAB.Controllers
 {
@@ -24,7 +24,7 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Usuarios()
         {
-            List<Usuarios> ListaPlantillas = await _servicioApiUsuarios.Lista();
+            List<UsuariosRol> ListaPlantillas = await _servicioApiUsuarios.Lista();
             return View(ListaPlantillas);
         }
 
@@ -49,21 +49,32 @@ namespace ServicesDeskUCAB.Controllers
             JObject respuesta;
             respuesta = await _servicioApiUsuarios.Eliminar(id);
             if ((bool)respuesta["success"])
-                return RedirectToAction("DepartamentoGrupo", new { message = "Se ha eliminado correctamente" });
+                return RedirectToAction("Usuarios");
             else
                 return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarUsuario(Usuarios plantilla)
+        public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 
             JObject respuesta;
 
             try
             {
-                respuesta = await _servicioApiUsuarios.Guardar(plantilla);
-
+                if (plantilla.Rol == Rol.Administrador)
+                {
+                    respuesta = await _servicioApiUsuarios.GuardarAdminstrador(plantilla);
+                }
+                else if(plantilla.Rol == Rol.Usuario)
+                {
+                    respuesta = await _servicioApiUsuarios.GuardarEmpleado(plantilla);
+                }
+                else 
+                {
+                    respuesta = await _servicioApiUsuarios.Guardar(plantilla);
+                }
+                
                 if ((bool)respuesta["success"])
                 {
                     return RedirectToAction("Usuarios");

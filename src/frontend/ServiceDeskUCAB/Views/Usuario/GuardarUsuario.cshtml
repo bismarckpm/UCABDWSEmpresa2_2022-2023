@@ -1,17 +1,10 @@
-﻿@model ServiceDeskUCAB.Models.Usuarios
+﻿@model ServiceDeskUCAB.Models.UsuariosRol
 
   
 @{
     ViewData["Title"] = "GuardarUsuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var list = new SelectList(new []
-    {
-        new {ID="1", Name="volvo"},
-        new {ID="2", Name="saab"},
-        new {ID="3", Name="mercedes"},
-        new {ID="4", Name="audi"},
-    },
-    "ID", "Name", 1);
+
 }
 
 
@@ -24,7 +17,7 @@
                 <div class="card-body p-md-5">
                     <div class="row justify-content-center">
                         
-            @using (Html.BeginForm("GuardarUsuario","Login",FormMethod.Post)){ 
+            @using (Html.BeginForm("GuardarUsuario","Usuario",FormMethod.Post)){ 
                         
                         <div class="row">
                             <div class="col-md-3">
@@ -55,7 +48,8 @@
                                  <span class="text-danger" ></span>
                             </div>
                             <div class="col-6">
-                                    @Html.TextBoxFor(x => x.fecha_nacimiento, new {Class="form-control" })
+                                    <label for="inputPassword4" class="form-label">Fecha de Nacimiento</label>
+                                    @Html.TextBoxFor(x => x.fecha_nacimiento, new {Class="form-control " ,Style="border-radius: 10px",Type="date",})
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                             <div class="col-6">
@@ -75,11 +69,9 @@
                             </div>
                             <div class="col-6">
                                 <label for="inputAddress" class="form-label">Genero</label>
-                                <select style="border-radius: 10px" class="form-control" aria-label=".form-select-lg example">
-                                    <option selected>Rol</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Empleado">Empleado</option>
-                                </select>
+                                    @Html.DropDownListFor(m => m.Rol,
+                                new SelectList(Enum.GetValues(typeof(Rol))),
+                                "Select Gender", new {Style="border-radius: 10px",Class="form-control"})
                                 <span class="text-danger"></span>
                             </div>
                             <div style="padding-top: 12px;margin-right: 8pc;" class="d-flex justify-content-end">

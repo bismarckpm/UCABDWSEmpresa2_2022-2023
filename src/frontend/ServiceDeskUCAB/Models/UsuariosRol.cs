@@ -1,9 +1,10 @@
-﻿using ServicesDeskUCABWS.Entities;
+﻿
+using ServiceDeskUCAB.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceDeskUCAB.Models
 {
-    public class Usuarios
+    public class UsuariosRol
     {
         public Guid id { get; set; }    
         public int cedula { get; set; }
@@ -15,11 +16,18 @@ namespace ServiceDeskUCAB.Models
         public string gender { get; set; }
         public string correo { get; set; } = string.Empty;
         public string password { get; set; } = string.Empty;
+        public Rol Rol { get; set; }
     }
 
     public enum Gender
     {
         M,
         F
+    }
+    public enum Rol
+    {
+        Administrador,
+        Usuario,
+        Cliente
     }
 }

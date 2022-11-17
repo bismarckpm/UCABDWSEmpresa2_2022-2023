@@ -10,8 +10,11 @@ namespace ServiceDeskUCAB.Servicios
 {
     public interface IServicioUsuario_API
     {
-        Task<List<Usuarios>> Lista();
-        Task<JObject> Guardar(Usuarios usuarios);
+        Task<List<UsuariosRol>> Lista();
+        Task<JObject> Guardar(UsuariosRol usuarios);
         Task<JObject> Eliminar(Guid id);
+        Task<JObject> GuardarEmpleado(UsuariosRol usuarios);
+        Task<JObject> GuardarAdminstrador(UsuariosRol usuarios);
+
     }
 }

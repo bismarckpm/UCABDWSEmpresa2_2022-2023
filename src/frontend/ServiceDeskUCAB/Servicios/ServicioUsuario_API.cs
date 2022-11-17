@@ -24,7 +24,7 @@ namespace ServiceDeskUCAB.Servicios
             {
                 BaseAddress = new Uri(_baseUrl)
             };
-            var response = await usuario.DeleteAsync($"api/Usuario/EliminarUsuario{id}");
+            var response = await usuario.DeleteAsync($"api/Usuario/EliminarUsuario/{id}");
 
             var respuesta = await response.Content.ReadAsStringAsync();
             JObject json_respuesta = JObject.Parse(respuesta);
@@ -32,7 +32,7 @@ namespace ServiceDeskUCAB.Servicios
             return json_respuesta;
         }
 
-        public async Task<JObject> Guardar(Usuarios usuarios)
+        public async Task<JObject> Guardar(UsuariosRol usuarios)
         {
             HttpClient cliente = new()
             {
@@ -63,9 +63,71 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
         }
 
-        public async Task<List<Usuarios>> Lista()
+        public async Task<JObject> GuardarEmpleado(UsuariosRol usuarios)
         {
-            List<Usuarios> listaUsuarios = new();
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            string json = await Task.Run(() => JsonConvert.SerializeObject(usuarios));
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Console.WriteLine(JsonConvert.SerializeObject(usuarios));
+
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/CrearEmpleado", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+        }
+
+        public async Task<JObject> GuardarAdminstrador(UsuariosRol usuarios)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            string json = await Task.Run(() => JsonConvert.SerializeObject(usuarios));
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Console.WriteLine(JsonConvert.SerializeObject(usuarios));
+
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/CrearAdminstrador", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+        }
+
+        public async Task<List<UsuariosRol>> Lista()
+        {
+            List<UsuariosRol> listaUsuarios = new();
 
             var cliente = new HttpClient
             {
@@ -83,7 +145,7 @@ namespace ServiceDeskUCAB.Servicios
 
                     //Obtengo la data del json respuesta
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<Usuarios>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<UsuariosRol>>(stringDataRespuesta);
 
                     //var resultado = JsonConvert.DeserializeObject<List<PlantillaNotificacion>>(json_respuesta);
                     listaUsuarios = resultado;

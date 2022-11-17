@@ -1,4 +1,4 @@
-﻿@model List<ServiceDeskUCAB.Models.Usuarios>
+﻿@model List<ServiceDeskUCAB.Models.UsuariosRol>
 @{
     ViewData["Title"] = "Usuarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -62,8 +62,11 @@
     {
         <tr>
             <td class="id" style="display:none" ;>
-                @Html.DisplayFor(i => item.id) @Html.DisplayFor(i => item.segundo_nombre)
+                @Html.DisplayFor(i => item.id) 
             </td>
+            <th>
+                @Html.DisplayFor(i => item.segundo_nombre)
+            </th>
             <td>
                 @Html.DisplayFor(i => item.primer_nombre) @Html.DisplayFor(i => item.segundo_nombre)
             </td>
