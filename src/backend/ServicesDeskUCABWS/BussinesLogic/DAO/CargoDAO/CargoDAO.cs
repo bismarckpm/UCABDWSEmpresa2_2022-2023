@@ -79,7 +79,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
         //Actualizar Cargo
         
-        public CargoDto_Update ActualizarCargos(Cargo cargo)
+        public CargoDto_Update ActualizarCargo(Cargo cargo)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         }
 
         //Consultar Cargo por ID
-        public CargoDto ConsultarCargoPorID(Guid id)
+        public CargoDto ConsultarPorID(Guid id)
         {
             var cargo = _dataContext.Cargos
                 .Where(c => c.id == id).First();
@@ -147,14 +147,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
         }
 
-        public CargoDto ConsultarPorID(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CargoDto_Update CargoDto_Update(Cargo cargo)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

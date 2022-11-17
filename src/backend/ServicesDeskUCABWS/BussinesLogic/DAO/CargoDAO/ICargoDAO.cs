@@ -11,6 +11,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         public List<CargoDto> ConsultarCargos();
         public CargoDto ConsultarPorID(Guid id);
         public CargoDto eliminarCargo(Guid id);
-        public CargoDto_Update CargoDto_Update(Cargo cargo);
+        public CargoDto_Update ActualizarCargo(Cargo cargo);
     }
 }

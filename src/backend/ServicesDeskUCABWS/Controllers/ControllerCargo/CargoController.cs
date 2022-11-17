@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -90,5 +91,25 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
                 throw ex.InnerException!;
             }
         }
+
+        [HttpPut]
+        [Route("ActualizarCargo/")]
+        public ActionResult<CargoDto_Update> ActualizarCargos([FromBody] CargoDto_Update cargo)
+        {
+            try
+            {
+                return _cargoDAO.ActualizarCargo(CargoMapper.MapperDTOToEntityModificar(cargo));
+                //Cambiar parametros cuando realicemos frontend
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
+                throw ex.InnerException!;
+            }
+        }
+
+
+
     }
 }
