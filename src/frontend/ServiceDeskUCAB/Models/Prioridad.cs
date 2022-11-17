@@ -5,15 +5,12 @@ namespace ServiceDeskUCAB.Models
 {
     public class Prioridad
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; } = string.Empty;
-        public string descripcion { get; set; } = string.Empty;
+        public string descripcion { get; set; }
+        public DateTime fecha_descripcion { get; set; }
+        public DateTime fecha_ultima_edic { get; set; }
+        public string estado { get; set; }
 
-        public Prioridad(string nombre, string descripcion)
-        {
-            Id = Guid.NewGuid();
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-        }
     }
 }

@@ -17,7 +17,6 @@
     <table id="table_id" class="display">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Titulo</th>
                 <th>Descripción</th>
                 <th>Tipo</th>
@@ -30,18 +29,13 @@
             @foreach (var item in Model)
             {
                 <tr>
-
-                    <td>@item.Id</td>
                     <td>@item.titulo</td>
                     <td>@item.descripcion</td>
-                    <td>@item.Tipo_Ticket</td>
-                    <td>@item.Prioridad</td>
-                    <td>@item.Departamento_Destino</td>
-                    <td>@item.Emisor</td>
-                   
-                    <td></td>
+                    <td>@item.Tipo_Ticket.nombre</td>
+                    <td>@item.Prioridad.nombre</td>
+                    <td>@item.Departamento_Destino.nombre</td>
+                    <td>@item.Emisor.correo</td>
                     
-                 
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,104 +53,9 @@
                 </tr>
             }
 
-
-
-
         </tbody>
     </table>
 </div>
-
-<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Nueva prioridad</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    <div class="container p-2 my-2 border">
-                        <div class="mb-2">
-                            <h6>Registro Modelo Aprobacion:</h6>
-                            <label class="form-label">Tipo Modelo Aprobación:</label>
-                            <select class="form-select form-select-sm">
-                                <option selected disabled>-- Seleccionar --</option>
-                                <option value="Paralelo">Paralelo</option>
-                                <option value="Jerarquico">Jerarquico</option>
-                                <option value="Default">Default</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Departamentos Asociados:</label>
-                        <br>
-                        <select multiple="multiple" style="width=100%;" id="lista">
-                            <option selected disabled>-- Seleccionar --</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Cargos Asociados:</label>
-                        <br>
-                        <select multiple="multiple" style="width=100%;" id="lista">
-                            <option selected disabled>-- Seleccionar --</option>
-
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="votarModalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Modificar Tipo Ticket "nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="VotarTicket" asp-controller="Home" method="post">
-                    <div class="container p-2 my-2 border">
-                        <div class="mb-2">
-                            <h6>Modificar Modelo Aprobacion:</h6>
-                            <label class="form-label">Tipo Modelo Aprobación:</label>
-                            <select id="voto" class="form-select form-select-sm"> <!--asp-for="voto" -->
-                                <option selected disabled>-- Seleccionar --</option>
-                                <option value="Aprobado">Aprobado</option>
-                                <option value="Rechazado">Rechazado</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Comentario:</label>
-                        <textarea class="form-control"  id="comentario"></textarea> <!--asp-for="comentario"-->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 
 <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -168,7 +67,7 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "nombre del tipo"?</label>
+                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este ticket?</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

@@ -1,4 +1,4 @@
-﻿@model Ticket
+﻿@model NuevoTicket
 @{
     ViewData["Title"] = "Agregar Ticket";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,13 +6,11 @@
 
 <div class="card">
     <div class="card-header">
-        Modificar Tipo Ticket
+        Agregar Ticket
     </div>
     <div class="card-body">
 
-        <form asp-action="AregarTicket" asp-route-Emisor="usuario" asp-controller="Home" method="post">
-            <input type="hidden" asp-for="Id" required />
-
+        <form asp-action="GuardarTicket" asp-route-Emisor="F57E4EEC-635C-4970-975A-3DC9A7BFDB52" asp-controller="Home" method="post">
             <div class="mb-2">
                 <label class="form-label">Titulo</label>
                 <input type="text" class="form-control form-control-sm" asp-for="titulo" required />
@@ -23,16 +21,18 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Prioridad</label>
-                <select type="text" class="form-control form-control-sm" asp-for="Prioridad" required >
-                   <!--@foreach (var item in ViewData["Prioridades"] as List<Prioridad>)
+                <select type="text" class="form-control form-control-sm" asp-for="prioridad" required >
+                                <option selected disabled>-- Seleccionar --</option>
+                   @foreach (var item in ViewData["Prioridades"] as List<Prioridad>)
                     {
-                            <option value=@item.Id.ToString()>@item.nombre</option>
-                    }-->
+                            <option value=@item.id.ToString()>@item.nombre</option>
+                    }
                 </select> 
             </div>
             <div class="mb-2">
                 <label class="form-label">Tipo de Ticket</label>
-                <select type="text" class="form-control form-control-sm" asp-for="Tipo_Ticket" required >
+                <select type="text" class="form-control form-control-sm" asp-for="tipo_Ticket" required >
+                                <option selected disabled>-- Seleccionar --</option>
                     @foreach (var item in ViewData["Tipos"] as List<Tipo>)
                     {
                         <option value=@item.Id.ToString()>@item.nombre</option>
@@ -41,7 +41,8 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Departamento Destino</label>
-                <select type="text" class="form-control form-control-sm" asp-for="Departamento_Destino" required >
+                <select type="text" class="form-control form-control-sm" asp-for="departamento_Destino" required >
+                                <option selected disabled>-- Seleccionar --</option>
                     @foreach (var item in ViewData["Departamentos"] as List<Departament>)
                     {
                             <option value=@item.Id.ToString()>@item.nombre</option>

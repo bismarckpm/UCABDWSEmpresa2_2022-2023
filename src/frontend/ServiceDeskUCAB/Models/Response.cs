@@ -4,10 +4,10 @@ namespace ServiceDeskUCAB.Models
 {
     public class ApplicationResponse<T> where T : class
     {
-        public string Message { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
-        public T Data { get; set; }
-        public bool Success { get; set; } = true;
-        public string Exception { get; set; }
+        public string? message { get; set; }
+        public HttpStatusCode statusCode { get; set; }
+        public T data { get; set; }
+        public bool success { get; set; } = true;
+        public string? exception { get; set; }
     }
 }

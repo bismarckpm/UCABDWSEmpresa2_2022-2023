@@ -138,18 +138,19 @@ namespace ServiceDeskUCAB.Servicios
         }
 
         //Método para Agregar Ticket desde el front
-        public async Task<bool> AgregarTicket(Ticket ticket)
+        public async Task<bool> AgregarTicket(NuevoTicket ticket)
         {
             bool respuesta = false;
-
 
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var content = new StringContent(JsonConvert.SerializeObject(ticket), Encoding.UTF8, "application/json");
+            var json = JsonConvert.SerializeObject(ticket);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-
-            var response = await cliente.PutAsync($"api/Tickets", content);
+            var response = await cliente.PostAsync("api/Tickets", content);
+            var res = await response.Content.ReadAsStringAsync();
+            JObject _json_respuesta = JObject.Parse(res);
 
             if (response.IsSuccessStatusCode)
             {
@@ -197,7 +198,7 @@ namespace ServiceDeskUCAB.Servicios
 
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Departament>>>(json_respuesta);
 
-                lista = resultado.Data;
+                lista = resultado.data;
             }
             return lista;
         }
@@ -218,7 +219,7 @@ namespace ServiceDeskUCAB.Servicios
 
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Prioridad>>>(json_respuesta);
 
-                lista = resultado.Data;
+                lista = resultado.data;
             }
             return lista;
         }

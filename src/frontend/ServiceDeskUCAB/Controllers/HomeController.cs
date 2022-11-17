@@ -41,7 +41,7 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> AgregarTicket()
         {
 
-            var ticket = new Ticket() {Id = new Guid()};
+            var ticket = new NuevoTicket();
 
             var departamentos = await _servicioApi.ObtenerDepartamentos();
             var prioridades = await _servicioApi.ObtenerPrioridades();
@@ -54,10 +54,10 @@ namespace ServiceDeskUCAB.Controllers
             return View(ticket);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GuardarTicket(Ticket ticket, string Emisor)
+        [HttpPost]
+        public async Task<IActionResult> GuardarTicket(NuevoTicket ticket, string Emisor)
         {
-            ticket.Emisor = Emisor;
+            ticket.emisor = Emisor;
             var respuesta = await _servicioApi.AgregarTicket(ticket);
 
             if (respuesta)

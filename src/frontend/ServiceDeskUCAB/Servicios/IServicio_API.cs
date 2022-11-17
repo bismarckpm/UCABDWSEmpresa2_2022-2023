@@ -8,7 +8,7 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<Tipo>> Lista();
         Task<bool> Eliminar(int idProducto);
         Task<bool> Modificar(Tipo tipo_ticket);
-        Task<bool> AgregarTicket(Ticket ticket);
+        Task<bool> AgregarTicket(NuevoTicket ticket);
         Task<bool> VotarTicket(VotarTicket voto_ticket);
         Task<List<Ticket>> ListaTickets();
 
