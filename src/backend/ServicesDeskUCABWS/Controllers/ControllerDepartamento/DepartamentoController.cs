@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Exceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -148,20 +149,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 			return response;
 		}
 
-        [HttpGet("AsignarGrupoToDepartamento/{idGrupo}")]
-        public ActionResult<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
+		[HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
         {
-            try
+			var response = new ApplicationResponse<List<DepartamentoDto>>();
+			try
             {
-                return _departamentoDAO.GetByIdDepartamento(idGrupo);
+                response.Data = _departamentoDAO.GetByIdDepartamento(idGrupo);
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
-            }
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response; 
         }
-
-        [HttpPost("ConsultarDepartamentosPorIdGrupo/{idGrupo}/{idDept}")]
+		[HttpPut("AsignarGrupoToDepartamento/{idGrupo}/{idDept}")]
         public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
         {
             try
@@ -174,5 +178,32 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
         }
 
-    }
+        [HttpGet("ConsultarDepartamentoNoAsociado/")]
+        public ActionResult<List<DepartamentoDto>> ListaDepartamentoNoAsociado() {
+            try
+            {
+                return _departamentoDAO.NoAsociado();
+            } catch (Exception ex)
+            {
+				throw ex.InnerException!;
+			}
+        }
+
+        [HttpGet("SelectListItemDepartamento/")]
+		public ApplicationResponse<IEnumerable<SelectListItem>> ListaDepartamentoSelectList()
+		{
+			var response = new ApplicationResponse<IEnumerable<SelectListItem>>();
+			try
+			{
+				response.Data= _departamentoDAO.ListaDepartamentoGrupo();
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
+	}
 }

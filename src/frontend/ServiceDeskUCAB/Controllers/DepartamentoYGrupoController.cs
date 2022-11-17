@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
@@ -117,6 +118,76 @@ namespace ServiceDeskUCAB.Controllers
 				Console.WriteLine(ex.ToString());
 			}
 			return NoContent();
+		}
+
+		/////////////
+		///Operaciones de grupo
+		////////////
+
+		//Retorna el modal con los departamentos que estan asociados a un grupo
+		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
+		{
+			List<DepartamentoModel> departamento = new List<DepartamentoModel>();
+			GrupoModel model = new GrupoModel();
+
+			try
+			{
+				model = await _servicioApiGrupo.BuscarGrupo(id);
+				ViewData["nombre"] = model.nombre;
+				departamento = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
+				return PartialView(departamento);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
+		//Retorna el modal de confirmación para eliminar un grupo
+		public async Task<IActionResult> VentanaEliminarGrupo(Guid id)
+		{
+			try
+			{
+				return PartialView(id);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
+		//
+		[HttpGet]
+		public async Task<IActionResult> EliminarGrupo(Guid id)
+		{
+			JObject respuesta;
+			respuesta = await _servicioApiGrupo.EliminarGrupo(id);
+			if ((bool)respuesta["success"])
+				return RedirectToAction("DepartamentoGrupo", new { message = "Se ha eliminado correctamente" });
+			else
+				return NoContent();
+		}
+
+		//Retorna el modal para registrar un grupo nuevo
+		public async Task<IActionResult> AgregarGrupo()
+		{
+			GrupoModel grupo = new GrupoModel();
+			var tupla = new Tuple<DepartamentoModel, GrupoModel> (null, null);
+
+			try
+			{
+				tupla = await _servicioApiGrupo.tuplaModelDepartamento();
+				return PartialView(tupla);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+			return NoContent();
+		}
+
+		//
+		public async Task<IActionResult> RegistrarGrupo(FormCollection frm) {
+			Console.WriteLine(frm.TryGetValue);
+			return RedirectToAction("DepartamentoGrupo");	
 		}
 	}
 }

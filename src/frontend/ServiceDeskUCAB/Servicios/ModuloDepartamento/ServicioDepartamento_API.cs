@@ -5,6 +5,7 @@ using ServiceDeskUCAB.Models;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.Entities;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
@@ -41,8 +42,8 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 		//Carga la lista de departamentos y grupos
 		public async Task<Tuple<List<DepartamentoDto>, List<GrupoDto>>> ListaDepartamentoGrupo()
         {
-            List<DepartamentoDto> listaDepartamento = new();
-            List<GrupoDto> listaGrupo = new();
+            List<DepartamentoDto> listaDepartamento = new List<DepartamentoDto>();
+            List<GrupoDto> listaGrupo = new List<GrupoDto>();
 
             var cliente = new HttpClient
             {
@@ -52,14 +53,14 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             try
             {
                 var responseDept = await cliente.GetAsync("Departamento/ConsultarDepartamentoNoEliminado");
-                var responseGrupo = await cliente.GetAsync("Grupo/ConsultarGrupo");
+                var responseGrupo = await cliente.GetAsync("Grupo/ConsultarGrupoNoEliminado/");
 
                 if (responseDept.IsSuccessStatusCode && responseGrupo.IsSuccessStatusCode)
                 {
                     var respuestaDept = await responseDept.Content.ReadAsStringAsync();
                     JObject json_respuestaDept = JObject.Parse(respuestaDept);
 
-                    var respuestaGrupo = await responseDept.Content.ReadAsStringAsync();
+                    var respuestaGrupo = await responseGrupo.Content.ReadAsStringAsync();
                     JObject json_respuestaGrupo = JObject.Parse(respuestaGrupo);
 
 
@@ -68,7 +69,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
                     var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoDto>>(stringDataRespuestaDept);
 
                     //Obtengo la data del json respuesta Grupo
-                    string stringDataRespuestaGrupo = json_respuestaDept["data"].ToString();
+                    string stringDataRespuestaGrupo = json_respuestaGrupo["data"].ToString();
                     var resultadoGrupo = JsonConvert.DeserializeObject<List<GrupoDto>>(stringDataRespuestaGrupo);
 
 
@@ -180,6 +181,38 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 			}
 
 			return _json_respuesta;
+		}
+
+		public async Task<List<DepartamentoModel>> DepartamentoAsociadoGrupo(Guid id)
+		{
+			DepartamentoModel departamento = new DepartamentoModel();
+
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			try
+			{
+				var responseDept = await cliente.GetAsync($"Departamento/ConsultarDepartamentosPorIdGrupo/{id}");
+
+				if (responseDept.IsSuccessStatusCode)
+				{
+					var respuestaDept = await responseDept.Content.ReadAsStringAsync();
+					JObject json_respuestaDept = JObject.Parse(respuestaDept);
+
+					string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
+					var resultadoDept = JsonConvert.DeserializeObject <List<DepartamentoModel>>(stringDataRespuestaDept);
+					departamento.departamentos = resultadoDept;
+				}
+
+
+			}
+			catch (Exception ex)
+			{
+					throw ex.InnerException!;
+			}
+			return departamento.departamentos;
 		}
 	}
 }
