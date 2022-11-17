@@ -15,24 +15,22 @@ namespace ServicesDeskUCABWS.Controllers
         public class EtiquetaController : ControllerBase
         {
             private readonly IEtiqueta _etiqueta;
-            private readonly IMapper _mapper;
 
-            public EtiquetaController(IEtiqueta etiqueta, IMapper mapper)
+            public EtiquetaController(IEtiqueta etiqueta)
             {
                 _etiqueta = etiqueta;
-                _mapper = mapper;
             }
 
             //GET: Controlador para consultar todas las etiquetas
             [HttpGet]
             [Route("Consulta/")]
-            public async Task<ApplicationResponse<List<EtiquetaDTO>>> ConsultaEtiquetasCtrl()
+            public ApplicationResponse<List<EtiquetaDTO>> ConsultaEtiquetasCtrl()
             {
                 var response = new ApplicationResponse<List<EtiquetaDTO>>();
 
                 try
                 {
-                    response.Data = await _etiqueta.ConsultaEtiquetas();
+                    response.Data = _etiqueta.ConsultaEtiquetas();
                 }
                 catch (ExceptionsControl ex)
                 {
@@ -46,13 +44,13 @@ namespace ServicesDeskUCABWS.Controllers
             //GET: Controlador para consultar una etiqueta en especifico
             [HttpGet]
             [Route("Consulta/{id}")]
-            public async Task<ActionResult<ApplicationResponse<EtiquetaDTO>>> GetEtiquetaByGuidCtrl(Guid id)
+            public ApplicationResponse<EtiquetaDTO> GetEtiquetaByGuidCtrl(Guid id)
         {
                 var response = new ApplicationResponse<EtiquetaDTO>();
 
                 try
                 {
-                    response.Data = await _etiqueta.ConsultarEtiquetaGUID(id);
+                    response.Data = _etiqueta.ConsultarEtiquetaGUID(id);
                 }
                 catch (ExceptionsControl ex)
                 {

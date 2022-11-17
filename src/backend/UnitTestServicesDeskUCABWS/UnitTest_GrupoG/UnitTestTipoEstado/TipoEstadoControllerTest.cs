@@ -131,9 +131,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         }
 
 
-    //*
-    //PRUEBAS UNITARIAS para crear tipo estado (CONTROLLER)
-    //*
+//*
+//PRUEBAS UNITARIAS para crear tipo estado (CONTROLLER)
+//*
 
         [TestMethod(displayName: "Prueba Unitaria controlador para crear tipo estado exitoso")]
         public void CrearTipoEstadoCtrlTest()

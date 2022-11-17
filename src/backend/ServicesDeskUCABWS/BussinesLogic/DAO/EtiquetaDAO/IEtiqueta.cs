@@ -7,7 +7,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
 {
     public interface IEtiqueta
     {
-        public Task<List<EtiquetaDTO>> ConsultaEtiquetas();
-        public Task<EtiquetaDTO> ConsultarEtiquetaGUID(Guid id);
+        public List<EtiquetaDTO> ConsultaEtiquetas();
+        public EtiquetaDTO ConsultarEtiquetaGUID(Guid id);
     }
 }
