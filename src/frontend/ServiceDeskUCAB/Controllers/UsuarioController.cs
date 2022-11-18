@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.Enums;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
 namespace ServicesDeskUCAB.Controllers
 {
@@ -43,6 +44,8 @@ namespace ServicesDeskUCAB.Controllers
             return PartialView(id);
         }
 
+
+
         [HttpGet]
         public async Task<IActionResult> EliminarUsuario(Guid id)
         {
@@ -54,6 +57,50 @@ namespace ServicesDeskUCAB.Controllers
                 return NoContent();
         }
 
+        public async Task<IActionResult> ViewUsuario(Guid id)
+        {
+           
+            try
+            {
+                UsuariosRol usuario = new UsuariosRol();
+
+                usuario = await _servicioApiUsuarios.MostrarInfoUsuario(id);
+                var rol = await _servicioApiUsuarios.ObtenerRoles(usuario.id);
+                if (rol.idrol == new Guid("8C8A156B-7383-4610-8539-30CCF7298161"))
+                {
+                    usuario.Rol = Rol.Cliente;
+                }else if (rol.idrol == new Guid("8C8A156B-7383-4610-8539-30CCF7298162"))
+                {
+                    usuario.Rol = Rol.Administrador;
+                }
+                else
+                {
+                    usuario.Rol = Rol.Usuario;
+                }
+                return View(usuario);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
+
+        public async Task<IActionResult> ModificarUsuario(UsuariosRol user)
+        {
+            try
+            {
+                JObject respuesta;
+                respuesta = await _servicioApiUsuarios.EditarUsuario(user);
+                if ((bool)respuesta["success"])
+                    return RedirectToAction("Usuario", new { message = "Se ha modificado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
         [HttpPost]
         public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
@@ -63,7 +110,8 @@ namespace ServicesDeskUCAB.Controllers
             try
             {
                 if (plantilla.Rol == Rol.Administrador)
-                {
+                {   
+
                     respuesta = await _servicioApiUsuarios.GuardarAdminstrador(plantilla);
                 }
                 else if(plantilla.Rol == Rol.Usuario)

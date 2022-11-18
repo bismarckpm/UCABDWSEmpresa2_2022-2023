@@ -1,10 +1,10 @@
-﻿using ServicesDeskUCABWS.Entities;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServiceDeskUCAB.Models;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -15,6 +15,9 @@ namespace ServiceDeskUCAB.Servicios
         Task<JObject> Eliminar(Guid id);
         Task<JObject> GuardarEmpleado(UsuariosRol usuarios);
         Task<JObject> GuardarAdminstrador(UsuariosRol usuarios);
+        Task<UsuariosRol> MostrarInfoUsuario(Guid id);
+        Task<JObject> EditarUsuario(UsuariosRol user);
+        Task<Roles> ObtenerRoles(Guid roles);
 
     }
 }

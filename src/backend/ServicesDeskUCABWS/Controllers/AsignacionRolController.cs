@@ -28,6 +28,24 @@ namespace ServicesDeskUCABWS.Controllers
             _log = log;
         }
 
+        [HttpGet]
+        [Route("AsignacionRol/{id}")]
+        public ApplicationResponse<RolUsuarioDTO> GetRolByUser(Guid id)
+        {
+            var response = new ApplicationResponse<RolUsuarioDTO>();
+            try
+            {
+                response.Data = _userRol.consularRolID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         [HttpDelete]
         [Route("EliminarRol/{user}/{rol}")]
         public ApplicationResponse<String> CrearDepartamento([FromRoute] Guid user, [FromRoute] Guid rol)

@@ -5,10 +5,10 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class RolUsuario
     {
-        public Guid UserId { get; set; }
+        public Guid userid { get; set; }
         [JsonIgnore]
         public Usuario User { get; set; }
-        public Guid RolId { get; set; }
+        public Guid rolid { get; set; }
         [JsonIgnore]
         public Rol Rol { get; set; }
     }

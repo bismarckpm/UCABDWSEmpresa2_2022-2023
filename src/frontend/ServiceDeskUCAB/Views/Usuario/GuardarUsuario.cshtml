@@ -68,7 +68,7 @@
                                 <span class="text-danger"></span>
                             </div>
                             <div class="col-6">
-                                <label for="inputAddress" class="form-label">Genero</label>
+                                <label for="inputAddress" class="form-label">Rol</label>
                                     @Html.DropDownListFor(m => m.Rol,
                                 new SelectList(Enum.GetValues(typeof(Rol))),
                                 "Select Gender", new {Style="border-radius: 10px",Class="form-control"})

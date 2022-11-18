@@ -22,18 +22,18 @@ namespace ServicesDeskUCABWS.Data
                 .HasValue<Empleado>("2")
                 .HasValue<Cliente>("3");
 
-            modelBuilder.Entity<RolUsuario>().HasKey(sc => new { sc.UserId, sc.RolId });
+            modelBuilder.Entity<RolUsuario>().HasKey(sc => new { sc.userid, sc.rolid });
 
             modelBuilder.Entity<RolUsuario>()
                 .HasOne<Usuario>(sc => sc.User)
                 .WithMany(s => s.Roles)
-                .HasForeignKey(sc => sc.UserId);
+                .HasForeignKey(sc => sc.userid);
 
 
             modelBuilder.Entity<RolUsuario>()
                 .HasOne<Rol>(sc => sc.Rol)
                 .WithMany(s => s.Usuarios)
-                .HasForeignKey(sc => sc.RolId);
+                .HasForeignKey(sc => sc.rolid);
         }
 
         //Creacion de los DbSeT

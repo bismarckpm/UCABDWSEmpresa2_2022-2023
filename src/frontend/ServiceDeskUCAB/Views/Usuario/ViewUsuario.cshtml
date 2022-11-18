@@ -1,0 +1,71 @@
+﻿@model ServiceDeskUCAB.Models.UsuariosRol
+@{
+    ViewData["Title"] = "ViewUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section style="">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center"><img style="width:25%;" src="https://cdn.discordapp.com/attachments/461277491844349953/1042989230680440932/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" /></div>
+                    
+                    <div class="row justify-content-center">
+
+                        
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Nombres</label>
+                            @Html.TextBoxFor(m => m.primer_nombre,new { @Value= Model.primer_nombre,Style="border-radius: 10px", Class="form-control",placeholder="Primer nombre",type="Text",@disabled = "disabled" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div style="padding-top: 8px" class="col-md-3">
+                            <label for="inputPassword4" class="form-label"></label>
+                            @Html.TextBoxFor(m => m.segundo_nombre,new { @Value= Model.segundo_nombre,Style="border-radius: 10px", Class="form-control",placeholder="Segundo nombre",type="Text",@disabled = "disabled" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputPassword4" class="form-label">Apellidos</label>
+                            @Html.TextBoxFor(m => m.primer_apellido,new { @Value= Model.primer_apellido,Style="border-radius: 10px", Class="form-control",placeholder="Primer nombre",type="Text",@disabled = "disabled" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div style="padding-top: 8px" class="col-md-3">
+                            <label for="inputPassword4" class="form-label"></label>
+                            @Html.TextBoxFor(m => m.segundo_apellido,new { @Value= Model.segundo_apellido,Style="border-radius: 10px", Class="form-control",placeholder="Segundo nombre",type="Text",@disabled = "disabled" })
+                            <span class="text-danger"></span>
+                        </div>
+
+                        <div class="col-6">
+                            <label for="inputAddress" class="form-label">Genero</label>
+                            @Html.TextBoxFor(m => m.gender,new { @Value= Model.gender,Style="border-radius: 10px", Class="form-control",placeholder="Segundo nombre",type="Text",@disabled = "disabled" })
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-6">
+                            <label for="inputPassword4" class="form-label">Fecha de Nacimiento</label>
+                            @Html.TextBoxFor(x => x.fecha_nacimiento, new {@Value= Model.fecha_nacimiento,Class="form-control " ,Style="border-radius: 10px",Type="date",@disabled = "disabled"})
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCity" class="form-label">Cedula (ID)</label>
+                            @Html.TextBoxFor(m => m.cedula,new { @Value= Model.cedula,Style="border-radius: 10px", Class="form-control",placeholder="Cedula",type="Text",@disabled = "disabled"})
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCity" class="form-label">Correo Electronico</label>
+                            @Html.TextBoxFor(m => m.correo,new { @Value= Model.correo,Style="border-radius: 10px", Class="form-control",placeholder="Email",type="Text",@disabled = "disabled"})
+                            <span class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputCity" class="form-label">Rol</label>
+                            @Html.TextBoxFor(m => m.Rol,new { @Value= Model.Rol,Style="border-radius: 10px", Class="form-control",placeholder="Email",type="Text",@disabled = "disabled"})
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

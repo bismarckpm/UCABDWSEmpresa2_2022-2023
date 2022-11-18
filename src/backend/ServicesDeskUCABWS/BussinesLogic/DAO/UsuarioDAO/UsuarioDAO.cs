@@ -34,7 +34,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
+                throw new ExceptionsControl("No existe un usuario con ese ID", ex);
             }
             
         }    
@@ -47,8 +47,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    UserId = usuario.Id,
-                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298162")
+                    userid = usuario.Id,
+                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298162")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();
@@ -90,8 +90,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    UserId = usuario.Id,
-                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298161")
+                    userid = usuario.Id,
+                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298161")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();
@@ -133,8 +133,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    UserId = usuario.Id,
-                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298163")
+                    userid = usuario.Id,
+                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298163")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();

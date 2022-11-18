@@ -33,11 +33,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 _dataContext.RolUsuarios.Add(rolUsuario);
                 _dataContext.SaveChanges();
 
-                var nuevoRolUsuario = _dataContext.RolUsuarios.Where(rolu => rolu.UserId == rolUsuario.UserId && rolu.RolId == rolUsuario.RolId)
+                var nuevoRolUsuario = _dataContext.RolUsuarios.Where(rolu => rolu.userid == rolUsuario.userid && rolu.rolid == rolUsuario.rolid)
                                         .Select(d => new RolUsuarioDTO
                                         {
-                                            IdUsuario = d.UserId,
-                                            IdRol = d.RolId,
+                                            idusuario = d.userid,
+                                            idrol = d.userid,
                                         });
 
                 return nuevoRolUsuario.First();
@@ -50,12 +50,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
 
 
         }
+
+        public RolUsuarioDTO consularRolID(Guid usuario)
+        {
+            try
+            {
+                var data = _dataContext.RolUsuarios.AsNoTracking().Where(p => p.userid == usuario).Single();
+                var user = new RolUsuarioDTO { idrol = data.rolid,idusuario = data.userid };
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
+            }
+        }
+
         public RolUsuarioDTO EliminarRol(Guid user, Guid Rol)
         {
             try
             {
                 var rolusuario = _dataContext.RolUsuarios
-                .Where(u => u.UserId == user && u.RolId == Rol).First();
+                .Where(u => u.userid == user && u.rolid == Rol).First();
 
                 _dataContext.RolUsuarios.Remove(rolusuario);
                 _dataContext.SaveChanges();
@@ -77,8 +92,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 var lista = _dataContext.RolUsuarios.Select(
                     roluser => new RolUsuarioDTO
                     {
-                        IdRol = roluser.RolId,
-                        IdUsuario = roluser.UserId,
+                        idrol = roluser.rolid,
+                        idusuario = roluser.userid,
                     });
 
 

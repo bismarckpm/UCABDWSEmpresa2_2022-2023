@@ -33,10 +33,6 @@
 <a href="@Url.Action("GuardarUsuarioView")" class="btn btn-primary btn-sm">Crear</a>
 </div>
 
-<div class="d-flex justify-content-end">
-    <a href="@Url.Action("RegistrarUsuario")" class="btn btn-primary btn-sm">Crear</a>
-</div>
-
 <table class="table">
     <tr>
         <th>
@@ -65,11 +61,8 @@
                 @Html.DisplayFor(i => item.id) 
             </td>
             <th>
-                @Html.DisplayFor(i => item.segundo_nombre)
-            </th>
-            <td>
                 @Html.DisplayFor(i => item.primer_nombre) @Html.DisplayFor(i => item.segundo_nombre)
-            </td>
+            </th>
             <td>
                 @Html.DisplayFor(i => item.primer_apellido) @Html.DisplayFor(i => item.segundo_apellido)
             </td>
@@ -83,6 +76,9 @@
                 <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
                     Eliminar
                 </button>
+                <a type="button" class="btn btn-primary" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
+                    Aceptar
+                </a>
             </td>
         </tr>
     }

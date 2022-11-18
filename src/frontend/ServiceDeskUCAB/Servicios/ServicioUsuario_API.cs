@@ -108,7 +108,7 @@ namespace ServiceDeskUCAB.Servicios
 
             try
             {
-                var response = await cliente.PostAsync("api/Usuario/CrearAdminstrador", content);
+                var response = await cliente.PostAsync("api/Usuario/CrearAdministrador", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;
@@ -123,6 +123,37 @@ namespace ServiceDeskUCAB.Servicios
             }
 
             return _json_respuesta;
+        }
+
+        public async Task<Roles> ObtenerRoles(Guid id)
+        {
+            Roles roles = new();
+
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            try
+            {
+                var responseUser = await cliente.GetAsync($"api/AsignacionRol/AsignacionRol/{id}");
+
+                if (responseUser.IsSuccessStatusCode)
+                {
+                    var respuestaUser = await responseUser.Content.ReadAsStringAsync();
+                    JObject json_respuestaUser = JObject.Parse(respuestaUser);
+
+                    string stringDataRespuestaUser = json_respuestaUser["data"].ToString();
+                    Console.WriteLine(stringDataRespuestaUser);
+                    var resultadoUser = JsonConvert.DeserializeObject<Roles>(stringDataRespuestaUser);
+                    roles = resultadoUser;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+            return roles;
         }
 
         public async Task<List<UsuariosRol>> Lista()
@@ -163,5 +194,42 @@ namespace ServiceDeskUCAB.Servicios
 
             return listaUsuarios;
         }
+
+        public async Task<UsuariosRol> MostrarInfoUsuario(Guid id)
+        {
+            UsuariosRol usuario = new UsuariosRol();
+
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            try
+            {
+                var responseUser = await cliente.GetAsync($"api/Usuario/Consulta/Usuario/{id}");
+
+                if (responseUser.IsSuccessStatusCode)
+                {
+                    var respuestaUser = await responseUser.Content.ReadAsStringAsync();
+                    JObject json_respuestaUser = JObject.Parse(respuestaUser);
+
+                    string stringDataRespuestaDept = json_respuestaUser["data"].ToString();
+                    var resultadoDept = JsonConvert.DeserializeObject<UsuariosRol>(stringDataRespuestaDept);
+                    usuario = resultadoDept;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+            return usuario;
+        }
+
+        public Task<JObject> EditarUsuario(UsuariosRol user)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
