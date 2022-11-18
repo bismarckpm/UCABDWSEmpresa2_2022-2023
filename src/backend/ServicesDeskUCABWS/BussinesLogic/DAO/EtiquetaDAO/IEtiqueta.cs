@@ -1,9 +1,9 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO
 {
     public interface IEtiqueta
     {

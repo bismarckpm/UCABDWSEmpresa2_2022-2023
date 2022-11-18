@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.Entities;
 
-namespace ServicesDeskUCABWS.BussinessLogic.Mapper
+namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 {
     public class EtiquetaMapper:Profile
     {

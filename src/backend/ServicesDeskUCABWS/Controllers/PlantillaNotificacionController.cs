@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.Response;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using System.Threading.Tasks;
 
@@ -37,10 +37,8 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 response.Success = false;
                 response.Message = ex.Mensaje;
-                if (ex.Excepcion != null)
-                {
-                    response.Exception = ex.Excepcion.ToString();
-                }
+                response.Exception = ex.Excepcion.ToString();
+                
                 
             }
             return response;

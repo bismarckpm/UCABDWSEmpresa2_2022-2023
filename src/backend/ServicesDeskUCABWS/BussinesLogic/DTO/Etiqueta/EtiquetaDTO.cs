@@ -1,7 +1,7 @@
 using System;
 
 
-namespace ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta
 {
 	public class EtiquetaDTO
 	{

@@ -1,7 +1,7 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using System;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla
 {
     public class PlantillaNotificacionDTO
     {

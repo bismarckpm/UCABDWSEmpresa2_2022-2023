@@ -1,36 +1,28 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
+
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 {
     public class TipoEstadoService: ITipoEstado
     {
         private readonly IDataContext _tipoEstadoContext;
         private readonly IMapper _mapper;
-        private readonly IEtiqueta _etiqueta;
+        
         
 
-        public TipoEstadoService(DataContext tipoestadoContext, IMapper mapper, IEtiqueta etiqueta)
+        public TipoEstadoService(IDataContext tipoestadoContext, IMapper mapper)
         {
             _tipoEstadoContext = tipoestadoContext;
             _mapper = mapper;
-            _etiqueta = etiqueta;
+           
             
         }
 
@@ -41,8 +33,15 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
             {
                 var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList();
                 var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoDTO>>(data);
+                if (tipoEstadoSearchDTO.Count() == 0)
+                    throw new ExceptionsControl("No existen Tipos de estados registrados");
                 return tipoEstadoSearchDTO;
-            }catch(Exception ex)
+            }
+            catch (ExceptionsControl ex)
+            {
+                throw new ExceptionsControl("No existen Tipos de estados registrados", ex);
+            }
+            catch (Exception ex)
             {
                 throw new ExceptionsControl("Hubo un problema en la consulta", ex);
             }
@@ -112,7 +111,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         }
 
         //PUT: Servicio para actualizar tipo estado
-        public Boolean ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
+        public Boolean ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id)
         {
             try
             {
@@ -120,7 +119,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
                 var tipoEstadoEntity = _tipoEstadoContext.Tipos_Estados.Include(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(et => et.Id == id).Single();
                 tipoEstadoEntity.etiquetaTipoEstado.Clear();
 
-                if (tipoEstadoAct.etiqueta!=null && tipoEstadoAct.etiqueta.Count() > 0 )
+                if ( tipoEstadoAct.etiqueta.Count() > 0 )
                     tipoEstadoEntity.etiquetaTipoEstado = AñadirRelacionEtiquetaTipoEstado( id, tipoEstadoAct.etiqueta);
 
                 tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
@@ -133,10 +132,10 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
             {
                 throw new ExceptionsControl("Se esta intentando asociar a una etiqueta que no existe", ex);
             }
-            catch (InvalidOperationException ex)
-            {
-                throw new ExceptionsControl("Se esta intentando asociar a la misma etiqueta más de una vez", ex);
-            }
+            //catch (InvalidOperationException ex)
+            //{
+            //    throw new ExceptionsControl("Se esta intentando asociar a la misma etiqueta más de una vez", ex);
+            //}
             catch (DbUpdateException ex)
             {
                 throw new ExceptionsControl("Alguno de los campos requeridos del tipo de estado está vacio", ex);
@@ -160,8 +159,8 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
                     plantilla.TipoEstadoId = null;
                     _tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
                 }
-                var tipoEstado = _tipoEstadoContext.Tipo_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
-                _tipoEstadoContext.Tipo_Estados.Remove(tipoEstado);
+                var tipoEstado = _tipoEstadoContext.Tipos_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
+                _tipoEstadoContext.Tipos_Estados.Remove(tipoEstado);
                 _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
             }

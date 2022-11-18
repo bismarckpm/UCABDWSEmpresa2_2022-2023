@@ -1,11 +1,11 @@
 ﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 {
     public interface ITipoEstado
     {
@@ -13,7 +13,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO
         public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id);
         public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo);
         public Boolean RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
-        public Boolean ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id);
+        public Boolean ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id);
         public Boolean EliminarTipoEstado(Guid id);
     }
 }

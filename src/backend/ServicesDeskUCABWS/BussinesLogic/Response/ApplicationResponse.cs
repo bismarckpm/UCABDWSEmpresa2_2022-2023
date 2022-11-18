@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ServicesDeskUCABWS.Response
+namespace ServicesDeskUCABWS.BussinesLogic.Response
 {
     public class ApplicationResponse<T> where T : class
     {

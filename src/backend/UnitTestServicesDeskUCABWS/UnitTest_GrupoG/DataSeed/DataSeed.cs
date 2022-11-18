@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -29,7 +29,20 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
                         nombre = "Aprobado",
                         descripcion = "Cuando se aprueba un ticket",
-                        etiquetaTipoEstado = null
+                        etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
+                        {
+                            new EtiquetaTipoEstado
+                            {
+                                etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                                etiqueta = new Etiqueta
+                                {
+                                    Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                    nombre = "@Usuario",
+                                    descripcion = "hola"
+                                }
+                            }
+                        }
                     }
                 },
                 new PlantillaNotificacion
@@ -43,16 +56,82 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
                         nombre = "Rechazado",
                         descripcion = "Cuando se rechaza un ticket",
-                        etiquetaTipoEstado = null
+                        etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
+                        {
+                            new EtiquetaTipoEstado
+                            {
+                                etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                                etiqueta = new Etiqueta
+                                {
+                                    Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                    nombre = "@Usuario",
+                                    descripcion = "hola"
+                                }
+                            }
+                        }
                     }
                 },
             };
 
+            //var requestTipoEstado = new List<Tipo_Estado>
+            //{
+            //     new Tipo_Estado
+            //        {
+            //            Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+            //            nombre = "Aprobado",
+            //            descripcion = "Cuando se aprueba un ticket",
+            //            etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
+            //            {
+            //                new EtiquetaTipoEstado
+            //                {
+            //                    etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+            //                    tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+            //                    etiqueta = new Etiqueta
+            //                    {
+            //                        Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+            //                        nombre = "@Usuario",
+            //                        descripcion = "hola"
+            //                    }
+            //                }
+            //            }
+            //        },
+
+            //        new Tipo_Estado
+            //        {
+            //            Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+            //            nombre = "Rechazado",
+            //            descripcion = "Cuando se rechaza un ticket",
+            //            etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
+            //            {
+            //                new EtiquetaTipoEstado
+            //                {
+            //                    etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+            //                    tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+            //                    etiqueta = new Etiqueta
+            //                    {
+            //                        Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+            //                        nombre = "@Usuario",
+            //                        descripcion = "hola"
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    };
+
+            var requestTipoEstado = request.Select(q => q.TipoEstado).ToList();
+
             _mockContext.Setup(c => c.PlantillasNotificaciones).Returns(request.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Tipos_Estados).Returns(requestTipoEstado.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.PlantillasNotificaciones.Add(It.IsAny<PlantillaNotificacion>()));
             _mockContext.Setup(e => e.PlantillasNotificaciones.Update(It.IsAny<PlantillaNotificacion>()));
             _mockContext.Setup(e => e.PlantillasNotificaciones.Remove(It.IsAny<PlantillaNotificacion>()));
             _mockContext.Setup(set => set.DbContext.SaveChanges());
+
+            _mockContext.Setup(set => set.Tipos_Estados.Add(It.IsAny<Tipo_Estado>()));
+            _mockContext.Setup(e => e.Tipos_Estados.Update(It.IsAny<Tipo_Estado>()));
+            _mockContext.Setup(e => e.Tipos_Estados.Remove(It.IsAny<Tipo_Estado>()));
+
             //_mockContext.Setup(set => set.PlantillasNotificaciones.AddAsync(It.IsAny<PlantillaNotificacion>(),default));
             //_mockContext.Setup(c => c.DbContext.SaveChangesAsync(It.IsAny<CancellationToken>())).Verifiable();
             //_mockContext.Setup(m => m.DbContext.SaveChanges());
@@ -69,5 +148,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
 
             _mockContext.Setup(c => c.PlantillasNotificaciones).Returns(request.AsQueryable().BuildMockDbSet().Object);
         }
+
+        public static void SetUpContextDataTipoEstadoVacio(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Tipo_Estado>() { };
+
+            _mockContext.Setup(c => c.Tipos_Estados).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+       
     }
 }

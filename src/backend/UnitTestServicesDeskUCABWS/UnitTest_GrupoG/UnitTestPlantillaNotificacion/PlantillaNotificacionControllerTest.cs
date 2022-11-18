@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Controllers;
-using ServicesDeskUCABWS.Response;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificacion
 {

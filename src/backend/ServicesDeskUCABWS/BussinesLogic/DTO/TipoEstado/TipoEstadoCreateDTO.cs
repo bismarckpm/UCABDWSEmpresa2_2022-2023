@@ -1,10 +1,10 @@
 ﻿using ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado
 {
     public class TipoEstadoCreateDTO
     {

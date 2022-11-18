@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO
 {
     public class EtiquetaService : IEtiqueta
     {

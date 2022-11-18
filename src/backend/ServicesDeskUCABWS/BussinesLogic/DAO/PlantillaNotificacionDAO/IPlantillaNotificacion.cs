@@ -1,10 +1,10 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
 {
     public interface IPlantillaNotificacion
     {

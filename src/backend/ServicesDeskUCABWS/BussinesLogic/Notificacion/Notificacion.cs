@@ -1,4 +1,4 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+﻿using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -8,8 +8,8 @@ using System;
 using ServicesDeskUCABWS.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Notification
 {

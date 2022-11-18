@@ -1,15 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado;
+﻿using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.Response;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -112,7 +106,7 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody]TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoCreateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
             var response = new ApplicationResponse<String>();
             try

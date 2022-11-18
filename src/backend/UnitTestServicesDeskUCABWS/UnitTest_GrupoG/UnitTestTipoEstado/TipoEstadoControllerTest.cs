@@ -1,17 +1,10 @@
 ﻿using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Controllers;
-using ServicesDeskUCABWS.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 {
@@ -173,11 +166,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ActualizarTipoEstadoCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>())).Returns(true);
+            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>())).Returns(true);
             var application = new ApplicationResponse<String>();
 
             //act
-            var result = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>());
+            var result = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>());
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
@@ -188,10 +181,10 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ActualizarTipoEstadoCtrlExceptionTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>());
+            var ex = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>());
 
             //assert
             Assert.IsNotNull(ex);

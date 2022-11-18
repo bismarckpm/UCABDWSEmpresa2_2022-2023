@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla
 
 {
     public class PlantillaNotificacionDTOCreate

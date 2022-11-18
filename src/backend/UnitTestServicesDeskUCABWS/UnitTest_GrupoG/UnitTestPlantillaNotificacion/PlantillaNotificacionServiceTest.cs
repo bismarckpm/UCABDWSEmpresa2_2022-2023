@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
-using ServicesDeskUCABWS.BussinessLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.Mapper;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificacion
@@ -16,18 +15,18 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
     public class PlantillaNotificacionServiceTest
     {
         private readonly PlantillaNotificacionService _plantillaService;
-        private readonly Mock<IPlantillaNotificacion> _serviceMock;                                 //En el servicio podemos moquear la interfaz de nuestro servicio
         private readonly Mock<IDataContext> _contextMock;
         private readonly IMapper _mapper;
 
         public PlantillaNotificacionServiceTest()
         {
             _contextMock = new Mock<IDataContext>();
-            _serviceMock = new Mock<IPlantillaNotificacion>();
             var myProfile = new List<Profile>
             {
                 new PlantillaNotificacionMapper(),
-                new TipoEstadoMapper()
+                new TipoEstadoMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new EtiquetaMapper()
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
@@ -363,7 +362,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
 
 
 //*
-//PRUEBAS UNITARIAS PARA REGISTRO DE PLANTILLA NOTIFICACION
+//PRUEBAS UNITARIAS PARA ACTUALIZAR DE PLANTILLA NOTIFICACION
 //*
 
         [TestMethod(displayName: "Prueba Unitaria cuando la actualización de la plantilla notificación sea exitoso")]
@@ -441,9 +440,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             //assert
             Assert.AreEqual(expected.Mensaje, result.Mensaje);
             Assert.AreEqual(expected.GetType(), result.GetType());
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
         }
 
 //*

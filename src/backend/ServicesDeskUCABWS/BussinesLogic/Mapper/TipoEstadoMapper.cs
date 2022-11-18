@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.Entities;
 using System.Linq;
 
-namespace ServicesDeskUCABWS.Mapper
+namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 {
     public class TipoEstadoMapper:Profile
     {

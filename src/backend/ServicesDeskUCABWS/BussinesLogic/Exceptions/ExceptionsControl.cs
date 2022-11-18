@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServicesDeskUCABWS.BussinessLogic.Exceptions
+namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
 {
     public class ExceptionsControl:Exception
     {

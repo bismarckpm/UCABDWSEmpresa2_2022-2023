@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.Entities;
 
-namespace ServicesDeskUCABWS.BussinessLogic.Mapper
+namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 {
     public class PlantillaNotificacionMapper:Profile
     {
@@ -15,8 +15,7 @@ namespace ServicesDeskUCABWS.BussinessLogic.Mapper
             CreateMap<PlantillaNotificacion, PlantillaNotificacionDTOCreate>();
             CreateMap<PlantillaNotificacionDTOCreate, PlantillaNotificacion>();
 
-            CreateMap<PlantillaNotificacionDTO, PlantillaNotificacionUpdateDTO>();
-            CreateMap<PlantillaNotificacionUpdateDTO, PlantillaNotificacionDTO>();
+         
 
         }
     }

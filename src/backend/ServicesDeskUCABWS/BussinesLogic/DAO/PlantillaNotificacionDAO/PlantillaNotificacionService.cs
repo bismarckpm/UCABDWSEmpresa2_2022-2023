@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinessLogic.DAO.TipoEstadoDAO;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -15,7 +15,7 @@ using System.Net;
 using System.Net.Mail;
 using ServicesDeskUCABWS.BussinesLogic.Notification;
 
-namespace ServicesDeskUCABWS.BussinessLogic.DAO.PlantillaNotificacioneDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
 {
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {

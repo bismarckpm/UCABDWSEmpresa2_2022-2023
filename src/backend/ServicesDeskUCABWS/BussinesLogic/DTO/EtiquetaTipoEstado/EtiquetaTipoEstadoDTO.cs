@@ -1,5 +1,5 @@
-﻿using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.BussinessLogic.DTO.TipoEstado;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using System;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado

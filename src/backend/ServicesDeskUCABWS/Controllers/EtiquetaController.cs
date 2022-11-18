@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.BussinessLogic.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.Response;
-using ServicesDeskUCABWS.BussinessLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.BussinessLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Controllers
