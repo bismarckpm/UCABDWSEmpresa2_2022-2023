@@ -52,24 +52,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultarPlantillasRetornaVaciaServiceTest()
         {
             _contextMock.SetUpContextDataVacio();
-            //_contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl(""));
-            //Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultaPlantillas());
-            //arrange
-            var expected = new ExceptionsControl("No existen plantillas registradas", new ExceptionsControl());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                _plantillaService.ConsultaPlantillas();
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultaPlantillas());
         }
 
 
@@ -77,22 +61,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultarPlantillasRetornaExceptionServiceTest()
         {
             //arrange
-            var expected = new ExceptionsControl("Hubo un problema al consultar las plantillas", new Exception());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultaPlantillas();
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultaPlantillas());
         }
 
 
@@ -117,24 +87,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         [TestMethod(displayName: "Prueba Unitaria de la excepcion consulta de una plantilla por id que no existe")]
         public void ConsultaPlantillaIDExceptionServiceTest()
         {
-            //arrange
-            var id = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c87");
-            var expected = new ExceptionsControl("No existe la plantilla con ese ID", new Exception());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultarPlantillaGUID(id);
-            }
-            catch(ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);    
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultarPlantillaGUID(It.IsAny<Guid>()));
         }
 
 
@@ -160,23 +114,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultaPlantillaTituloExceptionServiceTest()
         {
             //arrange
-            var titulo = "Plantilla";
-            var expected = new ExceptionsControl("No existe la plantilla con ese título", new Exception());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultarPlantillaTitulo(titulo);
-            }
-            catch(ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultarPlantillaTitulo(It.IsAny<String>()));
         }
 
 
@@ -202,23 +141,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultaPlantillaTipoEstadoTituloExceptionServiceTest()
         {
             //arrange
-            var titulo = "Plantilla";
-            var expected = new ExceptionsControl("No existe la plantilla asociada a un tipo estado con ese titulo", new Exception());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultarPlantillaTipoEstadoTitulo(titulo);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultarPlantillaTipoEstadoTitulo(It.IsAny<String>()));
         }
 
 
@@ -244,23 +168,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultaPlantillaTipoEstadoIDIncompatibleServiceTest()
         {
             //arrange
-            var id = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c87");
-            var expected = new ExceptionsControl("No existe la plantilla con ese tipo estado", new InvalidOperationException());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new InvalidOperationException());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultarPlantillaTipoEstadoID(id);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new InvalidOperationException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>()));
         }
 
 
@@ -268,23 +177,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultaPlantillaTipoEstadoIDExceptionServiceTest()
         {
             //arrange
-            var id = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c8a");
-            var expected = new ExceptionsControl("Ocurrió un error durante la consulta", new ExceptionsControl());
-            var result = new ExceptionsControl();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl());
-
-            //act
-            try
-            {
-                _plantillaService.ConsultarPlantillaTipoEstadoID(id);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>()));
         }
 
 
@@ -316,23 +210,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionAgregarPlantillaCamposVacios()
         {
             //arrange
-            var expected = new ExceptionsControl("Ya existe una plantilla asociada a ese tipo estado o alguno de los campos de la plantilla está vacia", new DbUpdateException());
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
-            var result = new ExceptionsControl();
-            var plantillaTest = new PlantillaNotificacionDTOCreate() { Titulo = "Hola" };
-
-            //act
-            try
-            {
-                _plantillaService.RegistroPlantilla(plantillaTest);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new DbUpdateException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
 
@@ -340,24 +219,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionAgregarPlantilla()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo registrar la plantilla", new Exception());
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
-            var result = new ExceptionsControl();
-            var plantillaTest = new PlantillaNotificacionDTOCreate() { Titulo = "Hola" };
-
-            //act
-            try
-            {
-                _plantillaService.RegistroPlantilla(plantillaTest);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            //Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
 
@@ -390,30 +253,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ActualizarPlantillaIdTipoEstadoIncompatibleCamposVacios()
         {
             //arrange
-            var expected = new ExceptionsControl("Ya existe una plantilla asociada a ese tipo estado o alguno de los campos de la plantilla está vacia", new DbUpdateException());
-            var result = new ExceptionsControl();
-            var idUpdate = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c87");
-            var plantillaUpdate = new PlantillaNotificacionDTOCreate()
-            {
-                Titulo = "Plantilla Enviado",
-                Descripcion = null,
-                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-            };
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
-
-            //act
-            try
-            {
-                _plantillaService.ActualizarPlantilla(plantillaUpdate, idUpdate);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new DbUpdateException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
 
@@ -421,25 +262,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionActualizarPlantillaNotificacion()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo actualizar la plantilla", new Exception());
-            var result = new ExceptionsControl();
-            var idUpdate = It.IsAny<Guid>();
-            var plantillaUpdate = It.IsAny<PlantillaNotificacionDTOCreate>();
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
-
-            //act
-            try
-            {
-                _plantillaService.ActualizarPlantilla(plantillaUpdate, idUpdate);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
 //*
@@ -472,30 +296,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionEliminarlantillaIdIncompatible()
         {
             //arrange
-            var expected = new ExceptionsControl("No existe ninguna plantilla con el id suministrado", new ArgumentNullException());
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new ArgumentNullException());
-            var result = new ExceptionsControl();
-            var data = new PlantillaNotificacion
-            {
-                Id = new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-                Titulo = "Plantilla Rechazado",
-                Descripcion = "Hola @Usuario su @Ticket",
-                TipoEstadoId = null,
-                TipoEstado = null
-            };
-
-            //act
-            try
-            {
-                _plantillaService.EliminarPlantilla(Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c86"));
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ArgumentNullException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.EliminarPlantilla(It.IsAny<Guid>()));
         }
 
 
@@ -503,22 +305,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionEliminarPlantillaNotificacion()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo eliminar la plantilla", new Exception());
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                _plantillaService.EliminarPlantilla(Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c86"));
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.EliminarPlantilla(It.IsAny<Guid>()));
         }
     }
 }
