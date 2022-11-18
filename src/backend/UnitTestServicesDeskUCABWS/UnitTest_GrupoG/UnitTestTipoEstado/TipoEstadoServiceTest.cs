@@ -55,45 +55,27 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         //[ExpectedException(typeof(ExceptionsControl))]
         public void ConsultarTipoEstadosRetornaVaciaServiceTest()
         {
-            _contextMock.SetUpContextDataTipoEstadoVacio();
+
             //arrange
-            var expected = new ExceptionsControl("No existen Tipos de estados registrados", new ExceptionsControl());
-            var result = new ExceptionsControl();
+            _contextMock.SetUpContextDataTipoEstadoVacio();
+            //_contextMock.Setup(p => p.Tipos_Estados).Returns(_contextMock.);
 
             //act
-            try
-            {
-                _TipoEstadoService.ConsultaTipoEstados();
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
+
+
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstados());
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]        //Esto está bueno?
         public void ConsultarTipoEstadosRetornaExceptionServiceTest()
         {
             //arrange
-            var expected = new ExceptionsControl("Hubo un problema en la consulta", new Exception());
-            var result = new ExceptionsControl();
             _contextMock.Setup(p => p.Tipos_Estados).Throws(new Exception());
 
-            //act
-            try
-            {
-                _TipoEstadoService.ConsultaTipoEstados();
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstados());
         }
 
         //*
@@ -118,23 +100,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ConsultaTipoEstadoIDExceptionServiceTest()
         {
             //arrange
-            var id = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c88");
-            var expected = new ExceptionsControl("No existe el tipo estado con ese ID", new Exception());
-            var result = new ExceptionsControl();
             _contextMock.Setup(p => p.Tipos_Estados).Throws(new Exception());
 
-            //act
-            try
-            {
-                _TipoEstadoService.ConsultarTipoEstadoGUID(id);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultarTipoEstadoGUID(It.IsAny<Guid>()));
         }
 
         //*
@@ -159,23 +129,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ConsultaTipoEstadoTituloExceptionServiceTest()
         {
             //arrange
-            var titulo = "Plantilla";
-            var expected = new ExceptionsControl("No existe la tipo estado con ese título", new Exception());
-            var result = new ExceptionsControl();
+            
             _contextMock.Setup(p => p.Tipos_Estados).Throws(new Exception());
 
-            //act
-            try
-            {
-                _TipoEstadoService.ConsultarTipoEstadoTitulo(titulo);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultarTipoEstadoTitulo(It.IsAny<string>()));
         }
 
         //*
@@ -209,23 +167,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionAgregarTipoEstadoCamposVacios()
         {
             //arrange
-            var expected = new ExceptionsControl("alguno de los campos requeridos del tipo de estado está vacio", new DbUpdateException());
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
-            var result = new ExceptionsControl();
             var tipoEstadoTest = new TipoEstadoCreateDTO() { nombre = "Hola" };
 
-            //act
-            try
-            {
-                _TipoEstadoService.RegistroTipoEstado(tipoEstadoTest);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
+          
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(tipoEstadoTest));
         }
 
 
@@ -233,24 +181,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionAgregarTipoEstado()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo registrar el tipo estado", new Exception());
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
-            var result = new ExceptionsControl();
-           
-
-            //act
-            try
-            {
-                _TipoEstadoService.RegistroTipoEstado(It.IsAny<TipoEstadoCreateDTO>());
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            //Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(It.IsAny<TipoEstadoCreateDTO>()));
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando el registro falla por intentar asociar un tipo estado a una etiqueta que no existe")]
@@ -267,22 +202,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("07c28457-f1fa-4a30-a347-b1fdb736bfd2")
                 }
             };
-            var expected = new ExceptionsControl("Se esta intentando asociar a una etiqueta que no existe", new ExceptionsControl());
+            
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new ExceptionsControl());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                _TipoEstadoService.RegistroTipoEstado(tipoEstado);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(tipoEstado));
         }
 
         //*
@@ -318,8 +242,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ActualizarTipoEstadoCamposVacios()
         {
             //arrange
-            var expected = new ExceptionsControl("Alguno de los campos requeridos del tipo de estado está vacio", new DbUpdateException());
-            var result = new ExceptionsControl();
+         
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
             var tipoEstadoUpdate = new TipoEstadoCreateDTO()
             {
@@ -334,18 +257,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
 
             //act
-            try
-            {
-                _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate, idUpdate);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
+
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate,idUpdate));
+            
         }
 
 
@@ -353,25 +269,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionActualizarTipoEstado()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo actualizar el tipo de estado", new Exception());
-            var result = new ExceptionsControl();
             var idUpdate = It.IsAny<Guid>();
             var tipoEstadoUpdate = It.IsAny<TipoEstadoCreateDTO>();
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
 
-            //act
-            try
-            {
-                _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate, idUpdate);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate, idUpdate));
+
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando la actualizacion falla por intentar asociar un tipo estado a una etiqueta que no existe")]
@@ -389,22 +293,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("07c28457-f1fa-4a30-a347-b1fdb736bfd2")
                 }
             };
-            var expected = new ExceptionsControl("Se esta intentando asociar a una etiqueta que no existe", new ExceptionsControl());
+            
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new ExceptionsControl());
-            var result = new ExceptionsControl();
 
             //act
-            try
-            {
-                _TipoEstadoService.ActualizarTipoEstado(tipoEstado, idUpdate);
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ActualizarTipoEstado(tipoEstado, idUpdate));
+
         }
 
         //*
@@ -431,23 +327,10 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionEliminarTipoEstadoEnUso()
         {
             //arrange
-            var expected = new ExceptionsControl("Un ticket está utilizado este tipo de estado, por lo tanto no se puede eliminar", new DbUpdateException());
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
-            var result = new ExceptionsControl();
-           
-
-            //act
-            try
-            {
-                _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87"));
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
+          
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
         }
 
 
@@ -455,22 +338,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionEliminarTipoEstado()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo eliminar el tipo de estado", new Exception());
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87"));
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
-
+ 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+
         }
 
         //*
@@ -481,22 +353,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ExcepcionAñadirRelacionEtiquetaTipoEstado()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo establecer la relacion entre las etiquetas y el tipo de estado", new Exception());
             _contextMock.Setup(set => set.DbContext.Add(It.IsAny<EtiquetaTipoEstado>)).Throws(new Exception());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                _TipoEstadoService.AñadirRelacionEtiquetaTipoEstado(It.IsAny<Guid>(), It.IsAny<HashSet<Guid>>());
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.AñadirRelacionEtiquetaTipoEstado(It.IsAny<Guid>(), It.IsAny<HashSet<Guid>>()));
+
         }
     }
 }

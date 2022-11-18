@@ -52,7 +52,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultarPlantillasRetornaVaciaServiceTest()
         {
             _contextMock.SetUpContextDataVacio();
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl(""));
+            //_contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl(""));
             Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultaPlantillas());
         }
 
@@ -210,8 +210,16 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionAgregarPlantillaCamposVacios()
         {
             //arrange
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new DbUpdateException(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            var plantilla = new PlantillaNotificacionDTOCreate
+            {
+
+                Titulo = null,
+                Descripcion = "Hola @Usuario su @Ticket",
+                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+                
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(plantilla));
         }
 
 
@@ -219,7 +227,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionAgregarPlantilla()
         {
             //arrange
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
+            //_contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
@@ -253,8 +261,15 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ActualizarPlantillaIdTipoEstadoIncompatibleCamposVacios()
         {
             //arrange
-            _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new DbUpdateException(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+            var plantillaUpdate = new PlantillaNotificacionDTOCreate()
+            {
+                Titulo = null,
+                Descripcion = "Hola @Usuario su @Ticket",
+                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate));
         }
 
 
@@ -263,7 +278,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         {
             //arrange
             _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ActualizarPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>()));
         }
 
 //*
