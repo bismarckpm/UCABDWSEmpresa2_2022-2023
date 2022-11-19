@@ -23,6 +23,6 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<TipoCargo>> ListaCargos();
 
-        Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario);
+        Task<List<Votos_Ticket>> ObtenerVotos();
     }
 }

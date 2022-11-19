@@ -17,6 +17,8 @@
             <div class="mb-2">
                 <label class="form-label">Voto</label>
                 <select type="text" class="form-control form-control-sm" asp-for="voto" required>
+                    <option selected disabled>-- Seleccionar --</option>
+
                     <option value="Aprobado">Aprobado</option>
                     <option value="Rechazado">Rechazado</option>
                 </select>

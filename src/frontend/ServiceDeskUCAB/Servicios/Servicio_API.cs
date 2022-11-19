@@ -76,10 +76,13 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario)
+        public async Task<List<Votos_Ticket>> ObtenerVotos()
         {
-            List<Votos_Ticket> lista = new List<Votos_Ticket>(); var cliente = new HttpClient();
+            List<Votos_Ticket> lista = new List<Votos_Ticket>();
+            var cliente = new HttpClient();
 
+            // TODO: Obtener sesion y colocar id del usuario aqui
+            var idUsuario = "0F2B9FCB-1815-4896-A18C-036FF61F11DD";
             cliente.BaseAddress = new Uri(_baseUrl);
 
             var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/(\"{idUsuario}\")");  //URL de Lista en el swagger
