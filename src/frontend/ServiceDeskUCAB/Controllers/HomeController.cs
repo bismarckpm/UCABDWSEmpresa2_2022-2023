@@ -9,7 +9,6 @@ namespace ServiceDeskUCAB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IServicio_API _servicioApi;
 
         public HomeController(IServicio_API servicioApi)
         {

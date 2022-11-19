@@ -1,4 +1,5 @@
 ﻿using ServiceDeskUCAB.Models;
+using ServicesDeskUCAB.Models.TipoTicketModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -18,5 +19,13 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<Prioridad>> ObtenerPrioridades();
 
 
+        Task<bool> Guardar(Tipo_TicketDTOCreate tipo);
+
+       
+        Task<bool> Eliminar(Guid id);
+
+        Task<List<Departament>> ListaDepa();
+
+        Task<List<TipoCargo>> ListaCargos();
     }
 }

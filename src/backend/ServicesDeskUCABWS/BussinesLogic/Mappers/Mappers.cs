@@ -24,12 +24,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
             CreateMap<Departamento, DepartamentoSearchDTO>();
             CreateMap<DepartamentoSearchDTO, Departamento>();
 
+            CreateMap<Departamento, DepartamentoDTO>();
+            CreateMap<DepartamentoDTO, Departamento>();
+
 
             CreateMap<Flujo_Aprobacion, Flujo_AprobacionDTOSearch>();
             CreateMap<Flujo_AprobacionDTOSearch, Flujo_Aprobacion>();
 
             CreateMap<Tipo_Cargo, Tipo_CargoDTOSearch>();
             CreateMap<Tipo_CargoDTOSearch, Tipo_Cargo>();
+
+            CreateMap<Tipo_Cargo, TipoCargoDTO>();
+            CreateMap<TipoCargoDTO, Tipo_Cargo>();
 
             CreateMap<Tipo_Ticket, Tipo_TicketDTOSearch>();
             CreateMap<Tipo_TicketDTOSearch, Tipo_Ticket>();

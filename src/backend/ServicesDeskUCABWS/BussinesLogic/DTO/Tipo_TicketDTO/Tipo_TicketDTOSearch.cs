@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO
 {

@@ -9,6 +9,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.Data;
@@ -52,6 +53,11 @@ namespace ServicesDeskUCABWS
 
             // DAO Grupo Prioridad
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
+            services.AddScoped<IDepartamentoDAO, DepartamentoService>();
+            services.AddScoped<IDataContext, DataContext>();
+
+            services.AddScoped<ITipo_CargoDAO, Tipo_CargoService>();
+            services.AddScoped<IDataContext, DataContext>();
 
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();

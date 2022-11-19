@@ -18,8 +18,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
             Mensaje = _mensaje;
         }
 
-
-
+        public ExceptionsControl()
+        {
+        }
     }
 }
 

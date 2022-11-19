@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
@@ -13,9 +15,12 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
     {
         private readonly DataContext _context;
 
-        public Votos_TicketController(DataContext context)
+        private readonly IVotos_TicketDAO _votos_ticketDAO;
+
+        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO, DataContext context)
         {
             _context = context;
+            this._votos_ticketDAO = _votos_ticketDAO;
         }
 
         // GET: Votos_Ticket
@@ -25,21 +30,11 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
         }
 
         // GET: Votos_Ticket/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public ApplicationResponse<List<Votos_Ticket>> Details(Guid id)
         {
-            if (id == null || _context.Votos_Tickets == null)
-            {
-                return NotFound();
-            }
+            var response = _votos_ticketDAO.ConsultaVotos(id);
 
-            var votos_Ticket = await _context.Votos_Tickets
-                .FirstOrDefaultAsync(m => m.IdUsuario == id);
-            if (votos_Ticket == null)
-            {
-                return NotFound();
-            }
-
-            return View(votos_Ticket);
+            return response;
         }
 
         // GET: Votos_Ticket/Create

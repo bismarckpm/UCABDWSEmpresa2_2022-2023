@@ -67,12 +67,15 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
 
         // POST: api/Tipo_Ticket
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+       
         [HttpPost]
+        [Route("Guardar/")]
         public ApplicationResponse<Tipo_Ticket> PostTipo_Ticket(Tipo_TicketDTOCreate tipo_TicketDTO)
         {
             var response = _ticketDAO.RegistroTipo_Ticket(tipo_TicketDTO);
             return response;
         }
+
         //GET: Controlador para consultar tipo ticket por un id
         [HttpGet]
         [Route("Consulta/(\"{id}\")")]

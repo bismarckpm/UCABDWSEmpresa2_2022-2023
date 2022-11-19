@@ -32,7 +32,6 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         }
 
 
-
         [TestMethod]
         public void RegistroTipoTicketJerarquicoExitoso()
         {
