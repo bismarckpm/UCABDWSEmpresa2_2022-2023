@@ -165,9 +165,9 @@ namespace ServiceDeskUCAB.Servicios
         }
 
         //Método para Agregar Ticket desde el front
-        public async Task<bool> VotarTicket(VotarTicket voto_ticket)
+        public async Task<ApplicationResponse<Votos_Ticket>> VotarTicket(VotarTicket voto_ticket)
         {
-            bool respuesta = false;
+            var respuesta = new ApplicationResponse<Votos_Ticket>();
 
 
             var cliente = new HttpClient();
@@ -180,7 +180,16 @@ namespace ServiceDeskUCAB.Servicios
 
             if (response.IsSuccessStatusCode)
             {
-                respuesta = true;
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta.ToString();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Votos_Ticket>>(stringDataRespuesta);
+                
+                respuesta = resultado;
+
             }
 
             return respuesta;

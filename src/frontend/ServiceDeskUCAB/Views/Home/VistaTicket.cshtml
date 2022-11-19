@@ -30,17 +30,17 @@
                 <tr>
                     <td>@item.titulo</td>
                     <td>@item.descripcion</td>
-                    <!--<td>@item.Tipo_Ticket?.nombre</td>
+                    <td>@item.Tipo_Ticket?.nombre</td>
                     <td>@item.Prioridad?.nombre</td>
                     <td>@item.Departamento_Destino?.nombre</td>
-                    <td>@item.Emisor?.correo</td>-->
+                    <td>@item.Emisor?.correo</td>
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                  <li>
-                                    <a asp-action="VistaVotarTicket" asp-controller="Home" asp-route-idTicket="@item.Id.ToString()" asp-route-idUsuario="usuario" class="btn btn-primary btn-sm">
+                                    <a asp-action="VistaVotarTicket" asp-controller="Home" asp-route-idTicket="@item.Id.ToString()" asp-route-idUsuario="E2B717AA-0098-498B-B677-9EEDEA222D3D" class="btn btn-primary btn-sm">
                                         Votar
                                     </a>
                                  </li>

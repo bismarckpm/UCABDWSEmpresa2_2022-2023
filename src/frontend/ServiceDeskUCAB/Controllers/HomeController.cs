@@ -115,7 +115,7 @@ namespace ServiceDeskUCAB.Controllers
 
             var respuesta = await _servicioApi.VotarTicket(voto_ticket);
 
-            if (respuesta)
+            if (respuesta.success)
                 return RedirectToAction("VistaTicket");
             else
                 return NoContent();
