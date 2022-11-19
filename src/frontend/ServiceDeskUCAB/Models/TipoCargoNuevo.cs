@@ -6,6 +6,8 @@
         public int? ordenAprobacion { get; set; }
         public int? minimo_aprobado_nivel { get; set; }
         public int? maximo_Rechazado_nivel { get; set; }
+
+        
  
     }
 }

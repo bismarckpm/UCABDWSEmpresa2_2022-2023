@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
+using ServicesDeskUCAB.Models.TipoTicketModels;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -101,7 +102,7 @@ namespace ServiceDeskUCAB.Servicios
 
             return lista;
         }
-        public async Task<bool> Guardar(TipoNuevo tipo)
+        public async Task<bool> Guardar(Tipo_TicketDTOCreate tipo)
         {
             bool respuesta = false;
 

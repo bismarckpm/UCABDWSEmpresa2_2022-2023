@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Models\ViewModel\" />
+    <Folder Include="Views\TipoTicket\" />
   </ItemGroup>
 
 </Project>

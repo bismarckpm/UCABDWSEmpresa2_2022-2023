@@ -1,4 +1,5 @@
 ﻿using ServiceDeskUCAB.Models;
+using ServicesDeskUCAB.Models.TipoTicketModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -7,7 +8,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<Tipo>> Lista();
 
-        Task<bool> Guardar(TipoNuevo tipo);
+        Task<bool> Guardar(Tipo_TicketDTOCreate tipo);
 
        
         Task<bool> Eliminar(Guid id);
