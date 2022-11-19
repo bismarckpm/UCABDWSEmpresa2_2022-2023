@@ -34,7 +34,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
         //*
 
         [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
-        public void ReemplazarEtiquetasNotificacionServiceTest()
+        public void ReemplazarEtiquetasEmpleadoNotificacionServiceTest()
         {
 
             var Ticket = new Ticket()
@@ -43,13 +43,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 titulo = "titulo",
                 descripcion = "descripcion",
                 fecha_creacion = DateTime.Now,
-                Estado = new Estado() {
+                Estado = new Estado()
+                {
                     Id = Guid.NewGuid(),
                     nombre = "nombreEstado"
                 },
                 Tipo_Ticket = new Tipo_Ticket()
                 {
-                  nombre = "nombreTipoTicket"  
+                    nombre = "nombreTipoTicket"
                 },
                 Departamento_Destino = new Departamento()
                 {
@@ -75,6 +76,85 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                         descripcion = "descrip",
                         fecha_creacion = DateTime.Now,
                     }
+                },
+                Votos_Ticket = new HashSet<Votos_Ticket>
+                {
+                    new Votos_Ticket()
+                    {
+                        Id = Guid.NewGuid(),
+                        comentario = "comentarioVoto",
+                    }
+                }
+            };
+
+            var Plantilla = new PlantillaNotificacionDTO()
+            {
+                Id = Guid.NewGuid(),
+                Titulo = "tituloPlantilla",
+                Descripcion = "@Cargo @Ticket @Estado @Departamento @Grupo @Prioridad @Usuario @TipoTicket @ComentarioVoto",
+                TipoEstado = new TipoEstadoDTO()
+                {
+                    etiqueta = new HashSet<EtiquetaDTO>()
+                    {
+                        new EtiquetaDTO() {
+                            Id = Guid.NewGuid(),
+                            Descripcion = "nombreDescripcion",
+                            Nombre = "@Usuario"
+                        },
+                        new EtiquetaDTO() {
+                            Id = Guid.NewGuid(),
+                            Descripcion = "nombreDescripcion",
+                            Nombre = "@Departamento"
+                        },
+                        new EtiquetaDTO() {
+                            Id = Guid.NewGuid(),
+                            Descripcion = "nombreDescripcion",
+                            Nombre = "@Grupo"
+                        }
+                    }
+                }
+            };
+
+            var result = _NotificacionService.ReemplazoEtiqueta(Ticket, Plantilla);
+            Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
+        public void ReemplazarEtiquetasClienteNotificacionServiceTest()
+        {
+
+            var Ticket = new Ticket()
+            {
+                Id = Guid.NewGuid(),
+                titulo = "titulo",
+                descripcion = "descripcion",
+                fecha_creacion = DateTime.Now,
+                Estado = new Estado()
+                {
+                    Id = Guid.NewGuid(),
+                    nombre = "nombreEstado"
+                },
+                Tipo_Ticket = new Tipo_Ticket()
+                {
+                    nombre = "nombreTipoTicket"
+                },
+                Departamento_Destino = new Departamento()
+                {
+                    nombre = "nombreDepartamento",
+                    Grupo = new Grupo()
+                    {
+                        nombre = "nombreGrupo"
+                    }
+                },
+                Prioridad = new Prioridad()
+                {
+                    nombre = "nombrePrioridad"
+                },
+                cliente = new Cliente()
+                {
+                    Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
+                    primer_nombre = "nombreEmpleado",
+                    primer_apellido = "apellidoEmpleado"
                 },
                 Votos_Ticket = new HashSet<Votos_Ticket>
                 {
