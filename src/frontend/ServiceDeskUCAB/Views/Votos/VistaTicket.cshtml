@@ -4,9 +4,10 @@
     <div class="col-8">
         <h1 id="ti">Gestionar Votos</h1>
     </div>
-    <div class="col-4">
+    <!--<div class="col-4">
         <a type="button" class="btn btn-primary" asp-action="AgregarTicket" asp-controller="Votos">Agregar Ticket</a>
     </div>
+    -->
 </div>
 
 <div class="alert alert-success d-none" role="alert">
@@ -38,11 +39,11 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                  <li>
-                                    <a asp-action="VistaVotarTicket" asp-controller="Votos" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
+                                    <a asp-action="VistaVotarTicket" asp-controller="Votos" asp-route-ticket="@(item.Ticket as Ticket)" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
                                         Votar
                                     </a>
                                  </li>
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</a></li>
+                                <!--<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</a></li>-->
                             </ul>
                         </div>
                     </td>

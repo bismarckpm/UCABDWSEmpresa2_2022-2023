@@ -306,11 +306,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
         public ApplicationResponse<List<Votos_Ticket>> ConsultaVotos(Guid id)
         {
-            var response= new ApplicationResponse<List<Votos_Ticket>>();
+            var response = new ApplicationResponse<List<Votos_Ticket>>();
             try
             {
-                
-                response.Data = contexto.Votos_Tickets.Where(x=> x.IdUsuario==id).ToList();
+                response.Data = contexto.Votos_Tickets.Include(x => x.Ticket).Include(x => x.Empleado).Where(x => x.IdUsuario == id && x.voto == "Pendiente").ToList();
 
             }
             catch (ExceptionsControl ex)

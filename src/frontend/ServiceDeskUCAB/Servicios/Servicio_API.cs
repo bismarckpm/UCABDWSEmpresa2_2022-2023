@@ -82,7 +82,7 @@ namespace ServiceDeskUCAB.Servicios
             var cliente = new HttpClient();
 
             // TODO: Obtener sesion y colocar id del usuario aqui
-            var idUsuario = "0F2B9FCB-1815-4896-A18C-036FF61F11DD";
+            var idUsuario = "2685504C-61DF-4396-91AC-25BA0C8BC2C2";
             cliente.BaseAddress = new Uri(_baseUrl);
 
             var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/(\"{idUsuario}\")");  //URL de Lista en el swagger
@@ -92,7 +92,34 @@ namespace ServiceDeskUCAB.Servicios
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
-
+                var newList = new List<Votos_Ticket>();
+                newList.Add(new Votos_Ticket
+                {
+                    comentario = "comentario",
+                    IdTicket = new("A080D400-EF72-4727-8B39-C2981C41C181"),
+                    IdUsuario = new(idUsuario),
+                    voto = "Pendiente",
+                    fecha = new DateTime(),
+                    Ticket = new Ticket
+                    {
+                        titulo = "Ticket",
+                        descripcion = "descripcion ticket",
+                        fecha_creacion = new DateTime()
+                    }
+                }); newList.Add(new Votos_Ticket
+                {
+                    comentario = "comentario2",
+                    IdTicket = new("A080D400-EF72-4727-8B39-C2981C41C181"),
+                    IdUsuario = new(idUsuario),
+                    voto = "Pendiente",
+                    fecha = new DateTime(),
+                    Ticket = new Ticket
+                    {
+                        titulo = "Ticket2",
+                        descripcion = "descripcion ticket2",
+                        fecha_creacion = new DateTime()
+                    }
+                });
                 lista = resultado.data;
             }
 
@@ -232,6 +259,35 @@ namespace ServiceDeskUCAB.Servicios
             if (response.IsSuccessStatusCode)
             {
                 respuesta = true;
+            }
+
+            return respuesta;
+        }
+
+        public async Task<Ticket> ObtenerTicket(string id)
+        {
+            var respuesta = new Ticket();
+
+
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync($"api/Tickets/{id}");
+
+
+            Console.WriteLine(response);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta.ToString();
+
+                var resultado = JsonConvert.DeserializeObject<Ticket>(stringDataRespuesta);
+
+                respuesta = resultado;
             }
 
             return respuesta;

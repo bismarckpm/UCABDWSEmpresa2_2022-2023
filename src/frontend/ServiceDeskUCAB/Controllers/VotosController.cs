@@ -54,10 +54,12 @@ namespace ServiceDeskUCAB.Controllers
         // controladores para votar ticket, Get de vista y Post de Guardar
 
         [HttpGet]
-        public IActionResult VistaVotarTicket(string idUsuario, string idTicket, string voto, string comentario)
+        public async Task<IActionResult> VistaVotarTicket(Ticket ticket, string idUsuario, string idTicket, string voto, string comentario)
         {
             var newVoto = new VotarTicket() { IdTicket = idTicket, IdUsuario = idUsuario, comentario = comentario, voto = voto };
+            var res = await _servicioApi.ObtenerTicket(idTicket);
 
+            ViewData["Ticket"] = res;
             return View(newVoto);
         }
 

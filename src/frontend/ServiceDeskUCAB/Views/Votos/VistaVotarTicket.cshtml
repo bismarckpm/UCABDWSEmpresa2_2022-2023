@@ -10,14 +10,31 @@
     </div>
     <div class="card-body">
 
-        <form asp-action="VotarTicket" asp-controller="Home" method="post">
+        <form asp-action="VotarTicket" asp-controller="Votos" method="post">
             <input type="hidden" asp-for="IdUsuario" required />
             <input type="hidden" asp-for="IdTicket" required />
+
+            <div class="mb-2 d-flex">
+                <div class="mx-2">
+                    <p><b>Titulo:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.titulo)</p>
+                </div>
+                <div class="mx-2">
+                    <p><b>Descripción:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.descripcion)</p>
+
+                </div>
+                <div class="mx-2">
+                    <p><b>Emisor:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.Emisor?.primer_nombre) @((ViewData["Ticket"] as Ticket)?.Emisor?.primer_apellido)</p>
+
+                </div>
+            </div>
 
             <div class="mb-2">
                 <label class="form-label">Voto</label>
                 <select type="text" class="form-control form-control-sm" asp-for="voto" required>
-                    <option selected disabled>-- Seleccionar --</option>
+                    <option>-- Seleccionar --</option>
 
                     <option value="Aprobado">Aprobado</option>
                     <option value="Rechazado">Rechazado</option>
@@ -30,7 +47,7 @@
             </div>
 
             <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
-            <a asp-action="VistaTicket" asp-controller="Home" class="btn btn-warning btn-sm">Volver a lista</a>
+            <a asp-action="VistaTicket" asp-controller="Votos" class="btn btn-warning btn-sm">Volver a lista</a>
         </form>
 
     </div>
