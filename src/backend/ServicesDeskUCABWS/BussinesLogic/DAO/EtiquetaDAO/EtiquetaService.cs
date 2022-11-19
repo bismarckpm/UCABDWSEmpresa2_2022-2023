@@ -12,10 +12,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO
 {
     public class EtiquetaService : IEtiqueta
     {
-        private readonly DataContext _EtiquetaContext;
+        private readonly IDataContext _EtiquetaContext;
         private readonly IMapper _mapper;
 
-        public EtiquetaService(DataContext etiquetaContext, IMapper mapper)
+        public EtiquetaService(IDataContext etiquetaContext, IMapper mapper)
         {
             _EtiquetaContext = etiquetaContext;
             _mapper = mapper;
@@ -24,9 +24,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO
         //GET: Servicio para consultar todas las etiquetas
         public List<EtiquetaDTO> ConsultaEtiquetas()
         {
-            var data = _EtiquetaContext.Etiquetas.AsNoTracking().ToList();
-            var etiDTO = _mapper.Map<List<EtiquetaDTO>>(data);
-            return etiDTO;
+            try {
+                var data = _EtiquetaContext.Etiquetas.AsNoTracking().ToList();
+                var etiDTO = _mapper.Map<List<EtiquetaDTO>>(data);
+                if (etiDTO.Count() == 0)
+                    throw new ExceptionsControl("No existen etiquetas registradas");
+                return etiDTO;
+            }
+            catch (ExceptionsControl ex)
+            {
+                throw new ExceptionsControl("No existen etiquetas registradas", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Hubo un problema al consultar las etiquetas", ex);
+
+            }
         }
 
         //GET: Servicio para consultar una plantilla notificacion en especifico

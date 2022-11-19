@@ -33,15 +33,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
             Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
             Empleado empleado = null;
 
-            var usuario = _context.Usuarios.Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
-            if (usuario == null)
+            //var cliente = _context.Clientes.Where(u => u.Id == ticket.cliente.Id).FirstOrDefault();
+            //var empleados = _context.Empleados.Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
+
+            if (ticket.empleado != null)
             {
-                usuario = _context.Usuarios.Where(u => u.Id == ticket.cliente.Id).FirstOrDefault();
+                etiquetasEstatico.Add("@Cargo", ticket.empleado.Cargo.nombre_departamental.ToString());
+                etiquetasEstatico.Add("@Usuario", ticket.empleado.primer_nombre.ToString() + " " + ticket.empleado.primer_apellido.ToString());
             }
             else
             {
-                empleado = _context.Empleados.Include(e => e.Cargo).Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
-                etiquetasEstatico.Add("@Cargo", empleado.Cargo.nombre_departamental.ToString());
+                etiquetasEstatico.Add("@Usuario", ticket.cliente.primer_nombre.ToString() + " " + ticket.cliente.primer_apellido.ToString());
             }
             try
             {
@@ -52,7 +54,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                     etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
                 etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.Grupo.nombre.ToString());
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
-                etiquetasEstatico.Add("@Usuario", usuario.primer_nombre.ToString() + " " + usuario.primer_apellido.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
 
                 if (ticket.Votos_Ticket != null)
