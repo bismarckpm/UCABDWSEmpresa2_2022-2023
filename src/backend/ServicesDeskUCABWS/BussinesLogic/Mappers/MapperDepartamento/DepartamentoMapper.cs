@@ -9,9 +9,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers.MapperDepartamento
     public class DepartamentoMapper : Profile
     {
 
-        public static DepartamentoDto MapperEntityToDto(Departamento dept)
+        public static DepartamentoDTO MapperEntityToDto(Departamento dept)
         {
-            return new DepartamentoDto
+            return new DepartamentoDTO
             {
                 id = Guid.NewGuid(),
                 nombre = dept.nombre,
@@ -20,9 +20,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers.MapperDepartamento
             };
         }
 
-        public static DepartamentoDto MapperEntityToDtoDefault(Departamento dept)
+        public static DepartamentoDTO MapperEntityToDtoDefault(Departamento dept)
         {
-            return new DepartamentoDto
+            return new DepartamentoDTO
             {
                 id = dept.Id,
                 nombre = dept.nombre,
@@ -31,7 +31,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers.MapperDepartamento
             };
         }
 
-        public static Departamento MapperDTOToEntity(DepartamentoDto dept)
+        public static Departamento MapperDTOToEntity(DepartamentoDTO dept)
         {
             return new Departamento
             {
@@ -42,7 +42,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers.MapperDepartamento
             };
         }
 
-        public static Departamento MapperDTOToEntityModificar(DepartamentoDto_Update dept)
+        public static Departamento MapperDTOToEntityModificar(DepartamentoDTO dept)
         {
             return new Departamento
             {

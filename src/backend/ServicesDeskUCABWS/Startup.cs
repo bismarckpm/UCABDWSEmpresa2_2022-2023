@@ -46,21 +46,20 @@ namespace ServicesDeskUCABWS
             //Conectar Interface DAO con su implementacion
             services.AddTransient<ITicketDAO, TicketService>();
             services.AddTransient<ITipo_TicketDAO, Tipo_TicketService>();
+            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
             // DAO Grupo Departamento
             services.AddTransient<IGrupoDAO, GrupoDAO>();
-            services.AddTransient<IDepartamentoDAO, DepartamentoDAO>();
+            services.AddScoped<IDepartamentoDAO, DepartamentoService>();
 
             // DAO Grupo Prioridad
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
-            services.AddScoped<IDepartamentoDAO, DepartamentoService>();
             services.AddScoped<IDataContext, DataContext>();
 
             services.AddScoped<ITipo_CargoDAO, Tipo_CargoService>();
             services.AddScoped<IDataContext, DataContext>();
 
             services.AddTransient<IDataContext, DataContext>();
-            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
             //Generar Conexion a BD
             services.AddDbContext<DataContext>(options =>

@@ -1,11 +1,11 @@
-﻿@model List<Ticket>
+﻿@model List<Votos_Ticket>
 
 <div class="row">
     <div class="col-8">
-        <h1 id="ti">Gestionar Tickets</h1>
+        <h1 id="ti">Gestionar Votos</h1>
     </div>
     <div class="col-4">
-        <a type="button" class="btn btn-primary" asp-action="AgregarTicket" asp-controller="Home">Agregar Ticket</a>
+        <a type="button" class="btn btn-primary" asp-action="AgregarTicket" asp-controller="Votos">Agregar Ticket</a>
     </div>
 </div>
 
@@ -19,28 +19,26 @@
             <tr>
                 <th>Titulo</th>
                 <th>Descripción</th>
-                <th>Tipo</th>
-                <th>Prioridad</th>
-                <th>Departamento</th>
-                <th>Emisor</th>
+                <th>Creado</th>
+                <th>Voto</th>
+                <th>Comentario</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model) {
                 <tr>
-                    <td>@item.titulo</td>
-                    <td>@item.descripcion</td>
-                    <td>@item.Tipo_Ticket?.nombre</td>
-                    <td>@item.Prioridad?.nombre</td>
-                    <td>@item.Departamento_Destino?.nombre</td>
-                    <td>@item.Emisor?.correo</td>
+                    <td>@item.Ticket?.titulo</td>
+                    <td>@item.Ticket?.descripcion</td>
+                    <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
+                    <td>@item.voto</td>
+                    <td>@item.comentario</td>
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                  <li>
-                                    <a asp-action="VistaVotarTicket" asp-controller="Home" asp-route-idTicket="@item.Id.ToString()" asp-route-idUsuario="E2B717AA-0098-498B-B677-9EEDEA222D3D" class="btn btn-primary btn-sm">
+                                    <a asp-action="VistaVotarTicket" asp-controller="Votos" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
                                         Votar
                                     </a>
                                  </li>

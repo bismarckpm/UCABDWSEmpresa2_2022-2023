@@ -58,14 +58,14 @@ namespace ServiceDeskUCAB.Servicios
         public async Task<List<Ticket>> ListaTickets()
         {
             List<Ticket> lista = new List<Ticket>();
- var cliente = new HttpClient();
+            var cliente = new HttpClient();
 
             cliente.BaseAddress = new Uri(_baseUrl);
-var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swagger
- if (response.IsSuccessStatusCode)
+            var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swagger
+            if (response.IsSuccessStatusCode)
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
- JArray dataRespuesta = JArray.Parse(json_respuesta);
+                JArray dataRespuesta = JArray.Parse(json_respuesta);
 
                 string stringDataRespuesta = dataRespuesta.ToString();
 
@@ -74,6 +74,27 @@ var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swag
                 lista = resultado;
             }
             return lista;
+        }
+
+        public async Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario)
+        {
+            List<Votos_Ticket> lista = new List<Votos_Ticket>(); var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/(\"{idUsuario}\")");  //URL de Lista en el swagger
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
+
+                lista = resultado.data;
+            }
+
+            return lista;
+
         }
 
         public async Task<List<Departament>> ListaDepa()
@@ -125,6 +146,39 @@ var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swag
 
             return lista;
         }
+
+        //Método para Agregar Ticket desde el front
+        public async Task<ApplicationResponse<Votos_Ticket>> VotarTicket(VotarTicket voto_ticket)
+        {
+            var respuesta = new ApplicationResponse<Votos_Ticket>();
+
+
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var content = new StringContent(JsonConvert.SerializeObject(voto_ticket), Encoding.UTF8, "application/json");
+
+
+            var response = await cliente.PutAsync($"api/Tickets/votos", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta.ToString();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Votos_Ticket>>(stringDataRespuesta);
+
+                respuesta = resultado;
+
+            }
+
+
+            return respuesta;
+        }
+
         public async Task<bool> Guardar(Tipo_TicketDTOCreate tipo)
         {
             bool respuesta = false;
@@ -167,9 +221,6 @@ var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swag
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var content = new StringContent(JsonConvert.SerializeObject(tipo_ticket), Encoding.UTF8, "application/json");
-
-
             var response = await cliente.DeleteAsync($"api/Tipo_Ticket/Elimina/(\"{id}\")");
 
 
@@ -183,6 +234,43 @@ var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swag
             return respuesta;
         }
 
+        public async Task<List<Prioridad>> ObtenerPrioridades()
+        {
+            var lista = new List<Prioridad>();
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync($"prioridad/getprioridades");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Prioridad>>>(json_respuesta);
+
+                lista = resultado.data;
+            }
+            return lista;
+        }
+
+        public async Task<bool> AgregarTicket(NuevoTicket ticket)
+        {
+            bool respuesta = false;
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var json = JsonConvert.SerializeObject(ticket);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await cliente.PostAsync("api/Tickets", content);
+            var res = await response.Content.ReadAsStringAsync();
+            JObject _json_respuesta = JObject.Parse(res);
+            if (response.IsSuccessStatusCode)
+            {
+                respuesta = true;
+            }
+            return respuesta;
+        }
 
     }
 
