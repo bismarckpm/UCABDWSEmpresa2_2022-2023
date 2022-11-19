@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.Data;
@@ -28,7 +29,10 @@ namespace ServicesDeskUCABWS
         {
       
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddTransient<IPlantillaNotificacion, PlantillaNotificacionService>();
+
+            services.AddTransient<INotificacion, NotificacionService>();
 
             services.AddTransient<IEtiqueta, EtiquetaService>();
 

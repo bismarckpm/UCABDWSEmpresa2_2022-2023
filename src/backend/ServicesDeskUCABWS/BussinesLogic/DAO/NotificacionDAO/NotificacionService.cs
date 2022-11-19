@@ -1,21 +1,20 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
 using System;
-using ServicesDeskUCABWS.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 
-namespace ServicesDeskUCABWS.BussinesLogic.Notification
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
-    public class Notificacion
+    public class NotificacionService : INotificacion
     {
-
         private readonly IDataContext _context;
         const string correo = "servicedeskucab@hotmail.com";
         const string clave = "servicedesk22.";
@@ -23,12 +22,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Notification
         const string host = "smtp.office365.com";
         const int puerto = 587;
 
-        public Notificacion(IDataContext context)
+        public NotificacionService(IDataContext context)
         {
             _context = context;
         }
 
-        //
+        //Servicio para reeemplazar las etiquetas de la plantilla notificación
         public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
         {
             Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
@@ -53,7 +52,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Notification
                     etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
                 etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.Grupo.nombre.ToString());
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
-                etiquetasEstatico.Add("@NombreUsuario", usuario.primer_nombre.ToString() + " " + usuario.primer_apellido.ToString());
+                etiquetasEstatico.Add("@Usuario", usuario.primer_nombre.ToString() + " " + usuario.primer_apellido.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
 
                 if (ticket.Votos_Ticket != null)
@@ -63,7 +62,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Notification
                 string input = Plantilla.Descripcion;
                 foreach (EtiquetaDTO etiqueta in Plantilla.TipoEstado.etiqueta)
                 {
-                    
+
                     input = Regex.Replace(input, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
                 }
 

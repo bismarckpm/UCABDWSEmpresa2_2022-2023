@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -9,23 +10,20 @@ using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Mail;
-using ServicesDeskUCABWS.BussinesLogic.Notification;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
 {
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {
         private readonly IDataContext _plantillaContext;
+        private readonly INotificacion _notificacionService;
         private readonly IMapper _mapper;
        
 
-        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper)
+        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, INotificacion notificacionService)
         {
             _plantillaContext = plantillaContext;
+            _notificacionService = notificacionService;
             _mapper = mapper;
             
         }
@@ -126,22 +124,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
                 _plantillaContext.PlantillasNotificaciones.Add(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
 
-                //
+
                 //Comienza Prueba reemplazo de descripcion plantilla
-                //var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
-                //                                      .Include(t => t.Tipo_Ticket)
-                //                                      .Include(t => t.Prioridad)
-                //                                      .Include(t => t.empleado)
-                //                                      .Include(t => t.cliente)
-                //                                      .Include(t => t.Departamento_Destino)
-                //                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
-                //var notificacion = new Notificacion(_plantillaContext);
-                //var consulta = await ConsultarPlantillaTipoEstadoTitulo("Aprobado");
-                //var reemplazo = notificacion.ReemplazoEtiqueta(ticket,consulta);
-                //var mail = notificacion.EnviarCorreo( consulta.Titulo, reemplazo, "alexguastaferro1@gmail.com");
+                var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
+                                                      .Include(t => t.Tipo_Ticket)
+                                                      .Include(t => t.Prioridad)
+                                                      .Include(t => t.empleado)
+                                                      .Include(t => t.cliente)
+                                                      .Include(t => t.Departamento_Destino)
+                                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
+                var consulta = ConsultarPlantillaTipoEstadoTitulo("Rechazado");
+
+                var reemplazo = _notificacionService.ReemplazoEtiqueta(ticket, consulta);
+                var mail = _notificacionService.EnviarCorreo(consulta.Titulo, reemplazo, "alexguastaferro1@gmail.com");
 
                 //Finaliza la prueba
-                //
+
+
 
                 return true;
             }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -16,11 +17,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
     {
         private readonly PlantillaNotificacionService _plantillaService;
         private readonly Mock<IDataContext> _contextMock;
+        private readonly Mock<INotificacion> _notificacion;
         private readonly IMapper _mapper;
 
         public PlantillaNotificacionServiceTest()
         {
             _contextMock = new Mock<IDataContext>();
+            _notificacion = new Mock<INotificacion>();
             var myProfile = new List<Profile>
             {
                 new PlantillaNotificacionMapper(),
@@ -30,7 +33,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
-            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper);
+            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper, _notificacion.Object);
             _contextMock.SetUpContextData();
         }
 
