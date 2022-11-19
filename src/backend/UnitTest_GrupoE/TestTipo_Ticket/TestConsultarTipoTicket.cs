@@ -37,9 +37,10 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             TipoticketDAO = new Tipo_TicketService(context.Object, mapper);
             context.SetupDbContextData();
         }
+     //Test camino feliz para hacer el consultar tipo ticket
 
         [TestMethod]
-        public void CaminoFelizConsultar()
+        public void CaminoFelizConsultarTest()
         {
 
             //arrange
@@ -51,46 +52,25 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             Assert.AreEqual(result.Count(), context.Object.Tipos_Tickets.ToList().Count());
         }
 
+     //Test para la excepcion de consultar tipo ticket      
         [TestMethod]
-        public void EntrarEnException()
+        public void EntrarEnExceptionTest()
         {
-            //arrange
-            var expected = new ExceptionsControl("Hubo un problema al consultar la lista de Tipos de Tickets", new Exception());
-            context.Setup(c => c.Tipos_Tickets).Throws(new Exception());
-            var result =new ExceptionsControl();
 
-            //act
-            try { 
-                TipoticketDAO.ConsultarTipoTicket();
-            }
-            catch (ExceptionsControl ex) {
-                result = ex;
-            }
-
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            context.Setup(a => a.Tipos_Tickets).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicket());
+            
         }
-
-       [TestMethod]
-        public void EntrarEnExceptionSQL()
+    //Test para la excepcion ExceptionsControl de eliminar tipo ticket      
+        [TestMethod]
+        public void EntrarEnExceptionControlTest()
         {
-            //arrange
-            var expected = new ExceptionsControl("No existen Tipos de tickets registrados", new ExceptionsControl());
-            context.Setup(c => c.Tipos_Tickets).Throws(new ExceptionsControl());
-            var result = new ExceptionsControl();
-
-            //act
-            try
-            {
-                TipoticketDAO.ConsultarTipoTicket();
-            }
-            catch (ExceptionsControl ex)
-            {
-                result = ex;
-            }
+            //arrage
+            context.Setup(a => a.Tipos_Tickets).Throws(new ExceptionsControl(""));
 
             //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicket());
+           
         }
     }
 }

@@ -25,11 +25,11 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
         private readonly ITipo_TicketDAO _ticketDAO;
         private readonly IMapper _mapper;
 
-        public Tipo_TicketController(ITipo_TicketDAO ticketDAO, DataContext context, IMapper mapper)
+        public Tipo_TicketController(ITipo_TicketDAO ticketDAO)
         {
-            _context = context;
+        
             _ticketDAO = ticketDAO;
-            _mapper = mapper;
+           
 
         }
 
@@ -79,13 +79,13 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
         //GET: Controlador para consultar tipo ticket por un id
         [HttpGet]
         [Route("Consulta/(\"{id}\")")]
-        public async Task<ActionResult<ApplicationResponse<Tipo_TicketDTOSearch>>> GetByGuidCtrl(Guid id)
+        public ApplicationResponse<Tipo_TicketDTOSearch> ConsultarIdTipoTicket(Guid id)
 
         {
             var response = new ApplicationResponse<Tipo_TicketDTOSearch>();
             try
             {
-                response.Data = await _ticketDAO.ConsultarTipoTicketGUID(id);
+                response.Data = _ticketDAO.ConsultarTipoTicketGUID(id);
             }
             catch (ExceptionsControl ex)
             {
@@ -100,12 +100,13 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
         //GET: Controlador para consultar una tipo de ticket por un nombre específico
         [HttpGet]
         [Route("Consulta/{nombre}")]
-        public async Task<ApplicationResponse<Tipo_TicketDTOSearch>> GetBynombreCtrl(string nombre)
+        public ApplicationResponse<Tipo_TicketDTOSearch> ConsultarNombreTipoTicket(string nombre)
         {
             var response = new ApplicationResponse<Tipo_TicketDTOSearch>();
             try
             {
-                response.Data = await _ticketDAO.ConsultarTipoTicketNomb(nombre);
+              response.Data = _ticketDAO.ConsultarTipoTicketNomb(nombre);
+
             }
             catch (ExceptionsControl ex)
             {
@@ -119,7 +120,7 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
         //DELETE: Controlador para eliminar tipo ticket
         [HttpDelete]
         [Route("Elimina/(\"{id}\")")]
-        public async Task<ApplicationResponse<String>> EliminarTipoTicketCtrl(Guid id)
+        public ApplicationResponse<String> EliminarTipoTicketCtrl(Guid id)
         {
             var response = new ApplicationResponse<String>();
 
@@ -137,39 +138,6 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-
-
         }
-
-        // DELETE: api/Tipo_Ticket/5
-        /*[HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTipo_Ticket(Guid id)
-        {
-            var tipo_Ticket = await _context.Tipos_Tickets.FindAsync(id);
-            if (tipo_Ticket == null)
-            {
-                return NotFound();
-            }
-
-            _context.Tipos_Tickets.Remove(tipo_Ticket);
-            await _context.SaveChangesAsync();
-
-        // POST: Tipo_Ticket/Delete/Controlador
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.Tipos_Tickets == null)
-            {
-                return Problem("Entity set 'DataContext.Tipos_Tickets'  is null.");
-            }
-            await tipo_TicketDAO.Delete(id);
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool Tipo_TicketExists(Guid id)
-        {
-            return _context.Tipos_Tickets.Any(e => e.Id == id);
-        }*/
     }
 }

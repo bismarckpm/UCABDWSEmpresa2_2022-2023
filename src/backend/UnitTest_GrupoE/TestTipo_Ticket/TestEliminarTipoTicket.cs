@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mappers;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -21,7 +22,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
     {
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
-      
+
         public TestEliminarTipoTicket()
         {
 
@@ -32,8 +33,8 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             context.SetupDbContextData();
         }
 
-
-    [TestMethod]
+        //Test camino feliz para hacer el eliminar tipo ticket
+        [TestMethod]
         public void EliminarTipoTicketExitoso()
         {
             //arrage
@@ -52,35 +53,66 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             Assert.IsTrue(result);
 
         }
-       
 
-       [TestMethod]
+        //Test para la excepcion de eliminar tipo ticket      
+        [TestMethod]
         public void EntrarEnExceptionDelete()
         {
             //arrange
-            var expected = new ExceptionsControl("No se pudo eliminar el tipo de ticket", new Exception());
-            context.Setup(c => c.Tipos_Tickets.Find(It.IsAny<Guid>)).Throws(new Exception());
-            var result = new ExceptionsControl();
+
+            //act
+            context.Setup(a => a.Tipos_Tickets).Throws(new Exception(""));
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(()=> TipoticketDAO.EliminarTipoTicket(Guid.Empty));
+           
+        }
+
+        //Test para validar camino feliz el eliminar tipo ticket  
+        [TestMethod]
+        public void CaminoFelizValidacionEliminar()
+        {
+            //arrange
+            var entrada = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E");
+
+            //act 
+            TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Delete(entrada);
+
+            //assert
+
+        }
+
+        //Test para validar el ID del eliminar tipo ticket 
+        [TestMethod]
+        public void ErrorEnID()
+        {
+           /* context.Setup(a => a.Tipos_Tickets).Throws(new ExceptionsControl(""));
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.EliminarTipoTicket(Guid.Empty));*/
+
+           // arrange
+            var entrada = Guid.Parse("36B2054E-BC81-4EA7-A5CC-7BA9137BC20E");
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET);
+            ExceptionsControl actualException = null;
 
             //act
             try
             {
-              TipoticketDAO.EliminarTipoTicket(Guid.Parse("68D9FC3F-0CBC-4793-AC9E-002EEC8ABA97"));
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Delete(entrada);
+
             }
             catch (ExceptionsControl ex)
             {
-                result = ex;
+                actualException = ex;
             }
 
-            //assert
-            Assert.AreEqual(expected.Mensaje, result.Mensaje);
+            //Assert
+            Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
         }
-    }
-    
-       
 
 
 
     }
+}
 
 
