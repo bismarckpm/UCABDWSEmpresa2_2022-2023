@@ -40,11 +40,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 
         public List<PrioridadDTO> ObtenerPrioridades()
         {
-<<<<<<< HEAD
-            var data = _dataContext.Prioridades.AsNoTracking();
-=======
-            var data = _dataContext.Prioridades.ToList();
->>>>>>> 4b6f7c0a7b3933ac418b139414d149f012f3314d
             var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO.ToList();
         }
@@ -67,13 +62,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-<<<<<<< HEAD
                 Prioridad data = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == PrioridadID).Single();
                 PrioridadDTO prioridadDTO = _mapper.Map<PrioridadDTO>(data);
-=======
-                var data = _dataContext.Prioridades.AsNoTracking().Where(p => p.estado == estado);
-                var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
->>>>>>> 4b6f7c0a7b3933ac418b139414d149f012f3314d
                 return prioridadDTO;
             }
             catch (Exception ex)
