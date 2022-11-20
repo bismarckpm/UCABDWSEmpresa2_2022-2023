@@ -304,5 +304,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             return false;
         }
 
+        public ApplicationResponse<List<Votos_Ticket>> ConsultaVotos(Guid id)
+        {
+            var response= new ApplicationResponse<List<Votos_Ticket>>();
+            try
+            {
+                
+                response.Data = contexto.Votos_Tickets.Where(x=> x.IdUsuario==id).ToList();
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Exception = ex.Mensaje;
+                response.Success = false;
+            }
+            return response;
+        }
     }
 }

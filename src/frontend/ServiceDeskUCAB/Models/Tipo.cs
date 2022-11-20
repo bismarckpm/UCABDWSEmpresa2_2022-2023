@@ -24,8 +24,14 @@ namespace ServiceDeskUCAB.Models
         public int? Minimo_Aprobado { get; set; }
 
         public int? Maximo_Rechazado { get; set; }
-        public Tipo objeto { get; set; }
+        
+        public List<string> Idsdepartamento { get; set; }
 
+        public Tipo()
+        {
+            Departamento = new List<Departament>();
+            Flujo_Aprobacion = new List<TipoFlujo>();
+        }
        
 
 
