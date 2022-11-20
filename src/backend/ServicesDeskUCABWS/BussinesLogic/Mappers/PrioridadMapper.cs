@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 using ServicesDeskUCABWS.Entities;
+using System.Collections.Generic;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Mappers
 {
@@ -10,6 +11,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
         {
             CreateMap<Prioridad, PrioridadDTO>();
             CreateMap<PrioridadDTO, Prioridad>();
+
+            //CreateMap<List<Prioridad>, PrioridadDTO>();
+            //CreateMap<PrioridadDTO, List<Prioridad>>();
         }
     }
 }

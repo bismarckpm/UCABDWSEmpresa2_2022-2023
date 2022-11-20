@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class first_migration : Migration
+    public partial class CrearBD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,11 +70,14 @@ namespace ServicesDeskUCABWS.Migrations
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     fecha_descripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Prioridades", x => x.Id);
+                    table.CheckConstraint("prioridad_estado_chk", "estado = 'DISPONIBLE' or estado = 'NO DISPONIBLE'");
+                    table.CheckConstraint("prioridad_nombre_chk", "nombre = 'URGENTE' or nombre = 'ALTA' or nombre = 'MEDIA' or nombre = 'BAJA'");
                 });
 
             migrationBuilder.CreateTable(
@@ -480,6 +483,12 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Flujos_Aprobaciones_Tipo_TicketId",
                 table: "Flujos_Aprobaciones",
                 column: "Tipo_TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prioridades_Id",
+                table: "Prioridades",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Departamento_DestinoId",

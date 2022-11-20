@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using ServicesDeskUCABWS.Data;
 using System.Collections.Generic;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
 using ServicesDeskUCABWS.Entities;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {
@@ -28,7 +28,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
                 // tipoEstadoCreate.etiqueta.Clear(); 
                 var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
 
-                _dataContext.Prioridad.Add(prioridadEntity);
+                _dataContext.Prioridades.Add(prioridadEntity);
                 _dataContext.SaveChanges();
                 return "Prioridad creada satisfactoriamente";
             }
@@ -40,7 +40,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 
         public List<PrioridadDTO> obtenerPrioridades()
         {
-            var data = _dataContext.Prioridad.AsNoTracking();
+            var data = _dataContext.Prioridades.ToList();
             var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO.ToList();
         }
@@ -49,7 +49,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.nombre == nombre).Single();
+                var data = _dataContext.Prioridades.AsNoTracking().Where(p => p.nombre == nombre).Single();
                 var prioridadDTO = _mapper.Map<PrioridadDTO>(data);
                 return prioridadDTO;
             }
@@ -63,7 +63,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.estado == estado);
+                var data = _dataContext.Prioridades.AsNoTracking().Where(p => p.estado == estado);
                 var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
                 return prioridadDTO;
             }
@@ -77,13 +77,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var prioridad = _dataContext.Prioridad.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
+                var prioridad = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
                 prioridad.nombre = prioridadDTO.nombre;
                 prioridad.descripcion = prioridadDTO.descripcion;
                 prioridad.estado = prioridadDTO.estado;
                 prioridad.fecha_descripcion = prioridadDTO.fecha_descripcion;
                 prioridad.fecha_ultima_edic = prioridadDTO.fecha_ultima_edic;
-                _dataContext.Prioridad.Update(prioridad);
+                _dataContext.Prioridades.Update(prioridad);
                 _dataContext.SaveChanges();
                 return "Prioridad modificada exitosamente";
             }

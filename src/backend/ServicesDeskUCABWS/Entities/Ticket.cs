@@ -20,11 +20,13 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
         [Required]
-        public DateTime fecha_eliminacion { get; set; }
-        
+        //public DateTime fecha_eliminacion { get; set; }
+        public DateTime? fecha_eliminacion { get; set; }
+
         [ForeignKey("FK_Estado")]
         public int? IDEstado { get; set; }
-        
+        public Usuario usuario { get; set; }
+        public Departamento departamento_usuario { get; set; }
         public Estado Estado { get; set; }
         [Required]
         public Prioridad Prioridad { get; set; }

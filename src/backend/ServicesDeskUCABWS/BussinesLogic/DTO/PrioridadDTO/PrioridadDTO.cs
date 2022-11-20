@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DTO
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO
 {
     public class PrioridadDTO
     {

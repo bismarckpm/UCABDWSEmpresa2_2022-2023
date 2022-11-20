@@ -30,9 +30,8 @@ namespace ServicesDeskUCABWS
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
-            //services.AddTransient<ITicketDAO, TicketDAO>();
-			services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
-            
+            services.AddTransient<ITicketDAO, TicketDAO>();
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
 
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
@@ -50,6 +49,7 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,8 +58,8 @@ namespace ServicesDeskUCABWS
 			//Habilitar swagger
 			app.UseSwagger();
 
-			//indica la ruta para generar la configuración de swagger
-			app.UseSwaggerUI(c =>
+            //indica la ruta para generar la configuración de swagger
+            app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
 			});
