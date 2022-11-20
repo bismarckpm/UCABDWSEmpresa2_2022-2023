@@ -11,13 +11,13 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.ID });
-            modelBuilder.Entity<Prioridad>().HasIndex(u => u.ID).IsUnique();
+            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
+            modelBuilder.Entity<Prioridad>().HasIndex(u => u.Id).IsUnique();
         }
 
         //Creacion de los DbSeT
         public DbSet<Estado> Estados { get; set; }
-        public DbSet<Prioridad> Prioridad { get; set; }
+        public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }

@@ -7,7 +7,7 @@ namespace ServicesDeskUCABWS.Data
     {
         DbContext DbContext { get; }
         public DbSet<Estado> Estados { get; set; }
-        public DbSet<Prioridad> Prioridad { get; set; }
+        public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }

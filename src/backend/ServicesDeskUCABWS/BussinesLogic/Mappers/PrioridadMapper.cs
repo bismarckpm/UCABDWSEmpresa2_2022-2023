@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using ServicesDeskUCABWS.BussinesLogic.DTO;
 using ServicesDeskUCABWS.Entities;
 
@@ -9,7 +10,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
         public PrioridadMapper()
         {
             CreateMap<Prioridad, PrioridadDTO>();
-            CreateMap<PrioridadDTO, Prioridad>();
+            CreateMap<PrioridadDTO,Prioridad>();
         }
     }
 }

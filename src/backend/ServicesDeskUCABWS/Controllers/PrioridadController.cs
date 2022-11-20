@@ -78,13 +78,13 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        [HttpGet, Route("Lista/{Estado}")]
-        public ApplicationResponse<List<PrioridadDTO>> ObtenerPrioridadesPorEstadoCtrl(string estado)
+        [HttpGet, Route("Obtener/{PrioridadID}")]
+        public ApplicationResponse<PrioridadDTO> ObtenerPrioridad(string PrioridadID)
         {
-            var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
+            var respuesta = new ApplicationResponse<PrioridadDTO>();
             try
             {
-                respuesta.Data = _prioridadDAO.ObtenerPrioridadesPorEstado(estado);
+                respuesta.Data = _prioridadDAO.ObtenerPrioridad(new Guid(PrioridadID));
                 return respuesta;
             }
             catch (System.IO.IOException ex)

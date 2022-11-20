@@ -1,14 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO
 {
     public class PrioridadDTO
     {
-        public Guid ID { get; set; }
-        public string Nombre { get; set; } = string.Empty;
-        public string Descripcion { get; set; }
-        public string Estado { get; set; }
-        public DateTime FechaDescripcion { get; set; }
-        public DateTime FechaUltimaEdic { get; set; }
+        public Guid Id { get; set; }
+        public string nombre { get; set; } = string.Empty;
+        public string descripcion { get; set; } = string.Empty;
+        public string estado { get; set; }
+        public DateTime fecha_descripcion { get; set; }
+        public DateTime fecha_ultima_edic { get; set; }
     }
 }

@@ -47,6 +47,7 @@ namespace ServicesDeskUCABWS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_descripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

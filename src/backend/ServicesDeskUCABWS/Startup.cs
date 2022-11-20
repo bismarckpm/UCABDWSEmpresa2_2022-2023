@@ -31,7 +31,7 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             //services.AddTransient<ITicketDAO, TicketDAO>();
-			services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
+			services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             
 
             //Se agrega en generador de Swagger
@@ -43,7 +43,7 @@ namespace ServicesDeskUCABWS
 
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus"))
+                options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
             );
         }
 
@@ -58,7 +58,7 @@ namespace ServicesDeskUCABWS
 			//Habilitar swagger
 			app.UseSwagger();
 
-			//indica la ruta para generar la configuración de swagger
+			//indica la ruta para generar la configuraciï¿½n de swagger
 			app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");

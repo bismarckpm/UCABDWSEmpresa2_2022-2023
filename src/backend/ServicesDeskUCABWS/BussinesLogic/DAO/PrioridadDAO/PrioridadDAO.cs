@@ -28,7 +28,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
                 // tipoEstadoCreate.etiqueta.Clear(); 
                 var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
 
-                _dataContext.Prioridad.Add(prioridadEntity);
+                _dataContext.Prioridades.Add(prioridadEntity);
                 _dataContext.SaveChanges();
                 return "Prioridad creada satisfactoriamente";
             }
@@ -40,7 +40,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 
         public List<PrioridadDTO> ObtenerPrioridades()
         {
-            var data = _dataContext.Prioridad.AsNoTracking();
+            var data = _dataContext.Prioridades.AsNoTracking();
             var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO.ToList();
         }
@@ -49,7 +49,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.Nombre == nombre).Single();
+                var data = _dataContext.Prioridades.AsNoTracking().Where(p => p.nombre == nombre).Single();
                 var prioridadDTO = _mapper.Map<PrioridadDTO>(data);
                 return prioridadDTO;
             }
@@ -59,12 +59,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             }
         }
 
-        public List<PrioridadDTO> ObtenerPrioridadesPorEstado(string estado)
+        public PrioridadDTO ObtenerPrioridad(Guid PrioridadID)
         {
             try
             {
-                var data = _dataContext.Prioridad.AsNoTracking().Where(p => p.Estado == estado);
-                var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
+                Prioridad data = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == PrioridadID).Single();
+                PrioridadDTO prioridadDTO = _mapper.Map<PrioridadDTO>(data);
                 return prioridadDTO;
             }
             catch (Exception ex)
@@ -77,13 +77,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var prioridad = _dataContext.Prioridad.AsNoTracking().Where(p => p.ID == prioridadDTO.ID).Single();
-                prioridad.Nombre = prioridadDTO.Nombre;
-                prioridad.Descripcion = prioridadDTO.Descripcion;
-                prioridad.Estado = prioridadDTO.Estado;
-                prioridad.FechaDescripcion = prioridadDTO.FechaDescripcion;
-                prioridad.FechaUltimaEdic = prioridadDTO.FechaUltimaEdic;
-                _dataContext.Prioridad.Update(prioridad);
+                var prioridad = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
+                prioridad.nombre = prioridadDTO.nombre;
+                prioridad.descripcion = prioridadDTO.descripcion;
+                prioridad.estado = prioridadDTO.estado;
+                prioridad.fecha_descripcion = prioridadDTO.fecha_descripcion;
+                prioridad.fecha_ultima_edic = prioridadDTO.fecha_ultima_edic;
+                _dataContext.Prioridades.Update(prioridad);
                 _dataContext.SaveChanges();
                 return "Prioridad modificada exitosamente";
             }
