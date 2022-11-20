@@ -67,9 +67,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             }
         }
 
-        public ApplicationResponse<Tipo_Ticket> ActualizarTipo_Ticket(Tipo_TicketDTOUpdate tipo_TicketDTO)
+
+        public ApplicationResponse<Tipo_TicketDTOUpdate> ActualizarTipo_Ticket(Tipo_TicketDTOUpdate tipo_TicketDTO)
         {
-            var response = new ApplicationResponse<Tipo_Ticket>();
+            var response = new ApplicationResponse<Tipo_TicketDTOUpdate>();
             try
             {
                 ValidarDatosEntradaTipo_Ticket_Update(tipo_TicketDTO);
@@ -84,8 +85,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 tipo_ticket.Maximo_Rechazado = tipo_TicketDTO.Maximo_Rechazado;
 
                 //Eliminando referencia en el tipo Ticket
-                tipo_ticket.Departamento.Clear();
-                tipo_ticket.Flujo_Aprobacion.Clear();
+                if (tipo_ticket.Departamento!=null) tipo_ticket.Departamento.Clear();
+                if (tipo_ticket.Departamento != null) tipo_ticket.Flujo_Aprobacion.Clear();
 
                 //Eliminando Entidades intermedias de flujo de aprobacion
                 context.Flujos_Aprobaciones.RemoveRange(context.Flujos_Aprobaciones
@@ -107,7 +108,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                    }).ToList();
                     foreach (Flujo_Aprobacion fa in tipo_ticket.Flujo_Aprobacion)
                     {
-                        var t = tipo_TicketDTO.Flujo_Aprobacion.Where(x => x.IdTipoCargo == fa.IdTipo_cargo.ToString().ToUpper()).FirstOrDefault();
+                        var t = tipo_TicketDTO.Flujo_Aprobacion.Where(x => x.IdTipoCargo.ToUpper() == fa.IdTipo_cargo.ToString().ToUpper()).FirstOrDefault();
+                        
                         fa.OrdenAprobacion = t.OrdenAprobacion;
                         fa.Minimo_aprobado_nivel = t.Minimo_aprobado_nivel;
                         fa.Maximo_Rechazado_nivel = t.Maximo_Rechazado_nivel;
@@ -126,7 +128,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 context.SaveChanges();
 
                 //Paso a AR
-                response.Data = tipo_ticket;
+                response.Data = tipo_TicketDTO;
             }
             catch (ExceptionsControl ex)
             {
@@ -140,9 +142,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
 
 
-        public ApplicationResponse<Tipo_Ticket> RegistroTipo_Ticket(Tipo_TicketDTOCreate Tipo_TicketDTO)
+        public ApplicationResponse<Tipo_TicketDTOCreate> RegistroTipo_Ticket(Tipo_TicketDTOCreate Tipo_TicketDTO)
         {
-            var response = new ApplicationResponse<Tipo_Ticket>();
+            var response = new ApplicationResponse<Tipo_TicketDTOCreate>();
             try
             {
                 //ValidarDatos
@@ -184,7 +186,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 context.SaveChanges();
 
                 //Paso a AR
-                response.Data = context.Tipos_Tickets.Find(tipo_ticket.Id);
+                response.Data = Tipo_TicketDTO;
             }
             catch (ExceptionsControl ex)
             {

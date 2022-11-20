@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServicesDeskUCAB.Models.TipoTicketModels
+namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class FlujoAprobacionDTOCreate
     {

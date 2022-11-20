@@ -1,5 +1,6 @@
 ﻿using ServiceDeskUCAB.Models;
-using ServicesDeskUCAB.Models.TipoTicketModels;
+using ServiceDeskUCAB.Models.Response;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -8,7 +9,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<Tipo>> Lista();
 
-        Task<bool> Guardar(Tipo_TicketDTOCreate tipo);
+        Task<ApplicationResponse<Tipo_TicketDTOCreate>> Guardar(Tipo_TicketDTOCreate tipo);
 
        
         Task<bool> Eliminar(Guid id);
@@ -16,5 +17,6 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<Departament>> ListaDepa();
 
         Task<List<TipoCargo>> ListaCargos();
+        Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipoTicketDTO);
     }
 }

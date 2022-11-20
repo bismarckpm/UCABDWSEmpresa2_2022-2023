@@ -58,8 +58,8 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
 
         // PUT: api/Tipo_Ticket/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public ApplicationResponse<Tipo_Ticket> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
+        [HttpPut("Editar/{id}")]
+        public ApplicationResponse<Tipo_TicketDTOUpdate> EditarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket)
         {
             var response = _ticketDAO.ActualizarTipo_Ticket(tipo_Ticket);
             return response;
@@ -70,7 +70,7 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
        
         [HttpPost]
         [Route("Guardar/")]
-        public ApplicationResponse<Tipo_Ticket> PostTipo_Ticket(Tipo_TicketDTOCreate tipo_TicketDTO)
+        public ApplicationResponse<Tipo_TicketDTOCreate> PostTipo_Ticket(Tipo_TicketDTOCreate tipo_TicketDTO)
         {
             var response = _ticketDAO.RegistroTipo_Ticket(tipo_TicketDTO);
             return response;
