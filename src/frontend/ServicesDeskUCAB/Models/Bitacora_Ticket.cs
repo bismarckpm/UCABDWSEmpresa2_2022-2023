@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ServicesDeskUCAB.Models
 {
-    public class BitacoraTicket
+    public class Bitacora_Ticket
     {
         public int BitacoraTicketID { get; set; }
         public int TicketID { get; set; }

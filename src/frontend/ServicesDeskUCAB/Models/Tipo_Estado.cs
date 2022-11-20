@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ServicesDeskUCAB.Models
 {
-    public class TipoEstado
+    public class Tipo_Estado
     {
         public int TipoEstadoID { get; set; }
         public string Nombre { get; set; }

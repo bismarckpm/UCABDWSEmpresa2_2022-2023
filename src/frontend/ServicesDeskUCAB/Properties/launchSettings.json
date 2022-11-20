@@ -26,7 +26,7 @@
     "ServicesDeskUCAB": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:17519;http://localhost:34217",
+      "applicationUrl": "https://localhost:42620;http://localhost:43074",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

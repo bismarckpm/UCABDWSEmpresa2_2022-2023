@@ -1,6 +1,9 @@
-﻿<div style="margin:30px 0px">
-    <h2>Merge ticket</h2>
+﻿
+<div style="margin:30px 0px">
+    <h1>Merge ticket</h1>
+    <hr />
 </div>
+
 <div class="container">
     <div class="row" style="margin-top:30px">
         <div class="col-8">
@@ -43,7 +46,7 @@
     </div>
 
     <div>
-        <form>
+        <form method="post" asp-controller="Ticket" asp-action="">
             <div class="col text-center" style="margin:30px 0px">
                 <h3>Seleccione los tickets a unir y presione Merge</h3>
                 <button type="submit" class="btn btn-success">Merge</button>
@@ -52,7 +55,6 @@
                 <thead>
                     <tr>
                         <th>SELECCIONAR</th>
-                        <th>TICKET ID</th>
                         <th>TIPO TICKET</th>
                         <th>PRIORIDAD</th>
                         <th>ESTADO</th>
@@ -74,7 +76,6 @@
                                 </div>
                             </div>
                         </td>
-                        <td>1</td>
                         <td>Solicitud</td>
                         <td>Alta</td>
                         <td>Por aprobar</td>
@@ -89,7 +90,6 @@
                             </div>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </form>

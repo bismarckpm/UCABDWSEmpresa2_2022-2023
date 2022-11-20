@@ -6,7 +6,7 @@ namespace ServicesDeskUCAB.Models
     public class Empleado : Usuario
     {
         public int CargoID { get; set; }
-        public ICollection<VotosTicket> VotosTicket { get; set; }
+        public ICollection<Votos_Ticket> VotosTicket { get; set; }
 
         public Cargo Cargo { get; set; }
     }

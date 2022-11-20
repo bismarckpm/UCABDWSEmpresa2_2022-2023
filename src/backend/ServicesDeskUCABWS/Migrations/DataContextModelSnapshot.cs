@@ -324,6 +324,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .IsUnique();
 
                     b.ToTable("Prioridades");
+
+                    b.HasCheckConstraint("prioridad_estado_chk", "estado = 'DISPONIBLE' or estado = 'NO DISPONIBLE'");
+
+                    b.HasCheckConstraint("prioridad_nombre_chk", "nombre = 'URGENTE' or nombre = 'ALTA' or nombre = 'MEDIA' or nombre = 'BAJA'");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Ticket", b =>
@@ -364,7 +368,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_eliminacion")
+                    b.Property<DateTime?>("fecha_eliminacion")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("titulo")

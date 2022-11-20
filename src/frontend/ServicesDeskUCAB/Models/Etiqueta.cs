@@ -9,7 +9,7 @@ namespace ServicesDeskUCAB.Models
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
 
-        public ICollection<TipoEstado> TipoEstados { get; set; }
+        public ICollection<Tipo_Estado> TipoEstados { get; set; }
     }
 }
 

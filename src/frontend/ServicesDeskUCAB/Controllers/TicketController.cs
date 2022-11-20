@@ -3,27 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ServicesDeskUCAB.Models;
+using ServicesDeskUCAB.Servicios.Ticket;
+using ServicesDeskUCAB.ViewModel;
 
 namespace ServicesDeskUCAB.Controllers
 {
     public class TicketController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string opcion)
         {
-            return View();
+            ViewBag.opcion = opcion;
+            List<Ticket> lista = new List<Ticket>();
+            return View(lista);
         }
-        public IActionResult CrearTicket()
+        public IActionResult Ticket()
         {
-            return View();
+            Ticket ticket = new Ticket();
+            return View(ticket);
         }
         public IActionResult Merge()
         {
-            return View();
+            TicketMergeViewModel ticketMergeViewModel = new TicketMergeViewModel()
+            {
+
+            };
+            return View(ticketMergeViewModel);
         }
 
         public IActionResult Details()
         {
-            return View();
+            TicketDetailsViewModel ticketDetailsViewModel = new TicketDetailsViewModel()
+            {
+
+            };
+            return View(ticketDetailsViewModel);
+        }
+
+        public IActionResult Reenviar()
+        {
+            TicketReenviarViewModel ticketReenviarViewModel = new TicketReenviarViewModel()
+            {
+
+            };
+            return View(ticketReenviarViewModel);
         }
 
         public IActionResult GuardarCambios()

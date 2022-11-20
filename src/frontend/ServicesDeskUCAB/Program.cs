@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ServicesDeskUCAB.Servicios.Prioridad;
+using ServicesDeskUCAB.Servicios;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IServicioAPI, ServicioAPI>();
+builder.Services.AddScoped<IServicioPrioridadAPI, ServicioPrioridadAPI>();
 builder.Services.AddHttpClient("Api", config =>
 {
     config.BaseAddress = new Uri(builder.Configuration["ApiSettings:baseUrl"]);

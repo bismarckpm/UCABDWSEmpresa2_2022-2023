@@ -1,17 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ServicesDeskUCAB.Models
 {
     public class Estado
     {
-        public int EstadoID { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public int TipoEstadoID { get; set; }
-        public DateTime FechaCreacion { get; set; }
-        public DateTime FechaUltimaEdic { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        [Required]
+        [MaxLength(20)]
+        [MinLength(3)]
+        public string nombre { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(70)]
+        [MinLength(3)]
+        public string descripcion { get; set; } = string.Empty;
+        [Required]
+        public DateTime fecha_creacion { get; set; }
+        [Required]
+        public DateTime fecha_ultima_edic { get; set; }
 
-        public TipoEstado TipoEstado { get; set; }
+        [Required]
+        public Tipo_Estado Estado_Padre { get; set; }
+        public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
+        public HashSet<Ticket> ListaTickets { get; set; }
     }
 }
 

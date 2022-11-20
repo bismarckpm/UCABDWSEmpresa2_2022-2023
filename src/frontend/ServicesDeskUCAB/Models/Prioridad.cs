@@ -7,7 +7,7 @@ namespace ServicesDeskUCAB.Models
     public class Prioridad
     {
         [Required]
-        public int ID { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string nombre { get; set; }
         [Required,MinLength(4),MaxLength(100)]
@@ -15,9 +15,9 @@ namespace ServicesDeskUCAB.Models
         [Required]
         public string estado { get; set; }
         [Required]
-        public DateTime fechaDescripcion { get; set; }
+        public DateTime fecha_descripcion { get; set; }
         [Required]
-        public DateTime fechaUltimaEdic { get; set; }
+        public DateTime fecha_ultima_edic { get; set; }
     }
     
 }

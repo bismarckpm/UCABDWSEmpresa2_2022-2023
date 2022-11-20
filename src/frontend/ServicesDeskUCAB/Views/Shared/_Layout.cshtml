@@ -62,11 +62,11 @@
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Ticket</span>
                 </a>
-                <div id="collapseTicket"  aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTicket" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestión de tickets:</h6>
                         <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index">Todos los tickets</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="CrearTicket">Crear Ticket</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
                     </div>
                 </div>
             </li>
@@ -81,7 +81,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestión de prioridad:</h6>
                         <a class="collapse-item" asp-area="" asp-controller="Prioridad" asp-action="Index">Todas las prioridades</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Prioridad" asp-action="CrearPrioridad">Crear Prioridad</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Prioridad" asp-action="Prioridad" asp-route-prioridadID="00000000-0000-0000-0000-000000000000">Crear Prioridad</a>
                     </div>
                 </div>
             </li>
@@ -158,13 +158,14 @@
         </div>
     </div>
 
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- Core plugin JavaScript-->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +21,7 @@ namespace ServicesDeskUCABWS.Controllers
             _prioridadDAO=prioridadDAO;
             _mapper=mapper;
         }
+     
 
         [HttpPost, Route("Guardar")]
         public ApplicationResponse<string> crearPrioridadCtrl([FromBody]PrioridadDTO prioridadDTO)

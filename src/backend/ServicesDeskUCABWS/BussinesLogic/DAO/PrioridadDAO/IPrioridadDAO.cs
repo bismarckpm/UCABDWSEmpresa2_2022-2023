@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {

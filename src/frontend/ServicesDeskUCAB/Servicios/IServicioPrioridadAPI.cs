@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServicesDeskUCAB.Models;
-namespace ServicesDeskUCAB.Servicios.Prioridad
+namespace ServicesDeskUCAB.Servicios
 {
-    public interface IServicioAPI 
+    public interface IServicioPrioridadAPI 
     {
         Task<List<Models.Prioridad>> Lista();
 
         Task<List<Models.Prioridad>> ListaEstado(string cadena);
 
-        Task<Models.Prioridad> Obtener(int PrioridadID);
+        Task<Models.Prioridad> Obtener(Guid prioridadID);
 
-        Task<bool> Guardar(Models.Prioridad Objeto);
+        Task<bool> Guardar(Prioridad Objeto);
 
-        Task<bool> Editar(Models.Prioridad Objeto);
+        Task<bool> Editar(Prioridad Objeto);
     }
 }
 

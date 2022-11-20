@@ -13,6 +13,9 @@ namespace ServicesDeskUCABWS.Data
         {
             modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
             modelBuilder.Entity<Prioridad>().HasIndex(u => u.Id).IsUnique();
+            modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_nombre_chk", "nombre = 'URGENTE' or nombre = 'ALTA' or nombre = 'MEDIA' or nombre = 'BAJA'");
+            modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'DISPONIBLE' or estado = 'NO DISPONIBLE'");
+            modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
         }
 
         //Creacion de los DbSeT

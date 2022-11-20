@@ -9,7 +9,7 @@ namespace ServicesDeskUCAB.Models
         public int TipoTicketID { get; set; }
 
         public TipoCargo TipoCargo { get; set; }
-        public TipoTicket TipoTicket { get; set; }
+        public Tipo_Ticket TipoTicket { get; set; }
     }
 }
 

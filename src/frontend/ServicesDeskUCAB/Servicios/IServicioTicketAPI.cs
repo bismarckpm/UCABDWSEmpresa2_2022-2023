@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ServicesDeskUCAB.Servicios.Ticket
 {
-    public interface IServicioAPI
+    public interface IServicioTicketAPI
     {
     }
 }

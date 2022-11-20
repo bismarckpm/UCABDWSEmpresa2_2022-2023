@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace ServicesDeskUCAB.Models
 {
-    public class TipoTicket
+    public class Tipo_Ticket
     {
         public int TipoTicketID { get; set; }
         public string Nombre { get; set; }

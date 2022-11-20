@@ -2,22 +2,22 @@
  
 <div class="row">
     <div class="col">
-        <h1 id="ti">Prioridad</h1>
+        <h1>Prioridad</h1>
+        <hr />
     </div>
     <div class="text-center">
-        <button type="button" class="btn btn-primary" asp-action="" asp-controller="Prioridad" asp-route-prioridadID="0">Agregar prioridad</button>
+        <a class="btn btn-primary" asp-action="Prioridad" asp-controller="Prioridad" asp-route-prioridadID="00000000-0000-0000-0000-000000000000">Agregar prioridad</a>
     </div>
 </div>
 
 <div class="alert alert-success d-none" role="alert">
-    "Algun mensaje de confirmación luego de hacer una acción"
+    @ViewBag.Mensaje
 </div>
 
 <div style="margin-top:30px;">
     <table id="table_id" class="display">
         <thead>
             <tr>
-                <th>PRIORIDAD ID</th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCIÓN</th>
                 <th>ESTADO</th>
@@ -25,102 +25,25 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Count() > 0)
+                @foreach (var item in Model)
                 {
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-
-                            <td>@item.ID</td>
-                            <td>@item.nombre </td>
-                            <td>@item.descripcion </td>
-                            <td>@item.estado</td>
-                            <td>
-                                <div class="dropdown" style="float: right">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item"asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.ID">Modificar</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                }
+                    <tr>
+                        <td>@item.nombre </td>
+                        <td>@item.descripcion </td>
+                        <td>@item.estado</td>
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item"asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.Id">Modificar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                  }
         </tbody>
     </table>
-</div>
-
-<div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Modificar prioridad "nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textareaclass="form-control" id="message-text"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="habilitarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Habilitar prioridad "nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea habilitar la prioridad "nombre de la prioridad"?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Habilitar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deshabilitarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Deshabilitar prioridad "nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar la prioridad "nombre de la prioridad"?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Deshabilitar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
 @section Scripts{
