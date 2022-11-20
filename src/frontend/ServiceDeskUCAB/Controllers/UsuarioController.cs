@@ -90,15 +90,38 @@ namespace ServicesDeskUCAB.Controllers
             try
             {
                 JObject respuesta;
-                respuesta = await _servicioApiUsuarios.EditarUsuario(user);
+                respuesta = await _servicioApiUsuarios.EditarUsuario(this.TransformUser(user));
                 if ((bool)respuesta["success"])
-                    return RedirectToAction("Usuario", new { message = "Se ha modificado correctamente" });
+                    return RedirectToAction("Usuarios");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
             return NoContent();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            Console.WriteLine("PRUEBA");
+                return null;
+        }
+
+        public UpdateUser TransformUser (UsuariosRol user)
+        {
+            return new UpdateUser()
+            {
+                id = user.id,
+                cedula = user.cedula,
+                primer_nombre = user.primer_nombre,
+                segundo_nombre = user.segundo_nombre,
+                primer_apellido = user.primer_apellido,
+                segundo_apellido = user.segundo_apellido,
+                fecha_nacimiento = user.fecha_nacimiento,
+                gender = user.gender,
+                correo = user.correo,   
+            };
         }
 
         [HttpPost]

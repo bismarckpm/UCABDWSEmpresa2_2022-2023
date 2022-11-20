@@ -17,6 +17,7 @@ namespace ServiceDeskUCAB.Models
         public string correo { get; set; } = string.Empty;
         public string password { get; set; } = string.Empty;
         public List<Roles> roles { get; set; } = new List<Roles>();
+        public string prueba { get; set; }
         public Rol Rol { get; set; }
     }
 

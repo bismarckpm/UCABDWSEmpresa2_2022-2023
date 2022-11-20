@@ -16,7 +16,7 @@ namespace ServiceDeskUCAB.Servicios
         Task<JObject> GuardarEmpleado(UsuariosRol usuarios);
         Task<JObject> GuardarAdminstrador(UsuariosRol usuarios);
         Task<UsuariosRol> MostrarInfoUsuario(Guid id);
-        Task<JObject> EditarUsuario(UsuariosRol user);
+        Task<JObject> EditarUsuario(UpdateUser user);
         Task<Roles> ObtenerRoles(Guid roles);
 
     }

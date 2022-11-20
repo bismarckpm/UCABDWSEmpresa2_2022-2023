@@ -224,6 +224,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                         primer_nombre = user.primer_nombre,
                         primer_apellido = user.primer_apellido,
                         fecha_nacimiento = user.fecha_nacimiento,
+                        gender = user.gender,
+                        correo = user.correo,
                     }
 
                 );

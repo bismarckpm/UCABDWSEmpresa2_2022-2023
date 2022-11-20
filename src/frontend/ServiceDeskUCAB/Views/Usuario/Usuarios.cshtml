@@ -29,8 +29,8 @@
 
 <h1>Usuarios</h1>
 
-<div class="d-flex justify-content-end">
-<a href="@Url.Action("GuardarUsuarioView")" class="btn btn-primary btn-sm">Crear</a>
+    <div style="width:94%" class="d-flex justify-content-end">
+        <a href="@Url.Action("GuardarUsuarioView")" style="background-color: #272727; border-color: #272727" class="btn btn-primary btn-sm">Crear</a>
 </div>
 
 <table class="table">
@@ -76,8 +76,8 @@
                 <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
                     Eliminar
                 </button>
-                <a type="button" class="btn btn-primary" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
-                    Aceptar
+                <a type="button" class="btn btn-primary btn-sm" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
+                    Editar
                 </a>
             </td>
         </tr>

@@ -100,6 +100,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_nombre = user.segundo_nombre,
                 cedula = user.cedula,
                 fecha_nacimiento = user.fecha_nacimiento,
+                gender = user.gender,   
+                correo=user.correo, 
 
             };
         }

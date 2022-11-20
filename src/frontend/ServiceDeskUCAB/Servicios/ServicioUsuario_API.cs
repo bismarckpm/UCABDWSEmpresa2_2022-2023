@@ -225,9 +225,33 @@ namespace ServiceDeskUCAB.Servicios
             return usuario;
         }
 
-        public Task<JObject> EditarUsuario(UsuariosRol user)
+        public async Task<JObject> EditarUsuario(UpdateUser user)
         {
-            throw new NotImplementedException();
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await cliente.PutAsync("api/Usuario/ActualizarUsuario", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
         }
 
 

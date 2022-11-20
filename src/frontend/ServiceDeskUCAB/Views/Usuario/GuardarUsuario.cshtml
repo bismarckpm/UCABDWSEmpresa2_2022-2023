@@ -71,11 +71,11 @@
                                 <label for="inputAddress" class="form-label">Rol</label>
                                     @Html.DropDownListFor(m => m.Rol,
                                 new SelectList(Enum.GetValues(typeof(Rol))),
-                                "Select Gender", new {Style="border-radius: 10px",Class="form-control"})
+                                 new {Style="border-radius: 10px",Class="form-control"})
                                 <span class="text-danger"></span>
                             </div>
                             <div style="padding-top: 12px;margin-right: 8pc;" class="d-flex justify-content-end">
-                                <button type="submit" style="background-color: #272727; border-color: #272727; border-radius: 10px;margin-right: 2pc" class="btn btn-primary">Cancelar</button>
+                                <a type="button" style="background-color: #272727; border-color: #272727; border-radius: 10px;margin-right: 2pc" class="btn btn-primary" href='@Url.Action("Usuarios","Usuario")'>Cancelar</a>
                                 <button type="submit" style="background-color: #272727; border-color: #272727; border-radius: 10px" class="btn btn-primary">Registrar</button>
                             </div>
 
