@@ -110,11 +110,11 @@ namespace ServiceDeskUCAB.Servicios
             bool respuesta = false;
 
         
-                if (tipo.tipo == "Modelo_No_Aprobacion")
+                /*if (tipo.tipo == "Modelo_No_Aprobacion")
                 {
                 tipo.flujo_Aprobacion = null;
 
-                }
+                }*/
 
 
             
