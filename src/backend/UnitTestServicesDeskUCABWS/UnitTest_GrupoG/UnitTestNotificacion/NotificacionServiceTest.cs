@@ -1,9 +1,11 @@
 ﻿using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -119,7 +121,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
+        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")] 
         public void ReemplazarEtiquetasClienteNotificacionServiceTest()
         {
 
@@ -196,6 +198,33 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
 
             var result = _NotificacionService.ReemplazoEtiqueta(Ticket, Plantilla);
             Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando existe un argumento null al reemplazar las etiquetas")]
+        public void ReemplazarEtiquetasNullReferenceExceptionServiceTest()
+        {
+
+            var Ticket = new Ticket();
+            var Plantilla = new PlantillaNotificacionDTO();
+
+            Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.ReemplazoEtiqueta(It.IsAny<Ticket>(), It.IsAny<PlantillaNotificacionDTO>()));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria al enviar correo exitoso")]        //esto está bueno?
+        public void EnviarCorreoExitosoServiceTest()
+        {
+
+            var tituloPlantilla = "Titulo email prueba unitaria";
+            var body = "Cuerpo del email prueba unitaria";
+            var correoDestino = "manueloliv96@gmail.com, 22anthony.monsalve@gmail.com";
+
+            Assert.IsTrue(_NotificacionService.EnviarCorreo(tituloPlantilla, body, correoDestino));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando existe una excepcion al enviar correo")]        //esto está bueno?
+        public void EnviarCorreoExceptionServiceTest()
+        {
+            Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.EnviarCorreo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
         }
     }
 }

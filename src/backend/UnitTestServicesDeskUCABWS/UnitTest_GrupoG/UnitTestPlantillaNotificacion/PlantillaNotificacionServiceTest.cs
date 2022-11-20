@@ -309,7 +309,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             Assert.IsTrue(result);
         }
 
-
         [TestMethod(displayName: "Prueba Unitaria cuando al eliminar no encuentra la plantilla notificación de acuerdo al id")]
         public void ExcepcionEliminarlantillaIdIncompatible()
         {
@@ -317,7 +316,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             _contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ArgumentNullException(""));
             Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.EliminarPlantilla(It.IsAny<Guid>()));
         }
-
 
         [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la eliminación")]
         public void ExcepcionEliminarPlantillaNotificacion()

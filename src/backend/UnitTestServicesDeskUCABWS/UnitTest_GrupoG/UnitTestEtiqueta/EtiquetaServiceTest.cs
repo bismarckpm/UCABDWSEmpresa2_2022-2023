@@ -65,7 +65,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestEtiqueta
         //*
 
         [TestMethod(displayName: "Prueba Unitaria de la consulta de una ETIQUETA por id exitosa")]
-        public void ConsultaPlantillaIDServiceTest()
+        public void ConsultaEtiquetaIDServiceTest()
         {
             //arrange
             var id = Guid.Parse("c76a9916-4cbb-434c-b88e-1fc8152eca8c");
@@ -78,7 +78,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestEtiqueta
         }
 
         [TestMethod(displayName: "Prueba Unitaria de la excepcion consulta de una ETIQUETA por id que no existe")]
-        public void ConsultaPlantillaIDExceptionServiceTest()
+        public void ConsultaEtiquetaIDExceptionServiceTest()
         {
             _contextMock.Setup(p => p.Etiquetas).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _EtiquetaService.ConsultarEtiquetaGUID(It.IsAny<Guid>()));

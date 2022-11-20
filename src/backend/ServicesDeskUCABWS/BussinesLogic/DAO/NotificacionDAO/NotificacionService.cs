@@ -31,22 +31,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
         public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
         {
             Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
-            Empleado empleado = null;
-
+            
+            //Empleado empleado = null;
             //var cliente = _context.Clientes.Where(u => u.Id == ticket.cliente.Id).FirstOrDefault();
             //var empleados = _context.Empleados.Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
 
-            if (ticket.empleado != null)
-            {
-                etiquetasEstatico.Add("@Cargo", ticket.empleado.Cargo.nombre_departamental.ToString());
-                etiquetasEstatico.Add("@Usuario", ticket.empleado.primer_nombre.ToString() + " " + ticket.empleado.primer_apellido.ToString());
-            }
-            else
-            {
-                etiquetasEstatico.Add("@Usuario", ticket.cliente.primer_nombre.ToString() + " " + ticket.cliente.primer_apellido.ToString());
-            }
             try
             {
+                if (ticket.empleado != null)
+                {
+                    etiquetasEstatico.Add("@Cargo", ticket.empleado.Cargo.nombre_departamental.ToString());
+                    etiquetasEstatico.Add("@Usuario", ticket.empleado.primer_nombre.ToString() + " " + ticket.empleado.primer_apellido.ToString());
+                }
+                else
+                {
+                    etiquetasEstatico.Add("@Usuario", ticket.cliente.primer_nombre.ToString() + " " + ticket.cliente.primer_apellido.ToString());
+                }
+
                 etiquetasEstatico.Add("@Ticket", ticket.titulo.ToString());
                 if (ticket.Estado != null)
                     etiquetasEstatico.Add("@Estado", ticket.Estado.nombre.ToString());
@@ -71,7 +72,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo hacer el reemplazo de las etiquetas en la plantilla", ex);
+                throw new ExceptionsControl("Ha ocurrido un error al reemplazar las etiquetas", ex);
             }
         }
 
@@ -106,7 +107,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo enviar el correo", ex);
+                throw new ExceptionsControl("No se pudo enviar el correo. Verifica el correo electrónico que ingresó", ex);
             }
         }
     }
