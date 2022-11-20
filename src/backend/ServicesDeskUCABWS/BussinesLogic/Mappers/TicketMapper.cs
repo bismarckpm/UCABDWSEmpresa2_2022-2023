@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Mappers
@@ -10,6 +10,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
         {
             CreateMap<Ticket, TicketDTO>();
             CreateMap<TicketDTO, Ticket>();
+
+            CreateMap<TicketDTO, TicketNuevoDTO>();
+            CreateMap<TicketNuevoDTO, TicketDTO>();
         }
     }
 }
