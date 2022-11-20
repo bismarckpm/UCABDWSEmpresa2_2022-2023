@@ -97,6 +97,12 @@ namespace ModuloPlantillasNotificaciones.Controllers
         [HttpPost]
         public async Task<IActionResult> EditarEstado(TipoEstadoNuevo estado, string id)
         {
+
+            if(estado.Etiqueta == null)
+            {
+                estado.Etiqueta = new();
+            }
+
             JObject respuesta;
 
             try

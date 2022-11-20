@@ -35,9 +35,12 @@
                     <div class="col-4">
                         <div class="mb-1">
                             <label class="form-label fs-6 fw-bold mb-1">Asociar etiquetas:</label>
-                            @if(Model.Etiquetas.Count() == 0){
-                                <p class="fst-italic text-danger">No tiene etiquetas asociadas</p>
-                            }else{
+                            @if (Model.Etiquetas != null && Model.Etiquetas.Count() == 0)
+                            {
+                                <p class="fst-italic text-danger">No existen etiquetas en el sistema</p>
+                            }
+                            else if(Model.Etiquetas != null)
+                            {
                                 @foreach (var etiqueta in Model.Etiquetas)
                                 {
                                     <div class="form-check form-switch">
@@ -45,6 +48,8 @@
                                         <label class="form-check-label">@etiqueta.Nombre</label>
                                     </div>
                                 }
+                            }else{
+                                <p class="fst-italic text-danger">No hay etiquetas registradas en el sistema</p>
                             }
                         </div>
                     </div>

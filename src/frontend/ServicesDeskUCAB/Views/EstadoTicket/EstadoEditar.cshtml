@@ -36,23 +36,30 @@
                     <div class="col-4">
                         <div class="mb-1">
                             <label class="form-label fs-6 fw-bold mb-1">Asociar etiquetas:</label>
-                            @if (Model.Etiquetas.Count() == 0)
+                            @if (Model.Etiquetas != null && Model.Etiquetas.Count() == 0)
                             {
-                                <p class="fst-italic text-danger">No tiene etiquetas asociadas</p>
+                                <p class="fst-italic text-danger">No existen etiquetas en el sistema</p>
                             }
-                            else
+                            else if (Model.Etiquetas != null)
                             {
                                 @foreach (var etiqueta in Model.Etiquetas)
                                 {
                                     <div class="form-check form-switch">
-                                    @if(Model.Estado.Etiqueta.Any(e => e.Nombre == etiqueta.Nombre)){
-                                        <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id" checked>
-                                    }else{
-                                        <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id">
-                                    }
+                                        @if (Model.Estado.Etiqueta.Any(e => e.Nombre == etiqueta.Nombre))
+                                        {
+                                            <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id" checked>
+                                        }
+                                        else
+                                        {
+                                            <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id">
+                                        }
                                         <label class="form-check-label">@etiqueta.Nombre</label>
                                     </div>
                                 }
+                            }
+                            else
+                            {
+                                <p class="fst-italic text-danger">No hay etiquetas registradas en el sistema</p>
                             }
                         </div>
                     </div>
