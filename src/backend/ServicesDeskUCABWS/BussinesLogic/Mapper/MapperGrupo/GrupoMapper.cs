@@ -38,8 +38,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
 				id = Guid.NewGuid(),
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_creacion = grupo.fecha_creacion
-            };
+                fecha_creacion = DateTime.Now.Date
+			};
         }
 
         public static Grupo MapperDTOToEntityModificar(GrupoDto_Update grupo)

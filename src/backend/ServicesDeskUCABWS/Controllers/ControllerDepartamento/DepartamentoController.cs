@@ -165,12 +165,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 			}
 			return response; 
         }
-		[HttpPut("AsignarGrupoToDepartamento/{idGrupo}/{idDept}")]
-        public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+
+		[HttpPut]
+		[Route("AsignarGrupoToDepartamento/")]
+        public ActionResult<List<string>> AsignarGrupoToDepartamento([FromBody] string idDepartamento)
         {
             try
             {
-                return _departamentoDAO.AsignarGrupoToDepartamento(idGrupo, idDept);
+                return _departamentoDAO.AsignarGrupoToDepartamento(idDepartamento);
             }
             catch (Exception ex)
             {
@@ -194,22 +196,5 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
-
-        [HttpGet("SelectListItemDepartamento/")]
-		public ApplicationResponse<IEnumerable<SelectListItem>> ListaDepartamentoSelectList()
-		{
-			var response = new ApplicationResponse<IEnumerable<SelectListItem>>();
-			try
-			{
-				response.Data= _departamentoDAO.ListaDepartamentoGrupo();
-			}
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-		}
 	}
 }

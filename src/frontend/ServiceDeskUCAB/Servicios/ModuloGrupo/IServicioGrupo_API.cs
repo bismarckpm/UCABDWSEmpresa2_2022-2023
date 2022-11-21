@@ -12,5 +12,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         public  Task<JObject> GuardarGrupo(GrupoDto grupo, List<DepartamentoDto> listaDept);
 		Task<JObject> EliminarGrupo(Guid id);
 		public Task<GrupoModel> BuscarGrupo(Guid id);
+		public Task<JObject> RegistrarGrupo(GrupoModel grupo);
 	}
 }

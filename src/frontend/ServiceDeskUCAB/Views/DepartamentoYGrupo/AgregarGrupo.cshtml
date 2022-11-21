@@ -26,15 +26,19 @@
                 </button>
             </div>
 
-            @using (Html.BeginForm("RegistrarGrupo", "DepartamentoYGrupo", FormMethod.Post))
+            @using (Html.BeginForm("GuardarGrupo", "DepartamentoYGrupo", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <span>Nombre: </span> @Html.TextBoxFor(m => m.Item3.nombre, new {name = "nombre"})
-                    @Html.ValidationMessageFor(m => m.Item3.nombre ,null, new { @class = "text-danger" })
+@*                    <span>Nombre: </span> @Html.TextBoxFor(m => m.Item3.nombre, new {name = "nombre"})
+                    @Html.ValidationMessageFor(m => m.Item3.nombre ,null, new { @class = "text-danger" })*@
+                    <label for="nombre">Nombre del Grupo:</label>
+                    <input type="text" name="nombre" value="@Model.Item3.nombre" />
                     <br />
                     <br />
-                    <span>Descripcion: </span> @Html.TextAreaFor(m => m.Item3.descripcion, new {name = "descripcion"})
-                    @Html.ValidationMessageFor(m => m.Item3.descripcion ,null, new { @class = "text-danger" })
+@*                    <span>Descripcion: </span> @Html.TextAreaFor(m => m.Item3.descripcion, new {name = "descripcion"})
+                    @Html.ValidationMessageFor(m => m.Item3.descripcion ,null, new { @class = "text-danger" })*@
+                    <label for="descripcion">Descripción del Grupo:</label>
+                    <input type="text" name="descripcion" value="@Model.Item3.descripcion" />
                     <br />
                     <br />
                    

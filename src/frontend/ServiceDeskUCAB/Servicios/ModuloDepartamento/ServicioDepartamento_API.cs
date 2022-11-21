@@ -5,6 +5,7 @@ using ServiceDeskUCAB.Models;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.Entities;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -205,14 +206,34 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 					var resultadoDept = JsonConvert.DeserializeObject <List<DepartamentoModel>>(stringDataRespuestaDept);
 					departamento.departamentos = resultadoDept;
 				}
-
-
 			}
 			catch (Exception ex)
 			{
 					throw ex.InnerException!;
 			}
 			return departamento.departamentos;
+		}
+
+		//Asociar un departamento seleccionado
+		public async Task<JObject> AsociarDepartamento(List<string> idDepartamento)
+		{
+			JObject json_respuesta;
+
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			string combinedString = string.Join(",", idDepartamento);
+			var content = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
+
+			
+				var responseDepartamento = await cliente.PutAsync($"Departamento/AsignarGrupoToDepartamento/", content);
+				Console.WriteLine(JsonConvert.SerializeObject(idDepartamento));
+			var respuestaDepartamento = await responseDepartamento.Content.ReadAsStringAsync();
+				 json_respuesta = JObject.Parse(respuestaDepartamento);
+			
+			return json_respuesta;
 		}
 	}
 }

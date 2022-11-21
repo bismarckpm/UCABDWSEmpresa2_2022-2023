@@ -139,5 +139,22 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
+		[HttpGet("ConsultarUltimoGrupoRegistrado/")]
+		public ApplicationResponse<GrupoDto> UltimoGrupoRegistradoDao()
+        {
+			var response = new ApplicationResponse<GrupoDto>();
+			try
+			{
+				response.Data = _grupoDAO.UltimoGrupoRegistradoDao();
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
+
 	}
 }

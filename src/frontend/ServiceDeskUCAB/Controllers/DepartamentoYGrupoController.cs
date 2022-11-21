@@ -7,6 +7,7 @@ using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+using ServicesDeskUCABWS.Entities;
 using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
@@ -187,11 +188,31 @@ namespace ServiceDeskUCAB.Controllers
 		}
 
 		
-		public async Task<IActionResult> RegistrarGrupo( List<string> idDepartamentos) {
+		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo,  List<string> idDepartamentos) {
 
-			Console.WriteLine(idDepartamentos.Count());
-            return RedirectToAction("DepartamentoGrupo");	
+			JObject respuestaGrupo;
 			
+			try
+			{
+				respuestaGrupo = await _servicioApiGrupo.RegistrarGrupo(grupo);
+
+				//if ((bool)respuestaGrupo["success"])
+				//{
+					JObject respuestaDepartamento;
+					respuestaDepartamento = await _servicioApiDepartamento.AsociarDepartamento(idDepartamentos);
+
+					if ((bool)respuestaDepartamento["success"])
+					{
+						return RedirectToAction("DepartamentoGrupo");
+					}
+				//}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+			return NoContent();
+
 		}
 	}
 }
