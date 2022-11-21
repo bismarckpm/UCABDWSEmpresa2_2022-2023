@@ -10,10 +10,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
     public class TicketHelpers
     {
 
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public TicketHelpers(DataContext dataContext, IMapper mapper)
+        public TicketHelpers(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;

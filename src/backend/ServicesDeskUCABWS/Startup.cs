@@ -29,6 +29,7 @@ namespace ServicesDeskUCABWS
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             services.AddTransient<ITicketDAO, TicketDAO>();
             services.AddTransient<IDataContext, DataContext>();
