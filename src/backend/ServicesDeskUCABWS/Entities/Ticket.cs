@@ -20,11 +20,13 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
         [Required]
-        public DateTime fecha_eliminacion { get; set; }
-        
+        //public DateTime fecha_eliminacion { get; set; }
+        public DateTime? fecha_eliminacion { get; set; }
+
         [ForeignKey("FK_Estado")]
         public int? IDEstado { get; set; }
-        
+        public Usuario usuario_emisor { get; set; }
+        public Departamento departamento_usuario { get; set; }
         public Estado Estado { get; set; }
         [Required]
         public Prioridad Prioridad { get; set; }
@@ -33,7 +35,7 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public HashSet<Votos_Ticket> Votos_Ticket { get; set; }
         public Departamento Departamento_Destino { get; set; }
-        public Familia_Ticket Familia_Ticket { get; set; }  
+        public Familia_Ticket Familia_Ticket { get; set; }
         public Ticket Ticket_Padre { get; set; }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
     }

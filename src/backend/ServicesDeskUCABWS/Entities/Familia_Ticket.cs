@@ -1,4 +1,4 @@
-﻿using ServicesDeskUCABWS.Models;
+﻿using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

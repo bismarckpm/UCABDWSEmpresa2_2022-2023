@@ -41,6 +41,6 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime fecha_eliminacion { get; set; }
-       
+        public List<Ticket> lista_ticket { get; set; }
     }
 }

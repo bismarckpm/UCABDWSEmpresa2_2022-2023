@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServicesDeskUCABWS.Entities;
+using System;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
 {
@@ -8,6 +9,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         public string titulo { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
         public DateTime fecha_creacion { get; set; }
+        public Usuario usuario { get; set; }
+        public Departamento departamento_usuario { get; set; }
         public Guid usuario_id { get; set; }
         public string estado_nombre { get; set; }
         public string prioridad_nombre { get; set; }
