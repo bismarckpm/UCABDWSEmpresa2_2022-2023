@@ -47,8 +47,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    userid = usuario.Id,
-                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298162")
+                    UserId = usuario.Id,
+                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298162")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();
@@ -90,8 +90,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    userid = usuario.Id,
-                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298161")
+                    UserId = usuario.Id,
+                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298161")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();
@@ -133,8 +133,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
-                    userid = usuario.Id,
-                    rolid = new Guid("8C8A156B-7383-4610-8539-30CCF7298163")
+                    UserId = usuario.Id,
+                    RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298163")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
                 _dataContext.SaveChanges();

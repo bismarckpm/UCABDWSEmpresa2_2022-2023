@@ -10,8 +10,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
         {
             return new RolUsuario
             {
-                userid = user.idusuario,
-                rolid = user.idrol,
+                UserId = user.idusuario,
+                RolId = user.idrol,
             };
 
         }
@@ -20,8 +20,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
         {
             return new RolUsuarioDTO
             {
-                idusuario = user.userid,
-                idrol = user.rolid,
+                idusuario = user.UserId,
+                idrol = user.RolId,
             };
 
         }
