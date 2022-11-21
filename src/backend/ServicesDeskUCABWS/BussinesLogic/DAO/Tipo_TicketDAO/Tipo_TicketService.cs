@@ -125,7 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
                 //Actualizacion de la BD
                 context.Tipos_Tickets.Update(tipo_ticket);
-                context.SaveChanges();
+                context.DbContext.SaveChanges();
 
                 //Paso a AR
                 response.Data = tipo_TicketDTO;
@@ -183,7 +183,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 catch (Exception EX) { }
                 //Actualizaciion de la BD
                 context.Tipos_Tickets.Add(tipo_ticket);
-                context.SaveChanges();
+                context.DbContext.SaveChanges();
 
                 //Paso a AR
                 response.Data = Tipo_TicketDTO;
@@ -401,7 +401,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 var tipo_ticket = context.Tipos_Tickets.Find(id);
 
                 tipo_ticket.fecha_elim = DateTime.UtcNow;
-                context.SaveChanges();
+                context.DbContext.SaveChanges();
                 return true;
 
             }

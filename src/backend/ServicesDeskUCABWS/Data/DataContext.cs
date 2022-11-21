@@ -52,45 +52,5 @@ namespace ServicesDeskUCABWS.Data
                 return this;
             }
         }
-
-        Task<EntityEntry> IDbContext.AddAsync(object entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<EntityEntry<TEntity>> IDbContext.AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IDbContext.FindAsync<TEntity>(params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<object> IDbContext.FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IDbContext.FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<object> IDbContext.FindAsync(Type entityType, params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Tipo_Ticket tipo_Ticket)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

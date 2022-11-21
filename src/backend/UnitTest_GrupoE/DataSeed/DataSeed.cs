@@ -48,7 +48,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tipo_Estados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoEstados.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipo_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
             _mockContext.Setup(set => set.Tipo_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
-            _mockContext.Setup(set => set.Update(It.IsAny<Tipo_Estado>));
+            _mockContext.Setup(set => set.Tipo_Estados.Update(It.IsAny<Tipo_Estado>()));
             //_mockContext.Setup(set => set.Tipo_Estados.ToList().Contains(It.IsAny<object>())).Returns((object input) => ListaTipoEstados.Contains(input));
             /*_mockContext.Setup(mr => mr.Tipo_Estados.Update(It.IsAny<Tipo_Estado >()))
                    .Callback((Tipo_Estado e) => {
@@ -440,7 +440,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tipos_Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoTickets.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Tickets.Add(It.IsAny<Tipo_Ticket>())).Callback<Tipo_Ticket>(ListaTipoTickets.Add);
             _mockContext.Setup(set => set.Tipos_Tickets.AddRange(It.IsAny<IEnumerable<Tipo_Ticket>>())).Callback<IEnumerable<Tipo_Ticket>>(ListaTipoTickets.AddRange);
-            _mockContext.Setup(set => set.Update(It.IsAny<Tipo_Ticket>));
+            _mockContext.Setup(set => set.Tipos_Tickets.Update(It.IsAny<Tipo_Ticket>()));
 
 
             _mockContext.Setup(c => c.Flujos_Aprobaciones).Returns(ListaFlujoAprobacion.AsQueryable().BuildMockDbSet().Object);
@@ -588,15 +588,17 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tickets.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTickets.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tickets.Add(It.IsAny<Ticket>())).Callback<Ticket>(ListaTickets.Add);
             _mockContext.Setup(set => set.Tickets.AddRange(It.IsAny<IEnumerable<Ticket>>())).Callback<IEnumerable<Ticket>>(ListaTickets.AddRange);
-            _mockContext.Setup(set => set.Update(It.IsAny<Ticket>()));
-                /*.Returns((Ticket input) => {
-                return 1;
-            });*/
+            _mockContext.Setup(set => set.Tickets.Update(It.IsAny<Ticket>()));
+            /*.Returns((Ticket input) => {
+            return 1;
+        });*/
 
             _mockContext.Setup(c => c.Votos_Tickets).Returns(ListaVotos.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.Votos_Tickets.Add(It.IsAny<Votos_Ticket>())).Callback<Votos_Ticket>(ListaVotos.Add);
             _mockContext.Setup(set => set.Votos_Tickets.AddRange(It.IsAny<IEnumerable<Votos_Ticket>>())).Callback<IEnumerable<Votos_Ticket>>(ListaVotos.AddRange);
-            _mockContext.Setup(set => set.Update(It.IsAny<Votos_Ticket>));
+            _mockContext.Setup(set => set.Votos_Tickets.Update(It.IsAny<Votos_Ticket>()));
+
+            _mockContext.Setup(set => set.DbContext.SaveChanges());
         }
     }
 }
