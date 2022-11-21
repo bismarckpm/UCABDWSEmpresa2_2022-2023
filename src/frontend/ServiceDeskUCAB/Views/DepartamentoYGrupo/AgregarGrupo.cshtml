@@ -7,91 +7,12 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-@*<script>
-    $("form").submit(function () {
-        //var formulario = $('form');
-        //$('#btnCrear').click(function (event) {
-            
-            var selectedCheckbox = new Array();
-            var tablaDepartamentos = $('#DeptTable');
-            var checks = $('input');
-            for (var i = 0; i < checks.length; i++) {
-                if(checks[i].checked){
-                    selectedCheckbox.push(checks[i].value);                    
-                }
-               
-            }       
-
-            var arrays = selectedCheckbox.toString();
-            
-            console.log(selectedCheckbox, "este es select");
-            $('#oculto').val(arrays);
-            console.log($('#oculto').val(arrays), "este es el input");
-            
-            
-            //$.get(url).done(function (data) {
-            //    console.log(data, "este es data");
-            //    //input.html(data);
-                
-            //})
-
-            
-
-                   
-                     
-
-        //})
-    })
-
-  
-
-</script>*@
-
 <head>
     <title>@ViewData["Title"] - ServicesDeskUCAB</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/sb-admin-2.css" />    
 </head>
 
-<!-- Importacion de librerias -->
-
-    
-
-@*
- <script>
-        function obtenerID() {
-            //Array de checkboxs.
-            var selectedCheckbox = new Array();
-
-            //Reference the Table.
-            var tablaDepartamentos = document.getElementById("DeptTable");
-
-            //Reference all the CheckBoxes in Table.
-            var checks = tablaDepartamentos.getElementsByTagName("input");            
-
-            // Loop and push the checked CheckBox value in Array.
-            for (var i = 0; i < checks.length; i++) {
-                if (checks[i].checked) {
-                    selectedCheckbox.push(checks[i].value);
-                    
-                }
-                else{
-                    if (checks[i] > -1) { 
-                        selectedCheckbox.splice(checks[i], 1);
-                        console.log(selectedCheckbox);
-                    }
-                }
-            }
-
-            var arrayString = selectedCheckbox.toString();
-            console.log(arrayString);
-            return arrayString.replace("ultimo",arrayString);
-        
-        }
- </script>*@
-
-
- 
 
 <!-- Ventana emergente para agregar grupo -->
 
