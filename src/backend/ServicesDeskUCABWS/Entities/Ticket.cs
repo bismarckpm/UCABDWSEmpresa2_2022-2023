@@ -20,7 +20,8 @@ namespace ServicesDeskUCABWS.Entities
 
         [ForeignKey("FK_Estado")]
         public int? IDEstado { get; set; }
-        public Usuario usuario { get; set; }
+        public Usuario usuario_emisor { get; set; }
+
         public Estado Estado { get; set; }
         [Required]
         public Prioridad Prioridad { get; set; }

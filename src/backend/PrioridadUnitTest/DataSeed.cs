@@ -19,7 +19,7 @@ namespace PrioridadUnitTest
         public static void SetupDbContextData(this Mock<IDataContext> _mockContext)
         {
 
-            var ListaPrioridad = new List<Prioridad>
+            /*var ListaPrioridad = new List<Prioridad>
             {
                 new Prioridad("Urgente","Descripcion P1")
                 {
@@ -36,7 +36,7 @@ namespace PrioridadUnitTest
             _mockContext.Setup(c => c.Prioridad.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaPrioridad.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Prioridad.Add(It.IsAny<Prioridad>())).Callback<Prioridad>(ListaPrioridad.Add);
             _mockContext.Setup(set => set.Prioridad.AddRange(It.IsAny<IEnumerable<Prioridad>>())).Callback<IEnumerable<Prioridad>>(ListaPrioridad.AddRange);
-
+            */
 
 
 

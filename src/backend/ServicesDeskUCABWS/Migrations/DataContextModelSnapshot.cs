@@ -316,11 +316,15 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("nombre")
                         .IsUnique();
 
                     b.ToTable("Prioridades");
@@ -377,6 +381,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<Guid?>("usuario_emisorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Departamento_DestinoId");
@@ -392,6 +399,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Ticket_PadreId");
 
                     b.HasIndex("Tipo_TicketId");
+
+                    b.HasIndex("usuario_emisorId");
 
                     b.ToTable("Tickets");
                 });
@@ -754,6 +763,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ServicesDeskUCABWS.Entities.Usuario", "usuario_emisor")
+                        .WithMany("lista_tickets")
+                        .HasForeignKey("usuario_emisorId");
+
                     b.Navigation("Departamento_Destino");
 
                     b.Navigation("Estado");
@@ -765,6 +778,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Ticket_Padre");
 
                     b.Navigation("Tipo_Ticket");
+
+                    b.Navigation("usuario_emisor");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
@@ -862,6 +877,11 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Ticket", b =>
                 {
                     b.Navigation("Flujo_Aprobacion");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Usuario", b =>
+                {
+                    b.Navigation("lista_tickets");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Empleado", b =>

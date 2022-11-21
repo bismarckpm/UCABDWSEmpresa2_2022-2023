@@ -17,6 +17,7 @@ namespace ServicesDeskUCABWS.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
+        [MaxLength(10), MinLength(3)]
         public string nombre { get; set; } = string.Empty;
         [Required, MaxLength(100), MinLength(4)]
         public string descripcion { get; set; } = string.Empty;
