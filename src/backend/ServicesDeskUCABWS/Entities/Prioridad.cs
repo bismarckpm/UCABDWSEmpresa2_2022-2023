@@ -5,15 +5,6 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Prioridad
     {
-        /*private string v1;
-        private string v2;
-
-        public Prioridad(string v1, string v2)
-        {
-            this.v1 = v1;
-            this.v2 = v2;
-        }*/
-
         [Key]
         public Guid Id { get; set; }
         [Required]
@@ -27,6 +18,5 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_descripcion { get; set; }
         [Required]
         public DateTime fecha_ultima_edic { get; set; }
-        
     }
 }
