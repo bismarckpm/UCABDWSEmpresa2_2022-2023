@@ -39,7 +39,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = ex.Message;
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -61,7 +61,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = null;
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -83,7 +83,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = null;
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -106,7 +106,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = "No se pudo añadir la bitacora al ticket";
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -128,7 +128,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = "No se pudo añadir la bitacora al ticket";
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -150,7 +150,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = null;
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+               //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -172,7 +172,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = "No se pudo añadir la bitacora al ticket";
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -195,7 +195,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = "No se pudo añadir la bitacora al ticket";
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
@@ -217,7 +217,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = "No se pudo añadir la bitacora al ticket";
                 respuesta.Message = ex.Message;
                 respuesta.Success = false;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
