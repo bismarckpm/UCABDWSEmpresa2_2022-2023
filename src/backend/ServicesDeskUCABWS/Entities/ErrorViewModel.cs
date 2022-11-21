@@ -1,5 +1,5 @@
-
-namespace ServiceDeskUCAB.Models{
+namespace ServicesDeskUCABWS.Entities
+{
     public class ErrorViewModel
     {
         public string? RequestId { get; set; }

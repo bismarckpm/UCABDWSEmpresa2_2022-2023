@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ServicesDeskUCABWS.Entities;
 
+
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.Usuario
 {
     public class UsuarioDto
@@ -41,6 +42,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Usuario
         public string password { get; set; } = string.Empty;
         [Required]
         public DateTime fecha_creacion { get; set; }
-        public RolUsuario Roles { get; set; }
+
     }
 }
