@@ -34,7 +34,7 @@
                             <label class="form-label fs-6 fw-bold mb-1">Mensaje</label>
                             <textarea id="mensajePlantilla" required class="form-control form-control-sm" rows="3" asp-for="Plantilla.Descripcion"></textarea>
                             <div class="mb-0 fs-6">
-                                @if(Model.TipoEstados != null)
+                                @if (Model.TipoEstados != null)
                                 {
                                     @foreach (var estado in Model.TipoEstados)
                                     {
@@ -57,12 +57,11 @@
                                         }
                                     }
                                 }
-                               
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
-                        @if(Model.TipoEstados != null)
+                        @if (Model.TipoEstados != null)
                         {
                             <div class="mb-1">
                                 <label class="form-label fs-6 fw-bold mb-1">Asociar a tipo de estado:</label>
@@ -83,7 +82,10 @@
                                 </div>
                             }
                         }
-                        
+                        else
+                        {
+                            <p class="fst-italic text-danger">No existen tipos de estados registrados</p>
+                        }
                     </div>
                 </div>
             </div>

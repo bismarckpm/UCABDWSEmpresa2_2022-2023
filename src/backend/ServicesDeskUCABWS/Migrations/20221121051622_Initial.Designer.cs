@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221121030228_migracion3244")]
-    partial class migracion3244
+    [Migration("20221121051622_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -516,50 +516,48 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_eliminacion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("fecha_eliminacion")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("fecha_nacimiento")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("fecha_nacimiento")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("fecha_ultima_edicion")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("primer_apellido")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("primer_nombre")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("segundo_apellido")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("segundo_nombre")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("correo")
+                        .IsUnique()
+                        .HasFilter("[correo] IS NOT NULL");
 
                     b.ToTable("Usuarios");
 
