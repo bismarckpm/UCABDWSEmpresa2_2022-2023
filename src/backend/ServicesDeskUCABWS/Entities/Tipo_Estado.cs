@@ -9,7 +9,7 @@ namespace ServicesDeskUCABWS.Entities
         public Tipo_Estado()
         {
             this.etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>();
-        } 
+        }
 
         [Key]
         public Guid Id { get; set; }

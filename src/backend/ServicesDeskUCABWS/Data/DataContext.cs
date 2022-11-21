@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
+using System.Diagnostics.Contracts;
+using static ServicesDeskUCABWS.Entities.RolUsuario;
+
 
 namespace ServicesDeskUCABWS.Data
 {
@@ -11,15 +14,43 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Usuario>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<Administrador>("1")
+                .HasValue<Empleado>("2")
+                .HasValue<Cliente>("3");
+
+            modelBuilder.Entity<RolUsuario>().HasKey(sc => new { sc.UserId, sc.RolId });
+
+            modelBuilder.Entity<RolUsuario>()
+                .HasOne<Usuario>(sc => sc.User)
+                .WithMany(s => s.Roles)
+                .HasForeignKey(sc => sc.UserId);
+
+
+            modelBuilder.Entity<RolUsuario>()
+                .HasOne<Rol>(sc => sc.Rol)
+                .WithMany(s => s.Usuarios)
+                .HasForeignKey(sc => sc.RolId);
+
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
         }
 
+       
+
         //Creacion de los DbSeT
+
+        public DbSet<RolUsuario> RolUsuarios { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Administrador> Administrador { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Empleado> Empleado { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }

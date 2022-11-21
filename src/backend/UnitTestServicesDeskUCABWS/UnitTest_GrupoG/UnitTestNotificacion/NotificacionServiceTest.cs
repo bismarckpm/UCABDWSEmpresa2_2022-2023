@@ -57,7 +57,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 Departamento_Destino = new Departamento()
                 {
                     nombre = "nombreDepartamento",
-                    Grupo = new Grupo()
+                    grupo = new Grupo()
                     {
                         nombre = "nombreGrupo"
                     }
@@ -143,7 +143,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 Departamento_Destino = new Departamento()
                 {
                     nombre = "nombreDepartamento",
-                    Grupo = new Grupo()
+                    grupo = new Grupo()
                     {
                         nombre = "nombreGrupo"
                     }

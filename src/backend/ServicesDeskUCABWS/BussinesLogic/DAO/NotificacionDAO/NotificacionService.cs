@@ -53,7 +53,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                     etiquetasEstatico.Add("@Estado", ticket.Estado.nombre.ToString());
                 if (ticket.Departamento_Destino != null)
                     etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
-                etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.Grupo.nombre.ToString());
+                etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.grupo.nombre.ToString());
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
 
