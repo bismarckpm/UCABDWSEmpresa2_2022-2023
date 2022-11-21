@@ -18,9 +18,8 @@ namespace ServicesDeskUCAB.Controllers
             _servicioAPI = servicioAPI;
         }
 
-        public async Task<IActionResult> Index(string mensaje = "")
+        public async Task<IActionResult> Index()
         {
-            ViewBag.Mensaje = mensaje;
             List<Prioridad> lista = await _servicioAPI.Lista();
             return View(lista);
         }
