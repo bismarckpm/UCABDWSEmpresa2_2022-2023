@@ -8,9 +8,9 @@ namespace ServicesDeskUCAB.ViewModel
     {
 		public Ticket ticket;
 
-		public Familia_Ticket merge;
+		public List<Ticket> tickets;
 
-		public string message;
+		public Familia_Ticket familiaTicket;
 	}
 }
 

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
 namespace ServicesDeskUCAB.Servicios
 {
     public interface IServicioPrioridadAPI 
     {
-        Task<List<Models.Prioridad>> Lista();
+        Task<List<Prioridad>> Lista();
 
-        Task<List<Models.Prioridad>> ListaEstado(string cadena);
+        Task<List<Prioridad>> ListaEstado(string cadena);
 
-        Task<Models.Prioridad> Obtener(Guid prioridadID);
+        Task<Prioridad> Obtener(Guid prioridadID);
 
-        Task<bool> Guardar(Prioridad Objeto);
+        Task<JObject> Guardar(Prioridad Objeto);
 
-        Task<bool> Editar(Prioridad Objeto);
+        Task<JObject> Editar(Prioridad Objeto);
     }
 }
 

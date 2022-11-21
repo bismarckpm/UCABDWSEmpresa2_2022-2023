@@ -10,7 +10,7 @@ namespace ServicesDeskUCAB.ViewModel
 
 		public List<Bitacora_Ticket> bitacoraTicket;
 
-		public Familia_Ticket familiaTicket;
+		public List<Ticket> familiaTicket;
 
 		public List<Estado> estados;
 

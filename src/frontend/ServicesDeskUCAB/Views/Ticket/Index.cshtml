@@ -13,21 +13,21 @@
         <div class="btn-group col-8" role="group">
             @if (ViewBag.opcion == "Abiertos")
             {
-                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
+                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Abiertos">Abiertos</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Todos">Todos</a>
                 }
                 else if (ViewBag.opcion == "Cerrados")
                 {
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Abiertos">Abiertos</a>
+                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Todos">Todos</a>
             }
             else
             {
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
-                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Abiertos">Abiertos</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="" asp-route-opcion="Todos">Todos</a>
             }
 
         </div>
@@ -39,6 +39,7 @@
     <table id="table_id" class="display">
         <thead>
             <tr>
+                <th>TITULO</th>
                 <th>TIPO TICKET</th>
                 <th>PRIORIDAD</th>
                 <th>ESTADO</th>
@@ -47,31 +48,29 @@
             </tr>
         </thead>
         <tbody>
-            @{
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.titulo</td>
-                        <td>@item.Tipo_Ticket.Nombre</td>
-                        <td>@item.Prioridad.nombre</td>
-                        <td>@item.Estado.nombre</td>
-                        <td>@item.fecha_creacion</td>
-                        <td>
-                            <div class="dropdown" style="float: right">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-TicketID="@item.Id">Reenviar</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-TicketID="@item.Id">Merge</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                 }
-            }
-            </tbody>
-        </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.titulo</td>
+                    <td>@item.Tipo_Ticket.Nombre</td>
+                    <td>@item.Prioridad.nombre</td>
+                    <td>@item.Estado.nombre</td>
+                    <td>@item.fecha_creacion</td>
+                    <td>
+                        <div class="dropdown" style="float: right">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-TicketID="@item.Id">Reenviar</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-TicketID="@item.Id">Merge</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                }
+         </tbody>
+    </table>
 </div>
 
 @section Scripts{

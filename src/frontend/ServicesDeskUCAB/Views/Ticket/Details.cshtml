@@ -1,60 +1,75 @@
-﻿<div>
+﻿@model ServicesDeskUCAB.ViewModel.TicketDetailsViewModel;
+
+<div>
     <h1>Detalles</h1>
     <hr />
 </div>
 
 
 <div class="row" style="margin-top:30px">
-    <div class="col-8">
-    </div>
+    <div class="col-8"></div>
+
     <div class="col-4 text-right">
-        <h6><span class="badge bg-primary rounded-pill"><a>Ticket reenviado</a></span></h6>
-        <div class="mb-3">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Cambiar estado</option>
-                <option value="1">Estado 1</option>
-                <option value="2">Estado 2</option>
-                <option value="3">Estado 3</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-6">
-        ID:
-    </div>
-    <div class="col-6">
-        Asunto:
-    </div>
-    <hr />
-    <div class="col-6">
-        Estado:
-    </div>
-    <div class="col-6">
-        Departamento:
-    </div>
-    <hr />
-    <div class="col-6">
-        Tipo ticket:
+        @if (Model.ticket.Ticket_Padre != null)
+        {
+            <h6><span class="badge bg-primary rounded-pill"><a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.Ticket_Padre.Id">Ticket reenviado</a></span></h6>
+        }
+
+        @if(Model.ticket.fecha_eliminacion != null)
+        {
+            <div class="mb-3">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Cambiar estado</option>
+                    @foreach (var item in Model.estados)
+                    {
+                        <option value="@item">@item.nombre</option>
+                    }
+                </select>
+            </div>
+        }
     </div>
 
     <div class="col-6">
-        Prioridad:
+        ID: @Model.ticket.Id
+    </div>
+    <div class="col-6">
+        Titulo: @Model.ticket.titulo
     </div>
     <hr />
     <div class="col-6">
-        Fecha de creación:
+        Estado: @Model.ticket.Estado.nombre
     </div>
     <div class="col-6">
-        Usuario:
+        Departamento origen: @Model.ticket.departamento_usuario
+    </div>
+    <hr />
+    <div class="col-6">
+        Tipo ticket: @Model.ticket.Tipo_Ticket.Nombre
+    </div>
+
+    <div class="col-6">
+        Prioridad: @Model.ticket.Prioridad.nombre
+    </div>
+    <hr />
+    <div class="col-6">
+        Fecha de creación: @Model.ticket.fecha_creacion
+    </div>
+    <div class="col-6">
+        Fecha de eliminación: @Model.ticket.fecha_eliminacion
+    </div>
+    <hr />
+    <div class="col-6">
+        Usuario: @Model.ticket.usuario.Correo
     </div>
     <hr />
     <div class="col-12">
-        Descripción:
+        Descripción: @Model.ticket.descripcion 
     </div>
 </div>
 
 <div class="col-12 text-center" style="margin-top: 20px">
     <a id="botonAnidado" type="button" class="btn btn-success" onclick="mostrarAnidados()" href="#ticketsAnidados">Ver tickets anidados</a>
-    <a class="btn btn-primary" asp-area="" asp-controller="Ticket" asp-action="Index">Aceptar</a>
+    <a class="btn btn-primary" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Aceptar</a>
 </div>
 
 <div style="margin-top:30px;">
@@ -68,20 +83,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Por abrobar</td>
-                <td>10/11/2022</td>
-                <td>10/12/2022</td>
-            </tr>
-            <tr>
-                <td>Por abrobar</td>
-                <td>10/11/2022</td>
-                <td>10/12/2022</td>
-            </tr>
+            @foreach(var item in Model.bitacoraTicket)
+            {
+                <tr>
+                    <td>@item.Estado</td>
+                    <td>@item.FechaInicio.</td>
+                    <td>@item.FechaFin</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
-
 
 
 <div id="ticketsAnidados" class="container d-none" style="margin-top:30px;">
@@ -90,31 +102,36 @@
         <table id="table_id2">
             <thead>
                 <tr>
-                    <th>TICKET ID</th>
+                    <th>TITULO</th>
                     <th>TIPO TICKET</th>
                     <th>PRIORIDAD</th>
                     <th>ESTADO</th>
                     <th>FECHA DE CREACIÓN</th>
+                    <th>FECHA DE ELIMINACIÓN</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>4</td>
-                    <td>Solicitud</td>
-                    <td>Alta</td>
-                    <td>Por aprobar</td>
-                    <td>10/11/2022</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details">Ver detalles</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                @foreach(var item in Model.familiaTicket)
+                {
+                    <tr>
+                        <td>@item.titulo</td>
+                        <td>@item.Tipo_Ticket.Nombre</td>
+                        <td>@item.Prioridad.nombre</td>
+                        <td>@item.Estado.nombre</td>
+                        <td>@item.fecha_creacion</td>
+                        <td>@item.fecha_eliminacion</td>
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketID="@item.Id">Ver detalles</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

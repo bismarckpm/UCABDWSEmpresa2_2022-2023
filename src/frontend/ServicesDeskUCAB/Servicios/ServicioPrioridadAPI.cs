@@ -10,6 +10,7 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
 using ServicesDeskUCAB.Servicios;
+using System.Xml.Linq;
 
 namespace ServicesDeskUCAB.Servicios
 {
@@ -96,12 +97,8 @@ namespace ServicesDeskUCAB.Servicios
                     Console.WriteLine("Es success obtener");
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
-
-                    //Obtengo la data del json respuesta
                     string stringDataRespuesta = json_respuesta["data"].ToString();
                     var resultado = JsonConvert.DeserializeObject<Prioridad>(stringDataRespuesta);
-
-                    //var resultado = JsonConvert.DeserializeObject<List<PlantillaNotificacion>>(json_respuesta);
                     objeto = resultado;
                     Console.WriteLine(await response.Content.ReadAsStringAsync());
                 }
@@ -113,46 +110,55 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<bool> Guardar(Prioridad Objeto)
+        // arreglar
+        public async Task<JObject> Guardar(Prioridad Objeto)
         {
-            bool respuesta = false;
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
                 var response = await cliente.PostAsync($"Prioridad/Guardar/", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                }
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
             }
-            catch (Exception e)
+            catch (HttpRequestException ex)
             {
-
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
             }
-            return respuesta;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return null;
         }
 
-        public async Task<bool> Editar(Models.Prioridad Objeto)
+        public async Task<JObject> Editar(Models.Prioridad Objeto)
         {
-            bool respuesta = false;
+            JObject _json_respuesta = new JObject();
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
                 var response = await cliente.PutAsync($"Prioridad/Editar/", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                }
+                var respuesta = await response.Content.ReadAsStringAsync();
+                _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
             }
-            catch (Exception e)
+            catch (HttpRequestException ex)
             {
-
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
             }
-            return respuesta;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
         }
+
+
     }
 }

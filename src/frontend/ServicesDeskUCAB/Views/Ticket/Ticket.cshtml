@@ -13,7 +13,7 @@
                 @{/*
                     foreach (var depa in departamento)
                     {
-                        <option value="1">Departamento 1</option>
+                        <option value="@depa">@depa.nombre</option>
                     }
                 */}
             </select>
@@ -25,7 +25,7 @@
                 @{/*
                     foreach (var item in Tipo_Ticket)
                     {
-                        <option value="@item_Id">@item</option>
+                        <option value="@item">@item.nombre</option>
                     }
                 */}
             </select>
@@ -37,7 +37,7 @@
                 @{/*
                     foreach (var item in Prioridad)
                     {
-                        <option value="@item.Id">@item.nombre</option>
+                        <option value="@item">@item.nombre</option>
                     }
                 */}
             </select>
@@ -51,7 +51,7 @@
             <textarea asp-for="descripcion" class="form-control" id="message-text"></textarea>
         </div>
         <div class="text-right" style="margin-top:30px">
-            <a class="btn btn-danger" asp-controller="Ticket" asp-action="Index">Cancelar</a>
+            <a class="btn btn-danger" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </div>
     </form>
