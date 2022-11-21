@@ -4,13 +4,13 @@ using System;
 
 namespace ServicesDeskUCABWS.Entities
 {
-    public class Grupo
+    public class Cargo
     {
         [Key]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string nombre { get; set; } = string.Empty;
+        public string nombre_departamental { get; set; } = string.Empty;
 
         [Required]
         [StringLength(150)]
@@ -19,11 +19,9 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-       
-        public DateTime? fecha_ultima_edicion { get; set; }
+        [Required]
+        public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-
-		public virtual List<Departamento> departamentos { get; set; }
-
-	}
+        public HashSet<Tipo_Cargo> Tipo_Cargo { get; set; }
+    }
 }
