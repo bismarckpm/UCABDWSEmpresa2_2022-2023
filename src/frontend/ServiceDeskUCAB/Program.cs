@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
 
 builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
 builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantillaNotificacion_API>();

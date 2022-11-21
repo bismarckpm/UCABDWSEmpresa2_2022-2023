@@ -32,48 +32,52 @@
                             <label class="form-label fs-6 fw-bold mb-1">Mensaje</label>
                             <textarea id="mensajePlantilla" required class="form-control form-control-sm" rows="5" asp-for="Plantilla.Descripcion"></textarea>
                             <p class="mb-0 fs-6">
-                                @foreach (var estado in Model.TipoEstados)
+                                @if (Model.TipoEstados != null)
                                 {
-                                    @if (Model.Plantilla.TipoEstado != null && Model.Plantilla.TipoEstado.Id == estado.Id)
+                                    @foreach (var estado in Model.TipoEstados)
                                     {
-                                        if (@estado.Etiqueta.Count() == 0)
+                                        @if (Model.Plantilla.TipoEstado != null && Model.Plantilla.TipoEstado.Id == estado.Id)
                                         {
-                                            <div class="etiquetas-tipoestado" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                                <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
-                                                <span class="fst-italic text-danger">No tiene etiquetas asociadas</span>
-                                            </div>
+                                            if (@estado.Etiqueta.Count() == 0)
+                                            {
+                                                <div class="etiquetas-tipoestado" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                                    <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
+                                                    <span class="fst-italic text-danger">No tiene etiquetas asociadas</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="etiquetas-tipoestado" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                                    <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
+                                                    @foreach (var etiqueta in @estado.Etiqueta)
+                                                    {
+                                                        <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
+                                                    }
+                                                </div>
+                                            }
                                         }
                                         else
                                         {
-                                            <div class="etiquetas-tipoestado" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                                <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
-                                                @foreach (var etiqueta in @estado.Etiqueta)
-                                                {
-                                                    <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
-                                                }
-                                            </div>
+                                            if (@estado.Etiqueta.Count() == 0)
+                                            {
+                                                <div class="etiquetas-tipoestado" style="display: none" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                                    <label class="form-label fs-6 fw-bold mb-1 mt-2">Etiquetas:</label>
+                                                    <span class="fst-italic text-danger">No tiene etiquetas asociadas</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="etiquetas-tipoestado" style="display: none" st id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                                    <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
+                                                    @foreach (var etiqueta in @estado.Etiqueta)
+                                                    {
+                                                        <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
+                                                    }
+                                                </div>
+                                            }
                                         }
                                     }
-                                    else
-                                    {
-                                        if (@estado.Etiqueta.Count() == 0)
-                                        {
-                                            <div class="etiquetas-tipoestado" style="display: none" id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                                <label class="form-label fs-6 fw-bold mb-1 mt-2">Etiquetas:</label>
-                                                <span class="fst-italic text-danger">No tiene etiquetas asociadas</span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="etiquetas-tipoestado" style="display: none" st id="etiquetas-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                                <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
-                                                @foreach (var etiqueta in @estado.Etiqueta)
-                                                {
-                                                    <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
-                                                }
-                                            </div>
-                                        }
-                                    }
+
                                 }
                             </p>
                         </div>
@@ -88,7 +92,9 @@
                                 <p class="mb-0 fs-6 fst-italic">@Model.Plantilla.TipoEstado.Descripcion</p>
                             </div>
                             <hr />
-                        }else{
+                        }
+                        else
+                        {
                             <div class="mb-2">
                                 <label class="form-label fs-6 fw-bold mb-1">Estado asociado:</label>
                                 <p class="mb-0 fs-6 text-danger">Sin tipo de estado</p>
@@ -123,19 +129,22 @@
                                 }
                             </select>
                         </div>
-                        @foreach (var estado in Model.TipoEstados)
+                        @if (Model.TipoEstados != null)
                         {
-                            if (Model.Plantilla.TipoEstado != null && estado.Id != Model.Plantilla.TipoEstado.Id)
+                            @foreach (var estado in Model.TipoEstados)
                             {
-                                <div style="display: none" class="p-1 mb-2 descripcion-estados border-bottom border-1 mt-1" id="descEstado-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                    <p style="font-size: 14px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
-                                </div>
-                            }
-                            else if (Model.Plantilla.TipoEstado == null)
-                            {
-                                <div style="display: none" class="p-1 mb-2 descripcion-estados border-bottom border-1 mt-1" id="descEstado-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
-                                    <p style="font-size: 14px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
-                                </div>
+                                if (Model.Plantilla.TipoEstado != null && estado.Id != Model.Plantilla.TipoEstado.Id)
+                                {
+                                    <div style="display: none" class="p-1 mb-2 descripcion-estados border-bottom border-1 mt-1" id="descEstado-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                        <p style="font-size: 14px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
+                                    </div>
+                                }
+                                else if (Model.Plantilla.TipoEstado == null)
+                                {
+                                    <div style="display: none" class="p-1 mb-2 descripcion-estados border-bottom border-1 mt-1" id="descEstado-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
+                                        <p style="font-size: 14px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
+                                    </div>
+                                }
                             }
                         }
                     </div>
@@ -165,24 +174,24 @@
 
         var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
         var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
-        
+
         if (selectTipoEstado.value.length > 0) {
-            var etiquetas_selected =  document.querySelector("#etiquetas-" + selected);
+            var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
             etiquetas_selected.style.display = "block";
 
-            if (document.querySelector("#descEstado-" + selected)){
+            if (document.querySelector("#descEstado-" + selected)) {
                 var descEstado_selected = document.querySelector("#descEstado-" + selected);
                 descEstado_selected.style.display = "block";
             }
 
         }
-        
+
     }
 
-    function escribirMensaje(el){
-        document.querySelector("#mensajePlantilla").value += " "+el.innerHTML;
+    function escribirMensaje(el) {
+        document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
     }
 
-    
+
 </script>
 

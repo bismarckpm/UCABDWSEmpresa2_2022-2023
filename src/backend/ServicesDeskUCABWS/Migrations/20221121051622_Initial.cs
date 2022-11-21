@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class migracion3244 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -152,17 +152,17 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     cedula = table.Column<int>(type: "int", nullable: false),
-                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    fecha_nacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    fecha_nacimiento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     gender = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    correo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    correo = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ultima_edicion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    fecha_eliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
                     CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -544,6 +544,13 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Usuarios_CargoId",
                 table: "Usuarios",
                 column: "CargoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_correo",
+                table: "Usuarios",
+                column: "correo",
+                unique: true,
+                filter: "[correo] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votos_Tickets_EmpleadoId",

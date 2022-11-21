@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 {
@@ -20,6 +24,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             _dataContext = dataContext;
             _mapper = mapper;
         }
+
+        public Usuario consularUsuarioID(Guid id)
+        {
+            try
+            {
+                var data = _dataContext.Usuarios.AsNoTracking().Where(p => p.Id == id).Single();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe un usuario con ese ID", ex);
+            }
+            
+        }    
 
         public Administrador AgregarAdminstrador(Usuario usuario)
         {
@@ -53,11 +71,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
                 return nuevoUsuario.First();
             }
-
+            catch (DbUpdateException ex)
+            {
+                throw new ExceptionsControl("El correo electronico ya existe", ex);
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("No se pudo registrar el cliente", ex);
             }
 
         }
@@ -89,16 +109,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                                             gender = UserDto.gender,
                                             correo = UserDto.correo,
                                             password = UserDto.password,
-                                            fecha_creacion = UserDto.fecha_creacion,
+                                            fecha_creacion = new DateTime(),
                                         });
 
                 return nuevoUsuario.First();
             }
-
+            /*catch (DbUpdateException ex)
+            {
+                throw new ExceptionsControl("El correo electronico ya existe", ex);
+            }*/
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("No se pudo registrar el cliente", ex);
             }
 
         }
@@ -136,10 +158,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 return nuevoUsuario.First();
             }
 
+            catch (DbUpdateException ex)
+            {
+                throw new ExceptionsControl("El correo electronico ya existe", ex);
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("No se pudo registrar el cliente", ex);
             }
 
         }
@@ -159,8 +184,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al eliminar por id: " + id, ex);
+                throw new ExceptionsControl("Fallo al eliminar por id: " + id, ex);
             }
         }
 
@@ -172,14 +196,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
                 var lista = _dataContext.Usuarios.Include(r => r.Roles).ToList();
 
-
                 return lista;
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("Hubo un problema en la consulta de los usuarios", ex);
             }
         }
 
@@ -202,6 +224,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                         primer_nombre = user.primer_nombre,
                         primer_apellido = user.primer_apellido,
                         fecha_nacimiento = user.fecha_nacimiento,
+                        gender = user.gender,
+                        correo = user.correo,
                     }
 
                 );
@@ -211,8 +235,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
+                throw new ExceptionsControl("Uno de los campos esta vacio", ex);
             }
         }
 
@@ -220,9 +243,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         {
             try
             {
+                (from p in _dataContext.Usuarios
+                 where p.Id == usuario.Id
+                 select p).ToList().ForEach(x => x.password = usuario.password);
 
-
-                _dataContext.Usuarios.Update(usuario);
                 _dataContext.SaveChanges();
 
                 var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
@@ -239,9 +263,47 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + usuario.Id, ex);
+                throw new ExceptionsControl("La id de usuario no existe", ex);
             }
+        }
+
+        public void RecuperarClave(string Email)
+        {
+            try
+            {
+                var usuario = _dataContext.Usuarios.Where(u => u.correo == Email).FirstOrDefault();
+                var fromAddress = new MailAddress("serviceucabdesk@hotmail.com", "SERVICE UCABDESK");
+                var toAddress = new MailAddress(usuario.correo,"To Name");
+                const string fromPassword = "ucab1234";
+                const string subject = "Recuperacion de contraseña";
+                string body = "Su contraseña era : " + usuario.password;
+                
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.office365.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("El correo no esta registrado", ex);
+            }
+
+
         }
     }
 }
+

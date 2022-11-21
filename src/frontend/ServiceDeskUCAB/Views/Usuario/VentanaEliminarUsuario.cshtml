@@ -1,17 +1,28 @@
-﻿@model Guid
+﻿@model Guid 
+@using ServiceDeskUCAB.Models.Modelos_de_Usuario
 @{
-    ViewData["Title"] = "Gestion Departamento";
+    ViewData["Title"] = "VentanaEliminarUsuario";
 }
 
-<head>
-    <title>@ViewData["Title"] - ServicesDeskUCAB</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script>
+        $(function () {
+        $('#check').click(function () {
+            var x = $("#check").val();
+            var checks = $('input')
+            console.log(this.checked)
+            if(this.checked){
+                console.log("Toy Chequeado")
+                console.log(x)
+            }else{
+                console.log("No toy chequeado")
+                console.log(checks.length)
+            }
+            });
+        });
 
-    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-</head>
 
+    </script>
 
 <!-- Libreria -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
@@ -28,12 +39,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                ¿Está seguro de que desea eliminar el departamento seleccionado?
+                ¿Está seguro de que desea eliminar el usuario seleccionado?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EliminarDepartamento", "DepartamentoYGrupo",new { id = Model })'">Aceptar</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EliminarUsuario", "Usuario",new { id = Model })'">Aceptar</button>
             </div>
         </div>
     </div>
+    
 </div>

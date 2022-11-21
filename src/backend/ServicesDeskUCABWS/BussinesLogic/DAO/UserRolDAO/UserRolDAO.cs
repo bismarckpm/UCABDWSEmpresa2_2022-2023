@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
-
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
@@ -34,8 +36,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 var nuevoRolUsuario = _dataContext.RolUsuarios.Where(rolu => rolu.UserId == rolUsuario.UserId && rolu.RolId == rolUsuario.RolId)
                                         .Select(d => new RolUsuarioDTO
                                         {
-                                            IdUsuario = d.UserId,
-                                            IdRol = d.RolId,
+                                            idusuario = d.UserId,
+                                            idrol = d.UserId,
                                         });
 
                 return nuevoRolUsuario.First();
@@ -43,12 +45,26 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
 
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("Uno de los id (Usuario o rol) es invalido", ex);
             }
 
 
         }
+
+        public RolUsuarioDTO consularRolID(Guid usuario)
+        {
+            try
+            {
+                var data = _dataContext.RolUsuarios.AsNoTracking().Where(p => p.UserId == usuario).Single();
+                var user = new RolUsuarioDTO { idrol = data.RolId,idusuario = data.UserId };
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
+            }
+        }
+
         public RolUsuarioDTO EliminarRol(Guid user, Guid Rol)
         {
             try
@@ -64,8 +80,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al eliminar por id: " + user, ex);
+                throw new ExceptionsControl("Uno de los id (Usuario o rol) es invalido", ex);
             }
         }
 
@@ -77,8 +92,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
                 var lista = _dataContext.RolUsuarios.Select(
                     roluser => new RolUsuarioDTO
                     {
-                        IdRol = roluser.RolId,
-                        IdUsuario = roluser.UserId,
+                        idrol = roluser.RolId,
+                        idusuario = roluser.UserId,
                     });
 
 
@@ -87,8 +102,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("Algo salio mal en la consulta", ex);
             }
         }
     }
