@@ -7,8 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCABWS", "Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestServicesDeskUCABWS", "..\UnitTestServicesDeskUCABWS\UnitTestServicesDeskUCABWS.csproj", "{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDeskUCAB", "..\..\frontend\ServiceDeskUCAB\ServiceDeskUCAB.csproj", "{CF2DA13E-3036-425A-92AE-2470010C4182}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +22,7 @@ Global
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF2DA13E-3036-425A-92AE-2470010C4182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF2DA13E-3036-425A-92AE-2470010C4182}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF2DA13E-3036-425A-92AE-2470010C4182}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF2DA13E-3036-425A-92AE-2470010C4182}.Release|Any CPU.Build.0 = Release|Any CPU
+		
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
