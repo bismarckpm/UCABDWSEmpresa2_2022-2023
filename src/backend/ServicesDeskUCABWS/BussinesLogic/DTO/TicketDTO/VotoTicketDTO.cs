@@ -11,13 +11,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         public string comentario { get; set; }
         public DateTime fecha { get; set; }
     }
-    public enum aprobado
-    {
-        [EnumMember(Value = "A")]
-        aprobado,
-        [EnumMember(Value = "D")]
-        denegado,
-        [EnumMember(Value = "EE")]
-        en_espera,
-    }
+
 }
