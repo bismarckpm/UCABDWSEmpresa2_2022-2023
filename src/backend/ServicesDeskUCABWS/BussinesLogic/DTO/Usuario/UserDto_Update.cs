@@ -12,7 +12,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Usuario
         [Required]
         [MaxLength(50)]
         public string primer_nombre { get; set; } = string.Empty;
-
         [MaxLength(50)]
         public string segundo_nombre { get; set; } = string.Empty;
         [Required]
