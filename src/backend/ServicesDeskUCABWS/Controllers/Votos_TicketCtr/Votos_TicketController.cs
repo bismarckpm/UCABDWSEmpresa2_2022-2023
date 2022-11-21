@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
@@ -19,10 +22,11 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
 
         private readonly IVotos_TicketDAO _votos_ticketDAO;
 
-        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO, DataContext context)
+        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO, DataContext context, IMapper mapper)
         {
             _context = context;
             this._votos_ticketDAO = _votos_ticketDAO;
+
         }
 
 

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
-using ServicesDeskUCAB.Models.TipoTicketModels;
+using ServiceDeskUCAB.Models.Response;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -45,6 +47,7 @@ namespace ServiceDeskUCAB.Servicios
                 string stringDataRespuesta = dataRespuesta["data"].ToString();
 
                 var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
+                
 
                 lista = resultado;
             }
@@ -213,6 +216,15 @@ namespace ServiceDeskUCAB.Servicios
         {
             bool respuesta = false;
 
+        
+                /*if (tipo.tipo == "Modelo_No_Aprobacion")
+                {
+                tipo.flujo_Aprobacion = null;
+
+                }*/
+
+
+            
 
             var cliente = new HttpClient();
 
@@ -224,19 +236,20 @@ namespace ServiceDeskUCAB.Servicios
             
 
             var response = await cliente.PostAsync("api/Tipo_Ticket/Guardar/", content);
-
-
-         
-
+            
             if (response.IsSuccessStatusCode)
             {
-                respuesta = true;
-                Console.WriteLine(respuesta);
+                var json_respuesta = await response.Content.ReadAsStringAsync();
 
+                Console.WriteLine(JsonConvert.SerializeObject(json_respuesta));
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Tipo_TicketDTOCreate>>(json_respuesta);
+
+                return resultado;
             }
+            
 
-            return respuesta;
-            Console.WriteLine(respuesta);
+
+            return null;
 
         }
 
@@ -330,7 +343,36 @@ namespace ServiceDeskUCAB.Servicios
             }
             return respuesta;
         }
+        public async Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipo)
+        {
+            bool respuesta = false;
 
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var content = new StringContent(JsonConvert.SerializeObject(tipo), Encoding.UTF8, "application/json");
+
+            Console.WriteLine(JsonConvert.SerializeObject(tipo));
+
+
+            var response = await cliente.PutAsync("api/Tipo_Ticket/Editar/"+tipo.Id, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine(JsonConvert.SerializeObject(json_respuesta));
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Tipo_TicketDTOUpdate>>(json_respuesta);
+
+                return resultado;
+            }
+
+
+
+            return null;
+        }
     }
 
 }

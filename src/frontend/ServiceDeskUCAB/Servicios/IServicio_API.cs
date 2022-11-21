@@ -1,5 +1,6 @@
 ﻿using ServiceDeskUCAB.Models;
-using ServicesDeskUCAB.Models.TipoTicketModels;
+using ServiceDeskUCAB.Models.Response;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -14,7 +15,7 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<Prioridad>> ObtenerPrioridades();
         Task<bool> AgregarTicket(NuevoTicket ticket);
 
-        Task<bool> Guardar(Tipo_TicketDTOCreate tipo);
+        Task<ApplicationResponse<Tipo_TicketDTOCreate>> Guardar(Tipo_TicketDTOCreate tipo);
 
        
         Task<bool> Eliminar(Guid id);
@@ -26,5 +27,6 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<Votos_Ticket>> ObtenerVotos();
 
         Task<Ticket> ObtenerTicket(string id);
+        Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipoTicketDTO);
     }
 }

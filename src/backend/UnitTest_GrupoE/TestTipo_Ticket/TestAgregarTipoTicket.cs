@@ -313,8 +313,8 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == 0);
-            Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == 0);
+            Assert.IsTrue(result.Data.Departamento== null);
+            Assert.IsTrue(result.Data.Flujo_Aprobacion == null);
         }
         [TestMethod]
         public void RegistroTipoTicketExcepcion()
