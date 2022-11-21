@@ -40,9 +40,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 
         public List<PrioridadDTO> obtenerPrioridades()
         {
-            var data = _dataContext.Prioridades.ToList();
-            var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
-            return prioridadDTO.ToList();
+            List<Prioridad> data = _dataContext.Prioridades.ToList();
+            List<PrioridadDTO> prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
+            return prioridadDTO;
         }
 
         public PrioridadDTO obtenerPrioridadPorNombre(string nombre)
