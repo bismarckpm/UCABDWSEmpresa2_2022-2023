@@ -99,19 +99,20 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 		}
 
 		//Retorna el modal de AgregarGrupo con la lista de departamentos que no están asociados
-		public async Task<Tuple<DepartamentoModel, GrupoModel>> tuplaModelDepartamento()
+		public async Task<Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>> tuplaModelDepartamento()
 		{
 			GrupoModel model = new GrupoModel();
 			DepartamentoModel departamentoModel = new DepartamentoModel();
+			List<DepartamentoModel> listaDepartamentos = new List<DepartamentoModel>();
 
-			var cliente = new HttpClient
+            var cliente = new HttpClient
 			{
 				BaseAddress = new Uri(_baseUrl)
 			};
 
 			try
 			{
-				var responseDept = await cliente.GetAsync("Departamento/SelectListItemDepartamento");
+				var responseDept = await cliente.GetAsync("Departamento/ConsultarDepartamentoNoAsociado");
 
 
 				if (responseDept.IsSuccessStatusCode)
@@ -121,9 +122,9 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
 					//Obtengo la data del json respuesta Departamento
 					string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
-					var resultadoDept = JsonConvert.DeserializeObject<List<SelectListItem>>(stringDataRespuestaDept);
+					var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
 
-					departamentoModel.listaDepartamento = resultadoDept;
+					listaDepartamentos = resultadoDept;
 				}
 			}
 			catch (HttpRequestException ex)
@@ -134,7 +135,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 			{
 				Console.WriteLine(ex);
 			}
-			var tupla = new Tuple<DepartamentoModel, GrupoModel>(departamentoModel, model);
+			var tupla = new Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>(listaDepartamentos,departamentoModel, model);
 
 			return tupla;
 		}

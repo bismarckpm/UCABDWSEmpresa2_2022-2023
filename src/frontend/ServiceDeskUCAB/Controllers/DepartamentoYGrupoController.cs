@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.OpenApi.Any;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -170,7 +172,7 @@ namespace ServiceDeskUCAB.Controllers
 		public async Task<IActionResult> AgregarGrupo()
 		{
 			GrupoModel grupo = new GrupoModel();
-			var tupla = new Tuple<DepartamentoModel, GrupoModel> (null, null);
+			var tupla = new Tuple<List<DepartamentoModel>,DepartamentoModel,GrupoModel> (null,null,null);
 
 			try
 			{
@@ -184,10 +186,12 @@ namespace ServiceDeskUCAB.Controllers
 			return NoContent();
 		}
 
-		//
-		public async Task<IActionResult> RegistrarGrupo(FormCollection frm) {
-			Console.WriteLine(frm.TryGetValue);
-			return RedirectToAction("DepartamentoGrupo");	
+		
+		public async Task<IActionResult> RegistrarGrupo( List<string> idDepartamentos) {
+
+			Console.WriteLine(idDepartamentos.Count());
+            return RedirectToAction("DepartamentoGrupo");	
+			
 		}
 	}
 }

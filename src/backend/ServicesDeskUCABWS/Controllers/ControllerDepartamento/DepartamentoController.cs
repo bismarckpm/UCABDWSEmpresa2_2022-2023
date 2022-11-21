@@ -179,14 +179,20 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         }
 
         [HttpGet("ConsultarDepartamentoNoAsociado/")]
-        public ActionResult<List<DepartamentoDto>> ListaDepartamentoNoAsociado() {
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentoNoAsociado()
+        {
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
             try
             {
-                return _departamentoDAO.NoAsociado();
-            } catch (Exception ex)
+                response.Data = _departamentoDAO.NoAsociado();
+            }
+            catch (ExceptionsControl ex)
             {
-				throw ex.InnerException!;
-			}
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
 
         [HttpGet("SelectListItemDepartamento/")]

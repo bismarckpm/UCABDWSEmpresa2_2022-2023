@@ -45,6 +45,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 							descripcion = d.descripcion,
 							nombre = d.nombre,
 							fecha_creacion = d.fecha_creacion
+
 						}).First();
 
 				return nuevoDepartamento;
