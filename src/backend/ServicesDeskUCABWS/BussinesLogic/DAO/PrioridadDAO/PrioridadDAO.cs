@@ -42,17 +42,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             return prioridadDTO;
         }
 
-        public PrioridadDTO ObtenerPrioridadPorNombre(string nombre)
+        public List<PrioridadDTO> ObtenerPrioridadesHabilitadas()
         {
             try
             {
-                var data = _dataContext.Prioridades.AsNoTracking().Where(p => p.nombre == nombre).Single();
-                var prioridadDTO = _mapper.Map<PrioridadDTO>(data);
+                var data = _dataContext.Prioridades.ToList().Where(p => p.estado == "habilitado").Single();
+                var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
                 return prioridadDTO;
             }
             catch (Exception ex)
             {
-                throw new Exception($"No existe la Prioridad {ex}");
+                throw new Exception($"Algo a sucedido: {ex}");
             }
         }
 

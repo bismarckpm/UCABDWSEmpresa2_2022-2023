@@ -60,14 +60,14 @@ namespace ServicesDeskUCABWS.Controllers
             }
         }
 
-        [HttpGet, Route("Lista/{Nombre}")]
-        public ActionResult<ApplicationResponse<PrioridadDTO>> ObtenerPrioridadPorNombreCtrl(string nombre)
+        [HttpGet, Route("Lista/Habilitadas")]
+        public ActionResult<ApplicationResponse<List<PrioridadDTO>>> ObtenerPrioridadesHabilitadas()
         {
-            var respuesta = new ApplicationResponse<PrioridadDTO>();
+            var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
             try
             {
-                respuesta.Data = _prioridadDAO.ObtenerPrioridadPorNombre(nombre);
-                return respuesta;
+                respuesta.Data = _prioridadDAO.ObtenerPrioridades();
+                return respuesta; ;
             }
             catch (System.IO.IOException ex)
             {

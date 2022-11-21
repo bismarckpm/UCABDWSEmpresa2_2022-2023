@@ -8,7 +8,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
     {
         public string CrearPrioridad(PrioridadDTO prioridadDTO);
         public List<PrioridadDTO> ObtenerPrioridades();
-        public PrioridadDTO ObtenerPrioridadPorNombre(string nombre);
+        public List<PrioridadDTO> ObtenerPrioridadesHabilitadas();
         public PrioridadDTO ObtenerPrioridad(Guid estado);
         public string ModificarPrioridad(PrioridadDTO prioridadDTO);
 
