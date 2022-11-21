@@ -183,6 +183,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             //POR DESARROLLAR
         }
-        
+
+        public string votarTicket(TicketDTO ticket, VotoTicketDTO voto_descripcion)
+        {
+            try
+            {
+                Votos_Ticket voto = _mapper.Map<Votos_Ticket>(voto_descripcion);
+                voto.Usuario = ticket.usuario_emisor;
+                voto.Ticket = _mapper.Map<Ticket>(ticket);
+                ticket.Votos_Ticket.Add(voto);
+                _dataContext.Update(_mapper.Map<Ticket>(ticket));
+                _dataContext.SaveChangesAsync();
+                return "Voto añadido exitosamente";
+            } catch(Exception e)
+            {
+                return "Error al hacer votación";
+            }
+        }
+
     }
 }

@@ -13,6 +13,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
 
             CreateMap<TicketDTO, TicketNuevoDTO>();
             CreateMap<TicketNuevoDTO, TicketDTO>();
+
+            CreateMap<Votos_Ticket, VotoTicketDTO>();
+            CreateMap<VotoTicketDTO, Votos_Ticket>();
+
         }
     }
 }

@@ -16,5 +16,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Ticket> obtenerFamiliaTickets(Guid ticketId);
         public string mergeTickets(TicketDTO ticketPrincipal, List<TicketDTO> tickets);
         public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHjo);
+        public string votarTicket(TicketDTO ticket, VotoTicketDTO voto_descripcion);
     }
 }
