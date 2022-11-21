@@ -12,11 +12,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public class TicketDAO : ITicketDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
         private readonly TicketHelpers _helper;
 
-        public TicketDAO(DataContext dataContext, IMapper mapper)
+        public TicketDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
@@ -42,7 +42,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 _helper.inicializarBitacora(nuevoTicketDTO);
                 _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
                 departamentoDestino.ListaTickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
-                _dataContext.SaveChangesAsync();
+                _dataContext.DbContext.SaveChangesAsync();
                 return "Ticket creado satisfactoriamente";
             }
             catch (Exception exception)
@@ -94,8 +94,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
                 ticketDTO.Bitacora_Tickets.Add(_helper.crearNuevaBitacora(ticketDTO));
-                _dataContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketDTO)));
-                _dataContext.SaveChangesAsync();
+                _dataContext.DbContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketDTO)));
+                _dataContext.DbContext.SaveChangesAsync();
                 return "Bitacora añadida satisfactoriamente";
             }
             catch (Exception exception)
@@ -108,10 +108,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
                 ticketA.Familia_Ticket.Lista_Ticket.Add(_mapper.Map<Ticket>(ticketB));
-                _dataContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketA)));
+                _dataContext.DbContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketA)));
                 ticketB.Familia_Ticket.Lista_Ticket.Add(_mapper.Map<Ticket>(ticketA));
-                _dataContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketB)));
-                _dataContext.SaveChangesAsync();
+                _dataContext.DbContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketB)));
+                _dataContext.DbContext.SaveChangesAsync();
                 return "Proceso realizado exitosamente";
             }
             catch (Exception exception)
@@ -152,7 +152,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     ticket.Estado.nombre = "Eliminado"; //->VERIFICAR
                     ticket.Bitacora_Tickets.Add(_helper.crearNuevaBitacora(ticket));
                 });
-                _dataContext.SaveChangesAsync();
+                _dataContext.DbContext.SaveChangesAsync();
                 return "PROCESO DE MERGE REALIZADO CORRECTAMENTE!";
             }
             catch (Exception exception)
@@ -171,7 +171,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 anadirALaBitacora(ticketPadre);
                 _dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketPadre));
                 _dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketHijo));
-                _dataContext.SaveChangesAsync();
+                _dataContext.DbContext.SaveChangesAsync();
                 return "Ticket hijo creado satisfactoriamente";
             }
             catch (Exception exception)

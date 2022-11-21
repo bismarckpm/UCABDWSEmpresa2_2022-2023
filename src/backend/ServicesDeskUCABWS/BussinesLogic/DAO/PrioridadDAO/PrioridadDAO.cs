@@ -11,10 +11,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {
     public class PrioridadDAO : IPrioridadDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public PrioridadDAO(DataContext dataContext, IMapper mapper)
+        public PrioridadDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
                 var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
 
                 _dataContext.Prioridades.Add(prioridadEntity);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
                 return "Prioridad creada satisfactoriamente";
             }
             catch (Exception ex)
@@ -84,7 +84,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
                 prioridad.fecha_descripcion = prioridadDTO.fecha_descripcion;
                 prioridad.fecha_ultima_edic = prioridadDTO.fecha_ultima_edic;
                 _dataContext.Prioridades.Update(prioridad);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
                 return "Prioridad modificada exitosamente";
             }
             catch (Exception ex)
