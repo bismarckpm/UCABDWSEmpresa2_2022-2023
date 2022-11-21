@@ -1,8 +1,7 @@
-﻿
-using ServiceDeskUCAB.Models.Enums;
+﻿using ServiceDeskUCAB.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.Modelos_de_Usuario
 {
     public class UsuariosRol
     {

@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using ServiceDeskUCAB.Servicios;
-using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.Modelos_de_Usuario;
+
 using ServiceDeskUCAB.Models.Enums;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
-namespace ServicesDeskUCAB.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class UsuarioController : Controller
     {
@@ -59,7 +60,7 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> ViewUsuario(Guid id)
         {
-           
+
             try
             {
                 UsuariosRol usuario = new UsuariosRol();
@@ -69,7 +70,8 @@ namespace ServicesDeskUCAB.Controllers
                 if (rol.idrol == new Guid("8C8A156B-7383-4610-8539-30CCF7298161"))
                 {
                     usuario.Rol = Rol.Cliente;
-                }else if (rol.idrol == new Guid("8C8A156B-7383-4610-8539-30CCF7298162"))
+                }
+                else if (rol.idrol == new Guid("8C8A156B-7383-4610-8539-30CCF7298162"))
                 {
                     usuario.Rol = Rol.Administrador;
                 }
@@ -90,7 +92,7 @@ namespace ServicesDeskUCAB.Controllers
             try
             {
                 JObject respuesta;
-                respuesta = await _servicioApiUsuarios.EditarUsuario(this.TransformUser(user));
+                respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
                 if ((bool)respuesta["success"])
                     return RedirectToAction("Usuarios");
             }
@@ -105,10 +107,10 @@ namespace ServicesDeskUCAB.Controllers
         public ActionResult Delete(int id)
         {
             Console.WriteLine("PRUEBA");
-                return null;
+            return null;
         }
 
-        public UpdateUser TransformUser (UsuariosRol user)
+        public UpdateUser TransformUser(UsuariosRol user)
         {
             return new UpdateUser()
             {
@@ -120,7 +122,7 @@ namespace ServicesDeskUCAB.Controllers
                 segundo_apellido = user.segundo_apellido,
                 fecha_nacimiento = user.fecha_nacimiento,
                 gender = user.gender,
-                correo = user.correo,   
+                correo = user.correo,
             };
         }
 
@@ -133,19 +135,19 @@ namespace ServicesDeskUCAB.Controllers
             try
             {
                 if (plantilla.Rol == Rol.Administrador)
-                {   
+                {
 
                     respuesta = await _servicioApiUsuarios.GuardarAdminstrador(plantilla);
                 }
-                else if(plantilla.Rol == Rol.Usuario)
+                else if (plantilla.Rol == Rol.Usuario)
                 {
                     respuesta = await _servicioApiUsuarios.GuardarEmpleado(plantilla);
                 }
-                else 
+                else
                 {
                     respuesta = await _servicioApiUsuarios.Guardar(plantilla);
                 }
-                
+
                 if ((bool)respuesta["success"])
                 {
                     return RedirectToAction("Usuarios");

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ServiceDeskUCAB.Models
+﻿namespace ServiceDeskUCAB.Models.Modelos_de_Usuario
 {
-    public class UpdateUser
+    public class CrearUsuario
     {
-        public Guid id { get; set; }
         public int cedula { get; set; }
         public string primer_nombre { get; set; } = string.Empty;
         public string segundo_nombre { get; set; } = string.Empty;
@@ -13,5 +10,7 @@ namespace ServiceDeskUCAB.Models
         public string fecha_nacimiento { get; set; }
         public string gender { get; set; }
         public string correo { get; set; } = string.Empty;
+        public string password { get; set; } = string.Empty;
+        public DateTime fecha_creacion { get; set; }
     }
 }

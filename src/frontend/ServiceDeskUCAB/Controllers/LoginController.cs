@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers

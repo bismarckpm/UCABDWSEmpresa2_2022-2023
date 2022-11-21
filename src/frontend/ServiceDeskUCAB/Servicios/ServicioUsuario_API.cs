@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
-using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 
 namespace ServiceDeskUCAB.Servicios
 {
