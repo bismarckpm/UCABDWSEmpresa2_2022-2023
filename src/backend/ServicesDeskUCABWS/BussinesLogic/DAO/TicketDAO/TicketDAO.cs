@@ -28,8 +28,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
                 TicketExceptions.getInstance().nuevoTicketEsValido(solicitudTicket);
-                Departamento departamentoSalida = _dataContext.Departamentos.Where(x => x.nombre == solicitudTicket.departamentoSalida_nombre).Single();
-                Usuario usuario = _dataContext.Usuarios.Where(x => x.Id == solicitudTicket.usuario_id).Single();
+                Usuario usuario_emisor = _dataContext.Usuarios.Where(x => x.Id == solicitudTicket.usuario_id).Single();
                 Departamento departamentoDestino = _dataContext.Departamentos.Where(x => x.nombre == solicitudTicket.departamentoDestino_nombre).FirstOrDefault();
                 Estado estado = _dataContext.Estados.Where(x => x.nombre == solicitudTicket.estado_nombre).FirstOrDefault();
                 Prioridad prioridad = _dataContext.Prioridades.Where(x => x.nombre == solicitudTicket.prioridad_nombre).FirstOrDefault();
@@ -39,18 +38,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 nuevoTicketDTO.Estado = estado;
                 nuevoTicketDTO.Prioridad = prioridad;
                 nuevoTicketDTO.Tipo_Ticket = tipoTicket;
-                nuevoTicketDTO.usuario_emisor = usuario;
-                nuevoTicketDTO.departamento_usuario = departamentoSalida;
+                nuevoTicketDTO.usuario_emisor = usuario_emisor;
                 _helper.inicializarBitacora(nuevoTicketDTO);
                 _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
-                departamentoSalida.ListaTickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
                 departamentoDestino.ListaTickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
                 _dataContext.SaveChangesAsync();
                 return "Ticket creado satisfactoriamente";
             }
             catch (Exception exception)
             {
-                throw new Exception("No se pudo crear el ticket");
+                throw new Exception(exception.Message);
             }
         }
 
@@ -63,7 +60,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return null;
+                throw new Exception("No se pudo obtener el ticket deseado");
                 //return exception.Message;
             }
         }
@@ -75,7 +72,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return null; //POR DESARROLLAR
+                throw new Exception("No se pudo obtener la lista de tickets");
                 //return exception.Message;
             }
         }
@@ -88,7 +85,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return null;
+                throw new Exception("No se pudo obtener la lista de tickets");
                 //return exception.Message;
             }
         }
@@ -103,7 +100,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                throw new Exception("No se puede añadir a la bitacora");
             }
         }
         public string crearFamiliaTickets(TicketDTO ticketA, TicketDTO ticketB)
@@ -119,7 +116,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return exception.Message;
+                throw new Exception("No se pudo crear la familia de tickets"); ;
             }
         }
         public List<Ticket> obtenerFamiliaTickets(Guid ticketId)
@@ -136,7 +133,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception e)
             {
-                return null;
+                throw new Exception("No se pudo obtener la familia de tickets");
             }
         }
         public string mergeTickets(TicketDTO ticketPrincipal, List<TicketDTO> tickets)
@@ -160,7 +157,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return "EL MERGE NO SE PUDO LOGRAR SATISFACTORIAMENTE";
+                throw new Exception("No se pudo hacer Merge de los tickets");
             }
         }
         public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHijo)
@@ -179,7 +176,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (Exception exception)
             {
-                return "Ticket hijo no fue creado exitosamente";
+                throw new Exception("No se pudo crear ticket hijo correctamente");
             }
             //POR DESARROLLAR
         }
