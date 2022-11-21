@@ -10,8 +10,7 @@ using System.Net;
 
 namespace ServicesDeskUCABWS.Controllers
 {
-    [Route("ticket")]
-    [ApiController]
+    [Route("Ticket"),ApiController]
     public class TicketController
     {
         private readonly ITicketDAO _ticketDAO;
@@ -22,8 +21,7 @@ namespace ServicesDeskUCABWS.Controllers
             _ticketDAO = ticketDAO;
         }
 
-        [HttpPost]
-        [Route("crearNuevoTicket")]
+        [HttpPost, Route("Guardar")]
         public ApplicationResponse<string> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
         {
             var respuesta = new ApplicationResponse<String>();
@@ -44,8 +42,7 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpGet]
-        [Route("obtenerTicket/{id}")]
+        [HttpGet, Route("Obtener/{id}")]
         public ApplicationResponse<Ticket> obtenerTicketPorIdCtrl(string id)
         {
             var respuesta = new ApplicationResponse<Ticket>();
@@ -66,14 +63,13 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpGet]
-        [Route("obtenerTickets/{ticketId}/{tipoBusqueda}")]
-        public ApplicationResponse<List<Ticket>> obtenerTicketsPorEstadoYDepartamentoCtrl(string ticketId, string tipoBusqueda)
+        [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
+        public ApplicationResponse<List<Ticket>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
             var respuesta = new ApplicationResponse<List<Ticket>>();
             try
             {
-                respuesta.Data = _ticketDAO.obtenerTickets(new Guid(ticketId), tipoBusqueda);
+                respuesta.Data = _ticketDAO.obtenerTickets(new Guid(departamentoId), opcion);
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;
@@ -88,8 +84,7 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpPut]
-        [Route("anadirBitacora")]
+        [HttpPut, Route("anadirBitacora")]
         public ApplicationResponse<string> anadirALaBitacoraCtrl([FromBody] BitacoraTicketDTO tickets)
         {
             var respuesta = new ApplicationResponse<string>();
@@ -111,8 +106,7 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpPut]
-        [Route("crearFamiliaTicket")]
+        [HttpPut, Route("crearFamiliaTicket")]
         public ApplicationResponse<string> crearFamiliaTicketCtrl([FromBody] TicketsParientesDTO ticketsParientes)
         {
             var respuesta = new ApplicationResponse<string>();
@@ -133,8 +127,7 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpGet]
-        [Route("obtenerFamiliaTicket/{id}")]
+        [HttpGet,Route("Familia/{id}")]
         public ApplicationResponse<List<Ticket>> obtenerFamiliaTicketCtrl(string id)
         {
             var respuesta = new ApplicationResponse<List<Ticket>>();
@@ -155,8 +148,7 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpPut]
-        [Route("mergeTicket")]
+        [HttpPut, Route("Merge")]
         public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMerge ticketsMerge)
         {
             var respuesta = new ApplicationResponse<string>();
@@ -178,8 +170,7 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
 
-        [HttpPut]
-        [Route("crearTicketsHijo")]
+        [HttpPut, Route("Reenviar")]
         public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaterno ticketPaterno)
         {
             var respuesta = new ApplicationResponse<string>();

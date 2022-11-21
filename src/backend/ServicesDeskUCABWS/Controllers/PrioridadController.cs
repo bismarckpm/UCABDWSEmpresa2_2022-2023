@@ -29,7 +29,7 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<String>();
             try
             {
-                respuesta.Data = _prioridadDAO.CrearPrioridad(prioridadDTO);
+                respuesta.Message = _prioridadDAO.CrearPrioridad(prioridadDTO);
             }
             catch (Exception ex)
             {
