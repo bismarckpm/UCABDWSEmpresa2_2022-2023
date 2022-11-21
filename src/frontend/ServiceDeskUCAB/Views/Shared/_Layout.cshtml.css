@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/frontend/ServicesDeskUCAB/wwwroot/css/site.css
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+========
+>>>>>>> 4bc58089133e7b82f8a462de98e46291788a0e8a
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
@@ -46,3 +69,7 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+<<<<<<< HEAD
+=======
+>>>>>>>> 4bc58089133e7b82f8a462de98e46291788a0e8a:src/frontend/ServiceDeskUCAB/Views/Shared/_Layout.cshtml.css
+>>>>>>> 4bc58089133e7b82f8a462de98e46291788a0e8a

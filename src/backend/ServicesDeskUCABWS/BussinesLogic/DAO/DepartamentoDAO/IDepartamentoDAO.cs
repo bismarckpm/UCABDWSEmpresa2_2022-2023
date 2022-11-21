@@ -1,4 +1,6 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,5 +17,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento);
         public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo);
         public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept);
-    }
+        public List<DepartamentoDto> DeletedDepartamento();
+        public List<DepartamentoDto> NoAsociado();
+        public IEnumerable<SelectListItem> ListaDepartamentoGrupo();
+	}
 }

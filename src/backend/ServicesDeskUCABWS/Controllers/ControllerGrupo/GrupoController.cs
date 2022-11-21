@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.Exceptions;
 
 namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 {
@@ -61,37 +64,44 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             }
         }
 
-        //Agregar Grupo por ID
+        //Consultar Grupo por ID
         [HttpGet]
         [Route("ConsultarGrupoPorID/{id}")]
-        public ActionResult<GrupoDto> ConsultarPorID([FromRoute] Guid id)
+        public ApplicationResponse<GrupoDto> ConsultarPorID([FromRoute] Guid id)
         {
-            try
+			var response = new ApplicationResponse<GrupoDto>();
+			try
             {
-                return _grupoDAO.ConsultarPorIdDao(id);
-            }
-            catch (Exception ex)
-            {
+                response.Data = _grupoDAO.ConsultarPorIdDao(id);
 
-                throw ex.InnerException!;
             }
+            catch (ExceptionsControl ex)
+            {
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+            return response;
         }
 
         //Eliminar Grupo
         [HttpDelete]
         [Route("EliminarGrupo/{id}")]
-        public ActionResult<GrupoDto> EliminarDepartamento([FromRoute] Guid id)
+        public ApplicationResponse<GrupoDto> EliminarGrupo([FromRoute] Guid id)
         {
-            try
-            {
-                return _grupoDAO.EliminarGrupoDao(id);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
-        }
+			var response = new ApplicationResponse<GrupoDto>();
+			try
+			{
+				response.Data = _grupoDAO.EliminarGrupoDao(id);
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
 
         //Actualizar Grupo
         [HttpPut]
@@ -111,5 +121,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             }
         }
 
-    }
+        //Mostrar todos los grupos que no están eliminados
+		[HttpGet("ConsultarGrupoNoEliminado/")]
+		public ApplicationResponse<List<GrupoDto>> ListaDepartamentoNoEliminado()
+		{
+			var response = new ApplicationResponse<List<GrupoDto>>();
+			try
+			{
+				response.Data = _grupoDAO.ConsultarGrupoNoEliminado();
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
+
+	}
 }
