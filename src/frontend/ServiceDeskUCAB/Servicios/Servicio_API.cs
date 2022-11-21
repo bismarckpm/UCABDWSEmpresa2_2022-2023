@@ -123,7 +123,7 @@ namespace ServiceDeskUCAB.Servicios
                         fecha_creacion = new DateTime()
                     }
                 });
-                lista = resultado.data;
+                lista = resultado.Data;
             }
 
             return lista;
@@ -212,7 +212,7 @@ namespace ServiceDeskUCAB.Servicios
             return respuesta;
         }
 
-        public async Task<bool> Guardar(Tipo_TicketDTOCreate tipo)
+        public async Task<ApplicationResponse<Tipo_TicketDTOCreate>> Guardar(Tipo_TicketDTOCreate tipo)
         {
             bool respuesta = false;
 
@@ -322,7 +322,7 @@ namespace ServiceDeskUCAB.Servicios
 
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Prioridad>>>(json_respuesta);
 
-                lista = resultado.data;
+                lista = resultado.Data;
             }
             return lista;
         }
