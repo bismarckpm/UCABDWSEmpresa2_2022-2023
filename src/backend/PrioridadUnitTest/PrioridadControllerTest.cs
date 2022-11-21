@@ -41,7 +41,7 @@ namespace PrioridadUnitTest
         //*
         //Prueba Unitaria para consultar todas las prioridades
         //*
-        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar todas las prioridades exitosamente")]
+        /*[TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar todas las prioridades exitosamente")]
         public void TestObtenerPrioridadesCtrl()
         {
             //Preparación
@@ -160,7 +160,7 @@ namespace PrioridadUnitTest
 
 
 
-
+        */
      
 
 

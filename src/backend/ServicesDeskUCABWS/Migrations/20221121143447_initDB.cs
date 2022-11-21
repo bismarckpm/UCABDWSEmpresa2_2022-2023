@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class CrearBD : Migration
+    public partial class initDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,7 +67,7 @@ namespace ServicesDeskUCABWS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     fecha_descripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -325,6 +325,7 @@ namespace ServicesDeskUCABWS.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IDEstado = table.Column<int>(type: "int", nullable: true),
+                    usuario_emisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -371,6 +372,11 @@ namespace ServicesDeskUCABWS.Migrations
                     table.ForeignKey(
                         name: "FK_Tickets_Usuarios_EmpleadoId",
                         column: x => x.EmpleadoId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Tickets_Usuarios_usuario_emisorId",
+                        column: x => x.usuario_emisorId,
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
@@ -491,6 +497,12 @@ namespace ServicesDeskUCABWS.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Prioridades_nombre",
+                table: "Prioridades",
+                column: "nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Departamento_DestinoId",
                 table: "Tickets",
                 column: "Departamento_DestinoId");
@@ -524,6 +536,11 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Tickets_Tipo_TicketId",
                 table: "Tickets",
                 column: "Tipo_TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_usuario_emisorId",
+                table: "Tickets",
+                column: "usuario_emisorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tipo_Estado_PlantillaNotificacionId",
