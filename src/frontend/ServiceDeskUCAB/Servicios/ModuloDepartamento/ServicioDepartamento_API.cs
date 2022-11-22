@@ -235,5 +235,35 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 			
 			return json_respuesta;
 		}
+
+		public async Task<List<DepartamentoModel>> ListaDepartamento()
+		{
+			DepartamentoModel departamento = new DepartamentoModel();
+
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			try
+			{
+				var responseDept =  await cliente.GetAsync("Departamento/ConsultarDepartamentoNoEliminado/");
+
+				if (responseDept.IsSuccessStatusCode)
+				{
+					var respuestaDept =  await responseDept.Content.ReadAsStringAsync();
+					JObject json_respuestaDept = JObject.Parse(respuestaDept);
+
+					string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
+					var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
+					departamento.departamentos = resultadoDept;
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+			return departamento.departamentos;
+		}
 	}
 }

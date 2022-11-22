@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221121051622_Initial")]
-    partial class Initial
+    [Migration("20221122001527_Add_Grupo_Departamento")]
+    partial class Add_Grupo_Departamento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

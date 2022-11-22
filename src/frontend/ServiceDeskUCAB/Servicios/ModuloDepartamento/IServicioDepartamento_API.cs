@@ -17,6 +17,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         Task<DepartamentoModel> MostrarInfoDepartamento(Guid id);
 		Task<List<DepartamentoModel>> DepartamentoAsociadoGrupo(Guid id);
         Task<JObject> AsociarDepartamento(List<string> idDepartamento);
+        Task<List<DepartamentoModel>> ListaDepartamento();
 
 	}
 }

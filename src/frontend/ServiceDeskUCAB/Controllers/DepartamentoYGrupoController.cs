@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
+using ServiceDeskUCAB.ViewModel.DepartamentoGrupo;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.Entities;
@@ -12,7 +13,7 @@ using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
 {
-	public class DepartamentoYGrupoController : Controller
+    public class DepartamentoYGrupoController : Controller
     {
 		//Declaración de variables
 		private readonly ILogger<DepartamentoYGrupoController> _logger;
@@ -126,6 +127,24 @@ namespace ServiceDeskUCAB.Controllers
 		/////////////
 		///Operaciones de grupo
 		////////////
+
+		//Retorna el modal con la lista de departamentos y los datos del grupo seleccionado
+		public async Task<IActionResult> VentanaEditarGrupo(Guid id)
+		{
+			GrupoEditarViewModel viewModel = new GrupoEditarViewModel();
+
+			try
+			{
+				viewModel.deptAsociado = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
+				viewModel.departamento = await _servicioApiDepartamento.ListaDepartamento();
+				viewModel.grupo = await _servicioApiGrupo.BuscarGrupo(id);
+				return PartialView(viewModel);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
 		//Retorna el modal con los departamentos que estan asociados a un grupo
 		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)

@@ -171,7 +171,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos registrados", ex);
+				throw new ExceptionsControl("No hay departamentos eliminados", ex);
 			}
 		}
 

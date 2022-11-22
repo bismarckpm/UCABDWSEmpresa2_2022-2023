@@ -55,26 +55,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         }
 
         [HttpGet]
-        [Route("ConsultarDepartamentoNoEliminado/")]
-        public ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentosNoEliminados(){
-			
-            var response = new ApplicationResponse<List<DepartamentoDto>>();
-
-			try
-			{
-                response.Data = _departamentoDAO.DeletedDepartamento();
-			}
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-
-		}
-
-        [HttpGet]
         [Route("ConsultarDepartamento/")]
         public  ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentos()
         {
@@ -196,5 +176,24 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
-	}
+
+		[HttpGet]
+		[Route("ConsultarDepartamentoNoEliminado/")]
+		public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentonoEliminado()
+        {
+
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
+            try
+            {
+                response.Data = _departamentoDAO.DeletedDepartamento();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+    }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Add_Grupo_Departamento : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
