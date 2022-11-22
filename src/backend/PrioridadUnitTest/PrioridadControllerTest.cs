@@ -9,6 +9,7 @@ using ServicesDeskUCABWS.Data;
 using System.Text;
 using System.Linq;
 using System;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
 
 //* Preparación  -> Organizar las precondiciones
@@ -20,11 +21,11 @@ namespace PrioridadUnitTest
     [TestClass]
     public class PrioridadControllerTest
     {
-        //private readonly Mock<DataContext> _contextMock;
+
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IPrioridadDAO> _serviceMock;
         private readonly PrioridadController _controller;
-        //private readonly PrioridadDAO _dao;
+
 
 
         public PrioridadControllerTest()
@@ -32,8 +33,8 @@ namespace PrioridadUnitTest
             _mapperMock = new Mock<IMapper>();
             _serviceMock = new Mock<IPrioridadDAO>();
             _controller = new PrioridadController(_serviceMock.Object, _mapperMock.Object);
-            
-            
+
+
 
 
         }
@@ -41,17 +42,17 @@ namespace PrioridadUnitTest
         //*
         //Prueba Unitaria para consultar todas las prioridades
         //*
-        /*[TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar todas las prioridades exitosamente")]
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar todas las prioridades exitosamente")]
         public void TestObtenerPrioridadesCtrl()
         {
             //Preparación
-            _serviceMock.Setup(p => p.obtenerPrioridades()).Returns(new List<PrioridadDTO>());
+            _serviceMock.Setup(p => p.ObtenerPrioridades()).Returns(new List<PrioridadDTO>());
             var application = new ApplicationResponse<List<PrioridadDTO>>();
-            
+
 
 
             //Prueba
-            var resultado = _controller.obtenerPrioridadesCtrl();
+            var resultado = _controller.ObtenerPrioridadesCtrl();
 
 
 
@@ -64,48 +65,50 @@ namespace PrioridadUnitTest
 
 
         //*
-        //Prueba Unitaria para consultar una prioridad por nombre
+        //Prueba Unitaria para consultar propiedades habilitadas
         //*
 
-        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar prioridades por nombre exitosamente")]
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar prioridades habilitadas exitosamente")]
 
-        public void TestObtenerPrioridadPorNombreCtrl()
+        public void TestObtenerPrioridadesHabilitadas()
         {
             //Preparación
-            _serviceMock.Setup(p => p.obtenerPrioridadPorNombre(It.IsAny<string>())).Returns(new PrioridadDTO());
-            var application = new ApplicationResponse<PrioridadDTO>();
+            _serviceMock.Setup(p => p.ObtenerPrioridadesHabilitadas()).Returns(new List<PrioridadDTO>());
+            var application = new ApplicationResponse<List<PrioridadDTO>>();
 
             //Prueba
-            var resultado = _controller.obtenerPrioridadPorNombreCtrl(It.IsAny<string>());
+            var resultado = _controller.ObtenerPrioridadesHabilitadas();
 
             //Verificación
             StringAssert.Equals(application.GetType(), resultado.GetType());
+
 
         }
 
 
         //*
-        //Prueba Unitaria para consultar prioridades por estado
+        //Prueba Unitaria para consultar prioridad por Guid
         //*
 
         [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar todas las prioridades por estado exitosamente")]
 
-        public void TestObtenerPrioridadesPorEstadoCtrl()
+        public void TestObtenerPrioridad()
         {
 
             //Preparación
-            _serviceMock.Setup(p => p.obtenerPrioridadesPorEstado(It.IsAny<string>())).Returns(new List<PrioridadDTO>());
-            var application = new ApplicationResponse<List<PrioridadDTO>>();
+            _serviceMock.Setup(p => p.ObtenerPrioridad(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"))).Returns(new PrioridadDTO());
+            var application = new ApplicationResponse<PrioridadDTO>();
 
 
 
             //Prueba
-            var resultado = _controller.obtenerPrioridadesPorEstadoCtrl(It.IsAny<string>());
+            var resultado = _controller.ObtenerPrioridad("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
 
 
             //Verificación
 
+            //StringAssert.Equals(application.ToString(), resultado.ToString());
             Assert.AreEqual(application.GetType(), resultado.GetType());
 
         }
@@ -121,7 +124,7 @@ namespace PrioridadUnitTest
         {
             //Preparación
 
-            _serviceMock.Setup(p => p.crearPrioridad(It.IsAny<PrioridadDTO>())).Returns(It.IsAny<string>());
+            _serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadDTO>())).Returns(It.IsAny<string>());
             var application = new ApplicationResponse<String>();
 
 
@@ -144,12 +147,12 @@ namespace PrioridadUnitTest
         {
             //Preparación
 
-            _serviceMock.Setup(p => p.modificarPrioridad(It.IsAny<PrioridadDTO>())).Returns(It.IsAny<string>());
+            _serviceMock.Setup(p => p.ModificarPrioridad(It.IsAny<PrioridadDTO>())).Returns(It.IsAny<string>());
             var application = new ApplicationResponse<String>();
 
 
             //Prueba
-            var resultado = _controller.modificarPrioridadEstadoPorNombreCtrl(It.IsAny<PrioridadDTO>());
+            var resultado = _controller.ModificarPrioridadEstadoPorNombreCtrl(It.IsAny<PrioridadDTO>());
 
             //Verificación
             Assert.AreEqual(application.GetType(), resultado.GetType());
@@ -157,11 +160,102 @@ namespace PrioridadUnitTest
 
         }
 
+        //*
+        //PRUEBAS UNITARIAS SOBRE LAS EXCEPCIONES
+        //*
 
 
+        //*
+        //Prueba Unitaria para crear prioridades EXCEPCION
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para crear prioridades excepcion")]
+        public void crearPrioridadCtrlExcepcionTest()
+        {
+            //Preparación
+            _serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadDTO>())).Throws(new Exception("", new Exception()));
 
-        */
-     
+            //Prueba
+            var ex = _controller.crearPrioridadCtrl(It.IsAny<PrioridadDTO>());
+
+            //Verificación
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+
+        }
+
+
+        //*
+        //Prueba Unitaria para consultar prioridades EXCEPCION
+        //*/*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar prioridades excepcion")]
+        public void ObtenerPrioridadesCtrlExcepcionTest()
+        {
+            //Preparación
+            _serviceMock.Setup(p => p.ObtenerPrioridades()).Throws(new Exception("", new Exception()));
+
+            //Prueba
+            var ex = _controller.ObtenerPrioridadesCtrl();
+
+            //Verificación
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+
+        }
+
+        //Prueba Unitaria para consultar prioridades habilitadas EXCEPCION
+        //*/*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar prioridades habilitadas excepcion")]
+        public void ObtenerPrioridadesHabilitadasCtrlExcepcionTest()
+        {
+            //Preparación
+            _serviceMock.Setup(p => p.ObtenerPrioridadesHabilitadas()).Throws(new Exception("", new Exception()));
+
+            //Prueba
+            var ex = _controller.ObtenerPrioridadesHabilitadas();
+
+            //Verificación
+            Assert.IsNotNull(ex);
+
+
+        }
+
+
+        //Prueba Unitaria para consultar prioridades por id EXCEPCION
+        //*/*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para consultar prioridades por id excepcion")]
+        public void ObtenerPrioridadExcepcionTest()
+        {
+            //Preparación
+            _serviceMock.Setup(p => p.ObtenerPrioridad(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"))).Throws(new Exception("", new Exception()));
+
+            //Prueba
+            var ex = _controller.ObtenerPrioridad("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+            //Verificación
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+
+
+        }
+
+
+        //*
+        //Prueba Unitaria para modificar prioridades EXCEPCION
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Prioridad para modificar prioridades excepcion")]
+        public void ModificarPrioridadEstadoPorNombreCtrlExcepcionTest()
+        {
+            //Preparación
+            _serviceMock.Setup(p => p.ModificarPrioridad(It.IsAny<PrioridadDTO>())).Throws(new Exception("", new Exception()));
+
+            //Prueba
+            var ex = _controller.ModificarPrioridadEstadoPorNombreCtrl(It.IsAny<PrioridadDTO>());
+
+            //Verificación
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+
+        }
 
 
     }

@@ -24,6 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
         {
             TicketDTO nuevoTicket = _mapper.Map<TicketDTO>(solicitudTicket);
+            nuevoTicket.Id = new Guid();
             nuevoTicket.fecha_creacion = new DateTime();
             nuevoTicket.Emisor = _dataContext.Empleados.Where(empleado => empleado.Id == solicitudTicket.empleado_id).Single();
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.Id == solicitudTicket.departamentoDestino_Id).Single();
