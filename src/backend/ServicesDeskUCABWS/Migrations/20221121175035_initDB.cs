@@ -319,8 +319,8 @@ namespace ServicesDeskUCABWS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    titulo = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    titulo = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IDEstado = table.Column<int>(type: "int", nullable: true),

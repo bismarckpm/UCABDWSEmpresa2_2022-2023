@@ -38,7 +38,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 nuevoTicketDTO.Estado = estado;
                 nuevoTicketDTO.Prioridad = prioridad;
                 nuevoTicketDTO.Tipo_Ticket = tipoTicket;
-                nuevoTicketDTO.usuario_emisor = usuario_emisor;
+                //nuevoTicketDTO.usuario_emisor = usuario_emisor;
                 _helper.inicializarBitacora(nuevoTicketDTO);
                 _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
                 departamentoDestino.ListaTickets.Add(_mapper.Map<Ticket>(nuevoTicketDTO));
