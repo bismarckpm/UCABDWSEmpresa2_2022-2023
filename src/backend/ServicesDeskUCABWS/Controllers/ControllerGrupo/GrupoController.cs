@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
-using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 
 namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 {

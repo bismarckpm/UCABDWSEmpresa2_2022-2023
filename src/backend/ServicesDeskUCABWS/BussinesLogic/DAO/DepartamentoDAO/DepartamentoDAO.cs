@@ -7,7 +7,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

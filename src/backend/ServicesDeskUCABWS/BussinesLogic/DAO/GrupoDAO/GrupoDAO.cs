@@ -9,7 +9,7 @@ using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
-using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System.Text.RegularExpressions;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using Microsoft.AspNetCore.Mvc;
