@@ -1,16 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
-using System;
-using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Data
-
 {
-    public interface IDataContext : IDbContext
+    public interface IDataContext
     {
-
-
-        //Creacion de los DbSeT
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Prioridad> Prioridades { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
@@ -19,10 +13,6 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Tipo_Ticket> Tipos_Tickets { get; set; }
-
-        Task SaveChangesAsync();
-        void Update(Tipo_Ticket tipo_Ticket);
-
         public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
@@ -37,8 +27,8 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Estado> Tipo_Estados { get; set; }
 
         public DbContext DbContext { get; }
-
-
     }
 }
+
+
 

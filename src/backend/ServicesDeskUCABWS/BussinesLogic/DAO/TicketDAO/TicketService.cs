@@ -68,7 +68,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).FirstOrDefault();
                 contexto.Tickets.Add(ticket);
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
                 response.Data = ticketDTO;
                 response.Exception = FlujoAprobacion(ticket);
 
@@ -124,7 +124,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
                 return result;
             }
             catch (Exception ex)
@@ -172,7 +172,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
 
                 return result;
             }
@@ -219,7 +219,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
-                //contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
 
                 return result;
             }

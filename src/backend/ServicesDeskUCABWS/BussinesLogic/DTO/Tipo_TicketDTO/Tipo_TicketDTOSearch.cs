@@ -17,7 +17,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO
 
         public int? Minimo_Aprobado { get; set; }
 
-        public HashSet<Flujo_AprobacionDTOSearch> Flujo_Aprobacion { get; set; }
-        public HashSet<DepartamentoSearchDTO> Departamento { get; set; }
+        public int? Maximo_Rechazado { get; set; }
+
+        public List<Flujo_AprobacionDTOSearch> Flujo_Aprobacion { get; set; }
+        public List<DepartamentoSearchDTO> Departamento { get; set; }
     }
 }

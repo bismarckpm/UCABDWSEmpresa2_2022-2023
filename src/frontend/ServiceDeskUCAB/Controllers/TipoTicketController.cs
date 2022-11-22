@@ -36,10 +36,7 @@ namespace ServiceDeskUCAB.Controllers
             int i = 0;
             foreach (var r in tipoNuevoViewModel.ListaCargos)
             {
-                tipoNuevoViewModel.tipo.Flujo_Aprobacion.Add(new TipoFlujo()
-                {
-                    IdCargo = r.Id
-                });
+                
                 r.posicion = i;
                 i++;
             }
@@ -174,8 +171,8 @@ namespace ServiceDeskUCAB.Controllers
                     return RedirectToAction("VistaTipo");
                 } else
                 {
-                    ViewBag.Error = respuesta.Message;
                     return NoContent();
+                    //return RedirectToAction("agregarModal", new { message = (string)respuesta.Message});
                 }
             }
                 

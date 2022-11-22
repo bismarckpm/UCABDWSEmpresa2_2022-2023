@@ -29,7 +29,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
         public bool AgregarVoto(List<Votos_Ticket> ListaVotos)
         {
             contexto.Votos_Tickets.AddRange(ListaVotos);
-            contexto.SaveChanges();
+            contexto.DbContext.SaveChanges();
             return true;
         }
 
@@ -51,7 +51,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 voto.voto = votoDTO.voto;
                 voto.fecha = DateTime.UtcNow;
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
 
                 var temp = contexto.Tickets.Include(x => x.Tipo_Ticket)
                     .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket.tipo;
@@ -66,7 +66,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     veredicto = VerificarAprobacionTicketJerarquico(Guid.Parse(votoDTO.IdTicket));
                 }
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
                 response.Data = voto;
 
             }
@@ -228,10 +228,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     if (fin)
                     {
                         CambiarEstado(ticket, "Aprobado");
-                        contexto.SaveChanges();
+                        contexto.DbContext.SaveChanges();
                         return "Aprobado";
                     }
-                    contexto.SaveChanges();
+                    contexto.DbContext.SaveChanges();
                     return "Pendiente";
                 }
 
@@ -248,13 +248,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
                     //Ingreso siguiente ronda de votos
                     CambiarEstado(ticket, "Rechazado");
-                    contexto.SaveChanges();
+                    contexto.DbContext.SaveChanges();
                     //EnviarNotiicacion("Ticket Rechazado")
                     return "Rechazado";
 
                 }
 
-                contexto.SaveChanges();
+                contexto.DbContext.SaveChanges();
             }
             catch (Exception ex)
             {

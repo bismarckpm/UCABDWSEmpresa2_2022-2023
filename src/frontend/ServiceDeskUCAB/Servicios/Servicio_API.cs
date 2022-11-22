@@ -45,6 +45,7 @@ namespace ServiceDeskUCAB.Servicios
                 JObject dataRespuesta = JObject.Parse(json_respuesta);
 
                 string stringDataRespuesta = dataRespuesta["data"].ToString();
+                Console.WriteLine(stringDataRespuesta);
 
                 var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
                 
@@ -245,6 +246,8 @@ namespace ServiceDeskUCAB.Servicios
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Tipo_TicketDTOCreate>>(json_respuesta);
 
                 return resultado;
+
+                
             }
             
 
