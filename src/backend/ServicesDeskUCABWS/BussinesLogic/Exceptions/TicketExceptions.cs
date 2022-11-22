@@ -1,4 +1,6 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+﻿
+/*
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using System;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
@@ -34,3 +36,4 @@ namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
         }
     }
 }
+*/

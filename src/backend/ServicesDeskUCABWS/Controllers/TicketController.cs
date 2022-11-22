@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿
+/*
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
@@ -175,3 +177,4 @@ namespace ServicesDeskUCABWS.Controllers
         //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }
 }
+    */

@@ -18,13 +18,13 @@ namespace ServicesDeskUCABWS.Controllers
         private readonly IMapper _mapper;
         public PrioridadController(IPrioridadDAO prioridadDAO, IMapper mapper)
         {
-            _prioridadDAO=prioridadDAO;
-            _mapper=mapper;
+            _prioridadDAO = prioridadDAO;
+            _mapper = mapper;
         }
-     
+
 
         [HttpPost, Route("Guardar")]
-        public ApplicationResponse<string> crearPrioridadCtrl([FromBody]PrioridadDTO prioridadDTO)
+        public ApplicationResponse<string> crearPrioridadCtrl([FromBody] PrioridadDTO prioridadDTO)
         {
             var respuesta = new ApplicationResponse<String>();
             try
@@ -49,8 +49,8 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridades();
                 return respuesta;
-            } 
-            catch (System.IO.IOException ex)
+            }
+            catch (Exception ex)
             {
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
@@ -69,7 +69,7 @@ namespace ServicesDeskUCABWS.Controllers
                 respuesta.Data = _prioridadDAO.ObtenerPrioridades();
                 return respuesta; ;
             }
-            catch (System.IO.IOException ex)
+            catch (Exception ex)
             {
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
@@ -86,9 +86,9 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridad(new Guid(PrioridadID));
-                return respuesta;
+                return respuesta; ;
             }
-            catch (System.IO.IOException ex)
+            catch (Exception ex)
             {
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
@@ -106,16 +106,9 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 response.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
                 response.Success = true;
-                if (response.Data == "")
-                {
-                    response.Message = null;
-                }
-                else
-                {
-                    response.Message = "Cambios Realizados con Éxito";
-                }
+                response.Message = "Cambios Realizados con Éxito";
             }
-            catch (System.IO.IOException ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Message = ex.Message;

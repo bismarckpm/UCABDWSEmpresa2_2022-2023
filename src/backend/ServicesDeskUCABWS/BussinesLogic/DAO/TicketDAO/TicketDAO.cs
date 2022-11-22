@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿
+/*
+using AutoMapper;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -187,3 +189,4 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         }
     }
 }
+*/
