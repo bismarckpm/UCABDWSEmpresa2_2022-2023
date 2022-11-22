@@ -16,24 +16,24 @@
 }
 
 <div class="container" style="margin-top:30px">
-    <form asp-action="GuardarCambios" asp-controller="Prioridad" method="post">
+    <form asp-action="GuardarCambios" asp-controller="Prioridad" autocomplete="on" method="post">
         @{
             if (ViewBag.Accion == "Nueva Prioridad")
             {
-                <input asp-for="Id" type="text" class="form-control d-none" id="recipient-name" value="@Guid.Empty">
+                <input asp-for="@Model.Id" type="text" class="form-control d-none" id="recipient-name" value="@Guid.Empty">
             }
             else
             {
-                <input asp-for="Id" type="text" class="form-control d-none" id="recipient-name">
+                <input asp-for="@Model.Id" type="text" class="form-control d-none" id="recipient-name">
             }
         }
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Nombre:</label>
-            <input asp-for="nombre" type="text" class="form-control" id="recipient-name">
+            <input asp-for="@Model.nombre" type="text" class="form-control" id="recipient-name" maxlength="50" required/>
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Descripción:</label>
-            <textarea asp-for="descripcion" class="form-control" id="message-text"></textarea>
+            <textarea asp-for="@Model.descripcion" class="form-control" id="message-text" maxlength="100" required></textarea>
         </div>
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Estado:</label>

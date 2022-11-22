@@ -7,21 +7,21 @@ namespace ServicesDeskUCAB.Servicios
 {
     public interface IServicioTicketAPI
     {
-        public Task<Models.Ticket> Obtener(string ticketId);
+        Task<Ticket> Obtener(string ticketId);
 
-        public Task<List<Ticket>> FamiliaTicket(string ticketId);
+        Task<List<Ticket>> FamiliaTicket(string ticketId);
 
-        public Task<Bitacora_Ticket> BitacoraTicket(string ticketId);
+        Task<Bitacora_Ticket> BitacoraTicket(string ticketId);
 
-        public Task<List<Models.Ticket>> Lista(string departamentoId, string opcion);
+        Task<List<Ticket>> Lista(string departamentoId, string opcion);
 
-        public Task<bool> Guardar(Models.Ticket ticket);
+        Task<bool> Guardar(Ticket ticket);
 
-        public Task<bool> Editar(Models.Ticket ticket);
+        Task<bool> Editar(Ticket ticket);
 
-        public Task<bool> GuardarFamilia(Familia_Ticket familiaTicket);
+        Task<bool> GuardarFamilia(Familia_Ticket familiaTicket);
 
-        public Task<bool> Reenviar(Ticket padre, Ticket hijo);
+        Task<bool> Reenviar(Ticket padre, Ticket hijo);
 
     }
 }

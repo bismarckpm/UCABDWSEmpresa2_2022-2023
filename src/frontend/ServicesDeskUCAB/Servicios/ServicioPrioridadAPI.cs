@@ -60,7 +60,7 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<Models.Prioridad>> ListaEstado(string Estado)
+        public async Task<List<Prioridad>> ListaEstado(string Estado)
         {
             List<Models.Prioridad> lista = new List<Prioridad>();
             try
@@ -134,12 +134,13 @@ namespace ServicesDeskUCAB.Servicios
             return null;
         }
 
-        public async Task<JObject> Editar(Models.Prioridad Objeto)
+        public async Task<JObject> Editar(Prioridad Objeto)
         {
             JObject _json_respuesta = new JObject();
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
             var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+            Console.WriteLine(content.ToString());
             try
             {
                 var response = await cliente.PutAsync($"Prioridad/Editar/", content);

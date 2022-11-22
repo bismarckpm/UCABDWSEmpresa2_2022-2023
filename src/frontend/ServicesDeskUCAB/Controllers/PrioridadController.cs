@@ -39,14 +39,14 @@ namespace ServicesDeskUCAB.Controllers
 
         [HttpPost]
         public async Task<IActionResult> GuardarCambios(Prioridad prioridad){
+            Console.WriteLine("guardar", prioridad.Id);
             JObject respuesta;
             try
             {
                 if (prioridad.Id == Guid.Empty)
                 {
-                    prioridad.Id = Guid.NewGuid();
                     respuesta = await _servicioAPI.Guardar(prioridad);
-                    Console.WriteLine(respuesta);
+                    Console.WriteLine(respuesta.ToString());
                     if ((bool) respuesta["success"])
                     {
                         Console.WriteLine("La respuesta fue verdadera");

@@ -13,10 +13,12 @@ namespace ServicesDeskUCAB.Controllers
     public class TicketController : Controller
     {
         private readonly IServicioTicketAPI _servicioTicketAPI;
+        private readonly IServicioPrioridadAPI _servicioPrioridadAPI;
 
-        public TicketController(IServicioTicketAPI servicioAPI)
+        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI)
         {
-            _servicioTicketAPI = servicioAPI;
+            //_servicioTicketAPI = servicioTicketAPI;
+            _servicioPrioridadAPI = servicioPrioridadAPI;
         }
 
         public async Task<IActionResult> Index(string departamentoId,string opcion)
@@ -26,10 +28,16 @@ namespace ServicesDeskUCAB.Controllers
             return View(lista);
         }
 
-        public IActionResult Ticket()
+        public async Task<IActionResult> Ticket()
         {
-            Ticket ticket = new Ticket();
-            return View(ticket);
+            TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
+            {
+                ticket = new Ticket(),
+                prioridades = await _servicioPrioridadAPI.Lista(),
+                departamentos = new List<Departamento>(),
+                tipo_tickets = new List<Tipo_Ticket>()
+            };
+            return View(ticketNuevoViewModel);
         }
         public async Task<IActionResult> Merge(string departamentoId,string ticketId)
         {
