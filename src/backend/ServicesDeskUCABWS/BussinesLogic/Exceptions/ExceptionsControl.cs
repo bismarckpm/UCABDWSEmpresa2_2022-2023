@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ServicesDeskUCABWS.Exceptions
+namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
 {
-	public class ExceptionsControl : Exception
+    public class ExceptionsControl:Exception
 	{
 		public string Mensaje { get; set; }
 		public Exception Excepcion { get; set; }
@@ -18,5 +18,8 @@ namespace ServicesDeskUCABWS.Exceptions
 			Mensaje = _mensaje;
 		}
 
+        public ExceptionsControl()
+        {
+        }
 	}
 }
