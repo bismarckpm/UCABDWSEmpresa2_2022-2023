@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTest_GrupoI\" />
+  </ItemGroup>
+
 </Project>
