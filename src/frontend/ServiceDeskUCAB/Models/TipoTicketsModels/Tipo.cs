@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class Tipo
     {
@@ -23,7 +23,7 @@ namespace ServiceDeskUCAB.Models
 
         public int? Minimo_Aprobado { get; set; }
         public int? Maximo_Rechazado { get; set; }
-        
+
         public List<string> Idsdepartamento { get; set; }
 
         public Tipo()
@@ -31,9 +31,9 @@ namespace ServiceDeskUCAB.Models
             Departamento = new List<Departament>();
             Flujo_Aprobacion = new List<TipoFlujo>();
         }
-       
+
 
 
     }
-    
+
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ViewModel;

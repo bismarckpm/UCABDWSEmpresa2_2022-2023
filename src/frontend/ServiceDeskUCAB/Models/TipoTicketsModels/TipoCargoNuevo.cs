@@ -1,4 +1,4 @@
-﻿namespace ServiceDeskUCAB.Models
+﻿namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class TipoCargoNuevo
     {
@@ -7,7 +7,7 @@
         public int? minimo_aprobado_nivel { get; set; }
         public int? maximo_Rechazado_nivel { get; set; }
 
-        
- 
+
+
     }
 }

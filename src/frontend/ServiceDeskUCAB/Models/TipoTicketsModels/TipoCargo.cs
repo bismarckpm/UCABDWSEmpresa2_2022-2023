@@ -1,4 +1,4 @@
-﻿namespace ServiceDeskUCAB.Models
+﻿namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class TipoCargo
     {
@@ -10,6 +10,6 @@
 
         public bool activado { get; set; } = false;
 
-       
+
     }
 }

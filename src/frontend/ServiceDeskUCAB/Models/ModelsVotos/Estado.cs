@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Estado
     {

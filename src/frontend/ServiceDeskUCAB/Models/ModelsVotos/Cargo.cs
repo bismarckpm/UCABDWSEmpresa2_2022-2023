@@ -1,5 +1,4 @@
-﻿
-namespace ServiceDeskUCAB.Models
+﻿namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Cargo
     {

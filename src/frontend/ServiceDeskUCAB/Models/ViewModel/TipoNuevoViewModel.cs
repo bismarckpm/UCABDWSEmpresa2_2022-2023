@@ -1,4 +1,6 @@
-﻿namespace ServiceDeskUCAB.Models.ViewModel
+﻿using ServiceDeskUCAB.Models.TipoTicketsModels;
+
+namespace ServiceDeskUCAB.Models.ViewModel
 {
     public class TipoNuevoViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace ServiceDeskUCAB.Models
+﻿namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class FlujoAprobacion
     {

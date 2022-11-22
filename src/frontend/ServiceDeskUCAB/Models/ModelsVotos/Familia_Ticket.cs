@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Familia_Ticket
     {

@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Ticket
     {

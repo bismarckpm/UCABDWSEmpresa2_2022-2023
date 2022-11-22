@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Votos_Ticket
     {

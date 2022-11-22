@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers

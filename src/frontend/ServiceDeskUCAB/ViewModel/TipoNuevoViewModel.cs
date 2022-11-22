@@ -1,4 +1,4 @@
-﻿using ServiceDeskUCAB.Models;
+﻿using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.ViewModel
 {

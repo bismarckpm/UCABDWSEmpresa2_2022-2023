@@ -1,4 +1,4 @@
-﻿@model Tipo
+﻿@*@model Tipo
 @{
     ViewData["Title"] = "Modificar Tipo Ticket";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -29,7 +29,7 @@
                 <label class="form-label">Departamentos Asociados:</label>
                 <br>
                 <select multiple="multiple" style="width=100%;" id="lista" asp-for="Departamento" required>
-                    
+
                     @foreach (var item in ViewData["Departamentos"] as List<Departament>)
                     {
                             <option value=@item.Id.ToString()>@item.nombre</option>
@@ -50,6 +50,7 @@
 
     </div>
 
-</div>
+</div>*@
+
 
 

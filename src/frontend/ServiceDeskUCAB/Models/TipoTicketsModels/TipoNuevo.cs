@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class TipoNuevo
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Empleado : Usuario
     {

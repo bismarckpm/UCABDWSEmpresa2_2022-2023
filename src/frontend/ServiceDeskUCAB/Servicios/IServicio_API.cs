@@ -1,4 +1,4 @@
-﻿using ServiceDeskUCAB.Models;
+﻿using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 

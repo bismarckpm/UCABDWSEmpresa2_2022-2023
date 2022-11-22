@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServiceDeskUCAB.Models
+namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public abstract class Usuario
     {
