@@ -27,6 +27,7 @@ namespace ServicesDeskUCABWS.Entities
         public Tipo_Estado Estado_Padre { get; set; }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public HashSet<Ticket> ListaTickets { get; set; }
+        public Departamento Departamento { get; set; }
 
     }
 }

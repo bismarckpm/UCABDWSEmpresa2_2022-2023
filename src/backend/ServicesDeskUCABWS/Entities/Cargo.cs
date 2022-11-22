@@ -23,5 +23,6 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public HashSet<Tipo_Cargo> Tipo_Cargo { get; set; }
+        public Departamento Departamento { get; set; }
     }
 }

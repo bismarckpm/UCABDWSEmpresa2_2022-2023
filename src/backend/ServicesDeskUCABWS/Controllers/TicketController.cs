@@ -25,67 +25,22 @@ namespace ServicesDeskUCABWS.Controllers
         [HttpPost, Route("Guardar")]
         public ApplicationResponse<string> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
         {
-            var respuesta = new ApplicationResponse<String>();
-            try
-            {
-                respuesta.Data = _ticketDAO.crearTicket(nuevoTicket);
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = ex.Message;
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
+            return _ticketDAO.crearTicket(nuevoTicket);
         }
 
         [HttpGet, Route("Obtener/{id}")]
-        public ApplicationResponse<TicketInfoDTO> obtenerTicketPorIdCtrl(string id)
+        public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorIdCtrl(string id)
         {
-            var respuesta = new ApplicationResponse<TicketInfoDTO>();
-            try
-            {
-                respuesta.Data = _ticketDAO.obtenerTicketPorId(new Guid(id));
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = null;
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
+            return _ticketDAO.obtenerTicketPorId(new Guid(id));
         }
 
         [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
-        public ApplicationResponse<List<TicketRespuestaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
-            var respuesta = new ApplicationResponse<List<TicketRespuestaDTO>>();
-            try
-            {
-                respuesta.Data = _ticketDAO.obtenerTickets(new Guid(departamentoId), opcion);
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = null;
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
+            return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
         }
 
-        [HttpPut, Route("anadirBitacora")]
+        /*[HttpPut, Route("anadirBitacora")]
         public ApplicationResponse<string> anadirALaBitacoraCtrl([FromBody] BitacoraTicketDTO tickets)
         {
             var respuesta = new ApplicationResponse<string>();
@@ -169,7 +124,7 @@ namespace ServicesDeskUCABWS.Controllers
                 //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
-        }
+        }*/
 
         //DEVOLVER LISTA DE BITACORAS(ticket_id): DEVOLVER INFO DE LA BITACORA {estado_nombre, fecha_inicio, fecha_fin}
         //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
