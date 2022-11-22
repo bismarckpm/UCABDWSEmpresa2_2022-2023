@@ -45,9 +45,6 @@ namespace ServiceDeskUCAB.Controllers
             return PartialView(id);
         }
 
-
-
-        [HttpGet]
         public async Task<IActionResult> EliminarUsuario(Guid id)
         {
             JObject respuesta;
@@ -101,13 +98,6 @@ namespace ServiceDeskUCAB.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return NoContent();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            Console.WriteLine("PRUEBA");
-            return null;
         }
 
         public UpdateUser TransformUser(UsuariosRol user)

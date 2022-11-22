@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialCommit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,8 +161,8 @@ namespace ServicesDeskUCABWS.Migrations
                     correo = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    fecha_eliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
                     CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -442,6 +442,21 @@ namespace ServicesDeskUCABWS.Migrations
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298161"), "Cliente" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298162"), "Administrador" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298163"), "Empleado" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bitacora_Tickets_EstadoId",

@@ -29,7 +29,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         {
             try
             {
-                var data = _dataContext.Usuarios.AsNoTracking().Where(p => p.Id == id).Single();
+                var data = _dataContext.Usuarios.AsNoTracking().Where(p => p.Id == id && p.fecha_eliminacion==default(DateTime)).Single();
                 return data;
             }
             catch (Exception ex)
@@ -43,7 +43,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         {
             try
             {
-
                 _dataContext.Usuarios.Add(usuario);
                 var UsuarioClient = new RolUsuario
                 {
@@ -173,10 +172,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         {
             try
             {
-                var usuario = _dataContext.Usuarios
-                .Where(d => d.Id == id).First();
+                var usuario = _dataContext.Usuarios.Where(d => d.Id == id).First();
 
-                _dataContext.Usuarios.Remove(usuario);
+                usuario.fecha_eliminacion = DateTime.Now.Date;
                 _dataContext.SaveChanges();
 
                 return UserMapper.MapperEntityToDto(usuario);
@@ -194,7 +192,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             {
                 _dataContext.Usuarios.Include(r => r.Roles).ToList();
 
-                var lista = _dataContext.Usuarios.Include(r => r.Roles).ToList();
+                var lista = _dataContext.Usuarios.Include(r => r.Roles).Where(x=> x.fecha_eliminacion==default(DateTime)).ToList();
 
                 return lista;
 

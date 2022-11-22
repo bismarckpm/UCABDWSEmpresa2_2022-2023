@@ -143,7 +143,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
-        public ApplicationResponse<UsuarioDto> EliminarDepartamento([FromRoute] Guid id)
+        public ApplicationResponse<UsuarioDto> EliminarUsuario([FromRoute] Guid id)
         {
             var response = new ApplicationResponse<UsuarioDto>();
             try
