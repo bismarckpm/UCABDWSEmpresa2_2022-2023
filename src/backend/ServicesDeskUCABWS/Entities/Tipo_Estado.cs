@@ -7,33 +7,25 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Tipo_Estado
     {
+        public Tipo_Estado()
+        {
+            this.etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>();
+        }
+
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(150)]
-        public string nombre { get; set; } = string.Empty;
+        [StringLength(50)]
+        public string nombre { get; set; }
 
         [Required]
-        [StringLength(250)]
-        public string descripcion { get; set; } = string.Empty;
+        [StringLength(150)]
+        public string descripcion { get; set; }
 
-        public HashSet<Etiqueta> Etiqueta { get; set; }
-
-        public PlantillaNotificacion PlantillaNotificacion { get; set; }
-
-        public List<Estado> ListaEstadosDerivados { get; set; }
-
-        public Tipo_Estado(string nombre, string descripcion)
-        {
-            Id = Guid.NewGuid();
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-
-        }
-
+        public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
         public Tipo_Estado()
         {
 
-        }
     }
+}
 }

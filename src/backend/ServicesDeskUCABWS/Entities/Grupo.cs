@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
@@ -9,7 +8,7 @@ namespace ServicesDeskUCABWS.Entities
     public class Grupo
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         [Required]
         [StringLength(50)]
         public string nombre { get; set; } = string.Empty;
@@ -21,8 +20,8 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+       
+        public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public HashSet<Departamento> Departamento { get; set; }
 
@@ -37,4 +36,8 @@ namespace ServicesDeskUCABWS.Entities
         }
 
     }
+
+		public virtual List<Departamento> departamentos { get; set; }
+
+	}
 }

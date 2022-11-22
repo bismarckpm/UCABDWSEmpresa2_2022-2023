@@ -7,10 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\backend\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Modelos_de_Usuario\" />
     <Folder Include="Models\ViewModel\" />
     <Folder Include="Views\TipoTicket\" />
   </ItemGroup>

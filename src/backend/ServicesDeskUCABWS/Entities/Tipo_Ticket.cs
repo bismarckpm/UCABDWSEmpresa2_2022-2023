@@ -44,7 +44,7 @@ namespace ServicesDeskUCABWS.Entities
             fecha_ult_edic = DateTime.UtcNow;
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
             Departamento = new List<Departamento>();
-        }
+    }
 
         public Tipo_Ticket(string nombre, string descripcion, string tipo)
         {
@@ -60,7 +60,7 @@ namespace ServicesDeskUCABWS.Entities
         }
 
         public Tipo_Ticket()
-        {
+    {
 
         }
 

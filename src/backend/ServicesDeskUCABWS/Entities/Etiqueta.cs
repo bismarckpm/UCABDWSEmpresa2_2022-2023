@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +6,11 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Etiqueta
     {
+        public Etiqueta()
+        {
+            this.etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>();
+        }
+
         [Key]
         public Guid Id { get; set; }
         [Required]
@@ -17,7 +21,7 @@ namespace ServicesDeskUCABWS.Entities
         [StringLength(250)]
         public string descripcion { get; set; } = string.Empty;
 
-        public HashSet<Tipo_Estado> ListaEstadosrelacionados { get; set; }
+        public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
 
     }
 }
