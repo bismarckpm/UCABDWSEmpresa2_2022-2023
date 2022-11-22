@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
@@ -79,7 +80,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //POST: Servicio para crear tipo estado
-        public Boolean RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
+        public TipoEstadoCreateDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
 
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return true;
+                return tipoEstado;
             }
             catch (ExceptionsControl ex)
             {
@@ -111,7 +112,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //PUT: Servicio para actualizar tipo estado
-        public Boolean ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id)
+        public TipoEstadoCreateDTO ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id)
         {
             try
             {
@@ -126,7 +127,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 tipoEstadoEntity.descripcion = tipoEstadoAct.descripcion;
                 _tipoEstadoContext.Tipos_Estados.Update(tipoEstadoEntity);
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return true;
+                return tipoEstadoAct;
             }
             catch (ExceptionsControl ex)
             {
@@ -148,7 +149,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //DELETE: Servicio para eliminar el tipo estado
-        public Boolean EliminarTipoEstado(Guid id)
+        public TipoEstadoCreateDTO EliminarTipoEstado(Guid id)
         {
             try
             {
@@ -162,7 +163,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 var tipoEstado = _tipoEstadoContext.Tipos_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
                 _tipoEstadoContext.Tipos_Estados.Remove(tipoEstado);
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return true;
+                return _mapper.Map<TipoEstadoCreateDTO>(tipoEstado);
             }
             catch (DbUpdateException ex)
             {

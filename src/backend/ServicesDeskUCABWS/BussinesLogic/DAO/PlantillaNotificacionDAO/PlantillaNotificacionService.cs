@@ -115,7 +115,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         }
 
         //POST: Servicio para crear plantilla notificacion
-        public Boolean RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
+        public PlantillaNotificacionDTOCreate RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
         {
             try
             {
@@ -124,21 +124,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
                 _plantillaContext.PlantillasNotificaciones.Add(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
 
-                //Comienza Prueba reemplazo de descripcion plantilla
-                //var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
-                //                                      .Include(t => t.Tipo_Ticket)
-                //                                      .Include(t => t.Prioridad)
-                //                                      .Include(t => t.empleado)
-                //                                      .Include(t => t.cliente)
-                //                                      .Include(t => t.Departamento_Destino)
-                //                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
-                //var consulta = ConsultarPlantillaTipoEstadoTitulo("Rechazado");
-
-                //var reemplazo = _notificacionService.ReemplazoEtiqueta(ticket, consulta);
-                //var mail = _notificacionService.EnviarCorreo(consulta.Titulo, reemplazo, "alexguastaferro1@gmail.com");
-                //Finaliza la prueba
-
-                return true;
+                return plantilla;
             }
             catch(DbUpdateException ex)
             {
@@ -151,7 +137,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         }
 
         //PUT: Servicio para modificar plantilla notificacion
-        public Boolean ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
+        public PlantillaNotificacionDTOCreate ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
         {
             try
             {
@@ -159,7 +145,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
                 plantillaEntity.Id = id;
                 _plantillaContext.PlantillasNotificaciones.Update(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
-                return true;
+                return plantilla;
             }
             catch (DbUpdateException ex)
             {
@@ -172,13 +158,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         }
 
         //DELETE: Servicio para eliminar plantilla notificacion
-        public Boolean EliminarPlantilla(Guid id)
+        public PlantillaNotificacionDTOCreate EliminarPlantilla(Guid id)
         {
             try
             {
-                _plantillaContext.PlantillasNotificaciones.Remove( _plantillaContext.PlantillasNotificaciones.Find(id));
+                var plantilla = _plantillaContext.PlantillasNotificaciones.Include(t => t.TipoEstado).Where(t => t.Id == id).Single(); 
+                _plantillaContext.PlantillasNotificaciones.Remove(plantilla);
                 _plantillaContext.DbContext.SaveChanges();
-                return true;
+
+                return _mapper.Map<PlantillaNotificacionDTOCreate>(plantilla); 
             }
             catch (ArgumentNullException ex)
             {

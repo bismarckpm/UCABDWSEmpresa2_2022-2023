@@ -12,8 +12,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         public List<TipoEstadoDTO> ConsultaTipoEstados();
         public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id);
         public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo);
-        public Boolean RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
-        public Boolean ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id);
-        public Boolean EliminarTipoEstado(Guid id);
+        public TipoEstadoCreateDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
+        public TipoEstadoCreateDTO ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id);
+        public TipoEstadoCreateDTO EliminarTipoEstado(Guid id);
     }
 }

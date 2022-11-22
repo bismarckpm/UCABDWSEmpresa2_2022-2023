@@ -132,8 +132,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void CrearTipoEstadoCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.RegistroTipoEstado(It.IsAny<TipoEstadoCreateDTO>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.RegistroTipoEstado(It.IsAny<TipoEstadoCreateDTO>()));//.Returns(true);
+            var application = new ApplicationResponse<TipoEstadoCreateDTO>();
 
             //act
             var result = _controller.CrearTipoEstadoCtrl(It.IsAny<TipoEstadoCreateDTO>());
@@ -166,8 +166,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void ActualizarTipoEstadoCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>()));//.Returns(true);
+            var application = new ApplicationResponse<TipoEstadoCreateDTO>();
 
             //act
             var result = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoCreateDTO>(), It.IsAny<Guid>());
@@ -200,8 +200,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void EliminarTipoEstadoCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.EliminarTipoEstado(It.IsAny<Guid>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.EliminarTipoEstado(It.IsAny<Guid>()));//.Returns(true);
+            var application = new ApplicationResponse<TipoEstadoCreateDTO>();
 
             //act
             var result = _controller.EliminarTipoEstadoCtrl(It.IsAny<Guid>());

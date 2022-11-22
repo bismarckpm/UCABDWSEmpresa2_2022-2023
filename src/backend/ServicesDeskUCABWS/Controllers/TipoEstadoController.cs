@@ -86,13 +86,13 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<TipoEstadoCreateDTO> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<TipoEstadoCreateDTO>();
             try
             {
                 var resultSevice = _tipoEstado.RegistroTipoEstado(tipoEstadoDTO);
-                response.Data = resultSevice.ToString();
+                response.Data = resultSevice;
             }
             catch (ExceptionsControl ex)
             {
@@ -106,13 +106,13 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoCreateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<TipoEstadoCreateDTO> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoCreateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<TipoEstadoCreateDTO>();
             try
             {
                 var resultSevice = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);
-                response.Data = resultSevice.ToString();
+                response.Data = resultSevice;
             }
             catch (ExceptionsControl ex)
             {
@@ -126,13 +126,13 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar tipo estado
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public ApplicationResponse<String> EliminarTipoEstadoCtrl(Guid id)
+        public ApplicationResponse<TipoEstadoCreateDTO> EliminarTipoEstadoCtrl(Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<TipoEstadoCreateDTO>();
             try
             {
                 var resultSevice = _tipoEstado.EliminarTipoEstado(id);
-                response.Data = resultSevice.ToString();
+                response.Data = resultSevice;
                       
             }
             catch (ExceptionsControl ex)
