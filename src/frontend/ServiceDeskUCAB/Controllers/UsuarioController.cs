@@ -17,6 +17,7 @@ namespace ServiceDeskUCAB.Controllers
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IServicioUsuario_API _servicioApiUsuarios;
+        private static Guid IdUser { get; set; }
 
         public UsuarioController(ILogger<UsuarioController> logger, IServicioUsuario_API servicioApiUsuarios)
         {
@@ -41,14 +42,17 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         public IActionResult VentanaEliminarUsuario(Guid id)
+
         {
-            return PartialView(id);
+            IdUser = id;
+            return PartialView();
         }
 
-        public async Task<IActionResult> EliminarUsuario(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> EliminarUsuario()
         {
             JObject respuesta;
-            respuesta = await _servicioApiUsuarios.Eliminar(id);
+            respuesta = await _servicioApiUsuarios.Eliminar(IdUser);
             if ((bool)respuesta["success"])
                 return RedirectToAction("Usuarios");
             else
