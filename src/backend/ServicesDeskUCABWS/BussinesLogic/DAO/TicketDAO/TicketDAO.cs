@@ -123,8 +123,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("No se pudo crear la familia de tickets"); ;
             }
         }
-        public List<TicketInfoDTO> obtenerFamiliaTickets(Guid ticketId)
+        
+        public List<Ticket> obtenerFamiliaTickets(Guid ticketId)
         {
+            /*
             try
             {
                 List<Ticket> listaTicket = new List<Ticket>();
@@ -139,6 +141,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 throw new Exception("No se pudo obtener la familia de tickets");
             }
+            */
+            return null;
         }
         public string mergeTickets(TicketDTO ticketPrincipal, List<TicketDTO> tickets)
         {

@@ -4,6 +4,7 @@ using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
@@ -44,12 +45,12 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpGet, Route("Obtener/{id}")]
-        public ApplicationResponse<TicketInfoDTO> obtenerTicketPorIdCtrl(string id)
+        public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorIdCtrl(string id)
         {
-            var respuesta = new ApplicationResponse<TicketInfoDTO>();
+            var respuesta = new ApplicationResponse<TicketInfoCompletaDTO>();
             try
             {
-                respuesta.Data = _ticketDAO.obtenerTicketPorId(new Guid(id));
+                //respuesta.Data = _ticketDAO.obtenerTicketPorId(new Guid(id));
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;
@@ -65,12 +66,12 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
-        public ApplicationResponse<List<TicketRespuestaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
-            var respuesta = new ApplicationResponse<List<TicketRespuestaDTO>>();
+            var respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
             try
             {
-                respuesta.Data = _ticketDAO.obtenerTickets(new Guid(departamentoId), opcion);
+                //respuesta.Data = _ticketDAO.obtenerTickets(new Guid(departamentoId), opcion);
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;
@@ -91,8 +92,8 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<string>();
             try
             {
-                _ticketDAO.anadirALaBitacora(tickets.ticketDTO);
-                respuesta.Data = $"Bitacora del ticket{tickets.ticketDTO.Id} modificada";
+                //_ticketDAO.anadirALaBitacora(tickets.ticketDTO);
+                //respuesta.Data = $"Bitacora del ticket{tickets.ticketDTO.Id} modificada";
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;
@@ -134,7 +135,7 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<string>();
             try
             {
-                respuesta.Data =  _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipal, ticketsMerge.tickets);
+                //respuesta.Data =  _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipal, ticketsMerge.tickets);
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;
@@ -156,7 +157,7 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<string>();
             try
             {
-                respuesta.Data = _ticketDAO.crearTicketHijo(ticketPaterno.ticketPadre, ticketPaterno.ticketHijo);
+                //respuesta.Data = _ticketDAO.crearTicketHijo(ticketPaterno.ticketPadre, ticketPaterno.ticketHijo);
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;

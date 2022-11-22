@@ -23,14 +23,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
                 throw new Exception("La descripción del ticket no es lo suficientemente detallado (longitud de la cadena menor a 5 caracteres)");
             //if (nuevoTicket.fecha_creacion == null)
             //    throw new Exception("La fecha de creación no fué proporcionada");
-            if (nuevoTicket.estado_nombre == null)
+            /*if (nuevoTicket.estado_nombre == null)
                 throw new Exception("El estado del ticket no fué proporcionado");
             if (nuevoTicket.prioridad_nombre == null)
                 throw new Exception("La prioridad del ticket no fué establecido");
             if (nuevoTicket.tipoTicket_nombre == null)
                 throw new Exception("El tipo del ticket no fué establecido");
             if (nuevoTicket.departamentoDestino_nombre == null)
-                throw new Exception("El departamento destino del ticket no fue establecido");
+                throw new Exception("El departamento destino del ticket no fue establecido");*/
         }
     }
 }
