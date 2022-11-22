@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -43,9 +44,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpGet, Route("Obtener/{id}")]
-        public ApplicationResponse<Ticket> obtenerTicketPorIdCtrl(string id)
+        public ApplicationResponse<TicketInfoDTO> obtenerTicketPorIdCtrl(string id)
         {
-            var respuesta = new ApplicationResponse<Ticket>();
+            var respuesta = new ApplicationResponse<TicketInfoDTO>();
             try
             {
                 respuesta.Data = _ticketDAO.obtenerTicketPorId(new Guid(id));
@@ -64,9 +65,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
-        public ApplicationResponse<List<Ticket>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
+        public ApplicationResponse<List<TicketRespuestaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
-            var respuesta = new ApplicationResponse<List<Ticket>>();
+            var respuesta = new ApplicationResponse<List<TicketRespuestaDTO>>();
             try
             {
                 respuesta.Data = _ticketDAO.obtenerTickets(new Guid(departamentoId), opcion);
@@ -106,27 +107,6 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }
 
-        [HttpPut, Route("crearFamiliaTicket")]
-        public ApplicationResponse<string> crearFamiliaTicketCtrl([FromBody] TicketsParientesDTO ticketsParientes)
-        {
-            var respuesta = new ApplicationResponse<string>();
-            try
-            {
-                respuesta.Data =  _ticketDAO.crearFamiliaTickets(ticketsParientes.ticketA, ticketsParientes.ticketB);
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = "No se pudo añadir la bitacora al ticket";
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
-        }
-
         [HttpGet,Route("Familia/{id}")]
         public ApplicationResponse<List<Ticket>> obtenerFamiliaTicketCtrl(string id)
         {
@@ -149,7 +129,7 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPut, Route("Merge")]
-        public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMerge ticketsMerge)
+        public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
         {
             var respuesta = new ApplicationResponse<string>();
             try
@@ -171,7 +151,7 @@ namespace ServicesDeskUCABWS.Controllers
 
 
         [HttpPut, Route("Reenviar")]
-        public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaterno ticketPaterno)
+        public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaternoDTO ticketPaterno)
         {
             var respuesta = new ApplicationResponse<string>();
             try
@@ -190,5 +170,8 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return respuesta;
         }
+
+        //DEVOLVER LISTA DE BITACORAS(ticket_id): DEVOLVER INFO DE LA BITACORA {estado_nombre, fecha_inicio, fecha_fin}
+        //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }
 }

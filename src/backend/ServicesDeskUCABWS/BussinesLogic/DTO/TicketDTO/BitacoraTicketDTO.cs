@@ -1,8 +1,10 @@
-﻿namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
+﻿using System;
+
+namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
 {
     public class BitacoraTicketDTO
     {
-        public TicketDTO ticketDTO { get; set; }
-        public TicketDTO nuevoTicketDTO { get; set; }
+        public Guid ticket { get; set; }
+        public Guid nuevoEstado { get; set; }
     }
 }

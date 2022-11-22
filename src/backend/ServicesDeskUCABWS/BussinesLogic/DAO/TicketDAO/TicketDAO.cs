@@ -80,6 +80,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         {
             try
             {
+                //estado {Abiertos, Cerrados, Todos}
+                //Abiertos son los que la fecha de eliminación es null
+                //Cerrados son los que tienen fecha de eliminación.
+                //Todos son todos puej
                 return _dataContext.Tickets.Where(d => d.Departamento_Destino.Id == idDepartamento && d.Estado.nombre == estado).ToList();
                 //return "Ticket creado satisfactoriamente";
             }
@@ -119,7 +123,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("No se pudo crear la familia de tickets"); ;
             }
         }
-        public List<Ticket> obtenerFamiliaTickets(Guid ticketId)
+        public List<TicketInfoDTO> obtenerFamiliaTickets(Guid ticketId)
         {
             try
             {
@@ -148,6 +152,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //ACTUALIZAR LA BITACORA DE LOS TICKETS PORQUE SE CAMBIÓ EL ESTADO
                 tickets.ForEach(delegate (TicketDTO ticket)
                 {
+                    //CREAR LA FAMILIA TICKET
                     ticket.fecha_eliminacion = new DateTime();
                     ticket.Estado.nombre = "Eliminado"; //->VERIFICAR
                     ticket.Bitacora_Tickets.Add(_helper.crearNuevaBitacora(ticket));
