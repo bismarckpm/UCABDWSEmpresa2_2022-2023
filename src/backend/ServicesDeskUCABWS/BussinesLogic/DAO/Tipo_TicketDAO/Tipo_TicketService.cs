@@ -14,6 +14,8 @@ using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using Microsoft.Data.SqlClient;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {
@@ -53,8 +55,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 .ThenInclude(fb => fb.Tipo_Cargo)
                 .Where(fa => fa.fecha_elim == null)
                 .ToList();
-                var tipo_tickets = _mapper.Map<List<Tipo_TicketDTOSearch>>(tipo);
-                return (IEnumerable<Tipo_TicketDTOSearch>)tipo_tickets;
+                var tipo_tickets = new List<Tipo_TicketDTOSearch>();
+                
+                    foreach (var r in tipo)
+                    {
+                        tipo_tickets.Add(new Tipo_TicketDTOSearch
+                        {
+                            Id = r.Id,
+                            nombre = r.nombre,
+                            descripcion = r.descripcion,
+                            Minimo_Aprobado = r.Minimo_Aprobado,
+                            Maximo_Rechazado = r.Maximo_Rechazado,
+                            tipo = r.tipo,
+                            Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
+                            Departamento = _mapper.Map<List<DepartamentoSearchDTO>>(r.Departamento)
+                        }) ;
+                    }
+               
+                    
+                return tipo_tickets;
             }
 
             catch (ExceptionsControl ex)
