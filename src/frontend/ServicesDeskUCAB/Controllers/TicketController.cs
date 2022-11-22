@@ -14,16 +14,21 @@ namespace ServicesDeskUCAB.Controllers
     {
         private readonly IServicioTicketAPI _servicioTicketAPI;
         private readonly IServicioPrioridadAPI _servicioPrioridadAPI;
+        //private readonly IServicioTipoTicketAPI _servicioTipoTicketAPI;
+        //private readonly IServicioDepartamento _servicioDepartamentoAPI;
 
-        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI)
+        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI/*,IServicioTicketAPI servicioTicketAPI, IServicioTipoTicketAPI servicioTipoTicketAPI, IServicioDepartamento servicioDepartamento*/)
         {
             //_servicioTicketAPI = servicioTicketAPI;
+            //_servicioTipoTicketAPI = servicioTipoTicketAPI;
+            //_servicioDepartamentoAPI = servicioDepartamentoAPI:
             _servicioPrioridadAPI = servicioPrioridadAPI;
         }
 
         public async Task<IActionResult> Index(string departamentoId,string opcion)
         {
             ViewBag.opcion = opcion;
+            ViewBag.departamentoId = departamentoId;
             List<Ticket> lista = await _servicioTicketAPI.Lista(departamentoId,opcion);
             return View(lista);
         }
@@ -34,8 +39,8 @@ namespace ServicesDeskUCAB.Controllers
             {
                 ticket = new Ticket(),
                 prioridades = await _servicioPrioridadAPI.Lista(),
-                departamentos = new List<Departamento>(),
-                tipo_tickets = new List<Tipo_Ticket>()
+                departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
+                tipo_tickets = new List<Tipo_Ticket>() // await _servicioTipoTicketAPI.Lista()
             };
             return View(ticketNuevoViewModel);
         }
@@ -66,11 +71,11 @@ namespace ServicesDeskUCAB.Controllers
         {
             TicketReenviarViewModel ticketReenviarViewModel = new TicketReenviarViewModel()
             {
-                ticket = await _servicioTicketAPI.Obtener(ticketId),
-                ticketReenviado = new Ticket(),
-                //departamentos = await _servicioDepartamentoAPI(),
-                //prioridades = await _servicioPrioridadAPI(),
-                //tipo_tickets = await _servicioTipoTicketAPI()
+                ticketPadre = await _servicioTicketAPI.Obtener(ticketId),
+                ticketHijo = new Ticket(),
+                prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
+                departamentos = new List<Departamento>(), //await _servicioDepartamentoAPI(),
+                tipo_tickets = new List<Tipo_Ticket>(), //await _servicioTipoTicketAPI()
             };
             return View(ticketReenviarViewModel);
         }

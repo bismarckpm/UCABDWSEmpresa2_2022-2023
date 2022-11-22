@@ -23,7 +23,7 @@
             Estado: @Model.ticket.Estado.nombre
         </div>
         <div class="col-6">
-            Departamento origen: @Model.ticket.departamento_usuario.Nombre
+            Departamento origen: @Model.ticket.Departamento_Destino.Nombre
         </div>
         <hr />
         <div class="col-6">
@@ -38,7 +38,7 @@
             Fecha de creación: @Model.ticket.fecha_creacion
         </div>
         <div class="col-6">
-            Usuario: @Model.ticket.usuario.Correo
+            Usuario: @Model.ticket.Emisor.Correo
         </div>
         <hr />
         <div class="col-12">

@@ -60,14 +60,14 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<Prioridad>> ListaEstado(string Estado)
+        public async Task<List<Prioridad>> ListaHabilitado()
         {
             List<Models.Prioridad> lista = new List<Prioridad>();
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Prioridad/Lista/{Estado}");
+                var response = await cliente.GetAsync($"Prioridad/Habilitados");
 
                 if (response.IsSuccessStatusCode)
                 {

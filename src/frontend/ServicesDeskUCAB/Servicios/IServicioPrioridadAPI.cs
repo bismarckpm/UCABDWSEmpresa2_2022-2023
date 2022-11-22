@@ -9,7 +9,7 @@ namespace ServicesDeskUCAB.Servicios
     {
         Task<List<Prioridad>> Lista();
 
-        Task<List<Prioridad>> ListaEstado(string cadena);
+        Task<List<Prioridad>> ListaHabilitado();
 
         Task<Prioridad> Obtener(Guid prioridadID);
 
