@@ -35,7 +35,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
-            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper, _notificacion.Object);
+            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper);
             _contextMock.SetUpContextData();
         }
 

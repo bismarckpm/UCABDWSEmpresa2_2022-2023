@@ -106,9 +106,9 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<TipoEstadoCreateDTO> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoCreateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<TipoEstadoDTO> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<TipoEstadoCreateDTO>();
+            var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
                 var resultSevice = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);

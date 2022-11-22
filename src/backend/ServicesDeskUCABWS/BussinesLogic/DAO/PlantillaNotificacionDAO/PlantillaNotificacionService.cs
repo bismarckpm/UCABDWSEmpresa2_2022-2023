@@ -16,14 +16,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {
         private readonly IDataContext _plantillaContext;
-        private readonly INotificacion _notificacionService;
         private readonly IMapper _mapper;
        
 
-        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, INotificacion notificacionService)
+        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper)
         {
             _plantillaContext = plantillaContext;
-            _notificacionService = notificacionService;
             _mapper = mapper;
             
         }

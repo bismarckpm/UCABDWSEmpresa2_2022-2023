@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 {
@@ -219,7 +220,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstadoUpdate = new TipoEstadoCreateDTO()
+            var tipoEstadoUpdate = new TipoEstadoUpdateDTO()
             {
 
                 nombre = "Aprobado",
@@ -229,14 +230,30 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c")
                 }
             };
+
+            var expect = new TipoEstadoDTO()
+            {
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                nombre = "Aprobado",
+                descripcion = "Cuando se aprueba un ticket",
+                etiqueta = new HashSet<EtiquetaDTO>
+                {
+                    new EtiquetaDTO {
+                        Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                        Nombre = "@Usuario",
+                        Descripcion = "hola",
+                    }
+                },
+            };
+
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 
             //act
             var result = _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate, idUpdate);
 
             //assert
-            Assert.AreEqual(result.nombre, tipoEstadoUpdate.nombre);
-            Assert.AreEqual(result.GetType(), tipoEstadoUpdate.GetType());
+            Assert.AreEqual(result.nombre, expect.nombre);
+            Assert.AreEqual(result.GetType(), expect.GetType());
         }
 
 
@@ -246,7 +263,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             //arrange
          
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstadoUpdate = new TipoEstadoCreateDTO()
+            var tipoEstadoUpdate = new TipoEstadoUpdateDTO()
             {
 
                 nombre = "Aprobado",
@@ -272,7 +289,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             var idUpdate = It.IsAny<Guid>();
-            var tipoEstadoUpdate = It.IsAny<TipoEstadoCreateDTO>();
+            var tipoEstadoUpdate = It.IsAny<TipoEstadoUpdateDTO>();
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
 
             //assert
@@ -285,7 +302,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstado = new TipoEstadoCreateDTO
+            var tipoEstado = new TipoEstadoUpdateDTO
             {
 
                 nombre = "Plantilla Aprobado",
@@ -315,12 +332,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             //arrange
             var tipoEstado = new TipoEstadoCreateDTO
             {
-                nombre = "Rechazado",
-                descripcion = "Cuando se rechaza un ticket",
+                nombre = "Aprobado",
+                descripcion = "Cuando se aprueba un ticket",
                 etiqueta = new HashSet<Guid>
                 {
                     new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
-                    new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
                 }
             };
 
@@ -328,13 +344,32 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
            // _contextMock.Setup(set => set.PlantillasNotificaciones).Returns(It.IsAny<PlantillaNotificacion>);
 
             //act
-            var result = _TipoEstadoService.EliminarTipoEstado(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"));
+            var result = _TipoEstadoService.EliminarTipoEstado(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"));
 
             //assert
             Assert.AreEqual(tipoEstado.nombre, result.nombre);
             Assert.AreEqual(tipoEstado.GetType(), result.GetType());
         }
 
+        [TestMethod(displayName: "Prueba Unitaria cuando no se puede eliminar este tipo de estado por la integridad del sistema")]
+        public void ExcepcionEliminarTipoEstadoPermisoDenegado()
+        {
+            //arrange
+            var tipoEstado = new TipoEstadoCreateDTO
+            {
+                nombre = "Aprobado",
+                descripcion = "Cuando se aprueba un ticket",
+                etiqueta = new HashSet<Guid>
+                {
+                    new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                }
+            };
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+        }
 
         [TestMethod(displayName: "Prueba Unitaria cuando la eliminación falla porque el tipo estado está en uso por un ticket")]
         public void ExcepcionEliminarTipoEstadoEnUso()
@@ -343,7 +378,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
           
             //assert
-            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86")));
         }
 
 
@@ -354,7 +389,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
  
             //assert
-            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86")));
 
         }
 

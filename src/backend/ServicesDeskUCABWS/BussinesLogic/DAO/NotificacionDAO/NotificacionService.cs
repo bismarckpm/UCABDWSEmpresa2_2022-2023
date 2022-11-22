@@ -101,7 +101,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                     EnableSsl = true
                 };
 
-
                 clienteServidor.Send(mail);
                 return true;
             }

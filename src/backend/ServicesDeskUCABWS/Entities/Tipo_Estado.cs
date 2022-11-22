@@ -23,5 +23,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
 
+        public Boolean permiso { get; set; }
+
     }
 }

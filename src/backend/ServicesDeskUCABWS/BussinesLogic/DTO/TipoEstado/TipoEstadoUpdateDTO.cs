@@ -1,16 +1,13 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.EtiquetaTipoEstado;
-using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
-using ServicesDeskUCABWS.Entities;
-using System;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using System.Collections.Generic;
+using System;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado
 {
-    public class TipoEstadoCreateDTO
+    public class TipoEstadoUpdateDTO
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public HashSet<Guid> etiqueta { get; set; }
-        public Boolean permiso { get; set; }
     }
 }

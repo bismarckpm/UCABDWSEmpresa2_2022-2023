@@ -42,7 +42,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                                     descripcion = "hola"
                                 }
                             }
-                        }
+                        },
+                        permiso = true, 
                     }
                 },
                 new PlantillaNotificacion
@@ -69,7 +70,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                                     descripcion = "hola"
                                 }
                             }
-                        }
+                        },
+                        permiso = false,
                     }
                 },
             };
@@ -118,15 +120,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
             _mockContext.Setup(set => set.Tipos_Estados.Add(It.IsAny<Tipo_Estado>()));
             _mockContext.Setup(e => e.Tipos_Estados.Update(It.IsAny<Tipo_Estado>()));
             _mockContext.Setup(e => e.Tipos_Estados.Remove(It.IsAny<Tipo_Estado>()));
-
-            //_mockContext.Setup(set => set.PlantillasNotificaciones.AddAsync(It.IsAny<PlantillaNotificacion>(),default));
-            //_mockContext.Setup(c => c.DbContext.SaveChangesAsync(It.IsAny<CancellationToken>())).Verifiable();
-            //_mockContext.Setup(m => m.DbContext.SaveChanges());
-
-            //_mockContext.Setup(c => c.PlantillasNotificaciones.Find(It.IsAny<object[]>())).Returns((object[] input) => .Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
-            //_mockContext.Setup(set => set.Tipo_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
-            //_mockContext.Setup(set => set.Tipo_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
-            //_mockContext.Setup(set => set.DbContext.SaveChanges()).Throws(new ExceptionsControl("", new DbUpdateException()));
         }
 
         public static void SetUpContextDataCliente(this Mock<IDataContext> _mockContext)
