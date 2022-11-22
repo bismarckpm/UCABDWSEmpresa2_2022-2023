@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
+using Microsoft.Data.SqlClient;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {
@@ -24,6 +25,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
+                prioridadDTO.Id = Guid.NewGuid();
+                prioridadDTO.fecha_ultima_edic = DateTime.Now;
+                prioridadDTO.fecha_descripcion = DateTime.Now;
                 var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
                 _dataContext.Prioridades.Add(prioridadEntity);
                 _dataContext.DbContext.SaveChanges();
@@ -46,8 +50,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
         {
             try
             {
-                var data = _dataContext.Prioridades.ToList().Where(p => p.estado == "habilitado").Single();
-                var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
+                List<Prioridad> data = _dataContext.Prioridades.Where(p => p.estado == "habilitado").ToList();
+                List<PrioridadDTO> prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
                 return prioridadDTO;
             }
             catch (Exception ex)
@@ -75,14 +79,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             try
             {
                 var prioridad = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
-                prioridad.nombre = prioridadDTO.nombre;
-                prioridad.descripcion = prioridadDTO.descripcion;
-                prioridad.estado = prioridadDTO.estado;
-                prioridad.fecha_descripcion = prioridadDTO.fecha_descripcion;
-                prioridad.fecha_ultima_edic = prioridadDTO.fecha_ultima_edic;
-                _dataContext.Prioridades.Update(prioridad);
-                _dataContext.DbContext.SaveChanges();
-                return "Prioridad modificada exitosamente";
+                if(prioridad.nombre != prioridadDTO.nombre || prioridad.descripcion != prioridadDTO.descripcion || prioridad.estado != prioridadDTO.estado)
+                {
+                    prioridad.nombre = prioridadDTO.nombre;
+                    prioridad.estado = prioridadDTO.estado;
+                    prioridad.fecha_ultima_edic = DateTime.Now;
+                    if(prioridad.descripcion != prioridadDTO.descripcion)
+                    {
+                        prioridad.fecha_descripcion = DateTime.Now;
+                    }
+                    prioridad.descripcion = prioridadDTO.descripcion;
+                    _dataContext.Prioridades.Update(prioridad);
+                    _dataContext.DbContext.SaveChanges();
+                    Console.WriteLine("aqui esta", prioridad.ToString());
+                    return "Prioridad modificada exitosamente";
+                }
+                return "";
             }
             catch (Exception ex)
             {

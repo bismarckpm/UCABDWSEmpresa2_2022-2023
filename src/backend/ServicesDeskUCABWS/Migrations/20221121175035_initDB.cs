@@ -67,7 +67,7 @@ namespace ServicesDeskUCABWS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_descripcion = table.Column<DateTime>(type: "datetime2", nullable: false),

@@ -106,7 +106,14 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 response.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
                 response.Success = true;
-                response.Message = "Cambios Realizados con Éxito";
+                if (response.Data == "")
+                {
+                    response.Message = null;
+                }
+                else
+                {
+                    response.Message = "Cambios Realizados con Éxito";
+                }
             }
             catch (System.IO.IOException ex)
             {
