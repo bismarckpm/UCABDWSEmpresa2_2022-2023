@@ -51,13 +51,13 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("CrearAdministrador/")]
-        public ApplicationResponse<String> CrearAdministrador([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<Administrador>();
             try
             {
                 var resultService = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
-                response.Data = resultService.ToString();
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)
@@ -70,9 +70,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
         [HttpPost]
         [Route("CrearCliente/")]
-        public ApplicationResponse<Usuario> CrearCliente([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
         {
-            var response = new ApplicationResponse<Usuario>();
+            var response = new ApplicationResponse<Cliente>();
             try
             {
                 response.Data = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
@@ -89,13 +89,13 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("CrearEmpleado/")]
-        public ApplicationResponse<String> CrearEmpleado([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Empleado> CrearEmpleado([FromBody] UsuarioDto Usuario)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<Empleado>();
             try
             {
                 var resultService = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
-                response.Data = resultService.ToString();
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)
@@ -143,13 +143,13 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
-        public ApplicationResponse<String> EliminarDepartamento([FromRoute] Guid id)
+        public ApplicationResponse<UsuarioDto> EliminarDepartamento([FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<UsuarioDto>();
             try
             {
                 var resultService = _usuarioDAO.eliminarUsuario(id);
-                response.Data = resultService.ToString();
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)
@@ -163,13 +163,13 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPut]
         [Route("ActualizarUsuario/")]
-        public ApplicationResponse<String> ActualizarUsuario([FromBody] UserDto_Update usuario)
+        public ApplicationResponse<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<UserDto_Update>();
             try
             {
                 var resultService = _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
-                response.Data = resultService.ToString();
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)
