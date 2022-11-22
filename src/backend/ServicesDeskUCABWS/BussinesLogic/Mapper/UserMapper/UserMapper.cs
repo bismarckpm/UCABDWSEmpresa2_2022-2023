@@ -27,6 +27,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 password = Encrypt.GetSHA256(user.password),
                 fecha_creacion = user.fecha_creacion,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -46,6 +47,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 password = Encrypt.GetSHA256(user.password),
                 fecha_creacion = user.fecha_creacion,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -65,6 +67,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 password = Encrypt.GetSHA256(user.password),
                 fecha_creacion = user.fecha_creacion,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -84,6 +87,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 password = Encrypt.GetSHA256(user.password),
                 fecha_creacion = user.fecha_creacion,
                 gender = user.gender,
+                fecha_nacimiento = user.fecha_nacimiento,
 
             };
 
@@ -100,10 +104,29 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 segundo_nombre = user.segundo_nombre,
                 cedula = user.cedula,
                 fecha_nacimiento = user.fecha_nacimiento,
+                gender = user.gender,   
+                correo=user.correo, 
 
             };
         }
 
+        public static Usuario MapperEntityToDtoGmail(UserGmail user)
+        {
+            return new Usuario
+            {
+                Id = user.id,
+                correo = user.correo,
+            };
+        }
+
+        public static UserGmail MapperEntityToDtoGmailUser(Usuario user)
+        {
+            return new UserGmail
+            {
+                id = user.Id,
+                correo = user.correo,
+            };
+        }
         public static Usuario MapperEntityToDtoUpdatePassword(UserPasswordDto user)
         {
             return new Usuario

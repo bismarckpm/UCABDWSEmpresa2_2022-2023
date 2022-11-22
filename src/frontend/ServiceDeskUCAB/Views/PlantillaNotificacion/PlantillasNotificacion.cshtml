@@ -1,0 +1,114 @@
+﻿@using System.Text.RegularExpressions
+@model List<ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones.PlantillaNotificacion>;
+@{
+    ViewData["Title"] = "PlantillasNotificacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-5">
+    <div class="card-header">        
+         <h1 class="fs-3 mb-0 text-center">Todas las plantillas de notificaciones</h1>
+    </div>
+    @if (Context.Request.Query["message"].Count() > 0)
+    {
+        <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+            <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="card-body table-responsive">
+
+        <a asp-action="PlantillaNueva" asp-controller="PlantillaNotificacion" asp-route-id="@null" class="btn btn-primary btn-sm">Nueva plantilla de notificación</a>
+       
+        @if(Model != null && Model.Count() > 0){
+            <hr class="mb-3"/>
+            <table class="table mt-1 table-striped" id="tabla_id">
+                <thead>
+                    <tr>
+                        <th>Nombre de la plantilla</th>
+                        <th>Estado asociado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var plantilla in Model)
+                    {
+                        <tr>
+                            <td style="font-size: 15px">@plantilla.Titulo</td>
+                            @if (plantilla.TipoEstado != null)
+                            {
+                                <td>
+                                    <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-black fw-normal border-secondary border border-2 m-0">
+                                        @plantilla.TipoEstado.Nombre   
+                                    </p>                               
+                                </td>                                  
+                            }                                          
+                            else                                       
+                            {                                          
+                                <td class="text-danger">
+                                    <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-danger border-danger border border-2 fw-normal m-0">
+                                        No tiene estado asociado
+                                    </p>
+                                </td>
+                            }
+                            <td>
+                                <a asp-action="PlantillaEditar" asp-controller="PlantillaNotificacion" asp-route-id="@plantilla.Id" class="btn btn-primary btn-sm">Editar</a>
+                                <a data-bs-toggle="modal" data-bs-target="#modal-@plantilla.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+@if(Model != null){
+    @foreach (var plantilla in Model)
+    {
+        <div class="modal fade" id="modal-@plantilla.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Deseas <b>Eliminar</b> esta plantilla?</h5>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                        <a type="button" asp-action="EliminarPlantilla" asp-controller="PlantillaNotificacion" asp-route-id="@plantilla.Id" class="btn btn-danger btn-sm">Eliminar estado</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tabla_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+    </script>
+
+}

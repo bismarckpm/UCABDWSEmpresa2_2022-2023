@@ -4,7 +4,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO
 {
     public class GrupoDto
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
         public DateTime fecha_creacion { get; set; }

@@ -1,13 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.Data;
 
 using System;
@@ -92,11 +95,23 @@ namespace ServicesDeskUCABWS
 			});
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddControllers();
+            services.AddTransient<IPlantillaNotificacion, PlantillaNotificacionService>();
 
-         
-            
+            services.AddTransient<INotificacion, NotificacionService>();
+
+            services.AddTransient<IEtiqueta, EtiquetaService>();
+
+            services.AddTransient<ITipoEstado, TipoEstadoService>();
+
+            services.AddTransient<IDataContext, DataContext>();
+        
+
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
