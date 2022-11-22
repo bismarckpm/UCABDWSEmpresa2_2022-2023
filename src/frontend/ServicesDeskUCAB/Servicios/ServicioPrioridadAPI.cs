@@ -110,7 +110,6 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        // arreglar
         public async Task<JObject> Guardar(Prioridad Objeto)
         {
             var cliente = new HttpClient();

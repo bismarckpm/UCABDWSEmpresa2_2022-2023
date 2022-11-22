@@ -56,7 +56,8 @@ namespace ServicesDeskUCAB.Controllers
                     else
                     {
                         Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                        return RedirectToAction("Prioridad", new { message = (string)respuesta["message"] });
+                        string message = (string)respuesta["message"];
+                        throw new Exception(message);
                     }
                 }
                 else

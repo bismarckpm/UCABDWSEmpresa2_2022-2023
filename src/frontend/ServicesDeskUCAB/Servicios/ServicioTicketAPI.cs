@@ -24,22 +24,22 @@ namespace ServicesDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
-        public async Task<Bitacora_Ticket> BitacoraTicket(string ticketId)
+        public async Task<Ticket> Obtener(string ticketId)
         {
-            Bitacora_Ticket objeto = new Bitacora_Ticket();
+            Ticket objeto = new Ticket();
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Ticket/Bitacora/{ticketId}");
+                var response = await cliente.GetAsync($"Ticket/Obtener/{ticketId}");
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<Bitacora_Ticket>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<Ticket>(stringDataRespuesta);
                     objeto = resultado;
-                    Console.WriteLine("Obtiene la bitacora del ticket");
+                    Console.WriteLine("Obtiene el ticket");
                 }
             }
             catch (HttpRequestException ex)
@@ -49,35 +49,9 @@ namespace ServicesDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene la bitacora del ticket, algo a sucedido ", e.Message);
+                Console.WriteLine("No obtiene el ticket, algo a sucedido ", e.Message);
             }
             return objeto;
-        }
-
-        public async Task<bool> Editar(Ticket Objeto)
-        {
-            bool respuesta = false;
-            try
-            {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-                var response = await cliente.PutAsync($"Ticket/Editar/", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("No edito el ticket, algo a sucedido ", e.Message);
-            }
-            return respuesta;
         }
 
         public async Task<List<Ticket>> FamiliaTicket(string ticketId)
@@ -92,8 +66,6 @@ namespace ServicesDeskUCAB.Servicios
                 {
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
-
-                    //Obtengo la data del json respuesta
                     string stringDataRespuesta = json_respuesta["data"].ToString();
                     var resultado = JsonConvert.DeserializeObject<List<Ticket>>(stringDataRespuesta);
                     objeto = resultado;
@@ -112,20 +84,22 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        [HttpPost]
-        public async Task<bool> Guardar(Models.Ticket Objeto)
+        public async Task<List<Bitacora_Ticket>> BitacoraTicket(string ticketId)
         {
-            bool respuesta = false;
+            List<Bitacora_Ticket> lista = new List<Bitacora_Ticket>();
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-                var response = await cliente.PostAsync($"Ticket/Guardar/", content);
+                var response = await cliente.GetAsync($"Ticket/Bitacora/{ticketId}");
                 if (response.IsSuccessStatusCode)
                 {
-                    respuesta = true;
-                    Console.WriteLine("El ticket se guarda");
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<Bitacora_Ticket>>(stringDataRespuesta);
+                    lista = resultado;
+                    Console.WriteLine("Obtiene la bitacora del ticket");
                 }
             }
             catch (HttpRequestException ex)
@@ -135,37 +109,9 @@ namespace ServicesDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+                Console.WriteLine("No obtiene la bitacora del ticket, algo a sucedido ", e.Message);
             }
-            return respuesta;
-        }
-
-
-        public async Task<bool> GuardarFamilia(Familia_Ticket Objeto)
-        {
-            bool respuesta = false;
-            try
-            {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-                var response = await cliente.PostAsync($"Ticket/Merge", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                    Console.WriteLine("La familia de tickets se guarda");
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("No obtiene la familai de tickets, algo a sucedido ", e.Message);
-            }
-            return respuesta;
+            return lista;
         }
 
         public async Task<List<Ticket>> Lista(string departamentoId, string opcion)
@@ -198,22 +144,45 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<Ticket> Obtener(string ticketId)
+        [HttpPost]
+        public async Task<JObject> Guardar(Ticket Objeto)
         {
-            Ticket objeto = new Ticket();
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PostAsync($"Ticket/Guardar/", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return null;
+        }
+
+
+        /*
+        public async Task<JObject> Editar(Ticket Objeto)
+        {
+            bool respuesta = false;
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Ticket/Obtener/{ticketId}");
+                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+                var response = await cliente.PutAsync($"Ticket/Editar/", content);
                 if (response.IsSuccessStatusCode)
                 {
-                    var respuesta = await response.Content.ReadAsStringAsync();
-                    JObject json_respuesta = JObject.Parse(respuesta);
-                    string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<Ticket>(stringDataRespuesta);
-                    objeto = resultado;
-                    Console.WriteLine("Obtiene el ticket");
+                    respuesta = true;
                 }
             }
             catch (HttpRequestException ex)
@@ -223,15 +192,42 @@ namespace ServicesDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene el ticket, algo a sucedido ",e.Message);
+                Console.WriteLine("No edito el ticket, algo a sucedido ", e.Message);
             }
-            return objeto;
-        }
+            return respuesta;
+        }*/
 
-        public Task<bool> Reenviar(Ticket padre, Ticket hijo)
+        /*
+        public async Task<JObject> GuardarFamilia(Familia_Ticket Objeto)
         {
-            throw new NotImplementedException();
-        }
+            bool respuesta = false;
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+                var response = await cliente.PostAsync($"Ticket/Merge", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    respuesta = true;
+                    Console.WriteLine("La familia de tickets se guarda");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene la familai de tickets, algo a sucedido ", e.Message);
+            }
+            return respuesta;
+        }*/
+
+
+
+
     }
 }
 
