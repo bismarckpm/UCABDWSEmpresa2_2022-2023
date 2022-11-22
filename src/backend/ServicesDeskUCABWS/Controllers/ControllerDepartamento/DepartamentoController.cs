@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.Response;
-using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -53,26 +53,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
-
-        [HttpGet]
-        [Route("ConsultarDepartamentoNoEliminado/")]
-        public ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentosNoEliminados(){
-			
-            var response = new ApplicationResponse<List<DepartamentoDto>>();
-
-			try
-			{
-                response.Data = _departamentoDAO.DeletedDepartamento();
-			}
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-
-		}
 
         [HttpGet]
         [Route("ConsultarDepartamento/")]
@@ -165,12 +145,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 			}
 			return response; 
         }
-		[HttpPut("AsignarGrupoToDepartamento/{idGrupo}/{idDept}")]
-        public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+
+		[HttpPut]
+		[Route("AsignarGrupoToDepartamento/")]
+        public ActionResult<List<string>> AsignarGrupoToDepartamento([FromBody] string idDepartamento)
         {
             try
             {
-                return _departamentoDAO.AsignarGrupoToDepartamento(idGrupo, idDept);
+                return _departamentoDAO.AsignarGrupoToDepartamento(idDepartamento);
             }
             catch (Exception ex)
             {
@@ -179,31 +161,39 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         }
 
         [HttpGet("ConsultarDepartamentoNoAsociado/")]
-        public ActionResult<List<DepartamentoDto>> ListaDepartamentoNoAsociado() {
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentoNoAsociado()
+        {
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
             try
             {
-                return _departamentoDAO.NoAsociado();
-            } catch (Exception ex)
+                response.Data = _departamentoDAO.NoAsociado();
+            }
+            catch (ExceptionsControl ex)
             {
-				throw ex.InnerException!;
-			}
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
 
-        [HttpGet("SelectListItemDepartamento/")]
-		public ApplicationResponse<IEnumerable<SelectListItem>> ListaDepartamentoSelectList()
-		{
-			var response = new ApplicationResponse<IEnumerable<SelectListItem>>();
-			try
-			{
-				response.Data= _departamentoDAO.ListaDepartamentoGrupo();
-			}
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-		}
-	}
+		[HttpGet]
+		[Route("ConsultarDepartamentoNoEliminado/")]
+		public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentonoEliminado()
+        {
+
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
+            try
+            {
+                response.Data = _departamentoDAO.DeletedDepartamento();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+    }
 }

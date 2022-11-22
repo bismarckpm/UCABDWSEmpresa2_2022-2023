@@ -3,17 +3,27 @@
 
 // Write your JavaScript code.
 
-<<<<<<< HEAD:src/frontend/ServicesDeskUCAB/wwwroot/js/site.js
-$(function (){
-    var PlaceholderElement = $('#Placeholder'); 
-    $('button[data-toggle="modal"]').click(function (event) {
+function GetSelected() {
+    console.log("Entre en el ");
+    //Array de checkboxs.
+    var selectedCheckbox = new Array();
 
-        var url = $(this).data('url');
-        $.get(url).done(function (data){
-            PlaceholderElement.html(data);
-            PlaceholderElement.find('.modal').modal('show');
-        })
-    })
-})
-=======
->>>>>>> 4bc58089133e7b82f8a462de98e46291788a0e8a:src/frontend/ServiceDeskUCAB/wwwroot/js/site.js
+    //Reference the Table.
+    var tablaDepartamentos = document.getElementById("DeptTable");
+
+    //Reference all the CheckBoxes in Table.
+    var checks = tablaDepartamentos.getElementsByTagName("Input");
+
+    // Loop and push the checked CheckBox value in Array.
+    for (var i = 0; i < checks.length; i++) {
+        if (checks[i].checked) {
+            selected.push(checks[i].value);
+            console.log("Entre en el if");
+        }
+    }
+
+    //Display the selected CheckBox values.
+    if (selectedCheckbox.length > 0) {
+        alert("Selected values: " + selected.join(","));
+    }
+};

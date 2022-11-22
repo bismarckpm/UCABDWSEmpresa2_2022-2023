@@ -9,7 +9,7 @@ using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
-using ServicesDeskUCABWS.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System.Text.RegularExpressions;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +60,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var lista = _dataContext.Grupos.Select(
                     d => new GrupoDto
                     {
-						id = d.id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
@@ -80,44 +80,47 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         //Consultar grupo por ID 
         public GrupoDto ConsultarPorIdDao(Guid idGrupo)
         {
-            try { 
+            try
+            {
                 var grupo = _dataContext.Grupos
                             .Where(d => d.id == idGrupo).First();
 
                 return GrupoMapper.MapperEntityToDtoDefault(grupo);
 
-            }catch (Exception ex)
-			{
-				throw new ExceptionsControl("El grupo" + idGrupo + "No esta registrado", ex);
-			}
-		}
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("El grupo" + idGrupo + "No esta registrado", ex);
+            }
+        }
 
         //Eliminar Grupo
         public GrupoDto EliminarGrupoDao(Guid idGrupo)
         {
-			try
-			{
-				var grupo = _dataContext.Grupos
-						   .Where(d => d.id == idGrupo).First();
+            try
+            {
+                var grupo = _dataContext.Grupos
+                           .Where(d => d.id == idGrupo).First();
 
-				if (grupo != null)
-				{
-					grupo.fecha_eliminacion = DateTime.Now.Date;
-					_dataContext.SaveChanges();
+                if (grupo != null)
+                {
+                    grupo.fecha_eliminacion = DateTime.Now.Date;
+                    _dataContext.SaveChanges();
 
-                    if (QuitarAsociacion(idGrupo) == true) {
-						return GrupoMapper.MapperEntityToDto(grupo);
-					}
+                    if (QuitarAsociacion(idGrupo) == true)
+                    {
+                        return GrupoMapper.MapperEntityToDto(grupo);
+                    }
 
-				}
-				
+                }
+
             }
             catch (Exception ex)
             {
-				throw new ExceptionsControl("No se encuentra el grupo" + " " + idGrupo, ex);
-			}
+                throw new ExceptionsControl("No se encuentra el grupo" + " " + idGrupo, ex);
+            }
             return null;
-		}
+        }
 
         //Modificar Grupo
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo)
@@ -134,7 +137,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion 
+                        fecha_ultima_edicion = d.fecha_ultima_edicion
                     }
 
                 );
@@ -147,66 +150,86 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
         }
 
+        //
         public bool QuitarAsociacion(Guid grupoId)
         {
             var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
-           
-            if (listaDept != null) {
 
-                foreach (var item in listaDept) {
+            if (listaDept != null)
+            {
+
+                foreach (var item in listaDept)
+                {
                     item.id_grupo = null;
-					
-				}
-				_dataContext.SaveChanges();
-				return true;
-            
+
+                }
+                _dataContext.SaveChanges();
+                return true;
+
             }
             return false;
         }
 
-		//Retorna una lista de grupo que no están eliminados
-		public List<GrupoDto> ConsultarGrupoNoEliminado()
-		{
-			try
-			{
-				var lista = _dataContext.Grupos.Where(x => x.fecha_eliminacion == null).Select(
-					d => new GrupoDto
-					{
-						id = d.id,
-						nombre = d.nombre,
-						descripcion = d.descripcion,
-						fecha_creacion = d.fecha_creacion,
-						fecha_ultima_edicion = d.fecha_ultima_edicion,
-						fecha_eliminacion = d.fecha_eliminacion
+        //Retorna una lista de grupo que no están eliminados
+        public List<GrupoDto> ConsultarGrupoNoEliminado()
+        {
+            try
+            {
+                var lista = _dataContext.Grupos.Where(x => x.fecha_eliminacion == null).Select(
+                    d => new GrupoDto
+                    {
+                        id = d.id,
+                        nombre = d.nombre,
+                        descripcion = d.descripcion,
+                        fecha_creacion = d.fecha_creacion,
+                        fecha_ultima_edicion = d.fecha_ultima_edicion,
+                        fecha_eliminacion = d.fecha_eliminacion
 
-					}
-				);
+                    }
+                );
 
-				return lista.ToList();
+                return lista.ToList();
 
-			}
-			catch (Exception ex)
-			{
-				throw new ExceptionsControl("No hay grupos registrados", ex);
-			}
-		}
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No hay grupos registrados", ex);
+            }
+        }
 
-		private bool ExisteGrupo(Grupo grupo)
-		{
-			bool existe = false;
+        private bool ExisteGrupo(Grupo grupo)
+        {
+            bool existe = false;
 
-			try
-			{
-				var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre));
-				if (nuevoGrupo.Count() != 0)
-					existe = true;
-			}
-			catch (Exception ex)
-			{
-				throw new ExceptionsControl("El grupo" + grupo.nombre + "ya está registrado", ex);
-			}
-			return existe;
-		}
-	}
+            try
+            {
+                var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre));
+                if (nuevoGrupo.Count() != 0)
+                    existe = true;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("El grupo" + grupo.nombre + "ya está registrado", ex);
+            }
+            return existe;
+        }
+
+
+        //Retorna el ultimo registro almacenado
+        public GrupoDto UltimoGrupoRegistradoDao()
+        {
+            try
+            {
+                var grupo = _dataContext.Grupos.OrderBy(x => x.id).LastOrDefault();
+
+                return GrupoMapper.MapperEntityToDtoDefault(grupo);
+
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No hay grupo registrado", ex);
+            }
+        }
+    }
 }
 
