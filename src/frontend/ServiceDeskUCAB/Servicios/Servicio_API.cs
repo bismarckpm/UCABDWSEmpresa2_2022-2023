@@ -217,15 +217,16 @@ namespace ServiceDeskUCAB.Servicios
         {
             bool respuesta = false;
 
-        
-                /*if (tipo.tipo == "Modelo_No_Aprobacion")
-                {
-                tipo.flujo_Aprobacion = null;
 
-                }*/
+            /*if (tipo.tipo == "Modelo_No_Aprobacion")
+            {
+            tipo.flujo_Aprobacion = null;
 
+            }*/
 
-            
+            if (tipo.Departamento.Count() == 0) { tipo.Departamento = null; };
+
+            if (tipo.Flujo_Aprobacion.Count() == 0) { tipo.Flujo_Aprobacion = null; };
 
             var cliente = new HttpClient();
 

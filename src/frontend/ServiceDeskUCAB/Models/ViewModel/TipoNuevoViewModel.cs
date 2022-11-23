@@ -13,5 +13,7 @@ namespace ServiceDeskUCAB.Models.ViewModel
 
         public List<TipoCargo> ListaCargos { get; set; }
 
+        public Tipo tipoActualizar { get; set; }
+
     }
 }

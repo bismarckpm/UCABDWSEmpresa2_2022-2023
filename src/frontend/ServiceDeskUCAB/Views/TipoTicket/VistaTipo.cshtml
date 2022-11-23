@@ -2,6 +2,7 @@
 
 
 
+
 <div class="row">
     <div class="col-8">
         <h1 id="ti">Gestionar Tipo Ticket</h1>
@@ -10,6 +11,14 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar Tipo Ticket</button>
     </div>
 </div>
+
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <div class="alert alert-success d-none" role="alert">
     "Algun mensaje de confirmación luego de hacer una acción"
@@ -115,7 +124,7 @@
                             <h6>Registro Modelo Aprobacion:</h6>
                             <label class="form-label">Tipo Modelo Aprobación:</label>
 
-                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" required="required" onChange="mostrarPremio(this.value);">
+                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" required="required" onChange="mostrarPremio(this.value)">
                                 <option value="" selected disabled>-- Seleccionar --</option>
                                 <option value="Modelo_Paralelo">Modelo_Paralelo</option>
                                 <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
@@ -129,7 +138,7 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch" >
-                                            <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 40px">
+                                            <input name="cargos2" class="form-check-input" value="mj-@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 40px">
                                             <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
                                             <br />
                                         </div>
@@ -151,7 +160,7 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch">
-                                            <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 40px">
+                                            <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 40px">
                                             <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
                                             <br />
 
@@ -205,10 +214,23 @@
 </div>
 
 <script type="text/javascript">
-    function mostrarPremio(id) {
-        if (id == "Modelo_Jerarquico") {
+    
+    
+    
+
+    function mostrarPremio(id) 
+    {
+        let model = JSON.parse('@Model.ListaCargos.Select(x=>x.Id).ToList()');
+
+        if (id == "Modelo_Jerarquico") 
+        {
             document.getElementById('Modelo_Jerarquico').style.display = 'block';
             document.getElementById('Modelo_Paralelo').style.display = 'none';
+            @*console.log("Afuera");
+            for (var i = 0; i < model.length; i++) {
+                console.log(model[i]);
+                document.getElementById("mp-" + model[i]).checked = 'false';
+            }*@
             document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
         }
 
@@ -223,11 +245,10 @@
             document.getElementById('Modelo_Jerarquico').style.display = 'none';
             document.getElementById('Modelo_Paralelo').style.display = 'none';
         }
-
-
     }
 
-    function OcultarCampos(cb, id) {
+    function OcultarCampos(cb, id) 
+    {
         if (cb.checked == true) {
             document.getElementById(id).style.display = 'block';
             const hijos = document.getElementById(id).children;
@@ -240,14 +261,11 @@
             
             const hijos = document.getElementById(id).children;
             hijos[0].removeAttribute('required');
-            hijos[0].setAttribute('ValueText','');
-            hijos[0].setAttribute('ValueNow','');
+            hijos[0].value = '';
             hijos[1].removeAttribute('required');
-            hijos[1].setAttribute('ValueText', '');
-            hijos[1].setAttribute('ValueNow','');
+            hijos[1].value = '';
             hijos[2].removeAttribute('required');
-            hijos[2].setAttribute('ValueText', ''); 
-            hijos[2].setAttribute('ValueNow','');
+            hijos[2].value = '';
             document.getElementById(id).style.display = 'none';
         }
 
@@ -257,7 +275,6 @@
         
        
         if (select.value == "Modelo_Jerarquico") {
-            console.log("Hola2");
             document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'block';
             document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
             document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
@@ -283,6 +300,7 @@
             document.getElementById(cb.id+"-"+id).style.display = 'block';
             const hijos = document.getElementById(id).children;
             hijos[0].required = 'true';
+            hijos[0].nodeValue ='';
             hijos[1].required = 'true';
             hijos[2].required = 'true';
         }
@@ -319,18 +337,18 @@
 
                         <div class="mb-3" style="display: none;">
                             <label for="recipient-name" class="col-form-label">Id:</label>
-                            <input required type="text" asp-for="tipo.Id" value="@tipo.Id" name="id" />
+                            <input required type="text" asp-for="tipoActualizar.Id" value="@tipo.Id" name="id" />
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nombre:</label>
-                            <input required type="text" asp-for="tipo.nombre" value= "@tipo.nombre" name="nombre" />
+                            <input required type="text" asp-for="tipoActualizar.nombre" value="@tipo.nombre" name="nombre" />
 
 
                         </div>
 
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Descripción:</label>
-                            <input required type="text" asp-for="tipo.descripcion" value="@tipo.descripcion" name="descripcion" />
+                            <input required type="text" asp-for="tipoActualizar.descripcion" value="@tipo.descripcion" name="descripcion" />
                         </div>
 
                         <div class="container p-2 my-2 border">
@@ -338,8 +356,8 @@
                                 <h6>Registro Modelo Aprobacion:</h6>
                                 <label class="form-label">Tipo Modelo Aprobación:</label>
 
-                                <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                    <option value="@tipo.tipo" selected disabled>@tipo.tipo</option>
+                                <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
+                                    <option value="@tipo.tipo">@tipo.tipo</option>
                                     <option value="Modelo_Paralelo">Modelo_Paralelo</option>
                                     <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
                                     <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
@@ -352,9 +370,6 @@
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                
-                                                
-                                                
                                                  @if(tipo.Flujo_Aprobacion.Select(x=>x.Tipo_Cargo.Id).ToList().Contains(cargos2.Id))
                                                  {
                                                     <div class="form-check form-switch">
@@ -439,11 +454,11 @@
 
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required type="text" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input required type="text" asp-for="tipo.Minimo_Aprobado" value="@tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required type="text" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input required type="text" asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
                                 } else {
@@ -492,7 +507,6 @@
                                     <label class="form-label">Departamentos Asociados:</label>
                                     @foreach (var departamentos in Model.ListaDepartamento)
                                     {
-
                                         <br>
 
                                         <div class="form-check form-switch">

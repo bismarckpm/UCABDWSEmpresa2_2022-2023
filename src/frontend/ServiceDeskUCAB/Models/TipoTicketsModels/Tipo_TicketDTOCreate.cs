@@ -15,9 +15,9 @@ namespace ServiceDeskUCAB.Models.TipoTicketsModels
 
         public string tipo { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public List<FlujoAprobacionDTOCreate> Flujo_Aprobacion { get; set; }
+        public List<FlujoAprobacionDTOCreate>? Flujo_Aprobacion { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Departamento { get; set; }
+        public List<string>? Departamento { get; set; }
         public int? Minimo_Aprobado { get; set; }
         public int? Maximo_Rechazado { get; set; }
     }

@@ -28,6 +28,7 @@ namespace ServiceDeskUCAB.Controllers
 
             tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
             tipoNuevoViewModel.tipo = new Tipo();
+            tipoNuevoViewModel.tipoActualizar = new Tipo();
             tipoNuevoViewModel.tipoCargoNuevo = new();
             tipoNuevoViewModel.ListaDepartamento = await _servicioApi.ListaDepa();
             tipoNuevoViewModel.ListaCargos = await _servicioApi.ListaCargos();
@@ -46,18 +47,18 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ActualizarCambios (Tipo tipoTicket, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel)
+        public async Task<IActionResult> ActualizarCambios (Tipo tipo,string tipot, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel)
         {
             ApplicationResponse<Tipo_TicketDTOUpdate> respuesta;
 
             var TipoTicketDTO = new Tipo_TicketDTOUpdate();
-            TipoTicketDTO.Id = tipoTicket.Id;
+            TipoTicketDTO.Id = tipo.Id;
             TipoTicketDTO.Departamento = departamentos;
-            TipoTicketDTO.nombre = tipoTicket.nombre;
-            TipoTicketDTO.Minimo_Aprobado = tipoTicket.Minimo_Aprobado;
-            TipoTicketDTO.Maximo_Rechazado = tipoTicket.Maximo_Rechazado;
-            TipoTicketDTO.descripcion = tipoTicket.descripcion;
-            TipoTicketDTO.tipo = tipoTicket.tipo;
+            TipoTicketDTO.nombre = tipo.nombre;
+            TipoTicketDTO.tipo = tipot;
+            TipoTicketDTO.Minimo_Aprobado = tipo.Minimo_Aprobado;
+            TipoTicketDTO.Maximo_Rechazado = tipo.Maximo_Rechazado;
+            TipoTicketDTO.descripcion = tipo.descripcion;
             TipoTicketDTO.Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate>();
             var ListaCargos = await _servicioApi.ListaCargos();
 
@@ -96,21 +97,21 @@ namespace ServiceDeskUCAB.Controllers
             }
             respuesta = await _servicioApi.Actualizar(TipoTicketDTO);
 
-            if (respuesta != null)
+            if(respuesta != null)
             {
                 if (respuesta.Success)
                 {
-                    return RedirectToAction("VistaTipo");
+                    return RedirectToAction("VistaTipo", new { message = "El tipo Ticket fue agregado satisfactoriamente" });
                 }
                 else
                 {
-                    ViewBag.Error = respuesta.Message;
-                    return NoContent();
+                    return RedirectToAction("VistaTipo", new { message = respuesta.Message });
                 }
             }
 
+
             else
-                return NoContent();
+                return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
         }
 
         [HttpPost]
@@ -165,18 +166,18 @@ namespace ServiceDeskUCAB.Controllers
 
             if (respuesta != null)
             {
-                if (respuesta.Success)
+                if(respuesta.Success)
                 {
-                    return RedirectToAction("VistaTipo");
-                } else
-                {
-                    return NoContent();
-                    //return RedirectToAction("agregarModal", new { message = (string)respuesta.Message});
+                   return RedirectToAction("VistaTipo", new { message = "El tipo Ticket fue agregado satisfactoriamente" });
                 }
+                else
+                 {
+                   return RedirectToAction("VistaTipo", new { message = respuesta.Exception });
+                 }
             }
                 
             else
-                return NoContent();
+                return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
 
         }
         public async Task<IActionResult> Eliminar(Guid id)
