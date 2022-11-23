@@ -11,7 +11,6 @@ using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace ServicesDeskUCABWS.Controllers
    
     public class UsuarioController : ControllerBase
     {
-        private readonly DataContext _dataContext;
+
         private readonly IUsuarioDAO _usuarioDAO;
         private readonly IUserLoginDAO _userLoginDAO;
         private readonly ILogger<UsuarioController> _log;
@@ -34,7 +33,6 @@ namespace ServicesDeskUCABWS.Controllers
         {
             _usuarioDAO = usuarioDao;
             _log = log;
-            _dataContext = dataContext;
             _userLoginDAO = userLogin; 
         }
 

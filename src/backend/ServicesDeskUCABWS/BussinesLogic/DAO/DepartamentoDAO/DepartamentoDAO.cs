@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
 using ServicesDeskUCABWS.Data;
@@ -18,22 +19,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
     public class DepartamentoDAO : IDepartamentoDAO
     {
         private readonly DataContext _dataContext;
+        private readonly IGrupoDAO _servicioGrupo;
 
         //Constructor
-        public DepartamentoDAO(DataContext dataContext)
+        public DepartamentoDAO(DataContext dataContext, IGrupoDAO servicioGrupo)
         {
             _dataContext = dataContext;
+            _servicioGrupo = servicioGrupo;
         }
 
-        //Registrar un Departamento
-        public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento)
+		//Registrar un Departamento
+		public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento)
         {
             try
             {
 
                 if (ExisteDepartamento(departamento) == false)
                 {
-
                     _dataContext.Departamentos.Add(departamento);
                     _dataContext.SaveChanges();          
                 }
@@ -168,7 +170,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos registrados", ex);
+				throw new ExceptionsControl("No hay departamentos eliminados", ex);
 			}
 		}
 
@@ -195,26 +197,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+        public List<string> AsignarGrupoToDepartamento(Guid id,string idDept)
         {
+
             try
             {
-                Departamento result = (from dept in _dataContext.Departamentos
-                                       where dept.id == idDept
-                                       select dept).SingleOrDefault();
+				List<string> listaDept = idDept.Split(',').ToList();
 
-                if (result is not null)
+
+                foreach (var dept in listaDept)
                 {
-                    result.id_grupo = idGrupo;
-                    _dataContext.SaveChanges();
-                }
 
-                return result;
+					var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
+                    nuevoDepartamento.id_grupo = id;
+					_dataContext.SaveChanges();
+
+				}
+
+                return listaDept;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new ExceptionsControl("Fallo al asignar grupo: " + idGrupo + "al departamento" + idDept, ex);
+                throw new ExceptionsControl("Fallo al asignar grupo", ex);
             }
         }
 	
@@ -234,11 +238,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             return existe;
 		}
 
+        //Retorna una lista de departamentos que no están asociados a un grupo
         public List<DepartamentoDto> NoAsociado()
         {
 			try
 			{
-				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null).Select(
+				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion == null).Select(
 					d => new DepartamentoDto
 					{
 						id = d.id,
@@ -253,28 +258,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos registrados", ex);
+				throw new ExceptionsControl("No hay departamentos asociados", ex);
 			}
 		}
-
-		public IEnumerable<SelectListItem> ListaDepartamentoGrupo()
-        {
-			IEnumerable<SelectListItem> listaDept;
-            try
-            {
-				listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion == null)
-	                .Select(x => new SelectListItem
-	                   {    
-		                    Text = x.nombre,
-		                    Value = Convert.ToString(x.id)
-	                    }).ToList();
-
-			}
-            catch (Exception ex)
-            {
-				throw new ExceptionsControl("Algo salio mal", ex);
-			}
-			return listaDept;
-        }
     }
 }
