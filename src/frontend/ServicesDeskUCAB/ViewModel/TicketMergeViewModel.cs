@@ -6,7 +6,7 @@ namespace ServicesDeskUCAB.ViewModel
 {
 	public class TicketMergeViewModel
     {
-		public Ticket ticket;
+		public TicketInfoCompleta ticket;
 
 		public List<Ticket> tickets;
 

@@ -18,7 +18,7 @@ namespace ServicesDeskUCAB.Controllers
         //private readonly IServicioTipoTicketAPI _servicioTipoTicketAPI;
         //private readonly IServicioDepartamento _servicioDepartamentoAPI;
 
-        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI,IServicioTicketAPI servicioTicketAPI/*, IServicioTipoTicketAPI servicioTipoTicketAPI, IServicioDepartamento servicioDepartamento*/)
+        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI, IServicioTicketAPI servicioTicketAPI/*, IServicioTipoTicketAPI servicioTipoTicketAPI, IServicioDepartamento servicioDepartamento*/)
         {
             _servicioTicketAPI = servicioTicketAPI;
             //_servicioTipoTicketAPI = servicioTipoTicketAPI;
@@ -36,14 +36,24 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Ticket(string ticketPadreId = "")
         {
+            Departamento depa= new Departamento();
+            depa.DepartamentoID = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87");
+            depa.Nombre = "Almacen";
+
+            Tipo_Ticket tipoTi = new Tipo_Ticket();
+            tipoTi.TipoTicketID = new Guid("172CE21D-B7DC-4537-9901-E0A29753644F");
+            tipoTi.Nombre = "Solicitud";
+
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
-                ticket = new Ticket(),
+                ticket = new CrearTicket(),
                 prioridades = await _servicioPrioridadAPI.Lista(),
                 departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
                 tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
                 ticketPadre = await _servicioTicketAPI.Obtener(ticketPadreId)
             };
+            ticketNuevoViewModel.departamentos.Add(depa);
+            ticketNuevoViewModel.tipo_tickets.Add(tipoTi);
             return View(ticketNuevoViewModel);
         }
 
@@ -73,26 +83,14 @@ namespace ServicesDeskUCAB.Controllers
             return View(ticketDetailsViewModel);
         }
 
-        public async Task<IActionResult> Reenviar(string ticketId)
-        {
-            TicketReenviarViewModel ticketReenviarViewModel = new TicketReenviarViewModel()
-            {
-                ticketPadre = await _servicioTicketAPI.Obtener(ticketId),
-                ticketHijo = new Ticket(),
-                prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
-                departamentos = new List<Departamento>(), //await _servicioDepartamentoAPI(),
-                tipo_tickets = new List<Tipo_Ticket>(), //await _servicioTipoTicketAPI()
-            };
-            return View(ticketReenviarViewModel);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> GuardarTicket(Ticket ticket)
+        public async Task<IActionResult> GuardarTicket(CrearTicket ticket)
         {
+            ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
             JObject respuesta;
             try
             {
-                if (ticket.Ticket_Padre == null)
+                if (ticket.ticketPadre_Id == Guid.Empty)
                 {
                     respuesta = await _servicioTicketAPI.Guardar(ticket);
                     Console.WriteLine(respuesta.ToString());
@@ -108,6 +106,9 @@ namespace ServicesDeskUCAB.Controllers
                         return RedirectToAction("Ticket",(new { message = (string)respuesta["message"] }));
                     }
                 }
+
+                // Falta ticket reenviado
+                /*
                 else
                 {
                     respuesta = null;// await _servicioTicketAPI.Editar(Ticket);
@@ -120,6 +121,7 @@ namespace ServicesDeskUCAB.Controllers
                         return RedirectToAction("Prioridad", new { message = (string)respuesta["message"] });
                     }
                 }
+                */
             }
             catch (Exception ex)
             {

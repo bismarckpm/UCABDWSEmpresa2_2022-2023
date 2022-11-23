@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCAB.Servicios
 {
-    public interface IServicioTicketAPI
-    {
-        Task<Ticket> Obtener(string ticketId);
+	public interface IServicioTicketAPI
+	{
+        Task<TicketInfoCompleta> Obtener(string ticketId);
 
         Task<List<Ticket>> FamiliaTicket(string ticketId);
 
@@ -16,15 +16,11 @@ namespace ServicesDeskUCAB.Servicios
 
         Task<List<Ticket>> Lista(string departamentoId, string opcion);
 
-        Task<JObject> Guardar(Ticket ticket);
-
-
-
+        Task<JObject> Guardar(CrearTicket Objeto);
 
         //Task<JObject> Editar();
 
         //Task<JObject> Merge(string ticketId, List<String> familiaId);
-
     }
 }
 

@@ -5,7 +5,7 @@ namespace ServicesDeskUCAB.Models
 {
     public class Departamento
     {
-        public int DepartamentoID { get; set; }
+        public Guid DepartamentoID { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int GrupoID { get; set; }

@@ -19,7 +19,7 @@ namespace ServicesDeskUCAB.Models
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        public DateTime fecha_eliminacion { get; set; }
+        public DateTime? fecha_eliminacion { get; set; }
 
         [Required]
         public Departamento Departamento_Destino { get; set; }

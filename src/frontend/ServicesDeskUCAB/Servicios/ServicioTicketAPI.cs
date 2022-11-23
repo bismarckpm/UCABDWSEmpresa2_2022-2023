@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCAB.Servicios
 {
-    public struct ServicioTicketAPI : IServicioTicketAPI
-    {
+	public class ServicioTicketAPI : IServicioTicketAPI
+	{
         private static string _baseUrl;
 
         public ServicioTicketAPI()
@@ -24,9 +23,9 @@ namespace ServicesDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
-        public async Task<Ticket> Obtener(string ticketId)
+        public async Task<TicketInfoCompleta> Obtener(string ticketId)
         {
-            Ticket objeto = new Ticket();
+            TicketInfoCompleta objeto = new TicketInfoCompleta();
             try
             {
                 var cliente = new HttpClient();
@@ -37,7 +36,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<Ticket>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<TicketInfoCompleta>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine("Obtiene el ticket");
                 }
@@ -145,7 +144,7 @@ namespace ServicesDeskUCAB.Servicios
         }
 
         [HttpPost]
-        public async Task<JObject> Guardar(Ticket Objeto)
+        public async Task<JObject> Guardar(CrearTicket Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
@@ -169,6 +168,31 @@ namespace ServicesDeskUCAB.Servicios
             return null;
         }
 
+        /*
+       [HttpPost]
+       public async Task<JObject> Reenviar(string ticketId)
+       {
+           var cliente = new HttpClient();
+           cliente.BaseAddress = new Uri(_baseUrl);
+           var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+           try
+           {
+               var response = await cliente.PostAsync($"Ticket/Reenviar/{ticketId}", content);
+               var respuesta = await response.Content.ReadAsStringAsync();
+               JObject _json_respuesta = JObject.Parse(respuesta);
+               return _json_respuesta;
+           }
+           catch (HttpRequestException ex)
+           {
+               Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+           }
+           catch (Exception e)
+           {
+               Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+           }
+           return null;
+       }*/
 
         /*
         public async Task<JObject> Editar(Ticket Objeto)
@@ -224,10 +248,6 @@ namespace ServicesDeskUCAB.Servicios
             }
             return respuesta;
         }*/
-
-
-
-
     }
 }
 
