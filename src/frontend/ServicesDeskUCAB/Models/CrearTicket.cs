@@ -11,7 +11,6 @@ namespace ServicesDeskUCAB.Models
         public Guid prioridad_id { get; set; } 
         public Guid tipoTicket_id { get; set; }
         public Guid departamentoDestino_Id { get; set; }
-        public Guid ticketPadre_Id { get; set; }
     }
 }
 
