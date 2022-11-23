@@ -11,6 +11,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
     public class ServicioGrupo_API : IServicioGrupo_API
     {
+		
 		//Declaracion de variables
 		private static string _baseUrl;
 		private JObject _json_respuesta;

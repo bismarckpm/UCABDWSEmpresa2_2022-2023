@@ -11,7 +11,6 @@ namespace ServicesDeskUCABWS.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [MaxLength(150)]
         [MinLength(3)]
         public string nombre { get; set; } = string.Empty;
         [Required]
@@ -34,8 +33,8 @@ namespace ServicesDeskUCABWS.Entities
             Id = Guid.NewGuid();
             this.nombre = nombre;
             this.descripcion = descripcion;
-            fecha_creacion = DateTime.UtcNow;
-            fecha_ultima_edic = DateTime.UtcNow;
+            this.fecha_creacion = DateTime.UtcNow;
+            this.fecha_ultima_edic = DateTime.UtcNow;
             //this.Estado_Padre = estado_Padre;
         }
 

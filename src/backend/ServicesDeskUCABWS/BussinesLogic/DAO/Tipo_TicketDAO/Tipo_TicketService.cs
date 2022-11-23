@@ -153,7 +153,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             {
                 response.Success = false;
                 response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
             }
 
             return response;

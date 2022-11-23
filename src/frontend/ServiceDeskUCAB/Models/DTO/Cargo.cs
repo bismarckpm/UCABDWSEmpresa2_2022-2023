@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 
-namespace ServicesDeskUCABWS.Models.DTO
+namespace ServiceDeskUCAB.Models.DTO
 {
     public class Cargo
     {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
@@ -40,6 +41,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<Tipo_Ticket, Tipo_TicketDTOSearch>();
             CreateMap<Tipo_TicketDTOSearch, Tipo_Ticket>();
 
+            CreateMap<Estado, EstadoDTOSearch>();
+            CreateMap<Estado, EstadoDTOUpdate>();
 
         }
     }

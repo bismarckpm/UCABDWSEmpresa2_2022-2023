@@ -6,6 +6,7 @@ using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
+using ServiceDeskUCAB.ViewModel.EstadoDepartamento;
 using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
@@ -25,8 +26,11 @@ namespace ServiceDeskUCAB.Controllers
 			_servicioApiDepartamento = servicioApiDepartamento;
 		}
 
-		//Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
-		public async Task<IActionResult> DepartamentoGrupo()
+
+        
+
+        //Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
+        public async Task<IActionResult> DepartamentoGrupo()
 		{
 			var tupla = new Tuple<List<DepartamentoDto>, List<GrupoDto>>(null,null);
 			tupla = await _servicioApiDepartamento.ListaDepartamentoGrupo();
@@ -192,5 +196,8 @@ namespace ServiceDeskUCAB.Controllers
             return RedirectToAction("DepartamentoGrupo");	
 			
 		}
+
+
+
 	}
 }

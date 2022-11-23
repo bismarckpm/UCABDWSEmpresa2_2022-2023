@@ -2,6 +2,8 @@ using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceDeskUCAB.Servicios.DepartamentoEstado;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantilla
 builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();
 
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
+
+builder.Services.AddScoped<IServicioDepartamentoEstado, ServicioDepartamentoEstado>();
 
 var app = builder.Build();
 
