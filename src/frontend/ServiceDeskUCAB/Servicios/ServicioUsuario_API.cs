@@ -254,6 +254,10 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
         }
 
+        public Task<JObject> ValidarLogin(Credenciales_Login user)
+        {
 
+            throw new NotImplementedException();
+        }
     }
 }

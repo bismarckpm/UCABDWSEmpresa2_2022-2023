@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Servicios;
+using System.Security.Claims;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -25,6 +28,31 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> ValidarCredenciales(Credenciales_Login usuario)
+        {
+            JObject respuesta;
+
+            try
+            {
+                respuesta = await _servicioApiUsuarios.ValidarLogin(usuario);
+
+                if ((bool)respuesta["success"])
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Login", new { message = (string)respuesta["message"] });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
+            [HttpPost]
         public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 
