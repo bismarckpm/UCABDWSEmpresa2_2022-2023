@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -18,20 +20,24 @@ namespace ServicesDeskUCABWS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   
     public class UsuarioController : ControllerBase
     {
-        private readonly DataContext _dataContext;
+
         private readonly IUsuarioDAO _usuarioDAO;
+        private readonly IUserLoginDAO _userLoginDAO;
         private readonly ILogger<UsuarioController> _log;
 
 
-        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, DataContext dataContext)
+        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, IUserLoginDAO userLogin)
         {
             _usuarioDAO = usuarioDao;
             _log = log;
-            _dataContext = dataContext;
+            _userLoginDAO = userLogin; 
         }
 
+
+      
         [HttpGet]
         public ApplicationResponse<List<Usuario>> ConsultarUsuarios()
         {
@@ -69,6 +75,7 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
         [HttpPost]
+        [Authorize]
         [Route("CrearCliente/")]
         public ApplicationResponse<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
         {
@@ -162,6 +169,7 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPut]
+   
         [Route("ActualizarUsuario/")]
         public ApplicationResponse<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
         {
@@ -199,6 +207,23 @@ namespace ServicesDeskUCABWS.Controllers
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
+        }
+
+        [HttpPost]
+        [Route("login/")]
+        public ActionResult<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
+        {
+            try
+            {
+         
+                  return _userLoginDAO.UserLogin(usuario);
+            }
+            catch (Exception e )
+            {
+                Console.WriteLine(e.Message);
+
+                throw;
+            }
         }
     }
 }
