@@ -11,12 +11,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
     {
         public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id);
-        //public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTickets(Guid departamento, string opcion);
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado);
-        /*public string anadirALaBitacora(TicketDTO ticketDTO);
-        public string crearFamiliaTickets(TicketDTO ticketA, TicketDTO ticketB);
-        public List<TicketInfoCompletaDTO> obtenerFamiliaTickets(Guid ticketId);
-        public string mergeTickets(TicketDTO ticketPrincipal, List<TicketDTO> tickets);
+        public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId);
+        public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId);
+        public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId);
+        /*public List<TicketInfoCompletaDTO> obtenerFamiliaTickets(Guid ticketId);
         public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHjo);*/
     }
 }

@@ -10,6 +10,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -126,8 +127,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //return "Ticket creado satisfactoriamente";
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.validarDepartamento(idDepartamento);
-                //respuesta.Data = _helper.rellenarTicketInfoCompleta(id);
-                respuesta.Message = "Ticket creado satisfactoriamente";
+                respuesta.Data = _helper.rellenarTicketInfoBasica(idDepartamento, estado);
+                respuesta.Message = "Proceso de búsqueda exitoso";
                 respuesta.Success = true;
             } catch (TicketDepartamentoException e)
             {
@@ -142,21 +143,62 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-        /*public string anadirALaBitacora(TicketDTO ticketDTO)
+
+        public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId)
         {
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
             try
             {
-                ticketDTO.Bitacora_Tickets.Add(_helper.crearNuevaBitacora(ticketDTO));//CORRECTO
-                _dataContext.DbContext.Update(_dataContext.Tickets.Update(_mapper.Map<Ticket>(ticketDTO)));
-                _dataContext.DbContext.SaveChangesAsync();
-                return "Bitacora añadida satisfactoriamente";
+                _helper.modificarEstadoTicket(ticketId, estadoId);
+                respuesta.Data = "Estado del ticket modificado exitosamente";
+                respuesta.Message = "Estado del ticket cambiado satisfactoriamente";
+                respuesta.Success = true;
             }
-            catch (Exception exception)
+            catch (TicketException e)
             {
-                throw new Exception("No se puede añadir a la bitacora");
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
             }
+            return respuesta;
         }
-        public string crearFamiliaTickets(TicketDTO ticketA, TicketDTO ticketB)
+
+        public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId)
+        {
+            ApplicationResponse<List<TicketBitacorasDTO>> respuesta = new ApplicationResponse<List<TicketBitacorasDTO>>();
+            try
+            {
+                respuesta.Data = _helper.obtenerBitacoras(ticketId);
+                respuesta.Message = "Búsqueda de bitácora exitosa";
+                respuesta.Success = true;
+            }
+            catch (TicketException e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<string> mergeTickets(Guid ticketId, List<Guid> ticketsSecundariosId)
+        {
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
+            try
+            {
+                //respuesta.Data = _helper.obtenerBitacoras(ticketId);
+                respuesta.Message = "Búsqueda de bitácora exitosa";
+                respuesta.Success = true;
+            }
+            catch (TicketException e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            return respuesta;
+        }
+
+        /*public string crearFamiliaTickets(TicketDTO ticketA, TicketDTO ticketB)
         {
             try
             {
@@ -190,6 +232,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 throw new Exception("No se pudo obtener la familia de tickets");
             }
+<<<<<<< HEAD
             
             return null;
         }*/
@@ -220,6 +263,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("No se pudo hacer Merge de los tickets");
             }
         }
+
+
         public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHijo)
         {
             try

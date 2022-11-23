@@ -1,8 +1,10 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
@@ -19,9 +21,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             validarTitulo(nuevoTicket.titulo);
             validarDescripcion(nuevoTicket.descripcion);
             validarPrioridad(nuevoTicket.prioridad_id);
+            validarEmisor(nuevoTicket.empleado_id);
             validarTipoTicket(nuevoTicket.tipoTicket_id);
             validarDepartamento(nuevoTicket.departamentoDestino_Id);
-            //validarEmisor(nuevoTicket.empleado_id);
         }
         public void validarTicket(Guid? id)
         {
@@ -90,7 +92,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))
                 throw new TicketEmisorException("El identificador del ticket emisor no fué provisto");
-            IQueryable<Empleado> emisor = _dataContext.Empleados.Where(empleado => empleado.Id == id);
+            IQueryable<Empleado> emisor = _dataContext.Empleados.Where( usu=> usu.Id == id);
             if (!emisor.Any())
                 throw new TicketEmisorException("El emisor indicado no se encuentra registrado en la Base de Datos");
         }

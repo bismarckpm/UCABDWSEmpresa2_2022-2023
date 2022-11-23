@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Text.Json.Serialization;
 
@@ -35,7 +36,7 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IDataContext, DataContext>();
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
-
+            
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
 			{
