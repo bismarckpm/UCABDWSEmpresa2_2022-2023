@@ -6,7 +6,6 @@ using Moq;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
@@ -44,11 +43,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
 
             //_mockContext.Tipos_Estados.AddRange(ListaTipoEstados);
-            _mockContext.Setup(c => c.Tipo_Estados).Returns(ListaTipoEstados.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Tipo_Estados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoEstados.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
-            _mockContext.Setup(set => set.Tipo_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
-            _mockContext.Setup(set => set.Tipo_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
-            _mockContext.Setup(set => set.Tipo_Estados.Update(It.IsAny<Tipo_Estado>()));
+            _mockContext.Setup(c => c.Tipos_Estados).Returns(ListaTipoEstados.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Tipos_Estados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoEstados.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Tipos_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
+            _mockContext.Setup(set => set.Tipos_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
+            _mockContext.Setup(set => set.Tipos_Estados.Update(It.IsAny<Tipo_Estado>()));
             //_mockContext.Setup(set => set.Tipo_Estados.ToList().Contains(It.IsAny<object>())).Returns((object input) => ListaTipoEstados.Contains(input));
             /*_mockContext.Setup(mr => mr.Tipo_Estados.Update(It.IsAny<Tipo_Estado >()))
                    .Callback((Tipo_Estado e) => {
@@ -63,7 +62,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             //_mockContext.Grupos.AddRange(ListaGrupo);
             _mockContext.Setup(c => c.Grupos).Returns(ListaGrupo.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Grupos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaGrupo.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Grupos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaGrupo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Grupos.Add(It.IsAny<Grupo>())).Callback<Grupo>(ListaGrupo.Add);
             _mockContext.Setup(set => set.Grupos.AddRange(It.IsAny<IEnumerable<Grupo>>())).Callback<IEnumerable<Grupo>>(ListaGrupo.AddRange);
 
@@ -71,19 +70,20 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             {
                 new Departamento("Departamento1", "Descripcion1")
                 {
-                    Id= new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
-                    Grupo=ListaGrupo[0]
+                    id= new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
+                    grupo=ListaGrupo[0],
+                    
                 },
                 new Departamento("Departamento2", "Descripcion2")
                 {
-                    Id= new Guid("19C117F4-9C2A-49B1-A633-969686E0B57E"),
-                    Grupo=ListaGrupo[0]
+                    id= new Guid("19C117F4-9C2A-49B1-A633-969686E0B57E"),
+                    grupo=ListaGrupo[0]
                 }
             };
 
             //_mockContext.Departamentos.AddRange(ListaDepartamento);
             _mockContext.Setup(c => c.Departamentos).Returns(ListaDepartamento.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Departamentos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaDepartamento.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Departamentos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaDepartamento.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Departamentos.Add(It.IsAny<Departamento>())).Callback<Departamento>(ListaDepartamento.Add);
             _mockContext.Setup(set => set.Departamentos.AddRange(It.IsAny<IEnumerable<Departamento>>())).Callback<IEnumerable<Departamento>>(ListaDepartamento.AddRange);
 
@@ -248,41 +248,41 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             var ListaUsuario = new List<Usuario>
             {
                 //Jefes D1
-                new Empleado(123456, "Jose", "Vargas", "Rojas", DateTime.Parse("20/12/1999"), 'M', "jmvargas@gmail.com", "1234", "Maria")
+                new Empleado(123456, "Jose", "Vargas", "Rojas", "20/12/1999", 'M', "jmvargas@gmail.com", "1234", "Maria")
                 {
 
                     Cargo=ListaCargo[0]
                 },
-                new Empleado(654321, "Jose2", "Vargas2", "Rojas2", DateTime.Parse("20/12/1999"), 'M', "jmvargas2@gmail.com", "1234", "Maria2")
+                new Empleado(654321, "Jose2", "Vargas2", "Rojas2", "20/12/1999", 'M', "jmvargas2@gmail.com", "1234", "Maria2")
                 {
                     Cargo=ListaCargo[0]
                 },
                 //Gerentes D1
-                new Empleado(12345, "Daniel", "Rojas", "Bonavista", DateTime.Parse("20/12/1999"), 'M', "drbonavista@gmail.com", "1234", "Jose")
+                new Empleado(12345, "Daniel", "Rojas", "Bonavista", "20/12/1999", 'M', "drbonavista@gmail.com", "1234", "Jose")
                 {
                     Id = Guid.Parse("C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A"),
                     Cargo=ListaCargo[1]
                 },
-                new Empleado(54321, "Daniel2", "Rojas2", "Bonavista2", DateTime.Parse("20/12/1999"), 'M', "drbonavista2@gmail.com", "1234", "Jose2")
+                new Empleado(54321, "Daniel2", "Rojas2", "Bonavista2", "20/12/1999", 'M', "drbonavista2@gmail.com", "1234", "Jose2")
                 {
                     Cargo=ListaCargo[1]
                 },
                 //Empleados D1
-                new Empleado(98765, "Adriana", "Guerrero", "Hugo", DateTime.Parse("20/12/1999"), 'M', "aghugo@gmail.com", "1234", "Valentina")
+                new Empleado(98765, "Adriana", "Guerrero", "Hugo", "20/12/1999", 'M', "aghugo@gmail.com", "1234", "Valentina")
                 {
                     Cargo=ListaCargo[2]
                 },
-                new Empleado(56789, "Adriana2", "Guerrero2", "Hugo2", DateTime.Parse("20/12/1999"), 'M', "aghugo2@gmail.com", "1234", "Valentina2")
+                new Empleado(56789, "Adriana2", "Guerrero2", "Hugo2", "20/12/1999", 'M', "aghugo2@gmail.com", "1234", "Valentina2")
                 {
                     Cargo=ListaCargo[2]
                 },
                 //Becarios D1
-                new Empleado(45678, "Jorge", "Perez", "Bosquejo", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
+                new Empleado(45678, "Jorge", "Perez", "Bosquejo", "20/12/1999", 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
                 {
                     Id = Guid.Parse("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
                     Cargo=ListaCargo[3]
                 },
-                new Empleado(87654, "Jorge2", "Perez2", "Bosquejo2", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo2@gmail.com", "1234", "Valentino2")
+                new Empleado(87654, "Jorge2", "Perez2", "Bosquejo2", "20/12/1999", 'M', "jpbosquejo2@gmail.com", "1234", "Valentino2")
                 {
                     Id= Guid.Parse("E40D0211-EA65-49BB-BAEE-E8A5F504F3B1"),
                     Cargo=ListaCargo[3]
@@ -299,41 +299,41 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             List<Empleado> ListaEmpleado = new List<Empleado>
             {
                 //Jefes D1
-                new Empleado(123456, "Jose", "Vargas", "Rojas", DateTime.Parse("20/12/1999"), 'M', "jmvargas@gmail.com", "1234", "Maria")
+                new Empleado(123456, "Jose", "Vargas", "Rojas", "20/12/1999", 'M', "jmvargas@gmail.com", "1234", "Maria")
                 {
 
                     Cargo=ListaCargo[0]
                 },
-                new Empleado(654321, "Jose2", "Vargas2", "Rojas2", DateTime.Parse("20/12/1999"), 'M', "jmvargas2@gmail.com", "1234", "Maria2")
+                new Empleado(654321, "Jose2", "Vargas2", "Rojas2", "20/12/1999", 'M', "jmvargas2@gmail.com", "1234", "Maria2")
                 {
                     Cargo=ListaCargo[0]
                 },
                 //Gerentes D1
-                new Empleado(12345, "Daniel", "Rojas", "Bonavista", DateTime.Parse("20/12/1999"), 'M', "drbonavista@gmail.com", "1234", "Jose")
+                new Empleado(12345, "Daniel", "Rojas", "Bonavista", "20/12/1999", 'M', "drbonavista@gmail.com", "1234", "Jose")
                 {
                     Id = Guid.Parse("C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A"),
                     Cargo=ListaCargo[1]
                 },
-                new Empleado(54321, "Daniel2", "Rojas2", "Bonavista2", DateTime.Parse("20/12/1999"), 'M', "drbonavista2@gmail.com", "1234", "Jose2")
+                new Empleado(54321, "Daniel2", "Rojas2", "Bonavista2", "20/12/1999", 'M', "drbonavista2@gmail.com", "1234", "Jose2")
                 {
                     Cargo=ListaCargo[1]
                 },
                 //Empleados D1
-                new Empleado(98765, "Adriana", "Guerrero", "Hugo", DateTime.Parse("20/12/1999"), 'M', "aghugo@gmail.com", "1234", "Valentina")
+                new Empleado(98765, "Adriana", "Guerrero", "Hugo", "20/12/1999", 'M', "aghugo@gmail.com", "1234", "Valentina")
                 {
                     Cargo=ListaCargo[2]
                 },
-                new Empleado(56789, "Adriana2", "Guerrero2", "Hugo2", DateTime.Parse("20/12/1999"), 'M', "aghugo2@gmail.com", "1234", "Valentina2")
+                new Empleado(56789, "Adriana2", "Guerrero2", "Hugo2", "20/12/1999", 'M', "aghugo2@gmail.com", "1234", "Valentina2")
                 {
                     Cargo=ListaCargo[2]
                 },
                 //Becarios D1
-                new Empleado(45678, "Jorge", "Perez", "Bosquejo", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
+                new Empleado(45678, "Jorge", "Perez", "Bosquejo", "20/12/1999", 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
                 {
                     Id = Guid.Parse("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
                     Cargo=ListaCargo[3]
                 },
-                new Empleado(87654, "Jorge2", "Perez2", "Bosquejo2", DateTime.Parse("20/12/1999"), 'M', "jpbosquejo2@gmail.com", "1234", "Valentino2")
+                new Empleado(87654, "Jorge2", "Perez2", "Bosquejo2", "20/12/1999", 'M', "jpbosquejo2@gmail.com", "1234", "Valentino2")
                 {
                     Id= Guid.Parse("E40D0211-EA65-49BB-BAEE-E8A5F504F3B1"),
                     Cargo=ListaCargo[3]

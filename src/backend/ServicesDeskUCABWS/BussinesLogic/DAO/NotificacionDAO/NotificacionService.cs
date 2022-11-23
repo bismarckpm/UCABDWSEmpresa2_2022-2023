@@ -38,15 +38,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 
             try
             {
-                if (ticket.empleado != null)
-                {
-                    etiquetasEstatico.Add("@Cargo", ticket.empleado.Cargo.nombre_departamental.ToString());
-                    etiquetasEstatico.Add("@Usuario", ticket.empleado.primer_nombre.ToString() + " " + ticket.empleado.primer_apellido.ToString());
-                }
+                /*if (ticket.Emisor != null)
+                {*/
+                    etiquetasEstatico.Add("@Cargo", ticket.Emisor.Cargo.nombre_departamental.ToString());
+                    etiquetasEstatico.Add("@Usuario", ticket.Emisor.primer_nombre.ToString() + " " + ticket.Emisor.primer_apellido.ToString());
+                /*}
                 else
                 {
                     etiquetasEstatico.Add("@Usuario", ticket.cliente.primer_nombre.ToString() + " " + ticket.cliente.primer_apellido.ToString());
-                }
+                }*/
 
                 etiquetasEstatico.Add("@Ticket", ticket.titulo.ToString());
                 if (ticket.Estado != null)

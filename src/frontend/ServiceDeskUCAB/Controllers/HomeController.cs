@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ViewModel;
+using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.Logging;
-using ModuloPlantillasNotificaciones.Models;
-using ModuloPlantillasNotificaciones.Servicios;
 using System.Diagnostics;
+using System.Dynamic;
 
-namespace ModuloPlantillasNotificaciones.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class HomeController : Controller
     {

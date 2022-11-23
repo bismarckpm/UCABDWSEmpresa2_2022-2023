@@ -350,4 +350,4 @@ MigrationBackup/
 .ionide/
 
 # Evita que  se actualize la cadena de conexion dentro del repositorio compartido
-appsettings.json
+appsettings.json                                                                                                                                                                         

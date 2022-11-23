@@ -1,7 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
 using System.Diagnostics.Contracts;
 using static ServicesDeskUCABWS.Entities.RolUsuario;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using ServicesDeskUCABWS.Entities;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 
 namespace ServicesDeskUCABWS.Data
@@ -14,6 +20,9 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
+            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
+
             modelBuilder.Entity<Usuario>().HasIndex(u=>u.correo).IsUnique();
 
             modelBuilder.Entity<Usuario>()
@@ -37,9 +46,18 @@ namespace ServicesDeskUCABWS.Data
 
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
+            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
+            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
         }
 
        
+
+        public DataContext()
+        {
+        }
+
+        
+        
 
         //Creacion de los DbSeT
 

@@ -1,4 +1,4 @@
-namespace ModuloPlantillasNotificaciones.Models
+namespace ServiceDeskUCAB.Models
 {
     public class ErrorViewModel
     {

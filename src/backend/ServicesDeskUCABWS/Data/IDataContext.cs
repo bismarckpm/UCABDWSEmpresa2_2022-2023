@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
 
+
 namespace ServicesDeskUCABWS.Data
 {
     public interface IDataContext
@@ -26,5 +27,10 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
+        
+
     }
 }
+
+
+

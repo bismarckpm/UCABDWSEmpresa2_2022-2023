@@ -2,19 +2,24 @@ using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
-using ModuloPlantillasNotificaciones.Servicios;
+using ServiceDeskUCAB.Servicios.DepartamentoEstado;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
+builder.Services.AddScoped<IServicio_API, Servicio_API>();
+
 
 builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
 builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantillaNotificacion_API>();
 builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();
 
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
+
+builder.Services.AddScoped<IServicioDepartamentoEstado, ServicioDepartamentoEstado>();
 
 var app = builder.Build();
 

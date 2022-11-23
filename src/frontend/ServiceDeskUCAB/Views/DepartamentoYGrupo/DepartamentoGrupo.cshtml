@@ -1,4 +1,4 @@
-﻿@model Tuple<List<ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO.DepartamentoDto>,List<ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO.GrupoDto>>
+﻿@model Tuple<List<ServiceDeskUCAB.Models.DTO.DepartamentoDTO.DepartamentoDto>,List<ServiceDeskUCAB.Models.DTO.GrupoDTO.GrupoDto>>
 
 <head>
     <link rel="stylesheet" href="~/css/Sidebar.css" />
@@ -134,94 +134,126 @@
 <div id="PlaceHolderModificarDepartamento"></div>
 
 
-<!-- Boton Agregar Departamento -->
-<button id=btnAgregarDepartamento type="button" class="btn btn-primary" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
-    Crear departamento
-</button>
 
+
+ <div class="contenedor">
+
+      <div class="arriba">
+
+          
+
+          <div class="area-boton">
+                <div class="titulo">
+                    <h1>Departamentos</h1>
+                </div>
+
+                <div class="agregar">
+                    <!-- Boton Agregar Departamento -->
+                    <button id=btnAgregarDepartamento class="boton" type="button" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
+                        Crear Departamento
+                    </button>
+                </div>               
+          </div>
+           
+
+            <!-- Tabla Departamentos -->
+            <table class="table">
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Descripcion
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                @foreach (var item in Model.Item1)
+                {
+                    <tr>
+                        <td class="id" style="display:none" ;>
+                            @Html.DisplayFor(i => item.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(i => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(i => item.descripcion)
+                        </td>
+                        <td>
+                            <button id=btnEditar type="button" class="botonEditar" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
+                                Editar
+                            </button>
+                            <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
+                                Eliminar
+                            </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+      </div>
+       
+  
     
+      <div class="abajo">
 
-<!-- Tabla Departamentos -->
-<table class="table">
-    <tr>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Descripcion
-        </th>
-        <th>
-            
-        </th>
-    </tr>
+        <div class="area-boton">
 
-@foreach (var item in Model.Item1)
-{
-    <tr>
-        <td class="id" style="display:none" ;>
-            @Html.DisplayFor(i => item.id)
-        </td>
-        <td>
-            @Html.DisplayFor(i => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(i => item.descripcion)
-        </td>
-        <td>
-            <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
-                Editar
-            </button>
-            <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
-                Eliminar
-            </button>
-        </td>
-    </tr>
-}
-
-</table>
-
-<!-- Boton Agregar Grupo -->
-<button id=btnAgregarGrupo type="button" class="btn btn-primary" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("AgregarGrupo")">
-    Crear Grupo
-</button>
-
-<!-- Tabla Grupos -->
-<table class="table">
-    <tr>
-        <th>
-            Nombre
-        </th>
-        <th>
-            Descripcion
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model.Item2)
-    {
-        <tr>
-            <td class="id" style="display:none" ;>
-                @Html.DisplayFor(i => item.id)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.descripcion)
-            </td>
-            <td>
-                <button id=btnVisualizar type="button" class="btn btn-success btn-sm" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","DepartamentoYGrupo",new { id = "idGrupo"})">
-                    Visualizar
+            <div class="titulo">
+                <h1>Grupos</h1>
+            </div>
+        
+            <div class="agregar">
+                <!-- Boton Agregar Grupo -->
+                <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("AgregarGrupo")">
+                    Crear Grupo
                 </button>
-                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
-                    Editar
-                </button>
-                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
-                    Eliminar
-                </button>
-            </td>
-        </tr>
-    }
-</table>
+            </div>
+        </div>
+        <!-- Tabla Grupos -->
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripcion
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+                    <td class="id" style="display:none" ;>
+                        @Html.DisplayFor(i => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <button id=btnVisualizar type="button" class="botonVisualizar" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","DepartamentoYGrupo",new { id = "idGrupo"})">
+                            Visualizar
+                        </button>
+                        <button id=btnEditar type="button" class="botonEditar" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
+                            Editar
+                        </button>
+                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+      </div>
+       
+</div>

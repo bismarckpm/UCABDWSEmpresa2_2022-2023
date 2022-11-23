@@ -24,7 +24,22 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
 
-		public virtual List<Departamento> departamentos { get; set; }
+        public virtual List<Departamento> departamentos { get; set; }
+        public Grupo(string nombre, string descripcion)
+        {
+            id = Guid.NewGuid();
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+            fecha_creacion = DateTime.UtcNow;
+            fecha_ultima_edicion = DateTime.UtcNow;
 
-	}
+        }
+
+        public Grupo() { }
+
+    }
+
+		
+
 }
+

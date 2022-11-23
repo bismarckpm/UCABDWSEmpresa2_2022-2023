@@ -2,9 +2,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using ServicesDeskUCABWS.Entities;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +19,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         public ServicioDepartamento_API()
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-
+			Console.WriteLine(builder.ToString());
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 

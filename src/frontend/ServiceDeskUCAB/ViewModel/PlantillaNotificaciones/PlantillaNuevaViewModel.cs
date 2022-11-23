@@ -1,8 +1,8 @@
-﻿using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ServiceDeskUCAB.Models.PlantillaNotificaciones;
+using ServiceDeskUCAB.Models.EstadoTicket;
 
-namespace ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones
+namespace ServiceDeskUCAB.ViewModel.PlantillaNotificaciones
 {
     public class PlantillaNuevaViewModel
     {
