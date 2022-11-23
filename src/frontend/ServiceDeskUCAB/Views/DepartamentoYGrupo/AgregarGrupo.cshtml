@@ -29,30 +29,20 @@
             @using (Html.BeginForm("GuardarGrupo", "DepartamentoYGrupo", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <label></label>
-                    <input type="text" id="@Model.nombre"  name="nombre" value="@Model.nombre" />
+                    
+                    <input type="text" id="@Model.nombre" name="nombre" value="@Model.nombre" class="form-control" placeholder="Nombre: " />
+                    <br />
+                    <input type="text" id="@Model.descripcion" name="descripcion" value="@Model.descripcion" class="form-control" placeholder="Descripcion: " />
                     <br />
 
-                    <input type="text" id="@Model.descripcion" name="descripcion" value="@Model.descripcion" />
-                    <br />
-  
+                  
+                 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" id="btnCrear" class="btn btn-primary">Crear</button>
+                    <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnCrear" class="botonCrear">Crear</button>
                 </div>
             }
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
