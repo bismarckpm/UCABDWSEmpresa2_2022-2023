@@ -52,13 +52,16 @@
 
                         @foreach (var item in @Model.prioridades)
                         {
-                            if (item.Id == Model.ticketPadre.ticketPadre_id)
+                            if(item.estado == "habilitado")
                             {
-                                <option value="@item.Id" selected>@item.nombre</option>
-                            }
-                            else
-                            {
-                                <option value="@item.Id">@item.nombre</option>
+                                if (item.Id == Model.ticketPadre.ticketPadre_id)
+                                {
+                                    <option value="@item.Id" selected>@item.nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.nombre</option>
+                                }
                             }
                         }
                     </select>
