@@ -74,7 +74,7 @@ namespace ServiceDeskUCAB.Controllers
             return NoContent();
         }
 
-            [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 
@@ -99,5 +99,20 @@ namespace ServiceDeskUCAB.Controllers
             }
             return NoContent();
         }
+
+        public async Task<IActionResult> LogOut()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
     }
 }
