@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Servicios;
+using System.Security.Claims;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -35,7 +38,7 @@ namespace ServiceDeskUCAB.Controllers
 
                 if ((bool)respuesta["success"])
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
