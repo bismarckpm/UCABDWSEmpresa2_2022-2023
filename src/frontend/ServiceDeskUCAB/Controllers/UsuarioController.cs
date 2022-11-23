@@ -9,9 +9,11 @@ using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 
 using ServiceDeskUCAB.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly ILogger<UsuarioController> _logger;

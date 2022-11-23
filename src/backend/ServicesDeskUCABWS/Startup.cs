@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
@@ -27,6 +25,7 @@ using ServicesDeskUCABWS.Tools;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ServicesDeskUCABWS
 {

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NuGet.Common;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Servicios;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text.Json.Nodes;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -38,10 +42,28 @@ namespace ServiceDeskUCAB.Controllers
 
                 if ((bool)respuesta["success"])
                 {
+                    //var resultjson = JsonConvert.DeserializeObject<JObject>(respuesta);
+                    string stringUser = respuesta["data"].ToString();
+                    var result = JsonConvert.DeserializeObject<TokenUser>(stringUser);
+
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var token = handler.ReadJwtToken(result.token);
+
+                    // THIS CODE HERE, MAKE THE "MAGIC"...
+                    var userPrincipal = new ClaimsPrincipal(
+                        new ClaimsIdentity(token.Claims, "myClaims")
+                    );
+                    await HttpContext.SignInAsync(userPrincipal);
+
+                    Console.WriteLine(userPrincipal);
+                    Response.Cookies.Append("bearer", result.token);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    Console.WriteLine((string)respuesta["message"]);
                     return RedirectToAction("Login", new { message = (string)respuesta["message"] });
                 }
             }
@@ -52,7 +74,7 @@ namespace ServiceDeskUCAB.Controllers
             return NoContent();
         }
 
-            [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 
@@ -77,5 +99,20 @@ namespace ServiceDeskUCAB.Controllers
             }
             return NoContent();
         }
+
+        public async Task<IActionResult> LogOut()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
     }
 }

@@ -254,10 +254,34 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
         }
 
-        public Task<JObject> ValidarLogin(Credenciales_Login user)
+        public async Task<JObject> ValidarLogin(Credenciales_Login user)
         {
 
-            throw new NotImplementedException();
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/login", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
         }
     }
 }
