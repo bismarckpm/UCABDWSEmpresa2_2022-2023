@@ -47,9 +47,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
+				throw new ExceptionsControl("Error al momento de registrar", ex);
+			}
         }
 
         //Retorna la lista de grupos
@@ -220,7 +219,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         {
             try
             {
-                var grupo = _dataContext.Grupos.OrderBy(x => x.id).LastOrDefault();
+                var grupo = _dataContext.Grupos.OrderBy(x => x.id).Where(x=> x.fecha_eliminacion == null).LastOrDefault();
 
                 return GrupoMapper.MapperEntityToDtoDefault(grupo);
 

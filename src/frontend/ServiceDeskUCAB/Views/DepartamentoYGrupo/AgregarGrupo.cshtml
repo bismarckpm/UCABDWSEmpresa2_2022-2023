@@ -1,4 +1,4 @@
-﻿@model Tuple<List<ServiceDeskUCAB.Models.DepartamentoModel>,ServiceDeskUCAB.Models.DepartamentoModel, ServiceDeskUCAB.Models.GrupoModel>
+﻿@model ServiceDeskUCAB.Models.GrupoModel
 
 @{
     ViewData["Title"] = "Gestion Departamento";
@@ -30,42 +30,12 @@
             {
                 <div class="modal-body">
                     <label></label>
-                    <input type="text" id="@Model.Item3.nombre"  name="nombre" value="@Model.Item3.nombre" />
-                    <br />
-                    <br />
-                    <input type="text" id="@Model.Item3.descripcion" name="descripcion" value="@Model.Item3.descripcion" />
-                    <br />
+                    <input type="text" id="@Model.nombre"  name="nombre" value="@Model.nombre" />
                     <br />
 
-                    <table class="table" id="DeptTable">
-                        <tr>
-                            <th>
-
-                            </th>
-                            <th>
-                                Nombre
-                            </th>
-                                                        
-                        </tr>
-
-                        @foreach (var item in Model.Item1)
-                        {
-                            <tr>
-                                <td class="id" style="display:none";>
-                                    @Html.DisplayFor(i => item.id)
-                                </td>
-                                <td>
-                                    <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(i => item.nombre)
-                                </td>                              
-                                
-                            </tr>
-                        }
-
-                    </table>
-                 
+                    <input type="text" id="@Model.descripcion" name="descripcion" value="@Model.descripcion" />
+                    <br />
+  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

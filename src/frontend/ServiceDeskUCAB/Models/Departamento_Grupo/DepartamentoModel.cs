@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceDeskUCAB.Models

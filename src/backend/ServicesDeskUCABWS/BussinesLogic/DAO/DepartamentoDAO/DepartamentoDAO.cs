@@ -36,7 +36,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
                 if (ExisteDepartamento(departamento) == false)
                 {
-
                     _dataContext.Departamentos.Add(departamento);
                     _dataContext.SaveChanges();          
                 }
@@ -198,20 +197,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        public List<string> AsignarGrupoToDepartamento(string idDept)
+        public List<string> AsignarGrupoToDepartamento(Guid id,string idDept)
         {
 
             try
             {
 				List<string> listaDept = idDept.Split(',').ToList();
-				var grupo = _servicioGrupo.UltimoGrupoRegistradoDao();
 
 
                 foreach (var dept in listaDept)
                 {
 
 					var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
-                    nuevoDepartamento.id_grupo = grupo.id;
+                    nuevoDepartamento.id_grupo = id;
 					_dataContext.SaveChanges();
 
 				}
@@ -220,8 +218,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new ExceptionsControl("Fallo al asignar grupo: al departamento" + idDept, ex);
+                throw new ExceptionsControl("Fallo al asignar grupo", ex);
             }
         }
 	
@@ -246,7 +243,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
 			try
 			{
-				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null).Select(
+				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion == null).Select(
 					d => new DepartamentoDto
 					{
 						id = d.id,
@@ -261,7 +258,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos registrados", ex);
+				throw new ExceptionsControl("No hay departamentos asociados", ex);
 			}
 		}
     }

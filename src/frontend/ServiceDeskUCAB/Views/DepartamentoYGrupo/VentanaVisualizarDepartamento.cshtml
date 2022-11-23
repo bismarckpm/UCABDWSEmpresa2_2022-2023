@@ -1,4 +1,4 @@
-﻿@model List<ServiceDeskUCAB.Models.DepartamentoModel>
+﻿@model ServiceDeskUCAB.Models.DepartamentoModel
 @{
     ViewData["Title"] = "Gestion Departamento";
 }
@@ -46,7 +46,7 @@
 
                         </tr>
 
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.departamentos)
                         {
                             <tr>
                                 <td>
