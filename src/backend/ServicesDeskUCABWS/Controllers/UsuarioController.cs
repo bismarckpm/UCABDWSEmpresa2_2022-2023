@@ -215,7 +215,6 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<UserResponseLoginDTO>();
             try
             {
-
                 response.Data = _userLoginDAO.UserLogin(usuario);
             }
             catch (ExceptionsControl ex )

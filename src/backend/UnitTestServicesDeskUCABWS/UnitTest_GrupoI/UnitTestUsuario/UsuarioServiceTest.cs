@@ -46,5 +46,12 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
         {
             Assert.ThrowsException<ExceptionsControl>(() => _userService.consularUsuarioID(new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC122")));
         }
+
+        [TestMethod(displayName: "Prueba unitaria cuando un usuario coloque una clave o un usuario invalido")]
+        public void LoginExeption()
+        {
+
+            //Assert.ThrowsException<ExceptionsControl>(() => _userService.consularUsuarioID();
+        }
     }
 }

@@ -3,6 +3,7 @@ using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
 using ModuloPlantillasNotificaciones.Servicios;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,14 @@ builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
 builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
 builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantillaNotificacion_API>();
 builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cookieAuthOptions =>
+         {
+             cookieAuthOptions.Cookie.Name = "MyApplicationCookie";
+             cookieAuthOptions.LoginPath = "/Login/Login";
+             //cookieAuthOptions.LogoutPath = "/signOut";
+             //cookieAuthOptions.AccessDeniedPath = "/accessDenied";
+         });
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 var app = builder.Build();
@@ -30,6 +38,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
