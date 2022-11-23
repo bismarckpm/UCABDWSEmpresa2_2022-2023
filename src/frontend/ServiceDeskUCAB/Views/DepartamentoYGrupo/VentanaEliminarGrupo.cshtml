@@ -12,11 +12,6 @@
 
 </head>
 
-
-<!-- Libreria -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-
-
 <!-- Ventana Emergente -->
 <div class="modal fade" id="popUpEliminar" tabindex="-1" role="dialog" aria-labelledby="popUpEliminarTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -31,8 +26,8 @@
                 ¿Está seguro de que desea eliminar el grupo seleccionado?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EliminarGrupo", "DepartamentoYGrupo",new { id = Model })'">Aceptar</button>
+                <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="botonCrear" onclick="location.href='@Url.Action("EliminarGrupo", "DepartamentoYGrupo",new { id = Model })'">Aceptar</button>
             </div>
         </div>
     </div>
