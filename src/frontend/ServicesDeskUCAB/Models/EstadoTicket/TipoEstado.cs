@@ -10,7 +10,7 @@ namespace ModuloPlantillasNotificaciones.Models.EstadoTicket
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public List<Etiqueta> Etiqueta { get; set; }
-
+        public bool Permiso { get; set; }
         public TipoEstado()
         {
             Id = Guid.Empty;

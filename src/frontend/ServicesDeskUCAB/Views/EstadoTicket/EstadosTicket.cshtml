@@ -46,7 +46,11 @@
                             </td>
                             <td>
                                 <a asp-action="EstadoEditar" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-primary btn-sm">Editar</a>
-                                <a data-bs-toggle="modal"  data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                                @if(tipoEstado.Permiso == true){
+                                    <a data-bs-toggle="modal"  data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                                }else{
+                                    <a data-bs-toggle="modal" data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm disabled">Eliminar</a>
+                                }
                             </td>
                         </tr>
                     }

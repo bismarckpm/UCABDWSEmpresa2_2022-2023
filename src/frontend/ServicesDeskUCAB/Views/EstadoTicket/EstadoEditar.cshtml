@@ -26,15 +26,42 @@
                         <input asp-for="Estado.Id" name="Id" type="hidden" />
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Nombre</label>
-                            <input required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                            @if(Model.Estado.Permiso == true){
+                                <input required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                            }else{
+                                <input disabled required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                            }
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Descripción</label>
-                            <textarea required class="form-control form-control-sm" rows="3" name="Descripcion" asp-for="Estado.Descripcion"></textarea>
+                            @if (Model.Estado.Permiso == true){
+                                <textarea required class="form-control form-control-sm" rows="3" name="Descripcion" asp-for="Estado.Descripcion"></textarea>
+                            }
+                            else{
+                                <textarea disabled required class="form-control form-control-sm" rows="3" name="Descripcion" asp-for="Estado.Descripcion"></textarea>
+                            }
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mb-1">
+                            <label class="form-label fs-6 fw-bold mb-1 d-flex">
+                                <span class="mr-2">Restricción de tipo de estado</span>
+                                <button type="button" style="width: 25px; height: 25px" class="fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#modalHelpModal">
+                                    ?
+                                </button>
+                            </label>
+                            <div class="form-check form-switch ml-4">
+                                @if(Model.Estado.Permiso == true){
+                                    <input name="Permiso" disabled class="form-check-input" checked data-bs-toggle="modal" data-bs-target="#desactivarHelpModal" value="True" type="checkbox" id="Permiso">
+
+                                }else{
+                                    <input name="Permiso" disabled class="form-check-input" data-bs-toggle="modal" data-bs-target="#desactivarHelpModal" value="True" type="checkbox" id="Permiso">
+
+                                }
+                                <label class="form-check-label">Permiso de edición</label>
+                            </div>
+                        </div>
+                        <div class="mb-1 mt-4">
                             <label class="form-label fs-6 fw-bold mb-1">Asociar etiquetas:</label>
                             @if (Model.Etiquetas != null && Model.Etiquetas.Count() == 0)
                             {
@@ -71,5 +98,19 @@
                 <a asp-action="EstadosTicket" asp-controller="EstadoTicket" class="btn btn-secondary btn-sm">Volver a la lista de Estados</a>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalHelpModal" tabindex="-1" aria-labelledby="modalHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body d-flex align-items-md-center">
+                <button type="button" style="min-width: 40px; min-height: 40px" class="fs-5 mr-2 fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center">
+                    ?
+                </button>
+                Texto de ayuda para decirle al usuario qué función es esta Texto de ayuda para decirle al usuario qué función es esta Texto de ayuda para decirle al usuario qué función es esta
+            </div>
+        </div>
     </div>
 </div>

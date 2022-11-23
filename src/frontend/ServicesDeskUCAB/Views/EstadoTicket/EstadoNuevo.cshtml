@@ -34,6 +34,18 @@
                     </div>
                     <div class="col-4">
                         <div class="mb-1">
+                            <label class="form-label fs-6 fw-bold mb-1 d-flex">
+                                <span class="mr-2">Restricción de tipo de estado</span>
+                                <button type="button" style="width: 25px; height: 25px" class="fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#modalHelpModal">
+                                    ?
+                                </button>
+                            </label>
+                            <div class="form-check form-switch ml-4">
+                                <input name="Permiso" class="form-check-input" checked data-bs-toggle="modal" data-bs-target="#desactivarHelpModal" value="True" type="checkbox" id="Permiso">
+                                <label class="form-check-label">Permiso de edición</label>
+                            </div>
+                        </div>
+                        <div class="mb-1 mt-4">
                             <label class="form-label fs-6 fw-bold mb-1">Asociar etiquetas:</label>
                             @if (Model.Etiquetas != null && Model.Etiquetas.Count() == 0)
                             {
@@ -63,3 +75,49 @@
         </form>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalHelpModal" tabindex="-1" aria-labelledby="modalHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body d-flex align-items-md-center">
+                <button type="button" style="min-width: 40px; min-height: 40px" class="fs-5 mr-2 fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center">
+                    ?
+                </button>
+                Texto de ayuda para decirle al usuario qué función es esta Texto de ayuda para decirle al usuario qué función es esta Texto de ayuda para decirle al usuario qué función es esta
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="desactivarHelpModal" tabindex="-1" aria-labelledby="desactivarHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body d-flex align-items-md-center justify-content-between">
+                <button type="button" style="min-width: 40px; min-height: 40px" class="fs-5 mr-2 fw-bold btn btn-sm btn-warning rounded-circle d-flex justify-content-center align-items-center">
+                    !
+                </button>
+                <div class="form-check form-switch" style="width: 85%">
+                    <p class="d-flex align-items-md-center">
+                        <input class="form-check-input" checked disabled type="checkbox">
+                        Ejemplo de lo que sucedería cuando el check está asi ejemplo de lo que sucedería cuando el check está asi
+                    </p>
+                    <p class="mb-0 d-flex align-items-md-center">
+                        <input class="form-check-input" disabled type="checkbox">
+                        Ejemplo de lo que sucedería cuando el check está asi ejemplo de lo que sucedería cuando el check está asi
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+}

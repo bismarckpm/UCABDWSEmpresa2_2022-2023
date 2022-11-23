@@ -78,7 +78,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
                 return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
               //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
-                return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+                return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });
         }
 
         public async Task<IActionResult> EstadoEditar(Guid id)
