@@ -19,6 +19,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
             _mapper = mapper;
         }
 
+        public EstadoService(IDataContext Context)
+        {
+            _dataContext = Context;
+
+        }
+
         public List<EstadoDTOUpdate> ConsultarEstadosDepartamento(Guid IdDepartamento)
         {
             var lista = new List<EstadoDTOUpdate>();
