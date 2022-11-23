@@ -16,13 +16,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 {
     public class UsuarioDAO : IUsuarioDAO
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
+        private readonly IDataContext _dataContext;   
 
-        public UsuarioDAO(DataContext dataContext, IMapper mapper)
+        public UsuarioDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapper;
+          
         }
 
         public Usuario consularUsuarioID(Guid id)
@@ -50,7 +49,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                     RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298162")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var nuevoUsuario = _dataContext.Usuarios.Where(User => User.Id == usuario.Id)
                                         .Select(UserDto => new Administrador
@@ -93,7 +92,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                     RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298161")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var nuevoUsuario = _dataContext.Usuarios.Where(User => User.Id == usuario.Id)
                                         .Select(UserDto => new Cliente
@@ -136,7 +135,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                     RolId = new Guid("8C8A156B-7383-4610-8539-30CCF7298163")
                 };
                 _dataContext.RolUsuarios.Add(UsuarioClient);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var nuevoUsuario = _dataContext.Usuarios.Where(User => User.Id == usuario.Id)
                                         .Select(UserDto => new Empleado
@@ -175,7 +174,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 var usuario = _dataContext.Usuarios.Where(d => d.Id == id).First();
 
                 usuario.fecha_eliminacion = DateTime.Now.Date;
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 return UserMapper.MapperEntityToDto(usuario);
 
@@ -210,7 +209,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
 
                 _dataContext.Usuarios.Update(usuario);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
                     user => new UserDto_Update
@@ -245,7 +244,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                  where p.Id == usuario.Id
                  select p).ToList().ForEach(x => x.password = usuario.password);
 
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
                     user => new UserPasswordDto

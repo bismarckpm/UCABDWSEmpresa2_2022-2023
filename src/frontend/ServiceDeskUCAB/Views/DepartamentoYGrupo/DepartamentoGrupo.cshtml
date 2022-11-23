@@ -1,4 +1,4 @@
-﻿@model Tuple<List<ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO.DepartamentoDto>,List<ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO.GrupoDto>>
+﻿@model Tuple<List<ServiceDeskUCAB.Models.DepartamentoModel>,List<ServiceDeskUCAB.Models.GrupoModel>>
 
 <head>
     <link rel="stylesheet" href="~/css/Sidebar.css" />
@@ -120,6 +120,24 @@
 
 </script>
 
+<!-- Script para mostrar ventana Asociar Departamento -->
+<script>
+    $(function () {
+            var PlaceHolderElement = $('#PlaceHolderAsociarDepartamento');
+            $('button[data-toggle="asociarGrupo-modal"]').click(function (event) {
+            var id = $(this).closest('tr').find('.id').text();
+            var url = $(this).data('url').replace("idGrupo", id);
+            $.get(url).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
+            })
+        })
+    })
+    
+        
+
+</script>
+
 }
 
 <!-- Placeholders de las ventanas emergentes (Grupo)-->
@@ -127,6 +145,7 @@
 <div id="PlaceHolderEliminarGrupo"></div>
 <div id="PlaceHolderModificarGrupo"></div>
 <div id="PlaceHolderVisualizarGrupo"></div>
+<div id="PlaceHolderAsociarDepartamento"></div>
 
 <!-- Placeholders de las ventanas emergentes (Departamento)-->
  <div id="PlaceHolderAgregarDepartamento"></div>
@@ -220,6 +239,9 @@
                 </button>
                 <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","DepartamentoYGrupo",new { id = "idGrupo"})">
                     Eliminar
+                </button>
+                <button id=btnAsociar type="button" class="btn btn-danger btn-sm" data-toggle="asociarGrupo-modal" data-target="#popUpAsociarGrupo" data-url="@Url.Action("VentanaAsociarDepartamento","DepartamentoYGrupo",new { id = "idGrupo"})">
+                    Asociar
                 </button>
             </td>
         </tr>
