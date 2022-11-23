@@ -261,5 +261,39 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				throw new ExceptionsControl("No hay departamentos asociados", ex);
 			}
 		}
+
+        public List<string> EditarRelacion(Guid id, string idDepartamentos)
+        {
+            try
+            {
+                List<string> listaDept = idDepartamentos.Split(',').ToList();
+
+                if (idDepartamentos.Equals("")) {
+
+                    _servicioGrupo.QuitarAsociacion(id);
+
+                    return listaDept;
+
+                }else if(_servicioGrupo.QuitarAsociacion(id)) {
+
+                    foreach (var nuevoDept in listaDept) {
+
+                        var relacionado = _dataContext.Departamentos.Where(x => x.id.ToString() == nuevoDept).FirstOrDefault();
+                        if (relacionado != null) {
+                            relacionado.id_grupo = id;
+                            relacionado.fecha_ultima_edicion = DateTime.Now.Date;
+							_dataContext.SaveChanges();
+						}
+
+                    }
+                
+                }
+                return listaDept;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Fallo al asignar grupo", ex);
+            }
+		}
     }
 }

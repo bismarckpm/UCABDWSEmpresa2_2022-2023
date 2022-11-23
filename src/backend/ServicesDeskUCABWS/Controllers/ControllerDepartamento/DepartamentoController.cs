@@ -199,5 +199,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
-    }
+
+		[HttpPut]
+		[Route("EditarRelacion/{id}")]
+		public ApplicationResponse<List<string>> EditarRelacion([FromRoute] Guid id, [FromBody] string idDepartamentos)
+		{
+			var response = new ApplicationResponse<List<string>>();
+			try
+			{
+				response.Data = _departamentoDAO.EditarRelacion(id, idDepartamentos);
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
+	}
 }

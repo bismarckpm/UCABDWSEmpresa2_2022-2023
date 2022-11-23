@@ -300,5 +300,35 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 			}
 			return departamento.departamentos;
 		}
+
+		public async Task<JObject> EditarRelacion(Guid id, List<string> idDepartamentos)
+		{
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			string combinedString = string.Join(",", idDepartamentos);
+			var content = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
+
+			try
+			{
+				var response = await cliente.PutAsync($"Departamento/EditarRelacion/{id}", content);
+				var respuesta = await response.Content.ReadAsStringAsync();
+				JObject _json_respuesta = JObject.Parse(respuesta);
+				return _json_respuesta;
+
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			return _json_respuesta;
+		}
 	}
 }

@@ -142,14 +142,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 );
                 return data.First();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + grupo.id, ex);
-            }
-        }
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("Fallo al actualizar un grupo", ex);
+			}
+		}
 
-        //
+        
         public bool QuitarAsociacion(Guid grupoId)
         {
             var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
