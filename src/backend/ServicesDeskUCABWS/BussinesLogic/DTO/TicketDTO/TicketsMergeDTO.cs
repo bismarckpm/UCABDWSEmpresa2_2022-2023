@@ -5,8 +5,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
 {
     public class TicketsMergeDTO
     {
-        public Guid ticketPrincipal { get; set; }
-        public List<Guid> ticketsSecundarios { get; set; }
+        public Guid ticketPrincipalId { get; set; }
+        public List<Guid> ticketsSecundariosId { get; set; }
         //A LOS TICKETS SECUNDARIOS SE LE TIENE QUE MODIFICAR LA FECHA DE ELIMINACIÓN, Y EL ESTADO A ELIMINADO
     }
 }

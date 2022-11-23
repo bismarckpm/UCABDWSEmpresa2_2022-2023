@@ -322,16 +322,16 @@ namespace ServicesDeskUCABWS.Migrations
                     titulo = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IDEstado = table.Column<int>(type: "int", nullable: true),
-                    usuario_emisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Departamento_DestinoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Departamento_DestinoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Ticket_PadreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmpleadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    EmisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    nro_cargo_actual = table.Column<int>(type: "int", nullable: true),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,7 +340,8 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_Tickets_Departamentos_Departamento_DestinoId",
                         column: x => x.Departamento_DestinoId,
                         principalTable: "Departamentos",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_Estados_EstadoId",
                         column: x => x.EstadoId,
@@ -369,13 +370,13 @@ namespace ServicesDeskUCABWS.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tickets_Usuarios_EmpleadoId",
-                        column: x => x.EmpleadoId,
+                        name: "FK_Tickets_Usuarios_EmisorId",
+                        column: x => x.EmisorId,
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Tickets_Usuarios_usuario_emisorId",
-                        column: x => x.usuario_emisorId,
+                        name: "FK_Tickets_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
@@ -501,9 +502,9 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Departamento_DestinoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_EmpleadoId",
+                name: "IX_Tickets_EmisorId",
                 table: "Tickets",
-                column: "EmpleadoId");
+                column: "EmisorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_EstadoId",
@@ -531,9 +532,9 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_usuario_emisorId",
+                name: "IX_Tickets_UsuarioId",
                 table: "Tickets",
-                column: "usuario_emisorId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tipo_Estado_PlantillaNotificacionId",

@@ -20,6 +20,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
 
             CreateMap<Ticket, TicketInfoCompletaDTO>();
             CreateMap<TicketInfoCompletaDTO, Ticket>();
+
+            CreateMap<TicketDTO, TicketInfoCompletaDTO>();
+            CreateMap<TicketInfoCompletaDTO, TicketDTO>();
+
+            CreateMap<TicketDTO, TicketInfoBasicaDTO>();
+            CreateMap<TicketInfoBasicaDTO, TicketDTO>();
+
+            CreateMap<TicketInfoCompletaDTO, TicketInfoBasicaDTO>();
+            CreateMap<TicketInfoBasicaDTO, TicketInfoCompletaDTO>();
         }
     }
 }

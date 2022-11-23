@@ -40,29 +40,24 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
         }
 
-        /*[HttpPut, Route("anadirBitacora")]
-        public ApplicationResponse<string> anadirALaBitacoraCtrl([FromBody] BitacoraTicketDTO tickets)
+        [HttpPut, Route("cambiarEstadoTicket/{ticketId}/{estadoId}")]
+        public ApplicationResponse<string> cambiarEstadoTicketCtrl(string ticketId, string estadoId)
         {
-            var respuesta = new ApplicationResponse<string>();
-            try
-            {
-                _ticketDAO.anadirALaBitacora(tickets.ticketDTO);
-                respuesta.Data = $"Bitacora del ticket{tickets.ticketDTO.Id} modificada";
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = "No se pudo añadir la bitacora al ticket";
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
+            return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
         }
 
-        [HttpGet,Route("Familia/{id}")]
+        [HttpGet, Route("obtenerBitacorasTicket/{ticketId}")]
+        public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacorasCtrl(string ticketId)
+        {
+            return _ticketDAO.obtenerBitacoras(new Guid(ticketId));
+        }
+        [HttpPut, Route("Merge")]
+        public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
+        {
+            return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);
+        }
+
+        /*[HttpGet,Route("Familia/{id}")]
         public ApplicationResponse<List<Ticket>> obtenerFamiliaTicketCtrl(string id)
         {
             var respuesta = new ApplicationResponse<List<Ticket>>();
@@ -82,28 +77,6 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return respuesta;
         }
-
-        [HttpPut, Route("Merge")]
-        public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
-        {
-            var respuesta = new ApplicationResponse<string>();
-            try
-            {
-                respuesta.Data =  _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipal, ticketsMerge.tickets);
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = "No se pudo añadir la bitacora al ticket";
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
-        }
-
 
         [HttpPut, Route("Reenviar")]
         public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaternoDTO ticketPaterno)
@@ -126,7 +99,6 @@ namespace ServicesDeskUCABWS.Controllers
             return respuesta;
         }*/
 
-        //DEVOLVER LISTA DE BITACORAS(ticket_id): DEVOLVER INFO DE LA BITACORA {estado_nombre, fecha_inicio, fecha_fin}
         //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }
 }
