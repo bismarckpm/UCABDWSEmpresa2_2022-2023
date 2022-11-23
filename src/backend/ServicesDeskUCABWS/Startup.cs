@@ -31,7 +31,7 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
-            services.AddTransient<ITicketDAO, TicketDAO>();
+            services.AddTransient<ITicketDAO, TicketDAO>(); //
             services.AddTransient<IDataContext, DataContext>();
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
