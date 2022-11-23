@@ -8,10 +8,6 @@ using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
-<<<<<<< HEAD
-
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
 
 namespace ServicesDeskUCABWS.BussinesLogic.Helpers
 {
@@ -35,12 +31,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             nuevoTicket.fecha_eliminacion = DateTime.MinValue;
             nuevoTicket.Emisor = _dataContext.Empleados.Where(empleado => empleado.Id == solicitudTicket.empleado_id).FirstOrDefault();
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.Id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
-            nuevoTicket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" && x.Departamento.Id == nuevoTicket.Emisor.Cargo.Departamento.Id).FirstOrDefault();
+            nuevoTicket.Estado =  _dataContext.Estados.Where(x => x.Id == new Guid("d198afee-6141-1e4f-9a78-0d6222f1b8db")).FirstOrDefault();
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
             nuevoTicket.Ticket_Padre = null;
             inicializarBitacora(nuevoTicket);
-            _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
+            _dataContext.Tickets.AddAsync(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChangesAsync();
             return nuevoTicket;
         }
@@ -62,7 +58,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 Fecha_Inicio = new DateTime(),
                 Fecha_Fin = DateTime.MinValue
             };
-            _dataContext.Bitacora_Tickets.Add(ticket.Bitacora_Tickets.First());
+            _dataContext.Bitacora_Tickets.AddAsync(ticket.Bitacora_Tickets.First());
             _dataContext.DbContext.SaveChangesAsync();
             return nuevaBitacora;
         }
@@ -105,10 +101,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 Lista_Ticket = new List<Ticket>()
             };
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public TicketInfoCompletaDTO rellenarTicketInfoCompleta(Guid id)
         {
             TicketDTO ticket = _mapper.Map<TicketDTO>(_dataContext.Tickets.Where(ticket => ticket.Id == id));
@@ -132,10 +124,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 empleado_correo = ticket.Emisor.correo
             };
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public List<TicketInfoBasicaDTO> rellenarTicketInfoBasica(Guid idDepartamento, string opcion)
         {
             List<TicketDTO> tickets;
@@ -156,9 +144,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             });
             return respuesta;
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
     }
 }

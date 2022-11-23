@@ -36,7 +36,7 @@ namespace ServicesDeskUCABWS.Entities
         
         public Familia_Ticket Familia_Ticket { get; set; }
 
-        public Ticket Ticket_Padre { get; set; }
+        public Ticket? Ticket_Padre { get; set; }
 
         public Empleado Emisor { get; set; }
 

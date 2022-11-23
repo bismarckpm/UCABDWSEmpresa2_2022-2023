@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
-=======
-﻿using Microsoft.EntityFrameworkCore;
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.Data;

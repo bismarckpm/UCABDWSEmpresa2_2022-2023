@@ -34,13 +34,8 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             services.AddTransient<ITicketDAO, TicketDAO>(); //
             services.AddTransient<IDataContext, DataContext>();
-<<<<<<< HEAD
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
-=======
-            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
             
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>

@@ -10,10 +10,6 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
-<<<<<<< HEAD
-using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -79,10 +75,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id)
         {
             ApplicationResponse<TicketInfoCompletaDTO> respuesta = new ApplicationResponse<TicketInfoCompletaDTO>();
@@ -91,11 +84,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.validarTicket(id);
                 respuesta.Data = _helper.rellenarTicketInfoCompleta(id);
-<<<<<<< HEAD
-                respuesta.Message = "Ticket creado satisfactoriamente";
-=======
                 respuesta.Message = "Proceso de búsqueda exitoso";
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
                 respuesta.Success = true;
 
             } catch (TicketException e)
@@ -111,10 +100,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         /*public List<Ticket> obtenerTickets(Guid departamento, string opcion)
         {
             try
@@ -127,10 +113,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //return exception.Message;
             }
         }*/
-<<<<<<< HEAD
 
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado)
         {
             ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
@@ -156,7 +139,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 respuesta.Data = null;
                 respuesta.Message = "Error 404";
                 respuesta.Success = false;
-<<<<<<< HEAD
             }
             return respuesta;
         }
@@ -173,33 +155,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             catch (TicketException e)
             {
-=======
-            }
-            return respuesta;
-        }
-        public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId)
-        {
-            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
-            try
-            {
-                _helper.modificarEstadoTicket(ticketId, estadoId);
-                respuesta.Data = "Estado del ticket modificado exitosamente";
-                respuesta.Message = "Estado del ticket cambiado satisfactoriamente";
-                respuesta.Success = true;
-            }
-            catch (TicketException e)
-            {
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
                 respuesta.Data = null;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
             return respuesta;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId)
         {
             ApplicationResponse<List<TicketBitacorasDTO>> respuesta = new ApplicationResponse<List<TicketBitacorasDTO>>();
@@ -251,10 +213,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("No se pudo crear la familia de tickets"); ;
             }
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public List<TicketInfoCompletaDTO> obtenerFamiliaTickets(Guid ticketId)
         {
             /*
@@ -272,44 +231,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 throw new Exception("No se pudo obtener la familia de tickets");
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            
-            return null;
-        }*/
 
-
-        public string mergeTickets(TicketDTO ticketPrincipal, List<TicketDTO> tickets)
-        {
-            try
-            {
-                //(EL MERGE ES CON LOS TICKETS HERMANOS, NO CON LOS TICKETS HIJOS)
-                //EL CLIENTE ENVÍA EL TICKET PRINCIPAL Y LA LISTA DE TICKETS HERMANOS (O DE TODOS LOS TICKETS)
-                //SE CAMBIA LA FECHA DE ELIMINACIÓN A ACTUAL
-                //CAMBIAR EL ESTADO DE LOS HERMANOS A ELIMINADO O COMPLETADO
-                //NO SE BORRAN
-                //ACTUALIZAR LA BITACORA DE LOS TICKETS PORQUE SE CAMBIÓ EL ESTADO
-                tickets.ForEach(delegate (TicketDTO ticket)
-                {
-                    //CREAR LA FAMILIA TICKET
-                    ticket.fecha_eliminacion = new DateTime();
-                    ticket.Estado.nombre = "Eliminado"; //->VERIFICAR
-                    ticket.Bitacora_Tickets.Add(_helper.crearNuevaBitacora(ticket));
-                });
-                _dataContext.DbContext.SaveChangesAsync();
-                return "PROCESO DE MERGE REALIZADO CORRECTAMENTE!";
-            }
-            catch (Exception exception)
-            {
-                throw new Exception("No se pudo hacer Merge de los tickets");
-            }
         }
 
-
-=======
-        }
-        
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHijo)
         {
             try

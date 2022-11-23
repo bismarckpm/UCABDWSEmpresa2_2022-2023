@@ -14,14 +14,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         [Required]
         public Guid prioridad_id { get; set; }
         [Required]
-<<<<<<< HEAD
         public Guid tipoTicket_id { get; set; }
-=======
-        public Guid tipoTicket_id { get; set; } //-> con esto calculo el estado del ticket
->>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         [Required]
         public Guid departamentoDestino_Id { get; set; }
-
-        public Guid ticketPadre_Id { get; set; }
     }
 }
