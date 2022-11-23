@@ -58,27 +58,12 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         /*[HttpGet,Route("Familia/{id}")]
-        public ApplicationResponse<List<Ticket>> obtenerFamiliaTicketCtrl(string id)
+        public ApplicationResponse<List<TicketDTO>> obtenerFamiliaTicketCtrl(string id)
         {
-            var respuesta = new ApplicationResponse<List<Ticket>>();
-            try
-            {
-                respuesta.Data = _ticketDAO.obtenerFamiliaTickets(new Guid(id));
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = null;
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
-        }
+            return _ticketDAO.obtenerFamiliaTickets(new Guid(id));
+        }*/
 
-        [HttpPut, Route("Reenviar")]
+        /*[HttpPut, Route("Reenviar")]
         public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaternoDTO ticketPaterno)
         {
             var respuesta = new ApplicationResponse<string>();
