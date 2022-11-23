@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.Mappers.MapperGrupo;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
@@ -61,7 +60,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var lista = _dataContext.Grupos.Select(
                     d => new GrupoDto
                     {
-						id = d.id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
@@ -173,7 +172,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 				var lista = _dataContext.Grupos.Where(x => x.fecha_eliminacion == null).Select(
 					d => new GrupoDto
 					{
-						id = d.id,
+                        id = d.id,
 						nombre = d.nombre,
 						descripcion = d.descripcion,
 						fecha_creacion = d.fecha_creacion,

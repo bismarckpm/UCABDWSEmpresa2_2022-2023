@@ -35,17 +35,11 @@ namespace ServicesDeskUCABWS.Entities
 	    [ForeignKey("id_grupo")]
 	    public Grupo grupo { get; set; }
 
-}
-        public HashSet<Tipo_Ticket> Tipo_Ticket { get; set; }
-        public HashSet<Cargo> Cargo { get; set; }
-        public Grupo Grupo { get; set; }
-        [Required]
-        public HashSet<Estado> ListaEstados { get; set; }
-        public HashSet<Ticket> ListaTickets { get; set; }
+
 
         public Departamento(string nombre, string descripcion)
         {
-            Id = Guid.NewGuid();
+            id = Guid.NewGuid();
             this.nombre = nombre;
             this.descripcion = descripcion;
             fecha_creacion = DateTime.UtcNow;

@@ -97,7 +97,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 {
                     new Departamento()
                     {
-                        Id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
                         nombre= "Almacen",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,
@@ -106,7 +106,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                     },
                     new Departamento()
                     {
-                        Id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
                         nombre= "Almacen de Electronica",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,
@@ -196,7 +196,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 {
                     new Departamento()
                     {
-                        Id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
                         nombre= "Almacen",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,
@@ -205,7 +205,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                     },
                     new Departamento()
                     {
-                        Id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
                         nombre= "Almacen de Electronica",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,
@@ -256,7 +256,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 {
                     new Departamento()
                     {
-                        Id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
                         nombre= "Almacen",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,
@@ -265,7 +265,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                     },
                     new Departamento()
                     {
-                        Id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
                         nombre= "Almacen de Electronica",
                         descripcion= "Lugar donde se guardan todos los recursos de la empresa",
                         fecha_creacion= DateTime.UtcNow,

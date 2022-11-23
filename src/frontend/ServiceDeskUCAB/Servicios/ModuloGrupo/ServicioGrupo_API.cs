@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using ServiceDeskUCAB.Models;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using ServicesDeskUCABWS.Entities;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 
 namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {

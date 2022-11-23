@@ -47,7 +47,7 @@
                                 <option selected disabled>-- Seleccionar --</option>
                     @foreach (var item in ViewData["Departamentos"] as List<Departament>)
                     {
-                            <option value=@item.Id.ToString()>@item.nombre</option>
+                            <option value=@item.id.ToString()>@item.nombre</option>
                     }
                 </select>
             </div>

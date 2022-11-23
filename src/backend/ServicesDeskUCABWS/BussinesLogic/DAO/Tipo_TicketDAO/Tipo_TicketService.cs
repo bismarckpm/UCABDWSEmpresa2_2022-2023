@@ -26,7 +26,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
        private readonly IMapper _mapper;
 
 
-        Mapper mapper = new Mapper(new MapperConfiguration(c => c.CreateMap<Tipo_TicketDTOUpdate, Tipo_TicketDTOCreate>()));
+        //Mapper mapper = new Mapper(new MapperConfiguration(c => c.CreateMap<Tipo_TicketDTOUpdate, Tipo_TicketDTOCreate>()));
         // Mapper mappers = new Mapper(new MapperConfiguration(d => d.CreateMap<Tipo_Ticket, Tipo_TicketDTOSearch>()));
 
         //
@@ -138,7 +138,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 try 
                 {
                     tipo_ticket.Departamento = context.Departamentos
-                    .Where(x => tipo_TicketDTO.Departamento.Contains(x.Id.ToString().ToUpper()))
+                    .Where(x => tipo_TicketDTO.Departamento.Contains(x.id.ToString().ToUpper()))
                     .ToList();
                 } catch(Exception) { }
 
@@ -176,7 +176,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 try
                 {
                     tipo_ticket.Departamento =
-                    context.Departamentos.Where(x => Tipo_TicketDTO.Departamento.Contains(x.Id.ToString())).ToList();
+                    context.Departamentos.Where(x => Tipo_TicketDTO.Departamento.Contains(x.id.ToString())).ToList();
                 }
                 catch (Exception) { }
                 try
@@ -241,7 +241,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 }
 
 
-                var tipo_TicketDTOCreate = mapper.Map<Tipo_TicketDTOCreate>(tipo_TicketDTOUpdate);
+                var tipo_TicketDTOCreate = _mapper.Map<Tipo_TicketDTOCreate>(tipo_TicketDTOUpdate);
                 if (tipo_TicketDTOCreate.Flujo_Aprobacion.Count() == 0)
                 {
                     tipo_TicketDTOCreate.Flujo_Aprobacion = null;

@@ -23,11 +23,11 @@ namespace ServicesDeskUCABWS.Entities
        
         public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Departamento> Departamento { get; set; }
 
+        public virtual List<Departamento> departamentos { get; set; }
         public Grupo(string nombre, string descripcion)
         {
-            Id = Guid.NewGuid();
+            id = Guid.NewGuid();
             this.nombre = nombre;
             this.descripcion = descripcion;
             fecha_creacion = DateTime.UtcNow;
@@ -35,9 +35,11 @@ namespace ServicesDeskUCABWS.Entities
 
         }
 
+        public Grupo() { }
+
     }
 
-		public virtual List<Departamento> departamentos { get; set; }
+		
 
-	}
 }
+

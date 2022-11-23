@@ -21,7 +21,7 @@ namespace ServiceDeskUCAB.Servicios
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
-            _baseUrl = builder.GetSection("ApiSetting:baseUrl").Value;
+            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
 
 
         }
@@ -147,9 +147,9 @@ namespace ServiceDeskUCAB.Servicios
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
 
-                var resultado = JsonConvert.DeserializeObject<List<Departament>>(json_respuesta);
+                var resultado = JsonConvert.DeserializeObject< ApplicationResponse<List<Departament>>>(json_respuesta);
 
-                lista = resultado;
+                lista = resultado.Data;
             }
 
 

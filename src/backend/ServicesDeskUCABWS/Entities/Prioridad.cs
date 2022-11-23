@@ -28,5 +28,9 @@ namespace ServicesDeskUCABWS.Entities
             fecha_descripcion = DateTime.UtcNow;
             fecha_ultima_edic = DateTime.UtcNow;
         }
+
+        public Prioridad()
+        {
+        }
     }
 }

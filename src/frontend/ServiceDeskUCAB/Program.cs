@@ -2,7 +2,6 @@ using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
-using ModuloPlantillasNotificaciones.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);
 

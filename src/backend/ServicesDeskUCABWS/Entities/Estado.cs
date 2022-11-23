@@ -38,5 +38,9 @@ namespace ServicesDeskUCABWS.Entities
             fecha_ultima_edic = DateTime.UtcNow;
             //this.Estado_Padre = estado_Padre;
         }
+
+        public Estado()
+        {
+        }
     }
 }

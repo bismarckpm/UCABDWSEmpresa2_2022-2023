@@ -65,7 +65,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 ticket.Departamento_Destino = contexto.Departamentos.Find(Guid.Parse(ticketDTO.Departamento_Destino));
                 ticket.Tipo_Ticket = contexto.Tipos_Tickets.Find(Guid.Parse(ticketDTO.Tipo_Ticket));
                 ticket.Estado = contexto.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
-                x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).FirstOrDefault();
+                x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
                 contexto.Tickets.Add(ticket);
 
                 contexto.DbContext.SaveChanges();
@@ -119,7 +119,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 //EnviarNotificacion(ticket.Emisor, ticket.Estado);
                 List<Empleado> ListaEmpleado = contexto.Empleados.
-                    Where(s => s.Cargo.Departamento.Id == ticket.Departamento_Destino.Id)
+                    Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
                     .ToList();
                 //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
@@ -150,7 +150,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 foreach (var tc in tipoCargos)
                 {
                     Cargos.Add(tc.Tipo_Cargo.Cargos_Asociados.ToList()
-                        .Where(x => x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).First());
+                        .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First());
                 }
 
                 var ListaEmpleado = new List<Empleado>();
@@ -199,7 +199,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
 
                 var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
-                    .Where(x => x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).First();
+                    .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();
 
 
                 var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
@@ -236,7 +236,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 ticket.Estado = contexto.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
                     Where(s => s.Estado_Padre.nombre == Estado &&
-                    s.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id)
+                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
                 var vticket = contexto.Tickets.Update(ticket);
                 vticket.State = EntityState.Modified;

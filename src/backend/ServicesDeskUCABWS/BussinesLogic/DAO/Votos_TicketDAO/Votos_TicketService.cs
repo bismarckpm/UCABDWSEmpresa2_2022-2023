@@ -172,7 +172,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             {
                 ticket.Estado = contexto.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
                     Where(s => s.Estado_Padre.nombre == Estado &&
-                    s.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id)
+                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
                 contexto.Tickets.Update(ticket);
 
@@ -282,7 +282,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
 
             var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
-                .Where(x => x.Departamento.Id == ticket.Emisor.Cargo.Departamento.Id).FirstOrDefault();
+                .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
 
 
             var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using ServicesDeskUCABWS.Data;
 using System.Collections.Generic;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
 using ServicesDeskUCABWS.Entities;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {

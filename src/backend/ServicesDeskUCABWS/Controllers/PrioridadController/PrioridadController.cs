@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
-using ServicesDeskUCABWS.BussinesLogic.DTO;
 using System;
 using System.Collections.Generic;
+using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 
-namespace ServicesDeskUCABWS.Controllers
+namespace ServicesDeskUCABWS.Controllers.PrioridadController
 {
     [Route("prioridad")]
     [ApiController]
@@ -27,7 +27,7 @@ namespace ServicesDeskUCABWS.Controllers
         [Route("crearPrioridad")]
         public ApplicationResponse<string> crearPrioridadCtrl([FromBody] PrioridadDTO prioridadDTO)
         {
-            var respuesta = new ApplicationResponse<String>();
+            var respuesta = new ApplicationResponse<string>();
             try
             {
                 respuesta.Data = _prioridadDAO.crearPrioridad(prioridadDTO);
@@ -104,9 +104,9 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPut]
         [Route("modificarprioridad")]
-        public ApplicationResponse<String> modificarPrioridadEstadoPorNombreCtrl([FromBody] PrioridadDTO prioridadDTO)
+        public ApplicationResponse<string> modificarPrioridadEstadoPorNombreCtrl([FromBody] PrioridadDTO prioridadDTO)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<string>();
             try
             {
                 response.Data = _prioridadDAO.modificarPrioridad(prioridadDTO);

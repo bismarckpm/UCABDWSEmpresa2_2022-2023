@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.OpenApi.Any;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
 {
-	public class DepartamentoYGrupoController : Controller
+    public class DepartamentoYGrupoController : Controller
     {
 		//Declaración de variables
 		private readonly ILogger<DepartamentoYGrupoController> _logger;
