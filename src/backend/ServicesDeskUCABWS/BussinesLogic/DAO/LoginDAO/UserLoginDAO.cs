@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -41,10 +42,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
                 
                return UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw new ExceptionsControl("El usuario o contraseña es invalida", ex);
             }
            
 

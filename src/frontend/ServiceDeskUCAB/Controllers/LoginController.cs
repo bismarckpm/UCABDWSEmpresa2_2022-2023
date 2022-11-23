@@ -25,6 +25,31 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> ValidarCredenciales(Credenciales_Login usuario)
+        {
+            JObject respuesta;
+
+            try
+            {
+                respuesta = await _servicioApiUsuarios.ValidarLogin(usuario);
+
+                if ((bool)respuesta["success"])
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Login", new { message = (string)respuesta["message"] });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
+            [HttpPost]
         public async Task<IActionResult> GuardarUsuario(UsuariosRol plantilla)
         {
 

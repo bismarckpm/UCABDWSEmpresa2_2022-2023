@@ -75,7 +75,6 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
         [HttpPost]
-        [Authorize]
         [Route("CrearCliente/")]
         public ApplicationResponse<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
         {
@@ -211,19 +210,21 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("login/")]
-        public ActionResult<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
+        public ApplicationResponse<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
         {
+            var response = new ApplicationResponse<UserResponseLoginDTO>();
             try
             {
-         
-                  return _userLoginDAO.UserLogin(usuario);
-            }
-            catch (Exception e )
-            {
-                Console.WriteLine(e.Message);
 
-                throw;
+                response.Data = _userLoginDAO.UserLogin(usuario);
             }
+            catch (ExceptionsControl ex )
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
     }
 }
