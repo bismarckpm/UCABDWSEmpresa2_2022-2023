@@ -42,6 +42,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
         }
 
+<<<<<<< HEAD
         /*[HttpPut, Route("anadirBitacora")]
         public ApplicationResponse<string> anadirALaBitacoraCtrl([FromBody] BitacoraTicketDTO tickets)
         {
@@ -65,6 +66,11 @@ namespace ServicesDeskUCABWS.Controllers
         [HttpPut, Route("cambiarEstadoTicket/{ticketId}/{estadoId}")]
         public ApplicationResponse<string> cambiarEstadoTicketCtrl(string ticketId, string estadoId)
         {
+=======
+        [HttpPut, Route("cambiarEstadoTicket/{ticketId}/{estadoId}")]
+        public ApplicationResponse<string> cambiarEstadoTicketCtrl(string ticketId, string estadoId)
+        {
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
             return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
         }
 
@@ -85,7 +91,10 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<List<Ticket>>();
             try
             {
+<<<<<<< HEAD
                 //respuesta.Data =  _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipal, ticketsMerge.tickets);
+=======
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
                 respuesta.Data = _ticketDAO.obtenerFamiliaTickets(new Guid(id));
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;

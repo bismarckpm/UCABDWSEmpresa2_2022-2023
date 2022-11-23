@@ -8,7 +8,10 @@ using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
 
 namespace ServicesDeskUCABWS.BussinesLogic.Helpers
 {
@@ -102,7 +105,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 Lista_Ticket = new List<Ticket>()
             };
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public TicketInfoCompletaDTO rellenarTicketInfoCompleta(Guid id)
         {
             TicketDTO ticket = _mapper.Map<TicketDTO>(_dataContext.Tickets.Where(ticket => ticket.Id == id));
@@ -126,7 +132,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 empleado_correo = ticket.Emisor.correo
             };
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
         public List<TicketInfoBasicaDTO> rellenarTicketInfoBasica(Guid idDepartamento, string opcion)
         {
             List<TicketDTO> tickets;
@@ -147,6 +156,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             });
             return respuesta;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d526b598ac596331fb4246c13686f83d90789e4c
     }
 }
