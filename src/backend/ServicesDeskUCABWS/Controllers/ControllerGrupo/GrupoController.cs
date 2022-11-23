@@ -106,20 +106,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
         //Actualizar Grupo
         [HttpPut]
         [Route("ActualizarGrupo/")]
-        public ActionResult<GrupoDto_Update> ActualizarDepartamento([FromBody] GrupoDto_Update grupo)
+        public ApplicationResponse<GrupoDto_Update> ActualizarDepartamento([FromBody] GrupoDto_Update grupo)
         {
-            try
+			var response = new ApplicationResponse<GrupoDto_Update>();
+			try
             {
-                return _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
+                response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
                 //Cambiar parametros cuando realicemos frontend
 
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
-        }
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
 
         //Mostrar todos los grupos que no están eliminados
 		[HttpGet("ConsultarGrupoNoEliminado/")]
