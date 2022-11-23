@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 
 namespace ServiceDeskUCAB.Servicios

@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using ServicesDeskUCABWS.Entities;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models;
+using System.Runtime.CompilerServices;
 
 namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
@@ -66,36 +64,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 			JObject json_respuesta = JObject.Parse(respuesta);
 
 			return json_respuesta;
-		}
-
-		public async Task<JObject> GuardarGrupo(GrupoDto grupo, List<DepartamentoDto> listaDept)
-		{
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
-
-			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
-			Console.WriteLine(JsonConvert.SerializeObject(grupo));
-
-			try
-			{
-				var response = await cliente.PostAsync("Grupo/CrearGrupo/", content);
-				var respuesta = await response.Content.ReadAsStringAsync();
-				JObject _json_respuesta = JObject.Parse(respuesta);
-
-				return _json_respuesta;
-			}
-			catch (HttpRequestException ex)
-			{
-				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-
-			return _json_respuesta;
 		}
 
 		//Retorna el modal de AgregarGrupo con la lista de departamentos que no están asociados
@@ -158,6 +126,35 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 				JObject _json_respuesta = JObject.Parse(respuesta);
 
 				return _json_respuesta;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			return _json_respuesta;
+		}
+
+		public async Task<JObject> EditarGrupo(GrupoModel grupo)
+		{
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+
+			try
+			{
+				var response = await cliente.PutAsync("Grupo/ActualizarGrupo", content);
+				var respuesta = await response.Content.ReadAsStringAsync();
+				JObject _json_respuesta = JObject.Parse(respuesta);
+				return _json_respuesta;
+
 			}
 			catch (HttpRequestException ex)
 			{

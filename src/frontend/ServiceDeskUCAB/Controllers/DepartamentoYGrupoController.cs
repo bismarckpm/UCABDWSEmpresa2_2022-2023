@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.OpenApi.Any;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.ViewModel.DepartamentoGrupo;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using ServicesDeskUCABWS.Entities;
 using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
@@ -31,7 +27,7 @@ namespace ServiceDeskUCAB.Controllers
 		//Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
 		public async Task<IActionResult> DepartamentoGrupo()
 		{
-			var tupla = new Tuple<List<DepartamentoDto>, List<GrupoDto>>(null,null);
+			var tupla = new Tuple<List<DepartamentoModel>, List<GrupoModel>>(null,null);
 			tupla = await _servicioApiDepartamento.ListaDepartamentoGrupo();
 			return View(tupla);
 		}
@@ -51,7 +47,7 @@ namespace ServiceDeskUCAB.Controllers
 
 		//Almacena la información referente a un nuevo departamento
 		[HttpPost]
-		public async Task<IActionResult> GuardarDepartamento(DepartamentoDto departamento)
+		public async Task<IActionResult> GuardarDepartamento(DepartamentoModel departamento)
 		{
 
 			JObject respuesta;
@@ -110,7 +106,7 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		public async Task<IActionResult> ModificarDepartamento(DepartamentoDto_Update dept) {
+		public async Task<IActionResult> ModificarDepartamento(DepartamentoModel dept) {
 			try
 			{
 				JObject respuesta;
@@ -127,6 +123,46 @@ namespace ServiceDeskUCAB.Controllers
 		/////////////
 		///Operaciones de grupo
 		////////////
+
+		//Retorna el modal con los departamentos que se desea asociar
+		public async Task<IActionResult> AsociarGrupo(GrupoModel grupo, List<string> idDepartamentos)
+		{
+			JObject respuesta;
+
+			try
+			{
+				
+				respuesta = await _servicioApiDepartamento.AsociarDepartamento(grupo.id, idDepartamentos);
+				if ((bool)respuesta["success"])
+					return RedirectToAction("DepartamentoGrupo", new { message = "Se ha asociado correctamente" });
+				else
+					return NoContent();
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
+
+		//Retorna el modal con los departamentos que se desea asociar
+		public async Task<IActionResult> VentanaAsociarDepartamento(Guid id)
+		{
+			DepartamentoAsociarViewModel departamento = new DepartamentoAsociarViewModel();
+
+
+			try
+			{
+				departamento.grupo = await _servicioApiGrupo.BuscarGrupo(id);
+				ViewData["nombre"] = departamento.grupo.nombre;
+				departamento.departamentoNoAsoc = await _servicioApiDepartamento.ListaDepartamentoNoAsociado();
+
+				return PartialView(departamento);
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+		}
 
 		//Retorna el modal con la lista de departamentos y los datos del grupo seleccionado
 		public async Task<IActionResult> VentanaEditarGrupo(Guid id)
@@ -146,17 +182,30 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		//Retorna el modal con los departamentos que estan asociados a un grupo
+		public async Task<IActionResult> ModificarGrupo(GrupoModel grupo, List<string> idDepartamentos)
+		{
+			JObject respuesta;
+			JObject respuestaDept;
+			respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
+			//if ((bool)respuesta["success"])
+
+			respuestaDept = await _servicioApiDepartamento.EditarRelacion(grupo.id, idDepartamentos);
+				return RedirectToAction("DepartamentoGrupo", new { message = "Se ha modificado correctamente" });
+			//else
+				//return NoContent();
+		}
+
+		//Retorna el modal con los departamentos que serán asociados a un grupo
 		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
 		{
-			List<DepartamentoModel> departamento = new List<DepartamentoModel>();
-			GrupoModel model = new GrupoModel();
+			DepartamentoModel departamento = new DepartamentoModel();
+			GrupoModel model = new GrupoModel ();
 
 			try
 			{
-				model = await _servicioApiGrupo.BuscarGrupo(id);
+				model  = await _servicioApiGrupo.BuscarGrupo(id);
 				ViewData["nombre"] = model.nombre;
-				departamento = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
+				departamento.departamentos = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
 				return PartialView(departamento);
 			}
 			catch (Exception ex)
@@ -164,6 +213,7 @@ namespace ServiceDeskUCAB.Controllers
 				throw ex.InnerException!;
 			}
 		}
+
 		//Retorna el modal de confirmación para eliminar un grupo
 		public async Task<IActionResult> VentanaEliminarGrupo(Guid id)
 		{
@@ -176,7 +226,7 @@ namespace ServiceDeskUCAB.Controllers
 				throw ex.InnerException!;
 			}
 		}
-		//
+		
 		[HttpGet]
 		public async Task<IActionResult> EliminarGrupo(Guid id)
 		{
@@ -192,12 +242,10 @@ namespace ServiceDeskUCAB.Controllers
 		public async Task<IActionResult> AgregarGrupo()
 		{
 			GrupoModel grupo = new GrupoModel();
-			var tupla = new Tuple<List<DepartamentoModel>,DepartamentoModel,GrupoModel> (null,null,null);
 
 			try
 			{
-				tupla = await _servicioApiGrupo.tuplaModelDepartamento();
-				return PartialView(tupla);
+				return PartialView(grupo);
 			}
 			catch (Exception ex)
 			{
@@ -207,24 +255,15 @@ namespace ServiceDeskUCAB.Controllers
 		}
 
 		
-		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo,  List<string> idDepartamentos) {
+		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo) {
 
 			JObject respuestaGrupo;
-			
+
 			try
 			{
 				respuestaGrupo = await _servicioApiGrupo.RegistrarGrupo(grupo);
-
-				//if ((bool)respuestaGrupo["success"])
-				//{
-					JObject respuestaDepartamento;
-					respuestaDepartamento = await _servicioApiDepartamento.AsociarDepartamento(idDepartamentos);
-
-					if ((bool)respuestaDepartamento["success"])
-					{
-						return RedirectToAction("DepartamentoGrupo");
-					}
-				//}
+				return RedirectToAction("DepartamentoGrupo");
+					
 			}
 			catch (Exception ex)
 			{
