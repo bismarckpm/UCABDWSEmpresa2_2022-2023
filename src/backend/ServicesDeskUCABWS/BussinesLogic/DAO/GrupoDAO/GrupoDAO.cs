@@ -20,10 +20,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
     public class GrupoDAO : IGrupoDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
         //Constructor
-        public GrupoDAO(DataContext dataContext)
+        public GrupoDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -34,7 +34,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
                 _dataContext.Grupos.Add(grupo);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var nuevoGrupo = _dataContext.Grupos.Where(d => d.id == grupo.id)
                                         .Select(d => new GrupoDto
@@ -44,6 +44,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                                             nombre = d.nombre,
                                             fecha_creacion = d.fecha_creacion
                                         });
+
                 return nuevoGrupo.First();
             }
 			catch (DuplicateNameException ex)
@@ -108,7 +109,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 if (grupo != null)
                 {
                     grupo.fecha_eliminacion = DateTime.Now.Date;
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
 
                     if (QuitarAsociacion(idGrupo) == true)
                     {
@@ -131,7 +132,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
                 _dataContext.Grupos.Update(grupo);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Grupos.Where(d => d.id == grupo.id).Select(
                     d => new GrupoDto_Update
@@ -169,7 +170,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                     item.id_grupo = null;
 
                 }
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
                 return true;
 
             }
