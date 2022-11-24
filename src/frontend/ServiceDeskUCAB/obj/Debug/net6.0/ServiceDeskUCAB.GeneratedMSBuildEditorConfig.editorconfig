@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\frontend\ServiceDeskUCAB
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoEstado/VistaEstadosDepartamentos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvRXN0YWRvXFZpc3RhRXN0YWRvc0RlcGFydGFtZW50b3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/AgregarDepartamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXEFncmVnYXJEZXBhcnRhbWVudG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -63,8 +67,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Home/ModificarTipoTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNb2RpZmljYXJUaXBvVGlja2V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Home/VistaTipoTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWaXN0YVRpcG9UaWNrZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Login/Login.cshtml]
@@ -99,6 +111,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/TipoTicket/VistaTipo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1RpY2tldFxWaXN0YVRpcG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/GuardarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xHdWFyZGFyVXN1YXJpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -113,6 +129,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/ViewUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xWaWV3VXN1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Votos/AgregarTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm90b3NcQWdyZWdhclRpY2tldC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Votos/VistaTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm90b3NcVmlzdGFUaWNrZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Votos/VistaVotarTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVm90b3NcVmlzdGFWb3RhclRpY2tldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/_ViewImports.cshtml]

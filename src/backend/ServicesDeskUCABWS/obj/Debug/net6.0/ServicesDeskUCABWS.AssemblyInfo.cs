@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("7f35bbd2-3bf3-4161-9ed2-e21f122ff61e")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ServicesDeskUCABWS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

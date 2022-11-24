@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
-using ServicesDeskUCABWS.Entities;
 using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models;
