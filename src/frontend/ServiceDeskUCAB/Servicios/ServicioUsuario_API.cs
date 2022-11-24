@@ -254,6 +254,8 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
         }
 
+
+
         public async Task<JObject> ValidarLogin(Credenciales_Login user)
         {
 
@@ -283,7 +285,9 @@ namespace ServiceDeskUCAB.Servicios
 
             return _json_respuesta;
         }
-        public async Task<JObject> ValidarEmail(RecuperarPasswordModel email)
+
+
+        public async Task<JObject> RecuperarContraseña(RecuperarPasswordModel email)
         {
             HttpClient cliente = new()
             {
@@ -292,8 +296,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
             try
             {
-                
-                var response = await cliente.PostAsync("api/Usuario/ValidarUsuario", content);
+                var response = await cliente.PostAsync("api/Usuario/RecuperarClave", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;
@@ -311,5 +314,6 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
 
         }
+
     }
 }
