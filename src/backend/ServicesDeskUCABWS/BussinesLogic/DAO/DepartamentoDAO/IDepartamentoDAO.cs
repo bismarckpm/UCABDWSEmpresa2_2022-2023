@@ -16,9 +16,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public DepartamentoDto eliminarDepartamento(Guid id);
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento);
         public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo);
-        public List<string> AsignarGrupoToDepartamento(Guid id,string idDept);
+        public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept);
         public List<DepartamentoDto> DeletedDepartamento();
         public List<DepartamentoDto> NoAsociado();
-        public List<string> EditarRelacion(Guid id, string idDepartamentos);
+        public IEnumerable<SelectListItem> ListaDepartamentoGrupo();
 	}
 }
