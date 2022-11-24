@@ -2,17 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.Entities;
 using System.Diagnostics.Contracts;
 using static ServicesDeskUCABWS.Entities.RolUsuario;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using ServicesDeskUCABWS.Entities;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
 
 
 namespace ServicesDeskUCABWS.Data
 {
-    public class DataContext: DbContext, IDataContext
+    public class DataContext : DbContext, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -20,10 +14,7 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
-            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
-
-            modelBuilder.Entity<Usuario>().HasIndex(u=>u.correo).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.correo).IsUnique();
 
             modelBuilder.Entity<Usuario>()
                 .HasDiscriminator<string>("Discriminator")
@@ -46,18 +37,11 @@ namespace ServicesDeskUCABWS.Data
 
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
-            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
-            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
+            modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
+            modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
         }
 
-       
 
-        public DataContext()
-        {
-        }
-
-        
-        
 
         //Creacion de los DbSeT
 

@@ -17,10 +17,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
     public class DepartamentoDAO : IDepartamentoDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
         //Constructor
-        public DepartamentoDAO(DataContext dataContext)
+        public DepartamentoDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -35,7 +35,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 {
 
                     _dataContext.Departamentos.Add(departamento);
-                    _dataContext.SaveChanges();     
+                    _dataContext.DbContext.SaveChanges();     
                 }
 
 				var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
@@ -92,7 +92,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
-					_dataContext.SaveChanges();
+					_dataContext.DbContext.SaveChanges();
 
 				return DepartamentoMapper.MapperEntityToDto(departamento);
 
@@ -109,7 +109,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                     _dataContext.Departamentos.Update(departamento);
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
@@ -232,7 +232,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 if (result is not null)
                 {
                     result.id_grupo = idGrupo;
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
                 }
 
                 return result;

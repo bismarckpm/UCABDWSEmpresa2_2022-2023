@@ -1,12 +1,14 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCABWS", "ServicesDeskUCABWS.csproj", "{E844259A-1F94-4B1E-B152-5B60C7B1F886}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestServicesDeskUCABWS", "..\UnitTestServicesDeskUCABWS\UnitTestServicesDeskUCABWS.csproj", "{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestServicesDeskUCABWS", "..\UnitTestServicesDeskUCABWS\UnitTestServicesDeskUCABWS.csproj", "{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReporteFechas", "..\ReporteFechas\ReporteFechas.csproj", "{C4285551-532D-4EEC-A54B-FB3D64A12011}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,7 +23,10 @@ Global
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFEC3F69-FC8E-4281-9433-E7BFAB5B9849}.Release|Any CPU.Build.0 = Release|Any CPU
-		
+		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

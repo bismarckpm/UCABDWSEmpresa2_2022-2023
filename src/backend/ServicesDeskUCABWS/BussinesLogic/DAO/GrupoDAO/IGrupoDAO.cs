@@ -15,5 +15,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo);
         public bool QuitarAsociacion(Guid grupoId);
         public List<GrupoDto> ConsultarGrupoNoEliminado();
-	}
+    }
 }
