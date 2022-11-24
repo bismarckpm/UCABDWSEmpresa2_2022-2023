@@ -19,6 +19,7 @@ namespace ServiceDeskUCAB.Servicios
         Task<Roles> ObtenerRoles(Guid roles);
         Task<JObject> ValidarLogin(Credenciales_Login user);
         Task<JObject> RecuperarContraseña(RecuperarPasswordModel email);
+        Task<JObject> EliminarRol(RolUser roles);
 
     }
 }

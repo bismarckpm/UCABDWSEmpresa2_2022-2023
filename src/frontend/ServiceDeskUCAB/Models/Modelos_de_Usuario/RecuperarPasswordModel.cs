@@ -7,6 +7,5 @@ namespace ServiceDeskUCAB.Models.Modelos_de_Usuario
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
-        public string link { get; set; } = string.Empty;    
     }   
 }

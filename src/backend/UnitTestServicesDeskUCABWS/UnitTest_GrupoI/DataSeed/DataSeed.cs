@@ -116,7 +116,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.DataSeed
 
             _mockContext.Setup(c => c.Administradores.Add(It.IsAny<Administrador>()));
             _mockContext.Setup(c => c.Administradores.Update(It.IsAny<Administrador>()));
-
+            _mockContext.Setup(c => c.Usuarios.Add(It.IsAny<Usuario>()));
             _mockContext.Setup(set => set.DbContext.SaveChanges());
 
 

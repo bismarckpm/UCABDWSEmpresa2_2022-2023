@@ -14,8 +14,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         public Empleado AgregarEmpleado(Usuario usuario);
         public UserDto_Update ActualizarUsuario(Usuario usuario);
         public UserPasswordDto ActualizarUsuarioPassword(Usuario usuario);
-        public void RecuperarClave(string Email, string Link);
-        public string ValidarCorreo(string Email);
+        public string RecuperarClave(string Email);
+        //public string ValidarCorreo(string Email);
         public Usuario consularUsuarioID (Guid id); 
     }
 }

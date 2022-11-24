@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
@@ -34,6 +35,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
             Assert.IsTrue(result.Count > 0);
 
         }
+
         [TestMethod(displayName: "Prueba unitaria para consultar usuario por ID ")]
         public void ConsultarUsurioByID()
         {
@@ -69,6 +71,180 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
             Assert.IsInstanceOfType(obj, result.GetType());
 
         }
+
+        [TestMethod(displayName: "Prueba Unitaria para recuperar clave")]
+        public void RecuperarPassword()
+        {
+            string id = "gabrielojeda7@gmail.com";
+            var response = _userService.RecuperarClave(id);
+
+            Assert.AreEqual(response, "Correo enviado");
+
+        }
+
+
+        [TestMethod(displayName: "Prueba Unitaria para recuperar clave exception")]
+        public void RecuperarPasswordException()
+        {
+            string id = "gabrielojeda72@gmail.com";
+            _contextMock.Setup(p => p.Usuarios).Throws(new Exception("El correo no esta registrado"));
+            Assert.ThrowsException<ExceptionsControl>(() =>  _userService.RecuperarClave(id));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para un Administrador con correo repetido")]
+        public void AgregarAdministradorException()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new DbUpdateException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarAdminstrador(requestUserAdmin));
+        }
+
+
+        [TestMethod(displayName: "Prueba Unitaria para un Administrador con un problema el registrar")]
+        public void AgregarAdministradorExceptionGeneric()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarAdminstrador(requestUserAdmin));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para un Cliente con correo repetido")]
+        public void AgregarClienteException()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new DbUpdateException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarCliente(requestUserAdmin));
+        }
+
+
+        [TestMethod(displayName: "Prueba Unitaria para un Cliente con un problema el registrar")]
+        public void AgregarClienteExceptionGeneric()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarCliente(requestUserAdmin));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para un Empleado con correo repetido")]
+        public void AgregarEmpleadoException()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new DbUpdateException(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarEmpleado(requestUserAdmin));
+        }
+
+
+        [TestMethod(displayName: "Prueba Unitaria para un Empleado con un problema el registrar")]
+        public void AgregarEmpleadoExceptionGeneric()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMock.Setup(p => p.Usuarios).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarEmpleado(requestUserAdmin));
+        }
+
+
 
         /*[TestMethod(displayName: "Prueba Unitaria para logeo satisfactorio")]
         public void LoginTest()

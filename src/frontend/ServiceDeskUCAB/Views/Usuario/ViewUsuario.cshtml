@@ -15,15 +15,19 @@
             console.log("Entre")
             //Si la variable 'Activado' es true
             if (Activado) {
+                $("select#Prueba").attr('disabled', 'disabled');
                 $("input#Prueba").attr('disabled', true);
                 $("button#Prueba").css("display", "none")
                 $("a#Prueba").css("display", "none")
             }
 
             else {
+
+                $('select#Prueba').removeAttr("disabled");
                 $("input#Prueba").removeAttr('disabled');
                 $("button#Prueba").css("display", "block")
                 $("a#Prueba").css("display", "block")
+
             }
 
 

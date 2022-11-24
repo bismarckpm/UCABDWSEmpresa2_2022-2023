@@ -95,7 +95,10 @@ namespace ServiceDeskUCAB.Controllers
             try
             {
                 JObject respuesta;
+                JObject changeRol;
+                JObject eliminateRol;
                 respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
+                //eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
                 if ((bool)respuesta["success"])
                     return RedirectToAction("Usuarios");
             }
@@ -120,6 +123,34 @@ namespace ServiceDeskUCAB.Controllers
                 gender = user.gender,
                 correo = user.correo,
             };
+        }
+
+        public RolUser TransformRol(UsuariosRol user)
+        {
+            if (user.Rol == Rol.Administrador)
+            {
+                return new RolUser()
+                {
+                    id_user = user.id,
+                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298162"),
+                };
+            }
+            else if (user.Rol == Rol.Cliente)
+            {
+                return new RolUser()
+                {
+                    id_user = user.id,
+                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298161"),
+                };
+            }
+            else
+            {
+                return new RolUser()
+                {
+                    id_user = user.id,
+                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298163"),
+                };
+            }
         }
 
         [HttpPost]
