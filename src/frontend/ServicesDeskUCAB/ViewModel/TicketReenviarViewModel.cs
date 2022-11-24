@@ -6,8 +6,8 @@ namespace ServicesDeskUCAB.ViewModel
 {
 	public class TicketReenviarViewModel
     {
-		public Ticket ticketPadre;
-		public Ticket ticketHijo;
+		public TicketInfoBasica ticketPadre;
+		public CrearTicket ticket;
 		public List<Departamento> departamentos;
 		public List<Prioridad> prioridades;
 		public List<Tipo_Ticket> tipo_tickets;
