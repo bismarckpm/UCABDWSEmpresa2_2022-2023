@@ -35,18 +35,22 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
         //Crear Departamento
         [HttpPost]
         [Route("CrearGrupo/")]
-        public ActionResult<GrupoDto> CrearGrupo([FromBody] GrupoDto dto1)
+        public ApplicationResponse<GrupoDto> CrearGrupo([FromBody] GrupoDto dto1)
         {
-            try
+			var response = new ApplicationResponse<GrupoDto>();
+			try
             {
-                var dao = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
-                return dao;
+				response.Data = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
+
 
             }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
         }
 
         //Consultar Grupo

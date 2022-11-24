@@ -33,9 +33,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
-
+                if (!ExisteDepartamento(departamento)) {
                     _dataContext.Departamentos.Add(departamento);
-				_dataContext.DbContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
+                }
 
 
 				var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
@@ -82,8 +83,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
+                if (!ExisteDepartamento(departamento)) {
                     _dataContext.Departamentos.Update(departamento);
-				_dataContext.DbContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
+                }
 
 				var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
@@ -226,8 +229,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
             try
             {
-                var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.nombre.Equals(departamento.nombre));
-                if (nuevoDepartamento.Count() != 0 )
+                var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.nombre.Equals(departamento.nombre)).ToList();
+                if (nuevoDepartamento.Count() > 0 )
                     existe = true;       
             }
             catch (Exception ex) {

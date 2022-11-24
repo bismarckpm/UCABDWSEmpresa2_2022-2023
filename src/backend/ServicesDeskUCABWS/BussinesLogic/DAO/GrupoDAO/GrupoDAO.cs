@@ -33,9 +33,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         {
             try
             {
-                _dataContext.Grupos.Add(grupo);
-                _dataContext.DbContext.SaveChanges();
-
+                if (!ExisteGrupo(grupo)) {
+                    _dataContext.Grupos.Add(grupo);
+                    _dataContext.DbContext.SaveChanges();
+                }
                 var nuevoGrupo = _dataContext.Grupos.Where(d => d.id == grupo.id)
                                         .Select(d => new GrupoDto
                                         {
@@ -131,9 +132,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         {
             try
             {
-                _dataContext.Grupos.Update(grupo);
-                _dataContext.DbContext.SaveChanges();
-
+                if (!ExisteGrupo(grupo)) {
+                    _dataContext.Grupos.Update(grupo);
+                    _dataContext.DbContext.SaveChanges();
+                }
                 var data = _dataContext.Grupos.Where(d => d.id == grupo.id).Select(
                     d => new GrupoDto_Update
                     {
@@ -211,7 +213,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
                 var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre));
-                if (nuevoGrupo.Count() != 0)
+                if (nuevoGrupo.Count() > 0)
                     existe = true;
             }
             catch (Exception ex)

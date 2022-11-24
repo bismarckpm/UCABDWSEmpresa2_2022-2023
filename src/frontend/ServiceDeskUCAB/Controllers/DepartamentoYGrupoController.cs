@@ -186,13 +186,23 @@ namespace ServiceDeskUCAB.Controllers
 		{
 			JObject respuesta;
 			JObject respuestaDept;
-			respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
-			//if ((bool)respuesta["success"])
-
-			respuestaDept = await _servicioApiDepartamento.EditarRelacion(grupo.id, idDepartamentos);
-				return RedirectToAction("DepartamentoGrupo", new { message = "Se ha modificado correctamente" });
-			//else
-				//return NoContent();
+			try
+			{
+				respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
+				if ((bool)respuesta["success"])
+				{
+					respuestaDept = await _servicioApiDepartamento.EditarRelacion(grupo.id, idDepartamentos);
+					if ((bool)respuesta["success"])
+					{
+						return RedirectToAction("DepartamentoGrupo", new { message = "Se ha modificado correctamente" });
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex.InnerException!;
+			}
+			return NoContent();
 		}
 
 		//Retorna el modal con los departamentos que serán asociados a un grupo
@@ -262,7 +272,10 @@ namespace ServiceDeskUCAB.Controllers
 			try
 			{
 				respuestaGrupo = await _servicioApiGrupo.RegistrarGrupo(grupo);
-				return RedirectToAction("DepartamentoGrupo");
+				if ((bool)respuestaGrupo["success"])
+				{
+					return RedirectToAction("DepartamentoGrupo");
+				}
 					
 			}
 			catch (Exception ex)
