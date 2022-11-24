@@ -32,11 +32,11 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public Tipo_Ticket Tipo_Ticket { get; set; }
 
-        public HashSet<Votos_Ticket> Votos_Ticket { get; set; }
+        public HashSet<Votos_Ticket>? Votos_Ticket { get; set; }
         
-        public Familia_Ticket Familia_Ticket { get; set; }
+        public Familia_Ticket? Familia_Ticket { get; set; }
 
-        public Ticket Ticket_Padre { get; set; }
+        public Ticket? Ticket_Padre { get; set; }
 
         public Empleado Emisor { get; set; }
 

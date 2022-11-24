@@ -94,7 +94,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             } catch (Exception e)
             {
                 respuesta.Data = null;
-                respuesta.Message = "Error 404";
+                respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
             return respuesta;
@@ -134,7 +134,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             } catch (Exception e)
             {
                 respuesta.Data = null;
-                respuesta.Message = "Error 404";
+                respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
             return respuesta;

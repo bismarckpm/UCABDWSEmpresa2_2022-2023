@@ -30,7 +30,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
         {
             TicketDTO nuevoTicket = _mapper.Map<TicketDTO>(solicitudTicket);
             nuevoTicket.Id = new Guid();
-            nuevoTicket.fecha_creacion = DateTime.Today;
+            nuevoTicket.fecha_creacion = DateTime.UtcNow;
             nuevoTicket.fecha_eliminacion = DateTime.MinValue;
             nuevoTicket.Emisor = _dataContext.Empleados
                                                 .Include(t=>t.Cargo)
@@ -38,22 +38,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
                                        .Where(t => t.Id == nuevoTicket.Emisor.Cargo.Id).FirstOrDefault();
+            Guid prueba = cargo.Departamento.Id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.Id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             nuevoTicket.Estado = _dataContext.Estados
                                                 .Include(t=>t.Estado_Padre)
-                                                .Where(x => x.Estado_Padre.nombre == "Pendiente" && x.Departamento.Id == nuevoTicket.Departamento_Destino.Id ).FirstOrDefault();
+                                                .Include(t=>t.Departamento)
+                                                .Where(x => x.Id == new Guid("D198AFEE-6141-1E4F-9A78-0D6222F1B8DB")/*x.Departamento.Id == cargo.Departamento.Id && x.Estado_Padre.nombre == "Pendiente"*/).FirstOrDefault();
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
-            //nuevoTicket.Ticket_Padre;
-            inicializarBitacora(nuevoTicket);
+            nuevoTicket.Ticket_Padre = null;
+            nuevoTicket.nro_cargo_actual = null;
+            nuevoTicket.Votos_Ticket = null;
+            nuevoTicket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>
+            {
+                crearNuevaBitacora(nuevoTicket)
+            };
             _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
+            _dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
             _dataContext.DbContext.SaveChanges();
             return nuevoTicket;
-        }
-        public void inicializarBitacora(TicketDTO nuevoTicketDTO)
-        {
-            nuevoTicketDTO.Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
-            crearNuevaBitacora(nuevoTicketDTO);
         }
 
         public Bitacora_Ticket crearNuevaBitacora(TicketDTO ticket)
@@ -66,9 +69,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                 Fecha_Inicio = DateTime.Today,
                 Fecha_Fin = DateTime.MinValue
             };
-            ticket.Bitacora_Tickets.Add(nuevaBitacora);
-            _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
-            _dataContext.DbContext.SaveChanges();
             return nuevaBitacora;
         }
 
@@ -80,16 +80,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             Estado nuevoEstado = _dataContext.Estados.Where(estados => estados.Id == estadoId).Single();
             ticket.Estado = nuevoEstado;
             ticket.Bitacora_Tickets.Add(crearNuevaBitacora(ticket));
-            //_dataContext.DbContext.Update(_mapper.Map<Ticket>(ticket));
+            _dataContext.Bitacora_Tickets.Add(ticket.Bitacora_Tickets.First());
+            _dataContext.Tickets.Update(_mapper.Map<Ticket>(ticket));
             _dataContext.DbContext.SaveChanges();
         }
         public List<TicketBitacorasDTO> obtenerBitacoras(Guid ticketId)
         {
             TicketValidaciones ticketValidaciones = new TicketValidaciones(_dataContext);
             ticketValidaciones.validarTicket(ticketId);
-            TicketDTO ticket = _mapper.Map<TicketDTO>(_dataContext.Tickets.Where(ticket => ticket.Id == ticketId).Single());
+            List<Bitacora_Ticket> listaBitacoras = _dataContext.Bitacora_Tickets
+                                                                    .Include(x => x.Ticket)
+                                                                    .Where(x => x.Ticket.Id == ticketId)
+                                                                    .ToList();
             List<TicketBitacorasDTO> bitacoras = new List<TicketBitacorasDTO>();
-            ticket.Bitacora_Tickets.ToList().ForEach(delegate (Bitacora_Ticket bitacora)
+            listaBitacoras.ForEach(delegate (Bitacora_Ticket bitacora)
             {
                 bitacoras.Add(new TicketBitacorasDTO
                 {
@@ -148,21 +152,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
                                                                     .Include(t=>t.Emisor)
                                                                     .Include(t=>t.Prioridad)
                                                                     .Include(t=>t.Tipo_Ticket)
-                                                                    .Include(t=>t.Departamento_Destino)
+                                                                    .Include(t=>t.Estado)
                                                                     .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento).ToList());
             else if (opcion == "Abiertos")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
                                                                     .Include(t => t.Emisor)
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
-                                                                    .Include(t => t.Departamento_Destino)
+                                                                    .Include(t => t.Estado)
                                                                     .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && ticket.fecha_eliminacion.Equals(DateTime.MinValue)).ToList());
             else if (opcion == "Cerrados")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
                                                                     .Include(t => t.Emisor)
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
-                                                                    .Include(t => t.Departamento_Destino)
+                                                                    .Include(t => t.Estado)
                                                                     .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && !ticket.fecha_eliminacion.Equals(DateTime.MinValue)).ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");
@@ -173,13 +177,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Helpers
             {
                 respuesta.Add(new TicketInfoBasicaDTO
                 {
+                    id = ticket.Id,
                     titulo = ticket.titulo,
                     empleado_correo = ticket.Emisor.correo,
                     prioridad_nombre = ticket.Prioridad.nombre,
                     fecha_creacion = ticket.fecha_creacion,
                     tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
-                    departamentoDestino_nombre = ticket.Departamento_Destino.nombre
-                });
+                    estado_nombre = ticket.Estado.nombre
+                }); ;
             });
             return respuesta;
         }
