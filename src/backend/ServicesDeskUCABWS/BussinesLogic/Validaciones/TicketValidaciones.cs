@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.Data;

@@ -1,8 +1,8 @@
-﻿@model List<ServicesDeskUCAB.Models.Ticket>
+﻿@model List<ServicesDeskUCAB.Models.TicketInfoBasica>
 
 <div class="row">
     <div class="col-12">
-        <h1>Tickets - Nombre del departamento</h1>
+        <h1>Tickets</h1>
         <hr />
         <div class="text-center" style="margin-top:30px">
             <a class="btn btn-primary" asp-controller="Ticket" asp-action="Ticket">Crear ticket</a>
@@ -52,31 +52,35 @@
                 <th>PRIORIDAD</th>
                 <th>ESTADO</th>
                 <th>FECHA DE CREACIÓN</th>
+                <th>EMISOR</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.titulo</td>
-                    <td>@item.Tipo_Ticket.Nombre</td>
-                    <td>@item.Prioridad.nombre</td>
-                    <td>@item.Estado.nombre</td>
-                    <td>@item.fecha_creacion</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-TicketID="@item.Id">Reenviar</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-TicketID="@item.Id">Merge</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                }
+            @if(Model != null) { 
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.titulo</td>
+                        <td>@item.tipoTicket_nombre</td>
+                        <td>@item.prioridad_nombre</td>
+                        <td>@item.estado_nombre</td>
+                        <td>@item.fecha_creacion</td>
+                        <td>@item.empleado_correo</td>
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Ticket" asp-route-TicketID="@item.Id">Reenviar</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-ticketPadreId="@item.Id">Merge</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+             }
          </tbody>
     </table>
 </div>

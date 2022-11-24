@@ -1,9 +1,8 @@
 ﻿using System;
-
-namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
+namespace ServicesDeskUCAB.Models
 {
-    public class TicketInfoCompletaDTO
-    {
+	public class TicketInfoCompleta
+	{
         public Guid ticket_id { get; set; }
         public Guid ticketPadre_id { get; set; }
         public DateTime fecha_creacion { get; set; }
@@ -17,3 +16,4 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
         public string empleado_correo { get; set; }
     }
 }
+

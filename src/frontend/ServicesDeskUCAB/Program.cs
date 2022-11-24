@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IServicioTicketAPI, ServicioTicketAPI>();
 builder.Services.AddScoped<IServicioPrioridadAPI, ServicioPrioridadAPI>();
+
 builder.Services.AddHttpClient("Api", config =>
 {
     config.BaseAddress = new Uri(builder.Configuration["ApiSettings:baseUrl"]);

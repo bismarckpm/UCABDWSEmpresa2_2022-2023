@@ -4,6 +4,7 @@ using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketPorId(new Guid(id));
         }
 
+        // No esta listo
         [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
@@ -69,7 +71,7 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<string>();
             try
             {
-                respuesta.Data = _ticketDAO.crearTicketHijo(ticketPaterno.ticketPadre, ticketPaterno.ticketHijo);
+                //respuesta.Data = _ticketDAO.crearTicketHijo(ticketPaterno.ticketPadre, ticketPaterno.ticketHijo);
                 respuesta.Message = "Proceso Exitoso";
                 respuesta.StatusCode = HttpStatusCode.OK;
                 respuesta.Exception = null;

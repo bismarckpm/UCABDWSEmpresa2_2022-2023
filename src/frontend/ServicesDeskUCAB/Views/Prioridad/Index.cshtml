@@ -30,23 +30,26 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @if(Model != null)
             {
-                <tr>
-                    <td>@item.nombre </td>
-                    <td>@item.descripcion </td>
-                    <td>@item.estado</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.Id">Modificar</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.nombre </td>
+                        <td>@item.descripcion </td>
+                        <td>@item.estado</td>
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" asp-action="Prioridad" asp-controller="Prioridad" asp-route-PrioridadID="@item.Id">Modificar</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+             }
         </tbody>
     </table>
 </div>
