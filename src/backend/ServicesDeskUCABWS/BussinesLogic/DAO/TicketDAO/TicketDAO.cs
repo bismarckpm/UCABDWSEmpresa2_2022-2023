@@ -82,7 +82,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.validarTicket(id);
-                respuesta.Data = rellenarTicketInfoCompleta(id);
+                respuesta.Data = rellenarTicketInfoCompletaHl(id);
                 respuesta.Message = "Proceso de búsqueda exitoso";
                 respuesta.Success = true;
 
@@ -125,7 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //return "Ticket creado satisfactoriamente";
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.validarDepartamento(idDepartamento);
-                respuesta.Data = rellenarTicketInfoBasica(idDepartamento, estado);
+                respuesta.Data = rellenarTicketInfoBasicaHl(idDepartamento, estado);
                 respuesta.Message = "Proceso de búsqueda exitoso";
                 respuesta.Success = true;
             } catch (TicketDepartamentoException e)
@@ -351,8 +351,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticketValidaciones.validarTicket(ticketId);
             List<Bitacora_Ticket> listaBitacoras = _dataContext.Bitacora_Tickets
                                                                     .Include(x => x.Ticket)
+                                                                    .Include(x => x.Estado)
                                                                     .Where(x => x.Ticket.Id == ticketId)
                                                                     .ToList();
+            if (listaBitacoras.Count == 0)
+                throw new Exception("Lista de Bitacoras vacías");
             List<TicketBitacorasDTO> bitacoras = new List<TicketBitacorasDTO>();
             listaBitacoras.ForEach(delegate (Bitacora_Ticket bitacora)
             {
@@ -367,7 +370,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             return bitacoras;
         }
 
-        public void inicializarFamiliaTicket(TicketDTO nuevoTicket)
+        public void inicializarFamiliaTicketHl(TicketDTO nuevoTicket)
         {   //PARA LOS TICKETS HERMANOS
             nuevoTicket.Familia_Ticket = new Familia_Ticket()
             {
@@ -375,7 +378,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 Lista_Ticket = new List<Ticket>()
             };
         }
-        public TicketInfoCompletaDTO rellenarTicketInfoCompleta(Guid id)
+        public TicketInfoCompletaDTO rellenarTicketInfoCompletaHl(Guid id)
         {
             Ticket ticket = _dataContext.Tickets
                                 .Include(t => t.Estado)
@@ -405,7 +408,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 empleado_correo = ticket.Emisor.correo,
             };
         }
-        public List<TicketInfoBasicaDTO> rellenarTicketInfoBasica(Guid idDepartamento, string opcion)
+        public List<TicketInfoBasicaDTO> rellenarTicketInfoBasicaHl(Guid idDepartamento, string opcion)
         {
             List<TicketDTO> tickets;
             if (opcion == "Todos")
