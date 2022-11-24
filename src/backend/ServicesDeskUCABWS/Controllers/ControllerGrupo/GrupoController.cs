@@ -52,17 +52,21 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
         //Consultar Grupo
         [HttpGet]
         [Route("ConsultarGrupo/")]
-        public ActionResult<List<GrupoDto>> ConsultarGrupos()
+        public ApplicationResponse<List<GrupoDto>> ConsultarGrupos()
         {
-            try
+			var response = new ApplicationResponse<List<GrupoDto>>();
+			try
             {
-                return _grupoDAO.ConsultarGruposDao();
+                response.Data =  _grupoDAO.ConsultarGruposDao();
             }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
 
         //Consultar Grupo por ID
         [HttpGet]
@@ -141,23 +145,5 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			}
 			return response;
 		}
-
-		[HttpGet("ConsultarUltimoGrupoRegistrado/")]
-		public ApplicationResponse<GrupoDto> UltimoGrupoRegistradoDao()
-        {
-			var response = new ApplicationResponse<GrupoDto>();
-			try
-			{
-				response.Data = _grupoDAO.UltimoGrupoRegistradoDao();
-			}
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-		}
-
 	}
 }
