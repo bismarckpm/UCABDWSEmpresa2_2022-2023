@@ -114,18 +114,44 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPost]
-        [Route("RecuperarClave/{Gmail}")]
-        public ActionResult<string> RecuperarClave([FromRoute] string Gmail)
+        [Route("RecuperarClave")]
+        public ApplicationResponse<string> RecuperarClave([FromBody] UserRecoveryDTO usuario)
         {
+            var response = new ApplicationResponse<string>();
             try
             {
-                _usuarioDAO.RecuperarClave(Gmail);
-                return "Mensaje enviado";
+                _usuarioDAO.RecuperarClave(usuario.email, usuario.link);
+                response.Message =  "Correo enviado";
             }
             catch (ExceptionsControl ex)
             {
-                return "El correo no existe";
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
+
+        }
+
+        [HttpPost]
+        [Route("ValidarUsuario")]
+        public ApplicationResponse<string> ValidarContraseña([FromRoute] string email)
+        {
+            var response = new ApplicationResponse<string>();
+            try
+            {
+               
+                 response.Message = _usuarioDAO.ValidarCorreo(email);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+
+            return response;
+
 
         }
 

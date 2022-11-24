@@ -18,6 +18,7 @@ namespace ServiceDeskUCAB.Servicios
         Task<JObject> EditarUsuario(UpdateUser user);
         Task<Roles> ObtenerRoles(Guid roles);
         Task<JObject> ValidarLogin(Credenciales_Login user);
+        Task<JObject> ValidarEmail(RecuperarPasswordModel email);
 
     }
 }

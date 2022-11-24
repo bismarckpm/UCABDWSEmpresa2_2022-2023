@@ -283,5 +283,33 @@ namespace ServiceDeskUCAB.Servicios
 
             return _json_respuesta;
         }
+        public async Task<JObject> ValidarEmail(RecuperarPasswordModel email)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
+            try
+            {
+                
+                var response = await cliente.PostAsync("api/Usuario/ValidarUsuario", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+
+        }
     }
 }
