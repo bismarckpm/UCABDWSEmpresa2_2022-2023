@@ -65,26 +65,11 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerFamiliaTickets(new Guid(id));
         }*/
 
-        /*[HttpPut, Route("Reenviar")]
-        public ApplicationResponse<string> crearTicketHijoCtrl([FromBody] TicketPaternoDTO ticketPaterno)
+        [HttpPut, Route("Reenviar")]
+        public ApplicationResponse<string> reenviarTicketCtrl([FromBody] TicketReenvioDTO ticketInfo)
         {
-            var respuesta = new ApplicationResponse<string>();
-            try
-            {
-                //respuesta.Data = _ticketDAO.crearTicketHijo(ticketPaterno.ticketPadre, ticketPaterno.ticketHijo);
-                respuesta.Message = "Proceso Exitoso";
-                respuesta.StatusCode = HttpStatusCode.OK;
-                respuesta.Exception = null;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Data = "No se pudo añadir la bitacora al ticket";
-                respuesta.Message = ex.Message;
-                respuesta.Success = false;
-                //respuesta.Exception = ex.InnerException.ToString();
-            }
-            return respuesta;
-        }*/
+            return _ticketDAO.reenviarTicket(ticketInfo.ticketPapaId, ticketInfo.solicitudTicket);
+        }
 
         //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }

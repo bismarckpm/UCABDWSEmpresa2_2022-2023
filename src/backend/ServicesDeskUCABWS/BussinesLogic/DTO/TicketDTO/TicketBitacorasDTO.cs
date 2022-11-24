@@ -6,7 +6,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
     {
         public Guid Id { get; set; }
         public string estado_nombre { get; set; }
-        public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_fin { get; set; }
+        public DateTime Fecha_Inicio { get; set; }
+        public DateTime Fecha_Fin { get; set; }
     }
 }

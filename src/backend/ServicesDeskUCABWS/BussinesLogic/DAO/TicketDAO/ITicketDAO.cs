@@ -16,6 +16,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId);
         public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId);
         //public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerFamiliaTickets(Guid ticketId);
-        /*public string crearTicketHijo(TicketDTO ticketPadre, TicketDTO ticketHjo);*/
+        public ApplicationResponse<string> reenviarTicket(Guid ticketId, TicketNuevoDTO solicitudTicket);
     }
 }
