@@ -21,52 +21,67 @@
             <div class="mb-3">
                 <select class="form-select" aria-label="Default select example">
                     <option selected>Cambiar estado</option>
-                    @foreach (var item in Model.estados)
+                    @try
                     {
-                        <option value="@item">@item.nombre</option>
+                        @foreach (var item in Model.estados)
+                        {
+                            <option value="@item">@item.nombre</option>
+                        }
                     }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
                 </select>
             </div>
         }
     </div>
 
     <div class="container">
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Departamento destino:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.departamentoDestino_nombre">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Tipo ticket:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.tipoTicket_nombre">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Estado:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.estado_nombre">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Prioridad:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.prioridad_nombre">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Titulo:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.titulo">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Descripción:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.descripcion">
             </div>
         </div>
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de creación:</b></label>
             <div class="col-sm-8">
@@ -115,14 +130,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model.bitacoraTicket)
+            @try
             {
-                <tr>
-                    <td>@item.Estado</td>
-                    <td>@item.FechaInicio.</td>
-                    <td>@item.FechaFin</td>
-                </tr>
-            }
+                @foreach (var item in Model.bitacoraTicket)
+                {
+                    <tr>
+                        <td>@item.estado_nombre</td>
+                        <td>@item.fecha_inicio</td>
+                        @if(item.fecha_fin == DateTime.MinValue)
+                        {
+                            <td>-</td>
+                        }
+                        else
+                        {
+                            <td>@item.fecha_fin</td>
+                        }
+                    </tr>
+                }
+             }
+             catch(Exception e)
+             {
+                Console.WriteLine(e.Message);
+             }
+
+
         </tbody>
     </table>
 </div>
@@ -144,25 +175,32 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model.familiaTicket)
+                @try
                 {
-                    <tr>
-                        <td>@item.titulo</td>
-                        <td>@item.Tipo_Ticket.Nombre</td>
-                        <td>@item.Prioridad.nombre</td>
-                        <td>@item.Estado.nombre</td>
-                        <td>@item.fecha_creacion</td>
-                        <td>@item.fecha_eliminacion</td>
-                        <td>
-                            <div class="dropdown" style="float: right">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketID="@item.Id">Ver detalles</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach(var item in Model.familiaTicket)
+                    {
+                        <tr>
+                            <td>@item.titulo</td>
+                            <td>@item.Tipo_Ticket.Nombre</td>
+                            <td>@item.Prioridad.nombre</td>
+                            <td>@item.Estado.nombre</td>
+                            <td>@item.fecha_creacion</td>
+                            <td>@item.fecha_eliminacion</td>
+                            <td>
+                                <div class="dropdown" style="float: right">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketID="@item.Id">Ver detalles</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                 }
+                 catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             </tbody>
         </table>

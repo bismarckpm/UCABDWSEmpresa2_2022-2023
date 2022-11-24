@@ -12,7 +12,7 @@ namespace ServicesDeskUCAB.Servicios
 
         Task<List<Ticket>> FamiliaTicket(string ticketId);
 
-        Task<List<Bitacora_Ticket>> BitacoraTicket(string ticketId);
+        Task<List<TicketBitacora>> BitacoraTicket(string ticketId);
 
         Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion);
 

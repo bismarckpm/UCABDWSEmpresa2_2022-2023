@@ -36,7 +36,7 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Ticket()
         {
-            ViewBag.departamentoId = "21674527-d5b9-4d18-8b6a-fde8d8718061";
+            ViewBag.departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87";
 
             Departamento depa= new Departamento();
             depa.DepartamentoID = new Guid("ccacd411-1b46-4117-aa84-73ea64deac87");

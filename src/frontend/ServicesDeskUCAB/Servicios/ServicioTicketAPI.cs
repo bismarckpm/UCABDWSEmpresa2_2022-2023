@@ -83,9 +83,9 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<List<Bitacora_Ticket>> BitacoraTicket(string ticketId)
+        public async Task<List<TicketBitacora>> BitacoraTicket(string ticketId)
         {
-            List<Bitacora_Ticket> lista = new List<Bitacora_Ticket>();
+            List<TicketBitacora> lista = new List<TicketBitacora>();
             try
             {
                 var cliente = new HttpClient();
@@ -96,7 +96,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<Bitacora_Ticket>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<TicketBitacora>>(stringDataRespuesta);
                     lista = resultado;
                     Console.WriteLine("Obtiene la bitacora del ticket");
                 }

@@ -48,7 +48,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
         }
 
-        [HttpGet, Route("obtenerBitacorasTicket/{ticketId}")]
+        [HttpGet, Route("Bitacora/{ticketId}")]
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacorasCtrl(string ticketId)
         {
             return _ticketDAO.obtenerBitacoras(new Guid(ticketId));

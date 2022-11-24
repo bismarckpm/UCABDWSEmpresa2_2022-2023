@@ -8,7 +8,7 @@ namespace ServicesDeskUCAB.ViewModel
 	{
 		public TicketInfoCompleta ticket;
 
-		public List<Bitacora_Ticket> bitacoraTicket;
+		public List<TicketBitacora> bitacoraTicket;
 
 		public List<Ticket> familiaTicket;
 
