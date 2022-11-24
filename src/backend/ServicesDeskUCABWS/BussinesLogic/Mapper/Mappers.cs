@@ -20,6 +20,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<Tipo_Ticket, Tipo_TicketDTOCreate>();
             CreateMap<Tipo_Ticket, Tipo_TicketDTOUpdate>();
             CreateMap<Tipo_TicketDTOUpdate, Tipo_TicketDTOCreate>();
+            CreateMap<Tipo_TicketDTOCreate, Tipo_TicketDTOUpdate>();
 
 
             CreateMap<Departamento, DepartamentoSearchDTO>();

@@ -91,10 +91,10 @@ namespace ServiceDeskUCAB.Controllers
                 }
             }
 
-            if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
+            /*if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
             {
                 TipoTicketDTO.Flujo_Aprobacion = null;
-            }
+            }*/
             respuesta = await _servicioApi.Actualizar(TipoTicketDTO);
 
             if(respuesta != null)
@@ -158,10 +158,10 @@ namespace ServiceDeskUCAB.Controllers
                 }
             }
 
-            if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
+            /*if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
             {
                 TipoTicketDTO.Flujo_Aprobacion = null;
-            }
+            }*/
             respuesta = await _servicioApi.Guardar(TipoTicketDTO);
 
             if (respuesta != null)

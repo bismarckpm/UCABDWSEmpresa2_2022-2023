@@ -124,7 +124,7 @@
                             <h6>Registro Modelo Aprobacion:</h6>
                             <label class="form-label">Tipo Modelo Aprobación:</label>
 
-                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" required="required" onChange="mostrarPremio(this.value)">
+                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" id="seleccionarModeloAgregar"  required="required" onChange="mostrarPremio(this.value)">
                                 <option value="" selected disabled>-- Seleccionar --</option>
                                 <option value="Modelo_Paralelo">Modelo_Paralelo</option>
                                 <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
@@ -138,17 +138,17 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch" >
-                                            <input name="cargos2" class="form-check-input" value="mj-@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 40px">
+                                            <input name="cargos2" class="form-check-input inputModelos" value="mj-@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 40px">
                                             <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
                                             <br />
                                         </div>
-                                        <div class="form-check form-switch" style="display: none" id="@cargos2.posicion">
+                                        <div class="form-check form-switch inputJerarquico" style="display: none" id="@cargos2.posicion">
                                             Orden Aprobación:
-                                            <input name="ordenaprobacion" type="number" class="form-control" style="width : 60px">
+                                            <input name="ordenaprobacion" type="number" class="form-control inputJerarquico" style="width : 60px">
                                             Mínimo Aprobado Nivel:
-                                            <input name="minimo_aprobado_nivel" type="number" class="form-control" style="width : 60px">
+                                            <input name="minimo_aprobado_nivel" type="number" class="form-control inputJerarquico" style="width : 60px">
                                             Máximo Rechazado Nivel:
-                                            <input name="maximo_rechazado_nivel" type="number" class="form-control" style="width : 60px">
+                                            <input name="maximo_rechazado_nivel" type="number" class="form-control inputJerarquico" style="width : 60px">
                                         </div>
                                     }
                                 </div>
@@ -160,7 +160,7 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch">
-                                            <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 40px">
+                                            <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 40px">
                                             <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
                                             <br />
 
@@ -220,18 +220,22 @@
 
     function mostrarPremio(id) 
     {
-        let model = JSON.parse('@Model.ListaCargos.Select(x=>x.Id).ToList()');
+        @*let model = JSON.parse('@Model.ListaCargos.Select(x=>x.Id).ToList()');*@
 
+        var listainputs = document.querySelectorAll(".inputModelos")
+        
+        listainputs.forEach((input) => {
+            if (input.checked == true){
+                input.click();
+            }
+        });
+        
         if (id == "Modelo_Jerarquico") 
         {
             document.getElementById('Modelo_Jerarquico').style.display = 'block';
             document.getElementById('Modelo_Paralelo').style.display = 'none';
-            @*console.log("Afuera");
-            for (var i = 0; i < model.length; i++) {
-                console.log(model[i]);
-                document.getElementById("mp-" + model[i]).checked = 'false';
-            }*@
             document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
         }
 
         if (id == "Modelo_Paralelo") {

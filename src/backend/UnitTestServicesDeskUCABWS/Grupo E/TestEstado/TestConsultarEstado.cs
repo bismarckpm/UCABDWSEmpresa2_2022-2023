@@ -28,8 +28,15 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
         private IMapper mapper;
         public TestConsultarEstado()
         {
-
-
+            var myProfile = new List<Profile>
+            {
+                new TipoEstadoMapper(),
+                new EtiquetaMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
+            mapper = new Mapper(configuration);
             context = new Mock<IDataContext>();
             EstadoDAO = new EstadoService(context.Object, mapper);
             context.SetupDbContextData();
