@@ -55,105 +55,34 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         }
 
         [HttpGet]
-        [Route("ConsultarDepartamento/")]
-        public ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentos()
-        {
+        [Route("ConsultarDepartamentoNoEliminado/")]
+        public ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentosNoEliminados(){
+			
             var response = new ApplicationResponse<List<DepartamentoDto>>();
 
-            try
-            {
-                response.Data = _departamentoDAO.ConsultarDepartamentos();
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
+			try
+			{
+                response.Data = _departamentoDAO.DeletedDepartamento();
+			}
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+
+		}
 
         [HttpGet]
-        [Route("ConsultarDepartamentoPorID/{id}")]
-        public ApplicationResponse<DepartamentoDto> ConsultarPorID([FromRoute] Guid id)
+        [Route("ConsultarDepartamento/")]
+        public  ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentos()
         {
-            var response = new ApplicationResponse<DepartamentoDto>();
-            try
-            {
-                response.Data = _departamentoDAO.ConsultarPorID(id);
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
+			var response = new ApplicationResponse<List<DepartamentoDto>>();
 
-        [HttpDelete]
-        [Route("EliminarDepartamento/{id}")]
-        public ApplicationResponse<DepartamentoDto> EliminarDepartamento([FromRoute] Guid id)
-        {
-            var response = new ApplicationResponse<DepartamentoDto>();
-            try
-            {
-                response.Data = _departamentoDAO.eliminarDepartamento(id);
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
-        [HttpPut]
-        [Route("ActualizarDepartamento/")]
-        public ApplicationResponse<DepartamentoDto_Update> ActualizarDepartamento([FromBody] DepartamentoDto_Update departamento)
-        {
-            var response = new ApplicationResponse<DepartamentoDto_Update>();
-            try
-            {
-                response.Data = _departamentoDAO.ActualizarDepartamento(DepartamentoMapper.MapperDTOToEntityModificar(departamento));
-                //Cambiar parametros cuando realicemos frontend
-
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
-        [HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
-        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
-        {
-            var response = new ApplicationResponse<List<DepartamentoDto>>();
-            try
-            {
-                response.Data = _departamentoDAO.GetByIdDepartamento(idGrupo);
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
-        [HttpPut]
-        [Route("AsignarGrupoToDepartamento/{id}")]
-        public ApplicationResponse<List<string>> AsignarGrupoToDepartamento([FromRoute] Guid id, [FromBody] string idDepartamentos)
-        {
-			var response = new ApplicationResponse<List<string>>();
 			try
             {
-                response.Data =  _departamentoDAO.AsignarGrupoToDepartamento(id,idDepartamentos);
+                response.Data =  _departamentoDAO.ConsultarDepartamentos();
             }
             catch (ExceptionsControl ex)
             {
@@ -162,6 +91,91 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 				response.Exception = ex.Excepcion.ToString();
 			}
             return response;
+        }
+
+        [HttpGet]
+        [Route("ConsultarDepartamentoPorID/{id}")]
+        public ApplicationResponse<DepartamentoDto> ConsultarPorID([FromRoute] Guid id)
+        {
+			var response = new ApplicationResponse<DepartamentoDto>();
+			try
+            {
+                response.Data =  _departamentoDAO.ConsultarPorID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+            return response;
+        }
+
+        [HttpDelete]
+        [Route("EliminarDepartamento/{id}")]
+        public ApplicationResponse<DepartamentoDto> EliminarDepartamento([FromRoute] Guid id)
+        {
+			var response = new ApplicationResponse<DepartamentoDto>();
+			try
+            {
+                response.Data = _departamentoDAO.eliminarDepartamento(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+            return response;
+        }
+
+        [HttpPut]
+        [Route("ActualizarDepartamento/")]
+        public ApplicationResponse<DepartamentoDto_Update> ActualizarDepartamento([FromBody] DepartamentoDto_Update departamento)
+        {
+			var response = new ApplicationResponse<DepartamentoDto_Update>();
+			try
+            {
+                response.Data = _departamentoDAO.ActualizarDepartamento(DepartamentoMapper.MapperDTOToEntityModificar(departamento));
+                //Cambiar parametros cuando realicemos frontend
+              
+            }
+            catch (ExceptionsControl ex)
+            {
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
+
+		[HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
+        {
+			var response = new ApplicationResponse<List<DepartamentoDto>>();
+			try
+            {
+                response.Data = _departamentoDAO.GetByIdDepartamento(idGrupo);
+            }
+            catch (ExceptionsControl ex)
+            {
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response; 
+        }
+		[HttpPut("AsignarGrupoToDepartamento/{idGrupo}/{idDept}")]
+        public ActionResult<Departamento> AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept)
+        {
+            try
+            {
+                return _departamentoDAO.AsignarGrupoToDepartamento(idGrupo, idDept);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
         }
 
         [HttpGet("ConsultarDepartamentoNoAsociado/")]
@@ -181,33 +195,13 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
-		[HttpGet]
-		[Route("ConsultarDepartamentoNoEliminado/")]
-		public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentonoEliminado()
-        {
-
-            var response = new ApplicationResponse<List<DepartamentoDto>>();
-            try
-            {
-                response.Data = _departamentoDAO.DeletedDepartamento();
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
-		[HttpPut]
-		[Route("EditarRelacion/{id}")]
-		public ApplicationResponse<List<string>> EditarRelacion([FromRoute] Guid id, [FromBody] string idDepartamentos)
+        [HttpGet("SelectListItemDepartamento/")]
+		public ApplicationResponse<IEnumerable<SelectListItem>> ListaDepartamentoSelectList()
 		{
-			var response = new ApplicationResponse<List<string>>();
+			var response = new ApplicationResponse<IEnumerable<SelectListItem>>();
 			try
 			{
-				response.Data = _departamentoDAO.EditarRelacion(id, idDepartamentos);
+				response.Data= _departamentoDAO.ListaDepartamentoGrupo();
 			}
 			catch (ExceptionsControl ex)
 			{
