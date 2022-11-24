@@ -18,11 +18,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
     public class DepartamentoDAO : IDepartamentoDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
         private readonly IGrupoDAO _servicioGrupo;
 
         //Constructor
-        public DepartamentoDAO(DataContext dataContext, IGrupoDAO servicioGrupo)
+        public DepartamentoDAO(IDataContext dataContext, IGrupoDAO servicioGrupo)
         {
             _dataContext = dataContext;
             _servicioGrupo = servicioGrupo;
@@ -34,11 +34,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
 
-                if (ExisteDepartamento(departamento) == false)
-                {
                     _dataContext.Departamentos.Add(departamento);
-                    _dataContext.SaveChanges();          
-                }
+				_dataContext.DbContext.SaveChanges();
+
 
 				var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
 						.Select(d => new DepartamentoDto
@@ -68,7 +66,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
-					_dataContext.SaveChanges();
+					_dataContext.DbContext.SaveChanges();
 
 				return DepartamentoMapper.MapperEntityToDto(departamento);
 
@@ -85,9 +83,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                     _dataContext.Departamentos.Update(departamento);
-                    _dataContext.SaveChanges();
+				_dataContext.DbContext.SaveChanges();
 
-                var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
+				var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
                     {
                         id = d.id,
@@ -210,7 +208,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
                     nuevoDepartamento.id_grupo = id;
-					_dataContext.SaveChanges();
+					_dataContext.DbContext.SaveChanges();
 
 				}
 
@@ -282,7 +280,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                         if (relacionado != null) {
                             relacionado.id_grupo = id;
                             relacionado.fecha_ultima_edicion = DateTime.Now.Date;
-							_dataContext.SaveChanges();
+							_dataContext.DbContext.SaveChanges();
 						}
 
                     }
