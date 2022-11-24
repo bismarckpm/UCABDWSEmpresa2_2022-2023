@@ -30,6 +30,10 @@ namespace ServiceDeskUCAB.Controllers
         {
             return PartialView();
         }
+        public IActionResult RecuperarPassword()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> ValidarCredenciales(Credenciales_Login usuario)

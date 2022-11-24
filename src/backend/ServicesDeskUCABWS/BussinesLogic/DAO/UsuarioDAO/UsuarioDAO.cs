@@ -263,18 +263,29 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 throw new ExceptionsControl("La id de usuario no existe", ex);
             }
         }
-
-        public void RecuperarClave(string Email)
+        public string ValidarCorreo(string Email)
         {
             try
             {
-                var usuario = _dataContext.Usuarios.Where(u => u.correo == Email).FirstOrDefault();
+                var usuario = _dataContext.Usuarios.Where(u => u.correo == Email && u.fecha_eliminacion != default(DateTime)).FirstOrDefault();
+                return "El correo es valido";
+            }
+            catch(Exception ex)
+            {
+                throw new ExceptionsControl("El correo no esta registrado", ex);
+            }
+        }
+
+        public void RecuperarClave(string email, string link)
+        {
+            try
+            {
                 var fromAddress = new MailAddress("serviceucabdesk@hotmail.com", "SERVICE UCABDESK");
-                var toAddress = new MailAddress(usuario.correo,"To Name");
+                var toAddress = new MailAddress(email, "To Name");
                 const string fromPassword = "ucab1234";
                 const string subject = "Recuperacion de contraseña";
-                string body = "Su contraseña era : " + usuario.password;
-                
+                string body = "<h3>Para recuperar su contraseña ingrese <a href="+link+">aqui</a></h3>";
+
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.office365.com",
@@ -288,8 +299,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 using (var message = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = subject,
-                    Body = body
-                })
+                    Body = body,
+                    IsBodyHtml = true
+            })
                 {
                     smtp.Send(message);
                 }
