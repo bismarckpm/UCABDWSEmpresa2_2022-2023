@@ -204,7 +204,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
             _contextMock.Setup(c => c.Usuarios.Add(requestUserAdmin));
             _contextMock.Setup(set => set.DbContext.SaveChanges());
             var usuario = _userService.ActualizarUsuario(requestUserAdmin);
-
+        }
         [TestMethod(displayName: "Prueba Unitaria intentar eliminar un usuario que no existe")]
         public void EliminarUsuarioExeptionTest()
         {
@@ -229,7 +229,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
         {
             string id = "gabrielojeda7@gmail.com";
             var response = _userService.RecuperarClave(id);
-
             Assert.AreEqual(response, "Correo enviado");
 
         }
@@ -345,7 +344,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
             Assert.ThrowsException<ExceptionsControl>(() => _userService.AgregarCliente(requestUserAdmin));
         }
 
-            Assert.AreEqual(usuario.correo, requestUserAdmin.correo);
+
         [TestMethod(displayName: "Prueba Unitaria para un Empleado con correo repetido")]
         public void AgregarEmpleadoException()
         {
