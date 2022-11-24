@@ -8,7 +8,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Usuario
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string email { get; set;  }
-        [Required]
-        public string link { get; set; }
     }
 }

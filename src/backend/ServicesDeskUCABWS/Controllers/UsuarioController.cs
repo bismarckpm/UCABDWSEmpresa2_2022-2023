@@ -120,8 +120,8 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<string>();
             try
             {
-                _usuarioDAO.RecuperarClave(usuario.email, usuario.link);
-                response.Message =  "Correo enviado";
+                
+                response.Message = _usuarioDAO.RecuperarClave(usuario.email);
             }
             catch (ExceptionsControl ex)
             {
@@ -132,7 +132,7 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
 
         }
-
+        /*
         [HttpPost]
         [Route("ValidarUsuario")]
         public ApplicationResponse<string> ValidarContraseña([FromRoute] string email)
@@ -153,7 +153,7 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
 
 
-        }
+        }*/
 
         [HttpGet]
         [Route("Consulta/Usuario/{id}")]

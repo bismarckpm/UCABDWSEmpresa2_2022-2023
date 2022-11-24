@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -116,6 +118,25 @@ namespace ServiceDeskUCAB.Controllers
                 Console.WriteLine(ex.ToString());
             }
             return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RecuperarContraseña(RecuperarPasswordModel usuario)
+        {
+            try
+            {
+                //var token = await UserManager.GenerateTwoFactorTokenAsync(usuario,String)
+                //usuario.link = ""
+                var repuesta = await _servicioApiUsuarios.RecuperarContraseña(usuario);
+
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
     }
