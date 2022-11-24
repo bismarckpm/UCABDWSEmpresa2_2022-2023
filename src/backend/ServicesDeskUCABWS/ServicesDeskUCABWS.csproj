@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -23,5 +24,29 @@
     <Folder Include="BussinesLogic\Response\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="BussinesLogic\Recursos\ErroresTipo_Tickets.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErroresTipo_Tickets.resx</DependentUpon>
+    </Compile>
+    <Compile Update="BussinesLogic\Recursos\ErroresVotos.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErroresVotos.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="BussinesLogic\Recursos\ErroresTipo_Tickets.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErroresTipo_Tickets.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="BussinesLogic\Recursos\ErroresVotos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErroresVotos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  
 
 </Project>

@@ -189,6 +189,7 @@
                             <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
                                 Eliminar
                             </button>
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
                         </td>
                     </tr>
                 }

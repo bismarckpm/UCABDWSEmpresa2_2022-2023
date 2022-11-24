@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
@@ -23,5 +24,15 @@ namespace ServicesDeskUCABWS.Entities
 
         public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
 
-    }
+
+        public Tipo_Estado(string nombre, string descripcion)
+        {
+            Id = Guid.NewGuid();
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+
+        }
+
+    } 
 }
+

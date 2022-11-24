@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
 {
     public interface IPlantillaNotificacion
     {
@@ -13,9 +13,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         public PlantillaNotificacionDTO ConsultarPlantillaTitulo(string titulo);
         public PlantillaNotificacionDTO ConsultarPlantillaTipoEstadoID(Guid id);
         public PlantillaNotificacionDTO ConsultarPlantillaTipoEstadoTitulo(string tituloTipoEstado);
-        public Boolean RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla);
-        public Boolean ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id);
-        public Boolean EliminarPlantilla(Guid id);
+        public bool RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla);
+        public bool ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id);
+        public bool EliminarPlantilla(Guid id);
         //public Boolean ValidarRelacionPlantillaTipo(Guid tipoEstadoId);
     }
 }

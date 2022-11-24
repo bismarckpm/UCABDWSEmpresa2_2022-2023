@@ -11,29 +11,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
 {
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {
         private readonly IDataContext _plantillaContext;
         private readonly INotificacion _notificacionService;
         private readonly IMapper _mapper;
-       
+
 
         public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, INotificacion notificacionService)
         {
             _plantillaContext = plantillaContext;
             _notificacionService = notificacionService;
             _mapper = mapper;
-            
+
         }
 
         //GET: Servicio para consultar todas las plantillas
-        public  List<PlantillaNotificacionDTO> ConsultaPlantillas()
+        public List<PlantillaNotificacionDTO> ConsultaPlantillas()
         {
             try
             {
-                var data =  _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList();
+                var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList();
                 var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionDTO>>(data);
                 if (plantillaSearchDTO.Count() == 0)
                     throw new ExceptionsControl("No existen plantillas registradas");
@@ -63,7 +63,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
             {
                 throw new ExceptionsControl("No existe la plantilla con ese ID", ex);
             }
-            
+
         }
 
         //GET: Servicio para consultar una plantilla notificacion por un título específico
@@ -74,17 +74,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
                 var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(p => p.Titulo == titulo).Single();
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(data);
                 return plantillaSearchDTO;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new ExceptionsControl("No existe la plantilla con ese título", ex);
-            } 
+            }
         }
 
         //GET: Servicio para consultar una plantilla notificacion por un tipo estado específico mediante su nombre
         public PlantillaNotificacionDTO ConsultarPlantillaTipoEstadoTitulo(string tituloTipoEstado)
         {
             try
-            { 
+            {
                 var data = _plantillaContext.PlantillasNotificaciones.AsNoTracking().Include(p => p.TipoEstado).ThenInclude(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(p => p.TipoEstado.nombre == tituloTipoEstado).Single();
                 var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(data);
                 return plantillaSearchDTO;
@@ -115,7 +116,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         }
 
         //POST: Servicio para crear plantilla notificacion
-        public Boolean RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
+        public bool RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
         {
             try
             {
@@ -140,18 +141,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
 
                 return true;
             }
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 throw new ExceptionsControl("Ya existe una plantilla asociada a ese tipo estado o alguno de los campos de la plantilla está vacia", ex);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ExceptionsControl("No se pudo registrar la plantilla", ex);
             }
         }
 
         //PUT: Servicio para modificar plantilla notificacion
-        public Boolean ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
+        public bool ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
         {
             try
             {
@@ -172,11 +173,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
         }
 
         //DELETE: Servicio para eliminar plantilla notificacion
-        public Boolean EliminarPlantilla(Guid id)
+        public bool EliminarPlantilla(Guid id)
         {
             try
             {
-                _plantillaContext.PlantillasNotificaciones.Remove( _plantillaContext.PlantillasNotificaciones.Find(id));
+                _plantillaContext.PlantillasNotificaciones.Remove(_plantillaContext.PlantillasNotificaciones.Find(id));
                 _plantillaContext.DbContext.SaveChanges();
                 return true;
             }
@@ -188,7 +189,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
             {
                 throw new ExceptionsControl("No se pudo eliminar la plantilla", ex);
             }
-        
+
         }
     }
 }

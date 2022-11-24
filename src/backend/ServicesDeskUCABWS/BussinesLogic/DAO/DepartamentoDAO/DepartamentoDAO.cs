@@ -49,11 +49,37 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 						}).First();
 
-				return nuevoDepartamento;
+                AgregarEstadoADepartamentoCreado(departamento);
+
+                return nuevoDepartamento;
 			}
             catch (Exception ex) {
 				throw new ExceptionsControl("No se pudo registrar el departamento"+" "+departamento.nombre, ex);
 			}
+        }
+
+        //Agregar Estados de los departamentos agregados
+
+        public void AgregarEstadoADepartamentoCreado(Departamento departamento)
+        {
+            var listaTipoEstados = _dataContext.Tipos_Estados.ToList();
+
+            var listaEstados = new List<Estado>();
+
+            foreach (var TipoEstado in listaTipoEstados)
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + TipoEstado.nombre, TipoEstado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = TipoEstado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _dataContext.Estados.AddRange(listaEstados);
+            _dataContext.DbContext.SaveChanges();
         }
 
         //Eliminar un Departamento

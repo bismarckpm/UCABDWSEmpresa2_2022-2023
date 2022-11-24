@@ -1,15 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+using ServicesDeskUCABWS.Entities;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
-using ServiceDeskUCAB.Models;
-using System.Runtime.CompilerServices;
 
 namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
     public class ServicioGrupo_API : IServicioGrupo_API
     {
+		
 		//Declaracion de variables
 		private static string _baseUrl;
 		private JObject _json_respuesta;

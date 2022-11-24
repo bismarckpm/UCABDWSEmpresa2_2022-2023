@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using System.Collections;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 using System.Collections.Generic;
 using System.Text;
 

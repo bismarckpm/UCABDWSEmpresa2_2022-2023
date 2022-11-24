@@ -2,7 +2,7 @@
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;

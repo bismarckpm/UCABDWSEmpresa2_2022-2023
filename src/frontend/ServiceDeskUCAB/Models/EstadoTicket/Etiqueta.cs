@@ -1,4 +1,4 @@
-﻿namespace ModuloPlantillasNotificaciones.Models.EstadoTicket
+﻿namespace ServiceDeskUCAB.Models.EstadoTicket
 {
     public class Etiqueta
     {

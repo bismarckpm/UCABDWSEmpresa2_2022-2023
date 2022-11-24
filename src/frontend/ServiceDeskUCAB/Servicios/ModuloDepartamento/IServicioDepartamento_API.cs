@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
 
 namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 {
