@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using ServiceDeskUCAB.Models.DTO.GrupoDTO;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
-using ServiceDeskUCAB.Models.DTO.GrupoDTO;
-using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 
 namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
@@ -68,36 +69,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 			return json_respuesta;
 		}
 
-		public async Task<JObject> GuardarGrupo(GrupoDto grupo, List<DepartamentoDto> listaDept)
-		{
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
-
-			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
-			Console.WriteLine(JsonConvert.SerializeObject(grupo));
-
-			try
-			{
-				var response = await cliente.PostAsync("Grupo/CrearGrupo/", content);
-				var respuesta = await response.Content.ReadAsStringAsync();
-				JObject _json_respuesta = JObject.Parse(respuesta);
-
-				return _json_respuesta;
-			}
-			catch (HttpRequestException ex)
-			{
-				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-
-			return _json_respuesta;
-		}
-
 		//Retorna el modal de AgregarGrupo con la lista de departamentos que no están asociados
 		public async Task<Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>> tuplaModelDepartamento()
 		{
@@ -138,6 +109,66 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 			var tupla = new Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>(listaDepartamentos,departamentoModel, model);
 
 			return tupla;
+		}
+
+		//Almacenar la información de un nuevo grupo
+		public async Task<JObject> RegistrarGrupo(GrupoModel grupo)
+		{
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+			Console.WriteLine(JsonConvert.SerializeObject(grupo));
+
+			try
+			{
+				var response = await cliente.PostAsync("Grupo/CrearGrupo/", content);
+				var respuesta = await response.Content.ReadAsStringAsync();
+				JObject _json_respuesta = JObject.Parse(respuesta);
+
+				return _json_respuesta;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			return _json_respuesta;
+		}
+
+		public async Task<JObject> EditarGrupo(GrupoModel grupo)
+		{
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+
+			try
+			{
+				var response = await cliente.PutAsync("Grupo/ActualizarGrupo", content);
+				var respuesta = await response.Content.ReadAsStringAsync();
+				JObject _json_respuesta = JObject.Parse(respuesta);
+				return _json_respuesta;
+
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			return _json_respuesta;
 		}
 	}
 }

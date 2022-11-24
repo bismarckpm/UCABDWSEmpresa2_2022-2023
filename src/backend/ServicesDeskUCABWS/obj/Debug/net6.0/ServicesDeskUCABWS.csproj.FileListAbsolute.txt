@@ -1,0 +1,832 @@
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\appsettings.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.exe
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.deps.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.runtimeconfig.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.pdb
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Humanizer.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\MessagePack.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\MessagePack.Annotations.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Build.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.Features.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Common.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Configuration.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Frameworks.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.LibraryModel.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Packaging.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.ProjectModel.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Protocol.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Versioning.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Convention.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Hosting.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Runtime.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.TypedParts.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.DirectoryServices.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Runtime.Caching.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.DirectoryServices.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.AssemblyReference.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.Resource.resources
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.GenerateResource.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.AssemblyInfoInputs.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.AssemblyInfo.cs
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.CoreCompileInputs.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\scopedcss\bundle\ServicesDeskUCABWS.styles.css
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.CopyComplete
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\refint\ServicesDeskUCABWS.dll
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.pdb
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.genruntimeconfig.cache
+C:\Users\luisr\OneDrive\Documentos\MyFork DS\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ref\ServicesDeskUCABWS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\appsettings.Development.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\appsettings.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.exe
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.deps.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.runtimeconfig.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ServicesDeskUCABWS.pdb
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\AutoMapper.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Humanizer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\MessagePack.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Build.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.Features.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Configuration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Frameworks.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.LibraryModel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Packaging.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.ProjectModel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Protocol.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\NuGet.Versioning.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Convention.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Hosting.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.Runtime.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Composition.TypedParts.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.DirectoryServices.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Features.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.DirectoryServices.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.AssemblyReference.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.Resource.resources
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.GenerateResource.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.AssemblyInfoInputs.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.AssemblyInfo.cs
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.CoreCompileInputs.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.MvcApplicationPartsAssemblyInfo.cs
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.MvcApplicationPartsAssemblyInfo.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\staticwebassets.build.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\staticwebassets.development.json
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\scopedcss\bundle\ServicesDeskUCABWS.styles.css
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.csproj.CopyComplete
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\refint\ServicesDeskUCABWS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.pdb
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.genruntimeconfig.cache
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ref\ServicesDeskUCABWS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.BussinesLogic.Recursos.ErroresTipo_Tickets.resources
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\obj\Debug\net6.0\ServicesDeskUCABWS.BussinesLogic.Recursos.ErroresVotos.resources
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Antiforgery.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authentication.Cookies.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authentication.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authentication.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authentication.OAuth.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authorization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Authorization.Policy.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Components.Authorization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Components.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Components.Forms.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Components.Server.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Components.Web.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Connections.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.CookiePolicy.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Cors.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.DataProtection.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.DataProtection.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Diagnostics.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Diagnostics.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Diagnostics.HealthChecks.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.HostFiltering.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Hosting.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Hosting.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Html.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Connections.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Connections.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Features.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Http.Results.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.HttpLogging.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.HttpOverrides.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.HttpsPolicy.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Identity.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Localization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Localization.Routing.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Metadata.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.ApiExplorer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Cors.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.DataAnnotations.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Formatters.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Formatters.Xml.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Localization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.Razor.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.RazorPages.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.TagHelpers.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Mvc.ViewFeatures.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Razor.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Razor.Runtime.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.ResponseCaching.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.ResponseCaching.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.ResponseCompression.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Rewrite.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Routing.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Routing.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.HttpSys.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.IIS.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.IISIntegration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.Kestrel.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.Kestrel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.Kestrel.Transport.Quic.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.Session.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.SignalR.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.SignalR.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.SignalR.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.StaticFiles.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.WebSockets.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.AspNetCore.WebUtilities.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.CSharp.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Caching.Memory.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Binder.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.CommandLine.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Ini.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.KeyPerFile.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.UserSecrets.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Configuration.Xml.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Features.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Composite.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Hosting.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Http.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Identity.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Identity.Stores.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Localization.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Localization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.Configuration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.Console.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.Debug.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.EventLog.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.EventSource.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Logging.TraceSource.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.ObjectPool.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Options.DataAnnotations.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Options.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Extensions.WebEncoders.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.JSInterop.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Net.Http.Headers.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.VisualBasic.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.VisualBasic.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Win32.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\Microsoft.Win32.Registry.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\mscorlib.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\netstandard.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.AppContext.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Buffers.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Collections.Concurrent.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Collections.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Collections.Immutable.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Collections.NonGeneric.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Collections.Specialized.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.Annotations.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.DataAnnotations.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.EventBasedAsync.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ComponentModel.TypeConverter.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Configuration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Console.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Core.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Data.Common.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Data.DataSetExtensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Data.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.Contracts.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.Debug.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.DiagnosticSource.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.EventLog.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.FileVersionInfo.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.Process.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.StackTrace.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.TextWriterTraceListener.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.Tools.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.TraceSource.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Diagnostics.Tracing.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Drawing.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Drawing.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Dynamic.Runtime.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Formats.Asn1.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Globalization.Calendars.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Globalization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Globalization.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Compression.Brotli.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Compression.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Compression.FileSystem.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Compression.ZipFile.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.FileSystem.AccessControl.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.FileSystem.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.FileSystem.DriveInfo.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.FileSystem.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.FileSystem.Watcher.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.IsolatedStorage.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.MemoryMappedFiles.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Pipelines.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Pipes.AccessControl.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.Pipes.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.IO.UnmanagedMemoryStream.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Linq.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Linq.Expressions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Linq.Parallel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Linq.Queryable.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Memory.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Http.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Http.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.HttpListener.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Mail.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.NameResolution.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.NetworkInformation.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Ping.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Requests.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Security.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.ServicePoint.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.Sockets.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.WebClient.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.WebHeaderCollection.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.WebProxy.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.WebSockets.Client.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Net.WebSockets.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Numerics.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Numerics.Vectors.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ObjectModel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.DispatchProxy.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Emit.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Emit.ILGeneration.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Emit.Lightweight.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Metadata.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Reflection.TypeExtensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Resources.Reader.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Resources.ResourceManager.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Resources.Writer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.CompilerServices.Unsafe.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.CompilerServices.VisualC.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Handles.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.InteropServices.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Intrinsics.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Loader.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Numerics.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Serialization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Serialization.Formatters.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Serialization.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Serialization.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Runtime.Serialization.Xml.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.AccessControl.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Claims.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Algorithms.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Cng.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Csp.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Encoding.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.OpenSsl.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Primitives.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.X509Certificates.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Cryptography.Xml.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Principal.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.Principal.Windows.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Security.SecureString.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ServiceModel.Web.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ServiceProcess.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.Encoding.CodePages.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.Encoding.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.Encoding.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.Encodings.Web.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.Json.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Text.RegularExpressions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Channels.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Overlapped.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Tasks.Dataflow.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Tasks.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Tasks.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Tasks.Parallel.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Thread.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.ThreadPool.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Threading.Timer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Transactions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Transactions.Local.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.ValueTuple.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Web.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Web.HttpUtility.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Windows.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.Linq.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.ReaderWriter.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.Serialization.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.XDocument.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.XmlDocument.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.XmlSerializer.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.XPath.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\System.Xml.XPath.XDocument.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\refs\WindowsBase.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
+D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\backend\ServicesDeskUCABWS\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll

@@ -1,0 +1,101 @@
+﻿@model ServiceDeskUCAB.ViewModel.DepartamentoGrupo.GrupoEditarViewModel
+@{
+    ViewData["Title"] = "Gestion Departamento";
+}
+
+<head>
+    <title>@ViewData["Title"] - ServicesDeskUCAB</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<!-- Librerias -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+<!-- Ventana Emergente -->
+<div class="modal fade" id="popUpEditar" tabindex="-1" role="dialog" aria-labelledby="popUpEditarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Editar Grupo</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("ModificarGrupo", "DepartamentoYGrupo", FormMethod.Post))
+            {
+                <div class="modal-body">
+
+                    @Html.TextBoxFor(m => m.grupo.id, new { @Value = Model.grupo.id, @type="hidden"})
+                    <span>Nombre: </span> 
+                    @Html.TextBoxFor(m => m.grupo.nombre, new { @Value = Model.grupo.nombre, Class="form-control"})
+                    @Html.ValidationMessageFor(m => m.grupo.nombre ,null, new { @class = "text-danger" })
+                    <br />
+                    <span>Descripcion: </span>
+                    @Html.TextAreaFor(m => m.grupo.descripcion, new { @Value = Model.grupo.descripcion, Class="form-control"})
+                    @Html.ValidationMessageFor(m => m.grupo.descripcion ,null, new { @class = "text-danger" })
+
+                    <table class="table" id="DeptTable">
+                        <tr>
+                            <th>
+                                Nombre
+                            </th>
+                        </tr>
+                        @if (Model.deptAsociado == null && Model.departamento == null || Model.deptAsociado.Count == 0 && Model.departamento.Count == 0)
+                        {
+                            <p class="fst-italic text-danger">No existen en el sistema</p>
+                        }else{
+
+                            @foreach (var item in Model.departamento)
+                            {
+                                @if (Model.deptAsociado.Any(x => x.id == item.id))
+                                {
+                                    <tr>
+                                        <td class="id" style="display:none" ;>
+                                            @Html.DisplayFor(i => item.id)
+                                        </td>
+                                        <td>
+                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" checked />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(i => item.nombre)
+                                        </td>
+
+                                    </tr>
+                                }else{
+                                    <tr>
+                                        <td class="id" style="display:none" ;>
+                                            @Html.DisplayFor(i => item.id)
+                                        </td>
+                                        <td>
+                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" />
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(i => item.nombre)
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+          
+                        }
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="botonCrear">Editar</button>
+                </div>
+            }
+           
+        </div>
+    </div>
+</div>
