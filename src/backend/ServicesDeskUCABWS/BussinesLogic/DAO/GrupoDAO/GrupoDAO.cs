@@ -211,23 +211,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
             return existe;
         }
-
-
-        //Retorna el ultimo registro almacenado
-        public GrupoDto UltimoGrupoRegistradoDao()
-        {
-            try
-            {
-                var grupo = _dataContext.Grupos.OrderBy(x => x.id).Where(x=> x.fecha_eliminacion == null).LastOrDefault();
-
-                return GrupoMapper.MapperEntityToDtoDefault(grupo);
-
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("No hay grupo registrado", ex);
-            }
-        }
+     
     }
 }
 
