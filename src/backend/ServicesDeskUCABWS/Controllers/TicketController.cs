@@ -58,7 +58,13 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);
         }
-
+        // FALTA COLOCAR EL PADRE COMO ELIMINADO EN REENVIAR
+        [HttpPost, Route("Reenviar")]
+        public ApplicationResponse<string> reenviarTicket([FromBody] TicketReenviarDTO ticket)
+        {
+            return _ticketDAO.reenviarTicket(ticket);
+        }
+        
         /*[HttpGet,Route("Familia/{id}")]
         public ApplicationResponse<List<TicketDTO>> obtenerFamiliaTicketCtrl(string id)
         {

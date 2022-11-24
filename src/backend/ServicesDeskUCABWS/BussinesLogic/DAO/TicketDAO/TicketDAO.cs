@@ -100,19 +100,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             return respuesta;
         }
 
-        /*public List<Ticket> obtenerTickets(Guid departamento, string opcion)
-        {
-            try
-            {
-                return _dataContext.Tickets.Where(d => d.Departamento_Destino.Id == departamento).ToList();
-            }
-            catch (Exception exception)
-            {
-                throw new Exception("No se pudo obtener la lista de tickets");
-                //return exception.Message;
-            }
-        }*/
-
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado)
         {
             ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
@@ -178,6 +165,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> mergeTickets(Guid ticketId, List<Guid> ticketsSecundariosId)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -209,6 +197,78 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             catch (TicketException e)
             {
                 respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket)
+        {
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
+            TicketNuevoDTO ticket = new TicketNuevoDTO();
+            ticket.departamentoDestino_Id = solicitudTicket.departamentoDestino_Id;
+            ticket.descripcion = solicitudTicket.descripcion;
+            ticket.empleado_id = solicitudTicket.empleado_id;
+            ticket.prioridad_id = solicitudTicket.prioridad_id;
+            ticket.tipoTicket_id = solicitudTicket.tipoTicket_id;
+            ticket.titulo = solicitudTicket.titulo;
+            ticket.ticketPadre_Id = solicitudTicket.ticketPadre_Id;
+
+            try
+            {
+                TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
+                validaciones.nuevoTicketEsValido(ticket);
+                TicketDTO nuevoTicket = crearNuevoTicket(ticket);
+                respuesta.Data = "Ticket creado satisfactoriamente";
+                respuesta.Message = "Ticket creado satisfactoriamente";
+                respuesta.Success = true;
+            }
+            catch (TicketException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketDescripcionException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketEmisorException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketPrioridadException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketTipoException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketDepartamentoException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (TicketPadreException e)
+            {
+                respuesta.Data = e.Message;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
@@ -299,7 +359,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 nuevoTicket.Estado = estado;
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
-            nuevoTicket.Ticket_Padre = null;
+            if(solicitudTicket.ticketPadre_Id != Guid.Empty)
+            {
+
+                nuevoTicket.Ticket_Padre = _dataContext.Tickets
+                                                                .Include(t => t.Id)
+                                                                .Where(padre => padre.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+            }
+            else
+            {
+                nuevoTicket.Ticket_Padre = null;
+            }
             nuevoTicket.nro_cargo_actual = null;
             nuevoTicket.Votos_Ticket = null;
             try
@@ -345,6 +415,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.Tickets.Update(_mapper.Map<Ticket>(ticket));
             _dataContext.DbContext.SaveChanges();
         }
+
         public List<TicketBitacorasDTO> obtenerBitacorasHl(Guid ticketId)
         {
             TicketValidaciones ticketValidaciones = new TicketValidaciones(_dataContext);
@@ -378,6 +449,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 Lista_Ticket = new List<Ticket>()
             };
         }
+
         public TicketInfoCompletaDTO rellenarTicketInfoCompletaHl(Guid id)
         {
             Ticket ticket = _dataContext.Tickets
@@ -408,6 +480,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 empleado_correo = ticket.Emisor.correo,
             };
         }
+
         public List<TicketInfoBasicaDTO> rellenarTicketInfoBasicaHl(Guid idDepartamento, string opcion)
         {
             List<TicketDTO> tickets;
@@ -478,5 +551,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             return listaTickets;
         }
+
     }
 }
