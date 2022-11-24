@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using System.Data;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
@@ -45,7 +46,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                                         });
                 return nuevoGrupo.First();
             }
-            catch (Exception ex)
+			catch (DuplicateNameException ex)
+			{
+				throw new ExceptionsControl("El grupo ingresado ya existe: ", ex);
+			}
+			catch (Exception ex)
             {
 				throw new ExceptionsControl("Error al momento de registrar", ex);
 			}
@@ -69,12 +74,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 );
                 return lista.ToList();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
-        }
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("Error al momento de consultar los grupos", ex);
+			}
+		}
 
         //Consultar grupo por ID 
         public GrupoDto ConsultarPorIdDao(Guid idGrupo)
@@ -121,7 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             return null;
         }
 
-        //Modificar Grupo
+        //Modifica la información de un grupo registrado
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo)
         {
             try
@@ -141,7 +145,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
                 );
                 return data.First();
-            }
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ExceptionsControl("Fallo al actualizar el grupo"+ grupo.nombre, ex);
+			}
 			catch (Exception ex)
 			{
 				throw new ExceptionsControl("Fallo al actualizar un grupo", ex);
@@ -210,23 +218,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 throw new ExceptionsControl("El grupo" + grupo.nombre + "ya está registrado", ex);
             }
             return existe;
-        }
-
-
-        //Retorna el ultimo registro almacenado
-        public GrupoDto UltimoGrupoRegistradoDao()
-        {
-            try
-            {
-                var grupo = _dataContext.Grupos.OrderBy(x => x.id).Where(x=> x.fecha_eliminacion == null).LastOrDefault();
-
-                return GrupoMapper.MapperEntityToDtoDefault(grupo);
-
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("No hay grupo registrado", ex);
-            }
         }
     }
 }

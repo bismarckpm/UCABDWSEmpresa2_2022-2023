@@ -14,6 +14,12 @@
     <link rel="stylesheet" href="~/css/sb-admin-2.css" />    
 </head>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
 <!-- Ventana emergente para agregar grupo -->
 
 <div class="modal fade" id="popUpAgregar" tabindex="-1" role="dialog" aria-labelledby="popUpEditarTitle" aria-hidden="true">
@@ -30,13 +36,12 @@
             {
                 <div class="modal-body">
                     
-                    <input type="text" id="@Model.nombre" name="nombre" value="@Model.nombre" class="form-control" placeholder="Nombre: " />
+                    @Html.TextBoxFor(m => m.nombre, new {Class="form-control", placeholder="Nombre: "})
+                    @Html.ValidationMessageFor(m => m.nombre ,null, new { @class = "text-danger" })
                     <br />
-                    <input type="text" id="@Model.descripcion" name="descripcion" value="@Model.descripcion" class="form-control" placeholder="Descripcion: " />
-                    <br />
+                    @Html.TextAreaFor(m => m.descripcion, new {Class="form-control", placeholder="Descripcion: "})
+                    @Html.ValidationMessageFor(m => m.descripcion ,null, new { @class = "alerta text-danger" })
 
-                  
-                 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>

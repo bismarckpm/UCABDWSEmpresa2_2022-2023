@@ -1,0 +1,128 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ServiceDeskUCAB
+build_property.RootNamespace = ServiceDeskUCAB
+build_property.ProjectDir = D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\frontend\ServiceDeskUCAB\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Proyectos2022\UCABDWSEmpresa2_2022-2023\src\frontend\ServiceDeskUCAB
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/AgregarDepartamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXEFncmVnYXJEZXBhcnRhbWVudG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/AgregarGrupo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXEFncmVnYXJHcnVwby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/DepartamentoGrupo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXERlcGFydGFtZW50b0dydXBvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/VentanaEditarDepartamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXFZlbnRhbmFFZGl0YXJEZXBhcnRhbWVudG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/VentanaEditarGrupo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXFZlbnRhbmFFZGl0YXJHcnVwby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/VentanaEliminarDepartamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXFZlbnRhbmFFbGltaW5hckRlcGFydGFtZW50by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/VentanaEliminarGrupo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXFZlbnRhbmFFbGltaW5hckdydXBvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/DepartamentoYGrupo/VentanaVisualizarDepartamento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvWUdydXBvXFZlbnRhbmFWaXN1YWxpemFyRGVwYXJ0YW1lbnRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/EstadoTicket/EstadoEditar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvVGlja2V0XEVzdGFkb0VkaXRhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/EstadoTicket/EstadoNuevo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvVGlja2V0XEVzdGFkb051ZXZvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/EstadoTicket/EstadosTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXN0YWRvVGlja2V0XEVzdGFkb3NUaWNrZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Login/SingUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cU2luZ1VwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/PlantillaNotificacion/PlantillaEditar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbnRpbGxhTm90aWZpY2FjaW9uXFBsYW50aWxsYUVkaXRhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/PlantillaNotificacion/PlantillaNueva.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbnRpbGxhTm90aWZpY2FjaW9uXFBsYW50aWxsYU51ZXZhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/PlantillaNotificacion/PlantillasNotificacion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbnRpbGxhTm90aWZpY2FjaW9uXFBsYW50aWxsYXNOb3RpZmljYWNpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Shared/_LayoutLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/GuardarUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xHdWFyZGFyVXN1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/Usuarios.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xVc3Vhcmlvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/VentanaEliminarUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xWZW50YW5hRWxpbWluYXJVc3VhcmlvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Usuario/ViewUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xWaWV3VXN1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Proyectos2022/UCABDWSEmpresa2_2022-2023/src/frontend/ServiceDeskUCAB/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-0nd5ifgj88
