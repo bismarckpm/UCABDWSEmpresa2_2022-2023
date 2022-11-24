@@ -16,11 +16,13 @@ namespace ServicesDeskUCAB.Servicios
 
         Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion);
 
-        Task<JObject> Guardar(CrearTicket Objeto);
+        Task<JObject> Guardar(TicketCrear Objeto);
+
+        Task<JObject> GuardarReenviar(TicketReenviar Objeto);
+
+        Task<JObject> GuardarMerge(TicketMerge Objeto);
 
         //Task<JObject> Editar();
-
-        //Task<JObject> Merge(string ticketId, List<String> familiaId);
     }
 }
 

@@ -113,7 +113,7 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion)
+        public async Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion) 
         {
             List<TicketInfoBasica> objeto = new List<TicketInfoBasica>();
             try
@@ -144,7 +144,7 @@ namespace ServicesDeskUCAB.Servicios
         }
 
         [HttpPost]
-        public async Task<JObject> Guardar(CrearTicket Objeto)
+        public async Task<JObject> Guardar(TicketCrear Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
@@ -168,31 +168,56 @@ namespace ServicesDeskUCAB.Servicios
             return null;
         }
 
-        /*
-       [HttpPost]
-       public async Task<JObject> Reenviar(string ticketId)
-       {
-           var cliente = new HttpClient();
-           cliente.BaseAddress = new Uri(_baseUrl);
-           var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-           try
-           {
-               var response = await cliente.PostAsync($"Ticket/Reenviar/{ticketId}", content);
-               var respuesta = await response.Content.ReadAsStringAsync();
-               JObject _json_respuesta = JObject.Parse(respuesta);
-               return _json_respuesta;
-           }
-           catch (HttpRequestException ex)
-           {
-               Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+        [HttpPost]
+        public async Task<JObject> GuardarReenviar(TicketReenviar Objeto)
+        {
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PostAsync($"Ticket/Reenviar/", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
 
-           }
-           catch (Exception e)
-           {
-               Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
-           }
-           return null;
-       }*/
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public async Task<JObject> GuardarMerge(TicketMerge Objeto)
+        {
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PostAsync($"Ticket/Merge/", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return null;
+        }
+
 
         /*
         public async Task<JObject> Editar(Ticket Objeto)
@@ -221,33 +246,6 @@ namespace ServicesDeskUCAB.Servicios
             return respuesta;
         }*/
 
-        /*
-        public async Task<JObject> GuardarFamilia(Familia_Ticket Objeto)
-        {
-            bool respuesta = false;
-            try
-            {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-                var response = await cliente.PostAsync($"Ticket/Merge", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                    Console.WriteLine("La familia de tickets se guarda");
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("No obtiene la familai de tickets, algo a sucedido ", e.Message);
-            }
-            return respuesta;
-        }*/
     }
 }
 

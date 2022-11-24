@@ -36,6 +36,8 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Ticket()
         {
+            ViewBag.departamentoId = "21674527-d5b9-4d18-8b6a-fde8d8718061";
+
             Departamento depa= new Departamento();
             depa.DepartamentoID = new Guid("ccacd411-1b46-4117-aa84-73ea64deac87");
             depa.Nombre = "Almacen";
@@ -46,7 +48,7 @@ namespace ServicesDeskUCAB.Controllers
 
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
-                ticket = new CrearTicket(),
+                ticket = new TicketCrear(),
                 prioridades = await _servicioPrioridadAPI.Lista(),
                 departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
                 tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
@@ -56,6 +58,17 @@ namespace ServicesDeskUCAB.Controllers
             return View(ticketNuevoViewModel);
         }
 
+        public async Task<IActionResult> Reenviar()
+        {
+            TicketReenviarViewModel ticketReenviarViewModel = new TicketReenviarViewModel()
+            {
+                ticket = new TicketReenviar(),
+                prioridades = await _servicioPrioridadAPI.Lista(),
+                departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
+                tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
+            };
+            return View(ticketReenviarViewModel);
+        }
 
         public async Task<IActionResult> Merge(string departamentoId,string ticketId)
         {
@@ -81,7 +94,7 @@ namespace ServicesDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarTicket(CrearTicket ticket)
+        public async Task<IActionResult> GuardarTicket(TicketCrear ticket)
         {
             ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
             JObject respuesta;
@@ -92,12 +105,14 @@ namespace ServicesDeskUCAB.Controllers
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
+                    // Falta la ruta buena de Index
                     return RedirectToAction("Index", new { message = (string)respuesta["message"] });
 
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    // Falta retornar a la misma vista sin recargar
                     return RedirectToAction("Ticket",(new { message = (string)respuesta["message"] }));
                 }
             }
@@ -108,14 +123,61 @@ namespace ServicesDeskUCAB.Controllers
             return NoContent();
         }
 
-        public IActionResult GuardarMerge()
+        [HttpPost]
+        public async Task<IActionResult> ReenviarTicket(TicketReenviar ticket)
         {
-            return View();
+            ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.GuardarReenviar(ticket);
+                Console.WriteLine(respuesta.ToString());
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    // Falta la ruta buena de Index
+                    return RedirectToAction("Index",new { message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    // Falta retornar a la misma vista sin recargar
+                    return RedirectToAction("Ticket", (new { message = (string)respuesta["message"] }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
         }
 
-        public IActionResult GuardarBitacora()
+        [HttpPost]
+        public async Task<IActionResult> GuardarMerge(TicketMerge merge)
         {
-            return View();
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.GuardarMerge(merge);
+                Console.WriteLine(respuesta.ToString());
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    // Falta la ruta buena de Index
+                    return RedirectToAction("Index", new { message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    // Falta retornar a la misma vista sin recargar
+                    return RedirectToAction("Ticket", (new { message = (string)respuesta["message"] }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
         }
     }
 }

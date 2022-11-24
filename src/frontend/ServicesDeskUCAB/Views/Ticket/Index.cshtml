@@ -4,20 +4,22 @@
     <div class="col-12">
         <h1>Tickets</h1>
         <hr />
+
+        @if (Context.Request.Query["message"].Count() > 0)
+        {
+            <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+                <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
         <div class="text-center" style="margin-top:30px">
             <a class="btn btn-primary" asp-controller="Ticket" asp-action="Ticket">Crear ticket</a>
         </div>
     </div>
 
-    @if (Context.Request.Query["message"].Count() > 0)
-    {
-        <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
-            <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-
-    <div class="row" style="margin-top:40px">
+  
+    <div class="row" style="margin-top:30px">
         <div class="col-2"></div>
         <div class="btn-group col-8" role="group">
             @if (ViewBag.opcion == "Abiertos")
@@ -38,6 +40,8 @@
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="@ViewBag.DepartamentoId" asp-route-opcion="Cerrados">Cerrados</a>
                 <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="@ViewBag.DepartamentoId" asp-route-opcion="Todos">Todos</a>
             }
+
+
         </div>
         <div class="col-2"></div>
     </div>
@@ -57,7 +61,8 @@
             </tr>
         </thead>
         <tbody>
-            @if(Model != null) { 
+            @try
+             {
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -79,8 +84,12 @@
                             </div>
                         </td>
                     </tr>
-                    }
-             }
+                  }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
          </tbody>
     </table>
 </div>
