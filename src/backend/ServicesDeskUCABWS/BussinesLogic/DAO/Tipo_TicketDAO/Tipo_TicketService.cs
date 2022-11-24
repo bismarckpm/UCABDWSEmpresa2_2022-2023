@@ -400,7 +400,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 var data = context.Tipos_Tickets.AsNoTracking()
                    .Include(p => p.Departamento)
                    .Include(fa => fa.Flujo_Aprobacion)
-                   .ThenInclude(_fa => _fa.Tipo_Cargo).Where(t => t.nombre == nombre).SingleAsync();
+                   .ThenInclude(_fa => _fa.Tipo_Cargo).Where(t => t.nombre == nombre).Single();
                 var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
                 return tipoticketSearchDTO;
             }
