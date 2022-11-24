@@ -69,7 +69,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 respuesta.Success = false;
             } catch(Exception e)
             {
-                respuesta.Data = "Error 404";
+                respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
@@ -95,7 +95,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             } catch (Exception e)
             {
                 respuesta.Data = null;
-                respuesta.Message = "Error 404";
+                respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
             return respuesta;
@@ -137,7 +137,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             } catch (Exception e)
             {
                 respuesta.Data = null;
-                respuesta.Message = "Error 404";
+                respuesta.Message = e.Message;
                 respuesta.Success = false;
             }
             return respuesta;
@@ -184,8 +184,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
             try
             {
-                //respuesta.Data = _helper.obtenerBitacoras(ticketId);
-                respuesta.Message = "Búsqueda de bitácora exitosa";
+                _helper.mergeTickets(ticketId, ticketsSecundariosId);
+                respuesta.Data = "Merge de tickets realizado satisfactoriamente";
+                respuesta.Message = "Proceso de Merge exitoso";
+                respuesta.Success = true;
+            }
+            catch (TicketException e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = false;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerFamiliaTickets(Guid ticketId)
+        {
+            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
+            try
+            {
+                respuesta.Data = _helper.obtenerFamiliaTickets(ticketId);
+                respuesta.Message = "Proceso de obtención de familia ticket exitoso";
                 respuesta.Success = true;
             }
             catch (TicketException e)

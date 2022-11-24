@@ -113,9 +113,9 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<Ticket>> Lista(string departamentoId, string opcion)
+        public async Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion)
         {
-            List<Ticket> objeto = new List<Ticket>();
+            List<TicketInfoBasica> objeto = new List<TicketInfoBasica>();
             try
             {
                 var cliente = new HttpClient();
@@ -126,7 +126,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<Ticket>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<TicketInfoBasica>>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine("Obtiene los tickets");
                 }

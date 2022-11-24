@@ -14,7 +14,7 @@ namespace ServicesDeskUCAB.Servicios
 
         Task<List<Bitacora_Ticket>> BitacoraTicket(string ticketId);
 
-        Task<List<Ticket>> Lista(string departamentoId, string opcion);
+        Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion);
 
         Task<JObject> Guardar(CrearTicket Objeto);
 

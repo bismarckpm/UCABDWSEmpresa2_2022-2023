@@ -1,7 +1,8 @@
 ﻿@model ServicesDeskUCAB.ViewModel.TicketDetailsViewModel;
 
 <div>
-    <h1>Detalles</h1>
+    <h1 style="display:inline-block">Detalles del Ticket -</h1> <h4 style="display:inline-block">@Model.ticket.ticket_id</h4>
+    
     <hr />
 </div>
 
@@ -15,7 +16,7 @@
             <h6><span class="badge bg-primary rounded-pill"><a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id">Ticket reenviado</a></span></h6>
         }
 
-        @if(Model.ticket.fecha_eliminacion != null)
+        @if(Model.ticket.fecha_eliminacion == DateTime.MinValue)
         {
             <div class="mb-3">
                 <select class="form-select" aria-label="Default select example">
@@ -29,45 +30,76 @@
         }
     </div>
 
-    <div class="col-6">
-        ID: @Model.ticket.ticket_id.
-    </div>
-    <div class="col-6">
-        Titulo: @Model.ticket.titulo
-    </div>
-    <hr />
-    <div class="col-6">
-        Estado: @Model.ticket.estado_nombre
-    </div>
-    <div class="col-6">
-        Departamento destino: @Model.ticket.departamentoDestino_nombre
-    </div>
-    <hr />
-    <div class="col-6">
-        Tipo ticket: @Model.ticket.tipoTicket_nombre
-    </div>
-
-    <div class="col-6">
-        Prioridad: @Model.ticket.prioridad_nombre
-    </div>
-    <hr />
-    <div class="col-6">
-        Fecha de creación: @Model.ticket.fecha_creacion
-    </div>
-    <div class="col-6">
-        Fecha de eliminación: @Model.ticket.fecha_eliminacion
-    </div>
-    <hr />
-    <div class="col-6">
-        Usuario: @Model.ticket.empleado_correo
-    </div>
-    <hr />
-    <div class="col-12">
-        Descripción: @Model.ticket.descripcion 
+    <div class="container">
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Departamento destino:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.departamentoDestino_nombre">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Tipo ticket:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.tipoTicket_nombre">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Estado:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.estado_nombre">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Prioridad:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.prioridad_nombre">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Titulo:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.titulo">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Descripción:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.descripcion">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de creación:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+            </div>
+        </div>
+         
+        
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de eliminación:</b></label>
+            <div class="col-sm-8">
+                @if (Model.ticket.fecha_eliminacion != DateTime.MinValue)
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="-">
+                }
+                else
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+                }
+            </div>
+        </div>
+             
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Emisor:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.empleado_correo">
+            </div>
+        </div>
+         
     </div>
 </div>
 
-<div class="col-12 text-center" style="margin-top: 20px">
+<div class="col-12 text-right" style="margin-top: 20px">
     <a id="botonAnidado" type="button" class="btn btn-success" onclick="mostrarAnidados()" href="#ticketsAnidados">Ver tickets anidados</a>
     <a class="btn btn-primary" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Aceptar</a>
 </div>

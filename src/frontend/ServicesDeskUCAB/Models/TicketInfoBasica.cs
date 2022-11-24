@@ -1,10 +1,8 @@
-﻿using Microsoft.VisualBasic;
-using System;
-
-namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
+﻿using System;
+namespace ServicesDeskUCAB.Models
 {
-    public class TicketInfoBasicaDTO
-    {
+	public class TicketInfoBasica
+	{
         public Guid Id { get; set; }
         public string titulo { get; set; } = string.Empty;
         public string empleado_correo { get; set; }
@@ -14,3 +12,4 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
         public string estado_nombre { get; set; }
     }
 }
+
