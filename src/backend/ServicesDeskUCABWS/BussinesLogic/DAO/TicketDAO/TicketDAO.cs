@@ -10,6 +10,7 @@ using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -288,19 +289,31 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                        .Where(t => t.Id == nuevoTicket.Emisor.Cargo.Id).FirstOrDefault();
             Guid prueba = cargo.Departamento.Id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.Id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
-            nuevoTicket.Estado = _dataContext.Estados
+            Estado estado = _dataContext.Estados
                                                 .Include(t => t.Estado_Padre)
                                                 .Include(t => t.Departamento)
-                                                .Where(x => x.Id == x.Departamento.Id /*== cargo.Departamento.Id && x.Estado_Padre.nombre == "Pendiente"*/).FirstOrDefault();
+                                                .Where(x => x.Estado_Padre.nombre == "Pendiente" && x.Departamento.Id == cargo.Departamento.Id).FirstOrDefault();
+            if (estado == null)
+                throw new Exception("No se halló el estado para el ticket");
+            else
+                nuevoTicket.Estado = estado;
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
             nuevoTicket.Ticket_Padre = null;
             nuevoTicket.nro_cargo_actual = null;
             nuevoTicket.Votos_Ticket = null;
-            nuevoTicket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>
+            try
             {
-                crearNuevaBitacora(nuevoTicket)
-            };
+                nuevoTicket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>
+                {
+                    crearNuevaBitacora(nuevoTicket)
+                };
+            } catch(Exception e)
+            {
+                throw new Exception("No se pudo crear la Bitacora para el ticket", e);
+            }
+            if (nuevoTicket.Bitacora_Tickets == null)
+                throw new Exception("La Bitacora para el ticket no pudo ser creada");
             _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
             _dataContext.DbContext.SaveChanges();

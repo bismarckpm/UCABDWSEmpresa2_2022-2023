@@ -324,7 +324,7 @@ namespace ServicesDeskUCABWS.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Departamento_DestinoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
