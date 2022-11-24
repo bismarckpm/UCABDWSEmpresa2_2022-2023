@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.EstadoTicket;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public class ServicioTipoEstado_API : IServicioTipoEstado_API
     {
@@ -168,7 +167,7 @@ namespace ModuloPlantillasNotificaciones.Servicios
 
             return tipoEstado;
         }
-        public async Task<JObject> Editar(TipoEstadoNuevo estado, String id)
+        public async Task<JObject> Editar(TipoEstadoNuevo estado, string id)
         {
             HttpClient cliente = new()
             {

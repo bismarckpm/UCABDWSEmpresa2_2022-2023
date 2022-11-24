@@ -1,5 +1,5 @@
 ﻿@using System.Text.RegularExpressions
-@model ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones.PlantillaNuevaViewModel;
+@model ServiceDeskUCAB.ViewModel.PlantillaNotificaciones.PlantillaNuevaViewModel;
 @{
     ViewData["Title"] = "PlantillaNueva";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -86,6 +86,10 @@
                                     <p style="font-size: 15px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
                                 </div>
                             }
+                        }
+                        else
+                        {
+                            <p class="fst-italic text-danger">No existen tipos de estados registrados</p>
                         }
                     </div>
                 </div>

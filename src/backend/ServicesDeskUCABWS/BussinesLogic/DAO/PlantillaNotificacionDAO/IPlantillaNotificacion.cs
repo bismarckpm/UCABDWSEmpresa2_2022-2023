@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO
+namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
 {
     public interface IPlantillaNotificacion
     {

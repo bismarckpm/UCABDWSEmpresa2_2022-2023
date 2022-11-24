@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.PlantillaNotificaciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public class ServicioPlantillaNotificacion_API : IServicioPlantillaNotificacion_API
     {

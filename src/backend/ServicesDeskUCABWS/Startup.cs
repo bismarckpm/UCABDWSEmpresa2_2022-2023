@@ -6,10 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Models;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.Data;
 
@@ -22,6 +20,12 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -47,12 +51,6 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IUserRol, UserRolDAO>();
             //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddControllers().AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-            services.AddControllers().AddJsonOptions(x=>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
@@ -78,7 +76,16 @@ namespace ServicesDeskUCABWS
             services.AddTransient<ITipoEstado, TipoEstadoService>();
 
             services.AddTransient<IDataContext, DataContext>();
-        
+
+            services.AddTransient<ITipo_CargoDAO, Tipo_CargoService>();
+
+            services.AddTransient<ITipo_TicketDAO,Tipo_TicketService>();
+
+            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
+
+            services.AddTransient<ITicketDAO, TicketService>();
+
+            services.AddTransient<IEstadoDAO, EstadoService>();
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

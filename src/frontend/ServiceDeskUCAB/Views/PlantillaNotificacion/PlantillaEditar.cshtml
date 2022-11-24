@@ -1,5 +1,5 @@
 ﻿@using System.Text.RegularExpressions
-@model ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones.PlantillaEditarViewModel;
+@model ServiceDeskUCAB.ViewModel.PlantillaNotificaciones.PlantillaEditarViewModel;
 @{
     ViewData["Title"] = "Plantilla Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -90,7 +90,9 @@
                                 <p class="mb-0 fs-6 fst-italic">@Model.Plantilla.TipoEstado.Descripcion</p>
                             </div>
                             <hr />
-                        }else{
+                        }
+                        else
+                        {
                             <div class="mb-2">
                                 <label class="form-label fs-6 fw-bold mb-1">Estado asociado:</label>
                                 <p class="mb-0 fs-6 text-danger">Sin tipo de estado</p>
@@ -174,24 +176,24 @@
 
         var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
         var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
-        
+
         if (selectTipoEstado.value.length > 0) {
-            var etiquetas_selected =  document.querySelector("#etiquetas-" + selected);
+            var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
             etiquetas_selected.style.display = "block";
 
-            if (document.querySelector("#descEstado-" + selected)){
+            if (document.querySelector("#descEstado-" + selected)) {
                 var descEstado_selected = document.querySelector("#descEstado-" + selected);
                 descEstado_selected.style.display = "block";
             }
 
         }
-        
+
     }
 
-    function escribirMensaje(el){
-        document.querySelector("#mensajePlantilla").value += " "+el.innerHTML;
+    function escribirMensaje(el) {
+        document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
     }
 
-    
+
 </script>
 

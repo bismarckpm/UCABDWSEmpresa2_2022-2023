@@ -12,7 +12,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto
             {
-				id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -23,7 +23,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto()
             {
-				id = grupo.id,
+                id = grupo.id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
                 fecha_creacion = DateTime.Now.Date

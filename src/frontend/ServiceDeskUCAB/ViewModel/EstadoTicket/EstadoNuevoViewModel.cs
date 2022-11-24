@@ -1,7 +1,7 @@
-﻿using ModuloPlantillasNotificaciones.Models.EstadoTicket;
+﻿using ServiceDeskUCAB.Models.EstadoTicket;
 using System.Collections.Generic;
 
-namespace ModuloPlantillasNotificaciones.ViewModel.EstadoTicket
+namespace ServiceDeskUCAB.ViewModel.EstadoTicket
 {
     public class EstadoNuevoViewModel
     {

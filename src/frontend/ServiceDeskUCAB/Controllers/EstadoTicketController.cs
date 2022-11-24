@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
-using ModuloPlantillasNotificaciones.Servicios;
-using ModuloPlantillasNotificaciones.ViewModel.EstadoTicket;
-using ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.EstadoTicket;
+using ServiceDeskUCAB.Servicios;
+using ServiceDeskUCAB.ViewModel.EstadoTicket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class EstadoTicketController : Controller
     {
@@ -42,11 +40,11 @@ namespace ModuloPlantillasNotificaciones.Controllers
 
             return View(estadoNuevoViewModel);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> GuardarEstado(TipoEstadoNuevo tipoEstadoNuevo)
         {
-            
+
             JObject respuesta;
 
             try
@@ -76,7 +74,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
             respuesta = await _servicioApiTipoEstado.Eliminar(id);
             if ((bool)respuesta["success"])
                 return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
-              //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+            //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
                 return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });
         }
@@ -98,7 +96,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
         public async Task<IActionResult> EditarEstado(TipoEstadoNuevo estado, string id)
         {
 
-            if(estado.Etiqueta == null)
+            if (estado.Etiqueta == null)
             {
                 estado.Etiqueta = new();
             }

@@ -1,11 +1,11 @@
-﻿using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
+﻿
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.EstadoTicket;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public interface IServicioTipoEstado_API
     {
@@ -14,7 +14,7 @@ namespace ModuloPlantillasNotificaciones.Servicios
         Task<JObject> Guardar(TipoEstadoNuevo tipoEstadoRegistro);
         Task<JObject> Eliminar(Guid idEstado);
         Task<TipoEstado> Obtener(Guid idEstado);
-        Task<JObject> Editar(TipoEstadoNuevo estado, String Id);
+        Task<JObject> Editar(TipoEstadoNuevo estado, string Id);
 
     }
 }
