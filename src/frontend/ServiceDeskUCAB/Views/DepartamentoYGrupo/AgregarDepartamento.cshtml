@@ -1,0 +1,59 @@
+﻿@model ServiceDeskUCAB.Models.DepartamentoModel
+
+
+@{
+    ViewData["Title"] = "Gestion Departamento";
+}
+
+<head>
+    <title>@ViewData["Title"] - ServicesDeskUCAB</title>    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+    
+    @*<link rel="stylesheet" href="~/css/sb-admin-2.css" /> 
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">*@
+
+</head>
+
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+*@
+
+<!-- Importacion de librerias -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+<!-- Ventana emergente -->
+<div class="modal fade" id="popUpAgregar" tabindex="-1" role="dialog" aria-labelledby="popUpAgregarTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Agregar Departamento</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("GuardarDepartamento","DepartamentoYGrupo", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    
+                    @Html.TextBoxFor(m => m.nombre, new {Class="form-control", placeholder="Nombre: "})
+                    @Html.ValidationMessageFor(m => m.nombre ,null, new { @class = "text-danger" })
+                    <br />
+                    @Html.TextAreaFor(m => m.descripcion, new {Class="form-control", placeholder="Descripcion: "})
+                    @Html.ValidationMessageFor(m => m.descripcion ,null, new { @class = "alerta text-danger" })
+                    
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="botonCrear">Crear</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
