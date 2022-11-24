@@ -23,9 +23,9 @@ namespace ServicesDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
-        public async Task<TicketInfoCompleta> Obtener(string ticketId)
+        public async Task<TicketCompletoDTO> Obtener(string ticketId)
         {
-            TicketInfoCompleta objeto = new TicketInfoCompleta();
+            TicketCompletoDTO objeto = new TicketCompletoDTO();
             try
             {
                 var cliente = new HttpClient();
@@ -36,7 +36,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<TicketInfoCompleta>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<TicketCompletoDTO>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine("Obtiene el ticket");
                 }
@@ -83,9 +83,9 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<List<TicketBitacora>> BitacoraTicket(string ticketId)
+        public async Task<List<BitacoraDTO>> BitacoraTicket(string ticketId)
         {
-            List<TicketBitacora> lista = new List<TicketBitacora>();
+            List<BitacoraDTO> lista = new List<BitacoraDTO>();
             try
             {
                 var cliente = new HttpClient();
@@ -96,7 +96,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<TicketBitacora>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<BitacoraDTO>>(stringDataRespuesta);
                     lista = resultado;
                     Console.WriteLine("Obtiene la bitacora del ticket");
                 }
@@ -113,9 +113,9 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<TicketInfoBasica>> Lista(string departamentoId, string opcion) 
+        public async Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion) 
         {
-            List<TicketInfoBasica> objeto = new List<TicketInfoBasica>();
+            List<TicketBasicoDTO> objeto = new List<TicketBasicoDTO>();
             try
             {
                 var cliente = new HttpClient();
@@ -126,7 +126,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<TicketInfoBasica>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine("Obtiene los tickets");
                 }
@@ -144,7 +144,7 @@ namespace ServicesDeskUCAB.Servicios
         }
 
         [HttpPost]
-        public async Task<JObject> Guardar(TicketCrear Objeto)
+        public async Task<JObject> Guardar(TicketDTO Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
@@ -194,7 +194,7 @@ namespace ServicesDeskUCAB.Servicios
         }
 
         [HttpPost]
-        public async Task<JObject> GuardarMerge(TicketMerge Objeto)
+        public async Task<JObject> GuardarMerge(FamiliaMergeDTO Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);

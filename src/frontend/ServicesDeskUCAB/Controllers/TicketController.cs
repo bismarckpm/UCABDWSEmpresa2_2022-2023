@@ -30,7 +30,7 @@ namespace ServicesDeskUCAB.Controllers
         {
             ViewBag.opcion = opcion;
             ViewBag.departamentoId = departamentoId;
-            List<TicketInfoBasica> lista = await _servicioTicketAPI.Lista(departamentoId, opcion);
+            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamentoId, opcion);
             return View(lista);
         }
 
@@ -48,7 +48,7 @@ namespace ServicesDeskUCAB.Controllers
 
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
-                ticket = new TicketCrear(),
+                ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.Lista(),
                 departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
                 tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
@@ -72,7 +72,7 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Merge(string departamentoId,string ticketId)
         {
-            TicketMergeViewModel ticketMergeViewModel = new TicketMergeViewModel()
+            FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
                 familiaTicket = new Familia_Ticket(),
@@ -94,7 +94,7 @@ namespace ServicesDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarTicket(TicketCrear ticket)
+        public async Task<IActionResult> GuardarTicket(TicketDTO ticket)
         {
             ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
             JObject respuesta;
@@ -153,7 +153,7 @@ namespace ServicesDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarMerge(TicketMerge merge)
+        public async Task<IActionResult> GuardarMerge(FamiliaMergeDTO merge)
         {
             JObject respuesta;
             try

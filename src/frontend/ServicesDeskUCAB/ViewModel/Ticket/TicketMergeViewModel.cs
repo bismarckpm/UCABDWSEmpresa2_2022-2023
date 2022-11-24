@@ -4,11 +4,11 @@ using ServicesDeskUCAB.Models;
 
 namespace ServicesDeskUCAB.ViewModel
 {
-	public class TicketMergeViewModel
+	public class FamiliaMergeDTOViewModel
     {
-		public TicketInfoCompleta ticket;
+		public TicketCompletoDTO ticket;
 
-		public List<TicketInfoBasica> tickets;
+		public List<TicketBasicoDTO> tickets;
 
 		public Familia_Ticket familiaTicket;
 	}

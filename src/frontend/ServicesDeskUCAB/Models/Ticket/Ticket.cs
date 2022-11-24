@@ -24,6 +24,7 @@ namespace ServicesDeskUCAB.Models
         [Required]
         public Departamento Departamento_Destino { get; set; }
 
+        [Required]
         public Estado Estado { get; set; }
 
         [Required]

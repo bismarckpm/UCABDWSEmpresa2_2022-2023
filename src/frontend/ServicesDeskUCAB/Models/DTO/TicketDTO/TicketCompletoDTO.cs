@@ -1,8 +1,8 @@
 ﻿using System;
 namespace ServicesDeskUCAB.Models
 {
-	public class TicketInfoCompleta
-	{
+	public class TicketCompletoDTO
+    {
         public Guid ticket_id { get; set; }
         public Guid ticketPadre_id { get; set; }
         public DateTime fecha_creacion { get; set; }

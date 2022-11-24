@@ -13,7 +13,7 @@ namespace ServicesDeskUCAB.Models
         public DateTime FechaUltimaEdic { get; set; }
         public DateTime? FechaEliminacion { get; set; }
 
-        public ICollection<TipoCargo> TipoCargo { get; set; }
+        public ICollection<Tipo_Cargo> Tipo_Cargo { get; set; }
     }
 }
 

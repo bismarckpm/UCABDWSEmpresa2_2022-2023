@@ -6,9 +6,9 @@ namespace ServicesDeskUCAB.ViewModel
 {
 	public class TicketDetailsViewModel
 	{
-		public TicketInfoCompleta ticket;
+		public TicketCompletoDTO ticket;
 
-		public List<TicketBitacora> bitacoraTicket;
+		public List<BitacoraDTO> bitacoraTicket;
 
 		public List<Ticket> familiaTicket;
 

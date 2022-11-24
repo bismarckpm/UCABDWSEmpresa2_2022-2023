@@ -6,7 +6,7 @@ namespace ServicesDeskUCAB.ViewModel
 {
 	public class TicketReenviarViewModel
     {
-		public TicketInfoCompleta ticketPadre;
+		public TicketCompletoDTO ticketPadre;
 		public TicketReenviar ticket;
 		public List<Departamento> departamentos;
 		public List<Prioridad> prioridades;

@@ -6,6 +6,17 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'ServiceDeskUCAB' " />
   <ItemGroup>
+    <None Remove="Models\DTO\" />
+    <None Remove="Models\DTO\TicketDTO\" />
+    <None Remove="Servicios\ModuloPrioridad\" />
+    <None Remove="Servicios\ModuloTicket\" />
+    <None Remove="ViewModel\Ticket\" />
+    <None Remove="Models\DTO\BitacoraDTO\" />
+    <None Remove="Models\DTO\FamiliaTicketDTO\" />
+    <None Remove="Models\Prioridad\" />
+    <None Remove="Models\Ticket\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -43,4 +54,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\DTO\" />
+    <Folder Include="Models\DTO\TicketDTO\" />
+    <Folder Include="Servicios\ModuloPrioridad\" />
+    <Folder Include="Servicios\ModuloTicket\" />
+    <Folder Include="ViewModel\Ticket\" />
+    <Folder Include="Models\DTO\BitacoraDTO\" />
+    <Folder Include="Models\DTO\FamiliaTicketDTO\" />
+    <Folder Include="Models\Prioridad\" />
+    <Folder Include="Models\Ticket\" />
+  </ItemGroup>
 </Project>

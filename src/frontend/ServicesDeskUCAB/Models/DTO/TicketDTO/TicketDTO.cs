@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ServicesDeskUCAB.Models
 {
-	public class TicketCrear
+	public class TicketDTO
     {
         public string titulo { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;

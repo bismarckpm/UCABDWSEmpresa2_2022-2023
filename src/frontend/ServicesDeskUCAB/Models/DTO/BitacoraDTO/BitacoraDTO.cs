@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ServicesDeskUCAB.Models
 {
-	public class TicketBitacora
+	public class BitacoraDTO
 	{
         public Guid Id { get; set; }
         public string estado_nombre { get; set; }

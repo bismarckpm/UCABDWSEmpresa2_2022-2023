@@ -1,8 +1,8 @@
 ﻿using System;
 namespace ServicesDeskUCAB.Models
 {
-	public class TicketInfoBasica
-	{
+	public class TicketBasicoDTO
+    {
         public Guid Id { get; set; }
         public string titulo { get; set; } = string.Empty;
         public string empleado_correo { get; set; }

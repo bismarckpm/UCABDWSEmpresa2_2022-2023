@@ -16,7 +16,7 @@ namespace ServicesDeskUCAB.Models
         public int? MinimoAprobado { get; set; }
         public DateTime? FechaElim { get; set; }
 
-        public ICollection<FlujoAprobacion> Flujo_Aprobacion { get; set; }
+        public ICollection<Flujo_Aprobacion> Flujo_Aprobacion { get; set; }
         public ICollection<Departamento> Departamento { get; set; }
         
     }
