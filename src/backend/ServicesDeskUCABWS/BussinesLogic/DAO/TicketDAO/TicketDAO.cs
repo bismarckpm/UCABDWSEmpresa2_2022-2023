@@ -280,7 +280,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
             try
             {
-                respuesta.Data = reenviarTicketHl(ticketId, solicitudTicket);
+                // RAY PON TU MÉTODO DE REENVIAR TICKET
+                //respuesta.Data = reenviarTicketHl(ticketId, solicitudTicket);
                 respuesta.Message = "Búsqueda de bitácora exitosa";
                 respuesta.Success = true;
             }catch (TicketException e)
@@ -592,7 +593,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             return listaTickets;
         }
-        public string reenviarTicketHl(Guid idTicketPadre, TicketNuevoDTO solicitudTicket)
+
+        //REENVIAR DE JESUS
+        /*public string reenviarTicketHl(Guid idTicketPadre, TicketNuevoDTO solicitudTicket)
         {
             TicketValidaciones validacionTicket = new TicketValidaciones(_dataContext);
             validacionTicket.validarTicket(idTicketPadre);
@@ -604,6 +607,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.Update(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
             return "Ticket reenviado satisfactoriamente";
-        }
+        }*/
     }
 }
