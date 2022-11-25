@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 {
@@ -31,7 +32,10 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
     public class DepartamentoDAOTest
     {
         private readonly DepartamentoDAO _DepartamentoDAO;
+        //private readonly GrupoDAO _GrupoDAO;
         private readonly Mock<IDataContext> _contextMock;
+        private readonly Mock<IDataContext> _contextMockDG;
+        private readonly Mock<IGrupoDAO> _serviceMock;
         private readonly IGrupoDAO _servicioGrupo;
 
         public DepartamentoDAOTest()
@@ -39,6 +43,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             _contextMock = new Mock<IDataContext>();
             _DepartamentoDAO = new DepartamentoDAO(_contextMock.Object, _servicioGrupo);
             _contextMock.SetUpContextDataDepartamento();
+            _serviceMock = new Mock<IGrupoDAO>();
+            _contextMockDG = new Mock<IDataContext>();
+            _contextMockDG.SetUpContextDataDepartamentoYGrupo();
+            _serviceMock = new Mock<IGrupoDAO>();
+
             //var myProfile = new List<Profile>
             //{
             //    new PlantillaNotificacionMapper(),
@@ -82,13 +91,45 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.AreEqual(request.nombre, "Seguridad Ambiental");
         }
 
+        [TestMethod(displayName: "Prueba Unitaria para agregar un Departamento Condicional")]
+        public void AgregarDepartamentoTestIf()
+        {
+            //arrange
+            var request = new Departamento
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre = "Seguridad Ambiental 2",
+
+                descripcion = "Cuida el ambiente",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null,
+
+                id_grupo = null
+
+            };
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            var result = _DepartamentoDAO.AgregarDepartamentoDAO(request);
+
+            Assert.AreNotEqual(request.nombre, result.nombre);
+        }
+
+
+
         [TestMethod(displayName: "Prueba Unitaria para agregar un Departamento excepcion general")]
         public void AgregarDepartamentoTestExceptionGeneral()
         {
             var request = new Departamento
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c88"),
 
                 nombre = "",
 
@@ -108,32 +149,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.AgregarDepartamentoDAO(request));
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para agregar un Departamento excepcion por nombre")]
-        public void AgregarDepartamentoTestExceptionNombreDuplicado()
-        {
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
-
-            _contextMock.Setup(p => p.Departamentos).Throws(new DuplicateNameException(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.AgregarDepartamentoDAO(request));
-        }
-
+       
         [TestMethod(displayName: "Prueba Unitaria para consultar departamentos")]
         public void ConsultarDepartamentosTest()
         {
@@ -329,8 +345,64 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.AreEqual(request.nombre, "Seguridad Ambiental");
         }
 
+        [TestMethod(displayName: "Prueba Unitaria para actualizar un Departamento Condicional")]
+        public void ActualizarDepartamentoTestIf()
+        {
+            //arrange
+            var request = new Departamento
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre = "Seguridad Ambiental 2",
+
+                descripcion = "Cuida el ambiente",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null,
+
+                id_grupo = null
+
+            };
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            var result = _DepartamentoDAO.ActualizarDepartamento(request);
+
+            Assert.AreNotEqual(request.nombre, result.nombre);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando la actualizacion de un departamento falla por campos vacios")]
+        public void ExcepcionDBUpdateActualizarDepartamento()
+        {
+            var request = new Departamento
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre = null,
+
+                descripcion = "Cuida el ambiente",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null,
+
+                id_grupo = null
+
+            };
+            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
+            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ActualizarDepartamento(request));
+        }
+
+
         [TestMethod(displayName: "Prueba Unitaria para editar un departamento excepcion general")]
-        public void ExcepcionDepartamentoTestExceptionGeneral()
+        public void ExcepcionEditarDepartamentoTestExceptionGeneral()
         {
             var request = new Departamento
             {
@@ -577,13 +649,24 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.NoAsociado());
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos")]
-        public void EditarRelacion()
+        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos con lista de IDs de Departamentos vacios")]
+        public void EditarRelacionPrimerCondicional()
         {
             var grupo = new Grupo
             {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
-            };
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+                nombre = "Grupo Nuevo",
+
+                descripcion = "Es un grupo",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null
+                
+            };                       
 
             var request = new Departamento
             {
@@ -600,15 +683,23 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 
                 fecha_eliminacion = null,
 
-                id_grupo = grupo.id
+                id_grupo = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+               
 
             };
 
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            //_contextMock.Setup(set => set.DbContext.SaveChanges());
+            _contextMockDG.Setup(set => set.DbContext.SaveChanges());
 
-            var result = _DepartamentoDAO.EditarRelacion(grupo.id, request.id.ToString());
+            _serviceMock.Setup(p => p.QuitarAsociacion(It.IsAny<Guid>())).Returns(new bool());
+            var respuesta = new List<string>();
+            var result = _DepartamentoDAO.EditarRelacion(grupo.id, "");
+            //_contextMock.Setup(set => set.DbContext.SaveChanges()); 
 
-            Assert.AreEqual(result.Count(), 1);
+            //var asoc = _servicioGrupo.QuitarAsociacion(grupo.id);
+
+
+            Assert.AreEqual(respuesta.GetType(), result.GetType());
         }
 
 

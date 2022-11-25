@@ -50,11 +50,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 						}).First();
 
 				return nuevoDepartamento;
-			}
-            catch (DuplicateNameException ex)
-            {
-                throw new ExceptionsControl("El departamento ingresado ya existe", ex);
-            }
+			}          
             catch (Exception ex) {
 				throw new ExceptionsControl("No se pudo registrar el departamento"+" "+departamento.nombre, ex);
 			}
