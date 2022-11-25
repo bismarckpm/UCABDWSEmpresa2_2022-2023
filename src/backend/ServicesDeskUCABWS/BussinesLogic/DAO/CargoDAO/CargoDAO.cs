@@ -211,20 +211,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         }
 
 
-        public List<string> AsignarTipoCargotoCargo(string idCargo)
+        public List<string> AsignarTipoCargotoCargo(Guid id, string idCargo)
         {
 
             try
             {
                 List<string> listaCargo = idCargo.Split(',').ToList();
-                var tipo = _servicioTipo.UltimoTipoRegistradoDao();
+                
 
 
                 foreach (var cargo in listaCargo)
                 {
 
                     var nuevoCargo = _dataContext.Cargos.Where(d => d.Id.ToString() == cargo).FirstOrDefault();
-                    nuevoCargo.id_tipo = tipo.Id;
+                    nuevoCargo.id_tipo = id;
                     _dataContext.SaveChanges();
 
                 }

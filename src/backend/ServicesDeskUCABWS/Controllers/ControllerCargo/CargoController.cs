@@ -127,17 +127,20 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             return response;
         }
         [HttpPut]
-        [Route("AsignarTipoCargotoCargo/")]
-        public ActionResult<List<string>> AsignarTipoCargotoCargo([FromBody] string idCargo)
+        [Route("AsignarTipoCargotoCargo/{id}")]
+        public ApplicationResponse<List<string>> AsignarTipoCargotoCargo([FromRoute] Guid id, [FromBody] string idCargos)
         {
+            var response = new ApplicationResponse<List<string>>();
+
             try
             {
-                return _cargoDAO.AsignarTipoCargotoCargo(idCargo);
+                response.Data = _cargoDAO.AsignarTipoCargotoCargo(id,idCargos);
             }
             catch (Exception ex)
             {
                 throw ex.InnerException!;
             }
+            return response;
         }
 
         [HttpGet("ConsultarCargoNoAsociado/")]
