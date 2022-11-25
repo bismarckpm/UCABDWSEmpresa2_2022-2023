@@ -214,8 +214,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar un usuario")]
-        public void EliminarPlantillaCtrlExceptionTest()
+        [TestMethod(displayName: "Prueba Unitaria para eliminar un usuario")]
+        public void EliminarUsuarioCtrlExceptionTest()
         {
             var id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B");
             var obj = new UsuarioDto();
@@ -224,14 +224,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para recuperar clave")]
+        /*[TestMethod(displayName: "Prueba Unitaria para recuperar clave")]
         public void RecuperarPassword()
         {
             string id = "gabrielojeda7@gmail.com";
             var response = _userService.RecuperarClave(id);
             Assert.AreEqual(response, "Correo enviado");
 
-        }
+        }*/
 
 
         [TestMethod(displayName: "Prueba Unitaria para recuperar clave exception")]
