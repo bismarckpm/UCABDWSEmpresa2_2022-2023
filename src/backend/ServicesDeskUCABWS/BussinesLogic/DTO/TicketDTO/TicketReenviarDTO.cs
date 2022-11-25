@@ -3,7 +3,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
 {
 	public class TicketReenviarDTO
 	{
-        public Guid Id { get; set; }
         public string titulo { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
         public Guid empleado_id { get; set; }
