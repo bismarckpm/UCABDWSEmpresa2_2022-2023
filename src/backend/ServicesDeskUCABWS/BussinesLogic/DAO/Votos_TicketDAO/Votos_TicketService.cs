@@ -215,13 +215,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     var fin = VotosSiguienteRonda(ticket, tipo_ticket);
                     if (fin)
                     {
-                        
-                        
                         iticket.CambiarEstado(ticket, "Aprobado",null);
-                        contexto.DbContext.SaveChanges();
                         return "Aprobado";
                     }
-                    contexto.DbContext.SaveChanges();
                     return "Pendiente";
                 }
 
@@ -245,7 +241,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
                 }
 
-                contexto.DbContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -299,7 +294,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             var response = new ApplicationResponse<List<Votos_Ticket>>();
             try
             {
-                response.Data = contexto.Votos_Tickets.Include(x => x.Ticket).Include(x => x.Empleado).Where(x => x.IdUsuario == id && x.voto == "Pendiente").ToList();
+                response.Data = contexto.Votos_Tickets
+                    .Include(x => x.Ticket).ThenInclude(x=>x.Tipo_Ticket)
+                    .Include(x => x.Empleado)
+                    .Where(x => x.IdUsuario == id && x.voto == "Pendiente").ToList();
             }
             catch (ExceptionsControl ex)
             {

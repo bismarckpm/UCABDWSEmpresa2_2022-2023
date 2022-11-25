@@ -97,33 +97,7 @@ namespace ServiceDeskUCAB.Servicios
 
                 var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
                 var newList = new List<Votos_Ticket>();
-               /* newList.Add(new Votos_Ticket
-                {
-                    comentario = "comentario",
-                    IdTicket = new("A080D400-EF72-4727-8B39-C2981C41C181"),
-                    IdUsuario = new(idUsuario),
-                    voto = "Pendiente",
-                    fecha = new DateTime(),
-                    Ticket = new Ticket
-                    {
-                        titulo = "Ticket",
-                        descripcion = "descripcion ticket",
-                        fecha_creacion = new DateTime()
-                    }
-                }); newList.Add(new Votos_Ticket
-                {
-                    comentario = "comentario2",
-                    IdTicket = new("A080D400-EF72-4727-8B39-C2981C41C181"),
-                    IdUsuario = new(idUsuario),
-                    voto = "Pendiente",
-                    fecha = new DateTime(),
-                    Ticket = new Ticket
-                    {
-                        titulo = "Ticket2",
-                        descripcion = "descripcion ticket2",
-                        fecha_creacion = new DateTime()
-                    }
-                });*/
+               
                 lista = resultado.Data;
             }
 

@@ -251,9 +251,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
 
-                
-                var vticket = contexto.Tickets.Update(ticket);
-                vticket.State = EntityState.Modified;
+
+                //contexto.DbContext.Entry(ticket).State = EntityState.Modified;
+                contexto.Tickets.Update(ticket);
+                contexto.DbContext.SaveChanges();
+                //vticket.State = EntityState.Modified;
 
                 if (Estado == "Aprobado")
                 {
@@ -262,6 +264,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                         var plant =plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
                         var descripcionPlantilla =notificacion.ReemplazoEtiqueta(ticket, plant);
                         notificacion.EnviarCorreo(plant.Titulo,descripcionPlantilla,ticket.Emisor.correo);
+
                     }
                     catch (ExceptionsControl) { }
                     CambiarEstado(ticket, "Siendo Procesado", null);
@@ -281,6 +284,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                         }
                         catch (ExceptionsControl) { }
                     }
+                    return true;
                 }
 
                 if (Estado == "Pendiente")

@@ -6,6 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="card">
     <div class="card-header">
         Votar Ticket
@@ -21,23 +29,26 @@
                     <p><b>Titulo:</b></p>
                     <p>@((ViewData["Ticket"] as Ticket)?.titulo)</p>
                 </div>
+                <br />
                 <div class="mx-2">
                     <p><b>Descripción:</b></p>
                     <p>@((ViewData["Ticket"] as Ticket)?.descripcion)</p>
-
                 </div>
                 <div class="mx-2">
                     <p><b>Emisor:</b></p>
                     <p>@((ViewData["Ticket"] as Ticket)?.Emisor?.primer_nombre) @((ViewData["Ticket"] as Ticket)?.Emisor?.primer_apellido)</p>
-
                 </div>
+                <div>
+                    <p><b>Tipo Solicitud:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.Tipo_Ticket?.nombre)</p>
+                </div>
+
             </div>
 
             <div class="mb-2">
                 <label class="form-label">Voto</label>
-                <select type="text" class="form-control form-control-sm" asp-for="voto" required>
+                <select required type="text" class="form-control form-control-sm" asp-for="voto" required>
                     <option>-- Seleccionar --</option>
-
                     <option value="Aprobado">Aprobado</option>
                     <option value="Rechazado">Rechazado</option>
                 </select>

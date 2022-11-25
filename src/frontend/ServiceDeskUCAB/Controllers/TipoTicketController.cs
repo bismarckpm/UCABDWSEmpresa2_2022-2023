@@ -168,16 +168,19 @@ namespace ServiceDeskUCAB.Controllers
             {
                 if(respuesta.Success)
                 {
-                   return RedirectToAction("VistaTipo", new { message = "El tipo Ticket fue agregado satisfactoriamente" });
+                   return RedirectToAction("VistaTipo", new { message2 = "El tipo Ticket fue agregado satisfactoriamente" });
                 }
                 else
                  {
                    return RedirectToAction("VistaTipo", new { message = respuesta.Exception });
                  }
             }
-                
+
             else
+            {
                 return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
+            }
+                
 
         }
         public async Task<IActionResult> Eliminar(Guid id)
