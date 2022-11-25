@@ -29,7 +29,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))
                 throw new TicketException("El identificador del ticket no fué provisto");
-            IQueryable<Ticket> tickets = _dataContext.Tickets.Where(tickets => tickets.Id == id);
+            IQueryable<Ticket> tickets = _dataContext.Tickets.AsNoTracking().Where(tickets => tickets.Id == id);
             if (!tickets.Any())
                 throw new TicketException("El ticket indicado no se encuentra registrado en la Base de Datos");
         }

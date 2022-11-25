@@ -1,0 +1,18 @@
+﻿# Ignora los archivos del sistema mac
+.DS_store
+
+Models/Cargo.cs
+Models/Departamento.cs
+Models/Empleado.cs
+Models/Estado.cs
+Models/ErrorViewModel.cs
+Models/Estado.cs
+Models/Etiqueta.cs
+Models/Flujo_Aprobacion.cs
+Models/Grupo.cs
+Models/PlantillaNotificacion.cs
+Models/Tipo_Cargo.cs
+Models/Tipo_Estado.cs
+Models/Tipo_Ticket.cs
+Models/Usuario.cs
+Models/Votos_Ticket.cs

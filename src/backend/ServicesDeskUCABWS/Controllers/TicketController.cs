@@ -48,7 +48,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
         }
 
-        [HttpGet, Route("obtenerBitacorasTicket/{ticketId}")]
+        [HttpGet, Route("Bitacora/{ticketId}")]
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacorasCtrl(string ticketId)
         {
             return _ticketDAO.obtenerBitacoras(new Guid(ticketId));
@@ -58,18 +58,24 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);
         }
-
+        // FALTA COLOCAR EL PADRE COMO ELIMINADO EN REENVIAR
+        [HttpPost, Route("Reenviar")]
+        public ApplicationResponse<string> reenviarTicket([FromBody] TicketReenviarDTO ticket)
+        {
+            return _ticketDAO.reenviarTicket(ticket);
+        }
+        
         /*[HttpGet,Route("Familia/{id}")]
         public ApplicationResponse<List<TicketDTO>> obtenerFamiliaTicketCtrl(string id)
         {
             return _ticketDAO.obtenerFamiliaTickets(new Guid(id));
         }*/
 
-        [HttpPut, Route("Reenviar")]
+        /*[HttpPut, Route("Reenviar")]
         public ApplicationResponse<string> reenviarTicketCtrl([FromBody] TicketReenvioDTO ticketInfo)
         {
             return _ticketDAO.reenviarTicket(ticketInfo.ticketPapaId, ticketInfo.solicitudTicket);
-        }
+        }*/
 
         //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }
