@@ -23,13 +23,13 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
     public class DepartamentoController : ControllerBase
     {
         private readonly IDepartamentoDAO _departamentoDAO;
-        private readonly ILogger<DepartamentoController> _log;
+        
 
         //Constructor
-        public DepartamentoController(IDepartamentoDAO departamentoDAO, ILogger<DepartamentoController> log)
+        public DepartamentoController(IDepartamentoDAO departamentoDAO)
         {
             _departamentoDAO = departamentoDAO;
-            _log = log;
+            
         }
 
 
@@ -117,7 +117,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             try
             {
                 response.Data = _departamentoDAO.ActualizarDepartamento(DepartamentoMapper.MapperDTOToEntityModificar(departamento));
-                //Cambiar parametros cuando realicemos frontend
+                
 
             }
             catch (ExceptionsControl ex)
