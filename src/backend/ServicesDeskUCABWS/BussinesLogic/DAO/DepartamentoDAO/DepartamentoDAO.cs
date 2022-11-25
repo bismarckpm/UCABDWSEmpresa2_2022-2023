@@ -252,7 +252,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 		}
 
-        private bool ExisteDepartamento(Departamento departamento)
+        public bool ExisteDepartamento(Departamento departamento)
         {
             bool existe = false;
 

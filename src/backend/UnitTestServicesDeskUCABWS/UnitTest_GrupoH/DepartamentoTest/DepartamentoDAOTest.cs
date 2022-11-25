@@ -47,7 +47,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             _contextMock.SetUpContextDataDepartamento();
             _serviceMock = new Mock<IGrupoDAO>();            
             _contextMockDG.SetUpContextDataDepartamentoYGrupo();
-            _serviceMock = new Mock<IGrupoDAO>();
+           
 
             //var myProfile = new List<Profile>
             //{
@@ -427,33 +427,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ActualizarDepartamento(request));
         }
-
-        [TestMethod(displayName: "Prueba Unitaria para editar un departamento excepcion DbUpdate")]
-        public void ExcepcionDepartamentoTestExceptionDbUpdate()
-        {
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
-
-            _contextMock.Setup(p => p.Departamentos).Throws(new DbUpdateException(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ActualizarDepartamento(request));
-        }
-
+    
         [TestMethod(displayName: "Prueba Unitaria para mostrar departamentos no eliminados")]
         public void MostrarDepartamentosNoEliminados()
         {
@@ -724,6 +698,63 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.EditarRelacion(grupo.id, request.id.ToString()));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para verificar existencia de departamento")]
+        public void ExisteDepartamento()
+        {
+
+           
+            var request = new Departamento
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre = "Seguridad Ambiental",
+
+                descripcion = "Cuida el ambiente",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null,
+
+                id_grupo = null
+
+            };
+
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            var result = _DepartamentoDAO.ExisteDepartamento(request);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para verificar existencia de departamento con excepcion")]
+        public void ExcepcionExisteDepartamento()
+        {
+            
+            var request = new Departamento
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2cab"),
+
+                nombre = "Seguridad Ambiental",
+
+                descripcion = "Cuida el ambiente",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null,
+
+                id_grupo = null
+
+            };
+
+            _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ExisteDepartamento(request));
         }
 
     }
