@@ -1,4 +1,4 @@
-﻿@*@model ServiceDeskUCAB.ViewModel.CargoTipoCargo.TipocargoEditarViewModel
+﻿@model ServiceDeskUCAB.ViewModel.CargoTipoCargo.TipoCargoEditarViewModel
 @{
     ViewData["Title"] = "Gestion Cargo";
 }
@@ -30,43 +30,43 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @using (Html.BeginForm("ModificarGrupo", "CargoYTipoCargo", FormMethod.Post))
+            @using (Html.BeginForm("ModificarTipoCargo", "CargoYTipoCargo", FormMethod.Post))
             {
                 <div class="modal-body">
 
-                    @Html.TextBoxFor(m => m.grupo.id, new { @Value = Model.grupo.id, @type="hidden"})
-                    <span>Nombre: </span> 
-                    @Html.TextBoxFor(m => m.grupo.nombre, new { @Value = Model.grupo.nombre, Class="form-control"})
-                    @Html.ValidationMessageFor(m => m.grupo.nombre ,null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.tipo.id, new { @Value = Model.tipo.id, @type="hidden"})
+                    <span>Nombre: </span>
+                    @Html.TextBoxFor(m => m.tipo.nombre, new { @Value = Model.tipo.nombre, Class="form-control"})
+                    @Html.ValidationMessageFor(m => m.tipo.nombre ,null, new { @class = "text-danger" })
                     <br />
                     <span>Descripcion: </span>
-                    @Html.TextAreaFor(m => m.grupo.descripcion, new { @Value = Model.grupo.descripcion, Class="form-control"})
-                    @Html.ValidationMessageFor(m => m.grupo.descripcion ,null, new { @class = "text-danger" })
+                    @Html.TextAreaFor(m => m.tipo.descripcion, new { @Value = Model.tipo.descripcion, Class="form-control"})
+                    @Html.ValidationMessageFor(m => m.tipo.descripcion ,null, new { @class = "text-danger" })
 
-                    <table class="table" id="DeptTable">
+                    <table class="table" id="CargoTable">
                         <tr>
                             <th>
                                 Nombre
                             </th>
                         </tr>
-                        @if (Model.deptAsociado == null && Model.departamento == null || Model.deptAsociado.Count == 0 && Model.departamento.Count == 0)
+                        @if (Model.cargoAsociado == null && Model.cargo == null || Model.cargoAsociado.Count == 0 && Model.cargo.Count == 0)
                         {
                             <p class="fst-italic text-danger">No existen en el sistema</p>
                         }else{
 
-                            @foreach (var item in Model.departamento)
+                            @foreach (var item in Model.cargo)
                             {
-                                @if (Model.deptAsociado.Any(x => x.id == item.id))
+                                @if (Model.cargoAsociado.Any(x => x.id == item.id))
                                 {
                                     <tr>
                                         <td class="id" style="display:none" ;>
                                             @Html.DisplayFor(i => item.id)
                                         </td>
                                         <td>
-                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" checked />
+                                            <input class="check" name="idCargos" id="@item.id" type="checkbox" value="@item.id" checked />
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(i => item.nombre)
+                                            @Html.DisplayFor(i => item.nombre_departamental)
                                         </td>
 
                                     </tr>
@@ -76,10 +76,10 @@
                                             @Html.DisplayFor(i => item.id)
                                         </td>
                                         <td>
-                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" />
+                                            <input class="check" name="idCargos" id="@item.id" type="checkbox" value="@item.id" />
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(i => item.nombre)
+                                            @Html.DisplayFor(i => item.nombre_departamental)
                                         </td>
 
                                     </tr>
@@ -99,4 +99,3 @@
         </div>
     </div>
 </div>
-*@

@@ -16,6 +16,7 @@ using ServiceDeskUCAB.Servicios.ModuloCargo;
 using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 using ServiceDeskUCAB.Models;
 using ServicesDeskUCABWS.Entities;
+using ServiceDeskUCAB.ViewModel.CargoTipoCargo;
 
 namespace ServicesDeskUCAB.Controllers
 {
@@ -140,24 +141,44 @@ namespace ServicesDeskUCAB.Controllers
 
         //Retorna el modal con los departamentos que estan asociados a un grupo
 
-        //public async Task<IActionResult> AsociarTipoCargo(Tipo_CargoModel tipo, List<string> idCargos)
-        //{
-        //    JObject respuesta;
+        public async Task<IActionResult> AsociarTipoCargo(Tipo_CargoModel tipo, List<string> idCargos)
+        {
+            JObject respuesta;
 
-        //    try
-        //    {
+            try
+            {
 
-        //        respuesta = await _servicioApiCargo.AsociarCargo(tipo.id, idCargos);
-        //        if ((bool)respuesta["success"])
-        //            return RedirectToAction("CargoTipoCargo", new { message = "Se ha asociado correctamente" });
-        //        else
-        //            return NoContent();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex.InnerException!;
-        //    }
-        //}
+                respuesta = await _servicioApiCargo.AsociarCargo(tipo.id, idCargos);
+                if ((bool)respuesta["success"])
+                    return RedirectToAction("CargoTipoCargo", new { message = "Se ha asociado correctamente" });
+                else
+                    return NoContent();
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
+
+        //Retorna el modal con los departamentos que se desea asociar
+        public async Task<IActionResult> VentanaAsociarCargo(Guid id)
+        {
+            CargoAsociarViewModel cargo = new CargoAsociarViewModel();
+
+
+            try
+            {
+                cargo.tipo = await _servicioApiTipoCargo.BuscarTipoCargo(id);
+                ViewData["nombre"] = cargo.tipo.nombre;
+                cargo.cargoNoAsoc = await _servicioApiCargo.ListaCargoNoAsociado();
+
+                return PartialView(cargo);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
 
         public async Task<IActionResult> VentanaVisualizarCargo(Guid id)
         {
@@ -239,6 +260,37 @@ namespace ServicesDeskUCAB.Controllers
 
         }
 
+
+        public async Task<IActionResult> VentanaEditarTipoCargo(Guid id)
+        {
+            TipoCargoEditarViewModel viewModel = new TipoCargoEditarViewModel();
+
+            try
+            {
+                viewModel.cargoAsociado = await _servicioApiCargo.CargoAsociadoTipoCargo(id);
+                viewModel.cargo = await _servicioApiCargo.ListaCargo();
+                viewModel.tipo = await _servicioApiTipoCargo.BuscarTipoCargo(id);
+                return PartialView(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
+
+
+        public async Task<IActionResult> ModificarTipoCargo(Tipo_CargoModel tipo, List<string> idCargos)
+        {
+            JObject respuesta;
+            JObject respuestaDept;
+            respuesta = await _servicioApiTipoCargo.EditarTipo_Cargo(tipo);
+            //if ((bool)respuesta["success"])
+
+            respuestaDept = await _servicioApiCargo.EditarRelacion(tipo.id, idCargos);
+            return RedirectToAction("CargoTipoCargo", new { message = "Se ha modificado correctamente" });
+            //else
+            //return NoContent();
+        }
 
 
 
