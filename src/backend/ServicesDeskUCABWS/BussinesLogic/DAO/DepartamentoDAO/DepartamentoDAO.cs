@@ -34,10 +34,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
-                  if (!ExisteDepartamento(departamento)) {
+                if (!ExisteDepartamento(departamento)) {
                     _dataContext.Departamentos.Add(departamento);
                     _dataContext.DbContext.SaveChanges();
-                  }    
+                }    
 
 				var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
 						.Select(d => new DepartamentoDto
@@ -67,10 +67,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
-                    _dataContext.DbContext.SaveChanges();
-
-                return DepartamentoMapper.MapperEntityToDto(departamento);
-
+          _dataContext.DbContext.SaveChanges();
+          return DepartamentoMapper.MapperEntityToDto(departamento);
             }
             catch (Exception ex)
             {
@@ -84,10 +82,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                     _dataContext.Departamentos.Update(departamento);
-                    _dataContext.DbContext.SaveChanges();
-                         
-
-                var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
+				            _dataContext.DbContext.SaveChanges();
+				            var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
                     {
                         id = d.id,
@@ -214,8 +210,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
                     nuevoDepartamento.id_grupo = id;
-                    _dataContext.DbContext.SaveChanges();
-
+          					_dataContext.DbContext.SaveChanges();
                 }
 
                 return listaDept;
@@ -289,6 +284,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                             relacionado.fecha_ultima_edicion = DateTime.Now.Date;
                             _dataContext.DbContext.SaveChanges();
                         }
+
 
                     }
                 
