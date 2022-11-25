@@ -29,7 +29,6 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_eliminacion { get; set; }
 
 
-
         public Estado Estado { get; set; }
         [Required]
         public Prioridad Prioridad { get; set; }
