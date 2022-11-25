@@ -13,6 +13,9 @@
 }
     <div class="container" style="margin-top:10px">
         <form method="post" asp-controller="Ticket" asp-action="GuardarTicket">
+            <h1>@Model.ticket.empleado_id</h1>
+            <input class="d-none" asp-for="@Model.ticket.empleado_id" value="@Model.ticket.empleado_id" required readonly/>
+
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Departamento Destino:</label>
                 <select asp-for="@Model.ticket.departamentoDestino_Id" class="form-select" aria-label="Default select example" required>
