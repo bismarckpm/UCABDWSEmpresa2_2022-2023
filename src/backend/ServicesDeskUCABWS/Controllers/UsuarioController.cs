@@ -29,10 +29,9 @@ namespace ServicesDeskUCABWS.Controllers
         private readonly ILogger<UsuarioController> _log;
 
 
-        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, IUserLoginDAO userLogin)
+        public UsuarioController(IUsuarioDAO usuarioDao, IUserLoginDAO userLogin)
         {
             _usuarioDAO = usuarioDao;
-            _log = log;
             _userLoginDAO = userLogin; 
         }
 
@@ -157,7 +156,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpGet]
         [Route("Consulta/Usuario/{id}")]
-        public ApplicationResponse<Usuario> GetByTipoEstadoIdCtrl(Guid id)
+        public ApplicationResponse<Usuario> GetByTipoUsuarioId(Guid id)
         {
             var response = new ApplicationResponse<Usuario>();
             try

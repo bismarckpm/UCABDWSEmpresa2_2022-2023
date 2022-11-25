@@ -47,7 +47,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpDelete]
         [Route("EliminarRol/{user}/{rol}")]
-        public ApplicationResponse<RolUsuarioDTO> CrearDepartamento([FromRoute] Guid user, [FromRoute] Guid rol)
+        public ApplicationResponse<RolUsuarioDTO> EliminarRol([FromRoute] Guid user, [FromRoute] Guid rol)
         {
             var response = new ApplicationResponse<RolUsuarioDTO>();
             try
