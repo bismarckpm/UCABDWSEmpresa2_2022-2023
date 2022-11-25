@@ -16,8 +16,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
     public class NotificacionService : INotificacion
     {
         private readonly IDataContext _context;
-        const string correo = "servicedeskucab@hotmail.com";
-        const string clave = "servicedesk22.";
+        const string correo = "serviceucabdesk@hotmail.com";
+        const string clave = "ucab1234";
         const string alias = "ServiceDeskUCAB";
         const string host = "smtp.office365.com";
         const int puerto = 587;
@@ -52,8 +52,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                 if (ticket.Estado != null)
                     etiquetasEstatico.Add("@Estado", ticket.Estado.nombre.ToString());
                 if (ticket.Departamento_Destino != null)
+                {
                     etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
-                etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.grupo.nombre.ToString());
+                    etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.grupo.nombre.ToString());
+                }  
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
 

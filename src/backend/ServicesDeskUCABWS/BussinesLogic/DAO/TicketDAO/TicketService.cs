@@ -1,6 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
+using NuGet.Protocol;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Response;
@@ -9,7 +14,9 @@ using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
@@ -18,10 +25,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
     {
         private readonly IDataContext contexto;
         private List<Ticket> listaTickets;
+        private readonly INotificacion notificacion;
+        private readonly IPlantillaNotificacion plantilla;
 
-        public TicketService(IDataContext context)
+        public TicketService(IDataContext context, IPlantillaNotificacion plantilla, INotificacion notificacion)
         {
             contexto = context;
+            this.notificacion = notificacion;
+            this.plantilla = plantilla;
         }
 
 
@@ -57,11 +68,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
                 ticket.Prioridad = contexto.Prioridades.Find(Guid.Parse(ticketDTO.Prioridad));
-                //List<Empleado> v =(List<Empleado>) contexto.Usuarios.ToList();
-                //Prioridad t = contexto.Prioridades.Find();//Include(x => x.Cargo).ThenInclude(x => x.Departamento).ToList();
-                //.Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
                 ticket.Emisor = contexto.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
+                    .Where(s => s.Id == Guid.Parse(ticketDTO.Emisor.ToLower())).FirstOrDefault();
                 ticket.Departamento_Destino = contexto.Departamentos.Find(Guid.Parse(ticketDTO.Departamento_Destino));
                 ticket.Tipo_Ticket = contexto.Tipos_Tickets.Find(Guid.Parse(ticketDTO.Tipo_Ticket));
                 ticket.Estado = contexto.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
@@ -114,16 +122,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             string result = null;
             try
             {
-                //Cambiar estado Ticket
-                CambiarEstado(ticket, "Aprobado");
-
                 //EnviarNotificacion(ticket.Emisor, ticket.Estado);
                 List<Empleado> ListaEmpleado = contexto.Empleados.
                     Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
                     .ToList();
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
-
+                //Cambiar estado Ticket
+                CambiarEstado(ticket, "Aprobado", null);
                 contexto.DbContext.SaveChanges();
                 return result;
             }
@@ -170,7 +175,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 contexto.Votos_Tickets.AddRange(ListaVotos);
 
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+                CambiarEstado(ticket,"Pendiente", ListaEmpleado);
 
                 contexto.DbContext.SaveChanges();
 
@@ -217,7 +222,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 contexto.Votos_Tickets.AddRange(ListaVotos);
 
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+                CambiarEstado(ticket, "Pendiente", ListaEmpleado);
 
                 contexto.DbContext.SaveChanges();
 
@@ -230,16 +235,78 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
         }
 
-        public bool CambiarEstado(Ticket ticket, string Estado)
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados)
         {
             try
             {
-                ticket.Estado = contexto.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
+                var ticket = contexto.Tickets.Include(x=>x.Departamento_Destino).ThenInclude(x=>x.grupo).Include(x=>x.Prioridad)
+                    .Include(x => x.Emisor).ThenInclude(x=>x.Cargo).ThenInclude(x=>x.Departamento)
+                    .Include(x=>x.Tipo_Ticket).Include(x=>x.Votos_Ticket)
+                    .Where(x=>x.Id == ticketLlegada.Id).FirstOrDefault();
+
+                ticket.Estado = contexto.Estados
+                    .Include(x => x.Estado_Padre)
+                    .Include(x => x.Departamento).
                     Where(s => s.Estado_Padre.nombre == Estado &&
                     s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
+
+                
                 var vticket = contexto.Tickets.Update(ticket);
                 vticket.State = EntityState.Modified;
+
+                if (Estado == "Aprobado")
+                {
+                    try
+                    {
+                        var plant =plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                        var descripcionPlantilla =notificacion.ReemplazoEtiqueta(ticket, plant);
+                        notificacion.EnviarCorreo(plant.Titulo,descripcionPlantilla,ticket.Emisor.correo);
+                    }
+                    catch (ExceptionsControl) { }
+                    CambiarEstado(ticket, "Siendo Procesado", null);
+                    return true;
+                }
+
+                if(Estado == "Siendo Procesado")
+                {
+                    var empleados = contexto.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in empleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                }
+
+                if (Estado == "Pendiente")
+                {
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in ListaEmpleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    return true;
+                }
+
+                try
+                {
+                    var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                    notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                }
+                catch (ExceptionsControl) { }
+
+
 
             }
             catch (ExceptionsControl ex)

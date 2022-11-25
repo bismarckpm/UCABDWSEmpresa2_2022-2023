@@ -14,7 +14,9 @@ namespace ServiceDeskUCAB.Controllers
 
         public async Task<IActionResult> VistaTicket()
         {
-            List<Votos_Ticket> lista = await _servicioApi.ObtenerVotos();
+            var idUsuario = //"E7AFDCF7-11DA-49FD-8503-C630D524DD55"; //Claim de Id usuario
+                            "4913F598-71FD-4E55-B38A-F5D471F18296";
+            List<Votos_Ticket> lista = await _servicioApi.ObtenerVotos(idUsuario);
 
             return View(lista);
         }

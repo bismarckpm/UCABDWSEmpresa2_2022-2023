@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
@@ -19,10 +20,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
     public class Votos_TicketService : IVotos_TicketDAO
     {
         private readonly IDataContext contexto;
+        private readonly ITicketDAO iticket;
 
-
-        public Votos_TicketService(IDataContext Context)
+        public Votos_TicketService(IDataContext Context, ITicketDAO ticketDAO)
         {
+            iticket = ticketDAO;
             contexto = Context;
         }
 
@@ -128,6 +130,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     .Where(x => x.Id == Id).FirstOrDefault();
 
                 var ticket = contexto.Tickets
+                    .AsNoTracking().Include(x=>x.Departamento_Destino)
                     .Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
                     .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
                     .Where(x => x.Id == Id).FirstOrDefault();
@@ -136,7 +139,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 && x.voto == "Aprobado").Count();
                 if (votosfavor >= tipo_ticket.Tipo_Ticket.Minimo_Aprobado)
                 {
-                    CambiarEstado(ticket, "Aprobado");
+                    var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
+                    iticket.CambiarEstado(ticket, "Aprobado", null);
                     var l = contexto.Votos_Tickets
                         .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
                         .ToList();//.ForEach(x=>x.voto="Aprobado");
@@ -148,7 +152,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 && x.voto == "Rechazado").Count();
                 if (votoscontra >= tipo_ticket.Tipo_Ticket.Maximo_Rechazado)
                 {
-                    CambiarEstado(ticket, "Rechazado");
+                    var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
+                    iticket.CambiarEstado(ticket, "Rechazado", null);
                     var l = contexto.Votos_Tickets
                         .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
                         .ToList();//.ForEach(x => x.voto = "Rechazado");
@@ -166,24 +171,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             return "Pendiente";
         }
 
-        public bool CambiarEstado(Ticket ticket, string Estado)
-        {
-            try
-            {
-                ticket.Estado = contexto.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
-                    Where(s => s.Estado_Padre.nombre == Estado &&
-                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
-                    .FirstOrDefault();
-                contexto.Tickets.Update(ticket);
-
-
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
-        }
+        
 
         public string VerificarAprobacionTicketJerarquico(Guid Id)
         {
@@ -227,7 +215,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     var fin = VotosSiguienteRonda(ticket, tipo_ticket);
                     if (fin)
                     {
-                        CambiarEstado(ticket, "Aprobado");
+                        
+                        
+                        iticket.CambiarEstado(ticket, "Aprobado",null);
                         contexto.DbContext.SaveChanges();
                         return "Aprobado";
                     }
@@ -247,7 +237,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     l.ForEach(x => x.voto = "Rechazado");
 
                     //Ingreso siguiente ronda de votos
-                    CambiarEstado(ticket, "Rechazado");
+                    var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
+                    iticket.CambiarEstado(ticket, "Rechazado",null);
                     contexto.DbContext.SaveChanges();
                     //EnviarNotiicacion("Ticket Rechazado")
                     return "Rechazado";
@@ -299,8 +290,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             });
 
             contexto.Votos_Tickets.AddRange(ListaVotos);
-
-
+            iticket.CambiarEstado(ticket, "Pendiente", ListaEmpleado);
             return false;
         }
 
@@ -310,7 +300,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             try
             {
                 response.Data = contexto.Votos_Tickets.Include(x => x.Ticket).Include(x => x.Empleado).Where(x => x.IdUsuario == id && x.voto == "Pendiente").ToList();
-
             }
             catch (ExceptionsControl ex)
             {

@@ -138,8 +138,8 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch" >
-                                            <input name="cargos2" class="form-check-input inputModelos" value="mj-@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 40px">
-                                            <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                            <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 60px">
+                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                             <br />
                                         </div>
                                         <div class="form-check form-switch inputJerarquico" style="display: none" id="@cargos2.posicion">
@@ -160,8 +160,8 @@
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
                                         <div class="form-check form-switch">
-                                            <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 40px">
-                                            <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                            <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 60px">
+                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                             <br />
 
                                         </div>
@@ -169,11 +169,11 @@
 
                                     <br />
                                     Mínimo Aprobado:
-                                    <input type="text" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                    <input class="inputModelosParalelo" type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado" style="width : 60px">
                                     <br />
                                     <br />
                                     Máximo Rechazado:
-                                    <input type="text" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                    <input class="inputModelosParalelo" type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado" style="width : 60px">
                                 </div>
                             </div>
 
@@ -192,8 +192,8 @@
                                     <br>
 
                                     <div class="form-check form-switch">
-                                        <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 40px">
-                                        <label class="form-check-label" style="position: absolute; left: 40px">@departamentos.nombre</label>
+                                        <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 60px">
+                                        <label class="form-check-label" style="position: absolute; left: 60px">@departamentos.nombre</label>
 
                                     </div>
                                 }
@@ -230,24 +230,44 @@
             }
         });
         
+        
+
         if (id == "Modelo_Jerarquico") 
         {
             document.getElementById('Modelo_Jerarquico').style.display = 'block';
             document.getElementById('Modelo_Paralelo').style.display = 'none';
             document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
 
+            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+            listainputsParalelos.forEach((input)=>{
+                input.required = 'false';
+                input.value = '';
+            });
+            
         }
 
         if (id == "Modelo_Paralelo") {
             document.getElementById('Modelo_Paralelo').style.display = 'block';
             document.getElementById('Modelo_Jerarquico').style.display = 'none';
             document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
+            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+            listainputsParalelos.forEach((input)=>{
+                input.required = 'true';
+                input.value = '';
+            });
         }
 
         if (id == "Modelo_No_Aprobacion") {
             document.getElementById('Modelo_No_Aprobacion').style.display = 'block';
             document.getElementById('Modelo_Jerarquico').style.display = 'none';
             document.getElementById('Modelo_Paralelo').style.display = 'none';
+
+            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+            listainputsParalelos.forEach((input) => {
+                input.required = 'false';
+                input.value = '';
+            });
         }
     }
 
@@ -377,8 +397,8 @@
                                                  @if(tipo.Flujo_Aprobacion.Select(x=>x.Tipo_Cargo.Id).ToList().Contains(cargos2.Id))
                                                  {
                                                     <div class="form-check form-switch">
-                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox" checked="checked" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 40px">
-                                                        <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox" checked="checked" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                         <br />
                                                     </div>
                                                      <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
@@ -391,8 +411,8 @@
                                                     </div>
                                                  }   else {
                                                     <div class="form-check form-switch">
-                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 40px">
-                                                        <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                         <br />
                                                     </div>
                                                      <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
@@ -415,8 +435,8 @@
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
                                                 <div class="form-check form-switch" >
-                                                    <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox"  onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 40px">
-                                                    <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                    <input name="cargos2" class="form-check-input" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
+                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                     <br />
                                                 </div>
                                                 <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
@@ -441,15 +461,15 @@
                                                 @if (tipo.Flujo_Aprobacion.Select(x => x.Tipo_Cargo.Id).ToList().Contains(cargos2.Id))
                                                 {
                                                     <div class="form-check form-switch">
-                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" checked="checked" id="@cargos2.Id" style="position: absolute; left: 40px">
-                                                        <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" checked="checked" id="@cargos2.Id" style="position: absolute; left: 60px">
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                         <br />
 
                                                     </div>
                                                 } else {
                                                     <div class="form-check form-switch">
-                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 40px">
-                                                        <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                        <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                         <br />
 
                                                     </div>
@@ -458,11 +478,11 @@
 
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required type="text" asp-for="tipo.Minimo_Aprobado" value="@tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input required type="number" asp-for="tipo.Minimo_Aprobado" value="@tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required type="text" asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input required type="number" asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
                                 } else {
@@ -473,8 +493,8 @@
                                             {
 
                                                 <div class="form-check form-switch">
-                                                    <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 40px">
-                                                    <label class="form-check-label" style="position: absolute; left: 40px">@cargos2.nombre</label>
+                                                    <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
+                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
                                                     <br />
 
                                                 </div>
@@ -482,11 +502,11 @@
 
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required type="text" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input required type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required type="text" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input required type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
                                 }
@@ -514,8 +534,8 @@
                                         <br>
 
                                         <div class="form-check form-switch">
-                                            <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 40px">
-                                            <label class="form-check-label" style="position: absolute; left: 40px">@departamentos.nombre</label>
+                                            <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 60px">
+                                            <label class="form-check-label" style="position: absolute; left: 60px">@departamentos.nombre</label>
 
                                         </div>
                                     }

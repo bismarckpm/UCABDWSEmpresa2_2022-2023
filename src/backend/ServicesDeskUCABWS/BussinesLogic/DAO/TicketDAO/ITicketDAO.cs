@@ -22,7 +22,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Ticket> ConsultaListaTickets();
         public Ticket ConsultaTicket(Guid id);
 
-        public bool CambiarEstado(Ticket ticket, string Estado);
+        public bool CambiarEstado(Ticket ticket, string Estado,List<Empleado> ListaEmpleados);
         //public ApplicationResponse<Votos_TicketDTOCreate> RegistroVotos(Votos_TicketDTOCreate votos_TicketDTO);
     }
 }

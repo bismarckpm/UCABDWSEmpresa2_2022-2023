@@ -93,7 +93,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
 
+                //Llena la entidad intermedia Estado
+                AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
+
                 _tipoEstadoContext.DbContext.SaveChanges();
+                
                 return true;
             }
             catch (ExceptionsControl ex)
@@ -108,7 +112,34 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             {
                 throw new ExceptionsControl("No se pudo registrar el tipo estado", ex);
             }
+
+            
         }
+
+        //Agregar Estados de los Tipo Estados Agregados
+
+        public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
+        {
+            var listaDepartamentos = _tipoEstadoContext.Departamentos.ToList();
+
+            var listaEstados = new List<Estado>();
+
+            foreach (var departamento in listaDepartamentos)
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + estado.nombre, estado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = estado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _tipoEstadoContext.Estados.AddRange(listaEstados);
+            _tipoEstadoContext.DbContext.SaveChanges();
+        }
+
 
         //PUT: Servicio para actualizar tipo estado
         public Boolean ActualizarTipoEstado(TipoEstadoCreateDTO tipoEstadoAct, Guid id)

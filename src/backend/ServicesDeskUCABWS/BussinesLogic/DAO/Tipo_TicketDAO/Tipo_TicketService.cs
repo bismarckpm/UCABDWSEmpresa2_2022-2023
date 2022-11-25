@@ -192,7 +192,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                     }).ToList();
                     foreach (Flujo_Aprobacion fa in tipo_ticket.Flujo_Aprobacion)
                     {
-                        var t = Tipo_TicketDTO.Flujo_Aprobacion.Where(x => x.IdTipoCargo == fa.IdTipo_cargo.ToString().ToUpper()).First();
+                        var t = Tipo_TicketDTO.Flujo_Aprobacion.Where(x => x.IdTipoCargo.ToUpper() == fa.IdTipo_cargo.ToString().ToUpper()).FirstOrDefault();
                         fa.OrdenAprobacion = t.OrdenAprobacion;
                         fa.Minimo_aprobado_nivel = t.Minimo_aprobado_nivel;
                         fa.Maximo_Rechazado_nivel = t.Maximo_Rechazado_nivel;
