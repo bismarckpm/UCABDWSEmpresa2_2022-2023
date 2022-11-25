@@ -65,11 +65,11 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.reenviarTicket(ticket);
         }
         
-        /*[HttpGet,Route("Familia/{id}")]
-        public ApplicationResponse<List<TicketDTO>> obtenerFamiliaTicketCtrl(string id)
+        [HttpGet,Route("Familia/{id}")]
+        public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicketCtrl(string id)
         {
-            return _ticketDAO.obtenerFamiliaTickets(new Guid(id));
-        }*/
+            return _ticketDAO.obtenerFamiliaTicket(new Guid(id));
+        }
 
         /*[HttpPut, Route("Reenviar")]
         public ApplicationResponse<string> reenviarTicketCtrl([FromBody] TicketReenvioDTO ticketInfo)

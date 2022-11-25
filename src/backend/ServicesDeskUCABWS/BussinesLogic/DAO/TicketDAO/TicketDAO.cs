@@ -568,21 +568,32 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
         }
-        public void mergeTicketsHl(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
+        public ApplicationResponse<string> mergeTicketsHl(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
         {
             //CREAR LA FAMILIA TICKET, Y PONER FECHA FIN A LOS QUE ESTÁN EN LA LISTA!
-            Familia_Ticket nuevaFamilia = new Familia_Ticket
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
+            try
             {
-                Id = new Guid(),
-                Lista_Ticket = new List<Ticket>()
-            };
-            ticketsSecundariosId.ForEach(delegate (Guid e)
+                Familia_Ticket nuevaFamilia = new Familia_Ticket
+                {
+                    Id = new Guid(),
+                    Lista_Ticket = new List<Ticket>()
+                };
+                ticketsSecundariosId.ForEach(delegate (Guid e)
+                {
+                    anadirFamilia(e, nuevaFamilia, false);
+                });
+                anadirFamilia(ticketPrincipalId, nuevaFamilia, true);
+                respuesta.Data = "Proceso de Merge realizado exitosamente";
+                respuesta.Message = "Mano hicimos merge tu eres loco";
+                respuesta.Success = true;
+            }catch (Exception e)
             {
-                anadirFamilia(e, nuevaFamilia, false);
-            });
-            anadirFamilia(ticketPrincipalId, nuevaFamilia, true);
-            //_dataContext.Familia_Tickets.Add(nuevaFamilia);
-            //_dataContext.DbContext.SaveChanges();
+                respuesta.Data = "Proceso de Merge no se procesó exitosamente";
+                respuesta.Message = e.Message;
+                respuesta.Success = true;
+            }
+            return respuesta;
         }
         public List<TicketInfoBasicaDTO> obtenerFamiliaTicketsHl(Guid id)
         {
@@ -608,5 +619,39 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.SaveChanges();
             return "Ticket reenviado satisfactoriamente";
         }*/
+        public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId)
+        {
+            ApplicationResponse<List<TicketInfoCompletaDTO>> respuesta = new ApplicationResponse<List<TicketInfoCompletaDTO>>();
+            try
+            {
+                TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
+                validaciones.validarTicket(ticketPrincipalId);
+                List<TicketInfoCompletaDTO> lista = new List<TicketInfoCompletaDTO>();
+                Ticket ticket = _dataContext.Tickets.Include(t => t.Familia_Ticket).Include(t=>t.Familia_Ticket.Lista_Ticket).Where(t => t.Id == ticketPrincipalId).Single();
+                if (ticket.Familia_Ticket == null)
+                    throw new Exception("El ticket no tiene familia definida");
+                ticket.Familia_Ticket.Lista_Ticket.ForEach(delegate (Ticket e)
+                {
+                    lista.Add(rellenarTicketInfoCompletaHl(e.Id));
+                });
+                if (lista.Count == 0)
+                    throw new Exception("El ticket no tiene integrantes en su familia");
+                respuesta.Data = lista;
+                respuesta.Message = "Mano ahí tienes a tu familia de tickets criminal tu eres loco";
+                respuesta.Success = true;
+            }catch(TicketException e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
     }
 }
