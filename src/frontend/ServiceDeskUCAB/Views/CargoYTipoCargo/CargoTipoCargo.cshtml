@@ -1,0 +1,202 @@
+﻿@model Tuple<List<ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO.CargoDto>,List<ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO.Tipo_CargoDto>>
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
+@{
+    ViewData["Title"] = "Gestion Cargo";
+}
+
+<!-- Scripts para mostrar ventanas emergentes -->
+@section scripts{
+
+    <!-- Script para mostrar ventana Agregar Cargo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderAgregarCargo');
+            $('button[data-toggle="agregarCargo-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+   <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderModificarCargo');
+            $('button[data-toggle="editarCargo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idCargo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+ </script>
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderEliminarCargo');
+            $('button[data-toggle="eliminarCargo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idCargo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Scripts para TipoCargo -->
+    <!-- Script para mostrar ventana Agregar TipoCargo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderAgregarTipoCargo');
+            $('button[data-toggle="agregarTipoCargo-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Script para mostrar ventana Visualizar Cargos asociados a un TipoCargo -->
+   <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderVisualizarTipoCargo');
+            $('button[data-toggle="visualizarTipoCargo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idTipo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+    <!-- Script para mostrar ventana Eliminar Grupo -->
+   <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderEliminarTipoCargo');
+            $('button[data-toggle="eliminarTipoCargo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idTipo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderModificarGrupo');
+            $('button[data-toggle="editarGrupo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idGrupo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+}
+
+    <!-- Placeholders de las ventanas emergentes (Grupo)-->
+<div id="PlaceHolderAgregarTipoCargo"></div>
+    <div id="PlaceHolderEliminarTipoCargo"></div>
+<div id="PlaceHolderModificarTipoCargo"></div>
+<div id="PlaceHolderVisualizarTipoCargo"></div>
+
+    <!-- Placeholders de las ventanas emergentes (Cargo)-->
+     <div id="PlaceHolderAgregarCargo"></div>
+    <div id="PlaceHolderEliminarCargo"></div>
+    <div id="PlaceHolderModificarCargo"></div>
+ 
+
+    <!-- Boton Agregar Cargo -->
+    <button id=btnAgregarCargo type="button" class="btn btn-primary" data-toggle="agregarCargo-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarCargo")">
+        Crear Cargo
+    </button>
+
+    <!-- Tabla Cargos -->
+    <table class="table">
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+        </tr>
+
+    @foreach (var item in Model.Item1)
+    {
+        <tr>
+            <td class="id" style="display:none" ;>
+                @Html.DisplayFor(i => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.nombre_departamental)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.descripcion)
+            </td>
+            <td>
+                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarCargo-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarCargo","CargoYTipoCargo",new { id = "idCargo" })">
+                    Editar
+                </button>
+                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarCargo-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarCargo","CargoYTipoCargo",new { id = "idCargo" })">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!-- Boton Agregar Grupo -->
+<button id=btnAgregarTipoCargo type="button" class="btn btn-primary" data-toggle="agregarTipoCargo-modal" data-target="#popUpAgregarTipoCargo" data-url="@Url.Action("AgregarTipoCargo")">
+    Crear Tipo Cargo
+</button>
+
+<!-- Tabla Grupos -->
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        
+    </tr>
+
+    @foreach (var item in Model.Item2)
+    {
+        <tr>
+            <td class="id" style="display:none" ;>
+                @Html.DisplayFor(i => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.nombre)
+            </td>
+            
+            <td>
+                <button id=btnVisualizar type="button" class="btn btn-success btn-sm" data-toggle="visualizarTipoCargo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                    Visualizar
+                </button>
+                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarTipoCargo-modal" data-target="#popUpEditarTipoCargo" data-url="@Url.Action("VentanaEditarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                    Editar
+                </button>
+                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarTipoCargo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    }
+</table>
