@@ -346,35 +346,35 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.AreEqual(request.nombre, "Seguridad Ambiental");
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para actualizar un Departamento Condicional")]
-        public void ActualizarDepartamentoTestIf()
-        {
-            //arrange
-            var request = new Departamento
-            {
+        //[TestMethod(displayName: "Prueba Unitaria para actualizar un Departamento Condicional")]
+        //public void ActualizarDepartamentoTestIf()
+        //{
+        //    //arrange
+        //    var request = new Departamento
+        //    {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+        //        id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental 2",
+        //        nombre = "Seguridad Ambiental 2",
 
-                descripcion = "Cuida el ambiente",
+        //        descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+        //        fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+        //        fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
+        //        fecha_eliminacion = null,
 
-                id_grupo = null
+        //        id_grupo = null
 
-            };
+        //    };
 
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
+        //    _contextMock.Setup(set => set.DbContext.SaveChanges());
 
-            var result = _DepartamentoDAO.ActualizarDepartamento(request);
+        //    var result = _DepartamentoDAO.ActualizarDepartamento(request);
 
-            Assert.AreNotEqual(request.nombre, result.nombre);
-        }
+        //    Assert.AreNotEqual(request.nombre, result.nombre);
+        //}
 
         [TestMethod(displayName: "Prueba Unitaria cuando la actualizacion de un departamento falla por campos vacios")]
         public void ExcepcionDBUpdateActualizarDepartamento()

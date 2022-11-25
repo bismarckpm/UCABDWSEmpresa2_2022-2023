@@ -83,11 +83,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
-                if (!ExisteDepartamento(departamento))
-                {
                     _dataContext.Departamentos.Update(departamento);
                     _dataContext.DbContext.SaveChanges();
-                }           
+                         
 
                 var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
                     d => new DepartamentoDto_Update
