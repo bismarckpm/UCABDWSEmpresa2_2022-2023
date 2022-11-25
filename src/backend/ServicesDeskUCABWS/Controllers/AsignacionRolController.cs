@@ -20,12 +20,11 @@ namespace ServicesDeskUCABWS.Controllers
     public class AsignacionRolController : ControllerBase
     {
         private readonly IUserRol _userRol;
-        private readonly ILogger<UsuarioController> _log;
 
-        public AsignacionRolController(IUserRol userRol, ILogger<UsuarioController> log)
+        public AsignacionRolController(IUserRol userRol)
         {
             _userRol = userRol;
-            _log = log;
+
         }
 
         [HttpGet]
@@ -68,7 +67,7 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("AsignarRol/")]
-        public ApplicationResponse<RolUsuarioDTO> CrearDepartamento([FromBody] RolUsuarioDTO userol)
+        public ApplicationResponse<RolUsuarioDTO> CrearRolUsuario([FromBody] RolUsuarioDTO userol)
         {
             var response = new ApplicationResponse<RolUsuarioDTO>();
             try
