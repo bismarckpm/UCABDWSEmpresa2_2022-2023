@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 
 using System;
@@ -18,57 +20,86 @@ namespace ServicesDeskUCABWS.Controllers
     public class AsignacionRolController : ControllerBase
     {
         private readonly IUserRol _userRol;
-        private readonly ILogger<UsuarioController> _log;
 
-        public AsignacionRolController(IUserRol userRol, ILogger<UsuarioController> log)
+        public AsignacionRolController(IUserRol userRol)
         {
             _userRol = userRol;
-            _log = log;
+
+        }
+
+        [HttpGet]
+        [Route("AsignacionRol/{id}")]
+        public ApplicationResponse<RolUsuarioDTO> GetRolByUser(Guid id)
+        {
+            var response = new ApplicationResponse<RolUsuarioDTO>();
+            try
+            {
+                response.Data = _userRol.consularRolID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
 
         [HttpDelete]
         [Route("EliminarRol/{user}/{rol}")]
-        public ActionResult<RolUsuarioDTO> CrearDepartamento([FromRoute] Guid user, [FromRoute] Guid rol)
+        public ApplicationResponse<RolUsuarioDTO> EliminarRol([FromRoute] Guid user, [FromRoute] Guid rol)
         {
+            var response = new ApplicationResponse<RolUsuarioDTO>();
             try
             {
-                var dao = _userRol.EliminarRol(user,rol);
-                return dao;
+                var resultService = _userRol.EliminarRol(user,rol);
+                response.Data = resultService;
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("AsignarRol/")]
-        public ActionResult<RolUsuarioDTO> CrearDepartamento([FromBody] RolUsuarioDTO userol)
+        public ApplicationResponse<RolUsuarioDTO> CrearRolUsuario([FromBody] RolUsuarioDTO userol)
         {
+            var response = new ApplicationResponse<RolUsuarioDTO>();
             try
             {
-                var dao = _userRol.AgregarRol(UserRolMapper.MapperEntityToDtoUR(userol));
-                return dao;
+                var resultService = _userRol.AgregarRol(UserRolMapper.MapperEntityToDtoUR(userol));
+                response.Data = resultService;
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpGet]
-        public ActionResult<List<RolUsuarioDTO>> ConsultarUsuarios()
+        public ApplicationResponse<List<RolUsuarioDTO>> ConsultarUsuarios()
         {
+            var response = new ApplicationResponse<List<RolUsuarioDTO>>();
             try
             {
-                return _userRol.ObtenerUsuariosRoles();
+                response.Data = _userRol.ObtenerUsuariosRoles();
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
     }
 }

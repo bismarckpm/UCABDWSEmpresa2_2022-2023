@@ -6,10 +6,11 @@ using Microsoft.Extensions.Logging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,147 +23,232 @@ namespace ServicesDeskUCABWS.Controllers
    
     public class UsuarioController : ControllerBase
     {
+
         private readonly IUsuarioDAO _usuarioDAO;
         private readonly IUserLoginDAO _userLoginDAO;
         private readonly ILogger<UsuarioController> _log;
 
 
-        public UsuarioController(IUsuarioDAO usuarioDao, ILogger<UsuarioController> log, IUserLoginDAO userLogin)
+        public UsuarioController(IUsuarioDAO usuarioDao, IUserLoginDAO userLogin)
         {
             _usuarioDAO = usuarioDao;
-            _log = log;
             _userLoginDAO = userLogin; 
         }
 
 
       
         [HttpGet]
-        [Authorize]
-         public ActionResult<List<Usuario>> ConsultarUsuarios()
+        public ApplicationResponse<List<Usuario>> ConsultarUsuarios()
         {
+            var response = new ApplicationResponse<List<Usuario>>();
             try
             {
-                return _usuarioDAO.ObtenerUsuarios();
+                response.Data= _usuarioDAO.ObtenerUsuarios();
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("CrearAdministrador/")]
-        public ActionResult<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
         {
+            var response = new ApplicationResponse<Administrador>();
             try
             {
-                var dao = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
-                return dao;
+                var resultService = _usuarioDAO.AgregarAdminstrador(UserMapper.MapperEntityToDtoAdmin(Usuario));
+                response.Data = resultService;
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
         [HttpPost]
-        [Authorize]
         [Route("CrearCliente/")]
-        public ActionResult<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Cliente> CrearCliente([FromBody] UsuarioDto Usuario)
         {
+            var response = new ApplicationResponse<Cliente>();
             try
             {
-                var dao = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
-                return dao;
+                response.Data = _usuarioDAO.AgregarCliente(UserMapper.MapperEntityToDtoClient(Usuario));
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("CrearEmpleado/")]
-        public ActionResult<Empleado> CrearEmpleado([FromBody] UsuarioDto Usuario)
+        public ApplicationResponse<Empleado> CrearEmpleado([FromBody] UsuarioDto Usuario)
         {
+            var response = new ApplicationResponse<Empleado>();
             try
             {
-                var dao = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
-                return dao;
+                var resultService = _usuarioDAO.AgregarEmpleado(UserMapper.MapperEntityToDtoEmp(Usuario));
+                response.Data = resultService;
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
+        }
+
+        [HttpPost]
+        [Route("RecuperarClave")]
+        public ApplicationResponse<string> RecuperarClave([FromBody] UserRecoveryDTO usuario)
+        {
+            var response = new ApplicationResponse<string>();
+            try
+            {
+                
+                response.Message = _usuarioDAO.RecuperarClave(usuario.email);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+        /*
+        [HttpPost]
+        [Route("ValidarUsuario")]
+        public ApplicationResponse<string> ValidarContraseña([FromRoute] string email)
+        {
+            var response = new ApplicationResponse<string>();
+            try
+            {
+               
+                 response.Message = _usuarioDAO.ValidarCorreo(email);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+
+            return response;
+
+
+        }*/
+
+        [HttpGet]
+        [Route("Consulta/Usuario/{id}")]
+        public ApplicationResponse<Usuario> GetByTipoUsuarioId(Guid id)
+        {
+            var response = new ApplicationResponse<Usuario>();
+            try
+            {
+                response.Data = _usuarioDAO.consularUsuarioID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
         }
 
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
-        public ActionResult<UsuarioDto> EliminarDepartamento([FromRoute] Guid id)
+        public ApplicationResponse<UsuarioDto> EliminarUsuario([FromRoute] Guid id)
         {
+            var response = new ApplicationResponse<UsuarioDto>();
             try
             {
-                return _usuarioDAO.eliminarUsuario(id);
+                var resultService = _usuarioDAO.eliminarUsuario(id);
+                response.Data = resultService;
+
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPut]
    
         [Route("ActualizarUsuario/")]
-        public ActionResult<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
+        public ApplicationResponse<UserDto_Update> ActualizarUsuario([FromBody] UserDto_Update usuario)
         {
+            var response = new ApplicationResponse<UserDto_Update>();
             try
             {
-                return _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
-                //Cambiar parametros cuando realicemos frontend
+                var resultService = _usuarioDAO.ActualizarUsuario(UserMapper.MapperEntityToDtoUpdate(usuario));
+                response.Data = resultService;
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPut]
         [Route("ActualizarUsuarioPassword/")]
-        public ActionResult<UserPasswordDto> ActualizarPassword([FromBody] UserPasswordDto usuario)
+        public ApplicationResponse<String> ActualizarPassword([FromBody] UserPasswordDto usuario)
         {
+            var response = new ApplicationResponse<String>();
             try
             {
-                return _usuarioDAO.ActualizarUsuarioPassword(UserMapper.MapperEntityToDtoUpdatePassword(usuario));
-                //Cambiar parametros cuando realicemos frontend
+                var resultService = _usuarioDAO.ActualizarUsuarioPassword(UserMapper.MapperEntityToDtoUpdatePassword(usuario));
+                response.Data = resultService.ToString();
 
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
 
         [HttpPost]
         [Route("login/")]
-        public ActionResult<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
+        public ApplicationResponse<UserResponseLoginDTO> UserLogin([FromBody]  UserLoginDto usuario )
         {
+            var response = new ApplicationResponse<UserResponseLoginDTO>();
             try
             {
-         
-                  return _userLoginDAO.UserLogin(usuario);
+                response.Data = _userLoginDAO.UserLogin(usuario);
             }
-            catch (Exception e )
+            catch (ExceptionsControl ex )
             {
-                Console.WriteLine(e.Message);
-
-                throw;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
+            return response;
         }
     }
 }

@@ -36,5 +36,9 @@ namespace ServicesDeskUCABWS.Entities
         public Familia_Ticket Familia_Ticket { get; set; }
         public Ticket Ticket_Padre { get; set; }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
+
+        public Empleado empleado { get; set; }
+
+        public Cliente cliente { get; set; }
     }
 }
