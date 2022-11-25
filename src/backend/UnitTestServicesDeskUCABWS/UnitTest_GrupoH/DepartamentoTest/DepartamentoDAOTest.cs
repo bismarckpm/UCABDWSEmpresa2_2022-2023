@@ -41,10 +41,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         public DepartamentoDAOTest()
         {
             _contextMock = new Mock<IDataContext>();
+            _contextMockDG = new Mock<IDataContext>();
+            _servicioGrupo = new GrupoDAO(_contextMockDG.Object);
             _DepartamentoDAO = new DepartamentoDAO(_contextMock.Object, _servicioGrupo);
             _contextMock.SetUpContextDataDepartamento();
-            _serviceMock = new Mock<IGrupoDAO>();
-            _contextMockDG = new Mock<IDataContext>();
+            _serviceMock = new Mock<IGrupoDAO>();            
             _contextMockDG.SetUpContextDataDepartamentoYGrupo();
             _serviceMock = new Mock<IGrupoDAO>();
 
@@ -652,21 +653,20 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos con lista de IDs de Departamentos vacios")]
         public void EditarRelacionPrimerCondicional()
         {
+            
+            _contextMockDG.Setup(set => set.DbContext.SaveChanges());           
+            var result = _DepartamentoDAO.EditarRelacion(It.IsAny<Guid>(), String.Empty);     
+            Assert.AreEqual(result.Count, 1);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos con lista de IDs de Departamentos asignado")]
+        public void EditarRelacionElse()
+        {
+
             var grupo = new Grupo
             {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Grupo Nuevo",
-
-                descripcion = "Es un grupo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-                
-            };                       
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+            };
 
             var request = new Departamento
             {
@@ -683,24 +683,16 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 
                 fecha_eliminacion = null,
 
-                id_grupo = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
-               
+                id_grupo = grupo.id
 
             };
 
-            //_contextMock.Setup(set => set.DbContext.SaveChanges());
+
             _contextMockDG.Setup(set => set.DbContext.SaveChanges());
-
-            _serviceMock.Setup(p => p.QuitarAsociacion(It.IsAny<Guid>())).Returns(new bool());
-            var respuesta = new List<string>();
-            var result = _DepartamentoDAO.EditarRelacion(grupo.id, "");
-            //_contextMock.Setup(set => set.DbContext.SaveChanges()); 
-
-            //var asoc = _servicioGrupo.QuitarAsociacion(grupo.id);
-
-
-            Assert.AreEqual(respuesta.GetType(), result.GetType());
+            var result = _DepartamentoDAO.EditarRelacion(It.IsAny<Guid>(), request.id.ToString());
+            Assert.AreEqual(result.Count, 1);
         }
+
 
 
         [TestMethod(displayName: "Prueba Unitaria para la excepcion de editar relacion de los departamentos con los grupos")]
