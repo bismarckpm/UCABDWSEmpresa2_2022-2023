@@ -220,8 +220,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.nuevoTicketEsValido(ticket);
                 TicketDTO nuevoTicket = crearNuevoTicket(ticket);
-                respuesta.Data = "Ticket creado satisfactoriamente";
-                respuesta.Message = "Ticket creado satisfactoriamente";
+
+                respuesta.Data = "Ticket Reenviado satisfactoriamente";
+                respuesta.Message = "Ticket Reenviado satisfactoriamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -357,19 +358,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("No se halló el estado para el ticket");
             else
                 nuevoTicket.Estado = estado;
+
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
+
             if(solicitudTicket.ticketPadre_Id != Guid.Empty)
             {
-
-                nuevoTicket.Ticket_Padre = _dataContext.Tickets
-                                                                .Include(t => t.Id)
-                                                                .Where(padre => padre.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                nuevoTicket.Ticket_Padre = _dataContext.Tickets.Where(padre => padre.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                Ticket ticketPadre = _dataContext.Tickets.Where(t => t.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                ticketPadre.fecha_eliminacion = DateTime.Now;
             }
             else
             {
+
                 nuevoTicket.Ticket_Padre = null;
             }
+
             nuevoTicket.nro_cargo_actual = null;
             nuevoTicket.Votos_Ticket = null;
             try
