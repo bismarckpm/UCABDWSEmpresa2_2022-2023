@@ -20,6 +20,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         public List<CargoDto> DeletedCargo();
         public List<CargoDto> NoAsociado();
 
+        public List<string> EditarRelacion(Guid id, string idCargos);
 
     }
 }

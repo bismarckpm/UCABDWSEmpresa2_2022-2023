@@ -298,6 +298,47 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         }
 
 
+        public List<string> EditarRelacion(Guid id, string idCargos)
+        {
+            try
+            {
+                List<string> listaCargo = idCargos.Split(',').ToList();
+
+                if (idCargos.Equals(""))
+                {
+
+                    _servicioTipo.QuitarAsociacion(id);
+
+                    return listaCargo;
+
+                }
+                else if (_servicioTipo.QuitarAsociacion(id))
+                {
+
+                    foreach (var nuevoCargo in listaCargo)
+                    {
+
+                        var relacionado = _dataContext.Cargos.Where(x => x.Id.ToString() == nuevoCargo).FirstOrDefault();
+                        if (relacionado != null){
+                            relacionado.id_tipo = id;
+                            relacionado.fecha_ultima_edicion = DateTime.Now.Date;
+                            _dataContext.DbContext.SaveChanges();
+                        }
+
+                    }
+
+                }
+                return listaCargo;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Fallo al asignar tipo de cargo", ex);
+            }
+        }
+
+
+
+
 
 
 
