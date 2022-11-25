@@ -627,22 +627,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados exitoso")]
         public void ListaDepartamentonoEliminado()
         {
-            var grupo = new Grupo()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Grupo",
-
-                descripcion = "Grupo nuevo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
+        
             var dept = new DepartamentoDto()
             {
 
