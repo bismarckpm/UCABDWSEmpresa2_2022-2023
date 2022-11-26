@@ -25,6 +25,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
            
             
         }
+        public TipoEstadoService(IDataContext tipoestadoContext)
+        {
+            _tipoEstadoContext = tipoestadoContext;
+
+        }
 
         //GET: Servicio para consultar todos los tipos estados
         public List<TipoEstadoDTO> ConsultaTipoEstados()

@@ -97,7 +97,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             var listavotos = context.Object.Votos_Tickets.Where(c => c.IdTicket.ToString().ToUpper() == Voto.IdTicket.ToUpper());
             Assert.IsTrue(listavotos.TakeWhile(c => c.voto == "Aprobado").Count() == listavotos.Count());
             var ticket = context.Object.Tickets.Find(Guid.Parse(Voto.IdTicket));
-            Assert.AreEqual(ticket.Estado.nombre, "Aprobado D1");
+            Assert.AreEqual(ticket.Estado.nombre, "Aprobado");
         }
 
 

@@ -21,10 +21,9 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
         private readonly DepartamentoDAO DepartamentoService;
         private readonly GrupoDAO GrupoService;
         private IMapper mapper;
+
         public TestAgregarEstadoADepartamento()
         {
-
-
             context = new Mock<IDataContext>();
             GrupoService = new GrupoDAO(context.Object);
             DepartamentoService = new DepartamentoDAO(context.Object);
@@ -46,7 +45,12 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
                 fecha_eliminacion = null,
             };
 
+            context.Setup(a => a.DbContext.SaveChanges());
+
             DepartamentoService.AgregarEstadoADepartamentoCreado(arrange);
+
+            
+
         }
     }
 }
