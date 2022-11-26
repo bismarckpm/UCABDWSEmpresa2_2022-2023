@@ -21,15 +21,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
 {
     public class UserLoginDAO : IUserLoginDAO
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
+        private readonly IDataContext _dataContext;
         private readonly AppSettings _appSettings;
       
 
-        public UserLoginDAO(DataContext dataContext, IMapper mapper, IOptions<AppSettings> appSettings) 
+        public UserLoginDAO(IDataContext dataContext, IOptions<AppSettings> appSettings) 
         {
             _dataContext = dataContext;
-            _mapper = mapper;
             _appSettings = appSettings.Value; 
         }
 
@@ -37,9 +35,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
         {
             try
             {
-               var passwordEncrypt = Encrypt.GetSHA256(user.password);
-               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == passwordEncrypt && u.fecha_eliminacion == default(DateTime)).FirstOrDefault();
-               return UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
+               //var passwordEncrypt = Encrypt.GetSHA256(user.password);
+               //&& u.fecha_eliminacion == default(DateTime)
+               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == user.password ).FirstOrDefault();
+               var userResponse = UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
+               return userResponse;
             }
             catch (Exception ex)
             {
