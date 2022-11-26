@@ -35,8 +35,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             this.plantilla = plantilla;
         }
 
-
-
         public Task<bool> ActualizarTicket(Ticket ticket)
         {
             throw new NotImplementedException();

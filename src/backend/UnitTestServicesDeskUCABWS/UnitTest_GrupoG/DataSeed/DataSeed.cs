@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -127,6 +128,29 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
             //_mockContext.Setup(set => set.Tipo_Estados.Add(It.IsAny<Tipo_Estado>())).Callback<Tipo_Estado>(ListaTipoEstados.Add);
             //_mockContext.Setup(set => set.Tipo_Estados.AddRange(It.IsAny<IEnumerable<Tipo_Estado>>())).Callback<IEnumerable<Tipo_Estado>>(ListaTipoEstados.AddRange);
             //_mockContext.Setup(set => set.DbContext.SaveChanges()).Throws(new ExceptionsControl("", new DbUpdateException()));
+
+            var ListaEstados = new List<Estado>()
+            {
+                new Estado("Aprobado D1", "Descripcion D1")
+                {
+                    Id=new Guid("B74DF138-BA05-45A8-B890-E424CA60210C"),
+                    Estado_Padre= new Tipo_Estado()
+                    {
+                        Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                        nombre = "Aprobado",
+                        descripcion = "Cuando se aprueba un ticket"
+                    }
+                },
+                
+                
+            };
+
+            //_mockContext.Estados.AddRange(ListaEstados);
+            _mockContext.Setup(c => c.Estados).Returns(ListaEstados.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Estados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaEstados.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Estados.Add(It.IsAny<Estado>())).Callback<Estado>(ListaEstados.Add);
+            _mockContext.Setup(set => set.Estados.AddRange(It.IsAny<IEnumerable<Estado>>())).Callback<IEnumerable<Estado>>(ListaEstados.AddRange);
+
         }
 
         public static void SetUpContextDataCliente(this Mock<IDataContext> _mockContext)
@@ -168,6 +192,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
 
             _mockContext.Setup(c => c.Tipos_Estados).Returns(request.AsQueryable().BuildMockDbSet().Object);
         }
+
+
 
        
     }

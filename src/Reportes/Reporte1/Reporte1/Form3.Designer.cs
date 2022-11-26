@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.gestionBDDataSet5 = new Reporte1.GestionBDDataSet5();
             this.reportesReque2BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gestionBDDataSet5 = new Reporte1.GestionBDDataSet5();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.reportesReque2TableAdapter = new Reporte1.GestionBDDataSet5TableAdapters.ReportesReque2TableAdapter();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -40,14 +40,29 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.gestionBDDataSet5)).BeginInit();
+            this.uCABServicesDesk8DataSet = new Reporte1.UCABServicesDesk8DataSet();
+            this.reportesReque2BindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.reportesReque2TableAdapter1 = new Reporte1.UCABServicesDesk8DataSetTableAdapters.ReportesReque2TableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.reportesReque2BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gestionBDDataSet5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uCABServicesDesk8DataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reportesReque2BindingSource1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // reportesReque2BindingSource
+            // 
+            this.reportesReque2BindingSource.DataMember = "ReportesReque2";
+            this.reportesReque2BindingSource.DataSource = this.gestionBDDataSet5;
+            // 
+            // gestionBDDataSet5
+            // 
+            this.gestionBDDataSet5.DataSetName = "GestionBDDataSet5";
+            this.gestionBDDataSet5.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // reportViewer1
             // 
             reportDataSource1.Name = "DataSet1";
-            reportDataSource1.Value = this.reportesReque2BindingSource;
+            reportDataSource1.Value = this.reportesReque2BindingSource1;
             this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Reporte1.Reporte2.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(-3, 162);
@@ -56,16 +71,6 @@
             this.reportViewer1.Size = new System.Drawing.Size(1546, 434);
             this.reportViewer1.TabIndex = 0;
             this.reportViewer1.Load += new System.EventHandler(this.reportViewer1_Load);
-            // 
-            // gestionBDDataSet5
-            // 
-            this.gestionBDDataSet5.DataSetName = "GestionBDDataSet5";
-            this.gestionBDDataSet5.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // reportesReque2BindingSource
-            // 
-            this.reportesReque2BindingSource.DataMember = "ReportesReque2";
-            this.reportesReque2BindingSource.DataSource = this.gestionBDDataSet5;
             // 
             // reportesReque2TableAdapter
             // 
@@ -127,6 +132,20 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "LISTA DE TICKETS ASIGNADOS A UN DEPARTAMENTO EN ESPECIFICO Y EN ESTADO X";
             // 
+            // uCABServicesDesk8DataSet
+            // 
+            this.uCABServicesDesk8DataSet.DataSetName = "UCABServicesDesk8DataSet";
+            this.uCABServicesDesk8DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // reportesReque2BindingSource1
+            // 
+            this.reportesReque2BindingSource1.DataMember = "ReportesReque2";
+            this.reportesReque2BindingSource1.DataSource = this.uCABServicesDesk8DataSet;
+            // 
+            // reportesReque2TableAdapter1
+            // 
+            this.reportesReque2TableAdapter1.ClearBeforeFill = true;
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -142,8 +161,10 @@
             this.Name = "Form3";
             this.Text = "Form3";
             this.Load += new System.EventHandler(this.Form3_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gestionBDDataSet5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.reportesReque2BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gestionBDDataSet5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.uCABServicesDesk8DataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.reportesReque2BindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,5 +182,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.BindingSource reportesReque2BindingSource1;
+        private UCABServicesDesk8DataSet uCABServicesDesk8DataSet;
+        private UCABServicesDesk8DataSetTableAdapters.ReportesReque2TableAdapter reportesReque2TableAdapter1;
     }
 }

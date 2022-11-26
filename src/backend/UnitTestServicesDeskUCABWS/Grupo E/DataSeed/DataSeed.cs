@@ -37,6 +37,10 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 {
                     Id=new Guid("822D08E6-713D-4F03-A634-520693D31E96")
                 },
+                new Tipo_Estado("Siendo Procesado","Tipo Estado prueba")
+                {
+                   Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                }, 
 
 
             };
@@ -105,6 +109,18 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 {
                     Id=new Guid("CD72EA9E-CEB4-45AC-B80F-C3545F172A02"),
                     Estado_Padre=ListaTipoEstados[2],
+                    Departamento=ListaDepartamento[0]
+                },
+                new Estado("Pendiente", "Descripcion")
+                {
+                    Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                    Estado_Padre=ListaTipoEstados[2],
+                    Departamento=ListaDepartamento[0]
+                },
+                 new Estado("Siendo Procesado", "Descripcion")
+                {
+                    Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                    Estado_Padre=ListaTipoEstados[4],
                     Departamento=ListaDepartamento[0]
                 },
                 new Estado("Cancelado D1", "Descripcion D1")
@@ -458,7 +474,6 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1]
                 },
-
                 new Ticket("Peticion 2", "Descripcion Peticion 2")
                 {
                     Id = Guid.Parse("5992E4A2-4737-42FB-88E2-FBC37EF26751"),

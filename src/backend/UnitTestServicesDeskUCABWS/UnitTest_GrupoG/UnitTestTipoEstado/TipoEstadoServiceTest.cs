@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using MockQueryable.Moq;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 {
@@ -155,6 +157,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                 }
             };
             _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            var departamento = new List<Departamento> { new Departamento { nombre = "Departamento 1" } };
+            _contextMock.Setup(x => x.Departamentos).Returns(departamento.AsQueryable().BuildMockDbSet().Object);
 
             //act
             var result = _TipoEstadoService.RegistroTipoEstado(tipoEstado);
