@@ -46,13 +46,13 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpDelete]
-        [Route("EliminarRol/{user}/{rol}")]
-        public ApplicationResponse<RolUsuarioDTO> EliminarRol([FromRoute] Guid user, [FromRoute] Guid rol)
+        [Route("EliminarRol/{user}")]
+        public ApplicationResponse<RolUsuarioDTO> EliminarRol([FromRoute] Guid user)
         {
             var response = new ApplicationResponse<RolUsuarioDTO>();
             try
             {
-                var resultService = _userRol.EliminarRol(user,rol);
+                var resultService = _userRol.EliminarRol(user);
                 response.Data = resultService;
 
             }

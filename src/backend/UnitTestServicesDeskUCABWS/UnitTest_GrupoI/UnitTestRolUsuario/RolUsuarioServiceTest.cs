@@ -47,7 +47,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestRolUsuario
         {
             var id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B");
             _contextMock.Setup(p => p.RolUsuarios).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _userService.EliminarRol(id, new Guid("8C8A156B-7383-4610-8539-30CCF7298161")));
+            Assert.ThrowsException<ExceptionsControl>(() => _userService.EliminarRol(id));
         }
 
         [TestMethod(displayName: "Prueba Unitaria para eliminar un rol de un usuario")]
@@ -56,7 +56,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestRolUsuario
             var id_usuario = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B");
             var id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298162");
             var obj = new RolUsuarioDTO();
-            var result = _userService.EliminarRol(id_usuario, id_rol);
+            var result = _userService.EliminarRol(id_usuario);
             Assert.IsInstanceOfType(obj, result.GetType());
 
         }

@@ -63,12 +63,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
         }
 
-        public RolUsuarioDTO EliminarRol(Guid user, Guid Rol)
+        public RolUsuarioDTO EliminarRol(Guid user)
         {
             try
             {
                 var rolusuario = _dataContext.RolUsuarios
-                .Where(u => u.UserId == user && u.RolId == Rol).First();
+                .Where(u => u.UserId == user).First();
 
                 _dataContext.RolUsuarios.Remove(rolusuario);
                 _dataContext.DbContext.SaveChanges();

@@ -37,7 +37,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
         {
             try
             {
-               var passwordEncrypt = Encrypt.GetSHA256(user.password);
+               var passwordEncrypt = user.password;
                var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == passwordEncrypt && u.fecha_eliminacion == default(DateTime)).FirstOrDefault();
                return UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
             }

@@ -265,10 +265,17 @@ namespace ServiceDeskUCAB.Servicios
 
             try
             {
-                var response = await cliente.PutAsync("api/Usuario/ActualizarUsuario", content);
+                var response = await cliente.DeleteAsync($"api/AsignacionRol/EliminarRol/{user.idusuario}");
                 var respuesta = await response.Content.ReadAsStringAsync();
+
+
+                var responseAgregate = await cliente.PostAsync("api/AsignacionRol/AsignarRol", content);
+                var respuestaAgregate = await response.Content.ReadAsStringAsync();
+
                 JObject _json_respuesta = JObject.Parse(respuesta);
-                return _json_respuesta;
+                JObject _json_respuestaAgregate = JObject.Parse(respuestaAgregate);
+
+                return _json_respuestaAgregate;
             }
             catch (HttpRequestException ex)
             {

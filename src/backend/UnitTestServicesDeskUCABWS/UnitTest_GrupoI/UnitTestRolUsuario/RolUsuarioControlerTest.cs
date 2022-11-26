@@ -134,11 +134,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestRolUsuario
 
 
             //arrange
-            _serviceMock.Setup(p => p.EliminarRol(It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(new RolUsuarioDTO());
+            _serviceMock.Setup(p => p.EliminarRol(It.IsAny<Guid>())).Returns(new RolUsuarioDTO());
             var application = new ApplicationResponse<RolUsuarioDTO>();
 
             //act
-            var result = _controller.EliminarRol(UsuarioClient.idusuario, UsuarioClient.idrol);
+            var result = _controller.EliminarRol(UsuarioClient.idusuario);
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
@@ -148,10 +148,10 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestRolUsuario
         public void EliminarRolUsuarioCtrlExceptionTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.EliminarRol(It.IsAny<Guid>(), It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.EliminarRol(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.EliminarRol(It.IsAny<Guid>(), It.IsAny<Guid>());
+            var ex = _controller.EliminarRol(It.IsAny<Guid>());
 
             //assert
             Assert.IsNotNull(ex);

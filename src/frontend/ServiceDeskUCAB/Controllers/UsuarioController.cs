@@ -95,11 +95,11 @@ namespace ServiceDeskUCAB.Controllers
             try
             {
                 JObject respuesta;
-                JObject changeRol;
                 JObject eliminateRol;
+                eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
                 respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
                 //eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
-                if ((bool)respuesta["success"])
+                if ((bool)eliminateRol["success"] && (bool)respuesta["success"])
                     return RedirectToAction("Usuarios");
             }
             catch (Exception ex)
@@ -131,24 +131,24 @@ namespace ServiceDeskUCAB.Controllers
             {
                 return new RolUser()
                 {
-                    id_user = user.id,
-                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298162"),
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298162"),
                 };
             }
             else if (user.Rol == Rol.Cliente)
             {
                 return new RolUser()
                 {
-                    id_user = user.id,
-                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298161"),
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298161"),
                 };
             }
             else
             {
                 return new RolUser()
                 {
-                    id_user = user.id,
-                    id_rol = new Guid("8C8A156B-7383-4610-8539-30CCF7298163"),
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298163"),
                 };
             }
         }
