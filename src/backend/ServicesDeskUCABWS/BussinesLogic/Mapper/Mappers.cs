@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
@@ -44,6 +45,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Estado, EstadoDTOSearch>();
             CreateMap<Estado, EstadoDTOUpdate>();
+
+            CreateMap<Cargo, CargoDTOUpdate>();
 
             CreateMap<Departamento, DepartamentoSearchDTO>();
 

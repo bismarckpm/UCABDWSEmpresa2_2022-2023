@@ -3,7 +3,7 @@ using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceDeskUCAB.Servicios.DepartamentoEstado;
-
+using ServiceDeskUCAB.Servicios.DepartamentosCargos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,8 @@ builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 builder.Services.AddScoped<IServicioDepartamentoEstado, ServicioDepartamentoEstado>();
+
+builder.Services.AddScoped<IDepartamentoCargoServicio, DepartamentoCargoServicio>();
 
 var app = builder.Build();
 

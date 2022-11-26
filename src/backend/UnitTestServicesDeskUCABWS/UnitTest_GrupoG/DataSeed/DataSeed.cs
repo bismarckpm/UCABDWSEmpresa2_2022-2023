@@ -92,7 +92,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                     primer_nombre = "primerNombre",
                     primer_apellido = "primerApellido",
                     cedula = 51353,
-                    Cargo = new Cargo()
+                    Cargo = new CargoController()
                     {
                         Id = Guid.NewGuid(),
                         nombre_departamental = "nombreDepartamental"

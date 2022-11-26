@@ -185,7 +185,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
 
-            var ListaCargo = new List<Cargo>
+            var ListaCargo = new List<CargoController>
             {
                 new Cargo("Jefe D1","Descripccion C1")
                 {
@@ -239,10 +239,10 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
             //_mockContext.Setup(mr => mr.Tipos_Cargos.Update(It.IsAny<int>(), It.IsAny<string>())).Verifiable();
 
-            ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[0], ListaCargo[4] };
-            ListaTipoCargo[1].Cargos_Asociados = new List<Cargo> { ListaCargo[1], ListaCargo[5] };
-            ListaTipoCargo[2].Cargos_Asociados = new List<Cargo> { ListaCargo[2], ListaCargo[6] };
-            ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[3], ListaCargo[7] };
+            ListaTipoCargo[0].Cargos_Asociados = new List<CargoController> { ListaCargo[0], ListaCargo[4] };
+            ListaTipoCargo[1].Cargos_Asociados = new List<CargoController> { ListaCargo[1], ListaCargo[5] };
+            ListaTipoCargo[2].Cargos_Asociados = new List<CargoController> { ListaCargo[2], ListaCargo[6] };
+            ListaTipoCargo[0].Cargos_Asociados = new List<CargoController> { ListaCargo[3], ListaCargo[7] };
 
 
             var ListaUsuario = new List<Usuario>

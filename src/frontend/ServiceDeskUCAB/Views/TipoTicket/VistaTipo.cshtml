@@ -55,6 +55,9 @@
                     @if(item.Departamento!= null)
                     {
                         <td>
+                            @if(item.Departamento.Count==0){
+                                <p>Es un tipo ticket general</p>
+                            }
                             @foreach (var departamento in item.Departamento)
                             {
                                 <p> @departamento.nombre</p>
@@ -65,6 +68,9 @@
                     @if (item.Flujo_Aprobacion != null)
                     {
                         <td>
+                            @if(item.Flujo_Aprobacion.Count==0){
+                                <p>No requiere de Aprobación</p>
+                            }
                             @foreach (var cargos2 in item.Flujo_Aprobacion)
                             {
 

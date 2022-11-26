@@ -71,7 +71,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                     Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
                     primer_nombre = "nombreEmpleado",
                     primer_apellido = "apellidoEmpleado",
-                    Cargo = new Cargo()
+                    Cargo = new CargoController()
                     {
                         Id = Guid.NewGuid(),
                         nombre_departamental = "nombreDepartamento",

@@ -26,6 +26,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -92,6 +93,8 @@ namespace ServicesDeskUCABWS
             services.AddTransient<ITicketDAO, TicketService>();
 
             services.AddTransient<IEstadoDAO, EstadoService>();
+
+            services.AddTransient<ICargoDAO, CargoService>();
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
