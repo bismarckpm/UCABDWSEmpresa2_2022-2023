@@ -4,12 +4,12 @@ using ServicesDeskUCABWS.Entities;
 using System.Linq;
 using System;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+
 using System.Collections.Generic;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
-using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
+
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 {
@@ -238,22 +238,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
         }
 
-        private bool ExisteDepartamento(Departamento departamento)
-        {
-            bool existe = false;
-
-            try
-            {
-                var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.nombre.Equals(departamento.nombre));
-                if (nuevoDepartamento.Count() != 0)
-                    existe = true;
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("El departamento" + departamento.id + "ya está registrado", ex);
-            }
-            return existe;
-        }
+        
 
         private bool ExisteCargo(Cargo cargo)
         {

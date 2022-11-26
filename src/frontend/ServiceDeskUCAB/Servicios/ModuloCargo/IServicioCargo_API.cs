@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 
 namespace ServiceDeskUCAB.Servicios.ModuloCargo

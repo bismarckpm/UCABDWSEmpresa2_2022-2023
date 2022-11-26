@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
+
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
 {

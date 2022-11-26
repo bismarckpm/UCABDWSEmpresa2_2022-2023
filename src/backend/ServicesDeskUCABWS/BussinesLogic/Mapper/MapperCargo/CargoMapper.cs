@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.Entities;
 using System;
 

@@ -1,5 +1,4 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.Data;
+﻿using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System;
@@ -7,8 +6,6 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
-using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo;
-using ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO;
 using System.Text.RegularExpressions;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo;

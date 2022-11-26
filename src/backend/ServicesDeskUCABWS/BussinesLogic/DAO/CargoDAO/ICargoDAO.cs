@@ -3,7 +3,7 @@ using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 {
