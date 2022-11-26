@@ -1,5 +1,4 @@
-using ServiceDeskUCAB.Servicios.ModuloDepartamento;
-using ServiceDeskUCAB.Servicios.ModuloGrupo;
+
 using Microsoft.Extensions.DependencyInjection;
 using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 using ServiceDeskUCAB.Servicios.ModuloCargo;
@@ -9,8 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
-builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
+
 builder.Services.AddScoped<IServicioTipo_Cargo_API, ServicioTipo_Cargo_API>();
 builder.Services.AddScoped<IServicioCargo_API, ServicioCargo_API>();
 
