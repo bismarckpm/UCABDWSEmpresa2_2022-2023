@@ -275,7 +275,7 @@ namespace ServicesDeskUCABWS.Migrations
                     password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
                     CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -324,7 +324,7 @@ namespace ServicesDeskUCABWS.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Departamento_DestinoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -389,7 +389,7 @@ namespace ServicesDeskUCABWS.Migrations
                     EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fecha_Inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Fecha_Fin = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Fecha_Fin = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

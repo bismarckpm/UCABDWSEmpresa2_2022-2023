@@ -12,7 +12,7 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221123225920_initDB")]
+    [Migration("20221126032013_initDB")]
     partial class initDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid>("EstadoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Fecha_Fin")
+                    b.Property<DateTime?>("Fecha_Fin")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Fecha_Inicio")
@@ -523,7 +523,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_eliminacion")
+                    b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("fecha_nacimiento")

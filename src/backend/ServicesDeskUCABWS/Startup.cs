@@ -33,7 +33,7 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             services.AddTransient<ITicketDAO, TicketDAO>();
-            services.AddTransient<IDataContext, DataContext>();
+            //services.AddTransient<IDataContext, DataContext>();
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
             
@@ -45,9 +45,9 @@ namespace ServicesDeskUCABWS
 			});
 
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-            services.AddDbContext<DataContext>(options =>
+            /*services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
-            );
+            );*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

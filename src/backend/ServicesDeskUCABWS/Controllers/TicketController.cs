@@ -71,6 +71,11 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.obtenerFamiliaTicket(new Guid(id));
         }
+        [HttpPut, Route("Eliminar/{id}")]
+        public ApplicationResponse<string> eliminarTicket(string id)
+        {
+            return _ticketDAO.eliminarTicket(new Guid(id));
+        }
 
     }
 }
