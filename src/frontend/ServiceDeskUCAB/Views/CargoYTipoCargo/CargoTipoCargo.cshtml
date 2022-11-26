@@ -119,84 +119,117 @@
      <div id="PlaceHolderAgregarCargo"></div>
     <div id="PlaceHolderEliminarCargo"></div>
     <div id="PlaceHolderModificarCargo"></div>
- 
 
-    <!-- Boton Agregar Cargo -->
-    <button id=btnAgregarCargo type="button" class="btn btn-primary" data-toggle="agregarCargo-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarCargo")">
-        Crear Cargo
-    </button>
 
-    <!-- Tabla Cargos -->
-    <table class="table">
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Descripcion
-            </th>
-        </tr>
 
-    @foreach (var item in Model.Item1)
-    {
-        <tr>
-            <td class="id" style="display:none" ;>
-                @Html.DisplayFor(i => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.nombre_departamental)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.descripcion)
-            </td>
-            <td>
-                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarCargo-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarCargo","CargoYTipoCargo",new { id = "idCargo" })">
-                    Editar
+
+
+<div class="contenedor">
+    <div class="arriba">
+        <div class="area-boton">
+            <div class="titulo">
+                <h1>Cargos</h1>
+            </div>
+            <div class="agregar">
+                <!-- Boton Agregar Cargo -->
+                <button id=btnAgregarCargo type="button" class="boton" data-toggle="agregarCargo-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarCargo")">
+                    Crear Cargo
                 </button>
-                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarCargo-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarCargo","CargoYTipoCargo",new { id = "idCargo" })">
-                    Eliminar
-                </button>
-            </td>
-        </tr>
-    }
+            </div>
+        </div>
 
-</table>
+        <!-- Tabla Cargos -->
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Descripcion
+                </th>
+            </tr>
 
-<!-- Boton Agregar Grupo -->
-<button id=btnAgregarTipoCargo type="button" class="btn btn-primary" data-toggle="agregarTipoCargo-modal" data-target="#popUpAgregarTipoCargo" data-url="@Url.Action("AgregarTipoCargo")">
-    Crear Tipo Cargo
-</button>
+            @foreach (var item in Model.Item1)
+            {
+                <tr>
+                    <td class="id" style="display:none" ;>
+                        @Html.DisplayFor(i => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre_departamental)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <button id=btnEditar type="button" class="botonEditar" data-toggle="editarCargo-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarCargo","CargoYTipoCargo",new { id = "idCargo" })">
+                            Editar
+                        </button>
+                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarCargo-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarCargo","CargoYTipoCargo",new { id = "idCargo" })">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
 
-<!-- Tabla Grupos -->
-<table class="table">
-    <tr>
-        <th>
-            Nombre
-        </th>
-        
-    </tr>
+        </table>
 
-    @foreach (var item in Model.Item2)
-    {
-        <tr>
-            <td class="id" style="display:none" ;>
-                @Html.DisplayFor(i => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(i => item.nombre)
-            </td>
-            
-            <td>
-                <button id=btnVisualizar type="button" class="btn btn-success btn-sm" data-toggle="visualizarTipoCargo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
-                    Visualizar
+
+   </div>
+
+
+
+    <div class="abajo">
+
+        <div class="area-boton">
+            <div class="titulo">
+                <h1>Tipo de Cargos</h1>
+            </div>
+
+            <div class="agregar">
+                <!-- Boton Agregar tipo cargo -->
+                <button id=btnAgregarTipoCargo type="button" class="boton" data-toggle="agregarTipoCargo-modal" data-target="#popUpAgregarTipoCargo" data-url="@Url.Action("AgregarTipoCargo")">
+                    Crear Tipo Cargo
                 </button>
-                <button id=btnEditar type="button" class="btn btn-success btn-sm" data-toggle="editarTipoCargo-modal" data-target="#popUpEditarTipoCargo" data-url="@Url.Action("VentanaEditarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
-                    Editar
-                </button>
-                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarTipoCargo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
-                    Eliminar
-                </button>
-            </td>
-        </tr>
-    }
-</table>
+            </div>
+
+         </div>
+        <!-- Tabla tipo cargo -->
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model.Item2)
+            {
+                <tr>
+                    <td class="id" style="display:none" ;>
+                        @Html.DisplayFor(i => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+
+                    <td>
+                        <button id=btnVisualizar type="button" class="botonVisualizar" data-toggle="visualizarTipoCargo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                            Visualizar
+                        </button>
+                        <button id=btnEditar type="button" class="botonEditar" data-toggle="editarTipoCargo-modal" data-target="#popUpEditarTipoCargo" data-url="@Url.Action("VentanaEditarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                            Editar
+                        </button>
+                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarTipoCargo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarTipoCargo","CargoYTipoCargo",new { id = "idTipo"})">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+
+</div>
+
+

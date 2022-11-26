@@ -39,11 +39,13 @@
             @using (Html.BeginForm("GuardarTipoCargo", "CargoYTipoCargo", FormMethod.Post))
             {
                 <div class="modal-body">
-                    <span>Nombre: </span> @Html.TextBoxFor(m => m.nombre)
+                    <span>Nombre: </span> 
+                    @Html.TextBoxFor(m => m.nombre)
                     @Html.ValidationMessageFor(m => m.nombre ,null, new { @class = "text-danger" })
                     <br />
                     <br />
-                    <span>Descripcion: </span>@Html.TextAreaFor(m => m.descripcion)
+                    <span>Descripcion: </span>
+                    @Html.TextAreaFor(m => m.descripcion)
                     @Html.ValidationMessageFor(m => m.descripcion ,null, new { @class = "text-danger" })
                     <br />
                     
@@ -51,8 +53,8 @@
                     <br />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Crear</button>
+                    <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="botonCrear">Crear</button>
                 </div>
             }
         </div>

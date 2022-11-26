@@ -36,15 +36,17 @@
             {
                 <div class="modal-body">
                     @Html.TextBoxFor(m => m.id, new { @Value = Model.id, @type="hidden"})
-                    <span>Nombre: </span> @Html.TextBoxFor(m => m.nombre_departamental, new { @Value = Model.nombre_departamental})
+                    <span>Nombre: </span> 
+                    @Html.TextBoxFor(m => m.nombre_departamental, new { @Value = Model.nombre_departamental})
                     @Html.ValidationMessageFor(m => m.nombre_departamental ,null, new { @class = "text-danger" })
                     <br />
-                    <span>Descripcion: </span> @Html.TextAreaFor(m => m.descripcion, new { @Value = Model.descripcion})
+                    <span>Descripcion: </span>
+                    @Html.TextAreaFor(m => m.descripcion, new { @Value = Model.descripcion})
                     @Html.ValidationMessageFor(m => m.descripcion ,null, new { @class = "text-danger" })
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Editar</button>
+                    <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="botonCrear">Editar</button>
                 </div>
             }
            
