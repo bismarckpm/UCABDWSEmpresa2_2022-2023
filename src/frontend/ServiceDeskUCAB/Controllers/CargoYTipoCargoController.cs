@@ -180,23 +180,8 @@ namespace ServicesDeskUCAB.Controllers
             }
         }
 
-        public async Task<IActionResult> VentanaVisualizarCargo(Guid id)
-        {
-            List<CargoModel> cargo = new List<CargoModel>();
-            Tipo_CargoModel model = new Tipo_CargoModel();
 
-            try
-            {
-                model = await _servicioApiTipoCargo.BuscarTipoCargo(id);
-                ViewData["nombre"] = model.nombre;
-                cargo = await _servicioApiCargo.CargoAsociadoTipoCargo(id);
-                return PartialView(cargo);
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+
         //Retorna el modal de confirmación para eliminar un grupo
         public IActionResult VentanaEliminarTipoCargo(Guid id)
         {
@@ -292,7 +277,45 @@ namespace ServicesDeskUCAB.Controllers
             //return NoContent();
         }
 
+        public async Task<IActionResult> VentanaVerTipoCargo(Guid id)
+        {
 
+
+            TipoCargoViewModel viewModel = new TipoCargoViewModel();
+
+            //List<CargoModel> cargo = new List<CargoModel>();
+            //Tipo_CargoModel model = new Tipo_CargoModel();
+
+            try
+            {
+                viewModel.tipo = await _servicioApiTipoCargo.BuscarTipoCargo(id);
+                viewModel.cargoAsociado = await _servicioApiCargo.CargoAsociadoTipoCargo(id);
+                return PartialView(viewModel);
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+        }
+
+
+
+        //public async Task<IActionResult> VentanaEditarTipoCargo(Guid id)
+        //{
+        //    TipoCargoEditarViewModel viewModel = new TipoCargoEditarViewModel();
+
+        //    try
+        //    {
+        //        viewModel.cargoAsociado = await _servicioApiCargo.CargoAsociadoTipoCargo(id);
+        //        viewModel.cargo = await _servicioApiCargo.ListaCargo();
+        //        viewModel.tipo = await _servicioApiTipoCargo.BuscarTipoCargo(id);
+        //        return PartialView(viewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex.InnerException!;
+        //    }
+        //}
 
 
     }

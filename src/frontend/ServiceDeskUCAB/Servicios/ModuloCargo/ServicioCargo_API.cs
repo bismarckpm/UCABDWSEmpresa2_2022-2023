@@ -135,7 +135,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloCargo
 
             try
             {
-                var responseDept = await cliente.GetAsync($"Cargo/consultarcargoporid/{id}");
+                var responseDept = await cliente.GetAsync($"Cargo/ConsultarPorID/{id}");
 
                 if (responseDept.IsSuccessStatusCode)
                 {

@@ -60,13 +60,13 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
 
         [HttpGet]
         [Route("ConsultarTipo_CargoPorID/{id}")]
-        public ApplicationResponse<Tipo_CargoDto> ConsultarPorID([FromRoute] Guid idTipo)
+        public ApplicationResponse<Tipo_CargoDto> ConsultarPorID([FromRoute] Guid id)
         {
 
             var response = new ApplicationResponse<Tipo_CargoDto>();
             try
             {
-                response.Data = _tipo_cargoDAO.ConsultarPorID(idTipo);
+                response.Data = _tipo_cargoDAO.ConsultarPorID(id);
 
             }
             catch (ExceptionsControl ex)

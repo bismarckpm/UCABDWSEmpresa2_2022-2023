@@ -6,7 +6,7 @@ namespace ServiceDeskUCAB.Models
     public class CargoModel
     {
 
-        public string id { get; set; }
+        public Guid id { get; set; }
 
         public List<CargoModel> cargos { get; set; }
         public IEnumerable<SelectListItem> listaCargo { get; set; }

@@ -110,19 +110,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
         }
 
         //Consultar Tipo de Cargo por ID
-        public Tipo_CargoDto ConsultarPorID(Guid idTipo)
+        public Tipo_CargoDto ConsultarPorID(Guid id)
         {
             try
             {
                 var tipo = _dataContext.Tipos_Cargos
-                            .Where(d => d.Id == idTipo).First();
+                            .Where(d => d.Id == id).First();
 
                 return Tipo_CargoMapper.MapperEntityToDtoDefault(tipo);
 
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("El tipo de cargo" + idTipo + "No esta registrado", ex);
+                throw new ExceptionsControl("El tipo de cargo" + id + "No esta registrado", ex);
             }
         }
 
