@@ -11,6 +11,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mappers
         {
             CreateMap<Prioridad, PrioridadDTO>();
             CreateMap<PrioridadDTO,Prioridad>();
+
+            CreateMap<PrioridadSolicitudDTO, PrioridadDTO>();
+            CreateMap<PrioridadDTO, PrioridadSolicitudDTO>();
         }
     }
 }

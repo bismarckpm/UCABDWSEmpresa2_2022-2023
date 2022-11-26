@@ -7,6 +7,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
 using System;
 using System.Collections.Generic;
+using static ServicesDeskUCABWS.BussinesLogic.Excepciones.PrioridadExcepciones;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -21,26 +22,42 @@ namespace ServicesDeskUCABWS.Controllers
             _prioridadDAO = prioridadDAO;
             _mapper = mapper;
         }
-
-
         [HttpPost, Route("Guardar")]
-        public ApplicationResponse<string> crearPrioridadCtrl([FromBody] PrioridadDTO prioridadDTO)
+        public ApplicationResponse<string> crearPrioridadCtrl([FromBody] PrioridadSolicitudDTO prioridadDTO)
         {
             var respuesta = new ApplicationResponse<String>();
             try
             {
-                respuesta.Message = _prioridadDAO.CrearPrioridad(prioridadDTO);
-            }
-            catch (Exception ex)
+                respuesta.Data = _prioridadDAO.CrearPrioridad(prioridadDTO);
+                respuesta.Success = true;
+                respuesta.Message = "Prioridad creada satisfactoriamente pibe";
+            }catch (PrioridadNombreLongitudException ex)
             {
+                respuesta.Data = null;
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
-                respuesta.Exception = ex.InnerException.ToString();
+                //respuesta.Exception = ex.InnerException.ToString();
+            }catch(PrioridadDescripcionLongitudException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //respuesta.Exception = ex.InnerException.ToString();
+            }catch (PrioridadEstadoException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //respuesta.Exception = ex.InnerException.ToString();
+            }catch (Exception ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //respuesta.Exception = ex.InnerException.ToString();
             }
             return respuesta;
         }
-
-
         [HttpGet, Route("Lista")]
         public ApplicationResponse<List<PrioridadDTO>> ObtenerPrioridadesCtrl()
         {
@@ -48,18 +65,19 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridades();
-                return respuesta;
+                respuesta.Message = "Mano sí se pudo mano";
+                respuesta.Success = true;
+                //respuesta.Message = "Ahí están las prioridades, anulo mufa";
             }
             catch (Exception ex)
             {
-                respuesta.Success = false;
+                respuesta.Data = null;
                 respuesta.Message = ex.Message;
-                respuesta.Exception = ex.InnerException.ToString();
-
-                return respuesta;
+                respuesta.Success = false;
+                //respuesta.Exception = ex.InnerException.ToString();
             }
+            return respuesta;
         }
-
         [HttpGet, Route("Lista/Habilitadas")]
         public ActionResult<ApplicationResponse<List<PrioridadDTO>>> ObtenerPrioridadesHabilitadas()
         {
@@ -67,18 +85,17 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridades();
-                return respuesta; ;
+                respuesta.Success = true;
+                respuesta.Message = "El var dice que estaba habilitado";
             }
             catch (Exception ex)
             {
+                respuesta.Data = null;
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
-                respuesta.Exception = ex.InnerException.ToString();
-
-                return respuesta;
             }
+            return respuesta;
         }
-
         [HttpGet, Route("Obtener/{PrioridadID}")]
         public ApplicationResponse<PrioridadDTO> ObtenerPrioridad(string PrioridadID)
         {
@@ -86,35 +103,67 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridad(new Guid(PrioridadID));
-                return respuesta; ;
+                respuesta.Success = true;
+                respuesta.Message = "El 11 de prioridades";
+            }
+            catch (PrioridadNoExisteException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //response.Exception = ex.InnerException.ToString();
             }
             catch (Exception ex)
             {
+                respuesta.Data = null;
                 respuesta.Success = false;
                 respuesta.Message = ex.Message;
-                respuesta.Exception = ex.InnerException.ToString();
-
-                return respuesta;
             }
+            return respuesta;
         }
-
         [HttpPut, Route("Editar")]
         public ApplicationResponse<String> ModificarPrioridadEstadoPorNombreCtrl([FromBody] PrioridadDTO prioridadDTO)
         {
-            var response = new ApplicationResponse<String>();
+            var respuesta = new ApplicationResponse<String>();
             try
             {
-                response.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
-                response.Success = true;
-                response.Message = "Cambios Realizados con Éxito";
+                respuesta.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
+                respuesta.Success = true;
+                respuesta.Message = "Entra el genio del futbol mundial";
+            }
+            catch(PrioridadNoExisteException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //response.Exception = ex.InnerException.ToString();
+            }
+            catch(PrioridadNombreLongitudException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+            }
+            catch (PrioridadDescripcionLongitudException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+            }
+            catch (PrioridadEstadoException ex)
+            {
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                response.Success = false;
-                response.Message = ex.Message;
-                response.Exception = ex.InnerException.ToString();
+                respuesta.Data = null;
+                respuesta.Success = false;
+                respuesta.Message = ex.Message;
+                //response.Exception = ex.InnerException.ToString();
             }
-            return response;
+            return respuesta;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
-using Microsoft.Data.SqlClient;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {
@@ -21,24 +21,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             _mapper = mapper;
         }
 
-        public string CrearPrioridad(PrioridadDTO prioridadDTO)
+        public string CrearPrioridad(PrioridadSolicitudDTO prioridadSolicitud)
         {
-            try
-            {
-                prioridadDTO.Id = Guid.NewGuid();
-                prioridadDTO.fecha_ultima_edic = DateTime.Now;
-                prioridadDTO.fecha_descripcion = DateTime.Now;
-                var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
-                _dataContext.Prioridades.Add(prioridadEntity);
-                _dataContext.DbContext.SaveChanges();
-                return "Prioridad creada satisfactoriamente";
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("No se pudo registrar la prioridad", ex);
-            }
+            PrioridadValidaciones validaciones = new PrioridadValidaciones();
+            validaciones.validarPrioridad(prioridadSolicitud.nombre, prioridadSolicitud.descripcion, prioridadSolicitud.estado);
+            PrioridadDTO prioridadDTO = _mapper.Map<PrioridadDTO>(prioridadSolicitud);
+            prioridadDTO.Id = Guid.NewGuid();
+            prioridadDTO.fecha_ultima_edic = DateTime.UtcNow;
+            prioridadDTO.fecha_descripcion = DateTime.UtcNow;
+            var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
+            _dataContext.Prioridades.Add(prioridadEntity);
+            _dataContext.DbContext.SaveChanges();
+            return "Prioridad creada satisfactoriamente";
         }
-
         public List<PrioridadDTO> ObtenerPrioridades()
         {
             List<Prioridad> data = _dataContext.Prioridades.ToList();
@@ -56,50 +51,41 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             }
             catch (Exception ex)
             {
-                throw new Exception($"Algo a sucedido: {ex}");
+                throw new Exception($"Algo ha sucedido: {ex}");
             }
         }
 
         public PrioridadDTO ObtenerPrioridad(Guid PrioridadID)
         {
-            try
-            {
-                Prioridad data = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == PrioridadID).Single();
-                PrioridadDTO prioridadDTO = _mapper.Map<PrioridadDTO>(data);
-                return prioridadDTO;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"No existe la Prioridad {ex}");
-            }
+            PrioridadValidaciones validaciones = new PrioridadValidaciones(_dataContext);
+            validaciones.validarPrioridadGuid(PrioridadID);
+            Prioridad data = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == PrioridadID).Single();
+            PrioridadDTO prioridadDTO = _mapper.Map<PrioridadDTO>(data);
+            return prioridadDTO;
         }
 
         public string ModificarPrioridad(PrioridadDTO prioridadDTO)
         {
-            try
+            PrioridadValidaciones validaciones = new PrioridadValidaciones(_dataContext);
+            validaciones.validarPrioridadGuid(prioridadDTO.Id);
+            validaciones.validarPrioridad(prioridadDTO.nombre, prioridadDTO.descripcion, prioridadDTO.estado);
+            var prioridad = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
+            if(prioridad.nombre != prioridadDTO.nombre || prioridad.descripcion != prioridadDTO.descripcion || prioridad.estado != prioridadDTO.estado)
             {
-                var prioridad = _dataContext.Prioridades.AsNoTracking().Where(p => p.Id == prioridadDTO.Id).Single();
-                if(prioridad.nombre != prioridadDTO.nombre || prioridad.descripcion != prioridadDTO.descripcion || prioridad.estado != prioridadDTO.estado)
+                prioridad.nombre = prioridadDTO.nombre;
+                prioridad.estado = prioridadDTO.estado;
+                prioridad.fecha_ultima_edic = DateTime.UtcNow;
+                if(prioridad.descripcion != prioridadDTO.descripcion)
                 {
-                    prioridad.nombre = prioridadDTO.nombre;
-                    prioridad.estado = prioridadDTO.estado;
-                    prioridad.fecha_ultima_edic = DateTime.Now;
-                    if(prioridad.descripcion != prioridadDTO.descripcion)
-                    {
-                        prioridad.fecha_descripcion = DateTime.Now;
-                    }
-                    prioridad.descripcion = prioridadDTO.descripcion;
-                    _dataContext.Prioridades.Update(prioridad);
-                    _dataContext.DbContext.SaveChanges();
-                    Console.WriteLine("aqui esta", prioridad.ToString());
-                    return "Prioridad modificada exitosamente";
+                    prioridad.fecha_descripcion = DateTime.Now;
                 }
-                return "";
+                prioridad.descripcion = prioridadDTO.descripcion;
+                _dataContext.Prioridades.Update(prioridad);
+                _dataContext.DbContext.SaveChanges();
+                Console.WriteLine("aqui esta", prioridad.ToString());
+                return "Prioridad modificada exitosamente";
             }
-            catch (Exception ex)
-            {
-                throw new Exception($"No existe la Prioridad {ex}");
-            }
+            return "";
         }
     }
 }
