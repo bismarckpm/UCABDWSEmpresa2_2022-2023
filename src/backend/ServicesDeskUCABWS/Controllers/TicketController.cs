@@ -17,6 +17,7 @@ namespace ServicesDeskUCABWS.Controllers
     {
         private readonly ITicketDAO _ticketDAO;
         private readonly IMapper _mapper;
+
         public TicketController(IMapper mapper, ITicketDAO ticketDAO)
         {
             _mapper = mapper;
@@ -35,7 +36,6 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketPorId(new Guid(id));
         }
 
-        // No esta listo
         [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
         {
@@ -53,12 +53,13 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.obtenerBitacoras(new Guid(ticketId));
         }
+
         [HttpPut, Route("Merge")]
         public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
         {
             return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);
         }
-        // FALTA COLOCAR EL PADRE COMO ELIMINADO EN REENVIAR
+
         [HttpPost, Route("Reenviar")]
         public ApplicationResponse<string> reenviarTicket([FromBody] TicketReenviarDTO ticket)
         {
@@ -71,12 +72,5 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerFamiliaTicket(new Guid(id));
         }
 
-        /*[HttpPut, Route("Reenviar")]
-        public ApplicationResponse<string> reenviarTicketCtrl([FromBody] TicketReenvioDTO ticketInfo)
-        {
-            return _ticketDAO.reenviarTicket(ticketInfo.ticketPapaId, ticketInfo.solicitudTicket);
-        }*/
-
-        //DEVOLVER FAMILIA DE TICKET DADO EL ID DE UN TICKET(ticket_id)
     }
 }

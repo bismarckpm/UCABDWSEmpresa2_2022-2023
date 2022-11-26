@@ -53,7 +53,7 @@ namespace ServicesDeskUCAB.Controllers
                 departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
                 tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
             };
-            //ticketNuevoViewModel.ticket.empleado_id = 
+            ticketNuevoViewModel.ticket.empleado_id = Guid.Parse("172ce21d-b7dc-7537-0901-e0a29753644f"); //Token
             ticketNuevoViewModel.departamentos.Add(depa);
             ticketNuevoViewModel.tipo_tickets.Add(tipoTi);
             return View(ticketNuevoViewModel);
@@ -63,9 +63,13 @@ namespace ServicesDeskUCAB.Controllers
         {
             ViewBag.departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87";
 
-            Departamento depa = new Departamento();
-            depa.DepartamentoID = new Guid("ccacd411-1b46-4117-aa84-73ea64deac87");
-            depa.Nombre = "Almacen";
+            Departamento depa1 = new Departamento();
+            depa1.DepartamentoID = new Guid("ccacd411-1b46-4117-aa84-73ea64deac87");
+            depa1.Nombre = "departamento 1";
+
+            Departamento depa2 = new Departamento();
+            depa2.DepartamentoID = new Guid("21674527-d5b9-4d18-8b6a-fde8d8718061");
+            depa2.Nombre = "departamento 2";
 
             Tipo_Ticket tipoTi = new Tipo_Ticket();
             tipoTi.TipoTicketID = new Guid("172ce21d-b7dc-4537-9901-e0a29753644f");
@@ -80,11 +84,12 @@ namespace ServicesDeskUCAB.Controllers
                     departamentos = new List<Departamento>(), // await _servicioDepartamentoAPI.Lista(),
                     tipo_tickets = new List<Tipo_Ticket>(), // await _servicioTipoTicketAPI.Lista()
                 };
-                ticketReenviarViewModel.ticket.ticketPadre_Id = ticketReenviarViewModel.ticketPadre.ticket_id;
+                ticketReenviarViewModel.ticket.ticketPadre_Id = Guid.Parse(ticketPadre_Id);
                 ticketReenviarViewModel.ticket.titulo = ticketReenviarViewModel.ticketPadre.titulo;
                 ticketReenviarViewModel.ticket.descripcion = ticketReenviarViewModel.ticketPadre.descripcion;
-                ticketReenviarViewModel.ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
-                ticketReenviarViewModel.departamentos.Add(depa);
+                ticketReenviarViewModel.ticket.empleado_id = Guid.Parse("172ce21d-b7dc-7537-0901-e0a29753644f"); //Token de usuario
+                ticketReenviarViewModel.departamentos.Add(depa1);
+                ticketReenviarViewModel.departamentos.Add(depa2);
                 ticketReenviarViewModel.tipo_tickets.Add(tipoTi);
                 return View(ticketReenviarViewModel);
             }
@@ -123,7 +128,6 @@ namespace ServicesDeskUCAB.Controllers
         [HttpPost]
         public async Task<IActionResult> GuardarTicket(TicketDTO ticket)
         {
-            ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
             JObject respuesta;
             try
             {
@@ -152,7 +156,6 @@ namespace ServicesDeskUCAB.Controllers
         [HttpPost]
         public async Task<IActionResult> GuardarReenviar(TicketReenviarDTO ticket)
         {
-            ticket.empleado_id = new Guid("172ce21d-b7dc-7537-0901-e0a29753644f");
             JObject respuesta;
             try
             {
@@ -168,7 +171,7 @@ namespace ServicesDeskUCAB.Controllers
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                     // Falta retornar a la misma vista sin recargar
-                    return RedirectToAction("Reenviar", (new { ticketPadre_Id = ticket.ticketPadre_Id.ToString(), message = (string)respuesta["message"] }));
+                    return RedirectToAction("Reenviar", (new { ticketPadre_Id = ticket.ticketPadre_Id, message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)

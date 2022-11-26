@@ -12,19 +12,21 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
-
-
-
+    
 <div class="container" style="margin-top:10px">
 
     <div class="row" style="margin-top:30px">
         <div class="col-8"></div>
         <div class="col-4 text-right">
-            <h6><span class="badge bg-primary"><a class="btn-primary" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticketPadre.ticket_id">Reenviado Ticket</a></span></h6>
+            <h6><span class="badge bg-primary"><a class="btn-primary" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticketPadre.ticket_id">Reenviando Ticket</a></span></h6>
         </div>
     </div>
 
     <form method="post" asp-controller="Ticket" asp-action="GuardarReenviar">
+        <h1>Padre @Model.ticket.ticketPadre_Id</h1>
+        <h1>Empleado @Model.ticket.empleado_id"</h1>
+        <input class="d-none" asp-for="@Model.ticket.ticketPadre_Id" value="@Model.ticket.ticketPadre_Id" required readonly/>
+        <input class="d-none" asp-for="@Model.ticket.empleado_id" value="@Model.ticket.empleado_id" requerid readonly/>
 
       <div class="mb-3">
           <label for="recipient-name" class="col-form-label">Departamento Destino:</label>
