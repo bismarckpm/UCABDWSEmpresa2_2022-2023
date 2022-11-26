@@ -1,6 +1,7 @@
 ﻿using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -29,11 +30,11 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         public void CaminoFelizCambiarEstado()
         {
             //arrange
-            var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
+           // var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
             //act
-            var result= VotoDAO.CambiarEstado(entrada,"Aprobado");
+            //var result= VotoDAO.CambiarEstado(entrada,"Aprobado");
             //assert
-            Assert.AreEqual(result,true);
+            //Assert.AreEqual(result,true);
         }
 
         [TestMethod]
@@ -43,9 +44,11 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
             context.Setup(c => c.Tickets.Update(It.IsAny<Ticket>())).Throws(new Exception());
             //act
-            var result = VotoDAO.CambiarEstado(entrada, "Aprobado");
+           // var result = VotoDAO.CambiarEstado(entrada, "Aprobado");
             //assert
             Assert.AreEqual(false, result);
         }*/
     }
 }
+
+

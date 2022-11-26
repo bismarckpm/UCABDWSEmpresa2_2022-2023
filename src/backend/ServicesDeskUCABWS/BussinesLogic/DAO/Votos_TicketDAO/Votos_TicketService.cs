@@ -28,6 +28,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             contexto = Context;
         }
 
+        public Votos_TicketService(IDataContext Context)
+        {
+            
+            contexto = Context;
+        }
         public bool AgregarVoto(List<Votos_Ticket> ListaVotos)
         {
             contexto.Votos_Tickets.AddRange(ListaVotos);
