@@ -23,31 +23,33 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
     {
 
         private readonly IGrupoDAO _grupoDAO;
-        private readonly ILogger<GrupoController> _log;
 
-        //Constructor
-        public GrupoController(IGrupoDAO grupoDAO, ILogger<GrupoController> log)
-        {
-            _grupoDAO = grupoDAO;
-            _log = log;
-        }
+		//Constructor
+		public GrupoController(IGrupoDAO grupoDAO)
+		{
+			_grupoDAO = grupoDAO;
+		}
 
         //Crear Departamento
         [HttpPost]
         [Route("CrearGrupo/")]
-        public ActionResult<GrupoDto> CrearGrupo([FromBody] GrupoDto dto1)
+        public ApplicationResponse<GrupoDto> CrearGrupo([FromBody] GrupoDto dto1)
         {
-            try
+			var response = new ApplicationResponse<GrupoDto>();
+			try
             {
-                var dao = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
-                return dao;
+                response.Data = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
+                
 
             }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-        }
+			catch (ExceptionsControl ex)
+			{
+				response.Success = false;
+				response.Message = ex.Mensaje;
+				response.Exception = ex.Excepcion.ToString();
+			}
+			return response;
+		}
 
         //Consultar Grupo
         [HttpGet]
@@ -57,7 +59,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			var response = new ApplicationResponse<List<GrupoDto>>();
 			try
             {
-                response.Data =  _grupoDAO.ConsultarGruposDao();
+                response.Data = _grupoDAO.ConsultarGruposDao();
             }
 			catch (ExceptionsControl ex)
 			{
@@ -110,13 +112,12 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
         //Actualizar Grupo
         [HttpPut]
         [Route("ActualizarGrupo/")]
-        public ApplicationResponse<GrupoDto_Update> ActualizarDepartamento([FromBody] GrupoDto_Update grupo)
+        public ApplicationResponse<GrupoDto_Update> ActualizarGrupo([FromBody] GrupoDto_Update grupo)
         {
 			var response = new ApplicationResponse<GrupoDto_Update>();
 			try
             {
                 response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
-                //Cambiar parametros cuando realicemos frontend
 
             }
 			catch (ExceptionsControl ex)
@@ -130,7 +131,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 
         //Mostrar todos los grupos que no están eliminados
 		[HttpGet("ConsultarGrupoNoEliminado/")]
-		public ApplicationResponse<List<GrupoDto>> ListaDepartamentoNoEliminado()
+		public ApplicationResponse<List<GrupoDto>> ListaGrupoNoEliminado()
 		{
 			var response = new ApplicationResponse<List<GrupoDto>>();
 			try

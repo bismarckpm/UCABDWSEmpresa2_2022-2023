@@ -64,8 +64,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
             _mockContextDG.Setup(set => set.Departamentos.Add(It.IsAny<Departamento>()));
             _mockContextDG.Setup(e => e.Departamentos.Update(It.IsAny<Departamento>()));
             _mockContextDG.Setup(e => e.Departamentos.Remove(It.IsAny<Departamento>()));
+
             _mockContextDG.Setup(set => set.Grupos.Add(It.IsAny<Grupo>()));
-            _mockContextDG.Setup(set => set.DbContext.SaveChanges());
+			_mockContextDG.Setup(e => e.Grupos.Update(It.IsAny<Grupo>()));
+			_mockContextDG.Setup(e => e.Grupos.Remove(It.IsAny<Grupo>()));
+			_mockContextDG.Setup(set => set.DbContext.SaveChanges());
 
         }
 
@@ -119,9 +122,23 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
                     fecha_ultima_edicion = null,
 
                     fecha_eliminacion = null
-                }
+                },
+                new Grupo
+				{
+					id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c90"),
 
-            };
+					nombre = "Segundo Grupo Nuevo",
+
+					descripcion = "Es un grupo",
+
+					fecha_creacion = DateTime.Now.Date,
+
+					fecha_ultima_edicion = null,
+
+					fecha_eliminacion = DateTime.Now.Date
+				}
+
+			};
 
             _mockContext.Setup(c => c.Grupos).Returns(request.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.Grupos.Add(It.IsAny<Grupo>()));        
