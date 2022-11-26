@@ -11365,11 +11365,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\UnitTestServicesDeskUCABWS.csproj",
+      "projectUniqueName": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\UnitTestServicesDeskUCABWS.csproj",
       "projectName": "UnitTestServicesDeskUCABWS",
-      "projectPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\UnitTestServicesDeskUCABWS.csproj",
+      "projectPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\UnitTestServicesDeskUCABWS.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\obj\\",
+      "outputPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\UnitTestServicesDeskUCABWS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11386,8 +11386,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj": {
-              "projectPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj"
+            "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj": {
+              "projectPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj"
             }
           }
         }

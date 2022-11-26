@@ -8944,11 +8944,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
+      "projectUniqueName": "D:\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
       "projectName": "ServiceDeskUCAB",
-      "projectPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
+      "projectPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\obj\\",
+      "outputPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",

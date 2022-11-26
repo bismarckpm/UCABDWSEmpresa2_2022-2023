@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gzqrxYAfLVZOk5dM3kfn3XGUJAcqxIKQbjkzSkrWF6ewBc+5TD0KCEGiB2kCnCplqWEtIDZxAajxwfZhTXENbw==",
+  "dgSpecHash": "AX3iuH824XPJ0IAMUkWlggGjOu+EfMVQZYdWeMCdu9kdxbhBmSdj67fH/DCT3wMihcDFjqgtWB1B+18lLbi1mw==",
   "success": true,
-  "projectFilePath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
+  "projectFilePath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\frontend\\ServiceDeskUCAB\\ServiceDeskUCAB.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

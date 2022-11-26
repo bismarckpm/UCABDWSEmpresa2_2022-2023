@@ -10122,11 +10122,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj",
+      "projectUniqueName": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj",
       "projectName": "ServicesDeskUCABWS",
-      "projectPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj",
+      "projectPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\ServicesDeskUCABWS.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "D:\\Proyectos2022\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\obj\\",
+      "outputPath": "D:\\UCABDWSEmpresa2_2022-2023\\src\\backend\\ServicesDeskUCABWS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
