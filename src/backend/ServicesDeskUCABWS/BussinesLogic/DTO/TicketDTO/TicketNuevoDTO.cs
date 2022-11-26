@@ -18,6 +18,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         [Required]
         public Guid departamentoDestino_Id { get; set; }
 
-        public Guid ticketPadre_Id { get; set; }
+        public Guid? ticketPadre_Id { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.nuevoTicketEsValido(solicitudTicket);
-                TicketDTO nuevoTicket = crearNuevoTicket(solicitudTicket);
+                crearNuevoTicket(solicitudTicket);
                 respuesta.Data = "Ticket creado satisfactoriamente";
                 respuesta.Message = "Ticket creado satisfactoriamente";
                 respuesta.Success = true;
@@ -174,7 +174,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 Familia_Ticket nuevaFamilia = new Familia_Ticket
                 {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Lista_Ticket = new List<Ticket>()
                 };
                 ticketsSecundariosId.ForEach(delegate (Guid e)
@@ -331,7 +331,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 Familia_Ticket nuevaFamilia = new Familia_Ticket
                 {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Lista_Ticket = new List<Ticket>()
                 };
                 ticketsSecundariosId.ForEach(delegate (Guid e)
@@ -356,7 +356,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
         {
             TicketDTO nuevoTicket = _mapper.Map<TicketDTO>(solicitudTicket);
-            nuevoTicket.Id = new Guid();
+            nuevoTicket.Id = Guid.NewGuid();
             nuevoTicket.fecha_creacion = DateTime.UtcNow;
             nuevoTicket.fecha_eliminacion = null;
             nuevoTicket.Emisor = _dataContext.Empleados
@@ -378,12 +378,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
-
-            if(solicitudTicket.ticketPadre_Id != Guid.Empty)
+            Guid? pruebaPadre = solicitudTicket.ticketPadre_Id;
+            if(solicitudTicket.ticketPadre_Id != null)
             {
                 nuevoTicket.Ticket_Padre = _dataContext.Tickets.Where(padre => padre.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
                 Ticket ticketPadre = _dataContext.Tickets.Where(t => t.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
-                ticketPadre.fecha_eliminacion = DateTime.Now;
+                if (ticketPadre != null)
+                    ticketPadre.fecha_eliminacion = DateTime.Now;
             }
             else
             {
@@ -474,9 +475,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                 .Include(t => t.Prioridad)
                                 .Include(t => t.Emisor)
                                 .Where(ticket => ticket.Id == id).Single();
-            Guid idPadre;
+            Guid? idPadre;
             if (ticket.Ticket_Padre == null || ticket.Ticket_Padre.Id.Equals(Guid.Empty))
-                idPadre = Guid.Empty;
+                idPadre = null;
             else
                 idPadre = ticket.Ticket_Padre.Id;
             Guid prueba = ticket.Estado.Id;
@@ -518,7 +519,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
-                                                                    .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && ticket.fecha_eliminacion != DateTime.MinValue && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+                                                                    .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && /*ticket.fecha_eliminacion != null &&*/ ticket.fecha_eliminacion != DateTime.MinValue && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");
             if (tickets.Count() == 0)
@@ -551,14 +552,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
         }
-        /*public List<TicketInfoBasicaDTO> obtenerFamiliaTicketsHl(Guid id)
-        {
-            TicketValidaciones ticketValidaciones = new TicketValidaciones(_dataContext);
-            ticketValidaciones.validarTicket(id);
-            List<TicketInfoBasicaDTO> listaTickets = new List<TicketInfoBasicaDTO>();
-            TicketDTO ticket = _mapper.Map<TicketDTO>(_dataContext.Tickets.Where(ticket => ticket.Id == id).Single());
-
-            return listaTickets;
-        }*/
     }
 }
