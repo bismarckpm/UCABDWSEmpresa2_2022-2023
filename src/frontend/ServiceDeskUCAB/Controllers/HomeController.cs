@@ -23,7 +23,16 @@ namespace ModuloPlantillasNotificaciones.Controllers
         public IActionResult Index()
         {
             var current = User.Identities.First().Claims;
-            return View();
+            if (current == null)
+            {
+                Console.WriteLine("asdasdadas");
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
