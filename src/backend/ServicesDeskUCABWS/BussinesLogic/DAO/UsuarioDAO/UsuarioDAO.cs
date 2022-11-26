@@ -206,9 +206,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         {
             try
             {
+                var Firstusuario = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(user => new Usuario
+                {
+                    Id = usuario.Id,
+                    cedula = usuario.cedula,
+                    segundo_nombre = usuario.segundo_nombre,
+                    segundo_apellido = usuario.segundo_apellido,
+                    primer_nombre = usuario.primer_nombre,
+                    primer_apellido = usuario.primer_apellido,
+                    fecha_nacimiento = usuario.fecha_nacimiento,
+                    gender = usuario.gender,
+                    correo = usuario.correo,
+                    password = user.password,
+                    fecha_creacion = user.fecha_creacion,
+                    fecha_ultima_edicion = DateTime.Now,
+                });
 
-
-                _dataContext.Usuarios.Update(usuario);
+                _dataContext.Usuarios.Update(Firstusuario.First());
                 _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
@@ -263,7 +277,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 throw new ExceptionsControl("La id de usuario no existe", ex);
             }
         }
-        /*public string ValidarCorreo(string Email)
+        public string ValidarCorreo(string Email)
         {
             try
             {
@@ -274,7 +288,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             {
                 throw new ExceptionsControl("El correo no esta registrado", ex);
             }
-        }*/
+        }
 
         public string RecuperarClave(string email)
         {

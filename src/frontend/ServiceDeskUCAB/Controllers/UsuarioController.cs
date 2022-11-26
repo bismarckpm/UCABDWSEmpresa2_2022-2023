@@ -100,7 +100,7 @@ namespace ServiceDeskUCAB.Controllers
                 respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
                 //eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
                 if ((bool)eliminateRol["success"] && (bool)respuesta["success"])
-                    return RedirectToAction("Usuarios");
+                return RedirectToAction("Usuarios");
             }
             catch (Exception ex)
             {

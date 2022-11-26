@@ -224,14 +224,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 
         }
 
-        /*[TestMethod(displayName: "Prueba Unitaria para recuperar clave")]
+        [TestMethod(displayName: "Prueba Unitaria para recuperar clave")]
         public void RecuperarPassword()
         {
             string id = "gabrielojeda7@gmail.com";
             var response = _userService.RecuperarClave(id);
             Assert.AreEqual(response, "Correo enviado");
 
-        }*/
+        }
 
 
         [TestMethod(displayName: "Prueba Unitaria para recuperar clave exception")]

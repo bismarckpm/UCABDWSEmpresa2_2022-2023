@@ -268,7 +268,6 @@ namespace ServiceDeskUCAB.Servicios
                 var response = await cliente.DeleteAsync($"api/AsignacionRol/EliminarRol/{user.idusuario}");
                 var respuesta = await response.Content.ReadAsStringAsync();
 
-
                 var responseAgregate = await cliente.PostAsync("api/AsignacionRol/AsignarRol", content);
                 var respuestaAgregate = await response.Content.ReadAsStringAsync();
 
