@@ -190,9 +190,9 @@ namespace ServiceDeskUCAB.Controllers
             var respuesta = await _servicioApi.Eliminar(id);
 
             if (respuesta)
-                return RedirectToAction("VistaTipo");
+                return RedirectToAction("VistaTipo",new { message2 ="Tipo Ticket eliminado exitosamente"});
             else
-                return NoContent();
+                return RedirectToAction("VistaTipo", new { message = "Error al eliminar el tipo ticket" });
         }
 
 

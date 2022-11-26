@@ -10,6 +10,10 @@ namespace ServiceDeskUCAB.Servicios.DepartamentoEstado
 
         Task<List<EstadoDTOUpdate>> ListaEstado(Guid Id);
         Task<ApplicationResponse<EstadoDTOUpdate>> EditarEstado(EstadoDTOUpdate estadoDTO);
-        
+
+        Task<ApplicationResponse<EstadoDTOUpdate>> DeshabilitarEstado(Guid Id);
+
+        Task<ApplicationResponse<EstadoDTOUpdate>> HabilitarEstado(Guid Id);
+
     }
 }

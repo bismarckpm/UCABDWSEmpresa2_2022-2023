@@ -29,6 +29,8 @@ namespace ServiceDeskUCAB.Servicios.DepartamentoEstado
 
         }
 
+        
+
         public async Task<ApplicationResponse<EstadoDTOUpdate>> EditarEstado(EstadoDTOUpdate estadoDTO)
         {
             var estado = new ApplicationResponse<EstadoDTOUpdate> ();
@@ -86,7 +88,54 @@ namespace ServiceDeskUCAB.Servicios.DepartamentoEstado
             return lista;
         }
 
+        public async Task<ApplicationResponse<EstadoDTOUpdate>> DeshabilitarEstado(Guid Id)
+        {
+            var lista = new ApplicationResponse<EstadoDTOUpdate>() ;
+
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.PutAsync("api/Estado/DeshabilitarEstado/" + Id, null); 
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<EstadoDTOUpdate>>(json_respuesta);
+
+
+                lista = resultado;
+
+            }
+            return lista;
+        }
+
+        public async Task<ApplicationResponse<EstadoDTOUpdate>> HabilitarEstado(Guid Id)
+        {
+            var lista = new ApplicationResponse<EstadoDTOUpdate>();
+
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.PutAsync("api/Estado/HabilitarEstado/" + Id, null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<EstadoDTOUpdate>>(json_respuesta);
+
+
+                lista = resultado;
+
+            }
+            return lista;
+        }
 
     }
+
+
 
 }

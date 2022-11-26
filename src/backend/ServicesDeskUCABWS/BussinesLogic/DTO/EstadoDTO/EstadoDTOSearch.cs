@@ -8,5 +8,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO
         public string nombre { get; set; } = string.Empty;
 
         public string descripcion { get; set; } = string.Empty;
+
+        public string? fecha_eliminacion { get; set; }
     }
 }

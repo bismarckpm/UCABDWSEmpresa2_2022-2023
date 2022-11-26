@@ -69,13 +69,53 @@ namespace ServicesDeskUCABWS.Controllers.EstadosController
 
         [HttpGet]
         [Route("ConsultarEstadosTicket/{Id}")]
-        public ApplicationResponse<List<EstadoDTOSearch>> ConsultarEstadoDepartamento(Guid Id)
+        public ApplicationResponse<List<EstadoDTOUpdate>> ConsultarEstadoDepartamento(Guid Id)
         {
-            var response = new ApplicationResponse<List<EstadoDTOSearch>>();
+            var response = new ApplicationResponse<List<EstadoDTOUpdate>>();
 
             try
             {
                 response.Data = _estadoDAO.ConsultarEstadosDepartamentoTicket(Id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+
+        [HttpPut]
+        [Route("DeshabilitarEstado/{Id}")]
+        public ApplicationResponse<EstadoDTOUpdate> DeshabilitarEstado([FromRoute] Guid Id)
+        {
+            var response = new ApplicationResponse<EstadoDTOUpdate>();
+
+            try
+            {
+                response.Data = _estadoDAO.DeshabilitarEstado(Id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+
+        [HttpPut]
+        [Route("HabilitarEstado/{Id}")]
+        public ApplicationResponse<EstadoDTOUpdate> HabilitarEstado([FromRoute]Guid Id)
+        {
+            var response = new ApplicationResponse<EstadoDTOUpdate>();
+
+            try
+            {
+                response.Data = _estadoDAO.HabilitarEstado(Id);
             }
             catch (ExceptionsControl ex)
             {

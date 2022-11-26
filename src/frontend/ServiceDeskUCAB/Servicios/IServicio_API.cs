@@ -28,5 +28,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<Ticket> ObtenerTicket(string id);
         Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipoTicketDTO);
+
+        
     }
 }

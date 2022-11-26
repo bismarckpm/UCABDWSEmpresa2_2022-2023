@@ -18,12 +18,12 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
     {
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
-        private readonly ITicketDAO ticketDAO;
+        //private readonly ITicketDAO ticketDAO;
 
         public testCambiarEstado()
         {
             context = new Mock<IDataContext>();
-            VotoDAO = new Votos_TicketService(context.Object, ticketDAO);
+            //VotoDAO = new Votos_TicketService(context.Object, ticketDAO);
             context.SetupDbContextData();
         }
         /*[TestMethod]
