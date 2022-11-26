@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221122155457_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20221126093442_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,6 +128,9 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("id_grupo");
 
+                    b.HasIndex("nombre")
+                        .IsUnique();
+
                     b.ToTable("Departamentos");
                 });
 
@@ -156,8 +159,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.Property<string>("nombre")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -273,6 +275,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("nombre")
+                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });

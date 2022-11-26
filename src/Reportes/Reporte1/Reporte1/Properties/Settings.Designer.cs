@@ -32,5 +32,16 @@ namespace Reporte1.Properties {
                 return ((string)(this["GestionBDConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-LAAOSSM;Initial Catalog=UCABServicesDesk8;Integrated Security" +
+            "=True")]
+        public string UCABServicesDesk8ConnectionString {
+            get {
+                return ((string)(this["UCABServicesDesk8ConnectionString"]));
+            }
+        }
     }
 }

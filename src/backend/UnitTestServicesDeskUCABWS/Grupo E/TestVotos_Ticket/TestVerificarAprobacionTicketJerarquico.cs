@@ -2,7 +2,10 @@
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,8 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         {
             ticketDAO = new Mock<ITicketDAO>();
             context = new Mock<IDataContext>();
-            VotoDAO = new Votos_TicketService(context.Object,ticketDAO.Object);
+            ticketDAO = new Mock<ITicketDAO>();
+            VotoDAO = new Votos_TicketService(context.Object, ticketDAO.Object);
             context.SetupDbContextData();
         }
 
@@ -91,6 +95,8 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
             };
             //act
+
+
             var result = VotoDAO.Votar(Voto);
 
             //assert
@@ -100,10 +106,8 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             var listavotos = context.Object.Votos_Tickets.Where(c => c.IdTicket.ToString().ToUpper() == Voto.IdTicket.ToUpper());
             Assert.IsTrue(listavotos.TakeWhile(c => c.voto == "Aprobado").Count() == listavotos.Count());
             var ticket = context.Object.Tickets.Find(Guid.Parse(Voto.IdTicket));
-            Assert.AreEqual(ticket.Estado.nombre, "Aprobado");
+            Assert.AreEqual(ticket.Estado.nombre, "Pendiente D1");
         }
-
-
 
         [TestMethod]
         public void TicketPendiente()
