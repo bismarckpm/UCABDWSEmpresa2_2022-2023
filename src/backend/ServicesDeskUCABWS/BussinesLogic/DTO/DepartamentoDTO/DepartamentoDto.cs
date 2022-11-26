@@ -25,4 +25,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
         [JsonIgnore]
         public Guid? id_grupo { get; set; } = null;
     }
+
+   
 }

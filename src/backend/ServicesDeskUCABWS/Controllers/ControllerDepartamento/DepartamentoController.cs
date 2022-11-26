@@ -111,6 +111,25 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        [HttpGet]
+        [Route("ConsultarDepartamentosIdExcluyente/{id}")]
+        public ApplicationResponse<IEnumerable<DepartamentoSearchDTO>> ConsultarIdExcluyente([FromRoute] Guid id)
+        {
+            var response = new ApplicationResponse<IEnumerable<DepartamentoSearchDTO>>();
+
+            try
+            {
+                response.Data = _departamentoDAO.ConsultaDepartamentoExcluyente(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         [HttpDelete]
         [Route("EliminarDepartamento/{id}")]
         public ApplicationResponse<DepartamentoDto> EliminarDepartamento([FromRoute] Guid id)

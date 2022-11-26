@@ -350,7 +350,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
 
-                    Departamento= new List<Departamento>
+                    Departamentos= new List<Departamento>
                     {
                         ListaDepartamento[0],
                         ListaDepartamento[1]
@@ -359,14 +359,14 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
                 {
                     Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
-                    Departamento= new List<Departamento>
+                    Departamentos= new List<Departamento>
                     {
                         ListaDepartamento[0]
                     }
                 },
                 new Tipo_Ticket("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamento= new List<Departamento>
+                    Departamentos= new List<Departamento>
                     {
                         ListaDepartamento[0]
                     }
@@ -374,7 +374,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
-                    Departamento= new List<Departamento>
+                    Departamentos= new List<Departamento>
                     {
                         ListaDepartamento[0]
                     }
@@ -383,7 +383,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
                 new Tipo_Ticket("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamento= new List<Departamento>
+                    Departamentos= new List<Departamento>
                     {
                         ListaDepartamento[0]
                     }

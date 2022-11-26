@@ -66,5 +66,25 @@ namespace ServicesDeskUCABWS.Controllers.EstadosController
             return response;
 
         }
+
+        [HttpGet]
+        [Route("ConsultarEstadosTicket/{Id}")]
+        public ApplicationResponse<List<EstadoDTOSearch>> ConsultarEstadoDepartamento(Guid Id)
+        {
+            var response = new ApplicationResponse<List<EstadoDTOSearch>>();
+
+            try
+            {
+                response.Data = _estadoDAO.ConsultarEstadosDepartamentoTicket(Id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
     }
 }

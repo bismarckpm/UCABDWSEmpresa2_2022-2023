@@ -3,6 +3,7 @@ using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -24,10 +25,15 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
         public TestAgregarEstadoADepartamento()
         {
 
-
+            var myprofile = new List<Profile>
+            {
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myprofile));
+            mapper = new Mapper(configuration);
             context = new Mock<IDataContext>();
             GrupoService = new GrupoDAO(context.Object);
-            DepartamentoService = new DepartamentoDAO(context.Object);
+            DepartamentoService = new DepartamentoDAO(context.Object,mapper);
             context.SetupDbContextData();
         }
 

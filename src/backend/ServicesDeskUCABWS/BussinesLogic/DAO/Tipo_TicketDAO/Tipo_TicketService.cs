@@ -50,7 +50,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             try
             {
                 var tipo = context.Tipos_Tickets
-                .Include(dep => dep.Departamento)
+                .Include(dep => dep.Departamentos)
                 .Include(fa => fa.Flujo_Aprobacion)
                 .ThenInclude(fb => fb.Tipo_Cargo)
                 .Where(fa => fa.fecha_elim == null)
@@ -68,7 +68,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                             Maximo_Rechazado = r.Maximo_Rechazado,
                             tipo = r.tipo,
                             Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
-                            Departamento = _mapper.Map<List<DepartamentoSearchDTO>>(r.Departamento)
+                            Departamento = _mapper.Map<List<DepartamentoSearchDTO>>(r.Departamentos)
                         }) ;
                     }
                
@@ -104,8 +104,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 tipo_ticket.Maximo_Rechazado = tipo_TicketDTO.Maximo_Rechazado;
 
                 //Eliminando referencia en el tipo Ticket
-                if (tipo_ticket.Departamento!=null) tipo_ticket.Departamento.Clear();
-                if (tipo_ticket.Departamento != null) tipo_ticket.Flujo_Aprobacion.Clear();
+                if (tipo_ticket.Departamentos != null) tipo_ticket.Departamentos.Clear();
+                if (tipo_ticket.Departamentos != null) tipo_ticket.Flujo_Aprobacion.Clear();
 
                 //Eliminando Entidades intermedias de flujo de aprobacion
                 context.Flujos_Aprobaciones.RemoveRange(context.Flujos_Aprobaciones
@@ -137,7 +137,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 catch (Exception) { }
                 try 
                 {
-                    tipo_ticket.Departamento = context.Departamentos
+                    tipo_ticket.Departamentos = context.Departamentos
                     .Where(x => tipo_TicketDTO.Departamento.Contains(x.id.ToString().ToUpper()))
                     .ToList();
                 } catch(Exception) { }
@@ -174,7 +174,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
                 try
                 {
-                    tipo_ticket.Departamento =
+                    tipo_ticket.Departamentos =
                     context.Departamentos.Where(x => Tipo_TicketDTO.Departamento.Contains(x.id.ToString())).ToList();
                 }
                 catch (Exception) { }
@@ -378,7 +378,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             try
             {
                 var data = context.Tipos_Tickets
-                   .Include(p => p.Departamento)
+                   .Include(p => p.Departamentos)
                    .Include(fa => fa.Flujo_Aprobacion)
                    .ThenInclude(_fa => _fa.Tipo_Cargo)
                    .Where(p => p.Id == id).Single();
@@ -398,7 +398,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             try
             {
                 var data = context.Tipos_Tickets.AsNoTracking()
-                   .Include(p => p.Departamento)
+                   .Include(p => p.Departamentos)
                    .Include(fa => fa.Flujo_Aprobacion)
                    .ThenInclude(_fa => _fa.Tipo_Cargo).Where(t => t.nombre == nombre).Single();
                 var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
@@ -434,7 +434,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
-                
                 var tipo_Ticket = context.Tipos_Tickets.Find(Id);
                 if (tipo_Ticket == null)
                 {
@@ -456,5 +455,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             }
            
         }
+
+        public List<Tipo_TicketDTOSearch> ConsultaTipoTicketAgregarTicket(Guid Id)
+        {
+            try
+            {
+                var ListaTipoTicket = context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Select(x => x.id).Contains(Id)).ToList();
+                ListaTipoTicket.AddRange(context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Count==0).ToList());
+                var ListaTipoTicketDTO = _mapper.Map<List<Tipo_TicketDTOSearch>>(ListaTipoTicket);
+                return ListaTipoTicketDTO;
+            }
+            catch (FormatException ex)
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET, ex);
+            }
+
+        }
+
+
     }
 }

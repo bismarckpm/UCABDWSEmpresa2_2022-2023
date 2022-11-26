@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -47,6 +48,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
                 return _mapper.Map<EstadoDTOUpdate>(estado);
             }
             return null;
+        }
+
+        public List<EstadoDTOSearch> ConsultarEstadosDepartamentoTicket(Guid Id)
+        {
+            var Listaestado = _dataContext.Estados.Include(x=>x.Estado_Padre).Include(x=>x.Departamento).Where(x=>x.Departamento.id==Id 
+            && (x.Estado_Padre.nombre != "Aprobado" && x.Estado_Padre.nombre != "Rechazado" && x.Estado_Padre.nombre != "Pendiente"));
+            
+            return _mapper.Map<List<EstadoDTOSearch>>(Listaestado);
+            
         }
     }
 }

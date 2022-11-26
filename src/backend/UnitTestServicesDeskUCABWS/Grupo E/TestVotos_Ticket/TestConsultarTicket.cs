@@ -1,4 +1,5 @@
 ﻿using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -15,11 +16,13 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
     {
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
+        private readonly Mock<ITicketDAO> ticketDAO;
 
         public TestConsultarTicket()
         {
             context = new Mock<IDataContext>();
-            VotoDAO = new Votos_TicketService(context.Object);
+            ticketDAO = new Mock<ITicketDAO>();
+            VotoDAO = new Votos_TicketService(context.Object,ticketDAO.Object);
             context.SetupDbContextData();
         }
 

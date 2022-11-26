@@ -18,11 +18,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
     public class DepartamentoDAO : IDepartamentoDAO
     {
         private readonly IDataContext _dataContext;
+        private readonly IMapper _mapper;
 
         //Constructor
-        public DepartamentoDAO(IDataContext dataContext)
+        public DepartamentoDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
+            _mapper = mapper;
         }
 
         //Registrar un Departamento
@@ -301,6 +303,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				throw new ExceptionsControl("Algo salio mal", ex);
 			}
 			return listaDept;
+        }
+
+        public IEnumerable<DepartamentoSearchDTO> ConsultaDepartamentoExcluyente(Guid IdDepartamento)
+        {
+            var ListaDepartamento =_mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
+
+            return ListaDepartamento;
         }
     }
 }

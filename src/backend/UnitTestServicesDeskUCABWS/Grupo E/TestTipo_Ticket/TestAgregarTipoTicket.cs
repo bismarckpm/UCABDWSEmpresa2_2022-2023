@@ -93,7 +93,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                         IdTicket = Guid.Parse("00000000-0000-0000-0000-000000000000")
                     }
                 },
-                Departamento = new List<Departamento>()
+                Departamentos = new List<Departamento>()
                 {
                     new Departamento()
                     {
@@ -124,7 +124,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             //assert
 
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
 
@@ -192,7 +192,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                         IdTicket = Guid.Parse("00000000-0000-0000-0000-000000000000")
                     }
                 },
-                Departamento = new List<Departamento>()
+                Departamentos = new List<Departamento>()
                 {
                     new Departamento()
                     {
@@ -222,7 +222,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
 
@@ -252,7 +252,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
-                Departamento = new List<Departamento>()
+                Departamentos = new List<Departamento>()
                 {
                     new Departamento()
                     {
@@ -280,7 +280,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
         }
 
         [TestMethod]
