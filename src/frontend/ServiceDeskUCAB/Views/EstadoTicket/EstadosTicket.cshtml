@@ -24,13 +24,18 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="tipoEstadoHabilidado-tab" data-bs-toggle="tab" data-bs-target="#tipoEstadoHabilidado" type="button" role="tab" aria-controls="tipoEstadoHabilidado" aria-selected="true">
                     Habilitados
-                    <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion == null).Count()</span>
+                    @if(Model != null){
+                        <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion == null).Count()</span>
+                    }
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tipoEstadoDeshabilidado" type="button" role="tab" aria-controls="profile" aria-selected="false">
                     Deshabilitados
-                    <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion != null).Count()</span>
+                    @if (Model != null)
+                    {
+                        <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion != null).Count()</span>
+                    }
                 </button>
             </li>
             <a asp-action="EstadoNuevo" asp-controller="EstadoTicket" asp-route-id="@null" class="btn btn-primary btn-sm position-absolute" style="right: 0; top: 5px">Crear tipo de estado</a>
