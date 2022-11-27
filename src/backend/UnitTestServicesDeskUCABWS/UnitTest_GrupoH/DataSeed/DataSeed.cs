@@ -194,7 +194,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 
                     tipo = new Tipo_Cargo
                     {
-                       Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                       id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
                        nombre = "Nuevo Tipo Cargo",
 

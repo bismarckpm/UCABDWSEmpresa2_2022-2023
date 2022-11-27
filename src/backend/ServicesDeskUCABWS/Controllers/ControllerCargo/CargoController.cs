@@ -111,8 +111,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             try
             {
                 response.Data = _cargoDAO.ActualizarCargo(CargoMapper.MapperDTOToEntityModificar(cargo));
-                //Cambiar parametros cuando realicemos frontend
-
+                
             }
             catch (ExceptionsControl ex)
             {
@@ -132,9 +131,11 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             {
                 response.Data = _cargoDAO.AsignarTipoCargotoCargo(id,idCargos);
             }
-            catch (Exception ex)
+            catch (ExceptionsControl ex)
             {
-                throw ex.InnerException!;
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
             }
             return response;
         }

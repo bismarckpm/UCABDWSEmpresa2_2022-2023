@@ -33,7 +33,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("El Tipo de cargo" + tipo.Id + "ya está registrado", ex);
+                throw new ExceptionsControl("El Tipo de cargo" + tipo.id + "ya está registrado", ex);
             }
             return existe;
         }
@@ -55,10 +55,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
 
 
 
-                var nuevoTipoCargo = _dataContext.Tipos_Cargos.Where(d => d.Id == tipo.Id)
+                var nuevoTipoCargo = _dataContext.Tipos_Cargos.Where(d => d.id == tipo.id)
                         .Select(d => new Tipo_CargoDto
                         {
-                            Id = d.Id,
+                            id = d.id,
                             nombre = d.nombre,
                             descripcion = d.descripcion,
                             fecha_creacion = d.fecha_creacion
@@ -86,10 +86,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 _dataContext.Tipos_Cargos.Update(tipo);
                 _dataContext.DbContext.SaveChanges();
 
-                var data = _dataContext.Tipos_Cargos.Where(t => t.Id == tipo.Id).Select(
+                var data = _dataContext.Tipos_Cargos.Where(t => t.id == tipo.id).Select(
                     t => new Tipo_CargoDto_Update
                     {
-                        Id = t.Id,
+                        id = t.id,
                         nombre = t.nombre,
                         descripcion = t.descripcion,
                         nivel_jerarquia = t.nivel_jerarquia,
@@ -102,7 +102,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + tipo.Id, ex);
+                throw new Exception("Fallo al actualizar: " + tipo.id, ex);
             }
         }
 
@@ -112,7 +112,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
             try
             {
                 var tipo = _dataContext.Tipos_Cargos
-                            .Where(d => d.Id == id).First();
+                            .Where(d => d.id == id).First();
 
                 return Tipo_CargoMapper.MapperEntityToDtoDefault(tipo);
 
@@ -133,7 +133,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 var lista = _dataContext.Tipos_Cargos.Select(
                     t => new Tipo_CargoDto
                     {
-                        Id = t.Id,
+                        id = t.id,
                         nombre = t.nombre,
                         descripcion = t.descripcion,
                         nivel_jerarquia = t.nivel_jerarquia,
@@ -179,7 +179,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
             try
             {
                 var tipo = _dataContext.Tipos_Cargos
-                           .Where(d => d.Id == id).First();
+                           .Where(d => d.id == id).First();
 
 
                 tipo.fecha_eliminacion = DateTime.Now.Date;
@@ -202,7 +202,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 var lista = _dataContext.Tipos_Cargos.Where(x => x.fecha_eliminacion == null).Select(
                     d => new Tipo_CargoDto
                     {
-                        Id = d.Id,
+                        id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,                        
@@ -240,7 +240,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
         {
             try
             {
-                var tipo = _dataContext.Tipos_Cargos.OrderBy(x => x.Id).LastOrDefault();
+                var tipo = _dataContext.Tipos_Cargos.OrderBy(x => x.id).LastOrDefault();
 
                 return Tipo_CargoMapper.MapperEntityToDtoDefault(tipo);
 

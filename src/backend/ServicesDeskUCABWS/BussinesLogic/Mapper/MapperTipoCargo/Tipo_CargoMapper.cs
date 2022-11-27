@@ -12,7 +12,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
         {
             return new Tipo_CargoDto
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre = tipo.nombre,
                 descripcion = tipo.descripcion,
                 nivel_jerarquia = tipo.nivel_jerarquia,
@@ -24,7 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
         {
             return new Tipo_CargoDto
             {
-                Id = tipo.Id,
+                id = tipo.id,
                 nombre = tipo.nombre,
                 descripcion = tipo.descripcion,
                 nivel_jerarquia = tipo.nivel_jerarquia,
@@ -36,7 +36,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
         {
             return new Tipo_Cargo
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre = tipo.nombre,
                 descripcion = tipo.descripcion,
                 nivel_jerarquia = tipo.nivel_jerarquia,
@@ -48,7 +48,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
         {
             return new Tipo_Cargo
             {
-                Id = tipo.Id,
+                id = tipo.id,
                 nombre = tipo.nombre,
                 descripcion = tipo.descripcion,
                 nivel_jerarquia = tipo.nivel_jerarquia,
