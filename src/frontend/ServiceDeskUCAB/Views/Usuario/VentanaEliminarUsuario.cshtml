@@ -4,6 +4,10 @@
     ViewData["Title"] = "VentanaEliminarUsuario";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
+
 <!-- Libreria -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 
@@ -22,8 +26,8 @@
                 ¿Está seguro de que desea eliminar el usuario seleccionado?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a type="button" class="btn btn-primary" href="@Url.Action("EliminarUsuario")">Aceptar</a>
+                <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
+                <a type="button" class="botonCrear" style="padding-top: 3px;padding-left: 14px;" href="@Url.Action("EliminarUsuario")">Aceptar</a>
             </div>
         </div>
     </div>
