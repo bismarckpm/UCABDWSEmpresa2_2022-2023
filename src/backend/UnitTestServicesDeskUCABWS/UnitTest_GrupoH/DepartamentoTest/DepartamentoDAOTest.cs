@@ -32,7 +32,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
     public class DepartamentoDAOTest
     {
         private readonly DepartamentoDAO _DepartamentoDAO;
-        //private readonly GrupoDAO _GrupoDAO;
         private readonly Mock<IDataContext> _contextMock;
         private readonly Mock<IDataContext> _contextMockDG;
         private readonly Mock<IGrupoDAO> _serviceMock;
@@ -48,18 +47,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             _serviceMock = new Mock<IGrupoDAO>();            
             _contextMockDG.SetUpContextDataDepartamentoYGrupo();
            
-
-            //var myProfile = new List<Profile>
-            //{
-            //    new PlantillaNotificacionMapper(),
-            //    new TipoEstadoMapper(),
-            //    new EtiquetaTipoEstadoMapper(),
-            //    new EtiquetaMapper()
-            //};
-            //var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
-            //_mapper = new Mapper(configuration);
-            //_plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper, _notificacion.Object);
-            //_contextMock.SetUpContextData();
         }
 
         [TestMethod(displayName: "Prueba Unitaria para agregar un Departamento")]
@@ -346,36 +333,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.AreEqual(request.nombre, "Seguridad Ambiental");
         }
 
-        //[TestMethod(displayName: "Prueba Unitaria para actualizar un Departamento Condicional")]
-        //public void ActualizarDepartamentoTestIf()
-        //{
-        //    //arrange
-        //    var request = new Departamento
-        //    {
-
-        //        id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-        //        nombre = "Seguridad Ambiental 2",
-
-        //        descripcion = "Cuida el ambiente",
-
-        //        fecha_creacion = DateTime.Now.Date,
-
-        //        fecha_ultima_edicion = null,
-
-        //        fecha_eliminacion = null,
-
-        //        id_grupo = null
-
-        //    };
-
-        //    _contextMock.Setup(set => set.DbContext.SaveChanges());
-
-        //    var result = _DepartamentoDAO.ActualizarDepartamento(request);
-
-        //    Assert.AreNotEqual(request.nombre, result.nombre);
-        //}
-
+     
         [TestMethod(displayName: "Prueba Unitaria cuando la actualizacion de un departamento falla por campos vacios")]
         public void ExcepcionDBUpdateActualizarDepartamento()
         {

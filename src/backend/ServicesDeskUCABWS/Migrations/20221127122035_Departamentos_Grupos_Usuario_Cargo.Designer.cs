@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221127060339_cuatro")]
-    partial class cuatro
+    [Migration("20221127122035_Departamentos_Grupos_Usuario_Cargo")]
+    partial class Departamentos_Grupos_Usuario_Cargo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,7 +68,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("id_tipo")

@@ -13,9 +13,11 @@ using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 
 
 using ServiceDeskUCAB.ViewModel.CargoTipoCargo;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServicesDeskUCAB.Controllers
 {
+    [Authorize(Policy = "AdminAccess")]
     public class CargoYTipoCargoController : Controller
     {
 

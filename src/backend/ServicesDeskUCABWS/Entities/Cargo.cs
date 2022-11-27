@@ -21,9 +21,9 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_creacion { get; set; }
 
         [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+        public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-       public Guid? id_tipo { get; set; }
+        public Guid? id_tipo { get; set; }
 
         [ForeignKey("id_tipo")]
         public Tipo_Cargo tipo { get; set; }

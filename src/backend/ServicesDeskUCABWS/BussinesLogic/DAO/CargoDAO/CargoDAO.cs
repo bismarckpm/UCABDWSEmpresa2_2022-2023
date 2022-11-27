@@ -9,20 +9,20 @@ using System.Collections.Generic;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 {
     public class CargoDAO: ICargoDAO
     {
 
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
        // private readonly IMapper _mapper;
         private readonly ITipo_CargoDAO _servicioTipo;
 
 
         //Constructor
-        public CargoDAO(DataContext dataContext, ITipo_CargoDAO servicioTipo)
+        public CargoDAO(IDataContext dataContext, ITipo_CargoDAO servicioTipo)
         {
             _dataContext = dataContext;
             _servicioTipo = servicioTipo;
@@ -36,14 +36,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             try
             {
 
-                if (ExisteCargo(cargo) == false) {
+                if (!ExisteCargo(cargo)) {
 
                     _dataContext.Cargos.Add(cargo);
-                    _dataContext.SaveChanges();
-                }          
-
-                    
-                
+                    _dataContext.DbContext.SaveChanges();
+                }   
 
                 var nuevoCargo = _dataContext.Cargos.Where(d => d.Id == cargo.Id)
                         .Select(d => new CargoDto
@@ -76,7 +73,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
                 cargo.fecha_eliminacion = DateTime.Now.Date;
                 cargo.id_tipo = null;
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 return CargoMapper.MapperEntityToDto(cargo);
 
@@ -94,7 +91,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             try
             {
                 _dataContext.Cargos.Update(cargo);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Cargos.Where(c => c.Id == cargo.Id).Select(
                     c => new CargoDto_Update
@@ -110,20 +107,31 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 );
                 return data.First();
             }
+            catch (DbUpdateException ex)
+            {
+                throw new ExceptionsControl("Fallo al actualizar el cargo: " + cargo.nombre_departamental, ex);
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + cargo.Id, ex);
+                throw new ExceptionsControl("No se encuentra el cargo" + " " + cargo.Id, ex);
             }
         }
 
         //Consultar Cargo por ID
         public CargoDto ConsultarPorID(Guid id)
         {
-            var cargo = _dataContext.Cargos
-                .Where(c => c.Id == id).First();
+            try
+            {
+                var cargo = _dataContext.Cargos
+               .Where(c => c.Id == id).First();
 
-            return CargoMapper.MapperEntityToDtoDefault(cargo);
+                return CargoMapper.MapperEntityToDtoDefault(cargo);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se encuentra el Grupo" + " " + id, ex);
+            }
+
         }
 
 
@@ -144,7 +152,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                         fecha_eliminacion = c.fecha_eliminacion
                     }
 
-
                 );
 
                 return lista.ToList();
@@ -152,8 +159,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
+                throw new ExceptionsControl("No hay cargos registrados", ex);
             }
         }
 
@@ -225,7 +231,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
                     var nuevoCargo = _dataContext.Cargos.Where(d => d.Id.ToString() == cargo).FirstOrDefault();
                     nuevoCargo.id_tipo = id;
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
 
                 }
 
@@ -233,8 +239,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new ExceptionsControl("Fallo al asignar grupo: al cargo" + idCargo, ex);
+                throw new ExceptionsControl("Fallo al asignar cargo", ex);
             }
         }
 
@@ -246,13 +251,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
             try
             {
-                var nuevoCargo = _dataContext.Cargos.Where(d => d.nombre_departamental.Equals(cargo.nombre_departamental));
+                var nuevoCargo = _dataContext.Cargos.Where(d => d.nombre_departamental.Equals(cargo.nombre_departamental ) && d.fecha_eliminacion == null);
                 if (nuevoCargo.Count() != 0)
                     existe = true;
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("El Cargo" + cargo.Id + "ya está registrado", ex);
+                throw new ExceptionsControl("El cargo" + cargo.Id + "ya está registrado", ex);
             }
             return existe;
         }

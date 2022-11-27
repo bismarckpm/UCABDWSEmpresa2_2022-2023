@@ -36,7 +36,7 @@
 
                     @Html.TextBoxFor(m => m.tipo.id, new { @Value = Model.tipo.id, @type="hidden"})
                     <span>Nombre: </span>
-                    @Html.TextBoxFor(m => m.tipo.nombre, new { @Value = Model.tipo.nombre, Class="form-control"})
+                    @Html.TextBoxFor(m => m.tipo.nombre, new { @Value = Model.tipo.nombre, Class="form-control", @readonly="readonly"})
                     @Html.ValidationMessageFor(m => m.tipo.nombre ,null, new { @class = "text-danger" })
                     <br />
                     <span>Descripcion: </span>

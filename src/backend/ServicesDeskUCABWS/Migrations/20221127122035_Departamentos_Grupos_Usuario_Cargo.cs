@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class cuatro : Migration
+    public partial class Departamentos_Grupos_Usuario_Cargo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

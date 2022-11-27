@@ -67,8 +67,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
-          _dataContext.DbContext.SaveChanges();
-          return DepartamentoMapper.MapperEntityToDto(departamento);
+                    _dataContext.DbContext.SaveChanges();
+                    return DepartamentoMapper.MapperEntityToDto(departamento);
             }
             catch (Exception ex)
             {
@@ -217,7 +217,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("Fallo al asignar grupo", ex);
+                throw new ExceptionsControl("Fallo al asignar departamento", ex);
             }
         }	
 

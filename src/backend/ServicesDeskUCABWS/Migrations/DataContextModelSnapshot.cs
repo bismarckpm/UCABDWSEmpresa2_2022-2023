@@ -66,7 +66,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ultima_edicion")
+                    b.Property<DateTime?>("fecha_ultima_edicion")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("id_tipo")
