@@ -138,11 +138,7 @@
     <div id="PlaceHolderEliminarCargo"></div>
     <div id="PlaceHolderModificarCargo"></div>
 
-
-
-
-
-<div class="contenedor">
+    <div class="contenedor">
     <div class="arriba">
         <div class="area-boton">
             <div class="titulo">
@@ -218,6 +214,9 @@
                 <th>
                     Nombre
                 </th>
+                <th>
+                    Descripcion
+                </th>
 
             </tr>
 
@@ -229,6 +228,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
                     </td>
 
                     <td>

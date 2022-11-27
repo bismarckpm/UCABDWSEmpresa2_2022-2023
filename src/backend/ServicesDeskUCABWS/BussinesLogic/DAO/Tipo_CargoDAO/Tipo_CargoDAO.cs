@@ -14,10 +14,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
 {
     public class Tipo_CargoDAO : ITipo_CargoDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
         //Constructor
-        public Tipo_CargoDAO(DataContext dataContext)
+        public Tipo_CargoDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -49,7 +49,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 {
 
                     _dataContext.Tipos_Cargos.Add(tipo);
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
                 }
 
 
@@ -84,7 +84,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
             try
             {
                 _dataContext.Tipos_Cargos.Update(tipo);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var data = _dataContext.Tipos_Cargos.Where(t => t.Id == tipo.Id).Select(
                     t => new Tipo_CargoDto_Update
@@ -165,7 +165,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                     item.id_tipo = null;
 
                 }
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
                 return true;
 
             }
@@ -183,8 +183,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
 
 
                 tipo.fecha_eliminacion = DateTime.Now.Date;
-                
-                _dataContext.SaveChanges();
+
+                _dataContext.DbContext.SaveChanges();
 
                 return Tipo_CargoMapper.MapperEntityToDto(tipo);
 

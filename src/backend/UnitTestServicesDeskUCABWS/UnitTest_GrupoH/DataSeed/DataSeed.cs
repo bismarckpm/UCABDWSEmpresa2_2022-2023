@@ -145,6 +145,33 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
             _mockContext.Setup(set => set.DbContext.SaveChanges());
         }
 
+        public static void SetUpContextDataCargo(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Cargo>
+            {
+                new Cargo
+                {
+                    Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+                    nombre_departamental = "Cargo Nuevo",
+
+                    descripcion = "Es un cargo",
+
+                    fecha_creacion = DateTime.Now.Date,
+
+                    fecha_ultima_edicion = null,
+
+                    fecha_eliminacion = null
+                }
+                
+
+            };
+
+            _mockContext.Setup(c => c.Cargos).Returns(request.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.Cargos.Add(It.IsAny<Cargo>()));
+            _mockContext.Setup(set => set.DbContext.SaveChanges());
+        }
+
 
 
     }
