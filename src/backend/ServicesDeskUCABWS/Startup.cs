@@ -90,7 +90,7 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
-            services.AddTransient<ITicketDAO, TicketService>();
+            services.AddTransient<ITicketDAO, TicketDAO>();
 
             services.AddTransient<IEstadoDAO, EstadoService>();
 

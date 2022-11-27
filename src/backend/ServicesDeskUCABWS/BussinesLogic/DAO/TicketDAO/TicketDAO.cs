@@ -21,14 +21,14 @@ using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
-    public class TicketService : ITicketDAO
+    public class TicketDAO : ITicketDAO
     {
         private readonly IDataContext contexto;
         private List<Ticket> listaTickets;
         private readonly INotificacion notificacion;
         private readonly IPlantillaNotificacion plantilla;
 
-        public TicketService(IDataContext context, IPlantillaNotificacion plantilla, INotificacion notificacion)
+        public TicketDAO(IDataContext context, IPlantillaNotificacion plantilla, INotificacion notificacion)
         {
             contexto = context;
             this.notificacion = notificacion;

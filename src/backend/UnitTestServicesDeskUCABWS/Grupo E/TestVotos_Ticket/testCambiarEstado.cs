@@ -22,7 +22,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
     public class testCambiarEstado
     {
         Mock<IDataContext> context;
-        private readonly TicketService ticketDAO;
+        private readonly TicketDAO ticketDAO;
         private readonly Mock<IPlantillaNotificacion> plantillaNotificacionDAO;
         private readonly Mock<INotificacion> notificacionService;
 
@@ -31,7 +31,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
             notificacionService = new Mock<INotificacion>();
             context = new Mock<IDataContext>();
-            ticketDAO = new TicketService(context.Object,plantillaNotificacionDAO.Object,notificacionService.Object);
+            ticketDAO = new TicketDAO(context.Object,plantillaNotificacionDAO.Object,notificacionService.Object);
             context.SetupDbContextData();
         }
 
