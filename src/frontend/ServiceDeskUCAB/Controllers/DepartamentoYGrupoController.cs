@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminAccess")]
     public class DepartamentoYGrupoController : Controller
     {
 		//Declaración de variables
@@ -26,6 +26,7 @@ namespace ServiceDeskUCAB.Controllers
 			_servicioApiDepartamento = servicioApiDepartamento;
 		}
 
+	
 		//Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
 		public async Task<IActionResult> DepartamentoGrupo()
 		{

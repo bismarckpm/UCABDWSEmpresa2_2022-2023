@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Interface\**" />
+    <Content Remove="Controllers\Interface\**" />
+    <EmbeddedResource Remove="Controllers\Interface\**" />
+    <None Remove="Controllers\Interface\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
@@ -14,10 +21,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Interface\" />
   </ItemGroup>
 
 </Project>
