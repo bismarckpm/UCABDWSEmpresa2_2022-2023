@@ -42,7 +42,8 @@
                     @Html.TextAreaFor(m => m.descripcion, new {Class="form-control", placeholder="Descripcion: "})
                     @Html.ValidationMessageFor(m => m.descripcion ,null, new { @class = "text-danger" })                    
                     <br />
-
+                    <center><label class="advertencia">*NOTA: No podrá ser modificado el nombre*</label></center>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
