@@ -11,7 +11,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo
         {
             return new CargoDto
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre_departamental = cargo.nombre_departamental,
                 descripcion = cargo.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -22,7 +22,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo
         {
             return new CargoDto
             {
-                Id = cargo.Id,
+                id = cargo.id,
                 nombre_departamental = cargo.nombre_departamental,
                 descripcion = cargo.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -33,7 +33,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo
         {
             return new Cargo
             {
-                Id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre_departamental = cargo.nombre_departamental,
                 descripcion = cargo.descripcion,
                 fecha_creacion = cargo.fecha_creacion
@@ -44,7 +44,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperCargo
         {
             return new Cargo
             {
-                Id = cargo.id,
+                id = cargo.id,
                 nombre_departamental = cargo.nombre_departamental,
                 descripcion = cargo.descripcion,
                 fecha_creacion = cargo.fecha_creacion,

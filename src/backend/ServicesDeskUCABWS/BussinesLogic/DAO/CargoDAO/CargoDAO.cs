@@ -42,10 +42,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                     _dataContext.DbContext.SaveChanges();
                 }   
 
-                var nuevoCargo = _dataContext.Cargos.Where(d => d.Id == cargo.Id)
+                var nuevoCargo = _dataContext.Cargos.Where(d => d.id == cargo.id)
                         .Select(d => new CargoDto
                         {
-                            Id = d.Id,
+                            id = d.id,
                             nombre_departamental = d.nombre_departamental,
                             descripcion = d.descripcion,
                             fecha_creacion = d.fecha_creacion
@@ -68,7 +68,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             try
             {
                 var cargo = _dataContext.Cargos
-                           .Where(d => d.Id == id).First();
+                           .Where(d => d.id == id).First();
 
 
                 cargo.fecha_eliminacion = DateTime.Now.Date;
@@ -93,10 +93,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 _dataContext.Cargos.Update(cargo);
                 _dataContext.DbContext.SaveChanges();
 
-                var data = _dataContext.Cargos.Where(c => c.Id == cargo.Id).Select(
+                var data = _dataContext.Cargos.Where(c => c.id == cargo.id).Select(
                     c => new CargoDto_Update
                     {
-                        id = c.Id,
+                        id = c.id,
                         nombre_departamental = c.nombre_departamental,
                         descripcion = c.descripcion,
                         fecha_creacion = c.fecha_creacion,
@@ -113,7 +113,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se encuentra el cargo" + " " + cargo.Id, ex);
+                throw new ExceptionsControl("No se encuentra el cargo" + " " + cargo.id, ex);
             }
         }
 
@@ -123,7 +123,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             try
             {
                 var cargo = _dataContext.Cargos
-               .Where(c => c.Id == id).First();
+               .Where(c => c.id == id).First();
 
                 return CargoMapper.MapperEntityToDtoDefault(cargo);
             }
@@ -144,7 +144,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var lista = _dataContext.Cargos.Select(
                     c => new CargoDto
                     {
-                        Id = c.Id,
+                        id = c.id,
                         nombre_departamental = c.nombre_departamental,
                         descripcion = c.descripcion,
                         fecha_creacion = c.fecha_creacion,
@@ -171,7 +171,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var lista = _dataContext.Cargos.Where(x => x.fecha_eliminacion == null).Select(
                     d => new CargoDto
                     {
-                        Id = d.Id,
+                        id = d.id,
                         nombre_departamental = d.nombre_departamental,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
@@ -200,7 +200,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var cargos = _dataContext.Cargos.Where(tipo => tipo.id_tipo == idTipo).Select(
                         d => new CargoDto
                         {
-                            Id = d.Id,
+                            id = d.id,
                             nombre_departamental = d.nombre_departamental,
                             descripcion = d.descripcion,
                             fecha_creacion = d.fecha_creacion,
@@ -229,7 +229,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 foreach (var cargo in listaCargo)
                 {
 
-                    var nuevoCargo = _dataContext.Cargos.Where(d => d.Id.ToString() == cargo).FirstOrDefault();
+                    var nuevoCargo = _dataContext.Cargos.Where(d => d.id.ToString() == cargo).FirstOrDefault();
                     nuevoCargo.id_tipo = id;
                     _dataContext.DbContext.SaveChanges();
 
@@ -245,7 +245,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
         
 
-        private bool ExisteCargo(Cargo cargo)
+        public bool ExisteCargo(Cargo cargo)
         {
             bool existe = false;
 
@@ -257,7 +257,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("El cargo" + cargo.Id + "ya está registrado", ex);
+                throw new ExceptionsControl("El cargo" + cargo.id + "ya está registrado", ex);
             }
             return existe;
         }
@@ -271,7 +271,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                 var lista = _dataContext.Cargos.Where(x => x.id_tipo == null).Select(
                     d => new CargoDto
                     {
-                        Id = d.Id,
+                        id = d.id,
                         nombre_departamental = d.nombre_departamental,
                         descripcion = d.descripcion,
                         fecha_creacion = d.fecha_creacion,
@@ -308,7 +308,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
                     foreach (var nuevoCargo in listaCargo)
                     {
 
-                        var relacionado = _dataContext.Cargos.Where(x => x.Id.ToString() == nuevoCargo).FirstOrDefault();
+                        var relacionado = _dataContext.Cargos.Where(x => x.id.ToString() == nuevoCargo).FirstOrDefault();
                         if (relacionado != null){
                             relacionado.id_tipo = id;
                             relacionado.fecha_ultima_edicion = DateTime.Now.Date;

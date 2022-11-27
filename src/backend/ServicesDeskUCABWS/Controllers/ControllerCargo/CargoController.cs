@@ -22,13 +22,11 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
     public class CargoController : ControllerBase
     {
         private readonly ICargoDAO _cargoDAO;
-        private readonly ILogger<CargoController> _log;
-
+        
         //Constructor
-        public CargoController(ICargoDAO cargoDAO, ILogger<CargoController> log)
+        public CargoController(ICargoDAO cargoDAO)
         {
-            _cargoDAO = cargoDAO;
-            _log = log;
+            _cargoDAO = cargoDAO;            
         }
 
         //Crear Cargo

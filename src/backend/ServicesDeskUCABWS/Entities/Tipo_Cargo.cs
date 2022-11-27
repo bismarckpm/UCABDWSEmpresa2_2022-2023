@@ -18,7 +18,7 @@ namespace ServicesDeskUCABWS.Entities
         [StringLength(20)]
         public string nivel_jerarquia { get; set; } = string.Empty;
         public DateTime fecha_creacion { get; set; }
-        public DateTime fecha_ult_edic { get; set; }
+        public DateTime? fecha_ult_edic { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public virtual List<Cargo> cargos { get; set; }
     }

@@ -51,7 +51,7 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -67,7 +67,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("fecha_ultima_edicion")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("id_tipo")
@@ -78,7 +77,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("id_tipo");
 
@@ -456,7 +455,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("fecha_ult_edic")
+                    b.Property<DateTime?>("fecha_ult_edic")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("nivel_jerarquia")
@@ -667,10 +666,10 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.HasBaseType("ServicesDeskUCABWS.Entities.Usuario");
 
-                    b.Property<Guid?>("CargoId")
+                    b.Property<Guid?>("Cargoid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("CargoId");
+                    b.HasIndex("Cargoid");
 
                     b.HasDiscriminator().HasValue("2");
                 });
@@ -867,7 +866,7 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.HasOne("ServicesDeskUCABWS.Entities.Cargo", "Cargo")
                         .WithMany()
-                        .HasForeignKey("CargoId");
+                        .HasForeignKey("Cargoid");
 
                     b.Navigation("Cargo");
                 });

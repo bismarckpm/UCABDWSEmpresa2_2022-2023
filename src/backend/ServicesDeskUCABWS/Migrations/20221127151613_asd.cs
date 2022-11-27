@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class Departamentos_Grupos_Usuario_Cargo : Migration
+    public partial class asd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -85,7 +85,7 @@ namespace ServicesDeskUCABWS.Migrations
                     descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     nivel_jerarquia = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: true),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -128,17 +128,17 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Cargos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     nombre_departamental = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     id_tipo = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cargos", x => x.Id);
+                    table.PrimaryKey("PK_Cargos", x => x.id);
                     table.ForeignKey(
                         name: "FK_Cargos_Tipos_Cargos_id_tipo",
                         column: x => x.id_tipo,
@@ -282,16 +282,16 @@ namespace ServicesDeskUCABWS.Migrations
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
-                    CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Cargoid = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Cargos_CargoId",
-                        column: x => x.CargoId,
+                        name: "FK_Usuarios_Cargos_Cargoid",
+                        column: x => x.Cargoid,
                         principalTable: "Cargos",
-                        principalColumn: "Id");
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -573,9 +573,9 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_CargoId",
+                name: "IX_Usuarios_Cargoid",
                 table: "Usuarios",
-                column: "CargoId");
+                column: "Cargoid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_correo",
