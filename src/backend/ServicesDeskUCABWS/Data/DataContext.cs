@@ -36,6 +36,7 @@ namespace ServicesDeskUCABWS.Data
                 .HasForeignKey(sc => sc.RolId);
 
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
+            modelBuilder.Entity<Tipo_Estado>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
             modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();

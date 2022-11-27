@@ -192,13 +192,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
                     
                     tipoEstadoEntity.descripcion = tipoEstadoAct.descripcion;
-                    var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstadoEntity.Id).ToList();
+                    /*var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstadoEntity.Id).ToList();
                     foreach (Estado hijo in estadosHijos)
                     {
                         hijo.nombre = Regex.Replace(hijo.nombre, tipoEstadoEntity.nombre, tipoEstadoAct.nombre);
                         hijo.descripcion = tipoEstadoAct.descripcion;
                         _estadoService.ModificarEstado(_mapper.Map<EstadoDTOUpdate>(hijo));
-                    }
+                    }*/
                     tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
                 }
 
