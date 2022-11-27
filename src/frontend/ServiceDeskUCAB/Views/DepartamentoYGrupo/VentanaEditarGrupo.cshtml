@@ -35,8 +35,8 @@
                 <div class="modal-body">
 
                     @Html.TextBoxFor(m => m.grupo.id, new { @Value = Model.grupo.id, @type="hidden"})
-                    <span>Nombre: </span> 
-                    @Html.TextBoxFor(m => m.grupo.nombre, new { @Value = Model.grupo.nombre, Class="form-control"})
+                    <span>Nombre: </span>
+                    @Html.TextBoxFor(m => m.grupo.nombre, new { @Value = Model.grupo.nombre, Class="form-control", @readonly="readonly"})
                     @Html.ValidationMessageFor(m => m.grupo.nombre ,null, new { @class = "text-danger" })
                     <br />
                     <span>Descripcion: </span>

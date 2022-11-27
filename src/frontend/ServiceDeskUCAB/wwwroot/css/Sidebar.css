@@ -265,3 +265,9 @@ main .modal-content label {
     font-size: 1.2rem;
     color: var(--color-sidebar);
 }
+
+main .modal-content .modal-body .advertencia{
+    color: var(--color-danger);
+    font-size: 14px;
+    text-align:center;
+}
