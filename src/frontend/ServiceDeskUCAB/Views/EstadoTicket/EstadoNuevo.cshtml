@@ -25,7 +25,7 @@
                     <div class="col-8">
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Nombre</label>
-                            <input required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                            <input required type="text" class="form-control form-control-sm" onkeypress="return check(event)" name="Nombre" asp-for="Estado.Nombre" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Descripción</label>
@@ -119,5 +119,21 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
+
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+
+            //Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            // Patrón de entrada, en este caso solo acepta numeros y letras
+            patron = /^[a-zA-Z ]+$/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
+        }
+
     </script>
 }

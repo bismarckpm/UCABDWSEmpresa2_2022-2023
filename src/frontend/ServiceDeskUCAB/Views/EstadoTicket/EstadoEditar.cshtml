@@ -27,9 +27,9 @@
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Nombre</label>
                             @if(Model.Estado.Permiso == true){
-                                <input required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                                <input required type="text" class="form-control form-control-sm" onkeypress="return check(event)" name="Nombre" asp-for="Estado.Nombre" />
                             }else{
-                                <input disabled required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                                <input disabled required type="text" class="form-control form-control-sm" onkeypress="return check(event)" name="Nombre" asp-for="Estado.Nombre" />
                             }
                         </div>
                         <div class="mb-3">
@@ -114,3 +114,23 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+
+            //Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            // Patrón de entrada, en este caso solo acepta numeros y letras
+            patron = /^[a-zA-Z ]+$/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
+        }
+
+    </script>
+}

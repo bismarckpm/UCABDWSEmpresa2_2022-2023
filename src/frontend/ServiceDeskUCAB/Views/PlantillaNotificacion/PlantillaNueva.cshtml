@@ -28,7 +28,7 @@
                     <div class="col-8">
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Titulo</label>
-                            <input required type="text" class="form-control form-control-sm" asp-for="Plantilla.Titulo" />
+                            <input required type="text" class="form-control form-control-sm" onkeypress="return check(event)" asp-for="Plantilla.Titulo" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Mensaje</label>
@@ -103,32 +103,50 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function mostrarEtiquetas() {
-        /* Para obtener el valor */
-        var etiquetasTipoestado = document.querySelectorAll(".etiquetas-tipoestado")
-        for (var i = 0; i < etiquetasTipoestado.length; i++) {
-            etiquetasTipoestado[i].style.display = "none";
+
+@section Scripts{
+    <script type="text/javascript">
+        function mostrarEtiquetas() {
+            /* Para obtener el valor */
+            var etiquetasTipoestado = document.querySelectorAll(".etiquetas-tipoestado")
+            for (var i = 0; i < etiquetasTipoestado.length; i++) {
+                etiquetasTipoestado[i].style.display = "none";
+            }
+
+            var descripcionEstados = document.querySelectorAll(".descripcion-estados")
+            for (var i = 0; i < descripcionEstados.length; i++) {
+                descripcionEstados[i].style.display = "none";
+            }
+
+            var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
+            var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
+            console.log(selectTipoEstado.value.length > 0);
+            if (selectTipoEstado.value.length > 0) {
+                var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
+                etiquetas_selected.style.display = "block";
+
+                var descEstado_selected = document.querySelector("#descEstado-" + selected);
+                descEstado_selected.style.display = "block";
+            }
         }
 
-        var descripcionEstados = document.querySelectorAll(".descripcion-estados")
-        for (var i = 0; i < descripcionEstados.length; i++) {
-            descripcionEstados[i].style.display = "none";
+        function escribirMensaje(el) {
+            document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
         }
 
-        var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
-        var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
-        console.log(selectTipoEstado.value.length > 0);
-        if (selectTipoEstado.value.length > 0) {
-            var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
-            etiquetas_selected.style.display = "block";
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
 
-            var descEstado_selected = document.querySelector("#descEstado-" + selected);
-            descEstado_selected.style.display = "block";
+            //Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            // Patrón de entrada, en este caso solo acepta numeros y letras
+            patron = /^[a-zA-Z ]+$/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
         }
-    }
 
-    function escribirMensaje(el) {
-        document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
-    }
-</script>
+    </script>
+}
