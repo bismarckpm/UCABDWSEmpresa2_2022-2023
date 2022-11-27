@@ -19,10 +19,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 {
     public class GrupoDAO : IGrupoDAO
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
         //Constructor
-        public GrupoDAO(DataContext dataContext)
+        public GrupoDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -32,8 +32,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         {
             try
             {
-                _dataContext.Grupos.Add(grupo);
-                _dataContext.SaveChanges();
+                if (!ExisteGrupo(grupo)) {
+                    _dataContext.Grupos.Add(grupo);
+                    _dataContext.DbContext.SaveChanges();
+                }
+                
 
                 var nuevoGrupo = _dataContext.Grupos.Where(d => d.id == grupo.id)
                                         .Select(d => new GrupoDto
@@ -47,9 +50,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
+				throw new ExceptionsControl("Error al momento de registrar", ex);
+			}
         }
 
         //Retorna la lista de grupos
@@ -70,12 +72,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 );
                 return lista.ToList();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " : " + ex.StackTrace);
-                throw ex.InnerException!;
-            }
-        }
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("No hay grupos registrados", ex);
+			}
+		}
 
         //Consultar grupo por ID 
         public GrupoDto ConsultarPorIdDao(Guid idGrupo)
@@ -97,7 +98,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         //Eliminar Grupo
         public GrupoDto EliminarGrupoDao(Guid idGrupo)
         {
-            try
+            var grupoDto = new GrupoDto(); 
+
+			try
             {
                 var grupo = _dataContext.Grupos
                            .Where(d => d.id == idGrupo).First();
@@ -105,30 +108,30 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 if (grupo != null)
                 {
                     grupo.fecha_eliminacion = DateTime.Now.Date;
-                    _dataContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
 
-                    if (QuitarAsociacion(idGrupo) == true)
+                    if (QuitarAsociacion(idGrupo))
                     {
-                        return GrupoMapper.MapperEntityToDto(grupo);
+						grupoDto = GrupoMapper.MapperEntityToDto(grupo);
                     }
-
                 }
-
-            }
+				   return grupoDto;
+			}
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No se encuentra el grupo" + " " + idGrupo, ex);
             }
-            return null;
-        }
+		}
 
         //Modificar Grupo
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo)
         {
             try
             {
-                _dataContext.Grupos.Update(grupo);
-                _dataContext.SaveChanges();
+
+                    _dataContext.Grupos.Update(grupo);
+                    _dataContext.DbContext.SaveChanges();
+
 
                 var data = _dataContext.Grupos.Where(d => d.id == grupo.id).Select(
                     d => new GrupoDto_Update
@@ -142,15 +145,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
                 );
                 return data.First();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + " || " + ex.StackTrace);
-                throw new Exception("Fallo al actualizar: " + grupo.id, ex);
-            }
-        }
+			}
+			catch (DbUpdateException ex)
+			{
+				throw new ExceptionsControl("Fallo al actualizar el grupo: " + grupo.nombre, ex);
+			}
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("Fallo al actualizar un grupo", ex);
+			}
+		}
 
-        //
+        
         public bool QuitarAsociacion(Guid grupoId)
         {
             var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
@@ -163,7 +169,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                     item.id_grupo = null;
 
                 }
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
                 return true;
 
             }
@@ -193,43 +199,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No hay grupos registrados", ex);
+                throw new ExceptionsControl("No hay grupos eliminados", ex);
             }
         }
 
-        private bool ExisteGrupo(Grupo grupo)
+        public bool ExisteGrupo(Grupo grupo)
         {
             bool existe = false;
 
             try
             {
-                var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre));
+                var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre) && d.fecha_eliminacion == null);
                 if (nuevoGrupo.Count() != 0)
                     existe = true;
             }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("El grupo" + grupo.nombre + "ya está registrado", ex);
-            }
-            return existe;
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("No se encuentra el grupo" + " " + grupo.id, ex);
+			}
+			return existe;
         }
-
-
-        //Retorna el ultimo registro almacenado
-        public GrupoDto UltimoGrupoRegistradoDao()
-        {
-            try
-            {
-                var grupo = _dataContext.Grupos.OrderBy(x => x.id).LastOrDefault();
-
-                return GrupoMapper.MapperEntityToDtoDefault(grupo);
-
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("No hay grupo registrado", ex);
-            }
-        }
+     
     }
 }
 

@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221122001527_Add_Grupo_Departamento")]
-    partial class Add_Grupo_Departamento
+    [Migration("20221127003837_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,9 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Tipo_TicketId");
 
                     b.HasIndex("id_grupo");
+
+                    b.HasIndex("nombre")
+                        .IsUnique();
 
                     b.ToTable("Departamentos");
                 });
@@ -251,6 +254,9 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("nombre")
+                        .IsUnique();
+
                     b.ToTable("Grupos");
                 });
 
@@ -318,6 +324,23 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298162"),
+                            Name = "Administrador"
+                        },
+                        new
+                        {
+                            Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298163"),
+                            Name = "Empleado"
+                        },
+                        new
+                        {
+                            Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298161"),
+                            Name = "Cliente"
+                        });
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.RolUsuario", b =>
@@ -521,14 +544,14 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_creacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("fecha_eliminacion")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("fecha_eliminacion")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("fecha_nacimiento")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("fecha_ultima_edicion")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("fecha_ultima_edicion")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("gender")
                         .IsRequired()

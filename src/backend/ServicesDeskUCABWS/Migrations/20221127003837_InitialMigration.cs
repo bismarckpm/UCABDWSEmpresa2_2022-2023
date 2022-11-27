@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class Add_Grupo_Departamento : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,8 +161,8 @@ namespace ServicesDeskUCABWS.Migrations
                     correo = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    fecha_eliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
                     CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -443,6 +443,21 @@ namespace ServicesDeskUCABWS.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298161"), "Cliente" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298162"), "Administrador" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298163"), "Empleado" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Bitacora_Tickets_EstadoId",
                 table: "Bitacora_Tickets",
@@ -457,6 +472,12 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Departamentos_id_grupo",
                 table: "Departamentos",
                 column: "id_grupo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Departamentos_nombre",
+                table: "Departamentos",
+                column: "nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departamentos_Tipo_TicketId",
@@ -482,6 +503,12 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Flujos_Aprobaciones_Tipo_TicketId",
                 table: "Flujos_Aprobaciones",
                 column: "Tipo_TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grupos_nombre",
+                table: "Grupos",
+                column: "nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlantillasNotificaciones_TipoEstadoId",

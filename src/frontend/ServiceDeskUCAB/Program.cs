@@ -3,6 +3,7 @@ using ServiceDeskUCAB.Servicios.ModuloGrupo;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
 using ModuloPlantillasNotificaciones.Servicios;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,27 @@ builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
 builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
 builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantillaNotificacion_API>();
 builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, cookieAuthOptions =>
+         {
+             cookieAuthOptions.Cookie.Name = "MyApplicationCookie";
+             cookieAuthOptions.LoginPath = "/Login/Login";
+             //cookieAuthOptions.LogoutPath = "/signOut";
+             cookieAuthOptions.AccessDeniedPath = "/Home/Index";
+         });
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ClienteAccess",
+         policy => policy.RequireAssertion(c=> c.User.Identities.First().Claims.ToList()[2].Value=="Cliente"));
+
+    options.AddPolicy("AdminAccess",
+         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList()[2].Value == "Administrador"));
+
+    options.AddPolicy("EmpleadoAccess",
+         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList()[2].Value == "Empleado"));
+});
 
 var app = builder.Build();
 
@@ -31,10 +51,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();

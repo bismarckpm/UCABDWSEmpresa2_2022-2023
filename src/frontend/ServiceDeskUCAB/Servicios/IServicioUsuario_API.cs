@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 
 namespace ServiceDeskUCAB.Servicios
@@ -18,6 +17,9 @@ namespace ServiceDeskUCAB.Servicios
         Task<UsuariosRol> MostrarInfoUsuario(Guid id);
         Task<JObject> EditarUsuario(UpdateUser user);
         Task<Roles> ObtenerRoles(Guid roles);
+        Task<JObject> ValidarLogin(Credenciales_Login user);
+        Task<JObject> RecuperarContraseña(RecuperarPasswordModel email);
+        Task<JObject> EliminarRol(RolUser roles);
 
     }
 }
