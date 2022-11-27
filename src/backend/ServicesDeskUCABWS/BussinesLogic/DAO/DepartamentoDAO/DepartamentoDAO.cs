@@ -247,11 +247,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
         public bool ExisteDepartamento(Departamento departamento)
         {
+            
             bool existe = false;
 
             try
             {
-                var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.nombre.Equals(departamento.nombre));
+                var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.nombre.Equals(departamento.nombre) && d.fecha_eliminacion == null);
                 if (nuevoDepartamento.Count() != 0)
                     existe = true;
             }
