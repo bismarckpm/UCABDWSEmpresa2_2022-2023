@@ -348,6 +348,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-# Evita que  se actualize la cadena de conexion dentro del repositorio compartido
-appsettings.json                                                                                                                                                                         
