@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -22,6 +23,9 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Tipo_Cargo> Tipo_Cargo { get; set; }
+       public Guid? id_tipo { get; set; }
+
+        [ForeignKey("id_tipo")]
+        public Tipo_Cargo tipo { get; set; }
     }
 }

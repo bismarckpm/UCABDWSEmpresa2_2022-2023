@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221127035834_Creacion_User_Admin")]
-    partial class Creacion_User_Admin
+    [Migration("20221127060339_cuatro")]
+    partial class cuatro
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,12 +71,17 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<DateTime>("fecha_ultima_edicion")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("id_tipo")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("nombre_departamental")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("id_tipo");
 
                     b.ToTable("Cargos");
                 });
@@ -441,9 +446,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CargoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -469,8 +471,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CargoId");
 
                     b.ToTable("Tipos_Cargos");
                 });
@@ -644,7 +644,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 11, 26, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2022, 11, 27, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",
@@ -695,6 +695,15 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
+                {
+                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "tipo")
+                        .WithMany("cargos")
+                        .HasForeignKey("id_tipo");
+
+                    b.Navigation("tipo");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", null)
@@ -741,7 +750,7 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "Tipo_Cargo")
-                        .WithMany("Flujo_Aprobacion")
+                        .WithMany()
                         .HasForeignKey("Tipo_CargoId");
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", "Tipo_Ticket")
@@ -836,13 +845,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("empleado");
                 });
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
-                {
-                    b.HasOne("ServicesDeskUCABWS.Entities.Cargo", null)
-                        .WithMany("Tipo_Cargo")
-                        .HasForeignKey("CargoId");
-                });
-
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Votos_Ticket", b =>
                 {
                     b.HasOne("ServicesDeskUCABWS.Entities.Empleado", null)
@@ -869,11 +871,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasForeignKey("CargoId");
 
                     b.Navigation("Cargo");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
-                {
-                    b.Navigation("Tipo_Cargo");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Estado", b =>
@@ -912,7 +909,7 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
                 {
-                    b.Navigation("Flujo_Aprobacion");
+                    b.Navigation("cargos");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Estado", b =>

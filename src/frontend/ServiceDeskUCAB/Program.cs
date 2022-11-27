@@ -4,6 +4,8 @@ using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.DependencyInjection;
 using ModuloPlantillasNotificaciones.Servicios;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ServiceDeskUCAB.Servicios.ModuloCargo;
+using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IServicioUsuario_API, ServicioUsuario_API>();
 
+builder.Services.AddScoped<IServicioCargo_API, ServicioCargo_API>();
+builder.Services.AddScoped<IServicioTipo_Cargo_API, ServicioTipo_Cargo_API>();
 builder.Services.AddScoped<IServicioDepartamento_API, ServicioDepartamento_API>();
 builder.Services.AddScoped<IServicioPlantillaNotificacion_API, ServicioPlantillaNotificacion_API>();
 builder.Services.AddScoped<IServicioTipoEstado_API, ServicioTipoEstado_API>();

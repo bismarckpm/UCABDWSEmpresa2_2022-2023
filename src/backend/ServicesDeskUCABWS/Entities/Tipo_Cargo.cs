@@ -20,6 +20,6 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_creacion { get; set; }
         public DateTime fecha_ult_edic { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Flujo_Aprobacion> Flujo_Aprobacion { get; set; }
+        public virtual List<Cargo> cargos { get; set; }
     }
 }
