@@ -444,25 +444,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria para mostrar departamentos no asociados a un grupo")]
         public void MostrarDepartamentosNoAsociados()
         {
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
-
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DeletedDepartamento());
         }
@@ -528,25 +509,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria para listar los departamentos que no están asociados a un grupo")]
         public void NoAsociado()
         {
-
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
 
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 

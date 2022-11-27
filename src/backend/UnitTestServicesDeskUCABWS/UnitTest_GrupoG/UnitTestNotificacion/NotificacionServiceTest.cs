@@ -73,7 +73,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                     primer_apellido = "apellidoEmpleado",
                     Cargo = new Cargo()
                     {
-                        Id = Guid.NewGuid(),
+                        id = Guid.NewGuid(),
                         nombre_departamental = "nombreDepartamento",
                         descripcion = "descrip",
                         fecha_creacion = DateTime.Now,

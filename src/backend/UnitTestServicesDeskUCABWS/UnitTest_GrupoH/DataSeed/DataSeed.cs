@@ -151,7 +151,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
             {
                 new Cargo
                 {
-                    Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                    id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
                     nombre_departamental = "Cargo Nuevo",
 
@@ -170,6 +170,60 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
             _mockContext.Setup(c => c.Cargos).Returns(request.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.Cargos.Add(It.IsAny<Cargo>()));
             _mockContext.Setup(set => set.DbContext.SaveChanges());
+        }
+
+        public static void SetUpContextDataCargo_TipoCargo(this Mock<IDataContext> _mockContextCTC)
+        {
+            var cargo = new List<Cargo>
+            {
+                new Cargo
+                {
+                    id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                    nombre_departamental = "Cargo Nuevo",
+
+                    descripcion = "Es un cargo",
+
+                    fecha_creacion = DateTime.Now.Date,
+
+                    fecha_ultima_edicion = null,
+
+                    fecha_eliminacion = null,
+
+                    id_tipo = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+                    tipo = new Tipo_Cargo
+                    {
+                       Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+                       nombre = "Nuevo Tipo Cargo",
+
+                       descripcion = "Cuida el ambiente",
+
+                       fecha_creacion = DateTime.Now.Date,
+
+                       fecha_ult_edic = null,
+
+                       fecha_eliminacion = null
+                    }
+
+                }
+
+
+            };
+
+            var tipoCargo = cargo.Select(q => q.tipo).ToList();
+
+            _mockContextCTC.Setup(c => c.Cargos).Returns(cargo.AsQueryable().BuildMockDbSet().Object);
+            _mockContextCTC.Setup(c => c.Tipos_Cargos).Returns(tipoCargo.AsQueryable().BuildMockDbSet().Object);
+            _mockContextCTC.Setup(set => set.Cargos.Add(It.IsAny<Cargo>()));
+            _mockContextCTC.Setup(e => e.Cargos.Update(It.IsAny<Cargo>()));
+            _mockContextCTC.Setup(e => e.Cargos.Remove(It.IsAny<Cargo>()));                    
+            _mockContextCTC.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>()));
+            _mockContextCTC.Setup(e => e.Tipos_Cargos.Update(It.IsAny<Tipo_Cargo>()));
+            _mockContextCTC.Setup(e => e.Tipos_Cargos.Remove(It.IsAny<Tipo_Cargo>()));
+            _mockContextCTC.Setup(set => set.DbContext.SaveChanges());
+
         }
 
 
