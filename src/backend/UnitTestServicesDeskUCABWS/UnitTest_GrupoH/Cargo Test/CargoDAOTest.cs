@@ -187,7 +187,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             var cargo = new Tipo_Cargo
             {
-                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
             };
 
             var request = new Cargo
@@ -207,7 +207,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             };
 
-            var result = _CargoDAO.GetByIdCargo(cargo.Id);
+            var result = _CargoDAO.GetByIdCargo(cargo.id);
             Assert.AreEqual(result.Count(), 0);
 
         }
@@ -218,7 +218,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             var cargo = new Tipo_Cargo
             {
-                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
             };
 
             var request = new Cargo
@@ -239,7 +239,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             };
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.GetByIdCargo(cargo.Id));
+            Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.GetByIdCargo(cargo.id));
 
         }
 
@@ -529,7 +529,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         {
             var tipo_cargo = new Tipo_Cargo
             {
-                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
             };
 
             var request = new Cargo
@@ -551,7 +551,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             };
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.EditarRelacion(tipo_cargo.Id, request.id.ToString()));
+            Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.EditarRelacion(tipo_cargo.id, request.id.ToString()));
         }
 
         [TestMethod(displayName: "Prueba Unitaria para verificar existencia de cargo")]

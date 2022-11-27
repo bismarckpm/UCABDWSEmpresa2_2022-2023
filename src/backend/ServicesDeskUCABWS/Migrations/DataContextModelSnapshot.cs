@@ -215,7 +215,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<int>("OrdenAprobacion")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("Tipo_CargoId")
+                    b.Property<Guid?>("Tipo_Cargoid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Tipo_TicketId")
@@ -223,7 +223,7 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Tipo_CargoId");
+                    b.HasIndex("Tipo_Cargoid");
 
                     b.HasIndex("Tipo_TicketId");
 
@@ -440,7 +440,7 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -468,7 +468,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Tipos_Cargos");
                 });
@@ -749,7 +749,7 @@ namespace ServicesDeskUCABWS.Migrations
                 {
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "Tipo_Cargo")
                         .WithMany()
-                        .HasForeignKey("Tipo_CargoId");
+                        .HasForeignKey("Tipo_Cargoid");
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", "Tipo_Ticket")
                         .WithMany("Flujo_Aprobacion")

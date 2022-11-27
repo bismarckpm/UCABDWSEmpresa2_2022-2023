@@ -4,7 +4,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO
 {
     public class Tipo_CargoDto
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public string? nivel_jerarquia { get; set; } = "ninguno";
@@ -14,7 +14,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO
     }
     public class Tipo_CargoDto_Update
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public string? nivel_jerarquia { get; set; } = "ninguno";
