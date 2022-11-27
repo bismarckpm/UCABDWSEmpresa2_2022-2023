@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -8,7 +10,8 @@ using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net.WebSockets;
+using System.Text.RegularExpressions;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 {
@@ -16,15 +19,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
     {
         private readonly IDataContext _tipoEstadoContext;
         private readonly IMapper _mapper;
+        private readonly IEstadoDAO _estadoService;
         
         
 
-        public TipoEstadoService(IDataContext tipoestadoContext, IMapper mapper)
+        public TipoEstadoService(IDataContext tipoestadoContext, IMapper mapper, IEstadoDAO estadoService )
         {
             _tipoEstadoContext = tipoestadoContext;
             _mapper = mapper;
-           
-            
+            _estadoService = estadoService;
+
+
         }
 
         //GET: Servicio para consultar todos los tipos estados
@@ -148,10 +153,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 //Si tiene permiso, quiere decir que puede modificar los atributos nombre y descripción del tipo estado
                 if (tipoEstadoEntity.permiso)
                 {
-                    tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
+
+                    
                     tipoEstadoEntity.descripcion = tipoEstadoAct.descripcion;
+                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstadoEntity.Id).ToList();
+                    //foreach (Estado hijo in estadosHijos)
+                    //{
+                    //    hijo.nombre =  Regex.Replace(hijo.nombre, tipoEstadoEntity.nombre, tipoEstadoAct.nombre);
+                    //    hijo.descripcion = tipoEstadoAct.descripcion;
+                    //    _estadoService.ModificarEstado();
+                    //}
+                    tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
                 }
-                
+
                 _tipoEstadoContext.Tipos_Estados.Update(tipoEstadoEntity);
                 _tipoEstadoContext.DbContext.SaveChanges();
                 return _mapper.Map<TipoEstadoDTO>(tipoEstadoEntity);
@@ -177,14 +191,31 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             try
             {
                 var tipoEstado = _tipoEstadoContext.Tipos_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
+                //Si no tiene permiso, quiere decir que no podrá deshabilitar el tipo estado
+                if (!tipoEstado.permiso)
+                {
+                    throw new ExceptionsControl("No se puede Deshabilitar este tipo de estado por la integridad del sistema");
+                }
+               
                 
                 if(tipoEstado.fecha_eliminacion != null)
                 {
                     tipoEstado.fecha_eliminacion = null;  //Hablilitar el tipo estado
+                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
+                    //foreach (Estado hijo in estadosHijos)
+                    //{
+                        
+                    //}
                 }
                 else
                 {
-                    tipoEstado.fecha_eliminacion = DateTime.Now; //Deshabilitar el tipo estado
+                    tipoEstado.fecha_eliminacion = DateTime.Now; //Deshabilitar el tipo estado 
+                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
+                    //foreach (Estado hijo in estadosHijos)
+                    //{
+
+                    //}
+
                 }
 
                 //Verifica si hay una plantilla notificación asociada al tipo estado. De ser así, eliminar la relación en plantilla.

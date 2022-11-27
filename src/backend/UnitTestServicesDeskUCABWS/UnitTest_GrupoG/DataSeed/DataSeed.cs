@@ -64,7 +64,36 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                             new EtiquetaTipoEstado
                             {
                                 etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
-                                tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                                tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                                etiqueta = new Etiqueta
+                                {
+                                    Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                    nombre = "@Usuario",
+                                    descripcion = "hola"
+                                }
+                            }
+                        },
+                        permiso = true,
+                    }
+                },
+                new PlantillaNotificacion
+                {
+                    Id = new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c88"),
+                    Titulo = "Plantilla Rechazad",
+                    Descripcion = "Hola @Usuario su @Ticket",
+                    TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c88"),
+                    TipoEstado = new Tipo_Estado()
+                    {
+                        Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c88"),
+                        nombre = "Rechazado",
+                        descripcion = "Cuando se rechaza un ticket",
+                        fecha_eliminacion = DateTime.Now,
+                        etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
+                        {
+                            new EtiquetaTipoEstado
+                            {
+                                etiquetaID = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                                tipoEstadoID = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c88"),
                                 etiqueta = new Etiqueta
                                 {
                                     Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
