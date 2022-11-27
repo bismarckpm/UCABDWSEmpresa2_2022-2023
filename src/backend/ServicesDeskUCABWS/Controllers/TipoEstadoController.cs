@@ -52,7 +52,7 @@ namespace ServicesDeskUCABWS.Controllers
 
             try
             {
-                response.Data = _tipoEstado.ConsultaTipoEstados();
+                response.Data = _tipoEstado.ConsultaTipoEstadosHabilitados();
             }
             catch (ExceptionsControl ex)
             {

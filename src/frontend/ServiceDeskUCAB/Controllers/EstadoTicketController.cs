@@ -67,13 +67,26 @@ namespace ServiceDeskUCAB.Controllers
             return NoContent();
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> EliminarEstado(Guid id)
+        //{
+        //    JObject respuesta;
+        //    respuesta = await _servicioApiTipoEstado.Eliminar(id);
+        //    if ((bool)respuesta["success"])
+        //        return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
+        //    //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+        //    else
+        //        return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> EliminarEstado(Guid id)
+        public async Task<IActionResult> HabilitarDeshabilitarEstado(Guid id)
         {
+            Console.WriteLine(id);
             JObject respuesta;
-            respuesta = await _servicioApiTipoEstado.Eliminar(id);
+            respuesta = await _servicioApiTipoEstado.HabilitarDeshabilitar(id);
             if ((bool)respuesta["success"])
-                return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
+                return RedirectToAction("EstadosTicket", new { message = "Se ha actualizado correctamente" });
             //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
                 return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });

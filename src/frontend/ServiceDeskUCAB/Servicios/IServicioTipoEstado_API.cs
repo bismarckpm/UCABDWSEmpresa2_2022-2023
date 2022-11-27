@@ -10,11 +10,13 @@ namespace ServiceDeskUCAB.Servicios
     public interface IServicioTipoEstado_API
     {
         Task<List<TipoEstado>> Lista();
+        Task<List<TipoEstado>> ListaHabilitados();
         Task<List<Etiqueta>> ListaEtiqueta();
         Task<JObject> Guardar(TipoEstadoNuevo tipoEstadoRegistro);
-        Task<JObject> Eliminar(Guid idEstado);
+        Task<JObject> HabilitarDeshabilitar(Guid idEstado);
         Task<TipoEstado> Obtener(Guid idEstado);
         Task<JObject> Editar(TipoEstadoNuevo estado, string Id);
+        //Task<JObject> Eliminar(Guid idEstado);
 
     }
 }

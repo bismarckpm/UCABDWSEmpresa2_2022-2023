@@ -71,7 +71,7 @@
                             {
                                 @foreach (var etiqueta in Model.Etiquetas)
                                 {
-                                    <div class="form-check form-switch">
+                                    <div class="form-check form-switch ml-4">
                                         @if (Model.Estado.Etiqueta.Any(e => e.Nombre == etiqueta.Nombre))
                                         {
                                             <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id" checked>

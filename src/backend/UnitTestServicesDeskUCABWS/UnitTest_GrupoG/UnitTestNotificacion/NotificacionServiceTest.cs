@@ -48,7 +48,12 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 Estado = new Estado()
                 {
                     Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
+                    nombre = "nombreEstado",
+                    Estado_Padre = new Tipo_Estado()
+                    {
+                        Id = Guid.NewGuid(),
+                        nombre = "nombrePadreEstado"
+                    }
                 },
                 Tipo_Ticket = new Tipo_Ticket()
                 {

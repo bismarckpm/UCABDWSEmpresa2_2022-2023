@@ -7,6 +7,7 @@ namespace ServiceDeskUCAB.Models.EstadoTicket
     {
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
+        public DateTime fecha_eliminacion { get; set; }
         public List<String> Etiqueta { get; set; }
         public bool Permiso { get; set; }
     }
