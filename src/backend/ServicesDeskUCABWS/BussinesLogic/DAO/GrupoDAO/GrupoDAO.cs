@@ -32,9 +32,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         {
             try
             {
-
+                if (!ExisteGrupo(grupo)) {
                     _dataContext.Grupos.Add(grupo);
                     _dataContext.DbContext.SaveChanges();
+                }
                 
 
                 var nuevoGrupo = _dataContext.Grupos.Where(d => d.id == grupo.id)
@@ -208,7 +209,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
             try
             {
-                var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre));
+                var nuevoGrupo = _dataContext.Grupos.Where(d => d.nombre.Equals(grupo.nombre) && d.fecha_eliminacion == null);
                 if (nuevoGrupo.Count() != 0)
                     existe = true;
             }
