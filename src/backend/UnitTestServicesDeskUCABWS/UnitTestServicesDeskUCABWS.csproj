@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj" />
+    <ProjectReference Include="..\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj"/>
   </ItemGroup>
 
 </Project>

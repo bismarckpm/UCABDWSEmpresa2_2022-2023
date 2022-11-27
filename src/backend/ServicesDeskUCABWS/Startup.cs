@@ -53,10 +53,13 @@ namespace ServicesDeskUCABWS
         {
 
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
+			services.AddScoped<IGrupoDAO, GrupoDAO>();
+			services.AddAutoMapper(typeof(Startup).Assembly);
 
-            //Se agrega en generador de Swagger
-            services.AddSwaggerGen(c =>
+
+			//Se agrega en generador de Swagger
+			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{ Title = "Empresa B", Version = "v1" });

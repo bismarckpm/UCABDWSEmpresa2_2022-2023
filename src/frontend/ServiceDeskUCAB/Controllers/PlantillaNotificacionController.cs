@@ -38,7 +38,7 @@ namespace ServiceDeskUCAB.Controllers
             PlantillaEditarViewModel plantillaEditarViewModel = new();
 
             PlantillaNotificacion plantillaNotificacion = await _servicioApiPlantillaNotificacion.Obtener(id);
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
 
             plantillaEditarViewModel.TipoEstados = ListaEstados;
             plantillaEditarViewModel.Plantilla = plantillaNotificacion;
@@ -51,7 +51,7 @@ namespace ServiceDeskUCAB.Controllers
         {
             PlantillaNuevaViewModel plantillaNuevaViewModel = new();
 
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
 
             plantillaNuevaViewModel.TipoEstados = ListaEstados;
             plantillaNuevaViewModel.Plantilla = new();

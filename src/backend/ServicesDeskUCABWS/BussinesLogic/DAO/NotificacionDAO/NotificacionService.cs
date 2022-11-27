@@ -50,7 +50,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 
                 etiquetasEstatico.Add("@Ticket", ticket.titulo.ToString());
                 if (ticket.Estado != null)
-                    etiquetasEstatico.Add("@Estado", ticket.Estado.nombre.ToString());
+                    etiquetasEstatico.Add("@Estado", ticket.Estado.Estado_Padre.nombre.ToString());
                 if (ticket.Departamento_Destino != null)
                 {
                     etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
@@ -58,9 +58,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                 }  
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
-
-                if (ticket.Votos_Ticket != null)
-                    etiquetasEstatico.Add("@ComentarioVoto", ticket.Votos_Ticket.ToString());
 
 
                 string input = Plantilla.Descripcion;
@@ -102,7 +99,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                     UseDefaultCredentials = false,
                     EnableSsl = true
                 };
-
 
                 clienteServidor.Send(mail);
                 return true;

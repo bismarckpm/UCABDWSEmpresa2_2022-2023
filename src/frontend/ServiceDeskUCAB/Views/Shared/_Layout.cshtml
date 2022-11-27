@@ -62,6 +62,36 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla"
+                   aria-expanded="true" aria-controls="collapsePlantilla">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Plantillas de notificación</span>
+                </a>
+                <div id="collapsePlantilla" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestion de plantillas:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="PlantillaNotificacion" asp-action="PlantillasNotificacion">Todas las plantillas</a>
+                        <a class="collapse-item" asp-area="" asp-controller="PlantillaNotificacion" asp-action="PlantillaNueva">Crear plantilla</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado"
+                   aria-expanded="true" aria-controls="collapseEstado">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>Estados de ticket</span>
+                </a>
+                <div id="collapseEstado" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestion de estados:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="EstadoTicket" asp-action="EstadosTicket">Todas los estados</a>
+                        <a class="collapse-item" asp-area="" asp-controller="EstadoTicket" asp-action="EstadoNuevo">Crear estado</a>
+                    </div>
+                </div>
+            </li>
+
             @*<li class="nav-item">
 
             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
