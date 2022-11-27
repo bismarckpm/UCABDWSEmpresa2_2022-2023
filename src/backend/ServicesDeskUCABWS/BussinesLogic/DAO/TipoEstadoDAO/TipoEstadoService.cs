@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -191,13 +192,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
                     
                     tipoEstadoEntity.descripcion = tipoEstadoAct.descripcion;
-                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstadoEntity.Id).ToList();
-                    //foreach (Estado hijo in estadosHijos)
-                    //{
-                    //    hijo.nombre =  Regex.Replace(hijo.nombre, tipoEstadoEntity.nombre, tipoEstadoAct.nombre);
-                    //    hijo.descripcion = tipoEstadoAct.descripcion;
-                    //    _estadoService.ModificarEstado();
-                    //}
+                    var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstadoEntity.Id).ToList();
+                    foreach (Estado hijo in estadosHijos)
+                    {
+                        hijo.nombre = Regex.Replace(hijo.nombre, tipoEstadoEntity.nombre, tipoEstadoAct.nombre);
+                        hijo.descripcion = tipoEstadoAct.descripcion;
+                        _estadoService.ModificarEstado(_mapper.Map<EstadoDTOUpdate>(hijo));
+                    }
                     tipoEstadoEntity.nombre = tipoEstadoAct.nombre;
                 }
 
@@ -236,20 +237,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 if(tipoEstado.fecha_eliminacion != null)
                 {
                     tipoEstado.fecha_eliminacion = null;  //Hablilitar el tipo estado
-                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
-                    //foreach (Estado hijo in estadosHijos)
-                    //{
-                        
-                    //}
+                    var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
+                    foreach (Estado hijo in estadosHijos)
+                    {
+                        _estadoService.HabilitarEstado(hijo.Id);
+                    }
                 }
                 else
                 {
                     tipoEstado.fecha_eliminacion = DateTime.Now; //Deshabilitar el tipo estado 
-                    //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
-                    //foreach (Estado hijo in estadosHijos)
-                    //{
-
-                    //}
+                    var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
+                    foreach (Estado hijo in estadosHijos)
+                    {
+                        _estadoService.DeshabilitarEstado(hijo.Id);
+                    }
 
                 }
 
