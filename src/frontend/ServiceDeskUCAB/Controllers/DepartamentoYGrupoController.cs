@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
@@ -9,6 +10,7 @@ using System.Collections;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize]
     public class DepartamentoYGrupoController : Controller
     {
 		//Declaración de variables

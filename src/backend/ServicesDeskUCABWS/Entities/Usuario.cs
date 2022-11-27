@@ -40,8 +40,8 @@ namespace ServicesDeskUCABWS.Entities
 
         public DateTime fecha_creacion { get; set; }
 
-        public string fecha_ultima_edicion { get; set; }
-        public string fecha_eliminacion { get; set; }
+        public DateTime fecha_ultima_edicion { get; set; } = default(DateTime);
+        public DateTime fecha_eliminacion { get; set; } = default(DateTime);
         public ICollection<RolUsuario> Roles { get; set; }
     }
 }

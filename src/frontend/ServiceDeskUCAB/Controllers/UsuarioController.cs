@@ -9,13 +9,16 @@ using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 
 using ServiceDeskUCAB.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly ILogger<UsuarioController> _logger;
         private readonly IServicioUsuario_API _servicioApiUsuarios;
+        private static Guid IdUser { get; set; }
 
         public UsuarioController(ILogger<UsuarioController> logger, IServicioUsuario_API servicioApiUsuarios)
         {
@@ -40,17 +43,18 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         public IActionResult VentanaEliminarUsuario(Guid id)
+
         {
-            return PartialView(id);
+            IdUser = id;
+            return PartialView();
         }
 
 
-
         [HttpGet]
-        public async Task<IActionResult> EliminarUsuario(Guid id)
+        public async Task<IActionResult> EliminarUsuario()
         {
             JObject respuesta;
-            respuesta = await _servicioApiUsuarios.Eliminar(id);
+            respuesta = await _servicioApiUsuarios.Eliminar(IdUser);
             if ((bool)respuesta["success"])
                 return RedirectToAction("Usuarios");
             else
@@ -91,22 +95,18 @@ namespace ServiceDeskUCAB.Controllers
             try
             {
                 JObject respuesta;
+                JObject eliminateRol;
+                eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
                 respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
-                if ((bool)respuesta["success"])
-                    return RedirectToAction("Usuarios");
+                //eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
+                if ((bool)eliminateRol["success"] && (bool)respuesta["success"])
+                return RedirectToAction("Usuarios");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
             return NoContent();
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            Console.WriteLine("PRUEBA");
-            return null;
         }
 
         public UpdateUser TransformUser(UsuariosRol user)
@@ -123,6 +123,34 @@ namespace ServiceDeskUCAB.Controllers
                 gender = user.gender,
                 correo = user.correo,
             };
+        }
+
+        public RolUser TransformRol(UsuariosRol user)
+        {
+            if (user.Rol == Rol.Administrador)
+            {
+                return new RolUser()
+                {
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298162"),
+                };
+            }
+            else if (user.Rol == Rol.Cliente)
+            {
+                return new RolUser()
+                {
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298161"),
+                };
+            }
+            else
+            {
+                return new RolUser()
+                {
+                    idusuario = user.id,
+                    idrol = new Guid("8C8A156B-7383-4610-8539-30CCF7298163"),
+                };
+            }
         }
 
         [HttpPost]

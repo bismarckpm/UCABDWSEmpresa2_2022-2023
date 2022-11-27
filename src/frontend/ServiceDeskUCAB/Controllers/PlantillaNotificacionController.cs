@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ModuloPlantillasNotificaciones.Controllers
 {
+    [Authorize]
     public class PlantillaNotificacionController : Controller
     {
         private readonly ILogger<PlantillaNotificacionController> _logger;
