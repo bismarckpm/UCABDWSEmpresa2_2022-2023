@@ -22,6 +22,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
         
         public IActionResult Index()
         {
+            //var current = User.Identities.First().Claims.ToList()[2].Value;
             var current = User.Identities.First().Claims;
             if (current == null)
             {
