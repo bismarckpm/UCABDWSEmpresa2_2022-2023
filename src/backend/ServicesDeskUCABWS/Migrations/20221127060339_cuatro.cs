@@ -5,26 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class Creacion_User_Admin : Migration
+    public partial class cuatro : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Cargos",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre_departamental = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cargos", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Etiquetas",
                 columns: table => new
@@ -93,6 +77,23 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tipos_Cargos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    nivel_jerarquia = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tipos_Cargos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tipos_Estados",
                 columns: table => new
                 {
@@ -124,56 +125,24 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tipos_Cargos",
+                name: "Cargos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    nombre_departamental = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    nivel_jerarquia = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tipos_Cargos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tipos_Cargos_Cargos_CargoId",
-                        column: x => x.CargoId,
-                        principalTable: "Cargos",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    cedula = table.Column<int>(type: "int", nullable: false),
-                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    fecha_nacimiento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    gender = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    correo = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
-                    CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    id_tipo = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_Cargos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Cargos_CargoId",
-                        column: x => x.CargoId,
-                        principalTable: "Cargos",
+                        name: "FK_Cargos_Tipos_Cargos_id_tipo",
+                        column: x => x.id_tipo,
+                        principalTable: "Tipos_Cargos",
                         principalColumn: "Id");
                 });
 
@@ -291,6 +260,37 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_Flujos_Aprobaciones_Tipos_Tickets_Tipo_TicketId",
                         column: x => x.Tipo_TicketId,
                         principalTable: "Tipos_Tickets",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    cedula = table.Column<int>(type: "int", nullable: false),
+                    primer_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    segundo_nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    primer_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    segundo_apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    fecha_nacimiento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    gender = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    correo = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
+                    CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Cargos_CargoId",
+                        column: x => x.CargoId,
+                        principalTable: "Cargos",
                         principalColumn: "Id");
                 });
 
@@ -456,7 +456,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Discriminator", "NumeroDeCuentasBloqueadas", "cedula", "correo", "fecha_creacion", "fecha_eliminacion", "fecha_nacimiento", "fecha_ultima_edicion", "gender", "password", "primer_apellido", "primer_nombre", "segundo_apellido", "segundo_nombre" },
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 11, 26, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 11, 27, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
 
             migrationBuilder.InsertData(
                 table: "RolUsuarios",
@@ -472,6 +472,11 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Bitacora_Tickets_TicketId",
                 table: "Bitacora_Tickets",
                 column: "TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cargos_id_tipo",
+                table: "Cargos",
+                column: "id_tipo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departamentos_id_grupo",
@@ -568,11 +573,6 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tipos_Cargos_CargoId",
-                table: "Tipos_Cargos",
-                column: "CargoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_CargoId",
                 table: "Usuarios",
                 column: "CargoId");
@@ -624,9 +624,6 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Etiquetas");
 
             migrationBuilder.DropTable(
-                name: "Tipos_Cargos");
-
-            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
@@ -658,6 +655,9 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cargos");
+
+            migrationBuilder.DropTable(
+                name: "Tipos_Cargos");
         }
     }
 }

@@ -26,6 +26,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -81,6 +83,8 @@ namespace ServicesDeskUCABWS
             services.AddControllers().AddJsonOptions(x=>
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+            services.AddTransient<ICargoDAO, CargoDAO>();
+            services.AddScoped<ITipo_CargoDAO, Tipo_CargoDAO>();
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
