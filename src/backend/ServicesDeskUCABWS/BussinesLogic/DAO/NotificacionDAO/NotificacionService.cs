@@ -57,9 +57,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                 etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
                 etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
 
-                if (ticket.Votos_Ticket != null)
-                    etiquetasEstatico.Add("@ComentarioVoto", ticket.Votos_Ticket.ToString());
-
 
                 string input = Plantilla.Descripcion;
                 foreach (EtiquetaDTO etiqueta in Plantilla.TipoEstado.etiqueta)

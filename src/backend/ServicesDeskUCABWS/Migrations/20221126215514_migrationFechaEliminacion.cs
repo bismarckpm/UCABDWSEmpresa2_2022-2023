@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class modulodevelop : Migration
+    public partial class migrationFechaEliminacion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -101,6 +101,7 @@ namespace ServicesDeskUCABWS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     permiso = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

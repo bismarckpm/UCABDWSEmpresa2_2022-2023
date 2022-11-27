@@ -470,6 +470,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<DateTime?>("fecha_eliminacion")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasMaxLength(50)

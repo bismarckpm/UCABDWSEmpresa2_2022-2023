@@ -43,6 +43,26 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
+        //GET: Controlador para consultar todas los tipos estados habilitados
+        [HttpGet]
+        [Route("ConsultaHabilitado/")]
+        public ApplicationResponse<List<TipoEstadoDTO>> ConsultaTipoEstadosHabilitadosCtrl()
+        {
+            var response = new ApplicationResponse<List<TipoEstadoDTO>>();
+
+            try
+            {
+                response.Data = _tipoEstado.ConsultaTipoEstados();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         //GET: Controlador para consultar un tipo estado en especifico
         [HttpGet]
         [Route("Consulta/{id}")]
@@ -123,26 +143,47 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
-        //DELETE: Controlador para eliminar tipo estado
-        [HttpDelete]
-        [Route("Eliminar/{id}")]
-        public ApplicationResponse<TipoEstadoCreateDTO> EliminarTipoEstadoCtrl(Guid id)
+        //UPDATE: Controlador para habilitar y deshabilitar tipo estado
+        [HttpPut]
+        [Route("HabilitarDeshabilitar/{id}")]
+        public ApplicationResponse<String> HabilitarDeshabilitarTipoEstadoCtrl(Guid id)
         {
-            var response = new ApplicationResponse<TipoEstadoCreateDTO>();
+            var response = new ApplicationResponse<String>();
             try
             {
-                var resultSevice = _tipoEstado.EliminarTipoEstado(id);
-                response.Data = resultSevice;
-                      
+                var resultSevice = _tipoEstado.HabilitarDeshabilitarTipoEstado(id);
+                response.Data = resultSevice.ToString();
+
             }
             catch (ExceptionsControl ex)
             {
                 response.Success = false;
                 response.Message = ex.Mensaje;
                 response.Exception = ex.Excepcion.ToString();
-            } 
+            }
             return response;
         }
+
+        ////DELETE: Controlador para eliminar tipo estado
+        //[HttpDelete]
+        //[Route("Eliminar/{id}")]
+        //public ApplicationResponse<TipoEstadoCreateDTO> EliminarTipoEstadoCtrl(Guid id)
+        //{
+        //    var response = new ApplicationResponse<TipoEstadoCreateDTO>();
+        //    try
+        //    {
+        //        var resultSevice = _tipoEstado.EliminarTipoEstado(id);
+        //        response.Data = resultSevice;
+
+        //    }
+        //    catch (ExceptionsControl ex)
+        //    {
+        //        response.Success = false;
+        //        response.Message = ex.Mensaje;
+        //        response.Exception = ex.Excepcion.ToString();
+        //    } 
+        //    return response;
+        //}
 
     }
 }

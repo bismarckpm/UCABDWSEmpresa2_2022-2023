@@ -11,6 +11,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado
         public Guid Id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
+        public DateTime? fecha_eliminacion { get; set; }
         public HashSet<EtiquetaDTO> etiqueta { get; set; }
         public Boolean permiso { get; set; }
     }

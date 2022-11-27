@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221124024020_modulo-develop")]
-    partial class modulodevelop
+    [Migration("20221126215514_migrationFechaEliminacion")]
+    partial class migrationFechaEliminacion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -471,6 +471,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime?>("fecha_eliminacion")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("nombre")
                         .IsRequired()

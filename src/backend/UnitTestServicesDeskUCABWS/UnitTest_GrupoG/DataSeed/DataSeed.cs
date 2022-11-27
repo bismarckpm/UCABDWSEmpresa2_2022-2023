@@ -29,6 +29,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
                         nombre = "Aprobado",
                         descripcion = "Cuando se aprueba un ticket",
+                        fecha_eliminacion = null,
                         etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
                         {
                             new EtiquetaTipoEstado
@@ -57,6 +58,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
                         nombre = "Rechazado",
                         descripcion = "Cuando se rechaza un ticket",
+                        fecha_eliminacion = DateTime.Now,
                         etiquetaTipoEstado = new HashSet<EtiquetaTipoEstado>
                         {
                             new EtiquetaTipoEstado

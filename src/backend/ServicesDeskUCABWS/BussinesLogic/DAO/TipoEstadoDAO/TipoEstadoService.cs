@@ -48,6 +48,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             }
         }
 
+        //GET: Servicio para consultar todos los tipos estados
+        public List<TipoEstadoDTO> ConsultaTipoEstadosHabilitados()
+        {
+            try
+            {
+                var data = _tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.fecha_eliminacion == null).ToList();
+                var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoDTO>>(data);
+                if (tipoEstadoSearchDTO.Count() == 0)
+                    throw new ExceptionsControl("No existen Tipos de estados habilitados");
+                return tipoEstadoSearchDTO;
+            }
+            catch (ExceptionsControl ex)
+            {
+                throw new ExceptionsControl("No existen Tipos de estados registrados", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Hubo un problema en la consulta", ex);
+            }
+        }
+
         //GET: Servicio para consultar una plantilla notificacion en especifico
         public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id)
         {
@@ -150,42 +171,38 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
         }
 
-        //DELETE: Servicio para eliminar el tipo estado
-        public TipoEstadoCreateDTO EliminarTipoEstado(Guid id)
+        //PUT: Servicio para eliminar el tipo estado
+        public Boolean HabilitarDeshabilitarTipoEstado(Guid id)
         {
             try
             {
                 var tipoEstado = _tipoEstadoContext.Tipos_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
-                //Si no tiene permiso, quiere decir que no podrá eliminar el tipo estado
-                if (!tipoEstado.permiso)
+                
+                if(tipoEstado.fecha_eliminacion != null)
                 {
-                    throw new ExceptionsControl("No se puede eliminar este tipo de estado por la integridad del sistema");
+                    tipoEstado.fecha_eliminacion = null;  //Hablilitar el tipo estado
+                }
+                else
+                {
+                    tipoEstado.fecha_eliminacion = DateTime.Now; //Deshabilitar el tipo estado
                 }
 
                 //Verifica si hay una plantilla notificación asociada al tipo estado. De ser así, eliminar la relación en plantilla.
                 var plantilla = _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefault();
-                if (plantilla != null)
+                if ((plantilla != null) && (tipoEstado.fecha_eliminacion != null))
                 {
                     plantilla.TipoEstadoId = null;
                     _tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
                 }
 
-                
-                _tipoEstadoContext.Tipos_Estados.Remove(tipoEstado);
+
+                _tipoEstadoContext.Tipos_Estados.Update(tipoEstado);
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return _mapper.Map<TipoEstadoCreateDTO>(tipoEstado);
-            }
-            catch (ExceptionsControl ex)
-            {
-                throw new ExceptionsControl("No se puede eliminar este tipo de estado por la integridad del sistema", ex);
-            }
-            catch (DbUpdateException ex)
-            {
-                throw new ExceptionsControl("Un ticket está utilizado este tipo de estado, por lo tanto no se puede eliminar", ex);
+                return true;
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo eliminar el tipo de estado", ex);
+                throw new ExceptionsControl("No se pudo habilitar o deshabilitar el tipo de estado", ex);
             }
 
         }
@@ -212,5 +229,45 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 
             }
         }
+
+        ////DELETE: Servicio para eliminar el tipo estado
+        //public TipoEstadoCreateDTO EliminarTipoEstado(Guid id)
+        //{
+        //    try
+        //    {
+        //        var tipoEstado = _tipoEstadoContext.Tipos_Estados.Include(t => t.etiquetaTipoEstado).Where(t => t.Id == id).Single();
+        //        //Si no tiene permiso, quiere decir que no podrá eliminar el tipo estado
+        //        if (!tipoEstado.permiso)
+        //        {
+        //            throw new ExceptionsControl("No se puede eliminar este tipo de estado por la integridad del sistema");
+        //        }
+
+        //        //Verifica si hay una plantilla notificación asociada al tipo estado. De ser así, eliminar la relación en plantilla.
+        //        var plantilla = _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefault();
+        //        if (plantilla != null)
+        //        {
+        //            plantilla.TipoEstadoId = null;
+        //            _tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
+        //        }
+
+
+        //        _tipoEstadoContext.Tipos_Estados.Remove(tipoEstado);
+        //        _tipoEstadoContext.DbContext.SaveChanges();
+        //        return _mapper.Map<TipoEstadoCreateDTO>(tipoEstado);
+        //    }
+        //    catch (ExceptionsControl ex)
+        //    {
+        //        throw new ExceptionsControl("No se puede eliminar este tipo de estado por la integridad del sistema", ex);
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        throw new ExceptionsControl("Un ticket está utilizado este tipo de estado, por lo tanto no se puede eliminar", ex);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ExceptionsControl("No se pudo eliminar el tipo de estado", ex);
+        //    }
+
+        //}
     }
 }
