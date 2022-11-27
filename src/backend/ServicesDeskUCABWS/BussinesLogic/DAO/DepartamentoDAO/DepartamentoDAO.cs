@@ -63,7 +63,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
         //Agregar Estados de los departamentos agregados
 
-        public void AgregarEstadoADepartamentoCreado(Departamento departamento)
+        public List<Estado> AgregarEstadoADepartamentoCreado(Departamento departamento)
         {
             var listaTipoEstados = _dataContext.Tipos_Estados.ToList();
 
@@ -82,12 +82,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             }
 
             _dataContext.Estados.AddRange(listaEstados);
-            
+            return listaEstados;
         }
 
         //Agregar Estados de los departamentos agregados
 
-        public void AgregarCargosADepartamentoCreado(Departamento departamento)
+        public List<Cargo> AgregarCargosADepartamentoCreado(Departamento departamento)
         {
             var listaTipoCargos = _dataContext.Tipos_Cargos.ToList();
 
@@ -104,6 +104,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             }
 
             _dataContext.Cargos.AddRange(ListaCargos);
+            return ListaCargos;
         }
 
         //Eliminar un Departamento

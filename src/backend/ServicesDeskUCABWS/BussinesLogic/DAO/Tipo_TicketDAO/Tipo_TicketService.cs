@@ -468,48 +468,32 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
         public void ValidarDatosEntradaTipo_Ticket_Delete(Guid Id)
         {
-            try
+            
+            var tipo_Ticket = context.Tipos_Tickets.Find(Id);
+            if (tipo_Ticket == null)
             {
-                var tipo_Ticket = context.Tipos_Tickets.Find(Id);
-                if (tipo_Ticket == null)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_TICKET_DESC);
-                }
-                var ticketsPendientes = context.Tickets.Include(x => x.Tipo_Ticket).Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
-                        .Where(x => x.Tipo_Ticket.Id == tipo_Ticket.Id &&
-                        x.Estado.Estado_Padre.nombre == "Pendiente").Count();
-
-                if (ticketsPendientes > 0)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.ERROR_UPDATE_MODELO_APROBACION);
-                }
-
+                throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_TICKET_DESC);
             }
-            catch (FormatException ex)
+            var ticketsPendientes = context.Tickets.Include(x => x.Tipo_Ticket).Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
+                    .Where(x => x.Tipo_Ticket.Id == tipo_Ticket.Id &&
+                    x.Estado.Estado_Padre.nombre == "Pendiente").Count();
+
+            if (ticketsPendientes > 0)
             {
-                throw new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET, ex);
+                throw new ExceptionsControl(ErroresTipo_Tickets.ERROR_UPDATE_MODELO_APROBACION);
             }
-           
         }
 
         public List<Tipo_TicketDTOSearch> ConsultaTipoTicketAgregarTicket(Guid Id)
         {
-            try
-            {
-                var ListaTipoTicket = context.Tipos_Tickets.Include(x => x.Departamentos).ThenInclude(x=>x.departamento).Where(x => x.Departamentos.Select(x => x.departamento.id).Contains(Id)).ToList();
-                ListaTipoTicket.AddRange(context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Count==0).ToList());
-                var ListaTipoTicketDTO = _mapper.Map<List<Tipo_TicketDTOSearch>>(ListaTipoTicket);
-                return ListaTipoTicketDTO;
-            }
-            catch (FormatException ex)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET, ex);
-            }
-
+            var ListaTipoTicket = context.Tipos_Tickets.Include(x => x.Departamentos).ThenInclude(x=>x.departamento).Where(x => x.Departamentos.Select(x => x.departamento.id).Contains(Id)).ToList();
+            ListaTipoTicket.AddRange(context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Count==0).ToList());
+            var ListaTipoTicketDTO = _mapper.Map<List<Tipo_TicketDTOSearch>>(ListaTipoTicket);
+            return ListaTipoTicketDTO;
         }
 
         //DELETE: Servicio para eliminar un tipo de ticket por un id en especifico
-        public Boolean HabilitarTipoTicket(Guid id)
+        /*public Boolean HabilitarTipoTicket(Guid id)
         {
 
             try
@@ -527,7 +511,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 throw new ExceptionsControl("No se pudo eliminar el tipo de ticket", ex);
             }
 
-        }
+        }*/
 
 
     }

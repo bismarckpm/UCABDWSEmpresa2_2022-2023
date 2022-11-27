@@ -43,20 +43,38 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
             context.SetupDbContextData();
         }
 
-        //Test camino feliz para hacer el consultar estado
-
         [TestMethod]
-        public void CaminoFelizConsultarEstadoTest()
+        public void CaminoFelizDesHabilitarCargo()
         {
-
             //arrange
-            var entrada = Guid.Parse("19C117F4-9C2A-49B1-A633-969686E0B57E");
+            var data = new EstadoDTOUpdate
+            {
+                Id = new Guid("B74DF138-BA05-45A8-B890-E424CA60210C"),
 
-            //act 
-            var result = EstadoDAO.ConsultarEstadosDepartamento(entrada);
+            };
+            //Act
+            context.Setup(a => a.DbContext.SaveChanges());
+
+            var result = EstadoDAO.DeshabilitarEstado(data.Id);
+
+            Assert.AreEqual(data.GetType(), result.GetType());
+        }
+
+        //Test para la excepcion Exception para deshabilitar estado  
+        [TestMethod]
+        public void EntrarEnExceptionControlDesHabilitarCargoTest()
+        {
+            //arrage
+            var data = new EstadoDTOUpdate
+            {
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+            };
+
+            //context.Setup(a => a.Estados).Throws(new Exception(""));
 
             //assert
-            Assert.IsTrue(result.Count() > 0);
+            Assert.ThrowsException<ExceptionsControl>(() => EstadoDAO.DeshabilitarEstado(data.Id));
 
         }
     } 

@@ -55,10 +55,31 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            DepartamentoService.AgregarEstadoADepartamentoCreado(arrange);
+            var result = DepartamentoService.AgregarEstadoADepartamentoCreado(arrange);
 
             
+            Assert.AreEqual(typeof(List<Estado>), result.GetType());
+        }
 
+        [TestMethod]
+        public void AgregarCargoADepartamentoCreadoTest()
+        {
+            var arrange = new Departamento()
+            {
+                id = Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                nombre = "Almacen de Electronica",
+                descripcion = "Lugar donde se guardan todos los recursos de la empresa",
+                fecha_creacion = DateTime.UtcNow,
+                fecha_ultima_edicion = DateTime.UtcNow,
+                fecha_eliminacion = null,
+            };
+
+            context.Setup(a => a.DbContext.SaveChanges());
+
+            var result = DepartamentoService.AgregarCargosADepartamentoCreado(arrange);
+
+
+            Assert.AreEqual(typeof(List<Cargo>), result.GetType());
         }
     }
 }

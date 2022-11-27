@@ -203,8 +203,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaCargo = new List<Cargo>
             {
+
+
                 new Cargo("Jefe D1","Descripccion C1")
                 {
+
                     Departamento = ListaDepartamento[0],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
@@ -220,6 +223,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 },
                 new Cargo("Becario D1","Descripccion C1")
                 {
+                    Id = Guid.Parse("17A696EE-BDCC-418C-BF60-B59F7A764416"),
                     Departamento = ListaDepartamento[0],
                     Tipo_Cargo = ListaTipoCargo[3]
                 },

@@ -126,5 +126,19 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicketNomb(nombre));
 
         }
+
+
+        [TestMethod]
+        public void CaminoFelizConsultarTipoTicketAgregarTicket()
+        {
+            //arrange
+            var entrada = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87");
+
+            var result = TipoticketDAO.ConsultaTipoTicketAgregarTicket(entrada);
+
+            Assert.AreEqual(typeof(List<Tipo_TicketDTOSearch>), result.GetType());
+        }
+
+
     }
 }

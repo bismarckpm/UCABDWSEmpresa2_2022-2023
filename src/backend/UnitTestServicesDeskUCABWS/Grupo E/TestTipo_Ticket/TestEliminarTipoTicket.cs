@@ -110,6 +110,27 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionsControl))]
+        public void ErrorDeFormatoEnID()
+        {
+            /* context.Setup(a => a.Tipos_Tickets).Throws(new ExceptionsControl(""));
+             Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.EliminarTipoTicket(Guid.Empty));*/
+
+            // arrange
+            var entrada = Guid.Parse("36B2054E-BC81-4EA7-A5CC-7B137BC20E");
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET);
+            ExceptionsControl actualException = null;
+
+            //act
+            
+           
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Delete(entrada);
+
+
+        }
+
 
 
     }
