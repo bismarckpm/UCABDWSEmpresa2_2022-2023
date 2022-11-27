@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221125220159_TablaIntermedia")]
-    partial class TablaIntermedia
+    [Migration("20221126231007_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -162,6 +162,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("fecha_creacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("fecha_eliminacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("fecha_ultima_edic")

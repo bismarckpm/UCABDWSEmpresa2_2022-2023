@@ -304,9 +304,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                     .Include(x => x.Empleado)
                     .Where(x => x.IdUsuario == id && x.voto == "Pendiente").ToList();
             }
-            catch (ExceptionsControl ex)
+            catch (Exception ex)
             {
-                response.Exception = ex.Mensaje;
+                response.Exception = ex.Message;
                 response.Success = false;
             }
             return response;

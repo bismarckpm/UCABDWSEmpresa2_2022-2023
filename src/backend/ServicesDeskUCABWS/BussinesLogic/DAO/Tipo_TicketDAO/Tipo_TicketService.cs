@@ -472,6 +472,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
         }
 
+        //DELETE: Servicio para eliminar un tipo de ticket por un id en especifico
+        public Boolean HabilitarTipoTicket(Guid id)
+        {
+
+            try
+            {
+                ValidarDatosEntradaTipo_Ticket_Delete(id);
+                var tipo_ticket = context.Tipos_Tickets.Find(id);
+
+                tipo_ticket.fecha_elim = null;
+                context.DbContext.SaveChanges();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo eliminar el tipo de ticket", ex);
+            }
+
+        }
+
 
     }
 }

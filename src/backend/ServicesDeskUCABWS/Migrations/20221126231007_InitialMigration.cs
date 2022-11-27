@@ -127,6 +127,28 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departamentos",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    id_grupo = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departamentos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Departamentos_Grupos_id_grupo",
+                        column: x => x.id_grupo,
+                        principalTable: "Grupos",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EtiquetasTipoEstados",
                 columns: table => new
                 {
@@ -166,34 +188,6 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_PlantillasNotificaciones_Tipos_Estados_TipoEstadoId",
                         column: x => x.TipoEstadoId,
                         principalTable: "Tipos_Estados",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Departamentos",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    id_grupo = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departamentos", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Departamentos_Grupos_id_grupo",
-                        column: x => x.id_grupo,
-                        principalTable: "Grupos",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_Departamentos_Tipos_Tickets_Tipo_TicketId",
-                        column: x => x.Tipo_TicketId,
-                        principalTable: "Tipos_Tickets",
                         principalColumn: "Id");
                 });
 
@@ -255,6 +249,30 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DepartamentoTipo_Ticket",
+                columns: table => new
+                {
+                    Departamentosid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Tipo_TicketsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartamentoTipo_Ticket", x => new { x.Departamentosid, x.Tipo_TicketsId });
+                    table.ForeignKey(
+                        name: "FK_DepartamentoTipo_Ticket_Departamentos_Departamentosid",
+                        column: x => x.Departamentosid,
+                        principalTable: "Departamentos",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepartamentoTipo_Ticket_Tipos_Tickets_Tipo_TicketsId",
+                        column: x => x.Tipo_TicketsId,
+                        principalTable: "Tipos_Tickets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Estados",
                 columns: table => new
                 {
@@ -263,6 +281,7 @@ namespace ServicesDeskUCABWS.Migrations
                     descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Estado_PadreId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Departamentoid = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -485,9 +504,9 @@ namespace ServicesDeskUCABWS.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departamentos_Tipo_TicketId",
-                table: "Departamentos",
-                column: "Tipo_TicketId");
+                name: "IX_DepartamentoTipo_Ticket_Tipo_TicketsId",
+                table: "DepartamentoTipo_Ticket",
+                column: "Tipo_TicketsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Estados_Departamentoid",
@@ -596,6 +615,9 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Bitacora_Tickets");
 
             migrationBuilder.DropTable(
+                name: "DepartamentoTipo_Ticket");
+
+            migrationBuilder.DropTable(
                 name: "EtiquetasTipoEstados");
 
             migrationBuilder.DropTable(
@@ -629,6 +651,9 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Prioridades");
 
             migrationBuilder.DropTable(
+                name: "Tipos_Tickets");
+
+            migrationBuilder.DropTable(
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
@@ -645,9 +670,6 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Grupos");
-
-            migrationBuilder.DropTable(
-                name: "Tipos_Tickets");
         }
     }
 }

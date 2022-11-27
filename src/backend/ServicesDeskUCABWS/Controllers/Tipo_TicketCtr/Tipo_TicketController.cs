@@ -140,23 +140,7 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
             return response;
         }
 
-        [HttpGet]
-        [Route("ConsultaxDepartamento/(\"{id}\")")]
-        public ApplicationResponse<List<Tipo_TicketDTOSearch>> ConsultarTipoTicketDepart([FromRoute]Guid id)
-        {
-            var response = new ApplicationResponse<List<Tipo_TicketDTOSearch>>();
-            try
-            {
-                response.Data = _ticketDAO.ConsultaTipoTicketAgregarTicket(id);
 
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
+     
     }
 }

@@ -25,7 +25,6 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         public TestConsultarTipoTicket()
         {
 
-            
             context = new Mock<IDataContext>();
             
             var myprofile = new List<Profile>
@@ -101,7 +100,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         }
 
         //Test para consultar tipo ticket por el nombtre
-        [TestMethod(displayName: "Prueba Unitaria de la consulta de una plantilla por titulo exitosa")]
+        [TestMethod]
         public void ConsultarTipoTicketNombreServiceTest()
         {
             //arrange

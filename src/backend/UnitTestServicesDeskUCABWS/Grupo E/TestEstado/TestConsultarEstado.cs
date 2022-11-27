@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
@@ -17,7 +18,7 @@ using UnitTestServicesDeskUCABWS.DataSeed;
 
 namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
 {
-  
+
 
 
     [TestClass]
@@ -41,7 +42,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
             EstadoDAO = new EstadoService(context.Object, mapper);
             context.SetupDbContextData();
         }
-        
+
         //Test camino feliz para hacer el consultar estado
 
         [TestMethod]
@@ -56,9 +57,9 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
 
             //assert
             Assert.IsTrue(result.Count() > 0);
-            
+
         }
-    }
+    } 
 }
 
 

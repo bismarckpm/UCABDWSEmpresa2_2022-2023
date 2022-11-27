@@ -1,7 +1,14 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +23,15 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
     {
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
-        private readonly Mock<ITicketDAO> ticketDAO;
+        private readonly Mock<IVotos_TicketDAO> VotosticketDAO;
 
         public TestConsultarTicket()
         {
             context = new Mock<IDataContext>();
-            ticketDAO = new Mock<ITicketDAO>();
-            VotoDAO = new Votos_TicketService(context.Object,ticketDAO.Object);
+            VotoDAO = new Votos_TicketService(context.Object);
             context.SetupDbContextData();
         }
-
+        //Test para el servicio consultar votos
         [TestMethod]
         public void CaminoFelizConsultarVotos()
         {
@@ -36,5 +42,29 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             Assert.AreEqual(result.Data.ToList().Count(), 3);
         }
 
+        //Test para el servicio de un excepcion consultar votos 
+        [TestMethod]
+        public void CaminoFelizConsultarVotosExceptions()
+        {
+            //arrage
+            var entrada = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+
+            var Expected = new ApplicationResponse<List<Votos_Ticket>>()
+            {
+                Success = false,
+
+            };
+
+            //act
+            context.Setup(x => x.Votos_Tickets).Throws(new Exception(""));
+
+            var result = VotoDAO.ConsultaVotos(entrada);
+
+            //assert
+            Assert.IsNotNull(result.Exception);
+            Assert.IsFalse(result.Success);
+
+        }
     }
 }
