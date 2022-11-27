@@ -26,7 +26,16 @@ namespace ServiceDeskUCAB.Controllers
         }
         public IActionResult Login()
         {
-            return View();
+            var current = User.Identities.First().Claims;
+            if (current.Count()==0)
+            {
+                Console.WriteLine("asdasdadas");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index","Home");
+            }
         }
         public IActionResult SingUp()
         {
