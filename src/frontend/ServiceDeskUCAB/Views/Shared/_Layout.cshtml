@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,8 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/sb-admin-2.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Tablas.styles.css" asp-append-version="true" />
@@ -39,7 +37,6 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon ">
                     <i class="fab fa-servicestack"></i>
-                    @*<i class="fas fa-laugh-wink"></i>*@
                 </div>
                 <div class="sidebar-brand-text mx-2">ServiceDesk<sup>UCAB</sup></div>
             </a>
@@ -56,18 +53,30 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
+                <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Departamentos</span>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="CargoYTipoCargo" asp-action="CargoTipoCargo">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Cargos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
+                    <i class="fas fa-city"></i>
+                    <span>Departamentos y Grupos</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla"
-                   aria-expanded="true" aria-controls="collapsePlantilla">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla" aria-expanded="true" aria-controls="collapsePlantilla">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Plantillas de notificación</span>
                 </a>
+
                 <div id="collapsePlantilla" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion de plantillas:</h6>
@@ -78,8 +87,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado"
-                   aria-expanded="true" aria-controls="collapseEstado">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado" aria-expanded="true" aria-controls="collapseEstado">
                     <i class="fas fa-fw fa-bell"></i>
                     <span>Estados de ticket</span>
                 </a>
@@ -92,7 +100,6 @@
                 </div>
             </li>
 
-            @*<li class="nav-item">
 
             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
 
@@ -169,21 +176,17 @@
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Ticket</span>
                 </a>
-                <div id="collapseTicket" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión de tickets:</h6>
-                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="CCACD411-1B46-4117-AA84-73EA64DEAC87" asp-route-opcion="Abiertos">Todos los tickets</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
-                </div>  
+                </div>
             </li>
-            @*  <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-            Addons
-            </div>*@
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -191,6 +194,7 @@
             </div>
 
         </ul>
+
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -212,29 +216,21 @@
         </div>
     </div>
 
-
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
