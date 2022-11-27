@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     Guid prueba = Model.id;
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/usuarioView.css" />
+</head> 
 @section scripts {
     <script type="text/javascript">
 
@@ -44,13 +48,16 @@
                 {
                     <div class="card-body p-md-5">
                         <div class="row justify-content-center"><img style="width:25%;" src="https://cdn.discordapp.com/attachments/461277491844349953/1042989230680440932/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" /></div>
-
-                        <div class="row justify-content-center">
-
-                            <div>
+                        <div style="width:100%;padding-left: 12px;" class="row">
+                            <div style="width:98%">
                                 <span>ID: @prueba @Html.TextBoxFor(m => m.id, new { @Value = Model.id,@readonly="readonly",Style="display:none"}) </span>
-                                <i id="Disable" type="button" class="fas fa-fw fa-cog"></i>
                             </div>
+                            <div style ="width:2%;font-size: 21px;">
+                                <i id="Disable" type="button" class="fas fa-user-edit"></i>
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center">
 
                             <div class="col-md-3">
                                 <label for="inputPassword4" class="form-label">Nombres</label>
@@ -101,8 +108,8 @@
                                 <span class="text-danger"></span>
                             </div>
                             <div style="padding-top: 12px;" class="d-flex justify-content-end">
-                                <a type="button" style="background-color: #272727; border-color: #272727; border-radius: 10px;margin-right: 2pc" class="btn btn-primary" href='@Url.Action("Usuarios","Usuario")'>Cancelar</a>
-                                <button type="submit" id="Prueba" style="display:none ;background-color: #272727; border-color: #272727; border-radius: 10px" class="btn btn-primary">Registrar</button>
+                                <a type="button" style="margin-right: 2pc;padding-top: 4px;padding-left: 10px;" class="botonCancelar" href='@Url.Action("Usuarios","Usuario")'>Cancelar</a>
+                                <button type="submit" id="Prueba" style="display:none" class="botonCrear">Registrar</button>
                             </div>
                         </div>
                     </div>
