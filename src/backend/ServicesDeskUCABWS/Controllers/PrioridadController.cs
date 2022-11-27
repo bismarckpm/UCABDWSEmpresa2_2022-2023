@@ -84,7 +84,7 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
             try
             {
-                respuesta.Data = _prioridadDAO.ObtenerPrioridades();
+                respuesta.Data = _prioridadDAO.ObtenerPrioridadesHabilitadas();
                 respuesta.Success = true;
                 respuesta.Message = "El var dice que estaba habilitado";
             }

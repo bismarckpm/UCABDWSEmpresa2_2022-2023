@@ -38,7 +38,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         }
         public void validarPrioridadEstado(string estado)
         {
-            if (estado != "Habilitado" || estado != "Deshabilitado")
+            if (estado != "Habilitado" && estado != "Deshabilitado")
                 throw new PrioridadEstadoException("El formato del estado debe ser o Habilitado o Deshabilitado específicamente");
         }
     }
