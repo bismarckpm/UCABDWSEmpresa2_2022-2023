@@ -20,13 +20,6 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
-            modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
-            modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
 
@@ -55,6 +48,10 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
+            //LOS DE JESÚS
+            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
+            modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
+            modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
         }
 
        

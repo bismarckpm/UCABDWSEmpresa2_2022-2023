@@ -34,13 +34,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
                 _dataContext.Prioridades.Add(prioridadEntity);
             _dataContext.DbContext.SaveChanges();
                 return "Prioridad creada satisfactoriamente";
-            }
+        }
         public List<PrioridadDTO> ObtenerPrioridades()
-            {
+        {
             List<Prioridad> data = _dataContext.Prioridades.ToList();
             List<PrioridadDTO> prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO;
-            }
         }
 
         public List<PrioridadDTO> ObtenerPrioridadesHabilitadas()
@@ -50,7 +49,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             return prioridadDTO.ToList();
         }
 
-        public PrioridadDTO obtenerPrioridadPorNombre(string nombre)
+        /*public List<PrioridadDTO> obtenerPrioridadPorNombre(string nombre)
         {
             try
             {
@@ -61,10 +60,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             catch (Exception ex)
             {
                 throw new Exception($"Algo ha sucedido: {ex}");
-            }
-        }
+            }   
+        }*/
 
         public PrioridadDTO ObtenerPrioridad(Guid PrioridadID)
+        {
+            try
             {
             PrioridadValidaciones validaciones = new PrioridadValidaciones(_dataContext);
             validaciones.validarPrioridadGuid(PrioridadID);

@@ -4,7 +4,6 @@ using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
@@ -52,7 +51,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))
                 throw new TicketDepartamentoException("El identificador del departamento no fué provisto");
-            IQueryable<Departamento> departamentos = _dataContext.Departamentos.Where(departamentos => departamentos.Id == id);
+            IQueryable<Departamento> departamentos = _dataContext.Departamentos.Where(departamentos => departamentos.id == id);
             if (!departamentos.Any())
                 throw new TicketDepartamentoException("El departamento indicado no está registrado en la Base de Datos");
         }
@@ -72,14 +71,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             if (!prioridades.Any())
                 throw new TicketPrioridadException("La prioridad indicada no se encuentra registrada en la base de datos");
         }
-        public void validarTicketVotos(Guid? id)
+        /*public void validarTicketVotos(Guid? id)
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))
                 throw new TicketVotosException("El identificador del ticket voto no fué provisto");
-            IQueryable<Votos_Ticket> votosTickets = _dataContext.Votos_Tickets.Where(votos => votos.Id == id);
+            IQueryable<Votos_Ticket> votosTickets = _dataContext.Votos_Tickets.Where(votos => votos.id == id);
             if (!votosTickets.Any())
                 throw new TicketVotosException("Los votos indicados no se encuentran registrados en la base de datos");
-        }
+        }*/
         public void validarTicketFamilia(Guid? id)
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))

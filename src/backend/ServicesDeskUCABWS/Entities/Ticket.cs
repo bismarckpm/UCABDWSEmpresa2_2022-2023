@@ -45,6 +45,7 @@ namespace ServicesDeskUCABWS.Entities
         public Ticket? Ticket_Padre { get; set; }
 
         public Empleado Emisor { get; set; }
+        public Ticket() { }
         public Ticket(string titulo, string descripcion)
         {
             Id = Guid.NewGuid();
@@ -53,7 +54,17 @@ namespace ServicesDeskUCABWS.Entities
             //this.Departamento_Destino = Departamento_Destino;
             fecha_creacion = DateTime.UtcNow;
             //this.Estado=
+        }
+        public Ticket(Guid Id, string titulo, string descripcion, DateTime fecha_creacion, DateTime fecha_eliminacion, Departamento Departamento_Destino)
+        {
+            Id = Guid.NewGuid();
+            this.titulo = titulo;
+            this.descripcion = descripcion;
+            this.Departamento_Destino = Departamento_Destino;
+            this.fecha_creacion = DateTime.UtcNow;
+            //this.Estado=
 
+        }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
 
         public int? nro_cargo_actual { get; set; }

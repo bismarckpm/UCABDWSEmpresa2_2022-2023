@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using System;
 using System.Collections.Generic;
 using static ServicesDeskUCABWS.BussinesLogic.Excepciones.PrioridadExcepciones;

@@ -1,5 +1,4 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
-using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
@@ -11,9 +10,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public interface ITicketDAO
     {
-
-
-
         public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
         public Task<bool> ActualizarTicket(Ticket ticket);
         public Task<bool> EliminarTicket(Guid Id);

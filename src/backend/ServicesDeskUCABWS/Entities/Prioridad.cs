@@ -17,8 +17,6 @@ namespace ServicesDeskUCABWS.Entities
         public DateTime fecha_descripcion { get; set; }
         [Required]
         public DateTime fecha_ultima_edic { get; set; }
-        [Required]
-        public string estado { get; set; }
 
         public Prioridad(string nombre, string descripcion)
         {

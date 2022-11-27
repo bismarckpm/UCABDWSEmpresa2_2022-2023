@@ -7,10 +7,13 @@ using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
-using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Sockets;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using Microsoft.Data.SqlClient;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -18,7 +21,230 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
     {
         private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
+        private List<Ticket> listaTickets;
 
+        public Task<bool> ActualizarTicket(Ticket ticket)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Ticket> ConsultaListaTickets()
+        {
+            listaTickets = _dataContext.Tickets.ToList();
+            return listaTickets;
+        }
+
+        public Ticket ConsultaTicket(Guid id)
+        {
+            var Ticket = (Ticket)_dataContext.Tickets.Where(s => s.Id == id);
+            return Ticket;
+        }
+
+        public Task<bool> EliminarTicket(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO)
+        {
+
+            var response = new ApplicationResponse<TicketCreateDTO>();
+            try
+            {
+
+                var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
+                ticket.Prioridad = _dataContext.Prioridades.Find(Guid.Parse(ticketDTO.Prioridad));
+                //List<Empleado> v =(List<Empleado>) contexto.Usuarios.ToList();
+                //Prioridad t = contexto.Prioridades.Find();//Include(x => x.Cargo).ThenInclude(x => x.Departamento).ToList();
+                //.Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
+                ticket.Emisor = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
+                ticket.Departamento_Destino = _dataContext.Departamentos.Find(Guid.Parse(ticketDTO.Departamento_Destino));
+                ticket.Tipo_Ticket = _dataContext.Tipos_Tickets.Find(Guid.Parse(ticketDTO.Tipo_Ticket));
+                ticket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
+                x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
+                _dataContext.Tickets.Add(ticket);
+
+                _dataContext.DbContext.SaveChanges();
+                response.Data = ticketDTO;
+                response.Exception = FlujoAprobacion(ticket);
+
+            }
+            catch (ExceptionsControl ex)
+            {
+
+                response.Success = false;
+                response.Message = ex.Message;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            catch (SqlException ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                response.Exception = ex.ToString();
+            }
+            return response;
+
+        }
+
+        public string FlujoAprobacion(Ticket ticket)
+        {
+            string result = null;
+            switch (ticket.Tipo_Ticket.tipo)
+            {
+                case "Modelo_No_Aprobacion":
+                    result = FlujoNoAprobacion(ticket);
+                    break;
+                case "Modelo_Paralelo":
+                    result = FlujoParalelo(ticket);
+                    break;
+                case "Modelo_Jerarquico":
+                    result = FlujoJerarquico(ticket);
+                    break;
+
+            }
+            return result;
+        }
+
+        public string FlujoNoAprobacion(Ticket ticket)
+        {
+            string result = null;
+            try
+            {
+                //Cambiar estado Ticket
+                CambiarEstado(ticket, "Aprobado");
+
+                //EnviarNotificacion(ticket.Emisor, ticket.Estado);
+                List<Empleado> ListaEmpleado = _dataContext.Empleados.
+                    Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
+                    .ToList();
+                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+
+
+                _dataContext.DbContext.SaveChanges();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result = ex.Message;
+                return result;
+            }
+        }
+
+
+        public string FlujoParalelo(Ticket ticket)
+        {
+            string result = null;
+            try
+            {
+
+                var tipoCargos = _dataContext.Flujos_Aprobaciones
+                    .Include(x => x.Tipo_Cargo)
+                    .ThenInclude(x => x.Cargos_Asociados)
+                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id);
+
+                var Cargos = new List<Cargo>();
+                foreach (var tc in tipoCargos)
+                {
+                    Cargos.Add(tc.Tipo_Cargo.Cargos_Asociados.ToList()
+                        .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First());
+                }
+
+                var ListaEmpleado = new List<Empleado>();
+                foreach (var c in Cargos)
+                {
+                    ListaEmpleado.AddRange(_dataContext.Empleados.Where(x => x.Cargo.Id == c.Id));
+                }
+
+                var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
+                {
+                    IdTicket = ticket.Id,
+                    Ticket = ticket,
+                    IdUsuario = x.Id,
+                    Empleado = x,
+                    voto = "Pendiente"
+                });
+
+                _dataContext.Votos_Tickets.AddRange(ListaVotos);
+
+                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+
+                _dataContext.DbContext.SaveChanges();
+
+                return result;
+            }
+            catch (ExceptionsControl ex)
+            {
+                result = ex.Message;
+                return result;
+            }
+        }
+
+        public string FlujoJerarquico(Ticket ticket)
+        {
+            string result = null;
+            try
+            {
+                ticket.nro_cargo_actual = 1;
+
+                var tipoCargos = _dataContext.Flujos_Aprobaciones
+                    .Include(x => x.Tipo_Cargo)
+                    .ThenInclude(x => x.Cargos_Asociados)
+                    .ThenInclude(x => x.Departamento)
+                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
+                    .OrderBy(x => x.OrdenAprobacion).First();
+
+
+                var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
+                    .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();
+
+
+                var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
+
+
+                var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
+                {
+                    IdTicket = ticket.Id,
+                    Ticket = ticket,
+                    IdUsuario = x.Id,
+                    Empleado = x,
+                    voto = "Pendiente",
+                    Turno = ticket.nro_cargo_actual
+                });
+
+                _dataContext.Votos_Tickets.AddRange(ListaVotos);
+
+                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+
+                _dataContext.DbContext.SaveChanges();
+
+                return result;
+            }
+            catch (ExceptionsControl ex)
+            {
+                result = ex.Message;
+                return result;
+            }
+        }
+
+        public bool CambiarEstado(Ticket ticket, string Estado)
+        {
+            try
+            {
+                ticket.Estado = _dataContext.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
+                    Where(s => s.Estado_Padre.nombre == Estado &&
+                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
+                    .FirstOrDefault();
+                var vticket = _dataContext.Tickets.Update(ticket);
+                vticket.State = EntityState.Modified;
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                return false;
+            }
+            return true;
+        }
         public TicketDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
@@ -391,12 +617,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
                                        .Where(t => t.Id == nuevoTicket.Emisor.Cargo.Id).FirstOrDefault();
-            Guid prueba = cargo.Departamento.Id;
-            nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.Id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
+            Guid prueba = cargo.Departamento.id;
+            nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             Estado estado = _dataContext.Estados
                                                 .Include(t => t.Estado_Padre)
                                                 .Include(t => t.Departamento)
-                                                .Where(x => x.Estado_Padre.nombre == "Pendiente" && x.Departamento.Id == cargo.Departamento.Id).FirstOrDefault();
+                                                .Where(x => x.Estado_Padre.nombre == "Pendiente" && x.Departamento.id == cargo.Departamento.id).FirstOrDefault();
             if (estado == null)
                 throw new Exception("No se halló el estado para el ticket");
             else
@@ -531,21 +757,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
-                                                                    .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Abiertos")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
                                                                     .Include(t => t.Emisor)
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
-                                                                    .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Cerrados")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
                                                                     .Include(t => t.Emisor)
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
-                                                                    .Where(ticket => ticket.Departamento_Destino.Id == idDepartamento && ticket.fecha_eliminacion != null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion != null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");
             if (tickets.Count() == 0)

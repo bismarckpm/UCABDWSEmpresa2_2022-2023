@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO;
 using ServicesDeskUCABWS.Controllers;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Linq;
 using System;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 
 
 //* Preparación  -> Organizar las precondiciones

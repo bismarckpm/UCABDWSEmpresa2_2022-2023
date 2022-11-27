@@ -33,7 +33,7 @@ namespace TicketUnitTest
                 fecha_creacion = new DateTime(2008, 5, 1, 8, 30, 52),
                 fecha_eliminacion = new DateTime(2008, 5, 1, 8, 30, 52),
                 Departamento_Destino = new Departamento(){
-                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
                 nombre = "nombre",
                 descripcion = "descripcion",
                 fecha_creacion = new DateTime(2008, 5, 1, 8, 30, 52)

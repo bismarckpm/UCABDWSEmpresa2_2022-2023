@@ -5,11 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
-    public partial class initDB : Migration
-========
     public partial class MigracionInicial : Migration
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,8 +58,7 @@ namespace ServicesDeskUCABWS.Migrations
                     descripcion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_descripcion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,7 +260,7 @@ namespace ServicesDeskUCABWS.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -304,7 +299,7 @@ namespace ServicesDeskUCABWS.Migrations
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDeCuentasBloqueadas = table.Column<int>(type: "int", nullable: true),
                     CargoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -351,28 +346,15 @@ namespace ServicesDeskUCABWS.Migrations
                     titulo = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Departamento_DestinoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Ticket_PadreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    nro_cargo_actual = table.Column<int>(type: "int", nullable: true),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-========
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Departamento_Destinoid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EstadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PrioridadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Ticket_PadreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EmisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     nro_cargo_actual = table.Column<int>(type: "int", nullable: true)
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
                 },
                 constraints: table =>
                 {
@@ -381,11 +363,7 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_Tickets_Departamentos_Departamento_Destinoid",
                         column: x => x.Departamento_Destinoid,
                         principalTable: "Departamentos",
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
-                        principalColumn: "Id",
-========
                         principalColumn: "id",
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_Estados_EstadoId",
@@ -417,14 +395,6 @@ namespace ServicesDeskUCABWS.Migrations
                     table.ForeignKey(
                         name: "FK_Tickets_Usuarios_EmisorId",
                         column: x => x.EmisorId,
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
-                        principalTable: "Usuarios",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Tickets_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-========
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
@@ -540,26 +510,17 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
-                name: "IX_Prioridades_nombre",
-                table: "Prioridades",
-                column: "nombre",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tickets_Departamento_DestinoId",
-                table: "Tickets",
-                column: "Departamento_DestinoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tickets_EmisorId",
-                table: "Tickets",
-========
                 name: "IX_PlantillasNotificaciones_TipoEstadoId",
                 table: "PlantillasNotificaciones",
                 column: "TipoEstadoId",
                 unique: true,
                 filter: "[TipoEstadoId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prioridades_nombre",
+                table: "Prioridades",
+                column: "nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolUsuarios_RolId",
@@ -574,7 +535,6 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_EmisorId",
                 table: "Tickets",
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
                 column: "EmisorId");
 
             migrationBuilder.CreateIndex(
@@ -603,24 +563,6 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "Tipo_TicketId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221126032013_initDB.cs
-                name: "IX_Tickets_UsuarioId",
-                table: "Tickets",
-                column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tipo_Estado_PlantillaNotificacionId",
-                table: "Tipo_Estado",
-                column: "PlantillaNotificacionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tipos_Cargos_CargoId",
-                table: "Tipos_Cargos",
-                column: "CargoId");
-
-            migrationBuilder.CreateIndex(
-========
->>>>>>>> 756014dd828ec633bcf089b98d42ecd33f359102:src/backend/ServicesDeskUCABWS/Migrations/20221122155457_MigracionInicial.cs
                 name: "IX_Usuarios_CargoId",
                 table: "Usuarios",
                 column: "CargoId");

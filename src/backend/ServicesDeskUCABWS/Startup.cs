@@ -70,18 +70,10 @@ namespace ServicesDeskUCABWS
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
             
             //Se agrega en generador de Swagger
-            services.AddSwaggerGen(c =>
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
 
-
-			//Se agrega en generador de Swagger
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo
-				{ Title = "Empresa B", Version = "v1" });
-			});
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       
@@ -94,6 +86,8 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IEtiqueta, EtiquetaService>();
 
             services.AddTransient<ITipoEstado, TipoEstadoService>();
+            
+            services.AddTransient<IEstadoDAO, EstadoService>();
 
 			services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
@@ -103,14 +97,13 @@ namespace ServicesDeskUCABWS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /*public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            services.AddTransient<IEstadoDAO, EstadoService>();
 
             services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-        }
+        }*/
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -120,7 +113,7 @@ namespace ServicesDeskUCABWS
                 app.UseDeveloperExceptionPage();
             }
 
-            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             /*services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
             );*/

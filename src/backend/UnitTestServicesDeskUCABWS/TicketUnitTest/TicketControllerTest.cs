@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ServicesDeskUCABWS.BussinesLogic.ApplicationResponse;
 using ServicesDeskUCABWS.BussinesLogic.DTO;
 using ServicesDeskUCABWS.Controllers;
 using ServicesDeskUCABWS.Data;
@@ -12,6 +11,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 
 
 //* Preparación  -> Organizar las precondiciones
