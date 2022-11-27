@@ -25,7 +25,7 @@
                 <button class="nav-link active" id="tipoEstadoHabilidado-tab" data-bs-toggle="tab" data-bs-target="#tipoEstadoHabilidado" type="button" role="tab" aria-controls="tipoEstadoHabilidado" aria-selected="true">
                     Habilitados
                     @if(Model != null){
-                        <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion == null).Count()</span>
+                        <span class="badge rounded-pill bg-primary text-white">@Model.Where(estado => estado.fecha_eliminacion == null).Count()</span>
                     }
                 </button>
             </li>
@@ -34,7 +34,7 @@
                     Deshabilitados
                     @if (Model != null)
                     {
-                        <span class="badge rounded-pill bg-primary">@Model.Where(estado => estado.fecha_eliminacion != null).Count()</span>
+                        <span class="badge rounded-pill bg-primary text-white">@Model.Where(estado => estado.fecha_eliminacion != null).Count()</span>
                     }
                 </button>
             </li>
