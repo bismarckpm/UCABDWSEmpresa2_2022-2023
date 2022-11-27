@@ -184,6 +184,19 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
+		public async Task<IActionResult> ModificarGrupo(GrupoModel grupo, List<string> idDepartamentos)
+		{
+			JObject respuesta;
+			JObject respuestaDept;
+			respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
+			//if ((bool)respuesta["success"])
+
+			respuestaDept = await _servicioApiDepartamento.EditarRelacion(grupo.id, idDepartamentos);
+				return RedirectToAction("DepartamentoGrupo", new { message = "Se ha modificado correctamente" });
+			//else
+				//return NoContent();
+		}
+
 		//Retorna el modal con los departamentos que serán asociados a un grupo
 		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
 		{
@@ -215,7 +228,7 @@ namespace ServiceDeskUCAB.Controllers
 				throw ex.InnerException!;
 			}
 		}
-		//
+		
 		[HttpGet]
 		public async Task<IActionResult> EliminarGrupo(Guid id)
 		{

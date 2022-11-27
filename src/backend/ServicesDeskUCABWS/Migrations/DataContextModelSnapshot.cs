@@ -116,6 +116,9 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("id_grupo");
 
+                    b.HasIndex("nombre")
+                        .IsUnique();
+
                     b.ToTable("Departamentos");
                 });
 
@@ -248,6 +251,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
+
+                    b.HasIndex("nombre")
+                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });

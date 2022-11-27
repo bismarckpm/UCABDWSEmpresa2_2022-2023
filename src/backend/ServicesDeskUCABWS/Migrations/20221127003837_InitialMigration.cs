@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class initial_migration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -474,6 +474,12 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "id_grupo");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Departamentos_nombre",
+                table: "Departamentos",
+                column: "nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Departamentos_Tipo_TicketId",
                 table: "Departamentos",
                 column: "Tipo_TicketId");
@@ -497,6 +503,12 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Flujos_Aprobaciones_Tipo_TicketId",
                 table: "Flujos_Aprobaciones",
                 column: "Tipo_TicketId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Grupos_nombre",
+                table: "Grupos",
+                column: "nombre",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlantillasNotificaciones_TipoEstadoId",

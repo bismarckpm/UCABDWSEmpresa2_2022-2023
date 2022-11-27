@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDeskUCAB", "ServiceD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCABWS", "..\..\backend\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj", "{EDAB01D7-F3BC-4F61-99BE-3B096646C4EC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestServicesDeskUCABWS", "..\..\backend\UnitTestServicesDeskUCABWS\UnitTestServicesDeskUCABWS.csproj", "{293628FB-980D-4C8F-B422-C97870F23A31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EDAB01D7-F3BC-4F61-99BE-3B096646C4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDAB01D7-F3BC-4F61-99BE-3B096646C4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDAB01D7-F3BC-4F61-99BE-3B096646C4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{293628FB-980D-4C8F-B422-C97870F23A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{293628FB-980D-4C8F-B422-C97870F23A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{293628FB-980D-4C8F-B422-C97870F23A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{293628FB-980D-4C8F-B422-C97870F23A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

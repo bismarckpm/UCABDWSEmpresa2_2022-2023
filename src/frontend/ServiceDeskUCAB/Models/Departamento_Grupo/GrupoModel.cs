@@ -7,7 +7,7 @@ namespace ServiceDeskUCAB.Models
         public Guid id { get; set; }
         List<DepartamentoModel> departamentos { get; set; }
 
-        [Required(ErrorMessage = "Introduzca el nombre del departamento")]
+        [Required(ErrorMessage = "Introduzca el nombre del grupo")]
         [StringLength(30, MinimumLength = 5, ErrorMessage = "El nombre debe de tener entre 5 a 30 caracteres")]
         public string nombre { get; set; }
 
