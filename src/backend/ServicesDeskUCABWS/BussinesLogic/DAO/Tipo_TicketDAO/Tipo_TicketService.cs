@@ -16,6 +16,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using Microsoft.Data.SqlClient;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using System.Runtime.CompilerServices;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {
@@ -46,11 +47,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         //GET: Servicio para consultar la lista de tipo ticket
         public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicket()
         {
-
             try
             {
                 var tipo = context.Tipos_Tickets
-                .Include(dep => dep.Departamentos)
+                .Include(dep => dep.Departamentos).ThenInclude(dep=>dep.departamento)
                 .Include(fa => fa.Flujo_Aprobacion)
                 .ThenInclude(fb => fb.Tipo_Cargo)
                 .Where(fa => fa.fecha_elim == null)
@@ -59,6 +59,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 
                     foreach (var r in tipo)
                     {
+                        var listaDept = new List<DepartamentoSearchDTO>();
+                        foreach (var t in r.Departamentos)
+                        {
+                            listaDept.Add(new DepartamentoSearchDTO()
+                            {
+                                Id = t.DepartamentoId.ToString(),
+                                nombre = t.departamento.nombre
+                            });
+                        }
+                        
                         tipo_tickets.Add(new Tipo_TicketDTOSearch
                         {
                             Id = r.Id,
@@ -68,8 +78,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                             Maximo_Rechazado = r.Maximo_Rechazado,
                             tipo = r.tipo,
                             Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
-                            Departamento = _mapper.Map<List<DepartamentoSearchDTO>>(r.Departamentos)
+                            Departamento = listaDept
+                            //r.Departamentos.Select(y=>new List<string> { y.DepartamentoId.ToString() }).ToList()//_mapper.Map<List<DepartamentoSearchDTO>>(r.Departamentos)
                         }) ;
+                        
                     }
                
                     
@@ -105,11 +117,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
                 //Eliminando referencia en el tipo Ticket
                 if (tipo_ticket.Departamentos != null) tipo_ticket.Departamentos.Clear();
-                if (tipo_ticket.Departamentos != null) tipo_ticket.Flujo_Aprobacion.Clear();
+                if (tipo_ticket.Flujo_Aprobacion != null) tipo_ticket.Flujo_Aprobacion.Clear();
 
                 //Eliminando Entidades intermedias de flujo de aprobacion
                 context.Flujos_Aprobaciones.RemoveRange(context.Flujos_Aprobaciones
                     .Where(x => x.IdTicket.ToString().ToUpper() == tipo_TicketDTO.Id.ToUpper()).ToList());
+
+                context.DepartamentoTipo_Ticket.RemoveRange(context.DepartamentoTipo_Ticket
+                    .Where(x => x.Tipo_Ticekt_Id.ToString().ToUpper() == tipo_TicketDTO.Id.ToUpper()).ToList());
 
                 //Agregando las nuevas relaciones
                 try 
@@ -137,13 +152,24 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 catch (Exception) { }
                 try 
                 {
-                    tipo_ticket.Departamentos = context.Departamentos
-                    .Where(x => tipo_TicketDTO.Departamento.Contains(x.id.ToString().ToUpper()))
-                    .ToList();
+                    tipo_ticket.Departamentos =
+                        context.Departamentos
+                       .Where(x => tipo_TicketDTO.Departamento.Select(y => y.ToString().ToUpper()).Contains(x.id.ToString().ToUpper()))
+                       .Select(s => new DepartamentoTipo_Ticket()
+                       {
+                           departamento = s,
+                           DepartamentoId = s.id,
+                           tipo_Ticket = tipo_ticket,
+                           Tipo_Ticekt_Id = tipo_ticket.Id
+
+                       }).ToList();
+                    /*context.DepartamentoTipo_Ticket
+                .Where(x => tipo_TicketDTO.Departamento.Contains(x.id.ToString().ToUpper()))
+                .ToList();*/
                 } catch(Exception) { }
 
                 //Actualizacion de la BD
-                context.Tipos_Tickets.Update(tipo_ticket);
+                //context.Tipos_Tickets.Update(tipo_ticket);
                 context.DbContext.SaveChanges();
 
                 //Paso a AR
@@ -175,7 +201,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 try
                 {
                     tipo_ticket.Departamentos =
-                    context.Departamentos.Where(x => Tipo_TicketDTO.Departamento.Contains(x.id.ToString())).ToList();
+                    context.Departamentos
+                    .Where(x => Tipo_TicketDTO.Departamento.Select(y => y).Contains(x.id.ToString().ToUpper()))
+                    .Select(s => new DepartamentoTipo_Ticket()
+                    {
+                        departamento = s,
+                        DepartamentoId = s.id,
+                        tipo_Ticket = tipo_ticket,
+                        Tipo_Ticekt_Id = tipo_ticket.Id
+                    }).ToList();
+                    /*tipo_ticket.Departamentos =
+                    context.DepartamentoTipo_Ticket.Where(x => Tipo_TicketDTO.Departamento.Contains(x.id.ToString())).ToList();*/
                 }
                 catch (Exception) { }
                 try
@@ -460,7 +496,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
-                var ListaTipoTicket = context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Select(x => x.id).Contains(Id)).ToList();
+                var ListaTipoTicket = context.Tipos_Tickets.Include(x => x.Departamentos).ThenInclude(x=>x.departamento).Where(x => x.Departamentos.Select(x => x.departamento.id).Contains(Id)).ToList();
                 ListaTipoTicket.AddRange(context.Tipos_Tickets.Include(x => x.Departamentos).Where(x => x.Departamentos.Count==0).ToList());
                 var ListaTipoTicketDTO = _mapper.Map<List<Tipo_TicketDTOSearch>>(ListaTipoTicket);
                 return ListaTipoTicketDTO;

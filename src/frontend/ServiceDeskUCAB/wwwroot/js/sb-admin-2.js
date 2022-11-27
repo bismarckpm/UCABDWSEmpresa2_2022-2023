@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
   "use strict"; // Start of use strict
 
   // Toggle the side navigation

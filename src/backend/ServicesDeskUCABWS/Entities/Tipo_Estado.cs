@@ -33,6 +33,7 @@ namespace ServicesDeskUCABWS.Entities
 
         }
 
+        public HashSet<Estado> ListaEstadosDerivados { get; set; }
     } 
 }
 

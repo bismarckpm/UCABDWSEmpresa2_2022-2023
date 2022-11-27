@@ -41,6 +41,11 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
+            modelBuilder.Entity<DepartamentoTipo_Ticket>().HasKey(x => new { x.Tipo_Ticekt_Id, x.DepartamentoId });
+            //LOS DE JES�S
+            modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
+            modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
+            modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
         }
 
 
@@ -72,6 +77,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
+        public DbSet<DepartamentoTipo_Ticket> DepartamentoTipo_Ticket { get; set; }
         public DbContext DbContext
         {
             get

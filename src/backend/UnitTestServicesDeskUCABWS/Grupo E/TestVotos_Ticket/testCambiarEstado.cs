@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
@@ -7,6 +8,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -25,13 +27,23 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         private readonly TicketDAO ticketDAO;
         private readonly Mock<IPlantillaNotificacion> plantillaNotificacionDAO;
         private readonly Mock<INotificacion> notificacionService;
+        private readonly IMapper mapper;
 
         public testCambiarEstado()
         {
+            var myProfile = new List<Profile>
+            {
+                new TipoEstadoMapper(),
+                new EtiquetaMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
+            mapper = new Mapper(configuration);
             plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
             notificacionService = new Mock<INotificacion>();
             context = new Mock<IDataContext>();
-            ticketDAO = new TicketDAO(context.Object,plantillaNotificacionDAO.Object,notificacionService.Object);
+            ticketDAO = new TicketDAO(context.Object,plantillaNotificacionDAO.Object,notificacionService.Object,mapper);
             context.SetupDbContextData();
         }
 

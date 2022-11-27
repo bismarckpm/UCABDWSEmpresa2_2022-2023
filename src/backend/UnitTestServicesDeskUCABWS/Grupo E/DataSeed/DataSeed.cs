@@ -360,51 +360,95 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Empleados.Add(It.IsAny<Empleado>())).Callback<Empleado>(ListaEmpleado.Add);
             _mockContext.Setup(set => set.Empleados.AddRange(It.IsAny<IEnumerable<Empleado>>())).Callback<IEnumerable<Empleado>>(ListaEmpleado.AddRange);
 
+            
 
             var ListaTipoTickets = new List<Tipo_Ticket>
             {
                 new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
 
-                    Departamentos= new List<Departamento>
-                    {
-                        ListaDepartamento[0],
-                        ListaDepartamento[1]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
                 {
                     Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
-                    Departamentos= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamentos= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
-                    Departamentos= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
 
                 },
 
                 new Tipo_Ticket("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamentos= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 }
             };
+
+            var listaDepartamentoTipoTicket = new List<DepartamentoTipo_Ticket>()
+            {
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[0].Id,
+                    tipo_Ticket = ListaTipoTickets[0],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[0].Id,
+                    tipo_Ticket = ListaTipoTickets[0],
+                    DepartamentoId = ListaDepartamento[1].id,
+                    departamento=ListaDepartamento[1]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[1].Id,
+                    tipo_Ticket = ListaTipoTickets[1],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[2].Id,
+                    tipo_Ticket = ListaTipoTickets[2],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[3].Id,
+                    tipo_Ticket = ListaTipoTickets[3],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+
+            };
+
+            ListaTipoTickets[0].Departamentos.Add(listaDepartamentoTipoTicket[0]);
+            ListaTipoTickets[0].Departamentos.Add(listaDepartamentoTipoTicket[1]);
+
+            ListaTipoTickets[1].Departamentos.Add(listaDepartamentoTipoTicket[2]);
+
+            ListaTipoTickets[2].Departamentos.Add(listaDepartamentoTipoTicket[3]);
+
+            ListaTipoTickets[3].Departamentos.Add(listaDepartamentoTipoTicket[4]);
+
+            _mockContext.Setup(c => c.DepartamentoTipo_Ticket).Returns(listaDepartamentoTipoTicket.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.DepartamentoTipo_Ticket.Add(It.IsAny<DepartamentoTipo_Ticket>())).Callback<DepartamentoTipo_Ticket>(listaDepartamentoTipoTicket.Add);
+            _mockContext.Setup(set => set.DepartamentoTipo_Ticket.AddRange(It.IsAny<IEnumerable<DepartamentoTipo_Ticket>>())).Callback<IEnumerable<DepartamentoTipo_Ticket>>(listaDepartamentoTipoTicket.AddRange);
+
 
             var ListaFlujoAprobacion = new List<Flujo_Aprobacion>
             {

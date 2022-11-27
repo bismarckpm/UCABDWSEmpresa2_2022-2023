@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
+    <link rel="stylesheet" type="text/css" href="https://localhost:5286/css/sb-admin-2.css" />
     <link rel="stylesheet" href="~/Tablas.styles.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
@@ -134,7 +134,35 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
+                   aria-expanded="true" aria-controls="collapsePrioridad">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>Prioridad</span>
+                </a>
+                <div id="collapsePrioridad" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestión de prioridad:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Prioridad" asp-action="Index">Todas las prioridades</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Prioridad" asp-action="Prioridad" asp-route-prioridadID="00000000-0000-0000-0000-000000000000">Crear Prioridad</a>
+                    </div>
+                </div>
+            </li>
 
+           <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
+                   aria-expanded="true" aria-controls="collapseTicket">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Ticket</span>
+                </a>
+                <div id="collapseTicket" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestión de tickets:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="CCACD411-1B46-4117-AA84-73EA64DEAC87" asp-route-opcion="Abiertos">Todos los tickets</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
+                    </div>
+                </div>  
+            </li>
             @*  <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -212,6 +240,8 @@
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 

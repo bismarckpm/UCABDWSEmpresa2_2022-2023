@@ -35,7 +35,7 @@ namespace ServicesDeskUCABWS.Entities
 	    [ForeignKey("id_grupo")]
 	    public Grupo grupo { get; set; }
 
-        public List<Tipo_Ticket> Tipo_Tickets { get; set; } 
+        public List<DepartamentoTipo_Ticket> Tipo_Tickets { get; set; } 
 
         public Departamento(string nombre, string descripcion)
         {
