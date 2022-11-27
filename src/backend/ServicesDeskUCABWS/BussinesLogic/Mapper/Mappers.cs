@@ -45,6 +45,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Estado, EstadoDTOSearch>();
             CreateMap<Estado, EstadoDTOUpdate>();
+            CreateMap<EstadoDTOUpdate, Estado>();
 
             CreateMap<Cargo, CargoDTOUpdate>();
 
