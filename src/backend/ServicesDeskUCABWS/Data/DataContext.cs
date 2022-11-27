@@ -48,8 +48,10 @@ namespace ServicesDeskUCABWS.Data
 
 
         }
+            modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
+            modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
 
-
+        }       
 
         //Creacion de los DbSeT
 

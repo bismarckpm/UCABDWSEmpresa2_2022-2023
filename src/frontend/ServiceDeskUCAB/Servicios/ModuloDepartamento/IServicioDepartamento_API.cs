@@ -17,6 +17,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         Task<JObject> AsociarDepartamento(Guid id, List<string> idDepartamentos);
         Task<List<DepartamentoModel>> ListaDepartamento();
         Task<List<DepartamentoModel>> ListaDepartamentoNoAsociado();
+        Task<JObject> EditarRelacion(Guid id, List<string> idDepartamentos);
 
 	}
 }

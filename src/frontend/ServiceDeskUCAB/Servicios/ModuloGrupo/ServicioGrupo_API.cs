@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models;
+using System.Runtime.CompilerServices;
 
 namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
@@ -125,6 +126,35 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 				JObject _json_respuesta = JObject.Parse(respuesta);
 
 				return _json_respuesta;
+			}
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			return _json_respuesta;
+		}
+
+		public async Task<JObject> EditarGrupo(GrupoModel grupo)
+		{
+			HttpClient cliente = new()
+			{
+				BaseAddress = new Uri(_baseUrl)
+			};
+
+			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+
+			try
+			{
+				var response = await cliente.PutAsync("Grupo/ActualizarGrupo", content);
+				var respuesta = await response.Content.ReadAsStringAsync();
+				JObject _json_respuesta = JObject.Parse(respuesta);
+				return _json_respuesta;
+
 			}
 			catch (HttpRequestException ex)
 			{

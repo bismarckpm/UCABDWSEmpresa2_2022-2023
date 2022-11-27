@@ -30,5 +30,5 @@ namespace ServicesDeskUCABWS.Entities
 	    [ForeignKey("id_grupo")]
 	    public Grupo grupo { get; set; }
 
-}
+    }
 }
