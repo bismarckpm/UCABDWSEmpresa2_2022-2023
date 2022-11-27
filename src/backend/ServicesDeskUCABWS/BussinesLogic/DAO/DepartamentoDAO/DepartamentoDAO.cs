@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
@@ -301,6 +302,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				throw new ExceptionsControl("Algo salio mal", ex);
 			}
 			return listaDept;
+        }
+        public Departamento obtenerDepartamentoPorEmpleadoId(Guid empleadoId)
+        {
+            try
+            {
+                Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == empleadoId).Single();
+                if (empleado == null)
+                    throw new Exception("Empleado no se encuentra registrado en sistema");
+                if (empleado.Cargo == null)
+                    throw new Exception("Empleado no tiene cargo asignado en el sistema");
+                Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.Id == empleado.Cargo.Id).Single();
+                if (cargo.Departamento == null)
+                    throw new Exception("El cargo del empleado no se encuentra asignado a ningún departamento");
+                return cargo.Departamento; 
+            } 
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

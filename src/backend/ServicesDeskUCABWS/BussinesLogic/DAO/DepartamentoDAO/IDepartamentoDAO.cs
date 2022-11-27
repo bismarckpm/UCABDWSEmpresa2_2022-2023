@@ -20,5 +20,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public List<DepartamentoDto> DeletedDepartamento();
         public List<DepartamentoDto> NoAsociado();
         public IEnumerable<SelectListItem> ListaDepartamentoGrupo();
+        public Departamento obtenerDepartamentoPorEmpleadoId(Guid empleadoId);
 	}
 }

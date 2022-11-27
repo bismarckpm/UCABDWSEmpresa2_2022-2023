@@ -211,5 +211,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
 			}
 			return response;
 		}
-	}
+        [HttpGet("BuscarDepartamentoPorEmpleado/")]
+        public ApplicationResponse<Departamento> BuscarDepartamentoPorEmpleado(string empleadoId)
+        {
+            var response = new ApplicationResponse<Departamento>();
+            try
+            {
+                response.Data= _departamentoDAO.obtenerDepartamentoPorEmpleadoId(new Guid(empleadoId));
+                response.Message = $"Departamento del empleado {empleadoId}";
+            }
+            catch (Exception ex)
+            {
+                response.Data = null;
+                response.Success = false;
+                response.Message = ex.Message;
+                //response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+    }
 }
