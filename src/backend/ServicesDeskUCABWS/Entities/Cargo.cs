@@ -9,11 +9,11 @@ namespace ServicesDeskUCABWS.Entities
         [Key]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string nombre_departamental { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(150)]
+        [StringLength(250)]
         public string descripcion { get; set; } = string.Empty;
 
         [Required]
@@ -22,7 +22,23 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Tipo_Cargo> Tipo_Cargo { get; set; }
+        [Required]
+        public Tipo_Cargo Tipo_Cargo { get; set; }
+        [Required]
         public Departamento Departamento { get; set; }
+
+        public Cargo(string nombre_departamenta, string descripcion)
+        {
+            Id = Guid.NewGuid();
+            nombre_departamental = nombre_departamenta;
+            this.descripcion = descripcion;
+            fecha_creacion = DateTime.UtcNow;
+            fecha_ultima_edicion = fecha_ultima_edicion;
+        }
+
+        public Cargo()
+        {
+
+        }
     }
 }

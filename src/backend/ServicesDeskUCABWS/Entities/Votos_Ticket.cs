@@ -6,14 +6,27 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Votos_Ticket
     {
-        [Key]
-        public Guid Id { get; set; }
-        public aprobado aprobado { get; set; }
+        public Guid IdUsuario { get; set; }
+        public Guid IdTicket { get; set; }
+        public string voto { get; set; }
         public string comentario { get; set; }
-        public DateTime fecha { get; set; }
-        public Usuario Usuario { get; set; }
+        public DateTime? fecha { get; set; }
+
+        public int? Turno { get; set; }
+        public Empleado Empleado { get; set; }
         public Ticket Ticket { get; set; }
+
+        /*public Votos_Ticket(Empleado empleado, Ticket ticket)
+        {
+            this.Id = new Guid();
+            this.voto = "pendiente";
+            this.Empleado = empleado;
+            this.Ticket = ticket;
+
+        }*/
     }
+
+
 
     public enum aprobado
     {
@@ -24,4 +37,5 @@ namespace ServicesDeskUCABWS.Entities
         [EnumMember(Value = "EE")]
         en_espera,
     }
+
 }

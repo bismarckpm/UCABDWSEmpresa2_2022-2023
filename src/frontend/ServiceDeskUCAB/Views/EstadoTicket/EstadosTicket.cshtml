@@ -1,0 +1,107 @@
+﻿@using System.Text.RegularExpressions
+@model List<ServiceDeskUCAB.Models.EstadoTicket.TipoEstado>;
+@{
+    ViewData["Title"] = "Estados Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mt-5">
+    <div class="card-header">        
+         <h1 class="fs-3 mb-0 text-center">Todas los tipos de estados</h1>
+    </div>
+    @if (Context.Request.Query["message"].Count() > 0)
+    {
+        <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+            <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="card-body table-responsive">
+
+        <a asp-action="EstadoNuevo" asp-controller="EstadoTicket" asp-route-id="@null" class="btn btn-primary btn-sm">Nuevo tipo de estado</a>
+       
+        @if (Model != null && Model.Count() > 0){
+            <hr class="mb-3"/>
+            <table class="table mt-1 table-striped" id="tabla_id">
+                <thead>
+                    <tr>
+                        <th>Nombre del estado</th>
+                        <th>Descripción</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tipoEstado in Model)
+                    {
+                        <tr>
+                            <td style="font-size: 15px">
+                                <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-black fw-normal border-secondary border border-2 m-0">
+                                    @tipoEstado.Nombre
+                                </p>
+                            </td>
+                            <td>
+                                <p style="font-size: 14px" class="p-1 pe-2 ps-2 m-0">
+                                    @tipoEstado.Descripcion
+                                </p>
+                            </td>
+                            <td>
+                                <a asp-action="EstadoEditar" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-primary btn-sm">Editar</a>
+                                <a data-bs-toggle="modal"  data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+@if (Model != null){
+    @foreach (var tipoEstado in Model)
+    {
+        <div class="modal fade" id="@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Deseas <b>Eliminar</b> este estado?</h5>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                        <a type="button" asp-action="EliminarEstado" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar estado</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tabla_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+    </script>
+
+}

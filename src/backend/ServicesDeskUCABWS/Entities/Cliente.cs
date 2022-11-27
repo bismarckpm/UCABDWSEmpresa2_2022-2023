@@ -1,6 +1,6 @@
 ﻿namespace ServicesDeskUCABWS.Entities
 {
-    public class Cliente: Usuario
+    public class Cliente : Usuario
     {
     }
 }

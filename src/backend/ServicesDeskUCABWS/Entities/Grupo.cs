@@ -9,7 +9,7 @@ namespace ServicesDeskUCABWS.Entities
     public class Grupo
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         [Required]
         [StringLength(50)]
         public string nombre { get; set; } = string.Empty;
@@ -21,9 +21,26 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+       
+        public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        public HashSet<Departamento> Departamento { get; set; }
+
+        public virtual List<Departamento> departamentos { get; set; }
+        public Grupo(string nombre, string descripcion)
+        {
+            id = Guid.NewGuid();
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+            fecha_creacion = DateTime.UtcNow;
+            fecha_ultima_edicion = DateTime.UtcNow;
+
+        }
+
+        public Grupo() { }
+
     }
+
+		
+
 }
+
