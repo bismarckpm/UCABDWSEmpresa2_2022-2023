@@ -7,8 +7,11 @@
 
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/usuarioView.css" />
+</head>
 
-<h1>Registrarar Usuario</h1>
+<h1>Registrar Usuario</h1>
 <section style="">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -74,10 +77,10 @@
                                  new {Style="border-radius: 10px",Class="form-control"})
                                 <span class="text-danger"></span>
                             </div>
-                            <div style="padding-top: 12px;margin-right: 8pc;" class="d-flex justify-content-end">
-                                <a type="button" style="background-color: #272727; border-color: #272727; border-radius: 10px;margin-right: 2pc" class="btn btn-primary" href='@Url.Action("Usuarios","Usuario")'>Cancelar</a>
-                                <button type="submit" style="background-color: #272727; border-color: #272727; border-radius: 10px" class="btn btn-primary">Registrar</button>
-                            </div>
+                                <div style="padding-top: 20px;width:100%" class="d-flex justify-content-center">
+                                <a type="button" style="margin-right: 2pc;padding-top: 4px;padding-left: 10px;" class="botonCancelar" href='@Url.Action("Usuarios","Usuario")'>Cancelar</a>
+                                <button type="submit" class="botonCrear">Registrar</button>
+                                </div>
 
 
                             </div>

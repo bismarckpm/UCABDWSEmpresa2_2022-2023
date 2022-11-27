@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ModuloPlantillasNotificaciones.Models.EstadoTicket;
 using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ModuloPlantillasNotificaciones.Controllers
 {
+    [Authorize]
     public class EstadoTicketController : Controller
     {
         private readonly ILogger<EstadoTicketController> _logger;

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using ServicesDeskUCABWS.Entities;
+using System;
 using System.Diagnostics.Contracts;
 using static ServicesDeskUCABWS.Entities.RolUsuario;
 
@@ -37,11 +39,16 @@ namespace ServicesDeskUCABWS.Data
 
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
+
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162"), Name="Administrador"},
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298163"), Name = "Empleado" },
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298161"), Name = "Cliente" });
             modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
 
-        }       
 
+        }
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }
@@ -76,5 +83,8 @@ namespace ServicesDeskUCABWS.Data
                 return this;
             }
         }
+
+    }       
+
+
     }
-}
