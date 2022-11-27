@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminAccess")]
     public class UsuarioController : Controller
     {
         private readonly ILogger<UsuarioController> _logger;

@@ -24,6 +24,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
         {
             //var current = User.Identities.First().Claims.ToList()[2].Value;
             var current = User.Identities.First().Claims;
+            var boold = User.Identities.First().Claims.ToList()[2].Value == "Cliente";
             if (current == null)
             {
                 Console.WriteLine("asdasdadas");
