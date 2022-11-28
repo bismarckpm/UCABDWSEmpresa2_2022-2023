@@ -22,7 +22,7 @@
                     <option selected>Seleccione un departamento</option>
                     @foreach (var depa in @Model.departamentos)
                     {
-                        <option value="@depa.DepartamentoID">@depa.Nombre</option>
+                        <option value="@depa.id">@depa.nombre</option>
                     }
                 </select>
             </div>
@@ -32,7 +32,7 @@
                     <option selected>Seleccione un tipo de ticket</option>
                     @foreach (var item in @Model.tipo_tickets)
                     {
-                        <option value="@item.TipoTicketID">@item.Nombre</option>
+                        <option value="@item.tipo">@item.nombre</option>
                     }
                 </select>
             </div>

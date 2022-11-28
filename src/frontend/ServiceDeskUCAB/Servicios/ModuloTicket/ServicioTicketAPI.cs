@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ModelsVotos;
 
 namespace ServiceDeskUCAB.Servicios
 {

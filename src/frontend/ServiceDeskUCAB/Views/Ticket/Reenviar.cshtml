@@ -36,7 +36,7 @@
                {
                   @foreach (var depa in @Model.departamentos)
                   {
-                      <option value="@depa.DepartamentoID">@depa.Nombre</option>
+                      <option value="@depa.id">@depa.nombre</option>
                   }
                   }
                catch(Exception e)
@@ -55,7 +55,7 @@
                {
                   @foreach (var item in @Model.tipo_tickets)
                   {
-                      <option value="@item.TipoTicketID">@item.Nombre</option>
+                      <option value="@item.Id">@item.nombre</option>
                   }
                }
                catch (Exception e)
