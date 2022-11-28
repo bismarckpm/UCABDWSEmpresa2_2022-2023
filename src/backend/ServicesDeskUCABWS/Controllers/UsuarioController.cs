@@ -213,7 +213,7 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
-        [HttpPut]
+        /*[HttpPut]
         [Route("ActualizarUsuarioPassword/")]
         public ApplicationResponse<String> ActualizarPassword([FromBody] UserPasswordDto usuario)
         {
@@ -231,7 +231,7 @@ namespace ServicesDeskUCABWS.Controllers
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
         [HttpPost]
         [Route("login/")]

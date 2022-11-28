@@ -13,7 +13,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         public UsuarioDto eliminarUsuario(Guid id);
         public Empleado AgregarEmpleado(Usuario usuario);
         public UserDto_Update ActualizarUsuario(Usuario usuario);
-        public UserPasswordDto ActualizarUsuarioPassword(Usuario usuario);
+        //public UserPasswordDto ActualizarUsuarioPassword(Usuario usuario);
         public string RecuperarClave(string Email);
         //public string ValidarCorreo(string Email);
         public Usuario consularUsuarioID (Guid id); 

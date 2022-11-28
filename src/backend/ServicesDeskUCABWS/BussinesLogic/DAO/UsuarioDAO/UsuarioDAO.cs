@@ -250,33 +250,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             }
         }
 
-        public UserPasswordDto ActualizarUsuarioPassword(Usuario usuario)
-        {
-            try
-            {
-                (from p in _dataContext.Usuarios
-                 where p.Id == usuario.Id
-                 select p).ToList().ForEach(x => x.password = usuario.password);
-
-                _dataContext.DbContext.SaveChanges();
-
-                var data = _dataContext.Usuarios.Where(d => d.Id == usuario.Id).Select(
-                    user => new UserPasswordDto
-                    {
-                        id = user.Id,
-                        password = user.password,
-                    }
-
-                );
-                return data.First();
-
-            }
-
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("La id de usuario no existe", ex);
-            }
-        }
         public string ValidarCorreo(string Email)
         {
             try
