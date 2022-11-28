@@ -141,8 +141,8 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
 
         //Test para la excepcion ExceptionsControl para consultar tipo ticket agregar ticket    
-        [TestMethod]
-        public void EntrarEnExceptionControlConsultarTest()
+        //[TestMethod]
+        /*public void EntrarEnExceptionControlConsultarTest()
         {
           
             //arrage
@@ -151,7 +151,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             //assert
             Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultaTipoTicketAgregarTicket(It.IsAny<Guid>()));
 
-        }
+        }*/
 
     }
 }

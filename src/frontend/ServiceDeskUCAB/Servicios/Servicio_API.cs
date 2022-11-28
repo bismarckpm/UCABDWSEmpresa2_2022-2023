@@ -89,7 +89,7 @@ namespace ServiceDeskUCAB.Servicios
             
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/(\"{idUsuario}\")");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/" + idUsuario);  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {

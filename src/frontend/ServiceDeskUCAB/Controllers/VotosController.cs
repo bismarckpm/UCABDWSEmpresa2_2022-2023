@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize(Policy = "EmpleadoAccess")]
     public class VotosController : Controller
     {
         private readonly IServicio_API _servicioApi;
@@ -14,8 +16,7 @@ namespace ServiceDeskUCAB.Controllers
 
         public async Task<IActionResult> VistaTicket()
         {
-            var idUsuario = //"E7AFDCF7-11DA-49FD-8503-C630D524DD55"; //Claim de Id usuario
-                            "4913F598-71FD-4E55-B38A-F5D471F18296";
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             List<Votos_Ticket> lista = await _servicioApi.ObtenerVotos(idUsuario);
 
             return View(lista);
