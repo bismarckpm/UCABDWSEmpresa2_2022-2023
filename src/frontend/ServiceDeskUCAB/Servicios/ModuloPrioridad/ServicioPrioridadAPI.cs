@@ -8,11 +8,11 @@ using System.Text;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Servicios;
 using System.Xml.Linq;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public class ServicioPrioridadAPI : IServicioPrioridadAPI
     {

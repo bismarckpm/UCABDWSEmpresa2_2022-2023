@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ServicesDeskUCAB.Models;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.ViewModel
+
+namespace ServiceDeskUCAB.ViewModel
 {
 	public class TicketNuevoViewModel
 	{

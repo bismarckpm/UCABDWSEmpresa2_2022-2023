@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
     public class Tipo_Ticket
     {

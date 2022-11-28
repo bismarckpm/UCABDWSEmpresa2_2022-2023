@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ServicesDeskUCAB.Models;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public interface IServicioPrioridadAPI 
     {

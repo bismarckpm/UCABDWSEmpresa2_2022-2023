@@ -1,8 +1,8 @@
-﻿@model ServicesDeskUCAB.ViewModel.TicketDetailsViewModel;
+﻿@model ServiceDeskUCAB.ViewModel.TicketDetailsViewModel;
 
 <div>
     <h1 style="display:inline-block">Detalles del Ticket -</h1> <h4 style="display:inline-block">@Model.ticket.ticket_id</h4>
-    
+
     <hr />
 </div>
 
@@ -16,25 +16,30 @@
             <h6><span class="badge bg-primary rounded-pill"><a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id">Ticket reenviado</a></span></h6>
         }
 
-        @if(Model.ticket.fecha_eliminacion == DateTime.MinValue)
+        @if (Model.ticket.fecha_eliminacion == null)
         {
-            <div class="mb-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Cambiar estado</option>
-                    @try
-                    {
-                        @foreach (var item in Model.estados)
+            <form method="post" asp-controller="Ticket" asp-action="CambiarEstado" asp-route-ticketId="@Model.ticket.ticket_id">
+                <div class="mb-3">
+                    <input asp-for="@Model.actualizarDTO.ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none"/>
+                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" aria-label="Default select example" required>
+                        <option selected>Cambiar estado</option>
+                        @try
                         {
-                            <option value="@item">@item.nombre</option>
+                            @foreach (var item in Model.estados)
+                            {
+                                <option value="@item">@item.nombre</option>
+                            }
                         }
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
 
-                </select>
-            </div>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Enviar</button>
+            </form>
+
         }
     </div>
 
@@ -88,12 +93,12 @@
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
             </div>
         </div>
-         
-        
+
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de eliminación:</b></label>
             <div class="col-sm-8">
-                @if (Model.ticket.fecha_eliminacion != DateTime.MinValue)
+                @if (Model.ticket.fecha_eliminacion != null)
                 {
                     <input type="text" readonly class="form-control-plaintext" value="-">
                 }
@@ -103,14 +108,14 @@
                 }
             </div>
         </div>
-             
+
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Emisor:</b></label>
             <div class="col-sm-8">
                 <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.empleado_correo">
             </div>
         </div>
-         
+
     </div>
 </div>
 
@@ -137,7 +142,7 @@
                     <tr>
                         <td>@item.estado_nombre</td>
                         <td>@item.fecha_inicio</td>
-                        @if(item.fecha_fin == DateTime.MinValue)
+                        @if (item.fecha_fin == null)
                         {
                             <td>-</td>
                         }
@@ -147,11 +152,11 @@
                         }
                     </tr>
                 }
-             }
-             catch(Exception e)
-             {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e.Message);
-             }
+            }
 
 
         </tbody>
@@ -178,7 +183,7 @@
             <tbody>
                 @try
                 {
-                    @foreach(var item in Model.familiaTicket)
+                    @foreach (var item in Model.familiaTicket)
                     {
                         <tr>
                             <td>@item.titulo</td>
@@ -192,14 +197,14 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketID="@item.Id">Ver detalles</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver detalles</a></li>
                                     </ul>
                                 </div>
                             </td>
                         </tr>
                     }
-                 }
-                 catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -239,7 +244,7 @@
                     }
                 }
 
-            },);
+            });
         });
 
         $(document).ready(function () {
@@ -285,7 +290,6 @@
                 boton.className = "btn btn-success";
             }
 
-        }
-    </script>
+        }</script>
 
 }

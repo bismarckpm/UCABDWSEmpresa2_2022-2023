@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
     public class Etiqueta
     {

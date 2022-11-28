@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServicesDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.ViewModel
+namespace ServiceDeskUCAB.ViewModel
 {
 	public class TicketDetailsViewModel
 	{
@@ -14,7 +16,7 @@ namespace ServicesDeskUCAB.ViewModel
 
 		public List<Estado> estados;
 
-		public string message;
+		public ActualizarDTO actualizarDTO;
 	}
 }
 

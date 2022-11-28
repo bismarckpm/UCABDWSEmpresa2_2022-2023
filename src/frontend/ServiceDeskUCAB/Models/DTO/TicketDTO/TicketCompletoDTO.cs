@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
 	public class TicketCompletoDTO
     {

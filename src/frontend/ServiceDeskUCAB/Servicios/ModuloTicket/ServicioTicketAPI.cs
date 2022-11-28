@@ -10,8 +10,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
 	public class ServicioTicketAPI : IServicioTicketAPI
 	{

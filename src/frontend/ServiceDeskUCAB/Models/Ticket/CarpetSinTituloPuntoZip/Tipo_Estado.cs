@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using ServicesDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
     public class Tipo_Estado
     {

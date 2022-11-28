@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
     public class Estado
     {

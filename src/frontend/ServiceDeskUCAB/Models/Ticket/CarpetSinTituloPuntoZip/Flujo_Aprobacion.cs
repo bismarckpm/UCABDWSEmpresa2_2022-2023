@@ -1,5 +1,5 @@
 ﻿using System;
-namespace ServicesDeskUCAB.Models
+namespace ServiceDeskUCAB.Models
 {
     public class Flujo_Aprobacion
     {

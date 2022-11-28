@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Servicios;
+using ServiceDeskUCAB.ViewModel;
 using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
-using ServicesDeskUCAB.ViewModel;
 
-namespace ServicesDeskUCAB.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class TicketController : Controller
     {

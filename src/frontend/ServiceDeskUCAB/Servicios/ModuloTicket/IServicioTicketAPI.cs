@@ -4,8 +4,9 @@ using ServicesDeskUCAB.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
 	public interface IServicioTicketAPI
 	{

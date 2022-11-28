@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Servicios;
 
-namespace ServicesDeskUCAB.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class PrioridadController : Controller
     {
