@@ -409,7 +409,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 });
                 anadirFamiliaHl(ticketPrincipalId, nuevaFamilia, true);
                 respuesta.Data = "Proceso de Merge realizado exitosamente";
-                respuesta.Message = "Mano hicimos merge tu eres loco";
+                respuesta.Message = "Proceso de Merge realizado exitosamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -454,6 +454,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticket.tipoTicket_id = solicitudTicket.tipoTicket_id;
             ticket.titulo = solicitudTicket.titulo;
             ticket.ticketPadre_Id = solicitudTicket.ticketPadre_Id;
+            ticket.nro_cargo_actual = solicitudTicket.nro_cargo_actual;
 
             try
             {
@@ -533,7 +534,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 if (lista.Count == 0)
                     throw new Exception("El ticket no tiene integrantes en su familia");
                 respuesta.Data = lista;
-                respuesta.Message = "Mano ahí tienes a tu familia de tickets criminal tu eres loco";
+                respuesta.Message = "Familia de tickets";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -568,7 +569,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 });
                 anadirFamiliaHl(ticketPrincipalId, nuevaFamilia, true);
                 respuesta.Data = "Proceso de Merge realizado exitosamente";
-                respuesta.Message = "Mano hicimos merge tu eres loco";
+                respuesta.Message = "Proceso de Merge realizado exitosamente";
                 respuesta.Success = true;
             }
             catch (Exception e)
@@ -587,7 +588,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 eliminarTicketHl(id);
                 respuesta.Data = "Ticket eliminado satisfactoriamente";
-                respuesta.Message = "Se eliminó el ticket mano";
+                respuesta.Message = "Ticket eliminado satisfactoriamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -709,7 +710,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             });
             return bitacoras;
         }
-
         public void inicializarFamiliaTicketHl(TicketDTO nuevoTicket)
         {   //PARA LOS TICKETS HERMANOS
             nuevoTicket.Familia_Ticket = new Familia_Ticket()
@@ -757,6 +757,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t=>t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Abiertos")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
@@ -764,6 +765,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Cerrados")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
@@ -771,6 +773,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion != null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");

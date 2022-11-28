@@ -68,7 +68,8 @@ namespace TicketUnitTest
                 empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c70"),
                 prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
                 tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40")
+                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40"),
+                nro_cargo_actual = 1
             };
             _contextMock.Setup(set => set.DbContext.SaveChanges());
             var application = "Ticket creado satisfactoriamente";
