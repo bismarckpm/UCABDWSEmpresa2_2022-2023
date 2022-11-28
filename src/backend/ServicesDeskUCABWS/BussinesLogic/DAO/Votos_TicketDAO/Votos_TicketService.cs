@@ -276,7 +276,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
 
 
-            var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
+            var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
 
 
             var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket

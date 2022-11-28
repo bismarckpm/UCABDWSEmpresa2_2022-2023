@@ -181,7 +181,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 var ListaEmpleado = new List<Empleado>();
                 foreach (var c in Cargos)
                 {
-                    ListaEmpleado.AddRange(_dataContext.Empleados.Where(x => x.Cargo.Id == c.Id));
+                    ListaEmpleado.AddRange(_dataContext.Empleados.Where(x => x.Cargo.id == c.id));
                 }
 
                 var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
@@ -227,7 +227,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();
 
 
-                var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
+                var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
 
 
                 var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
@@ -707,7 +707,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                 .Where(empleado => empleado.Id == solicitudTicket.empleado_id).FirstOrDefault();
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
-                                       .Where(t => t.Id == nuevoTicket.Emisor.Cargo.Id).FirstOrDefault();
+                                       .Where(t => t.id == nuevoTicket.Emisor.Cargo.id).FirstOrDefault();
             Guid prueba = cargo.Departamento.id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             Estado estado = _dataContext.Estados

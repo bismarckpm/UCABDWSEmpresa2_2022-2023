@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.EstadoTicket;
@@ -8,14 +9,18 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize(Policy = "AdminAccess")]
     public class EstadoTicketController : Controller
     {
         private readonly ILogger<EstadoTicketController> _logger;
         private readonly IServicioPlantillaNotificacion_API _servicioApiPlantillaNotificacion;
         private readonly IServicioTipoEstado_API _servicioApiTipoEstado;
+
 
         public EstadoTicketController(ILogger<EstadoTicketController> logger, IServicioTipoEstado_API servicioApiTipoEstado)
         {

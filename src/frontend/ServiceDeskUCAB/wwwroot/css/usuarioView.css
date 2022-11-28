@@ -1,0 +1,64 @@
+:root {
+    --color-primary: #109ea7;
+    --color-primary-dark: #0a767d;
+    --color-danger: #e74a3b;
+    --color-danger-dark: #bd2b1d;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-warning-dark: #d88e1e;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-sidebar: #272727;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-primary-variant: #111e88;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+    --btn-radius: 10px;
+    --card-padding: 1.8rem;
+    --padding: 1.2rem;
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+main .botonEliminar {
+    border: none;
+    background-color: var(--color-danger);
+    color: var(--color-white);
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 15px;
+    height: 30px;
+    width: 80px;
+    transition: all 300ms ease;
+}
+
+main .botonCancelar {
+    border: none;
+    background-color: var(--color-dark-variant);
+    color: var(--color-white);
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 15px;
+    height: 30px;
+    width: 80px;
+    transition: all 300ms ease;
+}
+
+main .botonCrear {
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 15px;
+    height: 30px;
+    width: 80px;
+    transition: all 300ms ease;
+}
+
+

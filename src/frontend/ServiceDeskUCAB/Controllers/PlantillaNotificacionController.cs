@@ -9,9 +9,11 @@ using ServiceDeskUCAB.Models.PlantillaNotificaciones;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel.PlantillaNotificaciones;
 using ServiceDeskUCAB.Models.EstadoTicket;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize(Policy = "AdminAccess")]
     public class PlantillaNotificacionController : Controller
     {
         private readonly ILogger<PlantillaNotificacionController> _logger;

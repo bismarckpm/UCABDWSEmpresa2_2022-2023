@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using ServicesDeskUCABWS.Entities;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using static ServicesDeskUCABWS.Entities.RolUsuario;
 
@@ -38,6 +41,18 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
             modelBuilder.Entity<Tipo_Estado>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
+
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162"), Name="Administrador"},
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298163"), Name = "Empleado" },
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298161"), Name = "Cliente" });
+
+            modelBuilder.Entity<Administrador>().HasData(
+                new Administrador { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), fecha_creacion = DateTime.Now.Date, correo = "admin@gmail.com", password = "admin", fecha_eliminacion = default(DateTime) });
+
+            modelBuilder.Entity<RolUsuario>().HasData(
+                new RolUsuario { UserId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), RolId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162") });
+
             modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
@@ -51,6 +66,7 @@ namespace ServicesDeskUCABWS.Data
 
 
 
+        
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ViewModel;
@@ -6,6 +7,8 @@ using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
+
+    [Authorize(Policy = "AdminAccess")]
     public class TipoTicketController : Controller
     {
        

@@ -34,7 +34,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
             mapper = new Mapper(configuration);
             context = new Mock<IDataContext>();
             GrupoService = new GrupoDAO(context.Object);
-            DepartamentoService = new DepartamentoDAO(context.Object,mapper);
+            DepartamentoService = new DepartamentoDAO(context.Object,GrupoService,mapper);
             context.SetupDbContextData();
         }
 

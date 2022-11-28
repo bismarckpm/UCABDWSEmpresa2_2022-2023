@@ -185,11 +185,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             {
                 new Tipo_Cargo("Jefe","descripcion C1", "Alta")
                 {
-                    Id=Guid.Parse("DDC1A0D0-FA70-48E1-9ACE-747057B0002C")
+                    id=Guid.Parse("DDC1A0D0-FA70-48E1-9ACE-747057B0002C")
                 },
                 new Tipo_Cargo("Gerente","descripcion C2", "Media")
                 {
-                    Id=Guid.Parse("24259113-437B-417F-9159-A8E27C34A871")
+                    id=Guid.Parse("24259113-437B-417F-9159-A8E27C34A871")
                 },
                 new Tipo_Cargo("Empleado","descripcion C3","Baja"),
                 new Tipo_Cargo("Becario","descripcion C4","Esclavo"),
@@ -197,7 +197,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             //_mockContext.Tipos_Cargos.AddRange(ListaTipoCargo);
             _mockContext.Setup(c => c.Tipos_Cargos).Returns(ListaTipoCargo.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Tipos_Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoCargo.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Tipos_Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
 
@@ -223,7 +223,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 },
                 new Cargo("Becario D1","Descripccion C1")
                 {
-                    Id = Guid.Parse("17A696EE-BDCC-418C-BF60-B59F7A764416"),
+                    id = Guid.Parse("17A696EE-BDCC-418C-BF60-B59F7A764416"),
                     Departamento = ListaDepartamento[0],
                     Tipo_Cargo = ListaTipoCargo[3]
                 },
@@ -254,7 +254,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             //_mockContext.Cargos.AddRange(ListaCargo);
             _mockContext.Setup(c => c.Cargos).Returns(ListaCargo.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCargo.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
             //_mockContext.Setup(mr => mr.Tipos_Cargos.Update(It.IsAny<int>(), It.IsAny<string>())).Verifiable();
@@ -456,32 +456,32 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaFlujoAprobacion = new List<Flujo_Aprobacion>
             {
-                new Flujo_Aprobacion(ListaTipoCargo[0].Id,ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[0].id,ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[0].Id, ListaTipoTickets[2].Id, 2,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[0].id, ListaTipoTickets[2].Id, 2,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[2].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[2].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[3].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[3].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[3],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[4].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[4].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[4],
                     Tipo_Cargo = ListaTipoCargo[1]

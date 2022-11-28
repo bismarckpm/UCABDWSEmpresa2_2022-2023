@@ -254,6 +254,100 @@ namespace ServiceDeskUCAB.Servicios
             return _json_respuesta;
         }
 
+        public async Task<JObject> EliminarRol(RolUser user)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await cliente.DeleteAsync($"api/AsignacionRol/EliminarRol/{user.idusuario}");
+                var respuesta = await response.Content.ReadAsStringAsync();
+
+                var responseAgregate = await cliente.PostAsync("api/AsignacionRol/AsignarRol", content);
+                var respuestaAgregate = await response.Content.ReadAsStringAsync();
+
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                JObject _json_respuestaAgregate = JObject.Parse(respuestaAgregate);
+
+                return _json_respuestaAgregate;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+        }
+
+
+
+        public async Task<JObject> ValidarLogin(Credenciales_Login user)
+        {
+
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/login", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+        }
+
+
+        public async Task<JObject> RecuperarContraseña(RecuperarPasswordModel email)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(email), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PostAsync("api/Usuario/RecuperarClave", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return _json_respuesta;
+
+        }
 
     }
 }

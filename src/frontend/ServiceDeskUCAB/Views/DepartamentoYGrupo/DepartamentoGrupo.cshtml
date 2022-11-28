@@ -1,4 +1,4 @@
-﻿@model Tuple<List<ServiceDeskUCAB.Models.DTO.DepartamentoDTO.DepartamentoDto>,List<ServiceDeskUCAB.Models.DTO.GrupoDTO.GrupoDto>>
+﻿@model Tuple<List<ServiceDeskUCAB.Models.DepartamentoModel>,List<ServiceDeskUCAB.Models.GrupoModel>>
 
 <head>
     <link rel="stylesheet" href="~/css/Sidebar.css" />
@@ -189,10 +189,10 @@
                             <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
                                 Eliminar
                             </button>
-
-                             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
                         
                              <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
+                       
                         </td>
                     </tr>
                 }
@@ -260,3 +260,5 @@
       </div>
        
 </div>
+
+

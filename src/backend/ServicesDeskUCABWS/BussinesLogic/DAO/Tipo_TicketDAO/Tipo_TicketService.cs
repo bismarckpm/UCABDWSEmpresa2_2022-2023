@@ -131,11 +131,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 {
                     tipo_ticket.Flujo_Aprobacion =
                    context.Tipos_Cargos
-                   .Where(x => tipo_TicketDTO.Flujo_Aprobacion.Select(y => y.IdTipoCargo.ToString().ToUpper()).Contains(x.Id.ToString().ToUpper()))
+                   .Where(x => tipo_TicketDTO.Flujo_Aprobacion.Select(y => y.IdTipoCargo.ToString().ToUpper()).Contains(x.id.ToString().ToUpper()))
                    .Select(s => new Flujo_Aprobacion()
                    {
                        Tipo_Cargo = s,
-                       IdTipo_cargo = s.Id,
+                       IdTipo_cargo = s.id,
                        Tipo_Ticket = tipo_ticket,
                        IdTicket = tipo_ticket.Id
 
@@ -218,11 +218,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 {
                     tipo_ticket.Flujo_Aprobacion =
                     context.Tipos_Cargos
-                    .Where(x => Tipo_TicketDTO.Flujo_Aprobacion.Select(y => y.IdTipoCargo).Contains(x.Id.ToString().ToUpper()))
+                    .Where(x => Tipo_TicketDTO.Flujo_Aprobacion.Select(y => y.IdTipoCargo).Contains(x.id.ToString().ToUpper()))
                     .Select(s => new Flujo_Aprobacion()
                     {
                         Tipo_Cargo = s,
-                        IdTipo_cargo = s.Id,
+                        IdTipo_cargo = s.id,
                         Tipo_Ticket = tipo_ticket,
                         IdTicket = tipo_ticket.Id
                     }).ToList();

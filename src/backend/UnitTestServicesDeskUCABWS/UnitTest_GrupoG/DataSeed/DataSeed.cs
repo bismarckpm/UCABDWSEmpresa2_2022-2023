@@ -128,7 +128,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                     cedula = 51353,
                     Cargo = new Cargo()
                     {
-                        Id = Guid.NewGuid(),
+                        id = Guid.NewGuid(),
                         nombre_departamental = "nombreDepartamental"
                     }
                 }
