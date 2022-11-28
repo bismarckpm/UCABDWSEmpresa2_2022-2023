@@ -3,8 +3,10 @@ using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
 	public interface IServicioTicketAPI
 	{
@@ -22,7 +24,8 @@ namespace ServicesDeskUCAB.Servicios
 
         Task<JObject> GuardarMerge(FamiliaMergeDTO Objeto);
 
-        //Task<JObject> Editar();
+        Task<JObject> Cancelar(string ticketId);
+        Task<JObject> CambiarEstado(string Objeto);
     }
 }
 

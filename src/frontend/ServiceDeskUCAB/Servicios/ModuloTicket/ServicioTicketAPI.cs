@@ -9,8 +9,10 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
 	public class ServicioTicketAPI : IServicioTicketAPI
 	{
@@ -217,22 +219,17 @@ namespace ServicesDeskUCAB.Servicios
             }
             return null;
         }
-
-
-        /*
-        public async Task<JObject> Editar(Ticket Objeto)
+        public async Task<JObject> Cancelar(string Objeto)
         {
-            bool respuesta = false;
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
-                var response = await cliente.PutAsync($"Ticket/Editar/", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    respuesta = true;
-                }
+                var response = await cliente.PutAsync($"Ticket/Cancelar/{Objeto}", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
             }
             catch (HttpRequestException ex)
             {
@@ -241,11 +238,35 @@ namespace ServicesDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No edito el ticket, algo a sucedido ", e.Message);
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
             }
-            return respuesta;
-        }*/
+            return null;
+        }
+        public async Task<JObject> CambiarEstado(string Objeto)
+        {
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PutAsync($"Ticket/CambiarEstado/{Objeto}", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return null;
+        }
 
     }
 }
+
 

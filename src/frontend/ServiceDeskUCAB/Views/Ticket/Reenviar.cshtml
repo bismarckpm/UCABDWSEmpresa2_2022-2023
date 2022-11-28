@@ -1,4 +1,4 @@
-﻿@model ServicesDeskUCAB.ViewModel.TicketReenviarDTOViewModel;
+﻿@model ServiceDeskUCAB.ViewModel.TicketReenviarDTOViewModel;
 
 <div>
     <h1>Reenviar Ticket</h1>
@@ -23,8 +23,6 @@
     </div>
 
     <form method="post" asp-controller="Ticket" asp-action="GuardarReenviar">
-        <h1>Padre @Model.ticket.ticketPadre_Id</h1>
-        <h1>Empleado @Model.ticket.empleado_id"</h1>
         <input class="d-none" asp-for="@Model.ticket.ticketPadre_Id" value="@Model.ticket.ticketPadre_Id" required readonly/>
         <input class="d-none" asp-for="@Model.ticket.empleado_id" value="@Model.ticket.empleado_id" requerid readonly/>
 
@@ -36,7 +34,7 @@
                {
                   @foreach (var depa in @Model.departamentos)
                   {
-                      <option value="@depa.DepartamentoID">@depa.Nombre</option>
+                      <option value="@depa.id">@depa.nombre</option>
                   }
                   }
                catch(Exception e)
@@ -55,7 +53,7 @@
                {
                   @foreach (var item in @Model.tipo_tickets)
                   {
-                      <option value="@item.TipoTicketID">@item.Nombre</option>
+                      <option value="@item.Id">@item.nombre</option>
                   }
                }
                catch (Exception e)

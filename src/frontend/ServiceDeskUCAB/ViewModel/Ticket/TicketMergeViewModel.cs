@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using ServicesDeskUCAB.Models;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ModelsVotos;
 
-namespace ServicesDeskUCAB.ViewModel
+namespace ServiceDeskUCAB.ViewModel
 {
-	public class FamiliaMergeDTOViewModel
+    public class FamiliaMergeDTOViewModel
     {
-		public TicketCompletoDTO ticket;
+        public TicketCompletoDTO ticket;
 
-		public List<TicketBasicoDTO> tickets;
+        public List<TicketBasicoDTO> tickets;
 
-		public Familia_Ticket familiaTicket;
-	}
+        public FamiliaMergeDTO familiaTicket;
+    }
 }
-

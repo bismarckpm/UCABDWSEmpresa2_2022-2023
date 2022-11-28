@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using ServicesDeskUCAB.Models;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models;
 
-namespace ServicesDeskUCAB.ViewModel
+namespace ServiceDeskUCAB.ViewModel
 {
-	public class TicketDetailsViewModel
-	{
-		public TicketCompletoDTO ticket;
+    public class TicketDetailsViewModel
+    {
+        public TicketCompletoDTO ticket;
 
-		public List<BitacoraDTO> bitacoraTicket;
+        public List<BitacoraDTO> bitacoraTicket;
 
-		public List<Ticket> familiaTicket;
+        public List<Ticket> familiaTicket;
 
-		public List<Estado> estados;
+        public List<Estado> estados;
 
-		public string message;
-	}
+        public int estadoId;
+    }
 }
-
