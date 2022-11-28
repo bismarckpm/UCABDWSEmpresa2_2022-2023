@@ -26,14 +26,15 @@ builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 builder.Services.AddAuthorization(options =>
 {
+    
     options.AddPolicy("ClienteAccess",
-         policy => policy.RequireAssertion(c=> c.User.Identities.First().Claims.ToList()[2].Value=="Cliente"));
+         policy => policy.RequireAssertion(c=> c.User.Identities.First().Claims.ToList().Count!=0 &&  c.User.Identities.First().Claims.ToList()[2].Value=="Cliente"));
 
     options.AddPolicy("AdminAccess",
-         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList()[2].Value == "Administrador"));
+         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList().Count != 0 && c.User.Identities.First().Claims.ToList()[2].Value == "Administrador"));
 
     options.AddPolicy("EmpleadoAccess",
-         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList()[2].Value == "Empleado"));
+         policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList().Count != 0 && c.User.Identities.First().Claims.ToList()[2].Value == "Empleado"));
 });
 
 var app = builder.Build();
