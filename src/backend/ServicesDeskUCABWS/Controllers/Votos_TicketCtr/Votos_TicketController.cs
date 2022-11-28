@@ -29,6 +29,12 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
 
         }
 
+        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO)
+        {
+            this._votos_ticketDAO = _votos_ticketDAO;
+
+        }
+
 
         // GET: Votos_Ticket/Details/5
         [HttpGet("Consulta/(\"{id}\")")]

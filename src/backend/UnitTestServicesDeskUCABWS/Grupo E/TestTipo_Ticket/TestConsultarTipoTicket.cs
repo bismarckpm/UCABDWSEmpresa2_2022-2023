@@ -127,18 +127,31 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
         }
 
-
+        //Test para la excepcion ExceptionsControl para consultar tipo ticket agregar ticket     
         [TestMethod]
-        public void CaminoFelizConsultarTipoTicketAgregarTicket()
+        public void ConsultarTipoTicketAgregarTicketTest()
         {
-            //arrange
-            var entrada = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87");
+            var id = new Guid("36B2054E-BC77-4EA7-A5CC-7BA9137BC20E");
+            //arrage
+            var result = TipoticketDAO.ConsultaTipoTicketAgregarTicket(id);
 
-            var result = TipoticketDAO.ConsultaTipoTicketAgregarTicket(entrada);
-
-            Assert.AreEqual(typeof(List<Tipo_TicketDTOSearch>), result.GetType());
+            //assert
+            Assert.IsTrue(result.Count() > 0);
         }
 
+
+        //Test para la excepcion ExceptionsControl para consultar tipo ticket agregar ticket    
+        [TestMethod]
+        public void EntrarEnExceptionControlConsultarTest()
+        {
+          
+            //arrage
+            context.Setup(a => a.Tipos_Tickets).Throws(new FormatException(""));
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultaTipoTicketAgregarTicket(It.IsAny<Guid>()));
+
+        }
 
     }
 }

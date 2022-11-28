@@ -1,4 +1,6 @@
-﻿namespace ReporteFechas
+﻿using System.Data.SqlClient;
+
+namespace ReporteFechas
 {
 
 

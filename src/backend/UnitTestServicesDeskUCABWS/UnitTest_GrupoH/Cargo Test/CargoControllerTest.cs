@@ -23,7 +23,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         private readonly Mock<ICargoDAO> _serviceMock;
         public Cargo cargo = It.IsAny<Cargo>();
         public CargoDto cargoDto = It.IsAny<CargoDto>();
-        /*
+        
         public CargoControllerTest()
         {
             _serviceMock = new Mock<ICargoDAO>();
@@ -152,7 +152,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.IsFalse(ex.Success);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar cargo exitoso")]
+        /*TestMethod(displayName: "Prueba Unitaria Controlador para eliminar cargo exitoso")]
         public void EliminarCargo()
         {
             var cargo = new CargoDto()
@@ -181,9 +181,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar Cargos excepcion")]
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para eliminar Cargos excepcion")]
         public void EliminarCargosExcepcion()
         {
 
@@ -212,7 +212,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
-        }
+        }*/
 
         [TestMethod(displayName: "Prueba Unitaria Controlador para modificar cargo exitoso")]
         public void ActualizarCargo()
@@ -410,7 +410,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.IsFalse(ex.Success);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar tipo cargo a cargo exitoso")]
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para asignar tipo cargo a cargo exitoso")]
         public void AsignarTipoCargoToCargo()
         {
             var tipo = new Tipo_Cargo
@@ -453,9 +453,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar Tipo de cargo a Cargo excepcion")]
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para asignar Tipo de cargo a Cargo excepcion")]
         public void ExcepcionAsignarTipoCargoToCargo()
         {
             var tipo = new Tipo_Cargo
@@ -498,9 +498,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados exitoso")]
+       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados exitoso")]
         public void ListaCargoNoAsociado()
         {
             var tipo = new Tipo_Cargo
@@ -543,9 +543,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados excepcion")]
+       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados excepcion")]
         public void ExcepcionListaCargoNoAsociado()
         {
            
@@ -559,8 +559,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
         }
-
-
+       */
+       /*
         [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los Cargos no eliminados exitoso")]
         public void ListaCargonoEliminado()
         {
@@ -591,8 +591,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
         }
-
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no eliminados excepcion")]
+       */
+       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no eliminados excepcion")]
         public void ExcepcionListaCargosNoEliminados()
         {
             var tipo = new Tipo_Cargo
@@ -634,9 +634,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma exitosa")]
+       /* [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma exitosa")]
         public void EditarRelacion()
         {
             var tipo = new Tipo_Cargo
@@ -680,8 +680,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
         }
-
-        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma excepcion")]
+       */
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma excepcion")]
         public void ExcepcionEditarRelacion()
         {
             var tipo = new Tipo_Cargo
@@ -724,8 +724,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
-        }
-
-        */
+        }*/
     }
 }

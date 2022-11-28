@@ -69,6 +69,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                         }).First();
 
                 AgregarCargoATipoEstadoCargo(tipo);
+                _dataContext.DbContext.SaveChanges();
                 return nuevoTipoCargo;
             }
             catch (Exception ex)
@@ -91,7 +92,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 {
                     id = Guid.NewGuid(),
                     Departamento = departamento,
-                    Tipo_Cargo = Tipo_Cargo
+                    Tipo_Cargo = Tipo_Cargo,
                 });
             }
 

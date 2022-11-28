@@ -26,13 +26,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         private readonly Mock<IDataContext> _contextMockCTC;
         private readonly ITipo_CargoDAO _servicioTipoCargo;
         private readonly ITipo_CargoDAO _servicioCargo;
-        /*
+        
         public CargoDAOTest()
         {
             _contextMock = new Mock<IDataContext>();
             _contextMockCTC = new Mock<IDataContext>();
             _servicioCargo = new Tipo_CargoDAO(_contextMockCTC.Object);
-            _CargoDAO = new CargoService(_contextMock.Object, _servicioCargo);
+            _CargoDAO = new CargoService(_contextMock.Object);
             _contextMock.SetUpContextDataCargo();
             _contextMockCTC.SetUpContextDataCargo_TipoCargo();                    
 
@@ -181,7 +181,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.ConsultarPorID(request.id));
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para consultar departamentos por ID de tipo cargo")]
+        /*[TestMethod(displayName: "Prueba Unitaria para consultar departamentos por ID de tipo cargo")]
         public void ConsultarDepartamentosPorIDTipoCargo()
         {
 
@@ -208,9 +208,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             };
 
             var result = _CargoDAO.GetByIdCargo(cargo.id);
-            Assert.AreEqual(result.Count(), 0);
+            Assert.AreEqual(result.Count(), 1);
 
-        }
+        }*/
 
         [TestMethod(displayName: "Excepcion Prueba Unitaria para consultar Cargo por ID de tipo cargo")]
         public void ExcepcionConsultarCargoPorIDTipoCargo()
@@ -244,7 +244,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         }
 
 
-        [TestMethod(displayName: "Eliminar Cargo por ID")]
+        /*[TestMethod(displayName: "Eliminar Cargo por ID")]
         public void EliminarCargoPorID()
         {
             var request = new Cargo
@@ -268,9 +268,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             _contextMock.Setup(set => set.DbContext.SaveChanges());
             var result = _CargoDAO.eliminarCargo(request.id);
             Assert.IsInstanceOfType(obj, result.GetType());
-        }
+        }*/
 
-        [TestMethod(displayName: "Excepcion de eliminar cargo por ID")]
+       /*[TestMethod(displayName: "Excepcion de eliminar cargo por ID")]
         public void ExcepcionEliminarDepartamentoPorID()
         {
             var data = new Cargo
@@ -281,7 +281,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.eliminarCargo(data.id));
-        }
+        }*/
 
         [TestMethod(displayName: "Prueba Unitaria para editar un Cargo")]
         public void ActualizarCargoTest()
@@ -417,7 +417,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.DeletedCargo());
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para asociar grupos a cargos")]
+        /*[TestMethod(displayName: "Prueba Unitaria para asociar grupos a cargos")]
         public void AsignarTipoCargoACargo()
         {
 
@@ -443,9 +443,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             var result = _CargoDAO.AsignarTipoCargotoCargo(request.id, request.id.ToString());
 
             Assert.AreEqual(result.Count(), 1);
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria para asociar tipo cargo a cargo excepcion")]
+       /* [TestMethod(displayName: "Prueba Unitaria para asociar tipo cargo a cargo excepcion")]
         public void ExcepcionAsignarTipoCargoACargo()
         {
 
@@ -468,9 +468,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.AsignarTipoCargotoCargo(request.id, request.id.ToString()));
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria para listar los cargos que no están asociados a un tipo cargo")]
+        /*[TestMethod(displayName: "Prueba Unitaria para listar los cargos que no están asociados a un tipo cargo")]
         public void NoAsociado()
         {
 
@@ -479,16 +479,16 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             var result = _CargoDAO.NoAsociado();
 
             Assert.AreEqual(result.Count(), 1);
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria para listar los cargos que no están asociados a un tipo cargo excepcion")]
+        /*[TestMethod(displayName: "Prueba Unitaria para listar los cargos que no están asociados a un tipo cargo excepcion")]
         public void ExcepcionNoAsociado()
         {            
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.NoAsociado());
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los cargos con los tipos de cargos con lista de IDs de Departamentos vacios")]
+        /*[TestMethod(displayName: "Prueba Unitaria para editar relacion de los cargos con los tipos de cargos con lista de IDs de Departamentos vacios")]
         public void EditarRelacionPrimerCondicional()
         {
 
@@ -496,8 +496,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             var result = _CargoDAO.EditarRelacion(It.IsAny<Guid>(), String.Empty);
             Assert.AreEqual(result.Count, 1);
         }
-
-        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los cargos con los tipo cargos con lista de IDs de asignado")]
+        */
+        /*[TestMethod(displayName: "Prueba Unitaria para editar relacion de los cargos con los tipo cargos con lista de IDs de asignado")]
         public void EditarRelacionElse()
         {
 
@@ -522,9 +522,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             _contextMockCTC.Setup(set => set.DbContext.SaveChanges());
             var result = _CargoDAO.EditarRelacion(It.IsAny<Guid>(), request.id.ToString());
             Assert.AreEqual(result.Count, 1);
-        }
+        }*/
 
-        [TestMethod(displayName: "Prueba Unitaria para la excepcion de editar relacion de los cargos con los tipo de cargos")]
+        /*[TestMethod(displayName: "Prueba Unitaria para la excepcion de editar relacion de los cargos con los tipo de cargos")]
         public void ExcepcionEditarRelacion()
         {
             var tipo_cargo = new Tipo_Cargo
@@ -552,7 +552,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.EditarRelacion(tipo_cargo.id, request.id.ToString()));
-        }
+        }*/
 
         [TestMethod(displayName: "Prueba Unitaria para verificar existencia de cargo")]
         public void ExisteCargo()
@@ -605,7 +605,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.ExisteCargo(request));
-        }*/
+        }
 
     }
 }

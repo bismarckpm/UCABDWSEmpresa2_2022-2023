@@ -23,11 +23,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             _mapper = mapper;
         }
 
-        /*public CargoService(IDataContext Context)
+        public CargoService(IDataContext Context)
         {
             _dataContext = Context;
 
-        }*/
+        }
 
 
 
