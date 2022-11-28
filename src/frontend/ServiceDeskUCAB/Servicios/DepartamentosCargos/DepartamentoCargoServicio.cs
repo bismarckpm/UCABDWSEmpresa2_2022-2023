@@ -58,7 +58,7 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("api/Cargo/Consulta/" + Id);  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("Cargo/ConsultarCargoPorDepartamento/" + Id);  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
