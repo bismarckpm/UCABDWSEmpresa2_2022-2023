@@ -23,11 +23,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         private readonly IMapper _mapper;
         private List<Ticket> listaTickets;
 
-        public Task<bool> ActualizarTicket(Ticket ticket)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Ticket> ConsultaListaTickets()
         {
             listaTickets = _dataContext.Tickets.ToList();
@@ -38,11 +33,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         {
             var Ticket = (Ticket)_dataContext.Tickets.Where(s => s.Id == id);
             return Ticket;
-        }
-
-        public Task<bool> EliminarTicket(Guid Id)
-        {
-            throw new NotImplementedException();
         }
 
         public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO)
@@ -245,6 +235,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return true;
         }
+
         public TicketDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
@@ -392,6 +383,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
         {
             //CREAR LA FAMILIA TICKET, Y PONER FECHA FIN A LOS QUE ESTÁN EN LA LISTA!
@@ -426,23 +418,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-        /*public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerFamiliaTickets(Guid ticketId)
-        {
-            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
-            try
-            {
-                respuesta.Data = obtenerFamiliaTicketsHl(ticketId);
-                respuesta.Message = "Proceso de obtención de familia ticket exitoso";
-                respuesta.Success = true;
-            }
-            catch (TicketException e)
-            {
-                respuesta.Data = null;
-                respuesta.Message = e.Message;
-                respuesta.Success = false;
-            }
-            return respuesta;
-        }*/
+
         public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -515,6 +491,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId)
         {
             ApplicationResponse<List<TicketInfoCompletaDTO>> respuesta = new ApplicationResponse<List<TicketInfoCompletaDTO>>();
@@ -550,6 +527,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> mergeTicketsHl(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -580,6 +558,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> eliminarTicket(Guid id)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -787,6 +766,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     empleado_correo = ticket.Emisor.correo,
                     prioridad_nombre = ticket.Prioridad.nombre,
                     fecha_creacion = ticket.fecha_creacion,
+                    fecha_eliminacion = ticket.fecha_eliminacion,
                     tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
                     estado_nombre = ticket.Estado.nombre
                 });

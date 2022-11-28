@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,13 +10,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
+    <link rel="stylesheet" href="~/css/sb-admin-2.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Tablas.styles.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
 
     <!-- Iconos -->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,7 +37,6 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon ">
                     <i class="fab fa-servicestack"></i>
-                    @*<i class="fas fa-laugh-wink"></i>*@
                 </div>
                 <div class="sidebar-brand-text mx-2">ServiceDesk<sup>UCAB</sup></div>
             </a>
@@ -57,73 +53,41 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Departamentos</span>
-                </a>
-            </li>
-
-            @*<li class="nav-item">
-
-            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
-
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Gestion Tipo Ticket</span>
-            </a>
-            </li>*@
-
-            <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Usuario</span>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="CargoYTipoCargo" asp-action="CargoTipoCargo">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Cargos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
+                    <i class="fas fa-city"></i>
+                    <span>Departamentos y Grupos</span>
                 </a>
             </li>
 
-                <li class="nav-item">
-                    
-                <a class="nav-link" asp-area="" asp-controller="TipoTicket" asp-action="VistaTipo">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                            <span>Gestionar Tipo Ticket</span>
-                        </a>
-                </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Votos" asp-action="VistaTicket">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Gestionar Votos</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla" aria-expanded="true" aria-controls="collapsePlantilla">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Plantillas de notificación</span>
                 </a>
+
+                <div id="collapsePlantilla" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestion de plantillas:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="PlantillaNotificacion" asp-action="PlantillasNotificacion">Todas las plantillas</a>
+                        <a class="collapse-item" asp-area="" asp-controller="PlantillaNotificacion" asp-action="PlantillaNueva">Crear plantilla</a>
+                    </div>
+                </div>
             </li>
 
-            
-            @*<!-- Divider -->
-            <hr class="sidebar-divider">*@
-
-            @*    <!-- Heading -->
-            <div class="sidebar-heading">
-            Interface
-            </div>*@
-
-                <!-- Nav Item - Pages Collapse Menu -->
-            @*<li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <a class="nav-link collapsed" data-toggle="collapse"  asp-area="" asp-controller="Home" asp-action="VistaTicket">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
-            </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
-            </div>
-            </div>
-            </li>*@
-            
-
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado"
-                   aria-expanded="true" aria-controls="collapseEstado">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado" aria-expanded="true" aria-controls="collapseEstado">
                     <i class="fas fa-fw fa-bell"></i>
                     <span>Estados de ticket</span>
                 </a>
@@ -135,6 +99,62 @@
                     </div>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
+
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Gestion Tipo Ticket</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Usuario</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" asp-area="" asp-controller="TipoTicket" asp-action="VistaTipo">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Gestionar Tipo Ticket</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Votos" asp-action="VistaTicket">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Gestionar Votos</span>
+                </a>
+            </li>
+
+
+            @*<!-- Divider -->
+        <hr class="sidebar-divider">*@
+
+            @*    <!-- Heading -->
+        <div class="sidebar-heading">
+        Interface
+        </div>*@
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            @*<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" data-toggle="collapse"  asp-area="" asp-controller="Home" asp-action="VistaTicket">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Components</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Custom Components:</h6>
+        <a class="collapse-item" href="buttons.html">Buttons</a>
+        <a class="collapse-item" href="cards.html">Cards</a>
+        </div>
+        </div>
+        </li>*@
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
                    aria-expanded="true" aria-controls="collapsePrioridad">
@@ -150,7 +170,7 @@
                 </div>
             </li>
 
-           <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
                    aria-expanded="true" aria-controls="collapseTicket">
                     <i class="fas fa-fw fa-edit"></i>
@@ -162,53 +182,8 @@
                         <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="ccacd411-1b46-4117-aa84-73ea64deac87" asp-route-opcion="Abiertos">Todos los tickets</a>
                         <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
                     </div>
-                </div>  
-            </li>
-            @*  <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-            Addons
-            </div>*@
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                   aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span>
-                </a>
-            </li>
-
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -216,6 +191,7 @@
             </div>
 
         </ul>
+
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -237,29 +213,23 @@
         </div>
     </div>
 
-
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
 
     <!-- Core plugin JavaScript-->
     <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-

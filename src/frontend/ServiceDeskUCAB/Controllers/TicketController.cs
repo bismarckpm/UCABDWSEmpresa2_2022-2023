@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServicesDeskUCAB.Models;
 using ServicesDeskUCAB.Servicios;
 using ServicesDeskUCAB.ViewModel;
@@ -208,6 +209,57 @@ namespace ServicesDeskUCAB.Controllers
             }
             return NoContent();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Cancelar(string ticketId)
+        {
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.Cancelar(ticketId);
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    return RedirectToAction("Index", (new { message = (string)respuesta["message"] }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CambiarEstado(ActualizarDTO ticketId)
+        {
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.CambiarEstado(ticketId);
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    return RedirectToAction("Index", (new { message = (string)respuesta["message"] }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
     }
 }
 

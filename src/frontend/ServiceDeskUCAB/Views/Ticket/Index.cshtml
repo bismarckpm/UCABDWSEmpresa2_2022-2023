@@ -77,9 +77,13 @@
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver detalles</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-ticketPadre_Id="@item.Id">Reenviar</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-ticketPadreId="@item.Id">Merge</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-tickeId="@item.Id">Merge</a></li>
+                                    @if (item.fecha_eliminacion == null)
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Cancelar" asp-route-ticketId="@item.Id">Cancelar</a></li>
+                                    }
                                 </ul>
                             </div>
                         </td>
