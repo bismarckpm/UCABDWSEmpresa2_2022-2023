@@ -295,9 +295,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             try
             {
                 var usuario = _dataContext.Usuarios.Where(u => u.correo == email && u.fecha_eliminacion == default(DateTime)).FirstOrDefault();
-                var fromAddress = new MailAddress("serviceucabdesk@hotmail.com", "SERVICE UCABDESK");
+                var fromAddress = new MailAddress("DesarrolloSoftwareUCAB2@hotmail.com", "SERVICE UCABDESK");
                 var toAddress = new MailAddress(usuario.correo, "To Name");
-                const string fromPassword = "ucab1234";
+                const string fromPassword = "Desarrollo_SoftwareUCAB_2";
                 const string subject = "Recuperacion de contraseña";
                 string body = "<h3>Tu anterior contraseña es <a>" + usuario.password + "</a></h3>";
 
