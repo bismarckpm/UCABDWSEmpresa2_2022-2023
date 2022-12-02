@@ -12,7 +12,7 @@ namespace ServiceDeskUCAB.ViewModel
 
 		public List<TicketBasicoDTO> tickets;
 
-		public FamiliaMergeDTO familiaTicket;
+		public Guid[] familia;
 	}
 }
 

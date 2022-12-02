@@ -81,8 +81,7 @@ namespace ServiceDeskUCAB.Controllers
             FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
-                familiaTicket = new FamiliaMergeDTO(),
-                //tickets = await _servicioTicketAPI.Lista(departamentoId, "Abiertos")
+                tickets = await _servicioTicketAPI.Lista(departamentoId, "Abiertos")
             };
             return View(ticketMergeViewModel);
         }
@@ -157,8 +156,17 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarMerge(FamiliaMergeDTO merge)
+        public async Task<IActionResult> GuardarMerge(Guid ticketId,Guid[] familia )
         {
+            FamiliaMergeDTO merge = new FamiliaMergeDTO();
+            merge.ticketPadre_Id = ticketId;
+            merge.tickets = new List<Guid>();
+            int i = 0;
+            foreach(Guid item in familia)
+            {
+                merge.tickets[i] = item;
+                i++;
+            }
             JObject respuesta;
             try
             {
