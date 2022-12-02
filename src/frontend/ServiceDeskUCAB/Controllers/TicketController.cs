@@ -12,6 +12,7 @@ using ServiceDeskUCAB.Servicios;
 using ServicesDeskUCAB.Models;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 
 namespace ServiceDeskUCAB.Controllers
 {
