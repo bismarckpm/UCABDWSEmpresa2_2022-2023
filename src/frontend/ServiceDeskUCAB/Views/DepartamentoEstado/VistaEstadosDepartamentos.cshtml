@@ -23,6 +23,7 @@
 
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Activo</th>
                 <th></th>
             </tr>
         </thead>
@@ -32,12 +33,27 @@
                 <tr>
                     <td>@item.nombre</td>
                     <td>@item.descripcion</td>
+                    @if(item.fecha_eliminacion==null){
+                        <td>Habilitado</td>
+                    } else {
+                        <td>Deshabilitado</td>
+                    }
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal-@item.Id">Modificar</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal-@item.Id">Modificar</a>
+                                    @if (item.fecha_eliminacion == null)
+                                    {
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">Desahabilitar</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal2-@item.Id">Habilitar</a>
+                                    }
+                                </li>
+                                
                             </ul>
                         </div>
                     </td>
@@ -96,6 +112,63 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*Deshabilitar o Habilitar estado*@
+@*Modal para Eliminar Tipo Ticket --- Fino*@
+@foreach (var estado in Model.ListaEstado)
+{
+    <div class="modal fade" id="modal-@estado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Desahabilitar Estado "@estado.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar este Estado "@estado.nombre"?</label>
+                        </div>
+                        <input type="hidden" asp-for="Departamento.Id" name="IdDept" required />
+                        <input type="hidden" asp-for="Departamento.nombre" name="nombreDept" required />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" asp-action="DeshabilitarEstado" asp-controller="DepartamentoEstado" asp-route-id="@estado.Id" asp-route-IdDept="Departamento.Id" asp-route-nombreDept="Departamento.nombre">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@foreach (var estado in Model.ListaEstado)
+{
+    <div class="modal fade" id="modal2-@estado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Desahabilitar Estado "@estado.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar este Estado "@estado.nombre"?</label>
+                        </div>
+                        <input type="hidden" asp-for="Departamento.Id" name="IdDept" required />
+                        <input type="hidden" asp-for="Departamento.nombre" name="nombreDept" required />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" asp-action="HabilitarEstado" asp-controller="DepartamentoEstado" asp-route-id="@estado.Id" asp-route-IdDept="Departamento.Id" asp-route-nombreDept="Departamento.nombre">Habilitar</button>
                         </div>
                     </form>
                 </div>

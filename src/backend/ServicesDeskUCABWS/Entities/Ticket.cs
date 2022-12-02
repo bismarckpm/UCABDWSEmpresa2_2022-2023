@@ -27,13 +27,13 @@ namespace ServicesDeskUCABWS.Entities
 
         public DateTime? fecha_eliminacion { get; set; }
 
-        [Required]
-        public Departamento Departamento_Destino { get; set; }
-
         public Estado Estado { get; set; }
 
         [Required]
         public Prioridad Prioridad{ get; set; }
+
+        [Required]
+        public Departamento Departamento_Destino { get; set; }
 
         [Required]
         public Tipo_Ticket Tipo_Ticket { get; set; }

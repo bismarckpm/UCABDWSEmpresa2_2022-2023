@@ -37,6 +37,10 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 {
                     Id=new Guid("822D08E6-713D-4F03-A634-520693D31E96")
                 },
+                new Tipo_Estado("Siendo Procesado","Tipo Estado prueba")
+                {
+                   Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                }, 
 
 
             };
@@ -107,6 +111,18 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Estado_Padre=ListaTipoEstados[2],
                     Departamento=ListaDepartamento[0]
                 },
+                new Estado("Pendiente", "Descripcion")
+                {
+                    Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                    Estado_Padre=ListaTipoEstados[2],
+                    Departamento=ListaDepartamento[0]
+                },
+                 new Estado("Siendo Procesado", "Descripcion")
+                {
+                    Id=new Guid("E54DF2C4-1857-4B05-BAAD-902A2AECF58F"),
+                    Estado_Padre=ListaTipoEstados[4],
+                    Departamento=ListaDepartamento[0]
+                },
                 new Estado("Cancelado D1", "Descripcion D1")
                 {
                     Id=new Guid("F70ECD4B-0119-42C9-B47E-852FA9D22B52"),
@@ -169,11 +185,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             {
                 new Tipo_Cargo("Jefe","descripcion C1", "Alta")
                 {
-                    Id=Guid.Parse("DDC1A0D0-FA70-48E1-9ACE-747057B0002C")
+                    id=Guid.Parse("DDC1A0D0-FA70-48E1-9ACE-747057B0002C")
                 },
                 new Tipo_Cargo("Gerente","descripcion C2", "Media")
                 {
-                    Id=Guid.Parse("24259113-437B-417F-9159-A8E27C34A871")
+                    id=Guid.Parse("24259113-437B-417F-9159-A8E27C34A871")
                 },
                 new Tipo_Cargo("Empleado","descripcion C3","Baja"),
                 new Tipo_Cargo("Becario","descripcion C4","Esclavo"),
@@ -181,14 +197,17 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             //_mockContext.Tipos_Cargos.AddRange(ListaTipoCargo);
             _mockContext.Setup(c => c.Tipos_Cargos).Returns(ListaTipoCargo.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Tipos_Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoCargo.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Tipos_Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
 
             var ListaCargo = new List<Cargo>
             {
+
+
                 new Cargo("Jefe D1","Descripccion C1")
                 {
+
                     Departamento = ListaDepartamento[0],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
@@ -204,6 +223,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 },
                 new Cargo("Becario D1","Descripccion C1")
                 {
+                    id = Guid.Parse("17A696EE-BDCC-418C-BF60-B59F7A764416"),
                     Departamento = ListaDepartamento[0],
                     Tipo_Cargo = ListaTipoCargo[3]
                 },
@@ -234,7 +254,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             //_mockContext.Cargos.AddRange(ListaCargo);
             _mockContext.Setup(c => c.Cargos).Returns(ListaCargo.AsQueryable().BuildMockDbSet().Object);
-            _mockContext.Setup(c => c.Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCargo.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(c => c.Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
             //_mockContext.Setup(mr => mr.Tipos_Cargos.Update(It.IsAny<int>(), It.IsAny<string>())).Verifiable();
@@ -344,80 +364,124 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Empleados.Add(It.IsAny<Empleado>())).Callback<Empleado>(ListaEmpleado.Add);
             _mockContext.Setup(set => set.Empleados.AddRange(It.IsAny<IEnumerable<Empleado>>())).Callback<IEnumerable<Empleado>>(ListaEmpleado.AddRange);
 
+            
 
             var ListaTipoTickets = new List<Tipo_Ticket>
             {
                 new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
 
-                    Departamento= new List<Departamento>
-                    {
-                        ListaDepartamento[0],
-                        ListaDepartamento[1]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
                 {
                     Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
-                    Departamento= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamento= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 },
                 new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
-                    Departamento= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
 
                 },
 
                 new Tipo_Ticket("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    Departamento= new List<Departamento>
-                    {
-                        ListaDepartamento[0]
-                    }
+                    
                 }
             };
 
+            var listaDepartamentoTipoTicket = new List<DepartamentoTipo_Ticket>()
+            {
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[0].Id,
+                    tipo_Ticket = ListaTipoTickets[0],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[0].Id,
+                    tipo_Ticket = ListaTipoTickets[0],
+                    DepartamentoId = ListaDepartamento[1].id,
+                    departamento=ListaDepartamento[1]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[1].Id,
+                    tipo_Ticket = ListaTipoTickets[1],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[2].Id,
+                    tipo_Ticket = ListaTipoTickets[2],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+                new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[3].Id,
+                    tipo_Ticket = ListaTipoTickets[3],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
+
+
+            };
+
+            ListaTipoTickets[0].Departamentos.Add(listaDepartamentoTipoTicket[0]);
+            ListaTipoTickets[0].Departamentos.Add(listaDepartamentoTipoTicket[1]);
+
+            ListaTipoTickets[1].Departamentos.Add(listaDepartamentoTipoTicket[2]);
+
+            ListaTipoTickets[2].Departamentos.Add(listaDepartamentoTipoTicket[3]);
+
+            ListaTipoTickets[3].Departamentos.Add(listaDepartamentoTipoTicket[4]);
+
+            _mockContext.Setup(c => c.DepartamentoTipo_Ticket).Returns(listaDepartamentoTipoTicket.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.DepartamentoTipo_Ticket.Add(It.IsAny<DepartamentoTipo_Ticket>())).Callback<DepartamentoTipo_Ticket>(listaDepartamentoTipoTicket.Add);
+            _mockContext.Setup(set => set.DepartamentoTipo_Ticket.AddRange(It.IsAny<IEnumerable<DepartamentoTipo_Ticket>>())).Callback<IEnumerable<DepartamentoTipo_Ticket>>(listaDepartamentoTipoTicket.AddRange);
+
+
             var ListaFlujoAprobacion = new List<Flujo_Aprobacion>
             {
-                new Flujo_Aprobacion(ListaTipoCargo[0].Id,ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[0].id,ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[0].Id, ListaTipoTickets[2].Id, 2,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[0].id, ListaTipoTickets[2].Id, 2,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
                     Tipo_Cargo = ListaTipoCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[2].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[2].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[3].Id, null,null,null)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[3].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[3],
                     Tipo_Cargo = ListaTipoCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].Id, ListaTipoTickets[4].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[4].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[4],
                     Tipo_Cargo = ListaTipoCargo[1]
@@ -458,7 +522,6 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1]
                 },
-
                 new Ticket("Peticion 2", "Descripcion Peticion 2")
                 {
                     Id = Guid.Parse("5992E4A2-4737-42FB-88E2-FBC37EF26751"),
@@ -579,6 +642,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     voto = "Pendiente",
                     Turno = 1
                 },
+
+
 
             };
 

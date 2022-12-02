@@ -9,7 +9,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
     {
         List<RolUsuarioDTO> ObtenerUsuariosRoles();
         RolUsuarioDTO AgregarRol(RolUsuario rolUsuario);
-        RolUsuarioDTO EliminarRol(Guid usuario, Guid rol);
+        RolUsuarioDTO EliminarRol(Guid usuario);
         RolUsuarioDTO consularRolID(Guid usuario);
     }
 }

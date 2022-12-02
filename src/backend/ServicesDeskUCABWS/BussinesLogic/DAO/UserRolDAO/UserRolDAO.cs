@@ -16,13 +16,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
 {
     public class UserRolDAO : IUserRol
     {
-        private readonly DataContext _dataContext;
-        private readonly IMapper _mapper;
+        private readonly IDataContext _dataContext;
 
-        public UserRolDAO(DataContext dataContext, IMapper mapper)
+        public UserRolDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
-            _mapper = mapper;
         }
 
         public RolUsuarioDTO AgregarRol(RolUsuario rolUsuario)
@@ -31,7 +29,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             {
 
                 _dataContext.RolUsuarios.Add(rolUsuario);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 var nuevoRolUsuario = _dataContext.RolUsuarios.Where(rolu => rolu.UserId == rolUsuario.UserId && rolu.RolId == rolUsuario.RolId)
                                         .Select(d => new RolUsuarioDTO
@@ -65,15 +63,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO
             }
         }
 
-        public RolUsuarioDTO EliminarRol(Guid user, Guid Rol)
+        public RolUsuarioDTO EliminarRol(Guid user)
         {
             try
             {
                 var rolusuario = _dataContext.RolUsuarios
-                .Where(u => u.UserId == user && u.RolId == Rol).First();
+                .Where(u => u.UserId == user).First();
 
                 _dataContext.RolUsuarios.Remove(rolusuario);
-                _dataContext.SaveChanges();
+                _dataContext.DbContext.SaveChanges();
 
                 return UserRolMapper.MapperEntityToDtoUR(rolusuario);
 

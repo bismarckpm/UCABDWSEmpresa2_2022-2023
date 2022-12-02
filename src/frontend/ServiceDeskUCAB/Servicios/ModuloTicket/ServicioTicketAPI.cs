@@ -129,6 +129,7 @@ namespace ServiceDeskUCAB.Servicios
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
                     var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<TicketBasicoDTO>(); }
                     objeto = resultado;
                     Console.WriteLine("Obtiene los tickets");
                 }
@@ -235,6 +236,13 @@ namespace ServiceDeskUCAB.Servicios
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
                 return null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return objeto;
+        }
 
             }
             catch (Exception e)

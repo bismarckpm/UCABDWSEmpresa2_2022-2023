@@ -28,14 +28,13 @@
                     <div class="col-8">
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Titulo</label>
-                            <input required type="text" class="form-control form-control-sm" asp-for="Plantilla.Titulo" />
+                            <input required type="text" class="form-control form-control-sm" onkeypress="return check(event)" asp-for="Plantilla.Titulo" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Mensaje</label>
                             <textarea id="mensajePlantilla" required class="form-control form-control-sm" rows="3" asp-for="Plantilla.Descripcion"></textarea>
                             <div class="mb-0 fs-6">
-                                @if (Model.TipoEstados != null)
-                                {
+                                @if(Model.TipoEstados != null){
                                     @foreach (var estado in Model.TipoEstados)
                                     {
                                         if (@estado.Etiqueta.Count() == 0)
@@ -51,7 +50,7 @@
                                                 <label class="form-label fs-6 fw-bold mb-1 mt-2">Etiquetas:</label>
                                                 @foreach (var etiqueta in @estado.Etiqueta)
                                                 {
-                                                    <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
+                                                    <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="p-1 btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
                                                 }
                                             </div>
                                         }
@@ -61,30 +60,32 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        @if (Model.TipoEstados != null)
-                        {
-                            <div class="mb-1">
+                        <div class="mb-1">
+                            @if (Model.TipoEstados != null)
+                            {
                                 <label class="form-label fs-6 fw-bold mb-1">Asociar a tipo de estado:</label>
                                 <select id="TipoEstadoSelect" asp-for="Plantilla.TipoEstadoId" onchange="mostrarEtiquetas();" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                     <option value="@null">- Selecciona un estado -</option>
-
+                                
                                     @foreach (var estado in Model.TipoEstados)
                                     {
                                         <option value="@estado.Id">@estado.Nombre</option>
                                     }
-
+     
                                 </select>
-                            </div>
+                            }else{
+                                <p class="fst-italic text-danger mb-1">No existen estados asociados en el sistema</p>
+                                <a asp-action="EstadoNuevo" asp-controller="EstadoTicket" asp-route-id="@null" class="btn btn-primary btn-sm">Agregar tipo de estado</a>
+                            }
+                        </div>
+                        @if (Model.TipoEstados != null)
+                        {
                             @foreach (var estado in Model.TipoEstados)
                             {
                                 <div style="display: none" class="p-1 mb-2 descripcion-estados border-bottom border-1 mt-1" id="descEstado-@Regex.Replace(estado.Nombre, @"\s+", String.Empty)">
                                     <p style="font-size: 15px" class="mt-0 mb-1 fst-italic">@estado.Descripcion</p>
                                 </div>
                             }
-                        }
-                        else
-                        {
-                            <p class="fst-italic text-danger">No existen tipos de estados registrados</p>
                         }
                     </div>
                 </div>
@@ -98,32 +99,50 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function mostrarEtiquetas() {
-        /* Para obtener el valor */
-        var etiquetasTipoestado = document.querySelectorAll(".etiquetas-tipoestado")
-        for (var i = 0; i < etiquetasTipoestado.length; i++) {
-            etiquetasTipoestado[i].style.display = "none";
+
+@section Scripts{
+    <script type="text/javascript">
+        function mostrarEtiquetas() {
+            /* Para obtener el valor */
+            var etiquetasTipoestado = document.querySelectorAll(".etiquetas-tipoestado")
+            for (var i = 0; i < etiquetasTipoestado.length; i++) {
+                etiquetasTipoestado[i].style.display = "none";
+            }
+
+            var descripcionEstados = document.querySelectorAll(".descripcion-estados")
+            for (var i = 0; i < descripcionEstados.length; i++) {
+                descripcionEstados[i].style.display = "none";
+            }
+
+            var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
+            var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
+            console.log(selectTipoEstado.value.length > 0);
+            if (selectTipoEstado.value.length > 0) {
+                var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
+                etiquetas_selected.style.display = "block";
+
+                var descEstado_selected = document.querySelector("#descEstado-" + selected);
+                descEstado_selected.style.display = "block";
+            }
         }
 
-        var descripcionEstados = document.querySelectorAll(".descripcion-estados")
-        for (var i = 0; i < descripcionEstados.length; i++) {
-            descripcionEstados[i].style.display = "none";
+        function escribirMensaje(el) {
+            document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
         }
 
-        var selectTipoEstado = document.querySelector("#TipoEstadoSelect");
-        var selected = selectTipoEstado.options[selectTipoEstado.selectedIndex].text.replace(/\s+/g, '');
-        console.log(selectTipoEstado.value.length > 0);
-        if (selectTipoEstado.value.length > 0) {
-            var etiquetas_selected = document.querySelector("#etiquetas-" + selected);
-            etiquetas_selected.style.display = "block";
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
 
-            var descEstado_selected = document.querySelector("#descEstado-" + selected);
-            descEstado_selected.style.display = "block";
+            //Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            // Patrón de entrada, en este caso solo acepta numeros y letras
+            patron = /^[a-zA-Z ]+$/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
         }
-    }
 
-    function escribirMensaje(el) {
-        document.querySelector("#mensajePlantilla").value += " " + el.innerHTML;
-    }
-</script>
+    </script>
+}

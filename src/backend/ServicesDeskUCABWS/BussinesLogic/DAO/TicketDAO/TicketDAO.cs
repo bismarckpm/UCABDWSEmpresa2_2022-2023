@@ -1,4 +1,15 @@
-﻿using AutoMapper;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NuGet.Packaging;
+using NuGet.Protocol;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using AutoMapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -9,11 +20,14 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 using System.Net.Sockets;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using Microsoft.Data.SqlClient;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -22,6 +36,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         private readonly IDataContext _dataContext;
         private readonly IMapper _mapper;
         private List<Ticket> listaTickets;
+        private readonly INotificacion notificacion;
+        private readonly IPlantillaNotificacion plantilla;
+
+        public TicketDAO(IDataContext context, IPlantillaNotificacion plantilla, INotificacion notificacion, IMapper mapper)
+        {
+            _dataContext = context;
+            this.notificacion = notificacion;
+            this.plantilla = plantilla;
+            _mapper = mapper;
+        }
+
+       /*public TicketDAO(IDataContext dataContext, IMapper mapper)
+        {
+            _dataContext = dataContext;
+            _mapper = mapper;
+        }*/
+
+        public Task<bool> ActualizarTicket(Ticket ticket)
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Ticket> ConsultaListaTickets()
         {
@@ -101,16 +136,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             string result = null;
             try
             {
-                //Cambiar estado Ticket
-                CambiarEstado(ticket, "Aprobado");
-
                 //EnviarNotificacion(ticket.Emisor, ticket.Estado);
                 List<Empleado> ListaEmpleado = _dataContext.Empleados.
                     Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
                     .ToList();
                 //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
-
+                //Cambiar estado Ticket
+                CambiarEstado(ticket, "Aprobado", ListaEmpleado);
                 _dataContext.DbContext.SaveChanges();
                 return result;
             }
@@ -143,7 +176,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 var ListaEmpleado = new List<Empleado>();
                 foreach (var c in Cargos)
                 {
-                    ListaEmpleado.AddRange(_dataContext.Empleados.Where(x => x.Cargo.Id == c.Id));
+                    ListaEmpleado.AddRange(_dataContext.Empleados.Where(x => x.Cargo.id == c.id));
                 }
 
                 var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
@@ -157,7 +190,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 _dataContext.Votos_Tickets.AddRange(ListaVotos);
 
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+                CambiarEstado(ticket,"Pendiente", ListaEmpleado);
 
                 _dataContext.DbContext.SaveChanges();
 
@@ -189,7 +222,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();
 
 
-                var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.Id == Cargos.Id).ToList();
+                var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
 
 
                 var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
@@ -204,7 +237,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 _dataContext.Votos_Tickets.AddRange(ListaVotos);
 
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
+                CambiarEstado(ticket, "Pendiente", ListaEmpleado);
 
                 _dataContext.DbContext.SaveChanges();
 
@@ -217,16 +250,82 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
         }
 
-        public bool CambiarEstado(Ticket ticket, string Estado)
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados)
         {
             try
             {
-                ticket.Estado = _dataContext.Estados.Include(x => x.Estado_Padre).Include(x => x.Departamento).
+                var ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
+                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Include(x => x.Tipo_Ticket).Include(x => x.Votos_Ticket)
+                    .Where(x => x.Id == ticketLlegada.Id).FirstOrDefault();
+
+                ticket.Estado = _dataContext.Estados
+                    .Include(x => x.Estado_Padre)
+                    .Include(x => x.Departamento).
                     Where(s => s.Estado_Padre.nombre == Estado &&
                     s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
-                var vticket = _dataContext.Tickets.Update(ticket);
-                vticket.State = EntityState.Modified;
+
+
+                //contexto.DbContext.Entry(ticket).State = EntityState.Modified;
+                _dataContext.Tickets.Update(ticket);
+                _dataContext.DbContext.SaveChanges();
+                //vticket.State = EntityState.Modified;
+
+                if (Estado == "Aprobado")
+                {
+                    try
+                    {
+                        var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                        var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+
+                    }
+                    catch (ExceptionsControl) { }
+                    CambiarEstado(ticket, "Siendo Procesado", null);
+                    return true;
+                }
+
+                if (Estado == "Siendo Procesado")
+                {
+                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in empleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    return true;
+                }
+
+                if (Estado == "Pendiente")
+                {
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in ListaEmpleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    return true;
+                }
+
+                try
+                {
+                    var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                    notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                }
+                catch (ExceptionsControl) { }
+
+
 
             }
             catch (ExceptionsControl ex)
@@ -235,12 +334,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return true;
         }
-
         public TicketDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
         }
+
+
 
         public ApplicationResponse<string> crearTicket(TicketNuevoDTO solicitudTicket)
         {
@@ -596,7 +696,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                 .Where(empleado => empleado.Id == solicitudTicket.empleado_id).FirstOrDefault();
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
-                                       .Where(t => t.Id == nuevoTicket.Emisor.Cargo.Id).FirstOrDefault();
+                                       .Where(t => t.id == nuevoTicket.Emisor.Cargo.id).FirstOrDefault();
             Guid prueba = cargo.Departamento.id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             Estado estado = _dataContext.Estados
@@ -622,7 +722,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 nuevoTicket.Ticket_Padre = null;
             }
-            nuevoTicket.nro_cargo_actual = null;
+            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+            {
+                nuevoTicket.nro_cargo_actual = 1;
+            }
+            else
+            {
+                nuevoTicket.nro_cargo_actual = null;
+            }
+           
             nuevoTicket.Votos_Ticket = null;
             try
             {
@@ -638,7 +746,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("La Bitacora para el ticket no pudo ser creada");
             _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
             //_dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
+            FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
+            
             return nuevoTicket;
         }
         public Bitacora_Ticket crearNuevaBitacora(TicketDTO ticket)

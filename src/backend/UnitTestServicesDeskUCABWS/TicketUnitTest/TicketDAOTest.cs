@@ -14,8 +14,9 @@ using System.Collections.Generic;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 using ServicesDeskUCABWS.Entities;
-using ServicesDeskUCABWS.BussinesLogic.Validaciones;
-using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 
 
 //* Preparación  -> Organizar las precondiciones
@@ -30,8 +31,8 @@ namespace TicketUnitTest
         private readonly TicketDAO _TicketDAO;
         private readonly Mock<IDataContext> _contextMock;
         private readonly IMapper _mapper;
-       
-      
+        private readonly Mock<IPlantillaNotificacion> plantillaNotificacionDAO;
+        private readonly Mock<INotificacion> notificacionService;
 
         public TicketDAOTest()
         {
@@ -39,17 +40,16 @@ namespace TicketUnitTest
             //Preparación
            
             _contextMock = new Mock<IDataContext>();
-
-
             var myProfile = new List<Profile>
                 {
                 new TicketMapper()
 
             };
+            plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
+            notificacionService = new Mock<INotificacion>();
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
-       
-            _TicketDAO = new TicketDAO(_contextMock.Object, _mapper);
+            _TicketDAO = new TicketDAO(_contextMock.Object, plantillaNotificacionDAO.Object, notificacionService.Object, _mapper);
             _contextMock.SetupDbContextDataTicket();
         }
 

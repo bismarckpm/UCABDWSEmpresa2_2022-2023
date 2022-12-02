@@ -200,8 +200,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void CrearPlantillaCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
+            var application = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
 
             //act
             var result = _controller.CrearPlantillaCtrl(It.IsAny<PlantillaNotificacionDTOCreate>());
@@ -234,8 +234,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ActualizarPlantillaCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.ActualizarPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.ActualizarPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>()));
+            var application = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
 
             //act
             var result = _controller.ActualizarPlantillaCtrl(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>());
@@ -268,8 +268,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void EliminarPlantillaCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.EliminarPlantilla(It.IsAny<Guid>())).Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.EliminarPlantilla(It.IsAny<Guid>()));
+            var application = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
 
             //act
             var result = _controller.EliminarPlantillaCtrl(It.IsAny<Guid>());
