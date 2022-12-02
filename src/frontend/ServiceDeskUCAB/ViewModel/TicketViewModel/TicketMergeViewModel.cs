@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ModelsVotos;
+using ServicesDeskUCAB.Models;
 
 namespace ServiceDeskUCAB.ViewModel
 {
@@ -11,6 +12,7 @@ namespace ServiceDeskUCAB.ViewModel
 
         public List<TicketBasicoDTO> tickets;
 
-        public FamiliaMergeDTO familiaTicket;
-    }
+		public FamiliaMergeDTO familiaTicket;
+	}
 }
+

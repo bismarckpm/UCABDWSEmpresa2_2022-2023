@@ -11,7 +11,6 @@ using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios;
 using System.Xml.Linq;
-using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
 
 namespace ServiceDeskUCAB.Servicios
@@ -65,16 +64,19 @@ namespace ServiceDeskUCAB.Servicios
         public async Task<List<PrioridadDTO>> ListaHabilitado()
         {
             List<PrioridadDTO> lista = new List<PrioridadDTO>();
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
             try
             {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Prioridad/Habilitados");
-
+                var response = await cliente.GetAsync("Prioridad/Lista/Habilitadas");
                 if (response.IsSuccessStatusCode)
                 {
-                    var json_respuesta = await response.Content.ReadAsStringAsync();
-                    var resultado = JsonConvert.DeserializeObject<List<PrioridadDTO>>(json_respuesta);
+
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<PrioridadDTO>>(stringDataRespuesta);
                     lista = resultado;
                 }
             }
@@ -93,7 +95,7 @@ namespace ServiceDeskUCAB.Servicios
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
                 var response = await cliente.GetAsync($"Prioridad/Obtener/{PrioridadID}");
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Es success obtener");

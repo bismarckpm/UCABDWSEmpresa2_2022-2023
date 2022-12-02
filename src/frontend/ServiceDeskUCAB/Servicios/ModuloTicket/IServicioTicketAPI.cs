@@ -3,8 +3,9 @@ using Newtonsoft.Json.Linq;
 using ServicesDeskUCAB.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ModelsVotos;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -18,14 +19,15 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion);
 
+        Task<JObject> Cancelar(string ticketId);
+
         Task<JObject> Guardar(TicketDTO Objeto);
 
         Task<JObject> GuardarReenviar(TicketReenviarDTO Objeto);
 
         Task<JObject> GuardarMerge(FamiliaMergeDTO Objeto);
 
-        Task<JObject> Cancelar(string ticketId);
-        Task<JObject> CambiarEstado(string Objeto);
+        Task<JObject> CambiarEstado(ActualizarDTO Objeto);
     }
 }
 

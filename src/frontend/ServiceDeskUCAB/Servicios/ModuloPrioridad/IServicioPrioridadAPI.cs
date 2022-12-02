@@ -8,7 +8,7 @@ using ServiceDeskUCAB.Models.ModelsVotos;
 
 namespace ServiceDeskUCAB.Servicios
 {
-    public interface IServicioPrioridadAPI 
+    public interface IServicioPrioridadAPI
     {
         Task<List<PrioridadDTO>> Lista();
 

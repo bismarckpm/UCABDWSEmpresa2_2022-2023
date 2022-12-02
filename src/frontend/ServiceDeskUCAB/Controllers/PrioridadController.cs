@@ -30,8 +30,9 @@ namespace ServiceDeskUCAB.Controllers
         {
             PrioridadDTO prioridad = new PrioridadDTO();
             ViewBag.Accion = "Nueva Prioridad";
-            Console.WriteLine("Esta es la guid ",prioridadID);
-            if (prioridadID != Guid.Empty){
+            Console.WriteLine("Esta es la guid ", prioridadID);
+            if (prioridadID != Guid.Empty)
+            {
                 prioridad = await _servicioAPI.Obtener(prioridadID);
                 ViewBag.Accion = "Editar Prioridad";
                 Console.WriteLine(await _servicioAPI.Obtener(prioridadID));
@@ -49,7 +50,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     respuesta = await _servicioAPI.Guardar(prioridad);
                     Console.WriteLine(respuesta.ToString());
-                    if ((bool) respuesta["success"])
+                    if ((bool)respuesta["success"])
                     {
                         Console.WriteLine("La respuesta fue verdadera");
                         return RedirectToAction("Index", new { message = (string)respuesta["message"] });
@@ -59,7 +60,7 @@ namespace ServiceDeskUCAB.Controllers
                     {
                         Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                         string message = (string)respuesta["message"];
-                        throw new Exception(message);
+                        return RedirectToAction("Prioridad", new { message = (string)respuesta["message"] });
                     }
                 }
                 else
@@ -84,4 +85,4 @@ namespace ServiceDeskUCAB.Controllers
 
     }
 
- }
+}

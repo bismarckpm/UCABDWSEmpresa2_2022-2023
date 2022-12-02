@@ -1,10 +1,11 @@
 ﻿using System;
+
 namespace ServiceDeskUCAB.Models
 {
 	public class TicketCompletoDTO
     {
         public Guid ticket_id { get; set; }
-        public Guid ticketPadre_id { get; set; }
+        public Guid? ticketPadre_id { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public string titulo { get; set; }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models.ModelsVotos;
-using ServiceDeskUCAB.Models;
-using ServiceDeskUCAB.Models;
+using ServicesDeskUCAB.Models;
 
 namespace ServiceDeskUCAB.ViewModel
 {
@@ -17,6 +17,7 @@ namespace ServiceDeskUCAB.ViewModel
 
         public List<Estado> estados;
 
-        public int estadoId;
-    }
+		public ActualizarDTO actualizarDTO;
+	}
 }
+
