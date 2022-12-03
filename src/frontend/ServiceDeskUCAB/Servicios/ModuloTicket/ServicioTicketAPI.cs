@@ -129,6 +129,7 @@ namespace ServiceDeskUCAB.Servicios
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
                     var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<TicketBasicoDTO>(); }
                     objeto = resultado;
                     Console.WriteLine("Obtiene los tickets");
                 }
@@ -219,7 +220,6 @@ namespace ServiceDeskUCAB.Servicios
             }
             return null;
         }
-
         public async Task<JObject> Cancelar(string Objeto)
         {
             var cliente = new HttpClient();
@@ -235,7 +235,6 @@ namespace ServiceDeskUCAB.Servicios
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
             }
             catch (Exception e)
             {
@@ -269,4 +268,5 @@ namespace ServiceDeskUCAB.Servicios
         }
     }
 }
+
 

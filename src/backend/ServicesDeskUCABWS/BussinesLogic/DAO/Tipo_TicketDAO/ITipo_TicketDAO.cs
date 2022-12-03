@@ -18,5 +18,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         public Tipo_TicketDTOSearch ConsultarTipoTicketGUID(Guid id);
         public Tipo_TicketDTOSearch ConsultarTipoTicketNomb(string nombre);
         public Boolean EliminarTipoTicket(Guid id);
+
+        public List<Tipo_TicketDTOSearch> ConsultaTipoTicketAgregarTicket(Guid Id);
     }
 }

@@ -101,59 +101,19 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VistaTipoTicket">
-
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Gestion Tipo Ticket</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Usuario</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
 
                 <a class="nav-link" asp-area="" asp-controller="TipoTicket" asp-action="VistaTipo">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gestionar Tipo Ticket</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Votos" asp-action="VistaTicket">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gestionar Votos</span>
                 </a>
             </li>
-
-
-            @*<!-- Divider -->
-        <hr class="sidebar-divider">*@
-
-            @*    <!-- Heading -->
-        <div class="sidebar-heading">
-        Interface
-        </div>*@
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            @*<li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-        aria-expanded="true" aria-controls="collapseTwo">
-        <a class="nav-link collapsed" data-toggle="collapse"  asp-area="" asp-controller="Home" asp-action="VistaTicket">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Components</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Custom Components:</h6>
-        <a class="collapse-item" href="buttons.html">Buttons</a>
-        <a class="collapse-item" href="cards.html">Cards</a>
-        </div>
-        </div>
-        </li>*@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
@@ -171,19 +131,12 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
-                   aria-expanded="true" aria-controls="collapseTicket">
-                    <i class="fas fa-fw fa-edit"></i>
-                    <span>Ticket</span>
+                <a class="nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar sesion</span>
                 </a>
-                <div id="collapseTicket" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión de tickets:</h6>
-                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="ccacd411-1b46-4117-aa84-73ea64deac87" asp-route-opcion="Abiertos">Todos los tickets</a>
-                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
-                    </div>
-                </div>
             </li>
+
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

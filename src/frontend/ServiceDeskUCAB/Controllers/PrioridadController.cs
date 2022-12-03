@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
-using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
+using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -40,8 +41,7 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarCambios(PrioridadDTO prioridad)
-        {
+        public async Task<IActionResult> GuardarCambios(PrioridadDTO prioridad){
             Console.WriteLine("guardar", prioridad.Id);
             JObject respuesta;
             try

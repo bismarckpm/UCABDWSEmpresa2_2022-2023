@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
-using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel;
+using ServiceDeskUCAB.Servicios;
 using ServicesDeskUCAB.Models;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models.DTO.TicketDTO;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -39,7 +40,8 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         public async Task<IActionResult> Ticket()
-        {TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
+        {
+            TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
                 ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.Lista(),

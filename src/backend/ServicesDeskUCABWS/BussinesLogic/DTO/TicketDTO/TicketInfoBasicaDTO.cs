@@ -13,5 +13,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
         public DateTime? fecha_eliminacion { get; set; }
         public string tipoTicket_nombre { get; set; }
         public string estado_nombre { get; set; }
+        public int? jerarquia { get; set; }
+        public int? nro_cargo_actual { get; set; }
+
     }
 }

@@ -1,19 +1,22 @@
 ﻿@model List<ServiceDeskUCAB.Models.ModelsVotos.Votos_Ticket>
 @using ServiceDeskUCAB.Models.ModelsVotos
 @using ServiceDeskUCAB.Models.TipoTicketsModels
+
+
 <div class="row">
     <div class="col-8">
         <h1 id="ti">Gestionar Votos</h1>
     </div>
-    <!--<div class="col-4">
-        <a type="button" class="btn btn-primary" asp-action="AgregarTicket" asp-controller="Votos">Agregar Ticket</a>
-    </div>
-    -->
+    
 </div>
 
-<div class="alert alert-success d-none" role="alert">
-    "Algun mensaje de confirmación luego de hacer una acción"
-</div>
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-succes text-center alert-dismissible fade show p-3">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <div style="margin-top:30px;">
     <table id="table_id" class="display">
@@ -21,9 +24,9 @@
             <tr>
                 <th>Titulo</th>
                 <th>Descripción</th>
+                <th>Tipo Solicitud</th>
                 <th>Creado</th>
                 <th>Voto</th>
-                <th>Comentario</th>
             </tr>
         </thead>
         <tbody>
@@ -31,9 +34,9 @@
                 <tr>
                     <td>@item.Ticket?.titulo</td>
                     <td>@item.Ticket?.descripcion</td>
+                    <td>@item.Ticket?.Tipo_Ticket?.nombre</td>
                     <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
                     <td>@item.voto</td>
-                    <td>@item.comentario</td>
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,14 +81,21 @@
 </div>
 
 @section Scripts{
+    <script type="text/javascript">
+        function mostrar() {
+            document.getElementById('Modelo_Paralelo').style.display = 'block';
+
+        }
+
+    </script>
     <script>
         $(document).ready(function () {
             $('#table_id').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sZeroRecords": "No se encontraron tipo tickets con esa características",
+                    "sEmptyTable": "No hay ningun tipo ticket en el sistema, registra uno para enviar tickets",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -107,5 +117,9 @@
                 }
 
             });
-        });</script>
+        });
+    </script>
+
+
+
 }

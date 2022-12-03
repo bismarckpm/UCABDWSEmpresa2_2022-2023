@@ -28,6 +28,15 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
+using ServicesDeskUCABWS.Tools;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -48,8 +57,47 @@ namespace ServicesDeskUCABWS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
 
+            //JWT
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var llave = Encoding.ASCII.GetBytes(appSettings.Secreto);
+            services.AddAuthentication(d =>
+            {
+                d.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                d.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(d =>
+            {
+                d.RequireHttpsMetadata = false;
+                d.SaveToken = true;
+                d.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(llave),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+
+            });
+
+            services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            services.AddTransient<IUserLoginDAO, UserLoginDAO>();
+            services.AddTransient<IUserRol, UserRolDAO>();
+            //services.AddScoped<AsignacionRolServices>();
             services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            services.AddControllers().AddJsonOptions(x=>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            services.AddTransient<ICargoDAO, CargoService>();
+            services.AddScoped<ITipo_CargoDAO, Tipo_CargoDAO>();
+            services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
+			services.AddScoped<IGrupoDAO, GrupoDAO>();
+			services.AddAutoMapper(typeof(Startup).Assembly);
+
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
@@ -58,24 +106,18 @@ namespace ServicesDeskUCABWS
 				{ Title = "Empresa B", Version = "v1" });
 			});
 			services.AddDbContext<DataContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
-            services.AddTransient<ITicketDAO, TicketDAO>();
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
+            //services.AddTransient<IDataContext, DataContext>();
+            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
             
             //Se agrega en generador de Swagger
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
-			services.AddAutoMapper(typeof(Startup).Assembly);
-
-			services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-      
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddTransient<IUsuarioDAO, UsuarioDAO>();
+            services.AddTransient<IUserRol, UserRolDAO>();
 
             services.AddTransient<IPlantillaNotificacion, PlantillaNotificacionService>();
 
@@ -87,19 +129,30 @@ namespace ServicesDeskUCABWS
             
             services.AddTransient<IEstadoDAO, EstadoService>();
 
-			services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnetion")));
+            services.AddTransient<ITicketDAO, TicketDAO>();
 
-            services.AddControllers();
-            
+            services.AddTransient<ITipo_CargoDAO, Tipo_CargoDAO>();
+
+            services.AddTransient<ITipo_TicketDAO,Tipo_TicketService>();
+
+            services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
+
+           
+
+            services.AddTransient<ICargoDAO, CargoService>();
+
+            services.AddControllers().AddJsonOptions(x =>
+               x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /*public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            
+
+           
 
         }*/
 
@@ -128,7 +181,11 @@ namespace ServicesDeskUCABWS
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
+
+           
 
             app.UseEndpoints(endpoints =>
             {

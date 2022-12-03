@@ -16,14 +16,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
     public class PlantillaNotificacionService : IPlantillaNotificacion
     {
         private readonly IDataContext _plantillaContext;
-        private readonly INotificacion _notificacionService;
         private readonly IMapper _mapper;
 
 
-        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper, INotificacion notificacionService)
+        public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper)
         {
             _plantillaContext = plantillaContext;
-            _notificacionService = notificacionService;
             _mapper = mapper;
 
         }
@@ -116,7 +114,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //POST: Servicio para crear plantilla notificacion
-        public bool RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
+        public PlantillaNotificacionDTOCreate RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
         {
             try
             {
@@ -125,21 +123,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
                 _plantillaContext.PlantillasNotificaciones.Add(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
 
-                //Comienza Prueba reemplazo de descripcion plantilla
-                //var ticket = _plantillaContext.Tickets.Include(t => t.Estado)
-                //                                      .Include(t => t.Tipo_Ticket)
-                //                                      .Include(t => t.Prioridad)
-                //                                      .Include(t => t.empleado)
-                //                                      .Include(t => t.cliente)
-                //                                      .Include(t => t.Departamento_Destino)
-                //                                      .ThenInclude(d => d.Grupo).Where(t => t.Id == Guid.Parse("6F5ED7B9-1231-40FF-ACDB-F7291699A228")).Single();
-                //var consulta = ConsultarPlantillaTipoEstadoTitulo("Rechazado");
-
-                //var reemplazo = _notificacionService.ReemplazoEtiqueta(ticket, consulta);
-                //var mail = _notificacionService.EnviarCorreo(consulta.Titulo, reemplazo, "alexguastaferro1@gmail.com");
-                //Finaliza la prueba
-
-                return true;
+                return plantilla;
             }
             catch (DbUpdateException ex)
             {
@@ -152,7 +136,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //PUT: Servicio para modificar plantilla notificacion
-        public bool ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
+        public PlantillaNotificacionDTOCreate ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
         {
             try
             {
@@ -160,7 +144,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
                 plantillaEntity.Id = id;
                 _plantillaContext.PlantillasNotificaciones.Update(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
-                return true;
+                return plantilla;
             }
             catch (DbUpdateException ex)
             {
@@ -173,13 +157,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //DELETE: Servicio para eliminar plantilla notificacion
-        public bool EliminarPlantilla(Guid id)
+        public PlantillaNotificacionDTOCreate EliminarPlantilla(Guid id)
         {
             try
             {
-                _plantillaContext.PlantillasNotificaciones.Remove(_plantillaContext.PlantillasNotificaciones.Find(id));
+                var plantilla = _plantillaContext.PlantillasNotificaciones.Include(t => t.TipoEstado).Where(t => t.Id == id).Single(); 
+                _plantillaContext.PlantillasNotificaciones.Remove(plantilla);
                 _plantillaContext.DbContext.SaveChanges();
-                return true;
+
+                return _mapper.Map<PlantillaNotificacionDTOCreate>(plantilla); 
             }
             catch (ArgumentNullException ex)
             {

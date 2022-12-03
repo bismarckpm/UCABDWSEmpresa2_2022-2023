@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
@@ -33,7 +35,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
-            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper, _notificacion.Object);
+            _plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper);
             _contextMock.SetUpContextData();
         }
 
@@ -42,7 +44,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
 //PRUEBAS UNITARIAS PARA CONSULTAR TODAS LAS PLANTILLAS NOTIFICACIONES
 //*
 
-        [TestMethod(displayName: "Prueba Unitaria de la consulta de las plantillas exitosa")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
+        [TestMethod(displayName: "Prueba Unitaria de la consulta de las plantillas exitosa")]                      
         public void ConsultaPlantillasServiceTest()
         {
             var result = _plantillaService.ConsultaPlantillas();
@@ -50,7 +52,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         }
 
 
-        [TestMethod(displayName: "Prueba Unitaria cuando la consulta de las plantillas retorna vacio o null")]      //Esta prueba está bien? 
+        [TestMethod(displayName: "Prueba Unitaria cuando la consulta de las plantillas retorna vacio o null")]      
         //[ExpectedException(typeof(ExceptionsControl))]
         public void ConsultarPlantillasRetornaVaciaServiceTest()
         {
@@ -60,7 +62,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         }
 
 
-        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]        //Esto está bueno?
+        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]        
         public void ConsultarPlantillasRetornaExceptionServiceTest()
         {
             //arrange
@@ -199,13 +201,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
                 Descripcion = "Hola @Usuario su @Ticket fue @Estado",
                 TipoEstadoId = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c86"),
             };
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
 
             //act
-            var result = _plantillaService.RegistroPlantilla(plantilla);
+            var response = _plantillaService.RegistroPlantilla(plantilla);
 
-            //assert
-            Assert.IsTrue(result);
+            //Assert
+            Assert.AreEqual(response.Titulo, plantilla.Titulo);
+            Assert.AreEqual(response.GetType(), plantilla.GetType());   
         }
 
 
@@ -242,6 +244,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         [TestMethod(displayName: "Prueba Unitaria cuando la actualización de la plantilla notificación sea exitoso")]
         public void ActualizarPlantillaServiceTest()
         {
+
             //arrange
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
             var plantillaUpdate = new PlantillaNotificacionDTOCreate()
@@ -250,13 +253,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
                 Descripcion = "Hola @Usuario su @Ticket",
                 TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
             };
-            //_contextMock.Setup(set => set.DbContext.SaveChanges());
 
             //act
-            var result = _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
+            var response = _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
 
             //assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(response.Titulo, plantillaUpdate.Titulo);
+            Assert.AreEqual(response.GetType(), plantillaUpdate.GetType());
         }
 
 
@@ -292,21 +295,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void EliminarPlantillaServiceTest()
         {
             //arrange
-            var data = new PlantillaNotificacion
+
+            var expected = new PlantillaNotificacionDTOCreate
             {
-                Id = new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c86"),
                 Titulo = "Plantilla Rechazado",
                 Descripcion = "Hola @Usuario su @Ticket",
-                TipoEstadoId = null,
-                TipoEstado = null
+                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
             };
+
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 
             //act
-            var result = _plantillaService.EliminarPlantilla(data.Id);
+            var result = _plantillaService.EliminarPlantilla(new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c87"));
 
             //assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(expected.Titulo, result.Titulo);
+            Assert.AreEqual(expected.GetType(), result.GetType());
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando al eliminar no encuentra la plantilla notificación de acuerdo al id")]

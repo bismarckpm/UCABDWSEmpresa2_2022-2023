@@ -1,18 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.Entities;
-using System.Diagnostics.Contracts;
-using static ServicesDeskUCABWS.Entities.RolUsuario;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Hosting;
 using ServicesDeskUCABWS.Entities;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
+using static ServicesDeskUCABWS.Entities.RolUsuario;
 
 
 namespace ServicesDeskUCABWS.Data
 {
-    public class DataContext: DbContext, IDataContext
+    public class DataContext : DbContext, IDataContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -20,10 +17,7 @@ namespace ServicesDeskUCABWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
-            modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
-
-            modelBuilder.Entity<Usuario>().HasIndex(u=>u.correo).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.correo).IsUnique();
 
             modelBuilder.Entity<Usuario>()
                 .HasDiscriminator<string>("Discriminator")
@@ -45,24 +39,34 @@ namespace ServicesDeskUCABWS.Data
                 .HasForeignKey(sc => sc.RolId);
 
             modelBuilder.Entity<EtiquetaTipoEstado>().HasKey(x => new { x.etiquetaID, x.tipoEstadoID });
+            modelBuilder.Entity<Tipo_Estado>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<PlantillaNotificacion>().HasIndex(u => u.TipoEstadoId).IsUnique();
+
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162"), Name="Administrador"},
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298163"), Name = "Empleado" },
+                new Rol { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298161"), Name = "Cliente" });
+
+            modelBuilder.Entity<Administrador>().HasData(
+                new Administrador { Id = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), fecha_creacion = DateTime.Now.Date, correo = "admin@gmail.com", password = "admin", fecha_eliminacion = default(DateTime) });
+
+            modelBuilder.Entity<RolUsuario>().HasData(
+                new RolUsuario { UserId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), RolId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162") });
+
+            modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
+            modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
-            //LOS DE JESÚS
+            modelBuilder.Entity<DepartamentoTipo_Ticket>().HasKey(x => new { x.Tipo_Ticekt_Id, x.DepartamentoId });
+            //LOS DE JESï¿½S
             modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
             modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
             modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
         }
 
-       
 
-        public DataContext()
-        {
-        }
 
         
-        
-
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }
@@ -90,6 +94,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
+        public DbSet<DepartamentoTipo_Ticket> DepartamentoTipo_Ticket { get; set; }
         public DbContext DbContext
         {
             get

@@ -24,9 +24,11 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<TipoCargo>> ListaCargos();
 
-        Task<List<Votos_Ticket>> ObtenerVotos();
+        Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario);
 
         Task<Ticket> ObtenerTicket(string id);
         Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipoTicketDTO);
+
+        
     }
 }

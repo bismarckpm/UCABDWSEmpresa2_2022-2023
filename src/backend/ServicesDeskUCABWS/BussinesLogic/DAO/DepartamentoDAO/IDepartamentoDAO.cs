@@ -16,10 +16,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public DepartamentoDto eliminarDepartamento(Guid id);
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento);
         public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo);
-        public Departamento AsignarGrupoToDepartamento(Guid idGrupo, Guid idDept);
+        public List<string> AsignarGrupoToDepartamento(Guid id, string idDept);
         public List<DepartamentoDto> DeletedDepartamento();
         public List<DepartamentoDto> NoAsociado();
-        public IEnumerable<SelectListItem> ListaDepartamentoGrupo();
-        public Departamento obtenerDepartamentoPorEmpleadoId(Guid empleadoId);
-	}
+        public List<string> EditarRelacion(Guid id, string idDepartamentos);
+
+    }
 }

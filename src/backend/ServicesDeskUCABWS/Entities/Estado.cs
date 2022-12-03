@@ -22,6 +22,7 @@ namespace ServicesDeskUCABWS.Entities
         [Required]
         public DateTime fecha_ultima_edic { get; set; }
 
+        public DateTime? fecha_eliminacion { get; set; }
         [Required]
         public Tipo_Estado Estado_Padre { get; set; }
         public List<Bitacora_Ticket> Bitacora_Tickets { get; set; }

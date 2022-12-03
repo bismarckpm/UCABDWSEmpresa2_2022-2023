@@ -13,12 +13,17 @@
 }
     <div class="container" style="margin-top:10px">
         <form method="post" asp-controller="Ticket" asp-action="GuardarTicket">
+<<<<<<< HEAD
+=======
+
+>>>>>>> b4dffc255b4dfb05479ee549f01ccee559f35dbb
             <input class="d-none" asp-for="@Model.ticket.empleado_id" value="@Model.ticket.empleado_id" required readonly/>
 
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Departamento Destino:</label>
                 <select asp-for="@Model.ticket.departamentoDestino_Id" class="form-select" aria-label="Default select example" required>
                     <option selected>Seleccione un departamento</option>
+                    <option value="CCACD411-1B46-4117-AA84-73EA64DEAC87">Depa prueba</option>
                     @foreach (var depa in @Model.departamentos)
                     {
                         <option value="@depa.id">@depa.nombre</option>
@@ -29,6 +34,7 @@
                 <label for="recipient-name" class="col-form-label">Tipo ticket:</label>
                 <select asp-for="@Model.ticket.tipoTicket_id" class="form-select" aria-label="Default select example" required>
                     <option selected>Seleccione un tipo de ticket</option>
+                    <option value="172CE21D-B7DC-4537-9901-E0A29753644F">Tipo ticket prueba</option>
                     @foreach (var item in @Model.tipo_tickets)
                     {
                         <option value="@item.tipo">@item.nombre</option>

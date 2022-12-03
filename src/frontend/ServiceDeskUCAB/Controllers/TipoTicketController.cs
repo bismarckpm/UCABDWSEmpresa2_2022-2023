@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ViewModel;
@@ -6,6 +7,8 @@ using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
+
+    [Authorize(Policy = "AdminAccess")]
     public class TipoTicketController : Controller
     {
        
@@ -91,10 +94,10 @@ namespace ServiceDeskUCAB.Controllers
                 }
             }
 
-            if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
+            /*if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
             {
                 TipoTicketDTO.Flujo_Aprobacion = null;
-            }
+            }*/
             respuesta = await _servicioApi.Actualizar(TipoTicketDTO);
 
             if(respuesta != null)
@@ -158,26 +161,29 @@ namespace ServiceDeskUCAB.Controllers
                 }
             }
 
-            if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
+            /*if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
             {
                 TipoTicketDTO.Flujo_Aprobacion = null;
-            }
+            }*/
             respuesta = await _servicioApi.Guardar(TipoTicketDTO);
 
             if (respuesta != null)
             {
                 if(respuesta.Success)
                 {
-                   return RedirectToAction("VistaTipo", new { message = "El tipo Ticket fue agregado satisfactoriamente" });
+                   return RedirectToAction("VistaTipo", new { message2 = "El tipo Ticket fue agregado satisfactoriamente" });
                 }
                 else
                  {
                    return RedirectToAction("VistaTipo", new { message = respuesta.Exception });
                  }
             }
-                
+
             else
+            {
                 return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
+            }
+                
 
         }
         public async Task<IActionResult> Eliminar(Guid id)
@@ -187,9 +193,9 @@ namespace ServiceDeskUCAB.Controllers
             var respuesta = await _servicioApi.Eliminar(id);
 
             if (respuesta)
-                return RedirectToAction("VistaTipo");
+                return RedirectToAction("VistaTipo",new { message2 ="Tipo Ticket eliminado exitosamente"});
             else
-                return NoContent();
+                return RedirectToAction("VistaTipo", new { message = "Error al eliminar el tipo ticket" });
         }
 
 

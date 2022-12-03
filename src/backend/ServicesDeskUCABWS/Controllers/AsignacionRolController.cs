@@ -20,12 +20,11 @@ namespace ServicesDeskUCABWS.Controllers
     public class AsignacionRolController : ControllerBase
     {
         private readonly IUserRol _userRol;
-        private readonly ILogger<UsuarioController> _log;
 
-        public AsignacionRolController(IUserRol userRol, ILogger<UsuarioController> log)
+        public AsignacionRolController(IUserRol userRol)
         {
             _userRol = userRol;
-            _log = log;
+
         }
 
         [HttpGet]
@@ -47,14 +46,14 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpDelete]
-        [Route("EliminarRol/{user}/{rol}")]
-        public ApplicationResponse<String> CrearDepartamento([FromRoute] Guid user, [FromRoute] Guid rol)
+        [Route("EliminarRol/{user}")]
+        public ApplicationResponse<RolUsuarioDTO> EliminarRol([FromRoute] Guid user)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<RolUsuarioDTO>();
             try
             {
-                var resultService = _userRol.EliminarRol(user,rol);
-                response.Data = resultService.ToString();
+                var resultService = _userRol.EliminarRol(user);
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)
@@ -68,13 +67,13 @@ namespace ServicesDeskUCABWS.Controllers
 
         [HttpPost]
         [Route("AsignarRol/")]
-        public ApplicationResponse<String> CrearDepartamento([FromBody] RolUsuarioDTO userol)
+        public ApplicationResponse<RolUsuarioDTO> CrearRolUsuario([FromBody] RolUsuarioDTO userol)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<RolUsuarioDTO>();
             try
             {
                 var resultService = _userRol.AgregarRol(UserRolMapper.MapperEntityToDtoUR(userol));
-                response.Data = resultService.ToString();
+                response.Data = resultService;
 
             }
             catch (ExceptionsControl ex)

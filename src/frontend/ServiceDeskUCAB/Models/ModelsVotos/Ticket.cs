@@ -10,7 +10,7 @@ namespace ServiceDeskUCAB.Models.ModelsVotos
         public string titulo { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
         public DateTime fecha_creacion { get; set; }
-        public DateTime fecha_eliminacion { get; set; }
+        public DateTime? fecha_eliminacion { get; set; }
         public Estado Estado { get; set; }
         public Prioridad Prioridad { get; set; }
         public Tipo Tipo_Ticket { get; set; }

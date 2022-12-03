@@ -13,5 +13,7 @@ namespace ServiceDeskUCAB.Models.DTO.EstadoDTO
 
         public string descripcion { get; set; } = string.Empty;
 
+        public string? fecha_eliminacion { get; set; }
+
     }
 }

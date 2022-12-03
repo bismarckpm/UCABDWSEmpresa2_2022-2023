@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
+using ServiceDeskUCAB.Models.ModelsVotos;
 
 namespace ServiceDeskUCAB.Servicios
 {

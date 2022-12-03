@@ -6,11 +6,11 @@ using ServicesDeskUCAB.Models;
 
 namespace ServiceDeskUCAB.ViewModel
 {
-	public class FamiliaMergeDTOViewModel
+    public class FamiliaMergeDTOViewModel
     {
-		public TicketCompletoDTO ticket;
+        public TicketCompletoDTO ticket;
 
-		public List<TicketBasicoDTO> tickets;
+        public List<TicketBasicoDTO> tickets;
 
 		public Guid[] familia;
 	}

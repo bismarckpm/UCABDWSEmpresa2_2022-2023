@@ -27,7 +27,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public DateTime? fecha_elim { get; set; }
         public List<Flujo_Aprobacion> Flujo_Aprobacion { get; set; }
-        public List<Departamento> Departamento { get; set; }
+        public List<DepartamentoTipo_Ticket> Departamentos { get; set; }
         public int? Minimo_Aprobado { get; set; }
         public int? Maximo_Rechazado { get; set; }
 
@@ -43,7 +43,7 @@ namespace ServicesDeskUCABWS.Entities
             fecha_creacion = DateTime.UtcNow;
             fecha_ult_edic = DateTime.UtcNow;
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
-            Departamento = new List<Departamento>();
+            Departamentos = new List<DepartamentoTipo_Ticket>();
     }
 
         public Tipo_Ticket(string nombre, string descripcion, string tipo)
@@ -56,7 +56,7 @@ namespace ServicesDeskUCABWS.Entities
             fecha_creacion = DateTime.UtcNow;
             fecha_ult_edic = DateTime.UtcNow;
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
-            Departamento = new List<Departamento>();
+            Departamentos = new List<DepartamentoTipo_Ticket>();
         }
 
         public Tipo_Ticket()
