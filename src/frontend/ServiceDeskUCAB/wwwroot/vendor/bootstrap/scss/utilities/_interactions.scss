@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 // stylelint-disable declaration-no-important
 
 @each $value in $user-selects {
   .user-select-#{$value} { user-select: $value !important; }
 }
-=======
-// stylelint-disable declaration-no-important
-
-@each $value in $user-selects {
-  .user-select-#{$value} { user-select: $value !important; }
-}
->>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

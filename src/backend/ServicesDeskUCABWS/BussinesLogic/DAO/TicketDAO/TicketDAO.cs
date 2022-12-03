@@ -28,6 +28,9 @@ using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -684,13 +687,48 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-        public ApplicationResponse<List<Departamento>> buscarDepartamentos(Guid id)
+        public ApplicationResponse<List<DepartamentoSearchDTO>> buscarDepartamentos(Guid id)
         {
-            ApplicationResponse<List<Departamento>> respuesta = new ApplicationResponse<List<Departamento>>();
+            ApplicationResponse<List<DepartamentoSearchDTO>> respuesta = new ApplicationResponse<List<DepartamentoSearchDTO>>();
             try
             {
                 respuesta.Data = buscarDepartamentoTicketSolcitud(id);
                 respuesta.Message = "Lista de departamentos obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<DepartamentoSearchDTO> buscarDepartamentoEmpleado(Guid id)
+        {
+            ApplicationResponse<DepartamentoSearchDTO> respuesta = new ApplicationResponse<DepartamentoSearchDTO>();
+            try
+            {
+                respuesta.Data = buscarDepartamentoUsuarioHl(id);
+                respuesta.Message = "Lista de departamentos obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id)
+        {
+            ApplicationResponse<List<Tipo_TicketDTOSearch>> respuesta = new ApplicationResponse<List<Tipo_TicketDTOSearch>>();
+            try
+            {
+                respuesta.Data = obtenerTipoTickets(id);
+                respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
                 respuesta.Success = true;
             }
             catch (Exception e)
@@ -928,17 +966,36 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
         }
-        public List<Departamento> buscarDepartamentoTicketSolcitud(Guid usuarioId)
+        public List<DepartamentoSearchDTO> buscarDepartamentoTicketSolcitud(Guid usuarioId)
         {
+            if (!_dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == usuarioId).Any())
+                throw new Exception("Usuario no es un empleado, por lo tanto no puede crear un ticket");
             Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == usuarioId).Single();
+            if (empleado.Cargo == null)
+                throw new Exception("Empleado no tiene cargo asignado");
             Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
             if (!_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).Any())
                 throw new Exception("No existen departamentos acorde al cargo del empleado");
-            return _dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList();
+            return _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
         }
-        public List<Tipo_Ticket> buscarTipoTicketPorCargo(Guid usuarioId)
+
+        public DepartamentoSearchDTO buscarDepartamentoUsuarioHl(Guid idEmpleado)
         {
-            return _dataContext.Tipos_Tickets.ToList();
+            if (!_dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == idEmpleado).Any())
+                throw new Exception("Usuario no es un empleado, por lo tanto no puede crear un ticket");
+            Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == idEmpleado).Single();
+            if (empleado.Cargo == null)
+                throw new Exception("Empleado no tiene cargo asignado");
+            Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
+            if (!_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Any())
+                throw new Exception("No existen departamentos acorde al cargo del empleado");
+            return _mapper.Map<DepartamentoSearchDTO>(_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Single());
+        }
+
+    public List<Tipo_TicketDTOSearch> obtenerTipoTickets(Guid departamentoId)
+        {
+            Tipo_TicketService tipoTicket = new Tipo_TicketService(_dataContext, _mapper);
+            return tipoTicket.ConsultaTipoTicketAgregarTicket(departamentoId);
         }
     }
 }

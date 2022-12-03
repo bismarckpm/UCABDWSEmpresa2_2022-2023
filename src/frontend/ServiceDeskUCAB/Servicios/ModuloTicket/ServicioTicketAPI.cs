@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using ServiceDeskUCAB.Models.DTO.Tipo_TicketDTO;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -142,6 +144,98 @@ namespace ServiceDeskUCAB.Servicios
             catch (Exception e)
             {
                 Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+        public async Task<List<DepartamentoSearchDTO>> Departamentos(string empleadoId)
+        {
+            List<DepartamentoSearchDTO> objeto = new List<DepartamentoSearchDTO>();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerDepartamentos/{empleadoId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<DepartamentoSearchDTO>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<DepartamentoSearchDTO>(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene los departamentos");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los departamentos, algo ha sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+        public async Task<List<Tipo_TicketDTOSearch>> TipoTickets(Guid idDepartamento)
+        {
+            List<Tipo_TicketDTOSearch> objeto = new List<Tipo_TicketDTOSearch>();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerTipoTickets/{idDepartamento}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<Tipo_TicketDTOSearch>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<Tipo_TicketDTOSearch>(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene los departamentos");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los departamentos, algo ha sucedido ", e.Message);
+            }
+            return objeto;
+        }
+        public async Task<DepartamentoSearchDTO> departamentoEmpleado(string empleadoId)
+        {
+            DepartamentoSearchDTO objeto = new DepartamentoSearchDTO();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerDepartamentoEmpleado/{empleadoId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<DepartamentoSearchDTO>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new DepartamentoSearchDTO(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene el departamento del empleado");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los departamentos, algo ha sucedido ", e.Message);
             }
             return objeto;
         }
