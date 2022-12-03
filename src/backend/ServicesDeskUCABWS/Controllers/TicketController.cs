@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -76,11 +78,22 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.eliminarTicket(new Guid(id));
         }
 
-        [HttpGet, Route("ObtenerDepartamento/{id}")]
-        public ApplicationResponse<List<Departamento>> obtenerDepartamentos(string id)
+        [HttpGet, Route("ObtenerDepartamentos/{id}")]
+        public ApplicationResponse<List<DepartamentoSearchDTO>> obtenerDepartamentos(string id)
         {
             return _ticketDAO.buscarDepartamentos(new Guid(id));
         }
 
+        [HttpGet, Route("ObtenerDepartamentoEmpleado/{idEmpleado}")]
+        public ApplicationResponse<DepartamentoSearchDTO> obtenerDepartamentoEmpleado(string idEmpleado)
+        {
+            return _ticketDAO.buscarDepartamentoEmpleado(new Guid(idEmpleado));
+        }
+
+        [HttpGet, Route("ObtenerTipoTickets/{idDepartamento}")]
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> obtenerTipoTicketPorDepartamento(string idDepartamento)
+        {
+            return _ticketDAO.buscarTipoTickets(new Guid(idDepartamento));
+        }
     }
 }

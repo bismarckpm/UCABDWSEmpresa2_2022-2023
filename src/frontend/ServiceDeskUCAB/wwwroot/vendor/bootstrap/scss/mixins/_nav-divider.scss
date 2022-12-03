@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Horizontal dividers
 //
 // Dividers (basically an hr) within dropdowns and nav lists
@@ -10,16 +9,3 @@
   border-top: 1px solid $color;
   @include deprecate("The `nav-divider()` mixin", "v4.4.0", "v5", $ignore-warning);
 }
-=======
-// Horizontal dividers
-//
-// Dividers (basically an hr) within dropdowns and nav lists
-
-@mixin nav-divider($color: $nav-divider-color, $margin-y: $nav-divider-margin-y, $ignore-warning: false) {
-  height: 0;
-  margin: $margin-y 0;
-  overflow: hidden;
-  border-top: 1px solid $color;
-  @include deprecate("The `nav-divider()` mixin", "v4.4.0", "v5", $ignore-warning);
-}
->>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

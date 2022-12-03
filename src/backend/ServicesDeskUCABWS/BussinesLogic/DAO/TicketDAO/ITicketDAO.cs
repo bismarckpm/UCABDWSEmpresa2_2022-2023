@@ -1,5 +1,7 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -28,6 +30,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket);
         public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId);
         public ApplicationResponse<string> eliminarTicket(Guid id);
-        public ApplicationResponse<List<Departamento>> buscarDepartamentos(Guid id);
+        public ApplicationResponse<List<DepartamentoSearchDTO>> buscarDepartamentos(Guid id);
+        public ApplicationResponse<DepartamentoSearchDTO> buscarDepartamentoEmpleado(Guid idEmpleado);
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id);
     }
 }
