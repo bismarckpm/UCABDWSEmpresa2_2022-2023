@@ -236,13 +236,6 @@ namespace ServiceDeskUCAB.Servicios
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
                 return null;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
-            }
-            return objeto;
-        }
 
             }
             catch (Exception e)
@@ -251,6 +244,7 @@ namespace ServiceDeskUCAB.Servicios
                 return null;
             }
         }
+
 
         public async Task<JObject> CambiarEstado(ActualizarDTO Objeto)
         {

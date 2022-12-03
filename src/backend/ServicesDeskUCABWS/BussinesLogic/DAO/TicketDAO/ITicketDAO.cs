@@ -28,5 +28,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket);
         public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId);
         public ApplicationResponse<string> eliminarTicket(Guid id);
+        public ApplicationResponse<List<Departamento>> buscarDepartamentos(Guid id);
     }
 }

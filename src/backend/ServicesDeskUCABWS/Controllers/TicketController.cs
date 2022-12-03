@@ -76,5 +76,11 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.eliminarTicket(new Guid(id));
         }
 
+        [HttpGet, Route("ObtenerDepartamento/{id}")]
+        public ApplicationResponse<List<Departamento>> obtenerDepartamentos(string id)
+        {
+            return _ticketDAO.buscarDepartamentos(new Guid(id));
+        }
+
     }
 }

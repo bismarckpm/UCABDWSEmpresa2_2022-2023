@@ -684,6 +684,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+        public ApplicationResponse<List<Departamento>> buscarDepartamentos(Guid id)
+        {
+            ApplicationResponse<List<Departamento>> respuesta = new ApplicationResponse<List<Departamento>>();
+            try
+            {
+                respuesta.Data = buscarDepartamentoTicketSolcitud(id);
+                respuesta.Message = "Lista de departamentos obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
         //HELPERS
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
         {
@@ -697,7 +714,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
                                        .Where(t => t.id == nuevoTicket.Emisor.Cargo.id).FirstOrDefault();
-            Guid prueba = cargo.Departamento.id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             Estado estado = _dataContext.Estados
                                                 .Include(t => t.Estado_Padre)
@@ -911,6 +927,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticket.fecha_eliminacion = DateTime.UtcNow;
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
+        }
+        public List<Departamento> buscarDepartamentoTicketSolcitud(Guid usuarioId)
+        {
+            Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == usuarioId).Single();
+            Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
+            if (!_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).Any())
+                throw new Exception("No existen departamentos acorde al cargo del empleado");
+            return _dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList();
+        }
+        public List<Tipo_Ticket> buscarTipoTicketPorCargo(Guid usuarioId)
+        {
+            return _dataContext.Tipos_Tickets.ToList();
         }
     }
 }

@@ -21,12 +21,12 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TesVotosController
     {
         private readonly Votos_TicketController _controller;
         private readonly Mock<IVotos_TicketDAO> _serviceMock;
-
-
+        private readonly Mock<DataContext> context;
+        private IMapper mapper;
         public TestVotosController()
         {
             _serviceMock = new Mock<IVotos_TicketDAO>();
-            _controller = new Votos_TicketController(_serviceMock.Object);
+            _controller = new Votos_TicketController(_serviceMock.Object, context.Object, mapper);
 
             _serviceMock.Setup(x => x.ConsultaVotos(It.IsAny<Guid>())).Returns(new ApplicationResponse<List<Votos_Ticket>>()
             {
@@ -42,7 +42,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TesVotosController
             Assert.IsTrue(res.Success);
         }
 
-        
+
 
     }
 

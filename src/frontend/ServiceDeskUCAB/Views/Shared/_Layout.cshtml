@@ -129,7 +129,20 @@
                     </div>
                 </div>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
+                   aria-expanded="true" aria-controls="collapseTicket">
+                    <i class="fas fa-fw fa-edit"></i>
+                    <span>Ticket</span>
+                </a>
+                <div id="collapseTicket" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestión de tickets:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-departamentoId="ccacd411-1b46-4117-aa84-73ea64deac87" asp-route-opcion="Abiertos">Todos los tickets</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Ticket" asp-action="Ticket">Crear Ticket</a>
+                    </div>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">
                     <i class="fas fa-sign-out-alt"></i>

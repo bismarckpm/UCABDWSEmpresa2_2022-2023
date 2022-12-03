@@ -17,6 +17,7 @@ using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 
 
 //* Preparación  -> Organizar las precondiciones
