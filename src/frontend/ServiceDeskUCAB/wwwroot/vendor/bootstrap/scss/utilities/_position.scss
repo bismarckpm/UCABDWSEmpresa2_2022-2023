@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // stylelint-disable declaration-no-important
 
 // Common values
@@ -30,3 +31,37 @@
     z-index: $zindex-sticky;
   }
 }
+=======
+// stylelint-disable declaration-no-important
+
+// Common values
+@each $position in $positions {
+  .position-#{$position} { position: $position !important; }
+}
+
+// Shorthand
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+
+.sticky-top {
+  @supports (position: sticky) {
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+>>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

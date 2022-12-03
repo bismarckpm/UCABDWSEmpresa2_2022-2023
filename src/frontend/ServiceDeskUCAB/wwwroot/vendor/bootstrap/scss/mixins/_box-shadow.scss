@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @mixin box-shadow($shadow...) {
   @if $enable-shadows {
     $result: ();
@@ -18,3 +19,25 @@
     }
   }
 }
+=======
+@mixin box-shadow($shadow...) {
+  @if $enable-shadows {
+    $result: ();
+
+    @if (length($shadow) == 1) {
+      // We can pass `@include box-shadow(none);`
+      $result: $shadow;
+    } @else {
+      // Filter to avoid invalid properties for example `box-shadow: none, 1px 1px black;`
+      @for $i from 1 through length($shadow) {
+        @if nth($shadow, $i) != "none" {
+          $result: append($result, nth($shadow, $i), "comma");
+        }
+      }
+    }
+    @if (length($result) > 0) {
+      box-shadow: $result;
+    }
+  }
+}
+>>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿
 .gradient-custom-2 {
     /* fallback for old browsers */
@@ -14,3 +15,21 @@
     }
 }
 
+=======
+﻿
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #fccb90;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: black;
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: black;
+}
+
+@media (min-width: 768px) {
+    .login-form {
+        height: 100vh !important;
+    }
+}
+
+>>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

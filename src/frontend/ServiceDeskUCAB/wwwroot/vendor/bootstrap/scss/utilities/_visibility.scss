@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // stylelint-disable declaration-no-important
 
 //
@@ -11,3 +12,18 @@
 .invisible {
   visibility: hidden !important;
 }
+=======
+// stylelint-disable declaration-no-important
+
+//
+// Visibility utilities
+//
+
+.visible {
+  visibility: visible !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+>>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @mixin reset-text() {
   font-family: $font-family-base;
   // We deliberately do NOT reset font-size or word-wrap.
@@ -15,3 +16,22 @@
   white-space: normal;
   line-break: auto;
 }
+=======
+@mixin reset-text() {
+  font-family: $font-family-base;
+  // We deliberately do NOT reset font-size or word-wrap.
+  font-style: normal;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  text-align: left; // Fallback for where `start` is not supported
+  text-align: start;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-break: normal;
+  word-spacing: normal;
+  white-space: normal;
+  line-break: auto;
+}
+>>>>>>> 04286eb4a5017e63e4fde010ff4d0d07166fd8e8

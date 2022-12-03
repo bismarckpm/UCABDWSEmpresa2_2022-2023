@@ -79,7 +79,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver detalles</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-ticketPadre_Id="@item.Id">Reenviar</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-tickeId="@item.Id">Merge</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-departamentoId="@ViewBag.departamentoId" asp-route-ticketId="@item.Id">Merge</a></li>
                                     @if (item.fecha_eliminacion == null)
                                     {
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Cancelar" asp-route-ticketId="@item.Id">Cancelar</a></li>
