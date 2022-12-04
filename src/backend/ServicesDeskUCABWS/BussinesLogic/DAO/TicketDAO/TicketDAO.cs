@@ -534,8 +534,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticket.tipoTicket_id = solicitudTicket.tipoTicket_id;
             ticket.titulo = solicitudTicket.titulo;
             ticket.ticketPadre_Id = solicitudTicket.ticketPadre_Id;
-            ticket.nro_cargo_actual = solicitudTicket.nro_cargo_actual;
-
             try
             {
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
@@ -758,6 +756,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
+        public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento)
+        {
+            ApplicationResponse<List<Estado>> respuesta = new ApplicationResponse<List<Estado>>();
+            try
+            {
+                respuesta.Data = buscarEstadosPorDepartamentoHl(idDepartamento);
+                respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        
         //HELPERS
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
         {
@@ -783,6 +800,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
+            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+                nuevoTicket.nro_cargo_actual = 1;
+            else
+                nuevoTicket.nro_cargo_actual = null;
             Guid? pruebaPadre = solicitudTicket.ticketPadre_Id;
             if (solicitudTicket.ticketPadre_Id != null)
             {
@@ -794,14 +815,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             else
             {
                 nuevoTicket.Ticket_Padre = null;
-            }
-            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
-            {
-                nuevoTicket.nro_cargo_actual = 1;
-            }
-            else
-            {
-                nuevoTicket.nro_cargo_actual = null;
             }
 
             nuevoTicket.Votos_Ticket = null;
@@ -817,9 +830,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             if (nuevoTicket.Bitacora_Tickets == null)
                 throw new Exception("La Bitacora para el ticket no pudo ser creada");
-            _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
             //_dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
-            FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
+            _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
+            //FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
 
             return nuevoTicket;
@@ -1020,6 +1033,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Tipo_Ticket> obtenerTiposTicketsHl()
         {
             return _dataContext.Tipos_Tickets.Include(t => t.Departamentos).ToList();
+        }
+        public List<Estado> buscarEstadosPorDepartamentoHl(Guid idDepartamento)
+        {
+            return _dataContext.Estados.Include(t => t.Departamento).Include(t => t.Estado_Padre).Where(t => t.Departamento.id == idDepartamento && t.Estado_Padre.nombre != "Aprobado" && t.Estado_Padre.nombre != "Rechazado" && t.Estado_Padre.nombre != "Pendiente").ToList();
         }
     }
 }

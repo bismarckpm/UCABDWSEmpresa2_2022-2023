@@ -15,6 +15,7 @@ namespace ServiceDeskUCAB.Models
         public string departamentoDestino_nombre { get; set; }
         public string prioridad_nombre { get; set; }
         public string empleado_correo { get; set; }
+        public int? nro_cargo_actual { get; set; }
     }
 }
 
