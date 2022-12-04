@@ -95,5 +95,11 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.buscarTipoTickets(new Guid(idDepartamento));
         }
+        
+        [HttpGet, Route("ObtenerTiposTickets/")]
+        public ApplicationResponse<List<Tipo_Ticket>> obtenerTiposTicketsPorDepartamento()
+        {
+            return _ticketDAO.buscarTiposTickets();
+        }
     }
 }

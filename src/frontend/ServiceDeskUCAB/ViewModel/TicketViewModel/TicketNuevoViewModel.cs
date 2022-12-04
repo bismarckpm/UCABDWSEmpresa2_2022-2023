@@ -6,6 +6,7 @@ using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.Tipo_TicketDTO;
+using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.ViewModel
 {
@@ -15,7 +16,6 @@ namespace ServiceDeskUCAB.ViewModel
 		public List<DepartamentoSearchDTO> departamentos;
 		public List<PrioridadDTO> prioridades;
 		public List<Tipo_TicketDTOSearch> tipo_tickets;
-
+		public IServicioTicketAPI servicioTicketApi;
 	}
 }
-

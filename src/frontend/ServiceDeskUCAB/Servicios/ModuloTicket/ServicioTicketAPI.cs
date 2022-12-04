@@ -14,6 +14,7 @@ using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.Tipo_TicketDTO;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -195,7 +196,7 @@ namespace ServiceDeskUCAB.Servicios
                     var resultado = JsonConvert.DeserializeObject<List<Tipo_TicketDTOSearch>>(stringDataRespuesta);
                     if (resultado == null) { resultado = new List<Tipo_TicketDTOSearch>(); }
                     objeto = resultado;
-                    Console.WriteLine("Obtiene los departamentos");
+                    Console.WriteLine("Obtiene los tipo tickets");
                 }
             }
             catch (HttpRequestException ex)
@@ -205,7 +206,38 @@ namespace ServiceDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene los departamentos, algo ha sucedido ", e.Message);
+                Console.WriteLine("No obtiene los tipo tickets, algo ha sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+        public async Task<List<Tipo>> TiposTickets()
+        {
+            List<Tipo> objeto = new List<Tipo>();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerTiposTickets/");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<Tipo>(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene los tipo tickets");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tipo tickets, algo ha sucedido ", e.Message);
             }
             return objeto;
         }

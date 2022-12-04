@@ -43,8 +43,6 @@ namespace ServicesDeskUCABWS
     public class Startup
     {
 
-	
-
 		public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -52,7 +50,7 @@ namespace ServicesDeskUCABWS
 
         public IConfiguration Configuration { get; }
 
-          
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -81,6 +79,11 @@ namespace ServicesDeskUCABWS
                 };
 
             });
+
+            services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
 
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
             services.AddTransient<IUserLoginDAO, UserLoginDAO>();
@@ -170,6 +173,7 @@ namespace ServicesDeskUCABWS
                 options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
             );*/
 
+            app.UseCors("corsapp");
 			//Habilitar swagger
 			app.UseSwagger();
 

@@ -13,6 +13,7 @@ using ServicesDeskUCAB.Models;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -20,55 +21,53 @@ namespace ServiceDeskUCAB.Controllers
     {
         private readonly IServicioTicketAPI _servicioTicketAPI;
         private readonly IServicioPrioridadAPI _servicioPrioridadAPI;
-        //private readonly IServicioTipoTicketAPI _servicioTipoTicketAPI;
-        //private readonly IServicioDepartamento _servicioDepartamentoAPI;
 
-        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI, IServicioTicketAPI servicioTicketAPI/*, IServicioTipoTicketAPI servicioTipoTicketAPI, IServicioDepartamento servicioDepartamento*/)
+        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI, IServicioTicketAPI servicioTicketAPI)
         {
             _servicioTicketAPI = servicioTicketAPI;
-            //_servicioTipoTicketAPI = servicioTipoTicketAPI;
-            //_servicioDepartamentoAPI = servicioDepartamentoAPI:
             _servicioPrioridadAPI = servicioPrioridadAPI;
         }
 
-        public async Task<IActionResult> Index(string departamentoId,string opcion)
+        public async Task<IActionResult> Index(string opcion)
         {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             ViewBag.opcion = opcion;
-            ViewBag.departamentoId = departamentoId;
-            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamentoId, opcion);
+            DepartamentoSearchDTO departamento= await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Id, opcion);
             return View(lista);
         }
 
         public async Task<IActionResult> Ticket()
         {
-            var token = User.Identities.First().Claims.ToList()[0].Value;
-            var userId = token;
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
                 ticket = new TicketDTO(),
-                prioridades = await _servicioPrioridadAPI.Lista(),
-                //departamentos = await _servicioTicketAPI.Departamentos(Guid.Parse(Guid.NewGuid)), //COLOCAR EL ID DEL USUARIO LOGUEADO MEDIANTE EL TOKEN
+                prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
+                departamentos = await _servicioTicketAPI.Departamentos(idUsuario)
             };
-            //ticketNuevoViewModel.ticket.empleado_id = Guid.NewGuid; //Token
+            ticketNuevoViewModel.ticket.empleado_id = new Guid(idUsuario);
             return View(ticketNuevoViewModel);
         }
 
         public async Task<IActionResult> Reenviar(string ticketPadre_Id)
         {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
             try
             {
                 TicketReenviarDTOViewModel ticketReenviarViewModel = new TicketReenviarDTOViewModel()
                 {
                     ticketPadre = await _servicioTicketAPI.Obtener(ticketPadre_Id),
                     ticket = new TicketReenviarDTO(),
-                    prioridades = await _servicioPrioridadAPI.Lista(),
-                    departamentos = new List<Departament>(), // await _servicioDepartamentoAPI.Lista(),
-                    tipo_tickets = new List<Tipo>(), // await _servicioTipoTicketAPI.Lista()
+                    prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
+                    departamentos = await _servicioTicketAPI.Departamentos(idUsuario),
+                    tipo_tickets = await _servicioTicketAPI.TipoTickets(new Guid(departamento.Id))
                 };
                 ticketReenviarViewModel.ticket.ticketPadre_Id = Guid.Parse(ticketPadre_Id);
                 ticketReenviarViewModel.ticket.titulo = ticketReenviarViewModel.ticketPadre.titulo;
                 ticketReenviarViewModel.ticket.descripcion = ticketReenviarViewModel.ticketPadre.descripcion;
-                ticketReenviarViewModel.ticket.empleado_id = Guid.Parse("172ce21d-b7dc-7537-0901-e0a29753644f"); //Token de usuario
+                ticketReenviarViewModel.ticket.empleado_id = new Guid(idUsuario); //Token de usuario
                 return View(ticketReenviarViewModel);
             }
             catch(Exception e)
@@ -79,12 +78,14 @@ namespace ServiceDeskUCAB.Controllers
             
         }
 
-        public async Task<IActionResult> Merge(string departamentoId,string ticketId)
+        public async Task<IActionResult> Merge(string ticketId)
         {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
             FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
-                tickets = await _servicioTicketAPI.Lista(departamentoId, "Abiertos")
+                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Abiertos")
             };
             return View(ticketMergeViewModel);
         }
@@ -98,7 +99,6 @@ namespace ServiceDeskUCAB.Controllers
                 bitacoraTicket = await _servicioTicketAPI.BitacoraTicket(ticketId),
                 estados = new List<Estado>() //await _servicioEstadoAPI.Estados()
             };
-
             return View(ticketDetailsViewModel);
         }
 
@@ -113,14 +113,14 @@ namespace ServiceDeskUCAB.Controllers
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new {opcion = "Abiertos", message = (string)respuesta["message"] });
 
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                     // Falta retornar a la misma vista sin recargar
-                    return RedirectToAction("Ticket",(new { message = (string)respuesta["message"] }));
+                    return RedirectToAction("Ticket",(new {message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     Console.WriteLine("La respuesta fue verdadera");
                     // Falta la ruta buena de Index
-                    return RedirectToAction("Index",new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index",new {opcion = "Abiertos", message = (string)respuesta["message"] });
                 }
                 else
                 {
@@ -179,13 +179,13 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     Console.WriteLine("La respuesta fue verdadera");
                     // Falta la ruta buena de Index
-                    return RedirectToAction("Index", new { message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new { opcion = "Abiertos", message = (string)respuesta["message"] });
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                     // Falta retornar a la misma vista sin recargar
-                    return RedirectToAction("Ticket", (new { message = (string)respuesta["message"] }));
+                    return RedirectToAction("Merge", (new { ticketId= ticketId , message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
@@ -205,12 +205,12 @@ namespace ServiceDeskUCAB.Controllers
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new {opcion = "Abiertos", message = (string)respuesta["message"] });
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                    return RedirectToAction("Index", (new { message = (string)respuesta["message"] }));
+                    return RedirectToAction("Index", (new { opcion = "Abiertos", message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
@@ -230,12 +230,12 @@ namespace ServiceDeskUCAB.Controllers
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new { opcion = "Abiertos", message = (string)respuesta["message"] });
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                    return RedirectToAction("Index", (new { message = (string)respuesta["message"] }));
+                    return RedirectToAction("Index", (new { opcion = "Abiertos", message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
