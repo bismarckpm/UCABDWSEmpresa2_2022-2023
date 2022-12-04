@@ -20,41 +20,38 @@ namespace ServiceDeskUCAB.Controllers
     {
         private readonly IServicioTicketAPI _servicioTicketAPI;
         private readonly IServicioPrioridadAPI _servicioPrioridadAPI;
-        //private readonly IServicioTipoTicketAPI _servicioTipoTicketAPI;
-        //private readonly IServicioDepartamento _servicioDepartamentoAPI;
 
-        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI, IServicioTicketAPI servicioTicketAPI/*, IServicioTipoTicketAPI servicioTipoTicketAPI, IServicioDepartamento servicioDepartamento*/)
+        public TicketController(IServicioPrioridadAPI servicioPrioridadAPI, IServicioTicketAPI servicioTicketAPI)
         {
             _servicioTicketAPI = servicioTicketAPI;
-            //_servicioTipoTicketAPI = servicioTipoTicketAPI;
-            //_servicioDepartamentoAPI = servicioDepartamentoAPI:
             _servicioPrioridadAPI = servicioPrioridadAPI;
         }
 
         public async Task<IActionResult> Index(string departamentoId,string opcion)
         {
             ViewBag.opcion = opcion;
-            ViewBag.departamentoId = departamentoId;
+            ViewBag.DepartamentoId = departamentoId;
             List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamentoId, opcion);
             return View(lista);
         }
 
-        public async Task<IActionResult> Ticket()
+        public async Task<IActionResult> Ticket(string departamentoId)
         {
-            var token = User.Identities.First().Claims.ToList()[0].Value;
-            var userId = token;
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            ViewBag.DepartamentoId = departamentoId;
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
                 ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.Lista(),
-                //departamentos = await _servicioTicketAPI.Departamentos(Guid.Parse(Guid.NewGuid)), //COLOCAR EL ID DEL USUARIO LOGUEADO MEDIANTE EL TOKEN
+                departamentos = await _servicioTicketAPI.Departamentos(idUsuario), //COLOCAR EL ID DEL USUARIO LOGUEADO MEDIANTE EL TOKEN
             };
-            //ticketNuevoViewModel.ticket.empleado_id = Guid.NewGuid; //Token
+            ticketNuevoViewModel.ticket.empleado_id = new Guid(idUsuario); //Token
             return View(ticketNuevoViewModel);
         }
 
-        public async Task<IActionResult> Reenviar(string ticketPadre_Id)
+        public async Task<IActionResult> Reenviar(string ticketPadre_Id, string departamentoId)
         {
+            ViewBag.DepartamentoId = departamentoId;
             try
             {
                 TicketReenviarDTOViewModel ticketReenviarViewModel = new TicketReenviarDTOViewModel()
@@ -103,7 +100,7 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarTicket(TicketDTO ticket)
+        public async Task<IActionResult> GuardarTicket(TicketDTO ticket, string departamentoId)
         {
             JObject respuesta;
             try
@@ -113,14 +110,14 @@ namespace ServiceDeskUCAB.Controllers
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new { departamentoId = "ccacd411-1b46-4117-aa84-73ea64deac87", opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new { departamentoId = departamentoId, opcion = "Abiertos", message = (string)respuesta["message"] });
 
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                     // Falta retornar a la misma vista sin recargar
-                    return RedirectToAction("Ticket",(new { message = (string)respuesta["message"] }));
+                    return RedirectToAction("Ticket",(new { departamentoId = departamentoId, message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)

@@ -19,25 +19,24 @@ namespace ServiceDeskUCAB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServicioPlantillaNotificacion_API _servicioApi;
-        //private readonly IServicioTicketAPI _servicioTicketApi;
+        private readonly IServicioTicketAPI _servicioTicketApi;
 
-        public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi)
+        /*public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi)
         {
             _logger = logger;
             _servicioApi = servicioApi;
-        }
-        /*public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi, IServicioTicketAPI servicioTicketApi)
+        }*/
+        public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi, IServicioTicketAPI servicioTicketApi)
         {
             _logger = logger;
             _servicioApi = servicioApi;
             _servicioTicketApi = servicioTicketApi;
-        }*/
+        }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var current1 = User.Identities.First().Claims.ToList()[2].Value;
-            var current1 = User.Identities.First().Claims.ToList()[0].Value;
-            //ViewBag.departamentoId = await _servicioTicketApi.departamentoEmpleado();
+            //var current = User.Identities.First().Claims.ToList()[2].Value;
+            ViewBag.departamentoId = await _servicioTicketApi.departamentoEmpleado(User.Identities.First().Claims.ToList()[0].Value);
             var current = User.Identities.First().Claims;
             var boold = User.Identities.First().Claims.ToList()[2].Value == "Cliente";
             if (current == null)

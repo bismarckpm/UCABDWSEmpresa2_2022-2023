@@ -8,6 +8,7 @@ using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.Tipo_TicketDTO;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -22,6 +23,8 @@ namespace ServiceDeskUCAB.Servicios
         Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion);
         Task<List<DepartamentoSearchDTO>> Departamentos(string empleadoId);
         Task<List<Tipo_TicketDTOSearch>> TipoTickets(Guid idDepartamento);
+        Task<List<Tipo>> TiposTickets();
+
         Task<DepartamentoSearchDTO> departamentoEmpleado(string empleadoId);
         Task<JObject> Cancelar(string ticketId);
 
