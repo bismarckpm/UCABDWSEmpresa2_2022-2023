@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Tipo ticket:</label>
-                <select id="tipo-ticket"  asp-for="@Model.ticket.tipoTicket_id" class="form-select" aria-label="Default select example" required></select>
+                <select id="tipo-ticket"  asp-for="@Model.ticket.tipoTicket_id" class="form-select" aria-label="Default select example" required disabled></select>
             </div>
             <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Prioridad:</label>
@@ -63,6 +63,7 @@
             {
                 var select = document.getElementById("tipo-ticket");
                 console.log(select);
+                select.setAttribute("disabled", "");
                 select.textContent = "Cargando...";
                 select.innerHTML = "";
                 var response = await fetch(`https://localhost:44392/Ticket/ObtenerTipoTickets/${departamento}`);
@@ -76,6 +77,7 @@
                     option.innerHTML = e.nombre;
                     select.appendChild(option);
                 });
+                select.removeAttribute("disabled");
             }
         }
     </script>
