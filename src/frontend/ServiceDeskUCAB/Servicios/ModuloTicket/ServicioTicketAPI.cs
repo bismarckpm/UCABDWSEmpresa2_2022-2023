@@ -58,9 +58,9 @@ namespace ServiceDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<List<Ticket>> FamiliaTicket(string ticketId)
+        public async Task<List<TicketCompletoDTO>> FamiliaTicket(string ticketId)
         {
-            List<Ticket> objeto = new List<Ticket>();
+            List<TicketCompletoDTO> objeto = new List<TicketCompletoDTO>();
             try
             {
                 var cliente = new HttpClient();
@@ -71,7 +71,7 @@ namespace ServiceDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<Ticket>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<TicketCompletoDTO>>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine("Obtiene la familia del ticket");
                 }

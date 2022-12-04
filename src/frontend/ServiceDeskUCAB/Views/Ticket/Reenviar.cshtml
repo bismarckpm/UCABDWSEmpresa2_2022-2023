@@ -86,10 +86,14 @@
     </form>
 </div>
 
+
 @section Scripts
 {
-    <script type="text/javascript">async function cargarTipoTicket(departamento) {
-            if (departamento !== '') {
+    <script type="text/javascript">
+        async function cargarTipoTicket(departamento)
+        {
+            if (departamento !== '')
+            {
                 var select = document.getElementById("tipo-ticket");
                 console.log(select);
                 select.setAttribute("disabled", "");
@@ -97,15 +101,17 @@
                 select.innerHTML = "";
                 var response = await fetch(`https://localhost:44392/Ticket/ObtenerTipoTickets/${departamento}`);
                 var tipos = await response.json();
-                select.removeAttribute('disabled');
                 select.textContent = "Seleccione una opción";
                 console.log(tipos.data);
-                tipos.data.forEach(e => {
-                    var option = document.createElement("option");
-                    option.value = e.Id;
+                tipos.data.forEach(e=>{
+                    //var option = document.createElement("option");
+                    option = document.createElement("option");
+                    option.value = e.id;
                     option.innerHTML = e.nombre;
                     select.appendChild(option);
                 });
+                select.removeAttribute("disabled");
             }
-        }</script>
+        }
+    </script>
 }

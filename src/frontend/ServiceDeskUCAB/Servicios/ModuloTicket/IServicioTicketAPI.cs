@@ -16,7 +16,7 @@ namespace ServiceDeskUCAB.Servicios
 	{
         Task<TicketCompletoDTO> Obtener(string ticketId);
 
-        Task<List<Ticket>> FamiliaTicket(string ticketId);
+        Task<List<TicketCompletoDTO>> FamiliaTicket(string ticketId);
 
         Task<List<BitacoraDTO>> BitacoraTicket(string ticketId);
 

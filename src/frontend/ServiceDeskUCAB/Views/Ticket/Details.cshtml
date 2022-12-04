@@ -187,9 +187,9 @@
                     {
                         <tr>
                             <td>@item.titulo</td>
-                            <td>@item.Tipo_Ticket.nombre</td>
-                            <td>@item.Prioridad.nombre</td>
-                            <td>@item.Estado.nombre</td>
+                            <td>@item.tipoTicket_nombre</td>
+                            <td>@item.prioridad_nombre</td>
+                            <td>@item.estado_nombre</td>
                             <td>@item.fecha_creacion</td>
                             <td>@item.fecha_eliminacion</td>
                             <td>
@@ -197,7 +197,7 @@
                                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver detalles</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.ticket_id">Ver detalles</a></li>
                                     </ul>
                                 </div>
                             </td>

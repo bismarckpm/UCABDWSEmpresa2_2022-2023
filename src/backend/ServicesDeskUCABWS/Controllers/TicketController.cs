@@ -101,5 +101,11 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.buscarTiposTickets();
         }
+
+        [HttpGet, Route("ObtenerEstadosPorDepartamento/{idDepartamento}")]
+        public ApplicationResponse<List<Estado>> obtenerEstadosPorDepartamento(string idDepartamento)
+        {
+            return _ticketDAO.buscarEstadosPorDepartamento(new Guid(idDepartamento));
+        }
     }
 }

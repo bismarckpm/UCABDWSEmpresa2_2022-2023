@@ -13,7 +13,7 @@ namespace ServiceDeskUCAB.ViewModel
 
         public List<BitacoraDTO> bitacoraTicket;
 
-        public List<Ticket> familiaTicket;
+        public List<TicketCompletoDTO> familiaTicket;
 
         public List<Estado> estados;
 
