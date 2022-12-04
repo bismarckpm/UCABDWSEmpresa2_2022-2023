@@ -60,21 +60,27 @@
     @section Scripts
     {
         <script type="text/javascript">
-            function async cargarTipoTicket(departamento)
+            async function cargarTipoTicket(departamento)
             {
-                alert(departamento)
-                $select = documnet.getElementById("tipo-ticket");
-                $select.innerHTML = "";
-                let response = await fetch(`https://localhost:44392/Ticket/ObtenerTipoTickets/${departamento}`);
-                let tipos = await response.json();
-                $select.removeAttribute('disabled');
-                alert("Aquí");
-                tipos.foreach(e=>{
-                    let option = document.createElement("option");
-                    option.value = e.Id;
-                    option.innerHTML = e.nombre;
-                    $select.appendChild(option);
-                });
+                if (departamento !== '')
+                {
+                    var select = document.getElementById("tipo-ticket");
+                    console.log(select);
+                    select.setAttribute("disabled", "");
+                    select.textContent = "Cargando...";
+                    select.innerHTML = "";
+                    var response = await fetch(`https://localhost:44392/Ticket/ObtenerTipoTickets/${departamento}`);
+                    var tipos = await response.json();
+                    select.removeAttribute('disabled');
+                    select.textContent = "Seleccione una opción";
+                    console.log(tipos.data);
+                    tipos.data.forEach(e=>{
+                        var option = document.createElement("option");
+                        option.value = e.Id;
+                        option.innerHTML = e.nombre;
+                        select.appendChild(option);
+                    });
+                }
             }
         </script>
     }
