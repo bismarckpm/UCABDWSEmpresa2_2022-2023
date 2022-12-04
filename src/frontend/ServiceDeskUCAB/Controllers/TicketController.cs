@@ -235,7 +235,7 @@ namespace ServiceDeskUCAB.Controllers
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                    return RedirectToAction("Index", (new { opcion = "Abiertos", message = (string)respuesta["message"] }));
+                    return RedirectToAction("Details", (new { ticketId = ticketId, opcion = "Abiertos", message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
