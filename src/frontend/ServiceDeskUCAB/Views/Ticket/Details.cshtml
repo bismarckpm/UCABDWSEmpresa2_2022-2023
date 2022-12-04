@@ -21,7 +21,7 @@
             <form method="post" asp-controller="Ticket" asp-action="CambiarEstado" asp-route-ticketId="@Model.ticket.ticket_id">
                 <div class="mb-3">
                     <input asp-for="@Model.actualizarDTO.ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none"/>
-                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" aria-label="Default select example" required>
+                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" style="display:inline-block" aria-label="Default select example" required>
                         <option selected>Cambiar estado</option>
                         @try
                         {
@@ -37,7 +37,7 @@
 
                     </select>
                 </div>
-                <button type="submit" class="btn btn-success">Enviar</button>
+                <button style="display:inline-block" type="submit" class="btn btn-success">Enviar</button>
             </form>
 
         }

@@ -241,6 +241,7 @@ namespace ServiceDeskUCAB.Servicios
             }
             return objeto;
         }
+
         public async Task<DepartamentoSearchDTO> departamentoEmpleado(string empleadoId)
         {
             DepartamentoSearchDTO objeto = new DepartamentoSearchDTO();

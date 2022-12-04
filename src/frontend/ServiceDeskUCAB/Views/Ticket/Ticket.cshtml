@@ -72,7 +72,8 @@
                 select.textContent = "Seleccione una opción";
                 console.log(tipos.data);
                 tipos.data.forEach(e=>{
-                    var option = document.createElement("option");
+                    //var option = document.createElement("option");
+                    option = document.createElement("option");
                     option.value = e.Id;
                     option.innerHTML = e.nombre;
                     select.appendChild(option);
