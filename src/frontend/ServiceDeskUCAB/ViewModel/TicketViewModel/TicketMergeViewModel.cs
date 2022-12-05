@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServicesDeskUCAB.Models;
@@ -12,7 +13,7 @@ namespace ServiceDeskUCAB.ViewModel
 
         public List<TicketBasicoDTO> tickets;
 
-		public List<Guid> familia;
+		public IList<SelectListItem> familia;
 	}
 }
 
