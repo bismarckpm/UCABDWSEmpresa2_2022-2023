@@ -159,17 +159,17 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarMerge(Guid ticketId,Guid[] familia )
+        public async Task<IActionResult> GuardarMerge(Guid ticketId )
         {
             FamiliaMergeDTO merge = new FamiliaMergeDTO();
-            merge.ticketPadre_Id = ticketId;
+            /*merge.ticketPadre_Id = ticketId;
             merge.tickets = new List<Guid>();
             int i = 0;
             foreach(Guid item in familia)
             {
                 merge.tickets[i] = item;
                 i++;
-            }
+            }*/
             JObject respuesta;
             try
             {

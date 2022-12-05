@@ -97,7 +97,7 @@
             </div>
         </div>
     <div>
-        <form method="post" asp-controller="Ticket" asp-action="GuardarFamilia" asp-route-ticketId="@Model.ticket.ticket_id">
+        <form method="post" asp-controller="Ticket" asp-action="GuardarMerge" asp-route-ticketId="@Model.ticket.ticket_id">
             <div class="col text-center" style="margin:30px 0px">
                 <h3>Seleccione los tickets a unir y presione Merge</h3>
                 <button type="submit" class="btn btn-success">Merge</button>
@@ -112,7 +112,7 @@
                     @foreach (var item in Model.tickets)
                     {
                         int i = 0;
-                        string id = "collapse" + i;
+                        string id = "collapse" + i.ToString();
                         <br />
                         <br />
                         <div class="col-2">
