@@ -161,19 +161,20 @@ namespace ServiceDeskUCAB.Controllers
         [HttpPost]
         public async Task<IActionResult> GuardarMerge(Guid ticketId, IFormCollection formCollection)
         {
-            var count = formCollection.LongCount();
+            var count = formCollection.Keys.Count;
             FamiliaMergeDTO merge = new FamiliaMergeDTO();
-            merge.ticketPadre_Id = ticketId;
-            merge.tickets = new List<Guid>();
-            foreach (var item in formCollection["familia"])
+            merge.ticketPrincipalId = ticketId;
+            merge.ticketsSecundariosId = new List<Guid>();
+            for (var i = 0; i < count - 1; i++)
             {
-                merge.tickets.Add(new Guid(item));
+                var element = formCollection[formCollection.Keys.ElementAt(i)];
+                merge.ticketsSecundariosId.Add(new Guid(element));
             }
             JObject respuesta;
             try
             {
                 respuesta = await _servicioTicketAPI.GuardarMerge(merge);
-                Console.WriteLine(respuesta.ToString());
+                //Console.WriteLine(respuesta.ToString());
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");

@@ -55,7 +55,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerBitacoras(new Guid(ticketId));
         }
 
-        [HttpPut, Route("Merge")]
+        [HttpPost, Route("Merge")]
         public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
         {
             return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);

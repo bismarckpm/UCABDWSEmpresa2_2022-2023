@@ -5,8 +5,8 @@ namespace ServiceDeskUCAB.Models
 {
 	public class FamiliaMergeDTO
 	{
-		public Guid ticketPadre_Id { get; set; }
-		public List<Guid>? tickets { get; set; }
-	}
+        public Guid ticketPrincipalId { get; set; }
+        public List<Guid> ticketsSecundariosId { get; set; }
+    }
 }
 
