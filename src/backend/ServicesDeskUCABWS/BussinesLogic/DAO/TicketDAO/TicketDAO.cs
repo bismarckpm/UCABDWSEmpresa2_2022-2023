@@ -834,7 +834,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
             //FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
-
             return nuevoTicket;
         }
         public Bitacora_Ticket crearNuevaBitacora(TicketDTO ticket)

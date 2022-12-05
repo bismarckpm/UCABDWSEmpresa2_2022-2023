@@ -103,40 +103,43 @@
                 <button type="submit" class="btn btn-success">Merge</button>
             </div>
             @try
-            {
+                {
                 <div class="row">
                     <div class="col-2">
                         <label class="col-form-label">Selecccionar</label>
                     </div>
                     <div class="col-10"></div>
+                    @{int i = 0;}
                     @foreach (var item in Model.tickets)
                     {
-                        int i = 0;
-                        string id = "collapse" + i.ToString();
-                        <br />
-                        <br />
-                        <div class="col-2">
-                            <div class="form-check col-6 text-center">
-                                <input name="familia[i]" class="form-check-input" type="checkbox" value="@item.Id">
-                            </div>
-                        </div>
-                        <div class="col-10">
-                            <button class="container-fluid btn btn-outline-secondary text-left" type="button" data-bs-toggle="collapse" data-bs-target="#@id" aria-expanded="false" aria-controls="@id">
-                                Titulo: @item.titulo - Tipo ticket: @item.tipoTicket_nombre - Click para ver más
-                            </button>
-                            <div class="collapse" id="@id">
-                                <div class="card card-body">
-                                    <b>TITULO:</b><p>@item.titulo</p>
-                                    <b>TIPO TICKET:</b><p>@item.tipoTicket_nombre</p>
-                                    <b>PRIORIDAD:</b><p>@item.prioridad_nombre</p>
-                                    <b>ESTADO:</b><p>@item.estado_nombre</p>
-                                    <b>FECHA DE CREACIÓN:</b><p>@item.fecha_creacion</p>
-                                    <b>EMIRSOR:</b><p>@item.empleado_correo</p>
-                                    <a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver mas detalles</a>
+                        if(item.Id != Model.ticket.ticket_id)
+                        { 
+                            string id = "collapse" + i.ToString();
+                            <br />
+                            <br />
+                            <div class="col-2">
+                                <div class="form-check col-6 text-center">
+                                    <input name="familia[i]" class="form-check-input" type="checkbox" value="@item.Id">
                                 </div>
                             </div>
-                        </div>
-                        i++;
+                            <div class="col-10">
+                                <button class="container-fluid btn btn-outline-secondary text-left" type="button" data-bs-toggle="collapse" data-bs-target="#@id" aria-expanded="false" aria-controls="@id">
+                                    Titulo: @item.titulo - Tipo ticket: @item.tipoTicket_nombre - Click para ver más
+                                </button>
+                                <div class="collapse" id="@id">
+                                    <div class="card card-body">
+                                        <b>TITULO:</b><p>@item.titulo</p>
+                                        <b>TIPO TICKET:</b><p>@item.tipoTicket_nombre</p>
+                                        <b>PRIORIDAD:</b><p>@item.prioridad_nombre</p>
+                                        <b>ESTADO:</b><p>@item.estado_nombre</p>
+                                        <b>FECHA DE CREACIÓN:</b><p>@item.fecha_creacion</p>
+                                        <b>EMIRSOR:</b><p>@item.empleado_correo</p>
+                                        <a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver mas detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                        }
                      }
                 </div>
                 }
