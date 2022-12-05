@@ -347,6 +347,7 @@ namespace ServiceDeskUCAB.Servicios
             }
             return null;
         }
+
         public async Task<JObject> Cancelar(string Objeto)
         {
             var cliente = new HttpClient();
@@ -372,7 +373,7 @@ namespace ServiceDeskUCAB.Servicios
             }
         }
 
-
+        [HttpPost]
         public async Task<JObject> CambiarEstado(ActualizarDTO Objeto)
         {
             var cliente = new HttpClient();
@@ -380,7 +381,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var response = await cliente.PutAsync($"Ticket/CambiarEstado", content);
+                var response = await cliente.PostAsync($"Ticket/CambiarEstado", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;

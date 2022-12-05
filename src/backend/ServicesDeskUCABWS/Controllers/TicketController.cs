@@ -43,10 +43,10 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
         }
 
-        [HttpPut, Route("cambiarEstadoTicket/{ticketId}/{estadoId}")]
-        public ApplicationResponse<string> cambiarEstadoTicketCtrl(string ticketId, string estadoId)
+        [HttpPut, Route("CambiarEstado")]
+        public ApplicationResponse<string> cambiarEstadoTicketCtrl([FromBody] ActualizarDTO actualizarDTO)
         {
-            return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
+            return _ticketDAO.cambiarEstadoTicket(new Guid(actualizarDTO.ticketId), new Guid(actualizarDTO.estadoId));
         }
 
         [HttpGet, Route("Bitacora/{ticketId}")]
