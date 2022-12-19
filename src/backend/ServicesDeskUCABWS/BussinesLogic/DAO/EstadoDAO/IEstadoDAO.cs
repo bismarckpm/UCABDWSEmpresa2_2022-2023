@@ -9,5 +9,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
         List<EstadoDTOUpdate> ConsultarEstadosDepartamento(Guid IdDepartamento);
 
         EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate);
+
+        List<EstadoDTOUpdate> ConsultarEstadosDepartamentoTicket(Guid Id);
+
+        public EstadoDTOUpdate HabilitarEstado(Guid Id);
+
+        public EstadoDTOUpdate DeshabilitarEstado(Guid Id);
     }
 }

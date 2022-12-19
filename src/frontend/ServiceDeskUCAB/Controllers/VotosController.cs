@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize(Policy = "EmpleadoAccess")]
     public class VotosController : Controller
     {
         private readonly IServicio_API _servicioApi;
@@ -14,7 +16,8 @@ namespace ServiceDeskUCAB.Controllers
 
         public async Task<IActionResult> VistaTicket()
         {
-            List<Votos_Ticket> lista = await _servicioApi.ObtenerVotos();
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            List<Votos_Ticket> lista = await _servicioApi.ObtenerVotos(idUsuario);
 
             return View(lista);
         }
@@ -71,9 +74,9 @@ namespace ServiceDeskUCAB.Controllers
             var respuesta = await _servicioApi.VotarTicket(voto_ticket);
 
             if (respuesta.Success)
-                return RedirectToAction("VistaTicket");
+                return RedirectToAction("VistaTicket", new { message = "Voto registrado exitosamente"});
             else
-                return NoContent();
+                return RedirectToAction("VistaVotarTicket", new { message = "Error ingresando voto" });
         }
 
         public IActionResult Index()

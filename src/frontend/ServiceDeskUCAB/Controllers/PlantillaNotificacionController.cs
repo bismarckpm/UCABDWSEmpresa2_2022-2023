@@ -9,9 +9,11 @@ using ServiceDeskUCAB.Models.PlantillaNotificaciones;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel.PlantillaNotificaciones;
 using ServiceDeskUCAB.Models.EstadoTicket;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize(Policy = "AdminAccess")]
     public class PlantillaNotificacionController : Controller
     {
         private readonly ILogger<PlantillaNotificacionController> _logger;
@@ -38,7 +40,7 @@ namespace ServiceDeskUCAB.Controllers
             PlantillaEditarViewModel plantillaEditarViewModel = new();
 
             PlantillaNotificacion plantillaNotificacion = await _servicioApiPlantillaNotificacion.Obtener(id);
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
 
             plantillaEditarViewModel.TipoEstados = ListaEstados;
             plantillaEditarViewModel.Plantilla = plantillaNotificacion;
@@ -51,7 +53,7 @@ namespace ServiceDeskUCAB.Controllers
         {
             PlantillaNuevaViewModel plantillaNuevaViewModel = new();
 
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
 
             plantillaNuevaViewModel.TipoEstados = ListaEstados;
             plantillaNuevaViewModel.Plantilla = new();

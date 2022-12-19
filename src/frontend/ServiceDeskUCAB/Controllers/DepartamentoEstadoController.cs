@@ -51,6 +51,33 @@ namespace ServiceDeskUCAB.Controllers
             }
         }
 
+        public async Task<IActionResult> DeshabilitarEstado(Guid Id, Guid IdDept, string nombreDept)
+        {
+            var respuesta = await _servicio.DeshabilitarEstado(Id);
+            if (respuesta.Success)
+            {
+                return RedirectToAction("VistaEstadosDepartamentos", new { id = IdDept, nombre = nombreDept, message = "Estado deshabilitado Correctamente" });
+            }
+            else
+            {
+                return RedirectToAction("VistaEstadosDepartamentos", new { id = IdDept, nombre = nombreDept, message = "Estado deshabilitado Correctamente" });
+            }
+        }
+
+        public async Task<IActionResult> HabilitarEstado(Guid Id, Guid IdDept, string nombreDept)
+        {
+            var respuesta = await _servicio.HabilitarEstado(Id);
+            if (respuesta.Success)
+            {
+                return RedirectToAction("VistaEstadosDepartamentos", new { id = IdDept, nombre = nombreDept, message = "Estado habilitado Correctamente" });
+            }
+            else
+            {
+                return RedirectToAction("VistaEstadosDepartamentos", new { id = IdDept, nombre = nombreDept, message = "Estado habilitado Correctamente" });
+            }
+
+
+        }
 
     }
 }

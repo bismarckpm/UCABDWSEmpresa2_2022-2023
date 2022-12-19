@@ -1,13 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ViewModel;
 using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Dynamic;
 
 namespace ServiceDeskUCAB.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,10 +25,22 @@ namespace ServiceDeskUCAB.Controllers
             _logger = logger;
             _servicioApi = servicioApi;
         }
-
+        
         public IActionResult Index()
         {
-            return View();
+            //var current = User.Identities.First().Claims.ToList()[2].Value;
+            var current = User.Identities.First().Claims;
+            var boold = User.Identities.First().Claims.ToList()[2].Value == "Cliente";
+            if (current == null)
+            {
+                Console.WriteLine("asdasdadas");
+                return View();
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -31,3 +50,4 @@ namespace ServiceDeskUCAB.Controllers
         }
     }
 }
+

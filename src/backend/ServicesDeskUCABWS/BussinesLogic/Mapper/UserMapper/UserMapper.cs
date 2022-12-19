@@ -1,14 +1,18 @@
 ﻿using AutoMapper;
+using NuGet.Common;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 
 using ServicesDeskUCABWS.Entities;
-
+using ServicesDeskUCABWS.Tools;
 using System;
+using System.Web;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
 {
     public class UserMapper : Profile
+
     {
+
         public static Administrador MapperEntityToDtoAdmin(UsuarioDto user)
         {
             return new Administrador
@@ -40,7 +44,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
                 primer_apellido = user.primer_apellido,
                 segundo_apellido = user.segundo_apellido,
                 correo = user.correo,
-                password = user.password,
+                password =user.password,
                 fecha_creacion = DateTime.Now.Date,
                 gender = user.gender,
                 fecha_nacimiento = user.fecha_nacimiento,
@@ -128,8 +132,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper
             return new Usuario
             {
                 Id = user.id,
-                password = user.password,
+                password = Encrypt.GetSHA256(user.password),
             };
+        }
+
+
+        public static UserResponseLoginDTO MapperDtoToEntityUserLogin(Usuario user , string token)
+        {
+
+            return new UserResponseLoginDTO
+            {
+                correo = user.correo,
+                token = token
+            };
+
         }
     }
 }

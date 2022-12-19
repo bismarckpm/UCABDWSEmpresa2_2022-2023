@@ -6,11 +6,11 @@ namespace ServiceDeskUCAB.Models.ModelsVotos
 {
     public class Empleado : Usuario
     {
-        public List<Ticket> Lista_Ticket { get; set; }
+        //public List<Ticket> Lista_Ticket { get; set; }
         public Cargo Cargo { get; set; }
         public HashSet<Votos_Ticket> Votos_Ticket { get; set; }
 
-        public Empleado(int cedula, string primer_nombre, string primer_apellido, string segundo_apellido, DateTime fecha_nacimiento, char gender, string correo, string segundo_nombre)
+        public Empleado(int cedula, string primer_nombre, string primer_apellido, string segundo_apellido, string fecha_nacimiento, char gender, string correo, string segundo_nombre)
         {
             Id = Guid.NewGuid();
             this.cedula = cedula;

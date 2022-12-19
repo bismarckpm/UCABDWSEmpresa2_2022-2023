@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ServiceDeskUCAB.Models.Modelos_de_Usuario.Credenciales_Login
+@{
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
@@ -16,33 +17,30 @@
 
                                     <h4 class="mt-1 mb-5 pb-1">ServicesDeskUCAB</h4>
                                 </div>
-
-                                <form method="post">
+                                @using (Html.BeginForm("ValidarCredenciales","Login",FormMethod.Post)){ 
                                     <div class="text-danger"></div>
                                     <p>Bienvenido</p>
 
                                     <div class="form-outline mb-3">
-                                        <input type="email" id="form2Example11" class="form-control"
+                                        <input name="correo" type="email" id="form2Example11" class="form-control"
                                                placeholder="Username" />
                                         <span class="text-danger"></span>
                                     </div>
 
                                     <div class="form-outline mb-3">
-                                        <input type="password" id="form2Example22" class="form-control" placeholder="Password" />
+                                        <input name="password" type="password" id="form2Example22" class="form-control" placeholder="Password" />
                                         <span class="text-danger"></span>
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-between mb-3 ">
                                         <input class="btn btn-primary" type="submit" value="Iniciar sesión"></input>
-                                        <a class="text-muted" href="#!">¿Olvidaste tu contraseña?</a>
+                                        <a class="text-muted" href="@Url.Action("RecuperarPassword")">¿Olvidaste tu contraseña?</a>
                                     </div>
-
+                                }
                                     <div class="d-flex align-items-center justify-content-between  pb-4">
                                         <p class="mb-0 me-2">¿No tienes cuenta?</p>
                                         <a type="button" class="btn btn-outline-primary" href="@Url.Action("SingUp")">Crea una nueva</a>
                                     </div>
-
-                                </form>
 
                             </div>
                         </div>

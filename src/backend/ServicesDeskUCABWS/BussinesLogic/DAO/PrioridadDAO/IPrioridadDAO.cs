@@ -6,11 +6,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 {
     public interface IPrioridadDAO
     {
-        public string crearPrioridad(PrioridadDTO prioridadDTO);
-        public List<PrioridadDTO> obtenerPrioridades();
-        public PrioridadDTO obtenerPrioridadPorNombre(string nombre);
-        public List<PrioridadDTO> obtenerPrioridadesPorEstado(string estado);
-        public string modificarPrioridad(PrioridadDTO prioridadDTO);
+        public string CrearPrioridad(PrioridadSolicitudDTO prioridadDTO);
+        public List<PrioridadDTO> ObtenerPrioridades();
+        public List<PrioridadDTO> ObtenerPrioridadesHabilitadas();
+        public PrioridadDTO ObtenerPrioridad(Guid estado);
+        public string ModificarPrioridad(PrioridadDTO prioridadDTO);
 
     }
 }

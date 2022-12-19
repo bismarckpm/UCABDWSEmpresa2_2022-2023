@@ -18,59 +18,158 @@
     }
     <div class="card-body table-responsive">
 
-        <a asp-action="EstadoNuevo" asp-controller="EstadoTicket" asp-route-id="@null" class="btn btn-primary btn-sm">Nuevo tipo de estado</a>
-       
-        @if (Model != null && Model.Count() > 0){
-            <hr class="mb-3"/>
-            <table class="table mt-1 table-striped" id="tabla_id">
-                <thead>
-                    <tr>
-                        <th>Nombre del estado</th>
-                        <th>Descripción</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var tipoEstado in Model)
-                    {
-                        <tr>
-                            <td style="font-size: 15px">
-                                <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-black fw-normal border-secondary border border-2 m-0">
-                                    @tipoEstado.Nombre
-                                </p>
-                            </td>
-                            <td>
-                                <p style="font-size: 14px" class="p-1 pe-2 ps-2 m-0">
-                                    @tipoEstado.Descripcion
-                                </p>
-                            </td>
-                            <td>
-                                <a asp-action="EstadoEditar" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-primary btn-sm">Editar</a>
-                                <a data-bs-toggle="modal"  data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar</a>
-                            </td>
-                        </tr>
+
+
+        <ul class="nav nav-tabs mt-3 position-relative" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tipoEstadoHabilidado-tab" data-bs-toggle="tab" data-bs-target="#tipoEstadoHabilidado" type="button" role="tab" aria-controls="tipoEstadoHabilidado" aria-selected="true">
+                    Habilitados
+                    @if(Model != null){
+                        <span class="badge rounded-pill bg-primary text-white">@Model.Where(estado => estado.fecha_eliminacion == null).Count()</span>
                     }
-                </tbody>
-            </table>
-        }
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#tipoEstadoDeshabilidado" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                    Deshabilitados
+                    @if (Model != null)
+                    {
+                        <span class="badge rounded-pill bg-primary text-white">@Model.Where(estado => estado.fecha_eliminacion != null).Count()</span>
+                    }
+                </button>
+            </li>
+            <a asp-action="EstadoNuevo" asp-controller="EstadoTicket" asp-route-id="@null" class="btn btn-primary btn-sm position-absolute" style="right: 0; top: 5px">Crear tipo de estado</a>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="tipoEstadoHabilidado" role="tabpanel" aria-labelledby="tipoEstadoHabilidado-tab">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <hr class="mb-3" />
+                    <table class="table mt-1 table-striped" id="tabla_id">
+                        <thead>
+                            <tr>
+                                <th>Nombre del estado</th>
+                                <th>Descripción</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tipoEstado in Model)
+                            {
+                                @if(tipoEstado.fecha_eliminacion == null){
+                                    <tr>
+                                        <td style="font-size: 15px">
+                                            <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-black fw-normal border-secondary border border-2 m-0">
+                                                @tipoEstado.Nombre
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p style="font-size: 14px" class="p-1 pe-2 ps-2 m-0">
+                                                @tipoEstado.Descripcion
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <a asp-action="EstadoEditar" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-primary btn-sm">Editar</a>
+                                            @if (tipoEstado.Permiso == true)
+                                            {
+                                                <a data-bs-toggle="modal" data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm">Deshabilitar</a>
+                                            }
+                                            else
+                                            {
+                                                <a data-bs-toggle="modal" data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-danger btn-sm disabled">Deshabilitar</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div class="tab-pane fade" id="tipoEstadoDeshabilidado" role="tabpanel" aria-labelledby="profile-tab">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <hr class="mb-3" />
+                    <table class="table mt-1 table-striped" id="tabla_id_disabled">
+                        <thead>
+                            <tr>
+                                <th>Nombre del estado</th>
+                                <th>Descripción</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tipoEstado in Model)
+                            {
+                                @if (tipoEstado.fecha_eliminacion != null)
+                                {
+                                    <tr>
+                                        <td style="font-size: 15px">
+                                            <p style="font-size: 14px" class="p-1 pe-2 ps-2 badge rounded-pill text-black fw-normal border-secondary border border-2 m-0">
+                                                @tipoEstado.Nombre
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p style="font-size: 14px" class="p-1 pe-2 ps-2 m-0">
+                                                @tipoEstado.Descripcion
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <a asp-action="EstadoEditar" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-primary btn-sm">Editar</a>
+                                            @if (tipoEstado.Permiso == true)
+                                            {
+                                                <a data-bs-toggle="modal" data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-success btn-sm">Habilitar</a>
+                                            }
+                                            else
+                                            {
+                                                <a data-bs-toggle="modal" data-bs-target="#@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" class="btn btn-success btn-sm disabled">Habilitar</a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+
+        
     </div>
 </div>
 @if (Model != null){
     @foreach (var tipoEstado in Model)
     {
-        <div class="modal fade" id="@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <h5 class="modal-title" id="exampleModalLabel">¿Deseas <b>Eliminar</b> este estado?</h5>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                        <a type="button" asp-action="EliminarEstado" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-danger btn-sm">Eliminar estado</a>
+        @if(tipoEstado.fecha_eliminacion == null){
+            <div class="modal fade" id="@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h5 class="modal-title" id="exampleModalLabel">¿Deseas <b>Deshabilitar</b> este estado?</h5>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                            <a type="button" asp-action="HabilitarDeshabilitarEstado" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-danger btn-sm">Deshabilitar estado</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }else{
+            <div class="modal fade" id="@Regex.Replace(tipoEstado.Nombre, @"\s+", String.Empty)@tipoEstado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h5 class="modal-title" id="exampleModalLabel">¿Deseas <b>Habilitar</b> este estado?</h5>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                            <a type="button" asp-action="HabilitarDeshabilitarEstado" asp-controller="EstadoTicket" asp-route-id="@tipoEstado.Id" class="btn btn-success btn-sm">Habilitar estado</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     }
 }
 
@@ -102,6 +201,34 @@
 
             });
         });
+
+        $(document).ready(function () {
+            $('#tabla_id_disabled').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+        
     </script>
 
 }

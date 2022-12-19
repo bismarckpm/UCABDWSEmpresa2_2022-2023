@@ -93,26 +93,42 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                         IdTicket = Guid.Parse("00000000-0000-0000-0000-000000000000")
                     }
                 },
-                Departamento = new List<Departamento>()
+                
+                Departamentos = new List<DepartamentoTipo_Ticket>()
                 {
-                    new Departamento()
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
-                        nombre= "Almacen",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                            nombre= "Almacen",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId = Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                        
+                        
                     },
-                    new Departamento()
+
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
-                        nombre= "Almacen de Electronica",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
-                    }
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                            nombre= "Almacen de Electronica",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e")
+                    },
+
+                    
                 },
                 Minimo_Aprobado = null,
                 Maximo_Rechazado = null
@@ -124,7 +140,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             //assert
 
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
 
@@ -192,27 +208,44 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                         IdTicket = Guid.Parse("00000000-0000-0000-0000-000000000000")
                     }
                 },
-                Departamento = new List<Departamento>()
+
+                Departamentos = new List<DepartamentoTipo_Ticket>()
                 {
-                    new Departamento()
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
-                        nombre= "Almacen",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                            nombre= "Almacen",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId = Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+
+
                     },
-                    new Departamento()
+
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
-                        nombre= "Almacen de Electronica",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
-                    }
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                            nombre= "Almacen de Electronica",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e")
+                    },
+
+
                 },
+               
                 Minimo_Aprobado = 1,
                 Maximo_Rechazado = 1
             };
@@ -222,7 +255,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
 
@@ -252,27 +285,42 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
-                Departamento = new List<Departamento>()
+                Departamentos = new List<DepartamentoTipo_Ticket>()
                 {
-                    new Departamento()
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
-                        nombre= "Almacen",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+                            nombre= "Almacen",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId = Guid.Parse("ccacd411-1b46-4117-aa84-73ea64deac87"),
+
+
                     },
-                    new Departamento()
+
+                    new DepartamentoTipo_Ticket()
                     {
-                        id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
-                        nombre= "Almacen de Electronica",
-                        descripcion= "Lugar donde se guardan todos los recursos de la empresa",
-                        fecha_creacion= DateTime.UtcNow,
-                        fecha_ultima_edicion= DateTime.UtcNow,
-                        fecha_eliminacion= null,
-                    }
-                },
+                        departamento =
+                        new Departamento()
+                        {
+                            id= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e"),
+                            nombre= "Almacen de Electronica",
+                            descripcion= "Lugar donde se guardan todos los recursos de la empresa",
+                            fecha_creacion= DateTime.UtcNow,
+                            fecha_ultima_edicion= DateTime.UtcNow,
+                            fecha_eliminacion= null,
+                        },
+                        DepartamentoId= Guid.Parse("19c117f4-9c2a-49b1-a633-969686e0b57e")
+                    },
+
+
+                }
             };
 
             //act
@@ -280,7 +328,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamento.Count);
+            Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
         }
 
         [TestMethod]

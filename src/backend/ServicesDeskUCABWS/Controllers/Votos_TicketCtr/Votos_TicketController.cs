@@ -29,10 +29,16 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
 
         }
 
+        /*public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO)
+        {
+            this._votos_ticketDAO = _votos_ticketDAO;
+
+        }*/
+
 
         // GET: Votos_Ticket/Details/5
-        [HttpGet("Consulta/(\"{id}\")")]
-        public ApplicationResponse<List<Votos_Ticket>> Details(Guid id)
+        [HttpGet("Consulta/{id}")]
+        public ApplicationResponse<List<Votos_Ticket>> Details([FromRoute]Guid id)
         {
             var response = _votos_ticketDAO.ConsultaVotos(id);
 

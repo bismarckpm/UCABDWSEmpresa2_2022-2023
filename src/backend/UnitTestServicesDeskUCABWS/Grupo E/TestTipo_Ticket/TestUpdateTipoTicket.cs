@@ -1,8 +1,10 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -19,11 +21,22 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
     {
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
+        private readonly IMapper mapper;
+
 
         public TestUpdateTipoTicket()
         {
+            var myProfile = new List<Profile>
+            {
+                new TipoEstadoMapper(),
+                new EtiquetaMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
+            mapper = new Mapper(configuration);
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketService(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object,mapper);
             context.SetupDbContextData();
         }
 

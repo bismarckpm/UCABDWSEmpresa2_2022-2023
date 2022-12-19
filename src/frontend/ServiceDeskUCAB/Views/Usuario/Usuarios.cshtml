@@ -8,7 +8,7 @@
 
 
 <head>
-    <link rel ="stylesheet" href="~/css/usuario.css" />
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
 </head> 
 
 @section scripts {
@@ -31,7 +31,7 @@
 <h1>Usuarios</h1>
 
     <div style="width:94%" class="d-flex justify-content-end">
-        <a href="@Url.Action("GuardarUsuarioView")" style="background-color: #272727; border-color: #272727" class="btn btn-primary btn-sm">Crear</a>
+        <a style="padding-left: 21px;padding-top: 3px;width: 8pc;" href="@Url.Action("GuardarUsuarioView")" class="botonCrear">Crear usuario</a>
 </div>
 
 <table class="table">
@@ -74,11 +74,11 @@
                 @Html.DisplayFor(i => item.gender)
             </td>
             <td>
-                <button id=btnEliminar type="button" class="btn btn-danger btn-sm" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
+                <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
                     Eliminar
                 </button>
-                <a type="button" class="btn btn-primary btn-sm" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
-                    Editar
+                <a style="padding-top:4px" type="button" class="botonVisualizar" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
+                    Visualizar
                 </a>
             </td>
         </tr>

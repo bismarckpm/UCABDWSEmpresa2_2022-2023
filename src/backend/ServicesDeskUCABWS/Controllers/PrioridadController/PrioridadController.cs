@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿/*using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -122,4 +122,4 @@ namespace ServicesDeskUCABWS.Controllers.PrioridadController
             return response;
         }
     }
-}
+}*/

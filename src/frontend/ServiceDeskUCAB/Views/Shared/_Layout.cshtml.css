@@ -1,53 +1,6 @@
-﻿<<<<<<<< HEAD:src/frontend/ServicesDeskUCAB/wwwroot/css/site.css
-========
-<<<<<<< HEAD
-=======
-<<<<<<<< HEAD:src/frontend/ServicesDeskUCAB/wwwroot/css/site.css
->>>>>>>> cfb44ab52bfe93e7ce40f069fa382f6f065a0277:src/frontend/ServiceDeskUCAB/Views/Shared/_Layout.cshtml.css
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-<<<<<<<< HEAD:src/frontend/ServicesDeskUCAB/wwwroot/css/site.css
-
-div#tabla_id_paginate a {
-    border: solid 1px #ccc;
-}
-
-div#tabla_id_paginate a.current {
-    background: #272727;
-    color: white !important;
-}
-
-div#tabla_id_paginate a.current:hover {
-    background: #272727;
-    color: white !important;
-}
-
-div#tabla_id_paginate a:hover, div#tabla_id_paginate a:active {
-    background: #eee;
-    color: #272727 !important;
-    box-shadow: none;
-}
-========
-========
->>>>>>> 4bc58089133e7b82f8a462de98e46291788a0e8a
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
