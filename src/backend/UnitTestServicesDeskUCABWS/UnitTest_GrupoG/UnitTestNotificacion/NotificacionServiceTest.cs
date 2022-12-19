@@ -1,7 +1,7 @@
 ﻿using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
@@ -31,11 +31,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             _contextMock.SetUpContextData();
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA REEMPLAZAR ETIQUETAS EN PLANTILLA NOTIFICACION
-        //*
+//*
+//PRUEBAS UNITARIAS PARA REEMPLAZAR ETIQUETAS EN PLANTILLA NOTIFICACION
+//*
 
-        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
+        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")]                    
         public void ReemplazarEtiquetasEmpleadoNotificacionServiceTest()
         {
 
@@ -48,7 +48,12 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 Estado = new Estado()
                 {
                     Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
+                    nombre = "nombreEstado",
+                    Estado_Padre = new Tipo_Estado()
+                    {
+                        Id = Guid.NewGuid(),
+                        nombre = "nombrePadreEstado"
+                    }
                 },
                 Tipo_Ticket = new Tipo_Ticket()
                 {
@@ -66,27 +71,27 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 {
                     nombre = "nombrePrioridad"
                 },
-                empleado = new Empleado()
+                Emisor = new Empleado()
                 {
                     Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
                     primer_nombre = "nombreEmpleado",
                     primer_apellido = "apellidoEmpleado",
                     Cargo = new Cargo()
                     {
-                        Id = Guid.NewGuid(),
+                        id = Guid.NewGuid(),
                         nombre_departamental = "nombreDepartamento",
                         descripcion = "descrip",
                         fecha_creacion = DateTime.Now,
                     }
                 },
-                Votos_Ticket = new HashSet<Votos_Ticket>
+                /*Votos_Ticket = new HashSet<Votos_Ticket>
                 {
                     new Votos_Ticket()
                     {
                         Id = Guid.NewGuid(),
                         comentario = "comentarioVoto",
                     }
-                }
+                }*/
             };
 
             var Plantilla = new PlantillaNotificacionDTO()
@@ -121,7 +126,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
         }
 
-        [TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")] 
+        /*[TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")] 
         public void ReemplazarEtiquetasClienteNotificacionServiceTest()
         {
 
@@ -152,7 +157,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                 {
                     nombre = "nombrePrioridad"
                 },
-                cliente = new Cliente()
+                /*cliente = new Cliente()
                 {
                     Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
                     primer_nombre = "nombreEmpleado",
@@ -198,7 +203,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
 
             var result = _NotificacionService.ReemplazoEtiqueta(Ticket, Plantilla);
             Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
-        }
+        }*/
 
         [TestMethod(displayName: "Prueba Unitaria cuando existe un argumento null al reemplazar las etiquetas")]
         public void ReemplazarEtiquetasNullReferenceExceptionServiceTest()
@@ -210,7 +215,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.ReemplazoEtiqueta(It.IsAny<Ticket>(), It.IsAny<PlantillaNotificacionDTO>()));
         }
 
-        [TestMethod(displayName: "Prueba Unitaria al enviar correo exitoso")]        //esto está bueno?
+//*
+//PRUEBAS UNITARIAS PARA REEMPLAZAR ETIQUETAS EN PLANTILLA NOTIFICACION
+//*
+
+        [TestMethod(displayName: "Prueba Unitaria al enviar correo exitoso")]       
         public void EnviarCorreoExitosoServiceTest()
         {
 
@@ -221,7 +230,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             Assert.IsTrue(_NotificacionService.EnviarCorreo(tituloPlantilla, body, correoDestino));
         }
 
-        [TestMethod(displayName: "Prueba Unitaria cuando existe una excepcion al enviar correo")]        //esto está bueno?
+        [TestMethod(displayName: "Prueba Unitaria cuando existe una excepcion al enviar correo")]        
         public void EnviarCorreoExceptionServiceTest()
         {
             Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.EnviarCorreo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));

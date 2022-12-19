@@ -6,7 +6,7 @@ using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
@@ -32,34 +32,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
     public class DepartamentoDAOTest
     {
         private readonly DepartamentoDAO _DepartamentoDAO;
-        //private readonly GrupoDAO _GrupoDAO;
         private readonly Mock<IDataContext> _contextMock;
         private readonly Mock<IDataContext> _contextMockDG;
         private readonly Mock<IGrupoDAO> _serviceMock;
         private readonly IGrupoDAO _servicioGrupo;
+        private readonly IMapper mapper;
 
         public DepartamentoDAOTest()
         {
             _contextMock = new Mock<IDataContext>();
             _contextMockDG = new Mock<IDataContext>();
             _servicioGrupo = new GrupoDAO(_contextMockDG.Object);
-            _DepartamentoDAO = new DepartamentoDAO(_contextMock.Object, _servicioGrupo);
+            _DepartamentoDAO = new DepartamentoDAO(_contextMock.Object, _servicioGrupo, mapper);
             _contextMock.SetUpContextDataDepartamento();
             _serviceMock = new Mock<IGrupoDAO>();            
             _contextMockDG.SetUpContextDataDepartamentoYGrupo();
            
-
-            //var myProfile = new List<Profile>
-            //{
-            //    new PlantillaNotificacionMapper(),
-            //    new TipoEstadoMapper(),
-            //    new EtiquetaTipoEstadoMapper(),
-            //    new EtiquetaMapper()
-            //};
-            //var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
-            //_mapper = new Mapper(configuration);
-            //_plantillaService = new PlantillaNotificacionService(_contextMock.Object, _mapper, _notificacion.Object);
-            //_contextMock.SetUpContextData();
         }
 
         [TestMethod(displayName: "Prueba Unitaria para agregar un Departamento")]
@@ -346,36 +334,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.AreEqual(request.nombre, "Seguridad Ambiental");
         }
 
-        //[TestMethod(displayName: "Prueba Unitaria para actualizar un Departamento Condicional")]
-        //public void ActualizarDepartamentoTestIf()
-        //{
-        //    //arrange
-        //    var request = new Departamento
-        //    {
-
-        //        id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-        //        nombre = "Seguridad Ambiental 2",
-
-        //        descripcion = "Cuida el ambiente",
-
-        //        fecha_creacion = DateTime.Now.Date,
-
-        //        fecha_ultima_edicion = null,
-
-        //        fecha_eliminacion = null,
-
-        //        id_grupo = null
-
-        //    };
-
-        //    _contextMock.Setup(set => set.DbContext.SaveChanges());
-
-        //    var result = _DepartamentoDAO.ActualizarDepartamento(request);
-
-        //    Assert.AreNotEqual(request.nombre, result.nombre);
-        //}
-
+     
         [TestMethod(displayName: "Prueba Unitaria cuando la actualizacion de un departamento falla por campos vacios")]
         public void ExcepcionDBUpdateActualizarDepartamento()
         {
@@ -486,25 +445,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria para mostrar departamentos no asociados a un grupo")]
         public void MostrarDepartamentosNoAsociados()
         {
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
-
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DeletedDepartamento());
         }
@@ -570,25 +510,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         [TestMethod(displayName: "Prueba Unitaria para listar los departamentos que no están asociados a un grupo")]
         public void NoAsociado()
         {
-
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = null
-
-            };
 
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 

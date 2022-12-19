@@ -26,5 +26,10 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Tipo_Estado> Tipos_Estados { get; set; }
         public DbSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public DbSet<Familia_Ticket> Familia_Tickets { get; set; }
+        public DbSet<RolUsuario> RolUsuarios { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+
+
+        public DbSet<DepartamentoTipo_Ticket> DepartamentoTipo_Ticket { get; set; }
     }
 }

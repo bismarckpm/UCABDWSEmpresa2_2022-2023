@@ -1,8 +1,8 @@
-﻿using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using ServiceDeskUCAB.Models.EstadoTicket;
 using System;
 
-namespace ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones
+namespace ServiceDeskUCAB.Models.PlantillaNotificaciones
 {
     public class PlantillaNotificacion
     {

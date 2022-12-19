@@ -1,10 +1,10 @@
-﻿using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.PlantillaNotificaciones;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public interface IServicioPlantillaNotificacion_API
     {

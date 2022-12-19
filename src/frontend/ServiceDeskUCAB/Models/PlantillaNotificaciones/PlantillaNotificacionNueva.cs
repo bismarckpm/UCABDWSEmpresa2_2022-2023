@@ -1,4 +1,4 @@
-﻿namespace ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones
+﻿namespace ServiceDeskUCAB.Models.PlantillaNotificaciones
 {
     public class PlantillaNotificacionNueva
     {

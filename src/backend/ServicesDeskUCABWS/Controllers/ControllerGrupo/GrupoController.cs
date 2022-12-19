@@ -51,24 +51,25 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
+        
         //Consultar Grupo
         [HttpGet]
         [Route("ConsultarGrupo/")]
         public ApplicationResponse<List<GrupoDto>> ConsultarGrupos()
         {
-			var response = new ApplicationResponse<List<GrupoDto>>();
-			try
+            var response = new ApplicationResponse<List<GrupoDto>>();
+            try
             {
                 response.Data = _grupoDAO.ConsultarGruposDao();
             }
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-		}
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
 
         //Consultar Grupo por ID
         [HttpGet]
@@ -109,28 +110,29 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
+        
         //Actualizar Grupo
         [HttpPut]
         [Route("ActualizarGrupo/")]
         public ApplicationResponse<GrupoDto_Update> ActualizarGrupo([FromBody] GrupoDto_Update grupo)
         {
-			var response = new ApplicationResponse<GrupoDto_Update>();
-			try
+            var response = new ApplicationResponse<GrupoDto_Update>();
+            try
             {
                 response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
 
             }
-			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
-				response.Message = ex.Mensaje;
-				response.Exception = ex.Excepcion.ToString();
-			}
-			return response;
-		}
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
 
         //Mostrar todos los grupos que no están eliminados
-		[HttpGet("ConsultarGrupoNoEliminado/")]
+        [HttpGet("ConsultarGrupoNoEliminado/")]
 		public ApplicationResponse<List<GrupoDto>> ListaGrupoNoEliminado()
 		{
 			var response = new ApplicationResponse<List<GrupoDto>>();
@@ -146,5 +148,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			}
 			return response;
 		}
+
 	}
 }

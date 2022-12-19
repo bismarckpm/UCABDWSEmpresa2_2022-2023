@@ -50,8 +50,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
             catch (Exception ex)
             {
-				throw new ExceptionsControl("Error al momento de registrar", ex);
-			}
+                throw new ExceptionsControl("Error al momento de registrar", ex);
+            }
         }
 
         //Retorna la lista de grupos
@@ -156,7 +156,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 			}
 		}
 
-        
+
         public bool QuitarAsociacion(Guid grupoId)
         {
             var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
@@ -222,4 +222,3 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
      
     }
 }
-

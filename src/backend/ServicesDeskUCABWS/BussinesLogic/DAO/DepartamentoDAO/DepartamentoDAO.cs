@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento;
 using ServicesDeskUCABWS.Data;
@@ -14,6 +13,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Data;
+using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
@@ -21,16 +22,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
     {
         private readonly IDataContext _dataContext;
         private readonly IGrupoDAO _servicioGrupo;
+        private readonly IMapper mapper;
 
         //Constructor
-        public DepartamentoDAO(IDataContext dataContext, IGrupoDAO servicioGrupo)
+        public DepartamentoDAO(IDataContext dataContext, IGrupoDAO servicioGrupo, IMapper mapper)
         {
             _dataContext = dataContext;
             _servicioGrupo = servicioGrupo;
+            this.mapper = mapper;
         }
 
-		//Registrar un Departamento
-		public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento)
+        //Registrar un Departamento
+        public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento)
         {
             try
             {
@@ -49,11 +52,61 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 						}).First();
 
-				return nuevoDepartamento;
-			}          
+                AgregarEstadoADepartamentoCreado(departamento);
+                AgregarCargosADepartamentoCreado(departamento);
+                
+                _dataContext.DbContext.SaveChanges();
+                return nuevoDepartamento;
+			}
             catch (Exception ex) {
 				throw new ExceptionsControl("No se pudo registrar el departamento"+" "+departamento.nombre, ex);
 			}
+        }
+
+        //Agregar Estados de los departamentos agregados
+
+        public List<Estado> AgregarEstadoADepartamentoCreado(Departamento departamento)
+        {
+            var listaTipoEstados = _dataContext.Tipos_Estados.ToList();
+
+            var listaEstados = new List<Estado>();
+
+            foreach (var TipoEstado in listaTipoEstados)
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + TipoEstado.nombre, TipoEstado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = TipoEstado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _dataContext.Estados.AddRange(listaEstados);
+            return listaEstados;
+        }
+
+        //Agregar Estados de los departamentos agregados
+
+        public List<Cargo> AgregarCargosADepartamentoCreado(Departamento departamento)
+        {
+            var listaTipoCargos = _dataContext.Tipos_Cargos.ToList();
+
+            var ListaCargos = new List<Cargo>();
+
+            foreach (var TipoCargo in listaTipoCargos)
+            {
+                ListaCargos.Add(new Cargo(departamento.nombre + " " + TipoCargo.nombre, TipoCargo.descripcion)
+                {
+                    id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Tipo_Cargo = TipoCargo
+                });
+            }
+
+            _dataContext.Cargos.AddRange(ListaCargos);
+            return ListaCargos;
         }
 
         //Eliminar un Departamento
@@ -67,8 +120,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
 					departamento.id_grupo = null;
-          _dataContext.DbContext.SaveChanges();
-          return DepartamentoMapper.MapperEntityToDto(departamento);
+                    _dataContext.DbContext.SaveChanges();
+                    return DepartamentoMapper.MapperEntityToDto(departamento);
             }
             catch (Exception ex)
             {
@@ -170,7 +223,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos eliminados", ex);
+				throw new ExceptionsControl("No hay departamentos registrados", ex);
 			}
 		}
 
@@ -197,36 +250,35 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        public List<string> AsignarGrupoToDepartamento(Guid id,string idDept)
+        public List<string> AsignarGrupoToDepartamento(Guid id, string idDept)
         {
 
             try
             {
-				List<string> listaDept = idDept.Split(',').ToList();
+                List<string> listaDept = idDept.Split(',').ToList();
 
 
                 foreach (var dept in listaDept)
                 {
 
-					var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
+                    var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
                     nuevoDepartamento.id_grupo = id;
-          					_dataContext.DbContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
                 }
 
                 return listaDept;
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("Fallo al asignar grupo", ex);
+                throw new ExceptionsControl("Fallo al asignar departamento", ex);
             }
-        }	
+        }
 
-        //Retorna una lista de departamentos que no están asociados a un grupo
         public List<DepartamentoDto> NoAsociado()
         {
 			try
 			{
-				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion == null).Select(
+				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null).Select(
 					d => new DepartamentoDto
 					{
 						id = d.id,
@@ -241,7 +293,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 			catch (Exception ex)
 			{
-				throw new ExceptionsControl("No hay departamentos asociados", ex);
+				throw new ExceptionsControl("No hay departamentos registrados", ex);
 			}
 		}
 
@@ -269,18 +321,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             {
                 List<string> listaDept = idDepartamentos.Split(',').ToList();
 
-                if (idDepartamentos.Equals("")) {
+                if (idDepartamentos.Equals(""))
+                {
 
                     _servicioGrupo.QuitarAsociacion(id);
 
                     return listaDept;
 
-                }else if(_servicioGrupo.QuitarAsociacion(id)) {
+                }
+                else if (_servicioGrupo.QuitarAsociacion(id))
+                {
 
-                    foreach (var nuevoDept in listaDept) {
+                    foreach (var nuevoDept in listaDept)
+                    {
 
                         var relacionado = _dataContext.Departamentos.Where(x => x.id.ToString() == nuevoDept).FirstOrDefault();
-                        if (relacionado != null) {
+                        if (relacionado != null)
+                        {
                             relacionado.id_grupo = id;
                             relacionado.fecha_ultima_edicion = DateTime.Now.Date;
                             _dataContext.DbContext.SaveChanges();
@@ -288,7 +345,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 
                     }
-                
+
                 }
                 return listaDept;
             }
@@ -296,6 +353,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             {
                 throw new ExceptionsControl("Fallo al asignar grupo", ex);
             }
-		}
+        }
+
+        public IEnumerable<DepartamentoSearchDTO> ConsultaDepartamentoExcluyente(Guid IdDepartamento)
+        {
+            var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
+
+            return ListaDepartamento;
+        }
+
+
     }
 }

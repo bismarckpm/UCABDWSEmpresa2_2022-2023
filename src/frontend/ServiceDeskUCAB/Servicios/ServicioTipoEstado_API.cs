@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.EstadoTicket;
+using ServiceDeskUCAB.Models.ModelsVotos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModuloPlantillasNotificaciones.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public class ServicioTipoEstado_API : IServicioTipoEstado_API
     {
@@ -61,6 +61,46 @@ namespace ModuloPlantillasNotificaciones.Servicios
 
             return listaTipoEstado;
         }
+
+        public async Task<List<TipoEstado>> ListaHabilitados()
+        {
+            List<TipoEstado> listaTipoEstado = new();
+
+            var cliente = new HttpClient
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            try
+            {
+                var response = await cliente.GetAsync("TipoEstado/ConsultaHabilitado");
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+
+                    //Obtengo la data del json respuesta
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<TipoEstado>>(stringDataRespuesta);
+
+                    //var resultado = JsonConvert.DeserializeObject<List<PlantillaNotificacion>>(json_respuesta);
+                    listaTipoEstado = resultado;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return listaTipoEstado;
+        }
+
         public async Task<List<Etiqueta>> ListaEtiqueta()
         {
             List<Etiqueta> listaEtiqueta = new();
@@ -101,6 +141,7 @@ namespace ModuloPlantillasNotificaciones.Servicios
         }
         public async Task<JObject> Guardar(TipoEstadoNuevo tipoEstadoNuevo)
         {
+
             HttpClient cliente = new()
             {
                 BaseAddress = new Uri(_baseUrl)
@@ -128,13 +169,31 @@ namespace ModuloPlantillasNotificaciones.Servicios
 
             return _json_respuesta;
         }
-        public async Task<JObject> Eliminar(Guid idEstado)
+
+        //public async Task<JObject> Eliminar(Guid idEstado)
+        //{
+        //    HttpClient cliente = new()
+        //    {
+        //        BaseAddress = new Uri(_baseUrl)
+        //    };
+        //    var response = await cliente.DeleteAsync($"TipoEstado/Eliminar/{idEstado}");
+
+        //    var respuesta = await response.Content.ReadAsStringAsync();
+        //    JObject json_respuesta = JObject.Parse(respuesta);
+
+        //    return json_respuesta;
+        //}
+
+        public async Task<JObject> HabilitarDeshabilitar(Guid idEstado)
         {
             HttpClient cliente = new()
             {
                 BaseAddress = new Uri(_baseUrl)
             };
-            var response = await cliente.DeleteAsync($"TipoEstado/Eliminar/{idEstado}");
+
+            var content = new StringContent(JsonConvert.SerializeObject(idEstado), Encoding.UTF8, "application/json");
+
+            var response = await cliente.PutAsync($"TipoEstado/HabilitarDeshabilitar/{idEstado}", content);
 
             var respuesta = await response.Content.ReadAsStringAsync();
             JObject json_respuesta = JObject.Parse(respuesta);
@@ -167,7 +226,7 @@ namespace ModuloPlantillasNotificaciones.Servicios
 
             return tipoEstado;
         }
-        public async Task<JObject> Editar(TipoEstadoNuevo estado, String id)
+        public async Task<JObject> Editar(TipoEstadoNuevo estado, string id)
         {
             HttpClient cliente = new()
             {

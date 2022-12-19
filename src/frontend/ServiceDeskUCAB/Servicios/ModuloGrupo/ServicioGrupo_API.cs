@@ -10,162 +10,163 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 {
     public class ServicioGrupo_API : IServicioGrupo_API
     {
-		//Declaracion de variables
-		private static string _baseUrl;
-		private JObject _json_respuesta;
+        //Declaracion de variables
+        private static string _baseUrl;
+        private JObject _json_respuesta;
 
-		//Constructor
-		public ServicioGrupo_API()
-		{
-			var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+        //Constructor
+        public ServicioGrupo_API()
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
 
-			_baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
-		}
+            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
+        }
 
-		public async Task<GrupoModel> BuscarGrupo(Guid id) {
+        public async Task<GrupoModel> BuscarGrupo(Guid id)
+        {
 
-			GrupoModel grupo = new GrupoModel();
-			
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
+            GrupoModel grupo = new GrupoModel();
 
-			try
-			{
-				var responseDept = await cliente.GetAsync($"Grupo/ConsultarGrupoPorID/{id}");
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
 
-				if (responseDept.IsSuccessStatusCode)
-				{
-					var respuestaDept = await responseDept.Content.ReadAsStringAsync();
-					JObject json_respuestaDept = JObject.Parse(respuestaDept);
+            try
+            {
+                var responseDept = await cliente.GetAsync($"Grupo/ConsultarGrupoPorID/{id}");
 
-					string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
-					var resultadoDept = JsonConvert.DeserializeObject<GrupoModel>(stringDataRespuestaDept);
-					grupo = resultadoDept;
-				}
-			}
-			catch (Exception ex)
-			{
-				throw ex.InnerException!;
-			}
-			return grupo;
-		}
+                if (responseDept.IsSuccessStatusCode)
+                {
+                    var respuestaDept = await responseDept.Content.ReadAsStringAsync();
+                    JObject json_respuestaDept = JObject.Parse(respuestaDept);
 
-		public async Task<JObject> EliminarGrupo(Guid id)
-		{
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
-			var response = await cliente.DeleteAsync($"Grupo/EliminarGrupo/{id}");
+                    string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
+                    var resultadoDept = JsonConvert.DeserializeObject<GrupoModel>(stringDataRespuestaDept);
+                    grupo = resultadoDept;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+            return grupo;
+        }
 
-			var respuesta = await response.Content.ReadAsStringAsync();
-			JObject json_respuesta = JObject.Parse(respuesta);
+        public async Task<JObject> EliminarGrupo(Guid id)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            var response = await cliente.DeleteAsync($"Grupo/EliminarGrupo/{id}");
 
-			return json_respuesta;
-		}
+            var respuesta = await response.Content.ReadAsStringAsync();
+            JObject json_respuesta = JObject.Parse(respuesta);
 
-		//Retorna el modal de AgregarGrupo con la lista de departamentos que no están asociados
-		public async Task<Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>> tuplaModelDepartamento()
-		{
-			GrupoModel model = new GrupoModel();
-			DepartamentoModel departamentoModel = new DepartamentoModel();
-			List<DepartamentoModel> listaDepartamentos = new List<DepartamentoModel>();
+            return json_respuesta;
+        }
+
+        //Retorna el modal de AgregarGrupo con la lista de departamentos que no están asociados
+        public async Task<Tuple<List<DepartamentoModel>, DepartamentoModel, GrupoModel>> tuplaModelDepartamento()
+        {
+            GrupoModel model = new GrupoModel();
+            DepartamentoModel departamentoModel = new DepartamentoModel();
+            List<DepartamentoModel> listaDepartamentos = new List<DepartamentoModel>();
 
             var cliente = new HttpClient
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
 
-			try
-			{
-				var responseDept = await cliente.GetAsync("Departamento/ConsultarDepartamentoNoAsociado");
+            try
+            {
+                var responseDept = await cliente.GetAsync("Departamento/ConsultarDepartamentoNoAsociado");
 
 
-				if (responseDept.IsSuccessStatusCode)
-				{
-					var respuestaDept = await responseDept.Content.ReadAsStringAsync();
-					JObject json_respuestaDept = JObject.Parse(respuestaDept);
+                if (responseDept.IsSuccessStatusCode)
+                {
+                    var respuestaDept = await responseDept.Content.ReadAsStringAsync();
+                    JObject json_respuestaDept = JObject.Parse(respuestaDept);
 
-					//Obtengo la data del json respuesta Departamento
-					string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
-					var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
+                    //Obtengo la data del json respuesta Departamento
+                    string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
+                    var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
 
-					listaDepartamentos = resultadoDept;
-				}
-			}
-			catch (HttpRequestException ex)
-			{
-				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
-			var tupla = new Tuple<List<DepartamentoModel>,DepartamentoModel, GrupoModel>(listaDepartamentos,departamentoModel, model);
+                    listaDepartamentos = resultadoDept;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            var tupla = new Tuple<List<DepartamentoModel>, DepartamentoModel, GrupoModel>(listaDepartamentos, departamentoModel, model);
 
-			return tupla;
-		}
+            return tupla;
+        }
 
-		//Almacenar la información de un nuevo grupo
-		public async Task<JObject> RegistrarGrupo(GrupoModel grupo)
-		{
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
+        //Almacenar la información de un nuevo grupo
+        public async Task<JObject> RegistrarGrupo(GrupoModel grupo)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
 
-			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
-			Console.WriteLine(JsonConvert.SerializeObject(grupo));
+            var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+            Console.WriteLine(JsonConvert.SerializeObject(grupo));
 
-			try
-			{
-				var response = await cliente.PostAsync("Grupo/CrearGrupo/", content);
-				var respuesta = await response.Content.ReadAsStringAsync();
-				JObject _json_respuesta = JObject.Parse(respuesta);
+            try
+            {
+                var response = await cliente.PostAsync("Grupo/CrearGrupo/", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
 
-				return _json_respuesta;
-			}
-			catch (HttpRequestException ex)
-			{
-				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
-			return _json_respuesta;
-		}
+            return _json_respuesta;
+        }
 
-		public async Task<JObject> EditarGrupo(GrupoModel grupo)
-		{
-			HttpClient cliente = new()
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
+        public async Task<JObject> EditarGrupo(GrupoModel grupo)
+        {
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
 
-			var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
 
-			try
-			{
-				var response = await cliente.PutAsync("Grupo/ActualizarGrupo", content);
-				var respuesta = await response.Content.ReadAsStringAsync();
-				JObject _json_respuesta = JObject.Parse(respuesta);
-				return _json_respuesta;
+            try
+            {
+                var response = await cliente.PutAsync("Grupo/ActualizarGrupo", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
 
-			}
-			catch (HttpRequestException ex)
-			{
-				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex);
-			}
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
-			return _json_respuesta;
-		}
-	}
+            return _json_respuesta;
+        }
+    }
 }
