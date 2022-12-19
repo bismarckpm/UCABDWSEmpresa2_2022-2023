@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
@@ -35,6 +36,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
                 lista = _mapper.Map<List<EstadoDTOUpdate>>(_dataContext.Estados.Where(x => x.Departamento.id == IdDepartamento).ToList());
             }
             return lista;
+        }
+
+        public List<EstadoDTOUpdate> ConsultarEstadosPorEstadoPadre(Guid IdTipoEstado)
+        {
+            return _mapper.Map<List<EstadoDTOUpdate>>(_dataContext.Estados.Where(e => e.Estado_Padre.Id == IdTipoEstado).ToList());
         }
 
         public EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate)
