@@ -26,7 +26,7 @@ namespace ServiceDeskUCAB.Controllers
             _servicioApi = servicioApi;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             //var current = User.Identities.First().Claims.ToList()[2].Value;
             var current = User.Identities.First().Claims;

@@ -361,7 +361,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
             return ListaDepartamento;
         }
-
-
     }
 }

@@ -28,6 +28,10 @@ using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -47,11 +51,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _mapper = mapper;
         }
 
-       /*public TicketDAO(IDataContext dataContext, IMapper mapper)
-        {
-            _dataContext = dataContext;
-            _mapper = mapper;
-        }*/
+        /*public TicketDAO(IDataContext dataContext, IMapper mapper)
+         {
+             _dataContext = dataContext;
+             _mapper = mapper;
+         }*/
 
         public Task<bool> ActualizarTicket(Ticket ticket)
         {
@@ -68,11 +72,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         {
             var Ticket = (Ticket)_dataContext.Tickets.Where(s => s.Id == id);
             return Ticket;
-        }
-
-        public Task<bool> EliminarTicket(Guid Id)
-        {
-            throw new NotImplementedException();
         }
 
         public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO)
@@ -93,6 +92,76 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 ticket.Tipo_Ticket = _dataContext.Tipos_Tickets.Find(Guid.Parse(ticketDTO.Tipo_Ticket));
                 ticket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
                 x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
+                
+                
+
+
+                _dataContext.Tickets.Add(ticket);
+                _dataContext.DbContext.SaveChanges();
+                response.Data = ticketDTO;
+                response.Exception = FlujoAprobacion(ticket);
+
+            }
+            catch (ExceptionsControl ex)
+            {
+
+                response.Success = false;
+                response.Message = ex.Message;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            catch (SqlException ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                response.Exception = ex.ToString();
+            }
+            return response;
+
+       }
+        public ApplicationResponse<TicketNuevoDTO> RegistroTicket(TicketNuevoDTO ticketDTO)
+        {
+
+            var response = new ApplicationResponse<TicketNuevoDTO>();
+            try
+            {
+
+                var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
+                ticket.Prioridad = _dataContext.Prioridades.Find(ticketDTO.prioridad_id);
+                //List<Empleado> v =(List<Empleado>) contexto.Usuarios.ToList();
+                //Prioridad t = contexto.Prioridades.Find();//Include(x => x.Cargo).ThenInclude(x => x.Departamento).ToList();
+                //.Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
+                ticket.Emisor = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Where(s => s.Id == ticketDTO.empleado_id).FirstOrDefault();
+                ticket.Departamento_Destino = _dataContext.Departamentos.Find(ticketDTO.departamentoDestino_Id);
+                ticket.Tipo_Ticket = _dataContext.Tipos_Tickets.Find(ticketDTO.tipoTicket_id);
+                ticket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
+                x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
+                try
+                {
+                    ticket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+                    /*{
+                        crearNuevaBitacora(ticket)
+                    };*/
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("No se pudo crear la Bitacora para el ticket", e);
+                }
+                if (ticket.Bitacora_Tickets == null)
+                    throw new Exception("La Bitacora para el ticket no pudo ser creada");
+
+                if (ticketDTO.ticketPadre_Id != null)
+                {
+                    ticket.Ticket_Padre = _dataContext.Tickets.Where(padre => padre.Id == ticketDTO.ticketPadre_Id).FirstOrDefault();
+                    //Ticket ticketPadre = _dataContext.Tickets.Where(padre => padre.Id == ticketDTO.ticketPadre_Id).FirstOrDefault();
+                    if (ticket.Ticket_Padre != null)
+                        ticket.Ticket_Padre.fecha_eliminacion = DateTime.Now;
+                }
+                else
+                {
+                    ticket.Ticket_Padre = null;
+                }
+
                 _dataContext.Tickets.Add(ticket);
 
                 _dataContext.DbContext.SaveChanges();
@@ -195,7 +264,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 _dataContext.Votos_Tickets.AddRange(ListaVotos);
 
-                CambiarEstado(ticket,"Pendiente", ListaEmpleado);
+                CambiarEstado(ticket, "Pendiente", ListaEmpleado);
 
                 _dataContext.DbContext.SaveChanges();
 
@@ -262,6 +331,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 var ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
                     .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
                     .Include(x => x.Tipo_Ticket).Include(x => x.Votos_Ticket)
+                    .Include(x=> x.Bitacora_Tickets)
                     .Where(x => x.Id == ticketLlegada.Id).FirstOrDefault();
 
                 ticket.Estado = _dataContext.Estados
@@ -271,8 +341,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
 
+                _dataContext.Tickets.Update(ticket);
+                _dataContext.DbContext.SaveChanges();
 
-                //contexto.DbContext.Entry(ticket).State = EntityState.Modified;
+                Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
+                if (ticket.Bitacora_Tickets.Count != 0)
+                {
+                    ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
+                }
+                
+                //ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
                 _dataContext.Tickets.Update(ticket);
                 _dataContext.DbContext.SaveChanges();
                 //vticket.State = EntityState.Modified;
@@ -339,6 +418,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return true;
         }
+        public TicketDAO(IDataContext dataContext, IMapper mapper)
+        {
+            _dataContext = dataContext;
+            _mapper = mapper;
+        }
 
 
 
@@ -349,41 +433,42 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.nuevoTicketEsValido(solicitudTicket);
-                crearNuevoTicket(solicitudTicket);
+                var ticketnuevo=RegistroTicket(solicitudTicket);
+                //FlujoAprobacion(_mapper.Map<Ticket>(ticketnuevo));
                 respuesta.Data = "Ticket creado satisfactoriamente";
                 respuesta.Message = "Ticket creado satisfactoriamente";
                 respuesta.Success = true;
-            } catch(TicketException e)
+            } catch (TicketException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(TicketDescripcionException e)
+            } catch (TicketDescripcionException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(TicketEmisorException e)
+            } catch (TicketEmisorException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(TicketPrioridadException e)
+            } catch (TicketPrioridadException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(TicketTipoException e)
+            } catch (TicketTipoException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(TicketDepartamentoException e)
+            } catch (TicketDepartamentoException e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
                 respuesta.Success = false;
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 respuesta.Data = e.Message;
                 respuesta.Message = e.Message;
@@ -483,6 +568,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
         {
             //CREAR LA FAMILIA TICKET, Y PONER FECHA FIN A LOS QUE ESTÁN EN LA LISTA!
@@ -500,7 +586,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 });
                 anadirFamiliaHl(ticketPrincipalId, nuevaFamilia, true);
                 respuesta.Data = "Proceso de Merge realizado exitosamente";
-                respuesta.Message = "Mano hicimos merge tu eres loco";
+                respuesta.Message = "Proceso de Merge realizado exitosamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -517,44 +603,68 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-        /*public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerFamiliaTickets(Guid ticketId)
-        {
-            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
-            try
-            {
-                respuesta.Data = obtenerFamiliaTicketsHl(ticketId);
-                respuesta.Message = "Proceso de obtención de familia ticket exitoso";
-                respuesta.Success = true;
-            }
-            catch (TicketException e)
-            {
-                respuesta.Data = null;
-                respuesta.Message = e.Message;
-                respuesta.Success = false;
-            }
-            return respuesta;
-        }*/
+
         public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
-            TicketNuevoDTO ticket = new TicketNuevoDTO();
-            ticket.departamentoDestino_Id = solicitudTicket.departamentoDestino_Id;
-            ticket.descripcion = solicitudTicket.descripcion;
-            ticket.empleado_id = solicitudTicket.empleado_id;
-            ticket.prioridad_id = solicitudTicket.prioridad_id;
-            ticket.tipoTicket_id = solicitudTicket.tipoTicket_id;
-            ticket.titulo = solicitudTicket.titulo;
-            ticket.ticketPadre_Id = solicitudTicket.ticketPadre_Id;
-
             try
             {
-                TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
-                validaciones.nuevoTicketEsValido(ticket);
-                TicketDTO nuevoTicket = crearNuevoTicket(ticket);
 
-                respuesta.Data = "Ticket Reenviado satisfactoriamente";
-                respuesta.Message = "Ticket Reenviado satisfactoriamente";
-                respuesta.Success = true;
+                Ticket ticket = new Ticket();
+                //ticket = _dataContext.Tickets.Find(solicitudTicket.ticketPadre_Id);
+                ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
+                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Include(x => x.Tipo_Ticket)
+                    .Include(x=> x.Estado)
+                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                ticket.fecha_creacion = DateTime.UtcNow;
+                ticket.Id = Guid.NewGuid();
+                ticket.Departamento_Destino = _dataContext.Departamentos.Find(solicitudTicket.departamentoDestino_Id);
+                var bitacoras = new HashSet<Bitacora_Ticket>();
+                bitacoras.AddRange(_dataContext.Bitacora_Tickets.Include(x => x.Ticket)
+                    .Where(x => x.Ticket.Id == solicitudTicket.ticketPadre_Id));
+
+                ticket.Ticket_Padre = _dataContext.Tickets
+                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                foreach (var bitacora in bitacoras)
+                {
+                    var nuevabitacora = new Bitacora_Ticket();
+                    nuevabitacora.Id = Guid.NewGuid();
+                    nuevabitacora.Estado = bitacora.Estado;
+                    nuevabitacora.Ticket = bitacora.Ticket;
+                    nuevabitacora.Fecha_Inicio = bitacora.Fecha_Inicio;
+                    nuevabitacora.Fecha_Fin= bitacora.Fecha_Fin;
+                    
+                }
+                ticket.Bitacora_Tickets = bitacoras;
+                _dataContext.Tickets.Add(ticket);
+                _dataContext.DbContext.SaveChanges();
+
+                var ticketviejo = _dataContext.Tickets.Include(x => x.Departamento_Destino)
+                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                ticketviejo.fecha_eliminacion = DateTime.UtcNow;
+                _dataContext.Tickets.Update(ticketviejo);
+                _dataContext.DbContext.SaveChanges();
+
+                /*TicketNuevoDTO ticket = new TicketNuevoDTO();
+                ticket.departamentoDestino_Id = solicitudTicket.departamentoDestino_Id;
+                ticket.descripcion = solicitudTicket.descripcion;
+                ticket.empleado_id = solicitudTicket.empleado_id;
+                ticket.prioridad_id = solicitudTicket.prioridad_id;
+            
+                ticket.tipoTicket_id = solicitudTicket.tipoTicket_id;
+                ticket.titulo = solicitudTicket.titulo;
+                ticket.ticketPadre_Id = solicitudTicket.ticketPadre_Id;
+                try
+                {
+                    TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
+                    validaciones.nuevoTicketEsValido(ticket);
+                    TicketDTO nuevoTicket = crearNuevoTicket(ticket);
+
+                    respuesta.Data = "Ticket Reenviado satisfactoriamente";
+                    respuesta.Message = "Ticket Reenviado satisfactoriamente";
+                    respuesta.Success = true;
+                }*/
             }
             catch (TicketException e)
             {
@@ -606,6 +716,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId)
         {
             ApplicationResponse<List<TicketInfoCompletaDTO>> respuesta = new ApplicationResponse<List<TicketInfoCompletaDTO>>();
@@ -616,7 +727,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 List<TicketInfoCompletaDTO> lista = new List<TicketInfoCompletaDTO>();
                 Ticket ticket = _dataContext.Tickets.Include(t => t.Familia_Ticket).Include(t => t.Familia_Ticket.Lista_Ticket).Where(t => t.Id == ticketPrincipalId).Single();
                 if (ticket.Familia_Ticket == null)
+                {
                     throw new Exception("El ticket no tiene familia definida");
+
+                }
                 ticket.Familia_Ticket.Lista_Ticket.ForEach(delegate (Ticket e)
                 {
                     lista.Add(rellenarTicketInfoCompletaHl(e.Id));
@@ -624,7 +738,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 if (lista.Count == 0)
                     throw new Exception("El ticket no tiene integrantes en su familia");
                 respuesta.Data = lista;
-                respuesta.Message = "Mano ahí tienes a tu familia de tickets criminal tu eres loco";
+                respuesta.Message = "Familia de tickets";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -641,6 +755,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> mergeTicketsHl(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -659,7 +774,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 });
                 anadirFamiliaHl(ticketPrincipalId, nuevaFamilia, true);
                 respuesta.Data = "Proceso de Merge realizado exitosamente";
-                respuesta.Message = "Mano hicimos merge tu eres loco";
+                respuesta.Message = "Proceso de Merge realizado exitosamente";
                 respuesta.Success = true;
             }
             catch (Exception e)
@@ -671,6 +786,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+
         public ApplicationResponse<string> eliminarTicket(Guid id)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
@@ -678,7 +794,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 eliminarTicketHl(id);
                 respuesta.Data = "Ticket eliminado satisfactoriamente";
-                respuesta.Message = "Se eliminó el ticket mano";
+                respuesta.Message = "Ticket eliminado satisfactoriamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -695,6 +811,95 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+        public ApplicationResponse<List<DepartamentoSearchDTO>> buscarDepartamentos(Guid id)
+        {
+            ApplicationResponse<List<DepartamentoSearchDTO>> respuesta = new ApplicationResponse<List<DepartamentoSearchDTO>>();
+            try
+            {
+                respuesta.Data = buscarDepartamentoTicketSolcitud(id);
+                respuesta.Message = "Lista de departamentos obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<DepartamentoSearchDTO> buscarDepartamentoEmpleado(Guid id)
+        {
+            ApplicationResponse<DepartamentoSearchDTO> respuesta = new ApplicationResponse<DepartamentoSearchDTO>();
+            try
+            {
+                respuesta.Data = buscarDepartamentoUsuarioHl(id);
+                respuesta.Message = "Lista de departamentos obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id)
+        {
+            ApplicationResponse<List<Tipo_TicketDTOSearch>> respuesta = new ApplicationResponse<List<Tipo_TicketDTOSearch>>();
+            try
+            {
+                respuesta.Data = obtenerTipoTickets(id);
+                respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<List<Tipo_Ticket>> buscarTiposTickets()
+        {
+            ApplicationResponse<List<Tipo_Ticket>> respuesta = new ApplicationResponse<List<Tipo_Ticket>>();
+            try
+            {
+                respuesta.Data = obtenerTiposTicketsHl();
+                respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+
+        public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento)
+        {
+            ApplicationResponse<List<Estado>> respuesta = new ApplicationResponse<List<Estado>>();
+            try
+            {
+                respuesta.Data = buscarEstadosPorDepartamentoHl(idDepartamento);
+                respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        
         //HELPERS
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
         {
@@ -708,7 +913,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             Cargo cargo = _dataContext.Cargos
                                        .Include(t => t.Departamento)
                                        .Where(t => t.id == nuevoTicket.Emisor.Cargo.id).FirstOrDefault();
-            Guid prueba = cargo.Departamento.id;
             nuevoTicket.Departamento_Destino = _dataContext.Departamentos.Where(departamento => departamento.id == solicitudTicket.departamentoDestino_Id).FirstOrDefault();
             Estado estado = _dataContext.Estados
                                                 .Include(t => t.Estado_Padre)
@@ -721,8 +925,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
+            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+                nuevoTicket.nro_cargo_actual = 1;
+            else
+                nuevoTicket.nro_cargo_actual = null;
             Guid? pruebaPadre = solicitudTicket.ticketPadre_Id;
-            if(solicitudTicket.ticketPadre_Id != null)
+            if (solicitudTicket.ticketPadre_Id != null)
             {
                 nuevoTicket.Ticket_Padre = _dataContext.Tickets.Where(padre => padre.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
                 Ticket ticketPadre = _dataContext.Tickets.Where(t => t.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
@@ -733,15 +941,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 nuevoTicket.Ticket_Padre = null;
             }
-            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
-            {
-                nuevoTicket.nro_cargo_actual = 1;
-            }
-            else
-            {
-                nuevoTicket.nro_cargo_actual = null;
-            }
-           
+
             nuevoTicket.Votos_Ticket = null;
             try
             {
@@ -749,17 +949,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 {
                     crearNuevaBitacora(nuevoTicket)
                 };
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 throw new Exception("No se pudo crear la Bitacora para el ticket", e);
             }
             if (nuevoTicket.Bitacora_Tickets == null)
                 throw new Exception("La Bitacora para el ticket no pudo ser creada");
-            _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
             //_dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
-            FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
+            _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
+            //FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
-            
             return nuevoTicket;
         }
         public Bitacora_Ticket crearNuevaBitacora(TicketDTO ticket)
@@ -769,6 +968,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 Id = Guid.NewGuid(),
                 Estado = ticket.Estado,
                 Ticket = _mapper.Map<Ticket>(ticket),
+                Fecha_Inicio = DateTime.Today,
+                Fecha_Fin = null
+            };
+            return nuevaBitacora;
+        }
+
+        public Bitacora_Ticket crearNuevaBitacora(Ticket ticket)
+        {
+            Bitacora_Ticket nuevaBitacora = new Bitacora_Ticket()
+            {
+                Id = Guid.NewGuid(),
+                Estado = ticket.Estado,
+                Ticket = ticket,
                 Fecha_Inicio = DateTime.Today,
                 Fecha_Fin = null
             };
@@ -810,7 +1022,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             });
             return bitacoras;
         }
-
         public void inicializarFamiliaTicketHl(TicketDTO nuevoTicket)
         {   //PARA LOS TICKETS HERMANOS
             nuevoTicket.Familia_Ticket = new Familia_Ticket()
@@ -858,6 +1069,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Abiertos")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
@@ -865,6 +1077,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Cerrados")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
@@ -872,6 +1085,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Prioridad)
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion != null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");
@@ -888,6 +1102,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     empleado_correo = ticket.Emisor.correo,
                     prioridad_nombre = ticket.Prioridad.nombre,
                     fecha_creacion = ticket.fecha_creacion,
+                    fecha_eliminacion = ticket.fecha_eliminacion,
                     tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
                     estado_nombre = ticket.Estado.nombre
                 });
@@ -919,6 +1134,46 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticket.fecha_eliminacion = DateTime.UtcNow;
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
+        }
+        public List<DepartamentoSearchDTO> buscarDepartamentoTicketSolcitud(Guid usuarioId)
+        {
+            if (!_dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == usuarioId).Any())
+                throw new Exception("Usuario no es un empleado, por lo tanto no puede crear un ticket");
+            Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == usuarioId).Single();
+            if (empleado.Cargo == null)
+                throw new Exception("Empleado no tiene cargo asignado");
+            Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
+            if (!_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).Any())
+                throw new Exception("No existen departamentos acorde al cargo del empleado");
+            return _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
+        }
+
+        public DepartamentoSearchDTO buscarDepartamentoUsuarioHl(Guid idEmpleado)
+        {
+            if (!_dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == idEmpleado).Any())
+                throw new Exception("Usuario no es un empleado, por lo tanto no puede crear un ticket");
+            Empleado empleado = _dataContext.Empleados.Include(t => t.Cargo).Where(t => t.Id == idEmpleado).Single();
+            if (empleado.Cargo == null)
+                throw new Exception("Empleado no tiene cargo asignado");
+            Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
+            if (!_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Any())
+                throw new Exception("No existen departamentos acorde al cargo del empleado");
+            return _mapper.Map<DepartamentoSearchDTO>(_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Single());
+        }
+
+        public List<Tipo_TicketDTOSearch> obtenerTipoTickets(Guid departamentoId)
+        {
+            Tipo_TicketService tipoTicket = new Tipo_TicketService(_dataContext, _mapper);
+            return tipoTicket.ConsultaTipoTicketAgregarTicket(departamentoId);
+        }
+
+        public List<Tipo_Ticket> obtenerTiposTicketsHl()
+        {
+            return _dataContext.Tipos_Tickets.Include(t => t.Departamentos).ToList();
+        }
+        public List<Estado> buscarEstadosPorDepartamentoHl(Guid idDepartamento)
+        {
+            return _dataContext.Estados.Include(t => t.Departamento).Include(t => t.Estado_Padre).Where(t => t.Departamento.id == idDepartamento && t.Estado_Padre.nombre != "Aprobado" && t.Estado_Padre.nombre != "Rechazado" && t.Estado_Padre.nombre != "Pendiente").ToList();
         }
     }
 }

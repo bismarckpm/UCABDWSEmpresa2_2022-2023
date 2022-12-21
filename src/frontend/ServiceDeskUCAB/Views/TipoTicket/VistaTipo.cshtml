@@ -110,25 +110,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                @*if (Context.Request.Query["message"].Count() > 0)
-                {
-                <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
-                <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                }*@
                 <form asp-action="GuardarCambios" asp-controller="TipoTicket" method="post">
-
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
                         <input required type="text" asp-for="tipo.nombre" name="nombre" />
                     </div>
-
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Descripción:</label>
                         <textarea required class="form-control" id="message-text" asp-for="tipo.descripcion" name="descripcion"></textarea>
                     </div>
-
                     <div class="container p-2 my-2 border">
                         <div class="mb-3">
                             <h6>Registro Modelo Aprobacion:</h6>
