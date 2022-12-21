@@ -10,11 +10,11 @@ namespace ServiceDeskUCAB.ViewModel
 {
 	public class TicketReenviarDTOViewModel
     {
-		public TicketCompletoDTO ticketPadre;
-		public TicketReenviarDTO ticket;
-		public List<DepartamentoSearchDTO> departamentos;
-		public List<PrioridadDTO> prioridades;
-		public List<Tipo_TicketDTOSearch> tipo_tickets;
+		public TicketCompletoDTO ticketPadre { get; set; }
+        public TicketReenviarDTO ticket { get; set; }
+		public List<DepartamentoSearchDTO> departamentos { get; set; }
+		public List<PrioridadDTO> prioridades { get; set; }
+		public List<Tipo_TicketDTOSearch> tipo_tickets { get; set; }
 	}
 }
 
