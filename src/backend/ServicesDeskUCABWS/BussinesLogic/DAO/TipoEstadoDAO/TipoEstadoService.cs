@@ -18,23 +18,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         private readonly IDataContext _tipoEstadoContext;
         private readonly IMapper _mapper;
         private readonly IEstadoDAO _estadoService;
-        
-        
-        
 
         public TipoEstadoService(IDataContext tipoestadoContext, IMapper mapper, IEstadoDAO estadoService )
         {
             _tipoEstadoContext = tipoestadoContext;
             _mapper = mapper;
             _estadoService = estadoService;
+        }
 
+        public TipoEstadoService(IDataContext tipoestadoContext)
+        {
+            _tipoEstadoContext = tipoestadoContext;
 
         }
-        //public TipoEstadoService(IDataContext tipoestadoContext)
-        //{
-        //    _tipoEstadoContext = tipoestadoContext;
-
-        //}
 
         //GET: Servicio para consultar todos los tipos estados
         public List<TipoEstadoDTO> ConsultaTipoEstados()
@@ -133,17 +129,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No se pudo registrar el tipo estado", ex);
-            }
-
-            
+            }            
         }
 
         //Agregar Estados de los Tipo Estados Agregados
 
         public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
         {
-            
-
             var listaEstados = new List<Estado>();
 
             foreach (var departamento in _tipoEstadoContext.Departamentos.ToList())
@@ -214,7 +206,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                     throw new ExceptionsControl("No se puede Deshabilitar este tipo de estado por la integridad del sistema");
                 }
                
-                
                 if(tipoEstado.fecha_eliminacion != null)
                 {
                     tipoEstado.fecha_eliminacion = null;  //Hablilitar el tipo estado

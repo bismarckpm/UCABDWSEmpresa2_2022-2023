@@ -20,15 +20,15 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
     [TestClass]
     public class NotificacionServiceTest
     {
-        private readonly Mock<IDataContext> _contextMock;
+        // readonly Mock<IDataContext> _contextMock;
         private readonly NotificacionService _NotificacionService;
 
 
         public NotificacionServiceTest()
         {
-            _contextMock = new Mock<IDataContext>();
-            _NotificacionService = new NotificacionService(_contextMock.Object);
-            _contextMock.SetUpContextData();
+            //_contextMock = new Mock<IDataContext>();
+            _NotificacionService = new NotificacionService();
+            //_contextMock.SetUpContextData();
         }
 
 //*
@@ -84,14 +84,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                         fecha_creacion = DateTime.Now,
                     }
                 },
-                /*Votos_Ticket = new HashSet<Votos_Ticket>
-                {
-                    new Votos_Ticket()
-                    {
-                        Id = Guid.NewGuid(),
-                        comentario = "comentarioVoto",
-                    }
-                }*/
             };
 
             var Plantilla = new PlantillaNotificacionDTO()
@@ -125,85 +117,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             var result = _NotificacionService.ReemplazoEtiqueta(Ticket, Plantilla);
             Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
         }
-
-        /*[TestMethod(displayName: "Prueba Unitaria para reemplazar las etiquetas en la plantilla notificación")] 
-        public void ReemplazarEtiquetasClienteNotificacionServiceTest()
-        {
-
-            var Ticket = new Ticket()
-            {
-                Id = Guid.NewGuid(),
-                titulo = "titulo",
-                descripcion = "descripcion",
-                fecha_creacion = DateTime.Now,
-                Estado = new Estado()
-                {
-                    Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
-                },
-                Tipo_Ticket = new Tipo_Ticket()
-                {
-                    nombre = "nombreTipoTicket"
-                },
-                Departamento_Destino = new Departamento()
-                {
-                    nombre = "nombreDepartamento",
-                    grupo = new Grupo()
-                    {
-                        nombre = "nombreGrupo"
-                    }
-                },
-                Prioridad = new Prioridad()
-                {
-                    nombre = "nombrePrioridad"
-                },
-                /*cliente = new Cliente()
-                {
-                    Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
-                    primer_nombre = "nombreEmpleado",
-                    primer_apellido = "apellidoEmpleado"
-                },
-                Votos_Ticket = new HashSet<Votos_Ticket>
-                {
-                    new Votos_Ticket()
-                    {
-                        Id = Guid.NewGuid(),
-                        comentario = "comentarioVoto",
-                    }
-                }
-            };
-
-            var Plantilla = new PlantillaNotificacionDTO()
-            {
-                Id = Guid.NewGuid(),
-                Titulo = "tituloPlantilla",
-                Descripcion = "@Cargo @Ticket @Estado @Departamento @Grupo @Prioridad @Usuario @TipoTicket @ComentarioVoto",
-                TipoEstado = new TipoEstadoDTO()
-                {
-                    etiqueta = new HashSet<EtiquetaDTO>()
-                    {
-                        new EtiquetaDTO() {
-                            Id = Guid.NewGuid(),
-                            Descripcion = "nombreDescripcion",
-                            Nombre = "@Usuario"
-                        },
-                        new EtiquetaDTO() {
-                            Id = Guid.NewGuid(),
-                            Descripcion = "nombreDescripcion",
-                            Nombre = "@Departamento"
-                        },
-                        new EtiquetaDTO() {
-                            Id = Guid.NewGuid(),
-                            Descripcion = "nombreDescripcion",
-                            Nombre = "@Grupo"
-                        }
-                    }
-                }
-            };
-
-            var result = _NotificacionService.ReemplazoEtiqueta(Ticket, Plantilla);
-            Assert.AreEqual(result, "@Cargo @Ticket @Estado nombreDepartamento nombreGrupo @Prioridad nombreEmpleado apellidoEmpleado @TipoTicket @ComentarioVoto");
-        }*/
 
         [TestMethod(displayName: "Prueba Unitaria cuando existe un argumento null al reemplazar las etiquetas")]
         public void ReemplazarEtiquetasNullReferenceExceptionServiceTest()
@@ -222,18 +135,21 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
         [TestMethod(displayName: "Prueba Unitaria al enviar correo exitoso")]       
         public void EnviarCorreoExitosoServiceTest()
         {
-
-            var tituloPlantilla = "Titulo email prueba unitaria";
-            var body = "Cuerpo del email prueba unitaria";
+            var Plantilla = new PlantillaNotificacionDTO()
+            {
+                Id = Guid.NewGuid(),
+                Titulo = "Titulo email prueba unitaria",
+                Descripcion = "Cuerpo del email prueba unitaria"
+            };
             var correoDestino = "manueloliv96@gmail.com, 22anthony.monsalve@gmail.com";
 
-            Assert.IsTrue(_NotificacionService.EnviarCorreo(tituloPlantilla, body, correoDestino));
+            Assert.IsTrue(_NotificacionService.EnviarCorreo(Plantilla, correoDestino));
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando existe una excepcion al enviar correo")]        
         public void EnviarCorreoExceptionServiceTest()
         {
-            Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.EnviarCorreo(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+            Assert.ThrowsException<ExceptionsControl>(() => _NotificacionService.EnviarCorreo(It.IsAny<PlantillaNotificacionDTO>(), It.IsAny<string>()));
         }
     }
 }

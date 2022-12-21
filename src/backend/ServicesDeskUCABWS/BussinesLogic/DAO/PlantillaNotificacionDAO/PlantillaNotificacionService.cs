@@ -23,7 +23,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             _plantillaContext = plantillaContext;
             _mapper = mapper;
-
         }
 
         //GET: Servicio para consultar todas las plantillas
