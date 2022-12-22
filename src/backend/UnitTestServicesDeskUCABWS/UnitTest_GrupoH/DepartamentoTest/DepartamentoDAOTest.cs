@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using MockQueryable.Moq;
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
@@ -54,6 +55,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         public void AgregarDepartamentoTest()
         {
             //arrange
+            var ListaTipoEstados = new List<Tipo_Estado>
+            {
+                new Tipo_Estado("Aprobado", "Tipo Estado prueba")
+                {
+                    Id=new Guid("A4D4417A-9A80-4EC2-B01E-02F57EB31144")
+                },
+                new Tipo_Estado("Rechazado","Tipo Estado prueba")
+                {
+                    Id=new Guid("3DD45003-3829-473B-92E5-03199E545C6C")
+                }
+            };
+            var ListaEstados = new List<Estado>();
+
+            _contextMock.Setup(c => c.Tipos_Estados).Returns(ListaTipoEstados.AsQueryable().BuildMockDbSet().Object);
+            _contextMock.Setup(set => set.Estados.AddRange(It.IsAny<IEnumerable<Estado>>())).Callback<IEnumerable<Estado>>(ListaEstados.AddRange);
+
             var request = new Departamento
             {
 
@@ -84,6 +101,23 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
         public void AgregarDepartamentoTestIf()
         {
             //arrange
+            var ListaTipoEstados = new List<Tipo_Estado>
+            {
+                new Tipo_Estado("Aprobado", "Tipo Estado prueba")
+                {
+                    Id=new Guid("A4D4417A-9A80-4EC2-B01E-02F57EB31144")
+                },
+                new Tipo_Estado("Rechazado","Tipo Estado prueba")
+                {
+                    Id=new Guid("3DD45003-3829-473B-92E5-03199E545C6C")
+                }
+            };
+            var ListaEstados = new List<Estado>();
+
+            _contextMock.Setup(c => c.Tipos_Estados).Returns(ListaTipoEstados.AsQueryable().BuildMockDbSet().Object);
+            _contextMock.Setup(set => set.Estados.AddRange(It.IsAny<IEnumerable<Estado>>())).Callback<IEnumerable<Estado>>(ListaEstados.AddRange);
+
+
             var request = new Departamento
             {
 

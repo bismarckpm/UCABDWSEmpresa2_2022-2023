@@ -1,5 +1,6 @@
 ﻿
 
+using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO
@@ -13,6 +14,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO
 
         public int? Maximo_Rechazado_nivel { get; set; }
 
-        public TipoCargoDTO Tipo_Cargo { get; set; }
+        public CargoDto Cargo { get; set; }
     }
 }

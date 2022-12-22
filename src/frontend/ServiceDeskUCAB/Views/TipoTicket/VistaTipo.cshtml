@@ -74,7 +74,7 @@
                             @foreach (var cargos2 in item.Flujo_Aprobacion)
                             {
 
-                                <p> @cargos2.Tipo_Cargo.nombre</p>
+                                <p> @cargos2.Cargo.nombre_departamental</p>
 
                             }
                         </td>
@@ -111,6 +111,11 @@
             </div>
             <div class="modal-body">
                 <form asp-action="GuardarCambios" asp-controller="TipoTicket" method="post">
+                    
+                    <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id:</label>
+                            <input required type="text" asp-for="tipo.Id" value="@Model.idDepartamento" name="idDepartOrigen" />
+                        </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
                         <input required type="text" asp-for="tipo.nombre" name="nombre" />
@@ -139,7 +144,7 @@
                                     {
                                         <div class="form-check form-switch" >
                                             <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 60px">
-                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                             <br />
                                         </div>
                                         <div class="form-check form-switch inputJerarquico" style="display: none" id="@cargos2.posicion">
@@ -161,7 +166,7 @@
                                     {
                                         <div class="form-check form-switch">
                                             <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" id="mp-@cargos2.Id" style="position: absolute; left: 60px">
-                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                            <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                             <br />
                                         </div>
                                     }
@@ -183,19 +188,18 @@
 
                             </div>
 
-                            <div class="mb-2" id="ListaDepartamentos">
+                            <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                 <label class="form-label">Departamentos Asociados:</label>
-                                @foreach (var departamentos in Model.ListaDepartamento)
-                                {
+                                
 
                                     <br>
 
                                     <div class="form-check form-switch">
-                                        <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 60px">
-                                        <label class="form-check-label" style="position: absolute; left: 60px">@departamentos.nombre</label>
+                                    <input name="departamentos" class="form-check-input" value="@Model.idDepartamento" type="checkbox" id="@Model.idDepartamento" checked="checked" style="position: absolute; left: 60px">
+                                        <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
 
                                     </div>
-                                }
+                                
                             </div>
                         </div>
 
@@ -385,6 +389,11 @@
 
                         <div class="mb-3" style="display: none;">
                             <label for="recipient-name" class="col-form-label">Id:</label>
+                            <input required type="text" asp-for="tipoActualizar.Id" value="@Model.idDepartamento" name="idDepartOrigen" />
+                        </div>
+
+                        <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id:</label>
                             <input required type="text" asp-for="tipoActualizar.Id" value="@tipo.Id" name="id" />
                         </div>
                         <div class="mb-3">
@@ -445,25 +454,25 @@
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                 @if(tipo.Flujo_Aprobacion.Select(x=>x.Tipo_Cargo.Id).ToList().Contains(cargos2.Id))
+                                                 @if(tipo.Flujo_Aprobacion.Select(x=>x.Cargo.Id).ToList().Contains(cargos2.Id))
                                                  {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" checked="checked" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
-                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
                                                      <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
                                                         Orden Aprobación:
-                                                        <input required name="ordenaprobacion" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Tipo_Cargo.Id==cargos2.Id).FirstOrDefault().OrdenAprobacion" style="width : 60px">
+                                                        <input required name="ordenaprobacion" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().OrdenAprobacion" style="width : 60px">
                                                         Mínimo Aprobado Nivel:
-                                                        <input required name="minimo_aprobado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Tipo_Cargo.Id==cargos2.Id).FirstOrDefault().minimo_aprobado_nivel" style="width : 60px">
+                                                        <input required name="minimo_aprobado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().minimo_aprobado_nivel" style="width : 60px">
                                                         Máximo Rechazado Nivel:
-                                                        <input required name="maximo_rechazado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Tipo_Cargo.Id==cargos2.Id).FirstOrDefault().maximo_rechazado_nivel" style="width : 60px">
+                                                        <input required name="maximo_rechazado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().maximo_rechazado_nivel" style="width : 60px">
                                                     </div>
                                                  }   else {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
-                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
                                                      <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
@@ -487,7 +496,7 @@
                                             {
                                                 <div class="form-check form-switch" >
                                                     <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
-                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                     <br />
                                                 </div>
                                                 <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
@@ -509,18 +518,18 @@
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                @if (tipo.Flujo_Aprobacion.Select(x => x.Tipo_Cargo.Id).ToList().Contains(cargos2.Id))
+                                                @if (tipo.Flujo_Aprobacion.Select(x => x.Cargo.Id).ToList().Contains(cargos2.Id))
                                                 {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" type="checkbox" checked="checked" id="@cargos2.Id" style="position: absolute; left: 60px">
-                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
 
                                                     </div>
                                                 } else {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
-                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                        <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
 
                                                     </div>
@@ -545,7 +554,7 @@
 
                                                 <div class="form-check form-switch">
                                                     <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
-                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre</label>
+                                                    <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                     <br />
 
                                                 </div>
@@ -553,11 +562,11 @@
 
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
                                 }
@@ -578,18 +587,14 @@
                                 }
                                 
 
-                                <div class="mb-2" id="ListaDepartamentos">
+                                <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                     <label class="form-label">Departamentos Asociados:</label>
-                                    @foreach (var departamentos in Model.ListaDepartamento)
-                                    {
-                                        <br>
+                                    <br>
+                                    <div class="form-check form-switch">
+                                        <input name="departamentos" class="form-check-input" value="@Model.idDepartamento" type="checkbox" id="@Model.idDepartamento" checked="checked" style="position: absolute; left: 60px">
+                                        <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
 
-                                        <div class="form-check form-switch">
-                                            <input name="departamentos" class="form-check-input" value="@departamentos.id" type="checkbox" id="@departamentos.id" style="position: absolute; left: 60px">
-                                            <label class="form-check-label" style="position: absolute; left: 60px">@departamentos.nombre</label>
-
-                                        </div>
-                                    }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -626,8 +631,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" asp-action="Eliminar" asp-controller= "TipoTicket" asp-route-id="@tipo.Id">Eliminar</button>
-                    </div>
+                            <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Eliminar", "TipoTicket",new{ id =tipo.Id, idDepartOrigen= Model.idDepartamento} )'">Eliminar</button>
+                            @*onclick="location.href='@Url.Action("VistaTipo", "TipoTicket",new{ idDepartamento =@item.id} )'"
+                        <button type="submit" class="btn btn-primary" asp-action="Eliminar" asp-controller="TipoTicket" asp-route-id="@tipo.Id" asp-route-idDepartOrigen="@Model.idDepartamento">Eliminar</button>
+
+                            *@
+                     </div>
                 </form>
             </div>
         </div>

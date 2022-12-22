@@ -264,16 +264,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 return true;
             }
 
-            var tipoCargos = contexto.Flujos_Aprobaciones
-                    .Include(x => x.Tipo_Cargo)
-                    .ThenInclude(x => x.Cargos_Asociados)
+            var Flujos = contexto.Flujos_Aprobaciones
+                    .Include(x => x.Cargo)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket.ToString().ToUpper() == ticket.Tipo_Ticket.Id.ToString().ToUpper() &&
                         x.OrdenAprobacion == ticket.nro_cargo_actual).FirstOrDefault();
 
 
-            var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
-                .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
+            var Cargos = Flujos.Cargo;
 
 
             var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();

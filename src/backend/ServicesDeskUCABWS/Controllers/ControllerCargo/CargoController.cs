@@ -189,7 +189,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
 
 
         }*/
-        [HttpGet("ConsultarCargoPorIdTipoCargo/{idTipo}")]
+        /*[HttpGet("ConsultarCargoPorIdTipoCargo/{idTipo}")]
         public ApplicationResponse<List<CargoDto>> ListaCargosTipoCargo(Guid idTipo)
         {
             var response = new ApplicationResponse<List<CargoDto>>();
@@ -204,7 +204,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
         [HttpGet("ConsultarCargoPorDepartamento/{id}")]
         public ApplicationResponse<List<CargoDTOUpdate>> ConsultarCargosPorDepartamento([FromRoute]Guid id)

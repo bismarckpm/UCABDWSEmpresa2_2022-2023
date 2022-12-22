@@ -1,4 +1,5 @@
-﻿using ServiceDeskUCAB.Models.TipoTicketsModels;
+﻿using ServiceDeskUCAB.Models.DTO.CargoDTO;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Models.ViewModel
 {
@@ -11,9 +12,11 @@ namespace ServiceDeskUCAB.Models.ViewModel
 
         public List<Departament> ListaDepartamento { get; set; }
 
-        public List<TipoCargo> ListaCargos { get; set; }
+        public List<CargoDTOUpdate> ListaCargos { get; set; }
 
         public Tipo tipoActualizar { get; set; }
+
+        public string idDepartamento { get; set; }
 
     }
 }

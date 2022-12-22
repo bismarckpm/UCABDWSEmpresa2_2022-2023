@@ -268,7 +268,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
 
 
         //Listar departamentos por el identificador de un grupo
-        public List<CargoDto> GetByIdCargo(Guid idTipo)
+        /*public List<CargoDto> GetByIdCargo(Guid idTipo)
         {
             try
             {
@@ -290,7 +290,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             {
                 throw new ExceptionsControl("El Cargo" + idTipo + "No esta registrado", ex);
             }
-        }
+        }*/
 
 
         /*public List<string> AsignarTipoCargotoCargo(Guid id, string idCargo)

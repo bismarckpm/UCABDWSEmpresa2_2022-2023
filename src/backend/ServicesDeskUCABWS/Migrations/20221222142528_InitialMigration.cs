@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class MigracionInicial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,23 +76,6 @@ namespace ServicesDeskUCABWS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tipos_Cargos",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    nivel_jerarquia = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tipos_Cargos", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,33 +178,6 @@ namespace ServicesDeskUCABWS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Flujos_Aprobaciones",
-                columns: table => new
-                {
-                    IdTipo_cargo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdTicket = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Tipo_Cargoid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OrdenAprobacion = table.Column<int>(type: "int", nullable: true),
-                    Minimo_aprobado_nivel = table.Column<int>(type: "int", nullable: true),
-                    Maximo_Rechazado_nivel = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Flujos_Aprobaciones", x => new { x.IdTicket, x.IdTipo_cargo });
-                    table.ForeignKey(
-                        name: "FK_Flujos_Aprobaciones_Tipos_Cargos_Tipo_Cargoid",
-                        column: x => x.Tipo_Cargoid,
-                        principalTable: "Tipos_Cargos",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_Flujos_Aprobaciones_Tipos_Tickets_Tipo_TicketId",
-                        column: x => x.Tipo_TicketId,
-                        principalTable: "Tipos_Tickets",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cargos",
                 columns: table => new
                 {
@@ -231,7 +187,6 @@ namespace ServicesDeskUCABWS.Migrations
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ultima_edicion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     fecha_eliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Tipo_Cargoid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Departamentoid = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -241,12 +196,6 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_Cargos_Departamentos_Departamentoid",
                         column: x => x.Departamentoid,
                         principalTable: "Departamentos",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Cargos_Tipos_Cargos_Tipo_Cargoid",
-                        column: x => x.Tipo_Cargoid,
-                        principalTable: "Tipos_Cargos",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -302,6 +251,33 @@ namespace ServicesDeskUCABWS.Migrations
                         principalTable: "Tipos_Estados",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Flujos_Aprobaciones",
+                columns: table => new
+                {
+                    IdCargo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdTicket = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cargoid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OrdenAprobacion = table.Column<int>(type: "int", nullable: true),
+                    Minimo_aprobado_nivel = table.Column<int>(type: "int", nullable: true),
+                    Maximo_Rechazado_nivel = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Flujos_Aprobaciones", x => new { x.IdTicket, x.IdCargo });
+                    table.ForeignKey(
+                        name: "FK_Flujos_Aprobaciones_Cargos_Cargoid",
+                        column: x => x.Cargoid,
+                        principalTable: "Cargos",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Flujos_Aprobaciones_Tipos_Tickets_Tipo_TicketId",
+                        column: x => x.Tipo_TicketId,
+                        principalTable: "Tipos_Tickets",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -488,7 +464,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Discriminator", "NumeroDeCuentasBloqueadas", "cedula", "correo", "fecha_creacion", "fecha_eliminacion", "fecha_nacimiento", "fecha_ultima_edicion", "gender", "password", "primer_apellido", "primer_nombre", "segundo_apellido", "segundo_nombre" },
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 11, 27, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 22, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
 
             migrationBuilder.InsertData(
                 table: "RolUsuarios",
@@ -509,11 +485,6 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "IX_Cargos_Departamentoid",
                 table: "Cargos",
                 column: "Departamentoid");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cargos_Tipo_Cargoid",
-                table: "Cargos",
-                column: "Tipo_Cargoid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departamentos_id_grupo",
@@ -552,9 +523,9 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "tipoEstadoID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Flujos_Aprobaciones_Tipo_Cargoid",
+                name: "IX_Flujos_Aprobaciones_Cargoid",
                 table: "Flujos_Aprobaciones",
-                column: "Tipo_Cargoid");
+                column: "Cargoid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Flujos_Aprobaciones_Tipo_TicketId",
@@ -704,9 +675,6 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Departamentos");
-
-            migrationBuilder.DropTable(
-                name: "Tipos_Cargos");
 
             migrationBuilder.DropTable(
                 name: "Grupos");
