@@ -127,9 +127,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
                 ticket.Prioridad = _dataContext.Prioridades.Find(ticketDTO.prioridad_id);
-                //List<Empleado> v =(List<Empleado>) contexto.Usuarios.ToList();
-                //Prioridad t = contexto.Prioridades.Find();//Include(x => x.Cargo).ThenInclude(x => x.Departamento).ToList();
-                //.Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
                 ticket.Emisor = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento)
                     .Where(s => s.Id == ticketDTO.empleado_id).FirstOrDefault();
                 ticket.Departamento_Destino = _dataContext.Departamentos.Find(ticketDTO.departamentoDestino_Id);

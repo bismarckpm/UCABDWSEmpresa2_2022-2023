@@ -57,7 +57,7 @@ namespace TicketUnitTest
         //*
         //Prueba Unitaria para crear los tickets
         //*
-        [TestMethod(displayName: "Prueba Unitaria para crear los tickets")]
+        /*[TestMethod(displayName: "Prueba Unitaria para crear los tickets")]
         public void crearTicketTest()
         {
 
@@ -83,7 +83,7 @@ namespace TicketUnitTest
            
 
         }
-
+        */
 
         //*
         //Prueba Unitaria para consultar tickets por id
