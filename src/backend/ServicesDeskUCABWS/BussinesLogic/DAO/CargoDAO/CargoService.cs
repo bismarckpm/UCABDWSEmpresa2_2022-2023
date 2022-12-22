@@ -103,34 +103,33 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
         }
 
-        public CargoDto AgregarCargoDAO(Cargo cargo)
+        public CargoDTOCreate AgregarCargoDAO(CargoDTOCreate cargoDTO)
         {
 
             try
             {
-
-                if (!ExisteCargo(cargo))
+                var Departamento = _dataContext.Departamentos.Find(cargoDTO.idDepartamento);
+                if (Departamento != null)
                 {
+                    var cargo = new Cargo(cargoDTO.nombre_departamental, cargoDTO.descripcion);
+                    cargo.Departamento = Departamento;
+                    if (!ExisteCargo(cargo))
+                    {
 
-                    _dataContext.Cargos.Add(cargo);
-                    _dataContext.DbContext.SaveChanges();
+                        _dataContext.Cargos.Add(cargo);
+                        _dataContext.DbContext.SaveChanges();
+                    }
+                } else
+                {
+                    throw new ExceptionsControl("No se encontro el departamento" );
                 }
+                
 
-                var nuevoCargo = _dataContext.Cargos.Where(d => d.id == cargo.id)
-                        .Select(d => new CargoDto
-                        {
-                            id = d.id,
-                            nombre_departamental = d.nombre_departamental,
-                            descripcion = d.descripcion,
-                            fecha_creacion = d.fecha_creacion
-
-                        }).First();
-
-                return nuevoCargo;
+                return cargoDTO;
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo registrar el cargo" + " " + cargo.nombre_departamental, ex);
+                throw new ExceptionsControl("No se pudo registrar el cargo" + " " + cargoDTO.nombre_departamental, ex);
             }
 
         }

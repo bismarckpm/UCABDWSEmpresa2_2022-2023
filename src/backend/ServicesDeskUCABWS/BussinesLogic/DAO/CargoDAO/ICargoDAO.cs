@@ -12,7 +12,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
     public interface ICargoDAO
     {
         List<CargoDTOUpdate> ConsultarCargosDepartamento(Guid IdDepartamento);
-        public CargoDto AgregarCargoDAO(Cargo cargo);
+        public CargoDTOCreate AgregarCargoDAO(CargoDTOCreate cargo);
         public List<CargoDto> ConsultarCargos();
         public CargoDto ConsultarPorID(Guid id);
         //public CargoDto eliminarCargo(Guid id);

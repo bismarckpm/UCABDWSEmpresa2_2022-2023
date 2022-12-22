@@ -33,7 +33,7 @@ namespace ServicesDeskUCABWS.Entities
             nombre_departamental = nombre_departamenta;
             this.descripcion = descripcion;
             fecha_creacion = DateTime.UtcNow;
-            fecha_ultima_edicion = fecha_ultima_edicion;
+            fecha_ultima_edicion = DateTime.UtcNow; 
         }
 
         public Cargo()
