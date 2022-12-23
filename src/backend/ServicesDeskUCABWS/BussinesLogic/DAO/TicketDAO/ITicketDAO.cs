@@ -1,5 +1,7 @@
-﻿using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -11,9 +13,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
     public interface ITicketDAO
     {
         public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
-        public Task<bool> ActualizarTicket(Ticket ticket);
-        public Task<bool> EliminarTicket(Guid Id);
-
+        public ApplicationResponse<TicketNuevoDTO> RegistroTicket(TicketNuevoDTO ticketDTO);
         public string FlujoAprobacion(Ticket ticket);
         public string FlujoParalelo(Ticket ticket);
         public string FlujoNoAprobacion(Ticket ticket);
@@ -29,9 +29,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId);
         public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId);
         public ApplicationResponse<string> reenviarTicket(TicketReenviarDTO solicitudTicket);
-        //public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerFamiliaTickets(Guid ticketId);
-        //public ApplicationResponse<string> reenviarTicket(Guid ticketId, TicketNuevoDTO solicitudTicket);
         public ApplicationResponse<List<TicketInfoCompletaDTO>> obtenerFamiliaTicket(Guid ticketPrincipalId);
         public ApplicationResponse<string> eliminarTicket(Guid id);
+        public ApplicationResponse<List<DepartamentoSearchDTO>> buscarDepartamentos(Guid id);
+        public ApplicationResponse<DepartamentoSearchDTO> buscarDepartamentoEmpleado(Guid idEmpleado);
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id);
+        public ApplicationResponse<List<Tipo_Ticket>> buscarTiposTickets();
+        public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento);
     }
 }

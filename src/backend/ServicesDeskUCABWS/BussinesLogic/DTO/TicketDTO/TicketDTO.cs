@@ -21,5 +21,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         public Empleado Emisor { get; set; }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public int? nro_cargo_actual { get; set; }
+
     }
 }

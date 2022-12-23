@@ -34,11 +34,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<Flujo_Aprobacion, Flujo_AprobacionDTOSearch>();
             CreateMap<Flujo_AprobacionDTOSearch, Flujo_Aprobacion>();
 
-            CreateMap<Tipo_Cargo, Tipo_CargoDTOSearch>();
+            /*CreateMap<Tipo_Cargo, Tipo_CargoDTOSearch>();
             CreateMap<Tipo_CargoDTOSearch, Tipo_Cargo>();
 
             CreateMap<Tipo_Cargo, TipoCargoDTO>();
-            CreateMap<TipoCargoDTO, Tipo_Cargo>();
+            CreateMap<TipoCargoDTO, Tipo_Cargo>();*/
 
             CreateMap<Tipo_Ticket, Tipo_TicketDTOSearch>();
             CreateMap<Tipo_TicketDTOSearch, Tipo_Ticket>();
@@ -48,6 +48,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<EstadoDTOUpdate, Estado>();
 
             CreateMap<Cargo, CargoDTOUpdate>();
+            CreateMap<Cargo, CargoDto>();
 
             CreateMap<Departamento, DepartamentoSearchDTO>();
 

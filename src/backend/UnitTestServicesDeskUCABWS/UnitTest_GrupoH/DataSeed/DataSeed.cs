@@ -190,7 +190,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 
 					fecha_eliminacion = null,
 
-					Tipo_Cargo = new Tipo_Cargo
+					/*Tipo_Cargo = new Tipo_Cargo
 					{
 					   id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
@@ -203,28 +203,28 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 					   fecha_ult_edic = null,
 
 					   fecha_eliminacion = null
-					}
+					}*/
 
 				}
 
 
 			};
 
-			var tipoCargo = cargo.Select(q => q.Tipo_Cargo).ToList();
+			//var tipoCargo = cargo.Select(q => q.Tipo_Cargo).ToList();
 
 			_mockContextCTC.Setup(c => c.Cargos).Returns(cargo.AsQueryable().BuildMockDbSet().Object);
-			_mockContextCTC.Setup(c => c.Tipos_Cargos).Returns(tipoCargo.AsQueryable().BuildMockDbSet().Object);
+			//_mockContextCTC.Setup(c => c.Tipos_Cargos).Returns(tipoCargo.AsQueryable().BuildMockDbSet().Object);
 			_mockContextCTC.Setup(set => set.Cargos.Add(It.IsAny<Cargo>()));
 			_mockContextCTC.Setup(e => e.Cargos.Update(It.IsAny<Cargo>()));
 			_mockContextCTC.Setup(e => e.Cargos.Remove(It.IsAny<Cargo>()));
-			_mockContextCTC.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>()));
-			_mockContextCTC.Setup(e => e.Tipos_Cargos.Update(It.IsAny<Tipo_Cargo>()));
-			_mockContextCTC.Setup(e => e.Tipos_Cargos.Remove(It.IsAny<Tipo_Cargo>()));
+			//_mockContextCTC.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>()));
+			//_mockContextCTC.Setup(e => e.Tipos_Cargos.Update(It.IsAny<Tipo_Cargo>()));
+			//_mockContextCTC.Setup(e => e.Tipos_Cargos.Remove(It.IsAny<Tipo_Cargo>()));
 			_mockContextCTC.Setup(set => set.DbContext.SaveChanges());
 
 		}
 
-		public static void SetUpContextDataTipoCargo(this Mock<IDataContext> _mockContext)
+		/*public static void SetUpContextDataTipoCargo(this Mock<IDataContext> _mockContext)
 		{
 			var request = new List<Tipo_Cargo>
 			{
@@ -272,7 +272,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 			_mockContext.Setup(c => c.Tipos_Cargos).Returns(request.AsQueryable().BuildMockDbSet().Object);
 			_mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>()));
 			_mockContext.Setup(set => set.DbContext.SaveChanges());
-		}
+		}*/
 
 	}
 }

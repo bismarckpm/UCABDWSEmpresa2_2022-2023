@@ -1,4 +1,4 @@
-﻿@model List<ServicesDeskUCAB.Models.Prioridad>
+﻿@model List<ServiceDeskUCAB.Models.DTO.PrioridadDTO.PrioridadDTO>
 
 <div class="row">
     <div class="col">
@@ -49,11 +49,11 @@
                         </td>
                     </tr>
                 }
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         </tbody>
     </table>
 </div>
@@ -88,6 +88,5 @@
                 }
 
             });
-        });
-    </script>
+        });</script>
 }

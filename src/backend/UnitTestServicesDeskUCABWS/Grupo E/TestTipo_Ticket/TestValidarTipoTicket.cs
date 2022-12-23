@@ -40,14 +40,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -83,14 +83,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -132,14 +132,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -182,14 +182,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -235,14 +235,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -357,14 +357,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B1002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B1002C",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=null
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=null
@@ -411,14 +411,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=null
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=null
@@ -463,14 +463,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=null,
                         Minimo_aprobado_nivel=null,
                         Maximo_Rechazado_nivel=null
@@ -545,14 +545,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=2,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=null
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -596,14 +596,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=4,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
@@ -685,14 +685,14 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
                         OrdenAprobacion=4,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1
                     },
                     new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
                         OrdenAprobacion=1,
                         Minimo_aprobado_nivel=1,
                         Maximo_Rechazado_nivel=1

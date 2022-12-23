@@ -8,7 +8,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
     public class Tipo_CargoMapper : Profile
     {
 
-        public static Tipo_CargoDto MapperEntityToDto(Tipo_Cargo tipo)
+        /*public static Tipo_CargoDto MapperEntityToDto(Tipo_Cargo tipo)
         {
             return new Tipo_CargoDto
             {
@@ -55,7 +55,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoCargo
                 fecha_ult_edic = (DateTime)tipo.fecha_ult_edic
 
             };
-        }
+        }*/
 
     }
 }

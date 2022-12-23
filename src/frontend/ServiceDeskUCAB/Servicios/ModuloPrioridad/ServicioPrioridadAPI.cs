@@ -8,11 +8,12 @@ using System.Text;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Servicios;
 using System.Xml.Linq;
+using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
 
-namespace ServicesDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios
 {
     public class ServicioPrioridadAPI : IServicioPrioridadAPI
     {
@@ -25,9 +26,9 @@ namespace ServicesDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
-        public async Task<List<Prioridad>> Lista()
+        public async Task<List<PrioridadDTO>> Lista()
         {
-            List<Prioridad> lista = new();
+            List<PrioridadDTO> lista = new();
 
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
@@ -42,7 +43,7 @@ namespace ServicesDeskUCAB.Servicios
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<List<Prioridad>>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<List<PrioridadDTO>>(stringDataRespuesta);
 
                     lista = resultado;
                 }
@@ -60,19 +61,22 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<Prioridad>> ListaHabilitado()
+        public async Task<List<PrioridadDTO>> ListaHabilitado()
         {
-            List<Models.Prioridad> lista = new List<Prioridad>();
+            List<PrioridadDTO> lista = new List<PrioridadDTO>();
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
             try
             {
-                var cliente = new HttpClient();
-                cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Prioridad/Habilitados");
-
+                var response = await cliente.GetAsync("Prioridad/Lista/Habilitadas");
                 if (response.IsSuccessStatusCode)
                 {
-                    var json_respuesta = await response.Content.ReadAsStringAsync();
-                    var resultado = JsonConvert.DeserializeObject<List<Prioridad>>(json_respuesta);
+
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<PrioridadDTO>>(stringDataRespuesta);
                     lista = resultado;
                 }
             }
@@ -83,22 +87,22 @@ namespace ServicesDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<Prioridad> Obtener(Guid PrioridadID)
+        public async Task<PrioridadDTO> Obtener(Guid PrioridadID)
         {
-            Prioridad objeto = new Prioridad();
+            PrioridadDTO objeto = new PrioridadDTO();
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
                 var response = await cliente.GetAsync($"Prioridad/Obtener/{PrioridadID}");
-                
+
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Es success obtener");
                     var respuesta = await response.Content.ReadAsStringAsync();
                     JObject json_respuesta = JObject.Parse(respuesta);
                     string stringDataRespuesta = json_respuesta["data"].ToString();
-                    var resultado = JsonConvert.DeserializeObject<Prioridad>(stringDataRespuesta);
+                    var resultado = JsonConvert.DeserializeObject<PrioridadDTO>(stringDataRespuesta);
                     objeto = resultado;
                     Console.WriteLine(await response.Content.ReadAsStringAsync());
                 }
@@ -110,7 +114,7 @@ namespace ServicesDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<JObject> Guardar(Prioridad Objeto)
+        public async Task<JObject> Guardar(PrioridadDTO Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
@@ -133,7 +137,7 @@ namespace ServicesDeskUCAB.Servicios
             return null;
         }
 
-        public async Task<JObject> Editar(Prioridad Objeto)
+        public async Task<JObject> Editar(PrioridadDTO Objeto)
         {
             JObject _json_respuesta = new JObject();
             var cliente = new HttpClient();

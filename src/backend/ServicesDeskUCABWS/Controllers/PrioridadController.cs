@@ -30,7 +30,7 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 respuesta.Data = _prioridadDAO.CrearPrioridad(prioridadDTO);
                 respuesta.Success = true;
-                respuesta.Message = "Prioridad creada satisfactoriamente pibe";
+                respuesta.Message = "Prioridad creada satisfactoriamente";
             }catch (PrioridadNombreLongitudException ex)
             {
                 respuesta.Data = null;
@@ -65,7 +65,7 @@ namespace ServicesDeskUCABWS.Controllers
             try
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridades();
-                respuesta.Message = "Mano sí se pudo mano";
+                respuesta.Message = "Lista de todas las prioridades en la base de datos";
                 respuesta.Success = true;
                 //respuesta.Message = "Ahí están las prioridades, anulo mufa";
             }
@@ -84,9 +84,9 @@ namespace ServicesDeskUCABWS.Controllers
             var respuesta = new ApplicationResponse<List<PrioridadDTO>>();
             try
             {
-                respuesta.Data = _prioridadDAO.ObtenerPrioridades();
+                respuesta.Data = _prioridadDAO.ObtenerPrioridadesHabilitadas();
                 respuesta.Success = true;
-                respuesta.Message = "El var dice que estaba habilitado";
+                respuesta.Message = "Lista de prioridades habilitadas";
             }
             catch (Exception ex)
             {
@@ -104,7 +104,7 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 respuesta.Data = _prioridadDAO.ObtenerPrioridad(new Guid(PrioridadID));
                 respuesta.Success = true;
-                respuesta.Message = "El 11 de prioridades";
+                respuesta.Message = $"Prioridad por id: {PrioridadID}";
             }
             catch (PrioridadNoExisteException ex)
             {
@@ -129,7 +129,7 @@ namespace ServicesDeskUCABWS.Controllers
             {
                 respuesta.Data = _prioridadDAO.ModificarPrioridad(prioridadDTO);
                 respuesta.Success = true;
-                respuesta.Message = "Entra el genio del futbol mundial";
+                respuesta.Message = "Prioridad modificada exitosamente";
             }
             catch(PrioridadNoExisteException ex)
             {

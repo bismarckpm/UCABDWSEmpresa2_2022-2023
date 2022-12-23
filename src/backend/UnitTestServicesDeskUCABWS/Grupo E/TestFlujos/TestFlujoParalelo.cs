@@ -6,6 +6,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
@@ -101,7 +102,17 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             { 
                 new Flujo_Aprobacion { 
                     IdTicket = new Guid("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
-                    Tipo_Cargo = new Tipo_Cargo("Nombre 1", "Descripcion 1", "1"){ 
+                    Cargo=new Cargo {
+                            nombre_departamental= "Cargos 1",
+                            descripcion= "Descripcion 1",
+
+                            Departamento = new Departamento {
+                                id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
+                                 nombre = "Cargos 1",
+                                descripcion= "Descripcion 1"
+                            }
+                        }
+                    /*Cargo = new Cargo("Nombre 1", "Descripcion 1"){ 
                     Cargos_Asociados= new List<Cargo> {
                        new Cargo {
                             nombre_departamental= "Cargos 1",
@@ -114,12 +125,14 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
                             }
                         }
                     }
-                  }
+                  }*/
                 } 
             };
-            
-            context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
-           
+
+            //context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
+            plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
+
+
             //Act
             context.Setup(a => a.DbContext.SaveChanges());
 
@@ -183,7 +196,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
         };
 
         //act
-        context.Setup(x => x.Flujos_Aprobaciones).Throws(new Exception(""));
+        context.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));
 
         var result = ticketDAO.FlujoParalelo(Ticket);
 

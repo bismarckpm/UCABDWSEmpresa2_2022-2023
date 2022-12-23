@@ -55,7 +55,7 @@ namespace ServicesDeskUCABWS.Data
 
             modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
-            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdTipo_cargo });
+            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdCargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
             modelBuilder.Entity<DepartamentoTipo_Ticket>().HasKey(x => new { x.Tipo_Ticekt_Id, x.DepartamentoId });
             //LOS DE JES�S
@@ -82,7 +82,6 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Tipo_Ticket> Tipos_Tickets { get; set; }
-        public DbSet<Tipo_Cargo> Tipos_Cargos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
         public DbSet<Votos_Ticket> Votos_Tickets { get; set; }

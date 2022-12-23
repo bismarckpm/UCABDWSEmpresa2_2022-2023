@@ -1,4 +1,6 @@
-﻿namespace ServiceDeskUCAB.Models.TipoTicketsModels
+﻿using ServiceDeskUCAB.Models.DTO;
+
+namespace ServiceDeskUCAB.Models.TipoTicketsModels
 {
     public class TipoFlujo
     {
@@ -9,6 +11,6 @@
 
         public int? maximo_rechazado_nivel { get; set; }
 
-        public TipoCargo? Tipo_Cargo { get; set; }
+        public Cargo? Cargo { get; set; }
     }
 }
