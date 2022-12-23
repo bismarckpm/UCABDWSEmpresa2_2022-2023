@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Text.Json.Serialization;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UserRolDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
@@ -27,7 +26,6 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
@@ -45,8 +43,6 @@ namespace ServicesDeskUCABWS
     public class Startup
     {
 
-	
-
 		public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -54,14 +50,15 @@ namespace ServicesDeskUCABWS
 
         public IConfiguration Configuration { get; }
 
-          
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-
+            
             //JWT
             var appSettings = appSettingsSection.Get<AppSettings>();
             var llave = Encoding.ASCII.GetBytes(appSettings.Secreto);
@@ -82,6 +79,11 @@ namespace ServicesDeskUCABWS
                 };
 
             });
+
+            services.AddCors(p => p.AddPolicy("corsapp", builder =>
+            {
+                builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+            }));
 
             services.AddTransient<IUsuarioDAO, UsuarioDAO>();
             services.AddTransient<IUserLoginDAO, UserLoginDAO>();
@@ -171,6 +173,7 @@ namespace ServicesDeskUCABWS
                 options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
             );*/
 
+            app.UseCors("corsapp");
 			//Habilitar swagger
 			app.UseSwagger();
 
@@ -179,15 +182,17 @@ namespace ServicesDeskUCABWS
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
 			});
 
-			app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-           
 
             app.UseEndpoints(endpoints =>
             {

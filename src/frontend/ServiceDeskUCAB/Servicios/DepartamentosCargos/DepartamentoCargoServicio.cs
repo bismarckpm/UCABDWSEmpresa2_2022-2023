@@ -2,6 +2,7 @@
 using ServiceDeskUCAB.Models.DTO.CargoDTO;
 using ServiceDeskUCAB.Models.DTO.EstadoDTO;
 using ServiceDeskUCAB.Models.Response;
+using ServicesDeskUCAB.Models.DTO.CargoDTO;
 using System.Text;
 
 namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
@@ -20,7 +21,32 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 
         }
 
+        public async Task<ApplicationResponse<CargoDTOCreate>> RegistrarCargo(CargoDTOCreate cargoDTOCreate)
+        {
+            var cargo = new ApplicationResponse<CargoDTOCreate>();
 
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var content = new StringContent(JsonConvert.SerializeObject(cargoDTOCreate), Encoding.UTF8, "application/json");
+
+            var response = await cliente.PostAsync("Cargo/CrearCargo", content);  //URL de Lista en el swagger
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<CargoDTOCreate>>(json_respuesta);
+
+
+                cargo = resultado;
+            }
+
+
+            return cargo;
+        }
 
         public async Task<ApplicationResponse<CargoDTOUpdate>> EditarCargo(CargoDTOUpdate estadoDTO)
         {
@@ -124,5 +150,7 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
             }
             return lista;
         }
+
+        
     }
 }

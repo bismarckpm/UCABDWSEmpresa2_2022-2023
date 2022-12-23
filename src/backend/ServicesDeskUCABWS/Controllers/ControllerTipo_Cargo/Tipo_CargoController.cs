@@ -25,7 +25,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
         }
 
         //Crear Tipo de Cargo
-        [HttpPost]
+        /*[HttpPost]
         [Route("CrearTipoCargo/")]
         public ActionResult<Tipo_CargoDto> CrearTipo_Cargo([FromBody] Tipo_CargoDto dto1)
         {
@@ -57,7 +57,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
 
 
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("ConsultarTipo_CargoPorID/{id}")]
         public ApplicationResponse<Tipo_CargoDto> ConsultarPorID([FromRoute] Guid id)
         {
@@ -75,9 +75,9 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
-        [HttpDelete]
+        /*[HttpDelete]
         [Route("EliminarTipo_Cargo/{id}")]
         public ApplicationResponse<Tipo_CargoDto> EliminarTipo_Cargo([FromRoute] Guid id)
         {
@@ -93,9 +93,9 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
-        [HttpPut]
+        /*[HttpPut]
         [Route("ActualizarTipo_Cargo/")]
         public ActionResult<Tipo_CargoDto_Update> ActualizarTipo([FromBody] Tipo_CargoDto_Update tipo)
         {
@@ -110,9 +110,9 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
             }
-        }
+        }*/
         //Mostrar todos los grupos que no están eliminados
-        [HttpGet("ConsultarTipoCargoNoEliminado/")]
+        /*[HttpGet("ConsultarTipoCargoNoEliminado/")]
         public ApplicationResponse<List<Tipo_CargoDto>> ListaCargoNoEliminado()
         {
             var response = new ApplicationResponse<List<Tipo_CargoDto>>();
@@ -127,8 +127,8 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
-        [HttpGet("ConsultarUltimoTipoCargoRegistrado/")]
+        }*/
+        /*[HttpGet("ConsultarUltimoTipoCargoRegistrado/")]
         public ApplicationResponse<Tipo_CargoDto> UltimoTipoRegistradoDao()
         {
             var response = new ApplicationResponse<Tipo_CargoDto>();
@@ -144,9 +144,9 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
             }
             return response;
 
-        }
+        }*/
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("ConsultarCargosGrupoE/")]
         public ActionResult<List<Tipo_CargoDTOSearch>> ConsultarCargo()
         {
@@ -158,7 +158,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerTipo_Cargo
             {
                 throw ex.InnerException!;
             }
-        }
+        }*/
 
     }
 }

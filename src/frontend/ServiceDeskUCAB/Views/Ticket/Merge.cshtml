@@ -1,7 +1,4 @@
-﻿@{/*
-
-
-@model ServicesDeskUCAB.ViewModel.FamiliaMergeDTOViewModel;
+﻿@model ServiceDeskUCAB.ViewModel.FamiliaMergeDTOViewModel;
 
 <div style="margin:30px 0px">
     <h1>Merge ticket</h1>
@@ -10,109 +7,154 @@
 
 <div class="container">
     <div class="row" style="margin-top:30px">
-        <div class="col-8">
-        </div>
+        <div class="col-8"></div>
+
         <div class="col-4 text-right">
-            <h6><span class="badge bg-primary rounded-pill"><a asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@Model.ticket.ticketPadre_id">Ticket reenviado</a></span></h6>
-        </div>
-        <div class="col-6">
-            ID: @Model.ticket.ticket_id
-        </div>
-        <div class="col-6">
-            Titulo: @Model.ticket.titulo
-        </div>
-        <hr />
-        <div class="col-6">
-            Estado: @Model.ticket.estado_nombre
-        </div>
-        <div class="col-6">
-            Departamento destino: @Model.ticket.departamentoDestino_nombre
-        </div>
-        <hr />
-        <div class="col-6">
-            Tipo ticket: @Model.ticket.tipoTicket_nombre
+            @if (Model.ticket.ticketPadre_id != Guid.Empty)
+            {
+                <div class="row" style="margin-top:30px">
+                    <div class="col-8"></div>
+                    <div class="col-4 text-right">
+                        <h6><span class="badge bg-primary"><a class="btn-primary" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id">Ticket Reenviado</a></span></h6>
+                    </div>
+                </div>
+            }
         </div>
 
-        <div class="col-6">
-            Prioridad: @Model.ticket.prioridad_nombre
-        </div>
-        <hr />
-        <div class="col-6">
-            Fecha de creación: @Model.ticket.fecha_creacion
-        </div>
-        <div class="col-6">
-            Fecha de eliminación: @Model.ticket.fecha_eliminacion
-        </div>
-        <hr />
-        <div class="col-6">
-            Usuario: @Model.ticket.empleado_correo
-        </div>
-        <hr />
-        <div class="col-12">
-            Descripción: @Model.ticket.descripcion
-        </div>
-    </div>
+        <div class="container">
 
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Departamento destino:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.departamentoDestino_nombre">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Tipo ticket:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.tipoTicket_nombre">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Estado:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.estado_nombre">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Prioridad:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.prioridad_nombre">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Titulo:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.titulo">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Descripción:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.descripcion">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de creación:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+                </div>
+            </div>
+
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de eliminación:</b></label>
+                <div class="col-sm-8">
+                    @if (Model.ticket.fecha_eliminacion != null)
+                    {
+                        <input type="text" readonly class="form-control-plaintext" value="-">
+                    }
+                    else
+                    {
+                        <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="staticEmail" class="col-sm-4 col-form-label"><b>Emisor:</b></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.empleado_correo">
+                </div>
+            </div>
+
+            </div>
+        </div>
     <div>
-        <form method="post" asp-controller="Ticket" asp-action="GuardarFamilia">
+        <form method="post" asp-controller="Ticket" asp-action="GuardarMerge" asp-route-ticketId="@Model.ticket.ticket_id">
             <div class="col text-center" style="margin:30px 0px">
                 <h3>Seleccione los tickets a unir y presione Merge</h3>
                 <button type="submit" class="btn btn-success">Merge</button>
             </div>
-            <table id="table_id" class="display">
-                <thead>
-                    <tr>
-                        <th>SELECCIONAR</th>
-                        <th>TITULO</th>
-                        <th>TIPO TICKET</th>
-                        <th>PRIORIDAD</th>
-                        <th>ESTADO</th>
-                        <th>FECHA DE CREACIÓN</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var item in Model.tickets)
-                    {
-                    <tr style="border-bottom:none">
-                        <td id="element1">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="form-check col-6">
-                                        <input class="form-check-input" type="checkbox" value="@item">
-                                        <label class="form-check-label" for="flexCheckIndeterminate">
-                                            U
-                                        </label>
+            @try
+                {
+                <div class="row">
+                    <div class="col-2">
+                        <label class="col-form-label">Selecccionar</label>
+                    </div>
+                    <div class="col-10"></div>
+                    @{int i = 0;}
+                    @foreach (var item in Model.tickets)
+                        {
+                            if(item.Id != Model.ticket.ticket_id)
+                            {
+                                string id = "collapse" + i.ToString();
+                                string n = "familia" + i.ToString();
+                            <br />
+                            <br />
+                            <div class="col-2">
+                                <div class="form-check col-6 text-center">
+                                    <input name="@n" class="form-check-input" type="checkbox" value="@item.Id">
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <button class="container-fluid btn btn-outline-secondary text-left" type="button" data-bs-toggle="collapse" data-bs-target="#@id" aria-expanded="false" aria-controls="@id">
+                                    Titulo: @item.titulo - Tipo ticket: @item.tipoTicket_nombre - Click para ver más
+                                </button>
+                                <div class="collapse" id="@id">
+                                    <div class="card card-body">
+                                        <b>TITULO:</b><p>@item.titulo</p>
+                                        <b>TIPO TICKET:</b><p>@item.tipoTicket_nombre</p>
+                                        <b>PRIORIDAD:</b><p>@item.prioridad_nombre</p>
+                                        <b>ESTADO:</b><p>@item.estado_nombre</p>
+                                        <b>FECHA DE CREACIÓN:</b><p>@item.fecha_creacion</p>
+                                        <b>EMIRSOR:</b><p>@item.empleado_correo</p>
+                                        <a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver mas detalles</a>
                                     </div>
                                 </div>
                             </div>
-                        </td>
-                        <td>@item.titulo</td>
-                        <td>@item.Tipo_Ticket.Nombre</td>
-                        <td>@item.Prioridad.nombre</td>
-                        <td>@item.Estado.nombre</td>
-                        <td>@item.fecha_creacion</td>
-                        <td>
-                            <div class="dropdown" style="float: right">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-TicketID="@item.Id">Ver detalles</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+                            i++;
+                        }
+                     }
+                </div>
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
         </form>
     </div>
 </div>
 
-        */
-}
 @section Scripts{
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             $('#table_id').DataTable({
                 "language": {
                     "sProcessing": "Procesando...",
@@ -140,6 +182,7 @@
                 }
 
             });
-        });</script>
+        });
+    </script>
 
 }

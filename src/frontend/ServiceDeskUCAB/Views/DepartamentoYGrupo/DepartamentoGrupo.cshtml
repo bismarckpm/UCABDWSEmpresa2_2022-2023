@@ -183,16 +183,25 @@
                             @Html.DisplayFor(i => item.descripcion)
                         </td>
                         <td>
+
                             <button id=btnEditar type="button" class="botonEditar" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
                                 Editar
                             </button>
                             <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","DepartamentoYGrupo",new { id = "idDepartamento" })">
                                 Eliminar
                             </button>
-                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
-                        
-                             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
-                       
+                            
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</a></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</a></li>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" onclick="location.href='@Url.Action("VistaTipo", "TipoTicket",new{ idDepartamento =@item.id} )'">Ver Tipo tickets</a></li>
+                                    
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                 }

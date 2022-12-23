@@ -13,7 +13,7 @@ using ServiceDeskUCAB.Servicios.ModuloCargo;
 using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 
 using Microsoft.Extensions.Hosting;
-using ServicesDeskUCAB.Servicios;
+using ServiceDeskUCAB.Servicios;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

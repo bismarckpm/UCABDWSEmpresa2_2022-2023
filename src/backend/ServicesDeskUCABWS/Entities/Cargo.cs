@@ -23,8 +23,7 @@ namespace ServicesDeskUCABWS.Entities
         
         public DateTime? fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
-        [Required]
-        public Tipo_Cargo Tipo_Cargo { get; set; }
+        public List<Flujo_Aprobacion> Flujo_Aprobacion { get; set; }
         [Required]
         public Departamento Departamento { get; set; }
 
@@ -34,7 +33,7 @@ namespace ServicesDeskUCABWS.Entities
             nombre_departamental = nombre_departamenta;
             this.descripcion = descripcion;
             fecha_creacion = DateTime.UtcNow;
-            fecha_ultima_edicion = fecha_ultima_edicion;
+            fecha_ultima_edicion = DateTime.UtcNow; 
         }
 
         public Cargo()

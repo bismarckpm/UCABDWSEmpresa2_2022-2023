@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO;
 using ServicesDeskUCABWS.Controllers;
@@ -9,7 +10,6 @@ using System.Text;
 using System.Linq;
 using System;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
-using ServicesDeskUCABWS.BussinesLogic.Response;
 
 
 //* Preparación  -> Organizar las precondiciones
@@ -59,6 +59,7 @@ namespace PrioridadUnitTest
             //Verificación
 
             Assert.AreEqual(application.GetType(), resultado.GetType());
+            Assert.IsTrue(resultado.Success);
 
 
         }
@@ -81,6 +82,7 @@ namespace PrioridadUnitTest
 
             //Verificación
             StringAssert.Equals(application.GetType(), resultado.GetType());
+           
 
 
         }
@@ -108,8 +110,9 @@ namespace PrioridadUnitTest
 
             //Verificación
 
-            //StringAssert.Equals(application.ToString(), resultado.ToString());
+           
             Assert.AreEqual(application.GetType(), resultado.GetType());
+            Assert.IsTrue(resultado.Success);
 
         }
 
@@ -124,15 +127,16 @@ namespace PrioridadUnitTest
         {
             //Preparación
 
-            //_serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadDTO>())).Returns(It.IsAny<string>());
+            _serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadSolicitudDTO>())).Returns(It.IsAny<string>());
             var application = new ApplicationResponse<String>();
 
 
             //Prueba
-            //var resultado = _controller.crearPrioridadCtrl(It.IsAny<PrioridadDTO>());
+            var resultado = _controller.crearPrioridadCtrl(It.IsAny<PrioridadSolicitudDTO>());
 
             //Verificación
-            //Assert.AreEqual(application.GetType(), resultado.GetType());
+            Assert.AreEqual(application.GetType(), resultado.GetType());
+            Assert.IsTrue(resultado.Success);
 
 
         }
@@ -156,6 +160,7 @@ namespace PrioridadUnitTest
 
             //Verificación
             Assert.AreEqual(application.GetType(), resultado.GetType());
+            Assert.IsTrue(resultado.Success);
 
 
         }
@@ -172,14 +177,14 @@ namespace PrioridadUnitTest
         public void crearPrioridadCtrlExcepcionTest()
         {
             //Preparación
-            //_serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadDTO>())).Throws(new Exception("", new Exception()));
+            _serviceMock.Setup(p => p.CrearPrioridad(It.IsAny<PrioridadSolicitudDTO>())).Throws(new Exception("", new Exception()));
 
             //Prueba
-            //var ex = _controller.crearPrioridadCtrl(It.IsAny<PrioridadDTO>());
+            var ex = _controller.crearPrioridadCtrl(It.IsAny<PrioridadSolicitudDTO>());
 
             //Verificación
-            //Assert.IsNotNull(ex);
-            //Assert.IsFalse(ex.Success);
+           
+            Assert.IsFalse(ex.Success);
 
         }
 
@@ -197,7 +202,7 @@ namespace PrioridadUnitTest
             var ex = _controller.ObtenerPrioridadesCtrl();
 
             //Verificación
-            Assert.IsNotNull(ex);
+            
             Assert.IsFalse(ex.Success);
 
         }
@@ -232,7 +237,7 @@ namespace PrioridadUnitTest
             var ex = _controller.ObtenerPrioridad("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
             //Verificación
-            Assert.IsNotNull(ex);
+            
             Assert.IsFalse(ex.Success);
 
 
@@ -252,7 +257,7 @@ namespace PrioridadUnitTest
             var ex = _controller.ModificarPrioridadEstadoPorNombreCtrl(It.IsAny<PrioridadDTO>());
 
             //Verificación
-            Assert.IsNotNull(ex);
+           
             Assert.IsFalse(ex.Success);
 
         }

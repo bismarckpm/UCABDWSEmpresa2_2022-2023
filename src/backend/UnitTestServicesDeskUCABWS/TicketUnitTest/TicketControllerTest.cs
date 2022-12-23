@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.DTO;
 using ServicesDeskUCABWS.Controllers;
 using ServicesDeskUCABWS.Data;
@@ -11,7 +12,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
-using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.BussinesLogic.Excepciones;
 
 
 //* Preparación  -> Organizar las precondiciones
@@ -54,6 +55,7 @@ namespace TicketUnitTest
             //Verificación
             Assert.IsTrue(application.Success);
             Assert.IsNotNull(resultado);
+            Assert.IsTrue(resultado.Success);
         }
         //*
         //Prueba Unitaria para consultar tickets por id
@@ -73,7 +75,8 @@ namespace TicketUnitTest
             //Verificación
 
             
-            Assert.IsNotNull(resultado);
+            Assert.IsNotNull(resultado); 
+            Assert.IsTrue(resultado.Success);
 
 
 
@@ -100,6 +103,7 @@ namespace TicketUnitTest
             //Verificación
             
             Assert.IsNotNull(resultado);
+            Assert.IsTrue(resultado.Success);
 
         }
 
@@ -130,6 +134,7 @@ namespace TicketUnitTest
             
             
             Assert.IsTrue(application.Success);
+            Assert.IsTrue(resultado.Success);
             Assert.IsNotNull(resultado);
 
 
@@ -173,13 +178,14 @@ namespace TicketUnitTest
             //Verificación
             Assert.IsNotNull(resultado);
             Assert.IsTrue(application.Success);
+            Assert.IsTrue(resultado.Success);
 
         }
 
         //*
         //Prueba Unitaria para cambiar el estado de tickets
         //*
-        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para cambiar el estado de tickets exitosamente")]
+        /*[TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para cambiar el estado de tickets exitosamente")]
 
         public void TestCambiarEstadoTicketCtrl()
 
@@ -190,18 +196,80 @@ namespace TicketUnitTest
             var application = new ApplicationResponse<string>();
 
             //Prueba
-            var resultado = _controller.obtenerTicketsPorEstadoYDepartamentoCtrl("38f401c9-12aa-46bf-82a2-05ff65bb2c86", "38f401c9-12aa-46bf-82a2-05ff65bb2c87");
+            var resultado = _controller.cambiarEstadoTicketCtrl("38f401c9-12aa-46bf-82a2-05ff65bb2c86", "38f401c9-12aa-46bf-82a2-05ff65bb2c87");
 
             //Verificación
 
             
             Assert.IsTrue(application.Success);
+            Assert.IsTrue(resultado.Success);
+
+        }*/
 
 
+        //*
+        //Prueba Unitaria para reenviar tickets
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para reenviar tickets exitosamente")]
+        public void TestReenviarTicket()
+        {
 
+            //Preparación
+            _serviceMock.Setup(p => p.reenviarTicket(It.IsAny<TicketReenviarDTO>())).Returns(new ApplicationResponse<string>());
+            var application = new ApplicationResponse<String>();
+            application.Success = true;
 
+            //Prueba
+            var resultado = _controller.reenviarTicket(It.IsAny<TicketReenviarDTO>());
 
+            //Verificación
+         
+            Assert.IsNotNull(resultado);
+            Assert.IsTrue(resultado.Success);
         }
+
+        //*
+        //Prueba Unitaria para obtener familia de tickets
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para obtener familia de tickets exitosamente")]
+        public void TestObtenerFamiliaTicket()
+        {
+
+            //Preparación
+            _serviceMock.Setup(p => p.obtenerFamiliaTicket(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"))).Returns(new ApplicationResponse<List<TicketInfoCompletaDTO>>());
+            var application = new ApplicationResponse<List<TicketInfoCompletaDTO>>();
+            application.Success = true;
+
+            //Prueba
+            var resultado = _controller.obtenerFamiliaTicketCtrl("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+            //Verificación
+
+            Assert.IsNotNull(resultado);
+            Assert.IsTrue(resultado.Success);
+        }
+
+
+        //*
+        //Prueba Unitaria para eliminar tickets
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para eliminar tickets exitosamente")]
+        public void TestEliminarTicket()
+        {
+
+            //Preparación
+            _serviceMock.Setup(p => p.eliminarTicket(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"))).Returns(new ApplicationResponse<string>());
+         ;
+
+            //Prueba
+            var resultado = _controller.eliminarTicket("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+            //Verificación
+
+            Assert.IsNotNull(resultado);
+            Assert.IsTrue(resultado.Success);
+        }
+
 
 
     }

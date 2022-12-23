@@ -1,4 +1,4 @@
-﻿@model ServicesDeskUCAB.Models.Prioridad;
+﻿@model ServiceDeskUCAB.Models.DTO.PrioridadDTO.PrioridadDTO;
 <div>
     <h1>@ViewBag.Accion </h1>
     <hr />
@@ -26,7 +26,7 @@
         }
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Nombre:</label>
-            <input asp-for="@Model.nombre" type="text" class="form-control" id="recipient-name" maxlength="50" required/>
+            <input asp-for="@Model.nombre" type="text" class="form-control" id="recipient-name" maxlength="50" required />
         </div>
         <div class="mb-3">
             <label for="message-text" class="col-form-label">Descripción:</label>
@@ -35,15 +35,15 @@
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Estado:</label>
             <select asp-for="estado" class="form-select">
-                @if (@Model.estado == "habilitado" || ViewBag.Accion == "Nueva Prioridad")
+                @if (@Model.estado == "Habilitado" || ViewBag.Accion == "Nueva Prioridad")
                 {
-                    <option selected value="habilitado">Habilitado</option>
-                    <option value="deshabilitado">Deshabilitado</option>
+                    <option selected value="Habilitado">Habilitado</option>
+                    <option value="Deshabilitado">Deshabilitado</option>
                 }
                 else
                 {
-                    <option selected value="deshabilitado">Deshabilitado</option>
-                    <option value="habilitado">Habilitado</option>
+                    <option selected value="Deshabilitado">Deshabilitado</option>
+                    <option value="Habilitado">Habilitado</option>
 
                 }
             </select>

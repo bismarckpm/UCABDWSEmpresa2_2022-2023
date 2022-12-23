@@ -181,7 +181,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Prioridades.Add(It.IsAny<Prioridad>())).Callback<Prioridad>(ListaPrioridad.Add);
             _mockContext.Setup(set => set.Prioridades.AddRange(It.IsAny<IEnumerable<Prioridad>>())).Callback<IEnumerable<Prioridad>>(ListaPrioridad.AddRange);
 
-            var ListaTipoCargo = new List<Tipo_Cargo>
+            /*var ListaTipoCargo = new List<Tipo_Cargo>
             {
                 new Tipo_Cargo("Jefe","descripcion C1", "Alta")
                 {
@@ -200,54 +200,55 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(c => c.Tipos_Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaTipoCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
             _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
-
+            */
             var ListaCargo = new List<Cargo>
             {
 
 
                 new Cargo("Jefe D1","Descripccion C1")
                 {
-
+                    id = Guid.Parse("DDC1A0D0-FA70-48E1-9ACE-747057B0002C"),
                     Departamento = ListaDepartamento[0],
-                    Tipo_Cargo = ListaTipoCargo[0]
+                    //Tipo_Cargo = ListaTipoCargo[0]
                 },
                 new Cargo("Gerente D1","Descripccion C1")
                 {
+                    id = Guid.Parse("24259113-437B-417F-9159-A8E27C34A871"),
                     Departamento = ListaDepartamento[0],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    //Tipo_Cargo = ListaTipoCargo[1]
                 },
                 new Cargo("Empleado D1","Descripccion C1")
                 {
                     Departamento = ListaDepartamento[0],
-                    Tipo_Cargo = ListaTipoCargo[2]
+                    //Tipo_Cargo = ListaTipoCargo[2]
                 },
                 new Cargo("Becario D1","Descripccion C1")
                 {
                     id = Guid.Parse("17A696EE-BDCC-418C-BF60-B59F7A764416"),
                     Departamento = ListaDepartamento[0],
-                    Tipo_Cargo = ListaTipoCargo[3]
+                    //Tipo_Cargo = ListaTipoCargo[3]
                 },
 
 
                 new Cargo("Jefe D2","Descripccion C1")
                 {
                     Departamento = ListaDepartamento[1],
-                    Tipo_Cargo = ListaTipoCargo[0]
+                    //Tipo_Cargo = ListaTipoCargo[0]
                 },
                 new Cargo("Gerente D2","Descripccion C1")
                 {
                     Departamento = ListaDepartamento[1],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    //Tipo_Cargo = ListaTipoCargo[1]
                 },
                 new Cargo("Empleado D2","Descripccion C1")
                 {
                     Departamento = ListaDepartamento[1],
-                    Tipo_Cargo = ListaTipoCargo[2]
+                    //Tipo_Cargo = ListaTipoCargo[2]
                 },
                 new Cargo("Becario D2","Descripccion C1")
                 {
                     Departamento = ListaDepartamento[1],
-                    Tipo_Cargo = ListaTipoCargo[3]
+                    //Tipo_Cargo = ListaTipoCargo[3]
                 }
             };
 
@@ -255,14 +256,14 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             //_mockContext.Cargos.AddRange(ListaCargo);
             _mockContext.Setup(c => c.Cargos).Returns(ListaCargo.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(c => c.Cargos.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCargo.Where(x => x.id == (Guid)input.First()).FirstOrDefault());
-            _mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
-            _mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
+            //_mockContext.Setup(set => set.Tipos_Cargos.Add(It.IsAny<Tipo_Cargo>())).Callback<Tipo_Cargo>(ListaTipoCargo.Add);
+            //_mockContext.Setup(set => set.Tipos_Cargos.AddRange(It.IsAny<IEnumerable<Tipo_Cargo>>())).Callback<IEnumerable<Tipo_Cargo>>(ListaTipoCargo.AddRange);
             //_mockContext.Setup(mr => mr.Tipos_Cargos.Update(It.IsAny<int>(), It.IsAny<string>())).Verifiable();
 
-            ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[0], ListaCargo[4] };
+            /*ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[0], ListaCargo[4] };
             ListaTipoCargo[1].Cargos_Asociados = new List<Cargo> { ListaCargo[1], ListaCargo[5] };
             ListaTipoCargo[2].Cargos_Asociados = new List<Cargo> { ListaCargo[2], ListaCargo[6] };
-            ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[3], ListaCargo[7] };
+            ListaTipoCargo[0].Cargos_Asociados = new List<Cargo> { ListaCargo[3], ListaCargo[7] };*/
 
 
             var ListaUsuario = new List<Usuario>
@@ -456,35 +457,35 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaFlujoAprobacion = new List<Flujo_Aprobacion>
             {
-                new Flujo_Aprobacion(ListaTipoCargo[0].id,ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaCargo[0].id,ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
-                    Tipo_Cargo = ListaTipoCargo[0]
+                    Cargo = ListaCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[1].Id, null,null,null)
+                new Flujo_Aprobacion(ListaCargo[1].id, ListaTipoTickets[1].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[1],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    Cargo = ListaCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[0].id, ListaTipoTickets[2].Id, 2,1,1)
+                new Flujo_Aprobacion(ListaCargo[0].id, ListaTipoTickets[2].Id, 2,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
-                    Tipo_Cargo = ListaTipoCargo[0]
+                    Cargo = ListaCargo[0]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[2].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaCargo[1].id, ListaTipoTickets[2].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[2],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    Cargo = ListaCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[3].Id, null,null,null)
+                new Flujo_Aprobacion(ListaCargo[1].id, ListaTipoTickets[3].Id, null,null,null)
                 {
                     Tipo_Ticket = ListaTipoTickets[3],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    Cargo = ListaCargo[1]
                 },
-                new Flujo_Aprobacion(ListaTipoCargo[1].id, ListaTipoTickets[4].Id, 1,1,1)
+                new Flujo_Aprobacion(ListaCargo[1].id, ListaTipoTickets[4].Id, 1,1,1)
                 {
                     Tipo_Ticket = ListaTipoTickets[4],
-                    Tipo_Cargo = ListaTipoCargo[1]
+                    Cargo = ListaCargo[1]
                 },
 
             };
@@ -647,6 +648,60 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             };
 
+
+            var ListaBitacora = new List<Bitacora_Ticket>
+            {
+
+                //Bitacora 1er Ticket
+                new Bitacora_Ticket()
+                {
+                    Estado= ListaEstados[2],
+                    Fecha_Fin=null,
+                    Fecha_Inicio= DateTime.Now,
+                    Ticket= ListaTickets[0]
+                },
+                
+                //Bitacora 2do Ticket
+                new Bitacora_Ticket()
+                {
+                    Estado= ListaEstados[2],
+                    Fecha_Fin=null,
+                    Fecha_Inicio= DateTime.Now,
+                    Ticket= ListaTickets[1]
+                },
+
+                //Bitacora 3er Ticket
+                new Bitacora_Ticket()
+                {
+                    Estado= ListaEstados[2],
+                    Fecha_Fin=null,
+                    Fecha_Inicio= DateTime.Now,
+                    Ticket= ListaTickets[2]
+                },
+
+                //Bitacora 4to Ticket
+                new Bitacora_Ticket()
+                {
+                    Estado= ListaEstados[2],
+                    Fecha_Fin=null,
+                    Fecha_Inicio= DateTime.Now,
+                    Ticket= ListaTickets[3]
+                },
+
+            };
+
+            ListaTickets[0].Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+            ListaTickets[0].Bitacora_Tickets.Add(ListaBitacora[0]);
+
+            ListaTickets[1].Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+            ListaTickets[1].Bitacora_Tickets.Add(ListaBitacora[1]);
+
+            ListaTickets[2].Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+            ListaTickets[2].Bitacora_Tickets.Add(ListaBitacora[2]);
+
+            ListaTickets[3].Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+            ListaTickets[3].Bitacora_Tickets.Add(ListaBitacora[3]);
+
             //_mockContext.Tickets.AddRange(ListaTickets);
             //_mockContext.Votos_Tickets.AddRange(ListaVotos);
             _mockContext.Setup(c => c.Tickets).Returns(ListaTickets.AsQueryable().BuildMockDbSet().Object);
@@ -662,6 +717,12 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Votos_Tickets.Add(It.IsAny<Votos_Ticket>())).Callback<Votos_Ticket>(ListaVotos.Add);
             _mockContext.Setup(set => set.Votos_Tickets.AddRange(It.IsAny<IEnumerable<Votos_Ticket>>())).Callback<IEnumerable<Votos_Ticket>>(ListaVotos.AddRange);
             _mockContext.Setup(set => set.Votos_Tickets.Update(It.IsAny<Votos_Ticket>()));
+
+
+            _mockContext.Setup(c => c.Bitacora_Tickets).Returns(ListaBitacora.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.Bitacora_Tickets.Add(It.IsAny<Bitacora_Ticket>())).Callback<Bitacora_Ticket>(ListaBitacora.Add);
+            _mockContext.Setup(set => set.Bitacora_Tickets.AddRange(It.IsAny<IEnumerable<Bitacora_Ticket>>())).Callback<IEnumerable<Bitacora_Ticket>>(ListaBitacora.AddRange);
+            _mockContext.Setup(set => set.Bitacora_Tickets.Update(It.IsAny<Bitacora_Ticket>()));
 
             _mockContext.Setup(set => set.DbContext.SaveChanges());
         }
