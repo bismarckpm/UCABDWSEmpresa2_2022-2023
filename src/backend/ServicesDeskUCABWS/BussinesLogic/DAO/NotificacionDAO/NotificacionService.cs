@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
 using System;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
@@ -69,7 +70,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 		}
 
 		//Metodo para hacer el envio del correo
-		public Boolean EnviarCorreo(PlantillaNotificacionDTO plantilla, string correoDestino)
+		public Task EnviarCorreo(PlantillaNotificacionDTO plantilla, string correoDestino)
 		{
 			try
 			{
@@ -94,7 +95,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 				};
 
 				clienteServidor.Send(mail);
-				return true;
+				return Task.CompletedTask;
 			}
 			catch (Exception ex)
 			{

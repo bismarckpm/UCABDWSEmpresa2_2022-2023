@@ -282,7 +282,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     try
                     {
                         var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                        var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                        plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
                         notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
 
                     }

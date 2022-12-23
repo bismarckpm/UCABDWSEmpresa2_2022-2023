@@ -143,7 +143,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
             };
             var correoDestino = "manueloliv96@gmail.com, 22anthony.monsalve@gmail.com";
 
-            Assert.IsTrue(_NotificacionService.EnviarCorreo(Plantilla, correoDestino));
+            _NotificacionService.EnviarCorreo(Plantilla, correoDestino);
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando existe una excepcion al enviar correo")]        

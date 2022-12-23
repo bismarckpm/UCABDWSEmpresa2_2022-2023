@@ -38,7 +38,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
             plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
             notificacionService = new Mock<INotificacion>();
 
-            notificacionService.Setup(x => x.EnviarCorreo(null, "drbonavista@gmail.com")).Returns(true);
+            notificacionService.Setup(x => x.EnviarCorreo(null, "drbonavista@gmail.com"));
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
             _TicketDAO = new TicketDAO(_contextMock.Object, plantillaNotificacionDAO.Object, notificacionService.Object, _mapper);
