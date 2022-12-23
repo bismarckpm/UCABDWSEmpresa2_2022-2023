@@ -43,29 +43,29 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 
         private void AgregarEtiquetasDiccionario(Ticket ticket)
         {
-			etiquetasEstatico.Add("@Cargo", $"{ticket.Emisor.Cargo.nombre_departamental}");
-			etiquetasEstatico.Add("@Usuario", $"{ticket.Emisor.primer_nombre} {ticket.Emisor.primer_apellido}");
-			etiquetasEstatico.Add("@Ticket", $"{ticket.titulo}");
-			etiquetasEstatico.Add("@Prioridad", $"{ticket.Prioridad.nombre}");
-			etiquetasEstatico.Add("@TipoTicket", $"{ticket.Tipo_Ticket.nombre}");
+			if(ticket.Emisor.Cargo != null)
+				etiquetasEstatico.Add("@Cargo", $"{ticket.Emisor.Cargo.nombre_departamental}");
 
-			ValidacionTicketEstado(ticket);
-            ValidacionTicketDepartamentoGrupo(ticket);
-		}
+			if(ticket.Emisor != null)
+				etiquetasEstatico.Add("@Usuario", $"{ticket.Emisor.primer_nombre} {ticket.Emisor.primer_apellido}");
 
-		private void ValidacionTicketEstado(Ticket ticket)
-        {
-			if (ticket.Estado != null) 
+			if(ticket != null)
+				etiquetasEstatico.Add("@Ticket", $"{ticket.titulo}");
+
+			if(ticket.Prioridad != null)
+				etiquetasEstatico.Add("@Prioridad", $"{ticket.Prioridad.nombre}");
+
+			if(ticket.Tipo_Ticket != null)
+				etiquetasEstatico.Add("@TipoTicket", $"{ticket.Tipo_Ticket.nombre}");
+
+			if (ticket.Estado != null)
 				etiquetasEstatico.Add("@Estado", $"{ticket.Estado.Estado_Padre.nombre}");
-		}
 
-		private void ValidacionTicketDepartamentoGrupo(Ticket ticket)
-		{
-			if (ticket.Departamento_Destino != null) 
-			{
+			if (ticket.Departamento_Destino != null)
 				etiquetasEstatico.Add("@Departamento", $"{ticket.Departamento_Destino.nombre}");
+
+			if (ticket.Departamento_Destino.grupo != null)
 				etiquetasEstatico.Add("@Grupo", $"{ticket.Departamento_Destino.grupo.nombre}");
-			}
 		}
 
 		//Metodo para hacer el envio del correo
