@@ -1,7 +1,6 @@
 ﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
-using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -19,22 +18,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
         const string alias = "ServiceDeskUCAB";
         const string host = "smtp.office365.com";
         const int puerto = 587;
-        Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
+		Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
 
-        //Servicio para reeemplazar las etiquetas de la plantilla notificación
-        public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
+		//Servicio para reeemplazar las etiquetas de la plantilla notificación
+		public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
         {
 			try
             {
-				var descripcionPlantilla = Plantilla.Descripcion;
 				AgregarEtiquetasDiccionario(ticket);
 
                 foreach (EtiquetaDTO etiqueta in Plantilla.TipoEstado.etiqueta)
                 {
-					descripcionPlantilla = Regex.Replace(descripcionPlantilla, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
+					Plantilla.Descripcion = Regex.Replace(Plantilla.Descripcion, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
                 }
 
-                return descripcionPlantilla;
+                return Plantilla.Descripcion;
             }
             catch (Exception ex)
             {
@@ -42,6 +40,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
             }
         }
 
+		//Metodo para agregar las etiquetas al diccionario
         private void AgregarEtiquetasDiccionario(Ticket ticket)
         {
 			if(ticket.Emisor.Cargo != null)

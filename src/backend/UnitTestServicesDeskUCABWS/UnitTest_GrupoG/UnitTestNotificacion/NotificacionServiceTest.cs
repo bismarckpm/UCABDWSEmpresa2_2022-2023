@@ -1,19 +1,10 @@
 ﻿using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
-using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
 {
@@ -26,9 +17,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
 
         public NotificacionServiceTest()
         {
-            //_contextMock = new Mock<IDataContext>();
             _NotificacionService = new NotificacionService();
-            //_contextMock.SetUpContextData();
         }
 
 //*

@@ -125,9 +125,9 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear plantilla notificacion
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<PlantillaNotificacionDTOCreate> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
+        public ApplicationResponse<PlantillaNotificacionDTO> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 var resultService = _plantilla.RegistroPlantilla(plantillaDTO);
@@ -145,9 +145,9 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar plantilla notificacion
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<PlantillaNotificacionDTOCreate> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
+        public ApplicationResponse<PlantillaNotificacionDTO> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 var resultService = _plantilla.ActualizarPlantilla(plantillaDTO, id);
@@ -165,9 +165,9 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar plantilla notificacion
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public ApplicationResponse<PlantillaNotificacionDTOCreate> EliminarPlantillaCtrl(Guid id)
+        public ApplicationResponse<PlantillaNotificacionDTO> EliminarPlantillaCtrl(Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTOCreate>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
                 var resultService = _plantilla.EliminarPlantilla(id);
