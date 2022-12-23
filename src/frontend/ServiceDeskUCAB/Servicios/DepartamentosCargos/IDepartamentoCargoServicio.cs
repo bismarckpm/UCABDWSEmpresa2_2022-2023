@@ -1,6 +1,7 @@
 ﻿using ServiceDeskUCAB.Models.DTO.CargoDTO;
 using ServiceDeskUCAB.Models.DTO.EstadoDTO;
 using ServiceDeskUCAB.Models.Response;
+using ServicesDeskUCAB.Models.DTO.CargoDTO;
 
 namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 {
@@ -12,5 +13,6 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
         Task<ApplicationResponse<CargoDTOUpdate>> DeshabilitarCargo(Guid Id);
 
         Task<ApplicationResponse<CargoDTOUpdate>> HabilitarCargo(Guid Id);
+        Task<ApplicationResponse<CargoDTOCreate>> RegistrarCargo(CargoDTOCreate cargoDTOCreate);
     }
 }

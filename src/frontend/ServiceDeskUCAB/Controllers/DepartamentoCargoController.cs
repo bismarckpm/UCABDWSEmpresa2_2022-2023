@@ -2,10 +2,12 @@
 using ServiceDeskUCAB.Models.DTO.CargoDTO;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.EstadoDTO;
+using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Servicios.DepartamentoEstado;
 using ServiceDeskUCAB.Servicios.DepartamentosCargos;
 using ServiceDeskUCAB.ViewModel.CargoDepartamento;
 using ServiceDeskUCAB.ViewModel.EstadoDepartamento;
+using ServicesDeskUCAB.Models.DTO.CargoDTO;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -30,6 +32,28 @@ namespace ServiceDeskUCAB.Controllers
                 nombre = nombre,
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarCargo( string nombre, string descripcion, Guid idDept, string nombreDept)
+        {
+
+            var respuesta = await _servicio.RegistrarCargo(new CargoDTOCreate()
+            {
+                nombre_departamental = nombre,
+                descripcion = descripcion,
+                idDepartamento = idDept
+            });
+
+            if (respuesta.Success)
+            {
+                return RedirectToAction("VistaCargosDepartamentos", new { id = idDept, nombre = nombreDept, message = "Cargo agregado Correctamente" });
+            }
+            else
+            {
+                return RedirectToAction("VistaCargosDepartamentos", new { id = idDept, nombre = nombreDept, message = respuesta.Message });
+
+            }
         }
 
         [HttpPost]
