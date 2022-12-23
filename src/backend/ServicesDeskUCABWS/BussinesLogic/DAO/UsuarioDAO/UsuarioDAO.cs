@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -300,8 +302,47 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             {
                 throw new ExceptionsControl("El correo no esta registrado", ex);
             }
+        }
 
+        public UsuarioDTOAsignarCargo AsignarCargo(UsuarioDTOAsignarCargo userDTO)
+        {
+            try
+            {
+                var cargo = _dataContext.Cargos.Find(userDTO.idCargo);
+                if (cargo == null)
+                {
+                    throw new ExceptionsControl("No se encontro el cargo ingresado");
+                }
+                var usuario = _dataContext.Empleados.Find(userDTO.idUsuario);
+                if (usuario == null)
+                {
+                    throw new ExceptionsControl("No se encontro el usuario ingresado");
+                }
 
+                usuario.Cargo = cargo;
+
+                _dataContext.Empleados.Update(usuario);
+                _dataContext.DbContext.SaveChanges();
+
+                return new UsuarioDTOAsignarCargo()
+                {
+                    idCargo = usuario.Cargo.id,
+                    idUsuario = usuario.Id
+                };
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                throw ex;
+            }
+            catch (FormatException ex)
+            {
+                throw new ExceptionsControl("Formato no valido", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo actualizar el cargo por error desconocido.",ex);
+            }
         }
     }
 }

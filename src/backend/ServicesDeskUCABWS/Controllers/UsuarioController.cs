@@ -250,5 +250,23 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
         }
+
+        [HttpPost]
+        [Route("AsignarCargo/")]
+        public ApplicationResponse<UsuarioDTOAsignarCargo> AsignarCargo([FromBody] UsuarioDTOAsignarCargo usuario)
+        {
+            var response = new ApplicationResponse<UsuarioDTOAsignarCargo>();
+            try
+            {
+                response.Data = _usuarioDAO.AsignarCargo(usuario);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                //response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
     }
 }
