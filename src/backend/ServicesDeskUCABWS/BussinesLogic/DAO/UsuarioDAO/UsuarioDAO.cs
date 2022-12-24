@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
@@ -19,11 +20,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
     public class UsuarioDAO : IUsuarioDAO
     {
         private readonly IDataContext _dataContext;   
+        private readonly IMapper _mapper;
 
-        public UsuarioDAO(IDataContext dataContext)
+        public UsuarioDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
-          
+            _mapper = mapper;   
         }
 
         public Usuario consularUsuarioID(Guid id)
@@ -38,7 +40,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 throw new ExceptionsControl("No existe un usuario con ese ID", ex);
             }
             
-        }    
+        }
+
+        public Empleado consularEmpleadoID(Guid id)
+        {
+            try
+            {
+                var data = _dataContext.Empleados.AsNoTracking().Where(p => p.Id == id && p.fecha_eliminacion == default(DateTime)).Single();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No existe un usuario con ese ID", ex);
+            }
+
+        }
 
         public Administrador AgregarAdminstrador(Usuario usuario)
         {
@@ -201,6 +217,24 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             catch (Exception ex)
             {
                 throw new ExceptionsControl("Hubo un problema en la consulta de los usuarios", ex);
+            }
+        }
+
+        public List<UsuarioGeneralDTO> ObtenerEmpleados()
+        {
+            try
+            {
+                var listaGeneral = new List<UsuarioGeneralDTO>();
+                var listaEmpleados = _dataContext.Empleados.Include(x=>x.Cargo).Include(r => r.Roles).ThenInclude(x=>x.Rol).Where(x => x.fecha_eliminacion == default(DateTime)).ToList();
+                listaGeneral.AddRange(_mapper.Map<List<UsuarioGeneralDTO>>(listaEmpleados));
+                var listaAdministrador = _dataContext.Administradores.Include(r => r.Roles).ThenInclude(x => x.Rol).Where(x => x.fecha_eliminacion == default(DateTime)).ToList();
+                listaGeneral.AddRange(_mapper.Map<List<UsuarioGeneralDTO>>(listaAdministrador));
+                return listaGeneral;
+
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Hubo un problema en la consulta de los empleados", ex);
             }
         }
 

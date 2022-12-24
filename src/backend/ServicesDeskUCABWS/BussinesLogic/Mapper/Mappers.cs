@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 
@@ -52,6 +53,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Departamento, DepartamentoSearchDTO>();
 
+            CreateMap<Empleado, UsuarioGeneralDTO>();
+            CreateMap<Usuario, UsuarioGeneralDTO>();
         }
     }
 }

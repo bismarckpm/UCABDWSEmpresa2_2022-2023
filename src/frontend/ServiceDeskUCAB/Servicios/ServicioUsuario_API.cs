@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using ServiceDeskUCAB.Models.Modelos_de_Usuario;
+using ServiceDeskUCAB.Models.DTO.Usuario;
+using ServiceDeskUCAB.Models.Response;
+using ServiceDeskUCAB.Models.TipoTicketsModels;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -167,7 +170,8 @@ namespace ServiceDeskUCAB.Servicios
 
             try
             {
-                var response = await cliente.GetAsync("api/Usuario");
+                //var response = await cliente.GetAsync("api/Usuario");
+                var response = await cliente.GetAsync("api/Usuario/ConsultarEmpleado");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -349,5 +353,33 @@ namespace ServiceDeskUCAB.Servicios
 
         }
 
+        public async Task<ApplicationResponse<UsuarioDTOAsignarCargo>> AsignarCargo(Guid idUsuario, Guid idCargo)
+        {
+            var resultado = new ApplicationResponse<UsuarioDTOAsignarCargo>();
+            var userDTO = new UsuarioDTOAsignarCargo()
+            {
+                idUsuario = idUsuario,
+                idCargo = idCargo
+            };
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var content = new StringContent(JsonConvert.SerializeObject(userDTO), Encoding.UTF8, "application/json");
+
+            var response = await cliente.PostAsync("api/Usuario/AsignarCargo", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                resultado = JsonConvert.DeserializeObject<ApplicationResponse<UsuarioDTOAsignarCargo>>(json_respuesta);
+
+                return resultado;
+
+
+            }
+            resultado.Success = false;
+            return resultado;
+        }
     }
 }

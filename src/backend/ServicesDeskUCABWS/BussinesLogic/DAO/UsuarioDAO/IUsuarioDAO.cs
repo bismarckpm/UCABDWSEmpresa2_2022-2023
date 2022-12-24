@@ -19,5 +19,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         //public string ValidarCorreo(string Email);
         public Usuario consularUsuarioID (Guid id);
         public UsuarioDTOAsignarCargo AsignarCargo(UsuarioDTOAsignarCargo userDTO);
+        public Empleado consularEmpleadoID(Guid id);
+        public List<UsuarioGeneralDTO> ObtenerEmpleados();
     }
 }

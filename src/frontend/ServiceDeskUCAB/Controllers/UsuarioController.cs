@@ -44,7 +44,6 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         public IActionResult VentanaEliminarUsuario(Guid id)
-
         {
             IdUser = id;
             return PartialView();
@@ -192,7 +191,22 @@ namespace ServiceDeskUCAB.Controllers
             return NoContent();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AsignarCargo(Guid idUsuario, Guid idCargo)
+        {
 
+            var respuesta = await _servicioApiUsuarios.AsignarCargo(idUsuario,idCargo);
+            if (respuesta.Success)
+            {
+                return RedirectToAction("Usuarios");
+            }
+            else
+            {
+                return RedirectToAction("Usuarios", new { message = respuesta.Message });
+            }
+
+            return NoContent();
+        }
 
     }
 }

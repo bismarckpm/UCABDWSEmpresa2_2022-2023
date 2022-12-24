@@ -54,6 +54,24 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("ConsultarEmpleado/")]
+        public ApplicationResponse<List<UsuarioGeneralDTO>> ConsultarEmpleados()
+        {
+            var response = new ApplicationResponse<List<UsuarioGeneralDTO>>();
+            try
+            {
+                response.Data = _usuarioDAO.ObtenerEmpleados();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         [HttpPost]
         [Route("CrearAdministrador/")]
         public ApplicationResponse<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
@@ -171,6 +189,25 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
         }
+
+        [HttpGet]
+        [Route("Consulta/Empleado/{id}")]
+        public ApplicationResponse<Empleado> GetByTipoEmpleadoId(Guid id)
+        {
+            var response = new ApplicationResponse<Empleado>();
+            try
+            {
+                response.Data = _usuarioDAO.consularEmpleadoID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
 
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
