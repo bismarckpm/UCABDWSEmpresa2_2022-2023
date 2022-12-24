@@ -305,5 +305,23 @@ namespace ServicesDeskUCABWS.Controllers
             }
             return response;
         }
+
+        [HttpPost]
+        [Route("RevocarCargo/")]
+        public ApplicationResponse<string> RevocarCargo([FromBody] Guid idusuario)
+        {
+            var response = new ApplicationResponse<string>();
+            try
+            {
+                response.Data = _usuarioDAO.RevocarCargo(idusuario);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                //response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
     }
 }

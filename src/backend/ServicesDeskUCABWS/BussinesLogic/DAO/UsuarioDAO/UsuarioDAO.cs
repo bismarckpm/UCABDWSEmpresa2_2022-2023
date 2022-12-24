@@ -378,6 +378,38 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 throw new ExceptionsControl("No se pudo actualizar el cargo por error desconocido.",ex);
             }
         }
+
+        public string RevocarCargo(Guid idusuario)
+        {
+            try
+            {
+                var usuario = _dataContext.Empleados.Include(x=>x.Cargo).Where(x=>x.Id == idusuario).FirstOrDefault();
+                if (usuario == null)
+                {
+                    throw new ExceptionsControl("No se encontro el usuario ingresado");
+                }
+
+                usuario.Cargo = null;
+
+                _dataContext.Empleados.Update(usuario);
+                _dataContext.DbContext.SaveChanges();
+
+                return usuario.Id.ToString();
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                throw ex;
+            }
+            catch (FormatException ex)
+            {
+                throw new ExceptionsControl("Formato no valido", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se pudo actualizar el cargo por error desconocido.", ex);
+            }
+        }
     }
 }
 

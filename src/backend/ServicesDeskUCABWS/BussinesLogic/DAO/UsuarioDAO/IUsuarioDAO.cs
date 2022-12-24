@@ -21,5 +21,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
         public UsuarioDTOAsignarCargo AsignarCargo(UsuarioDTOAsignarCargo userDTO);
         public Empleado consularEmpleadoID(Guid id);
         public List<UsuarioGeneralDTO> ObtenerEmpleados();
+
+        public string RevocarCargo(Guid idusuario);
     }
 }
