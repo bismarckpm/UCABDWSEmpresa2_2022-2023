@@ -14,9 +14,12 @@ using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceDeskUCAB.Controllers
 {
+
+    [Authorize(Policy = "EmpleadoAccess")]
     public class TicketController : Controller
     {
         private readonly IServicioTicketAPI _servicioTicketAPI;
@@ -41,7 +44,7 @@ namespace ServiceDeskUCAB.Controllers
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
-            TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
+            TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel()
             {
                 ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.ListaHabilitado(),

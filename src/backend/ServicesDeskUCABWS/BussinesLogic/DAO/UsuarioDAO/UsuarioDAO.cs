@@ -355,6 +355,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
                 usuario.Cargo = cargo;
 
+                EliminarVotosPendientes(usuario);
+                AgregarVotosCargo(usuario);
+
                 _dataContext.Empleados.Update(usuario);
                 _dataContext.DbContext.SaveChanges();
 
@@ -391,6 +394,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
                 usuario.Cargo = null;
 
+                EliminarVotosPendientes(usuario);
+
                 _dataContext.Empleados.Update(usuario);
                 _dataContext.DbContext.SaveChanges();
 
@@ -409,6 +414,36 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             {
                 throw new ExceptionsControl("No se pudo actualizar el cargo por error desconocido.", ex);
             }
+        }
+
+        public void AgregarVotosCargo(Empleado usuario)
+        {
+            var TicketsPendiente = _dataContext.Tickets
+                .Include(x => x.Estado)
+                .ThenInclude(x => x.Estado_Padre)
+                .Include(x=> x.Tipo_Ticket)
+                .ThenInclude(x=>x.Flujo_Aprobacion)
+                .Where(x=>x.Estado.Estado_Padre.nombre == "Pendiente").ToList();
+
+            TicketsPendiente = TicketsPendiente.Where(x => x.Tipo_Ticket.Flujo_Aprobacion
+            .Select(x => x.IdCargo).Contains(usuario.Cargo.id)).ToList();
+
+            var ListaVotos = TicketsPendiente.Select(x=> new Votos_Ticket()
+            {
+                IdTicket = x.Id,
+                IdUsuario=usuario.Id,
+                Ticket = x,
+                Empleado=usuario,
+                voto = "Pendiente"
+            });
+            _dataContext.Votos_Tickets.AddRange(ListaVotos);
+
+        }
+
+        private void EliminarVotosPendientes(Empleado usuario)
+        {
+            var Votos = _dataContext.Votos_Tickets.Where(x => x.IdUsuario == usuario.Id);
+            _dataContext.Votos_Tickets.RemoveRange(Votos);
         }
     }
 }
