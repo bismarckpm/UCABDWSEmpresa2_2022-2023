@@ -381,5 +381,30 @@ namespace ServiceDeskUCAB.Servicios
             resultado.Success = false;
             return resultado;
         }
+
+        public async Task<ApplicationResponse<string>> RevocarCargo(Guid idUsuario)
+        {
+            var resultado = new ApplicationResponse<string>();
+            
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var content = new StringContent(JsonConvert.SerializeObject(idUsuario), Encoding.UTF8, "application/json");
+
+            var response = await cliente.PostAsync("api/Usuario/RevocarCargo", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                resultado = JsonConvert.DeserializeObject<ApplicationResponse<string>>(json_respuesta);
+
+                return resultado;
+
+
+            }
+            resultado.Success = false;
+            return resultado;
+        }
     }
 }

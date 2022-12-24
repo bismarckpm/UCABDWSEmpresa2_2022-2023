@@ -24,5 +24,6 @@ namespace ServiceDeskUCAB.Servicios
         Task<JObject> RecuperarContraseña(RecuperarPasswordModel email);
         Task<JObject> EliminarRol(RolUser roles);
         Task<ApplicationResponse<UsuarioDTOAsignarCargo>> AsignarCargo(Guid idUsuario, Guid idCargo);
+        Task<ApplicationResponse<string>> RevocarCargo(Guid idUsuario);
     }
 }

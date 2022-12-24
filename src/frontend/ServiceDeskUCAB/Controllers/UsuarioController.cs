@@ -11,6 +11,7 @@ using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Models.Enums;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using Microsoft.AspNetCore.Authorization;
+using ServiceDeskUCAB.Models.Response;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -196,6 +197,23 @@ namespace ServiceDeskUCAB.Controllers
         {
 
             var respuesta = await _servicioApiUsuarios.AsignarCargo(idUsuario,idCargo);
+            if (respuesta.Success)
+            {
+                return RedirectToAction("Usuarios");
+            }
+            else
+            {
+                return RedirectToAction("Usuarios", new { message = respuesta.Message });
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RevocarCargo(Guid idUsuario)
+        {
+
+            var respuesta = await _servicioApiUsuarios.RevocarCargo(idUsuario);
             if (respuesta.Success)
             {
                 return RedirectToAction("Usuarios");
