@@ -110,7 +110,7 @@ namespace ServicesDeskUCABWS
 				{ Title = "Empresa B", Version = "v1" });
 			});
 			services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             //services.AddTransient<IDataContext, DataContext>();

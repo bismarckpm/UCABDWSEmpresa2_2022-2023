@@ -8,7 +8,6 @@ using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel;
-using ServiceDeskUCAB.Servicios;
 using ServicesDeskUCAB.Models;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ModelsVotos;
@@ -100,6 +99,35 @@ namespace ServiceDeskUCAB.Controllers
                 estados = new List<Estado>() //await _servicioEstadoAPI.Estados()
             };
             return View(ticketDetailsViewModel);
+        }
+
+        public async Task<IActionResult> Tomar(string ticketId)
+        {
+            TicketTomarDTO tomar= new TicketTomarDTO();
+            tomar.empleadoId = User.Identities.First().Claims.ToList()[0].Value;
+            tomar.ticketId = ticketId;
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.Tomar(tomar);
+                Console.WriteLine(respuesta.ToString());
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    return RedirectToAction("Index", new { opcion = "Mis-Tickets", message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    // Falta retornar a la misma vista sin recargar
+                    return RedirectToAction("Index", new { opcion = "Abiertos", message = (string)respuesta["message"] });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
         }
 
         [HttpPost]

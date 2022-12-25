@@ -28,6 +28,8 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<DepartamentoSearchDTO> departamentoEmpleado(string empleadoId);
 
+        Task<JObject> Tomar(TicketTomarDTO objeto);
+
         Task<JObject> Cancelar(string ticketId);
 
         Task<JObject> Guardar(TicketDTO Objeto);

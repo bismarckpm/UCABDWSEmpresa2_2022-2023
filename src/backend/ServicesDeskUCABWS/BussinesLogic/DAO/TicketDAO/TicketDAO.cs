@@ -174,7 +174,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 foreach (var tc in tipoCargos)
                 {
                     Cargos.Add(tc.Tipo_Cargo.Cargos_Asociados.ToList()
-                        .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First());
+                        .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault());
                 }
 
                 var ListaEmpleado = new List<Empleado>();
@@ -832,8 +832,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 throw new Exception("La Bitacora para el ticket no pudo ser creada");
             //_dataContext.Bitacora_Tickets.Add(nuevoTicket.Bitacora_Tickets.First());
             _dataContext.Tickets.Add(_mapper.Map<Ticket>(nuevoTicket));
-            //FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             _dataContext.DbContext.SaveChanges();
+            //FlujoAprobacion(_mapper.Map<Ticket>(nuevoTicket));
             return nuevoTicket;
         }
         public Bitacora_Ticket crearNuevaBitacora(TicketDTO ticket)

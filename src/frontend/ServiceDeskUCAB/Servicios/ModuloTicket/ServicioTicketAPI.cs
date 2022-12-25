@@ -273,6 +273,32 @@ namespace ServiceDeskUCAB.Servicios
             return objeto;
         }
 
+        public async Task<JObject> Tomar(TicketTomarDTO objeto)
+        {
+
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PutAsync($"Ticket/Tomar/{objeto}", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+                return null;
+            }
+        }
+
         [HttpPost]
         public async Task<JObject> Guardar(TicketDTO Objeto)
         {
@@ -397,6 +423,7 @@ namespace ServiceDeskUCAB.Servicios
             }
             return null;
         }
+
     }
 }
 
