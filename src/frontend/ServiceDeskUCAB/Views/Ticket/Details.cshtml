@@ -184,8 +184,10 @@
             <tbody>
                 @try
                 {
-                    @foreach (var item in Model.familiaTicket)
+                    @if (Model.familiaTicket!= null)
                     {
+                        @foreach (var item in Model.familiaTicket)
+                        {
                         <tr>
                             <td>@item.titulo</td>
                             <td>@item.tipoTicket_nombre</td>
@@ -203,6 +205,7 @@
                                 </div>
                             </td>
                         </tr>
+                        }
                     }
                 }
                 catch (Exception e)
