@@ -185,7 +185,7 @@ namespace TicketUnitTest
         //*
         //Prueba Unitaria para cambiar el estado de tickets
         //*
-        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para cambiar el estado de tickets exitosamente")]
+        /*[TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para cambiar el estado de tickets exitosamente")]
 
         public void TestCambiarEstadoTicketCtrl()
 
@@ -204,7 +204,7 @@ namespace TicketUnitTest
             Assert.IsTrue(application.Success);
             Assert.IsTrue(resultado.Success);
 
-        }
+        }*/
 
 
         //*

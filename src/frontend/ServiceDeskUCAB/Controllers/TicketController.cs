@@ -39,11 +39,13 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> Ticket()
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel
             {
                 ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
-                departamentos = await _servicioTicketAPI.Departamentos(idUsuario)
+                departamentos = await _servicioTicketAPI.Departamentos(idUsuario),
+                tipo_tickets = await _servicioTicketAPI.TipoTickets(Guid.Parse(departamento.Id))
             };
             ticketNuevoViewModel.ticket.empleado_id = new Guid(idUsuario);
             return View(ticketNuevoViewModel);

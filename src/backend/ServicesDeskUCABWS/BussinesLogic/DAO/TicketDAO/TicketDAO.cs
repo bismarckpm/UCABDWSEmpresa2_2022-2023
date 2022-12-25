@@ -127,9 +127,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
                 ticket.Prioridad = _dataContext.Prioridades.Find(ticketDTO.prioridad_id);
-                //List<Empleado> v =(List<Empleado>) contexto.Usuarios.ToList();
-                //Prioridad t = contexto.Prioridades.Find();//Include(x => x.Cargo).ThenInclude(x => x.Departamento).ToList();
-                //.Where(s => s.Id == Guid.Parse(ticketDTO.Emisor)).FirstOrDefault();
                 ticket.Emisor = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento)
                     .Where(s => s.Id == ticketDTO.empleado_id).FirstOrDefault();
                 ticket.Departamento_Destino = _dataContext.Departamentos.Find(ticketDTO.departamentoDestino_Id);
@@ -235,16 +232,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
 
-                var tipoCargos = _dataContext.Flujos_Aprobaciones
-                    .Include(x => x.Tipo_Cargo)
+                /*var tipoCargos = _dataContext.Flujos_Aprobaciones
+                    .Include(x => x.Cargo)
                     .ThenInclude(x => x.Cargos_Asociados)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id);
+                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id);*/
+
+                //var Cargos = new List<Cargo>();
+                var Flujos = _dataContext.Flujos_Aprobaciones.Include(s => s.Cargo)
+                    .Where(x=>x.IdTicket == ticket.Tipo_Ticket.Id).ToList();
 
                 var Cargos = new List<Cargo>();
-                foreach (var tc in tipoCargos)
+                foreach (var f in Flujos)
                 {
-                    Cargos.Add(tc.Tipo_Cargo.Cargos_Asociados.ToList()
-                        .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault());
+                    Cargos.Add(f.Cargo);
                 }
 
                 var ListaEmpleado = new List<Empleado>();
@@ -284,17 +284,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 ticket.nro_cargo_actual = 1;
 
-                var tipoCargos = _dataContext.Flujos_Aprobaciones
-                    .Include(x => x.Tipo_Cargo)
-                    .ThenInclude(x => x.Cargos_Asociados)
+                var Flujos = _dataContext.Flujos_Aprobaciones
+                    .Include(x => x.Cargo)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
                     .OrderBy(x => x.OrdenAprobacion).First();
 
 
-                var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
-                    .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();
+                /*var Cargos = tipoCargos.Tipo_Cargo.Cargos_Asociados.ToList()
+                    .Where(x => x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).First();*/
 
+                var Cargos = Flujos.Cargo;
+                
 
                 var ListaEmpleado = _dataContext.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
 

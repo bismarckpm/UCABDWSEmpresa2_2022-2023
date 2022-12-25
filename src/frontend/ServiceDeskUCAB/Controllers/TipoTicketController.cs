@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 using ServiceDeskUCAB.Models.ViewModel;
 using ServiceDeskUCAB.Servicios;
+using System.Drawing;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -15,26 +17,29 @@ namespace ServiceDeskUCAB.Controllers
        
 
         private readonly IServicio_API _servicioApi;
+        private readonly IServicioTicketAPI _servicioTicketAPI;
 
-
-
-        public TipoTicketController(IServicio_API servicioApi)
+        public TipoTicketController(IServicio_API servicioApi, IServicioTicketAPI servicioTicketAPI)
         {
             _servicioApi = servicioApi;
+            _servicioTicketAPI = servicioTicketAPI;
         }
 
 
-        public async Task<IActionResult> VistaTipo()
+        public async Task<IActionResult> VistaTipo(string idDepartamento)
         {
 
+            //var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            //DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            //var idDepartamento = "CCACD411-1B46-4117-AA84-73EA64DEAC87";
             TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
-
+            tipoNuevoViewModel.idDepartamento = idDepartamento;
             tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
             tipoNuevoViewModel.tipo = new Tipo();
             tipoNuevoViewModel.tipoActualizar = new Tipo();
             tipoNuevoViewModel.tipoCargoNuevo = new();
             tipoNuevoViewModel.ListaDepartamento = await _servicioApi.ListaDepa();
-            tipoNuevoViewModel.ListaCargos = await _servicioApi.ListaCargos();
+            tipoNuevoViewModel.ListaCargos = await _servicioApi.ListaCargos(Guid.Parse(idDepartamento));
 
             int i = 0;
             foreach (var r in tipoNuevoViewModel.ListaCargos)
@@ -50,8 +55,11 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ActualizarCambios (Tipo tipo,string tipot, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel)
+        public async Task<IActionResult> ActualizarCambios (Tipo tipo,string tipot, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel, string idDepartOrigen)
         {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+
             ApplicationResponse<Tipo_TicketDTOUpdate> respuesta;
 
             var TipoTicketDTO = new Tipo_TicketDTOUpdate();
@@ -63,7 +71,7 @@ namespace ServiceDeskUCAB.Controllers
             TipoTicketDTO.Maximo_Rechazado = tipo.Maximo_Rechazado;
             TipoTicketDTO.descripcion = tipo.descripcion;
             TipoTicketDTO.Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate>();
-            var ListaCargos = await _servicioApi.ListaCargos();
+            var ListaCargos = await _servicioApi.ListaCargos(Guid.Parse(idDepartOrigen));
 
             var ListanuevoCargo = ListaCargos.Where(x => cargos2.Contains(x.Id.ToString())).ToList();
 
@@ -74,7 +82,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     TipoTicketDTO.Flujo_Aprobacion.Add(new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo = cargo.Id.ToString(),
+                        IdCargo = cargo.Id.ToString(),
                         OrdenAprobacion = ordenaprobacion[i],
                         Minimo_aprobado_nivel = minimo_aprobado_nivel[i],
                         Maximo_Rechazado_nivel = maximo_rechazado_nivel[i]
@@ -88,7 +96,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     TipoTicketDTO.Flujo_Aprobacion.Add(new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo = cargo.Id.ToString()
+                        IdCargo = cargo.Id.ToString()
                     });
                     i++;
                 }
@@ -104,21 +112,21 @@ namespace ServiceDeskUCAB.Controllers
             {
                 if (respuesta.Success)
                 {
-                    return RedirectToAction("VistaTipo", new { message = "El tipo Ticket fue agregado satisfactoriamente" });
+                    return RedirectToAction("VistaTipo", new { idDepartamento= idDepartOrigen, message2 = "El tipo Ticket fue modificado satisfactoriamente" });
                 }
                 else
                 {
-                    return RedirectToAction("VistaTipo", new { message = respuesta.Message });
+                    return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = respuesta.Message });
                 }
             }
 
 
             else
-                return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
+                return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarCambios(Tipo tipoTicket, List<string> departamentos,List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel)
+        public async Task<IActionResult> GuardarCambios(Tipo tipoTicket, List<string> departamentos,List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel, string idDepartOrigen)
         {
             ApplicationResponse<Tipo_TicketDTOCreate> respuesta;
 
@@ -130,7 +138,7 @@ namespace ServiceDeskUCAB.Controllers
             TipoTicketDTO.descripcion = tipoTicket.descripcion;
             TipoTicketDTO.tipo = tipoTicket.tipo;
             TipoTicketDTO.Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate>();
-            var ListaCargos=await _servicioApi.ListaCargos();
+            var ListaCargos=await _servicioApi.ListaCargos(Guid.Parse(idDepartOrigen));
 
             var ListanuevoCargo = ListaCargos.Where(x=>cargos2.Contains(x.Id.ToString())).ToList();
             
@@ -141,7 +149,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     TipoTicketDTO.Flujo_Aprobacion.Add(new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo = cargo.Id.ToString(),
+                        IdCargo = cargo.Id.ToString(),
                         OrdenAprobacion = ordenaprobacion[i],
                         Minimo_aprobado_nivel = minimo_aprobado_nivel[i],
                         Maximo_Rechazado_nivel = maximo_rechazado_nivel[i]
@@ -155,7 +163,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     TipoTicketDTO.Flujo_Aprobacion.Add(new FlujoAprobacionDTOCreate()
                     {
-                        IdTipoCargo = cargo.Id.ToString()
+                        IdCargo = cargo.Id.ToString()
                     });
                     i++;
                 }
@@ -171,31 +179,31 @@ namespace ServiceDeskUCAB.Controllers
             {
                 if(respuesta.Success)
                 {
-                   return RedirectToAction("VistaTipo", new { message2 = "El tipo Ticket fue agregado satisfactoriamente" });
+                   return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message2 = "El tipo Ticket fue agregado satisfactoriamente" });
                 }
                 else
                  {
-                   return RedirectToAction("VistaTipo", new { message = respuesta.Exception });
+                   return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = respuesta.Exception });
                  }
             }
 
             else
             {
-                return RedirectToAction("VistaTipo", new { message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
+                return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
             }
                 
 
         }
-        public async Task<IActionResult> Eliminar(Guid id)
+        public async Task<IActionResult> Eliminar(Guid id, string idDepartOrigen)
         {
             Console.WriteLine(id);
 
             var respuesta = await _servicioApi.Eliminar(id);
 
             if (respuesta)
-                return RedirectToAction("VistaTipo",new { message2 ="Tipo Ticket eliminado exitosamente"});
+                return RedirectToAction("VistaTipo",new { idDepartamento = idDepartOrigen, message2 ="Tipo Ticket eliminado exitosamente"});
             else
-                return RedirectToAction("VistaTipo", new { message = "Error al eliminar el tipo ticket" });
+                return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = "Error al eliminar el tipo ticket" });
         }
 
 

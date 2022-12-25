@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.DTO.CargoDTO;
 using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
@@ -130,25 +131,25 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<TipoCargo>> ListaCargos()
+        public async Task<List<CargoDTOUpdate>> ListaCargos(Guid IdDepartamento)
         {
-            List<TipoCargo> lista = new List<TipoCargo>();
+            List<CargoDTOUpdate> lista = new List<CargoDTOUpdate>();
 
 
             var cliente = new HttpClient();
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.GetAsync("Tipo_Cargo/ConsultarCargosGrupoE/");  //URL de Lista en el swagger
+            var response = await cliente.GetAsync("Cargo/ConsultarCargoPorDepartamento/"+IdDepartamento);  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
 
 
-                var resultado = JsonConvert.DeserializeObject<List<TipoCargo>>(json_respuesta);
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<CargoDTOUpdate>>>(json_respuesta);
 
-                lista = resultado;
+                lista = resultado.Data;
             }
 
 

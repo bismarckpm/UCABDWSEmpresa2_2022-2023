@@ -18,7 +18,7 @@
         <input class="d-none" asp-for="@Model.ticket.empleado_id" value="@Model.ticket.empleado_id" required readonly/>
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Departamento Destino:</label>
-            <select onchange="cargarTipoTicket(this.value)" id="select-departamento" asp-for="@Model.ticket.departamentoDestino_Id" class="form-select" aria-label="Default select example" required>
+            <select id="select-departamento" asp-for="@Model.ticket.departamentoDestino_Id" class="form-select" aria-label="Default select example" required>
                 <option value="" selected disable>Seleccione un departamento</option>
                 @foreach (var depa in @Model.departamentos)
                 {
@@ -28,7 +28,12 @@
         </div>
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Tipo ticket:</label>
-        <select id="tipo-ticket" asp-for="@Model.ticket.tipoTicket_id" class="form-select" aria-label="Default select example" required disabled></select>
+        <select id="tipo-ticket" asp-for="@Model.ticket.tipoTicket_id" class="form-select" aria-label="Default select example" required>
+            @foreach (var tipo_Ticket in @Model.tipo_tickets)
+            {
+                <option value="@tipo_Ticket.Id">@tipo_Ticket.nombre</option>
+            }
+        </select>
         </div>
         <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Prioridad:</label>
