@@ -843,7 +843,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 respuesta.Data = null;
                 respuesta.Message = $"Ha ocurrido un error, {e.Message}";
-                respuesta.Success = true;
+                respuesta.Success = false;
             }
             return respuesta;
         }

@@ -58,7 +58,7 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> ActualizarCambios (Tipo tipo,string tipot, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel, string idDepartOrigen)
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            var departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
 
             ApplicationResponse<Tipo_TicketDTOUpdate> respuesta;
 

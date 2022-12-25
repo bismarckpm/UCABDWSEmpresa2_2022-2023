@@ -15,6 +15,7 @@ using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.TicketDTO;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using Microsoft.AspNetCore.Authorization;
+using ServiceDeskUCAB.Models.Response;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -35,21 +36,31 @@ namespace ServiceDeskUCAB.Controllers
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             ViewBag.opcion = opcion;
-            DepartamentoSearchDTO departamento= await _servicioTicketAPI.departamentoEmpleado(idUsuario);
-            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Id, opcion);
+            var departamento= await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            if (!departamento.Success)
+            {
+                return View(new List<TicketBasicoDTO>());
+            }
+            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion);
             return View(lista);
         }
 
         public async Task<IActionResult> Ticket()
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            var departamento = new ApplicationResponse<DepartamentoSearchDTO>();
+            departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            if (departamento.Success == false)
+            {
+                return RedirectToAction("Index", new { opcion = "Abiertos", message = departamento.Message });
+            }    
+            
             TicketNuevoViewModel ticketNuevoViewModel = new TicketNuevoViewModel()
             {
                 ticket = new TicketDTO(),
                 prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
                 departamentos = await _servicioTicketAPI.Departamentos(idUsuario),
-                tipo_tickets = await _servicioTicketAPI.TipoTickets(Guid.Parse(departamento.Id))
+                tipo_tickets = await _servicioTicketAPI.TipoTickets(Guid.Parse(departamento.Data.Id))
             };
             ticketNuevoViewModel.ticket.empleado_id = new Guid(idUsuario);
             return View(ticketNuevoViewModel);
@@ -58,7 +69,11 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> Reenviar(string ticketPadre_Id)
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            var departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            if (departamento.Success == false)
+            {
+                return RedirectToAction("Index", new { opcion = "Abiertos", message = departamento.Message });
+            }
             try
             {
                 TicketReenviarDTOViewModel ticketReenviarViewModel = new TicketReenviarDTOViewModel()
@@ -67,7 +82,7 @@ namespace ServiceDeskUCAB.Controllers
                     ticket = new TicketReenviarDTO(),
                     prioridades = await _servicioPrioridadAPI.ListaHabilitado(),
                     departamentos = await _servicioTicketAPI.Departamentos(idUsuario),
-                    tipo_tickets = await _servicioTicketAPI.TipoTickets(new Guid(departamento.Id))
+                    tipo_tickets = await _servicioTicketAPI.TipoTickets(new Guid(departamento.Data.Id))
                 };
                 ticketReenviarViewModel.ticket.ticketPadre_Id = Guid.Parse(ticketPadre_Id);
                 ticketReenviarViewModel.ticket.titulo = ticketReenviarViewModel.ticketPadre.titulo;
@@ -86,11 +101,15 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> Merge(string ticketId)
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            var departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            if (departamento.Success == false)
+            {
+                return RedirectToAction("Index", new { opcion = "Abiertos", message = departamento.Message });
+            }
             FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
-                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Abiertos")
+                tickets = await _servicioTicketAPI.Lista(departamento.Data.Id, "Abiertos")
             };
             return View(ticketMergeViewModel);
         }
