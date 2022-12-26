@@ -33,25 +33,20 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         [TestMethod(displayName: "Prueba Unitaria Controlador para crear Cargo exitoso")]
         public void Crear()
         {
-            var cargo = new CargoDto()
+            var cargo = new CargoDTOCreate()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
                 nombre_departamental = "Cargo Nuevo",
 
                 descripcion = "Es un cargo",
 
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
             };
 
             //arrange
-            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<Cargo>())).Returns(new CargoDto());
-            var application = new ApplicationResponse<CargoDto>();
+            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<CargoDTOCreate>())).Returns(new CargoDTOCreate());
+            var application = new ApplicationResponse<CargoDTOCreate>();
 
             //act
             var result = _controller.AgregarCargoDAO(cargo);
@@ -64,24 +59,18 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         public void CrearDepartamentoExcepcion()
         {
 
-            var cargo = new CargoDto()
+            var cargo = new CargoDTOCreate()
             {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
                 nombre_departamental = "Cargo Nuevo",
 
                 descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
+                
             };
 
             //arrange
-            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<Cargo>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<CargoDTOCreate>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
             var ex = _controller.AgregarCargoDAO(cargo);

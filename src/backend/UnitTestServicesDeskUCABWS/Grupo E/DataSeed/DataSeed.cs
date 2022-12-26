@@ -365,7 +365,32 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Empleados.Add(It.IsAny<Empleado>())).Callback<Empleado>(ListaEmpleado.Add);
             _mockContext.Setup(set => set.Empleados.AddRange(It.IsAny<IEnumerable<Empleado>>())).Callback<IEnumerable<Empleado>>(ListaEmpleado.AddRange);
 
-            
+
+            List<Administrador> ListaAdministradores = new List<Administrador>
+            {
+                //Jefes D1
+                new Administrador()
+                {
+                    Id = Guid.NewGuid(),
+                    primer_nombre="Admin",
+                    segundo_nombre="Admin",
+                    primer_apellido="Admin",
+                    segundo_apellido="Admin",
+                    cedula=123456789,
+                    correo="Fut@gmail.com",
+                    gender='M',
+                    password="1234"
+                    
+                },
+               
+            };
+
+            _mockContext.Setup(c => c.Administradores).Returns(ListaAdministradores.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Administradores.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaAdministradores.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Administradores.Add(It.IsAny<Administrador>())).Callback<Administrador>(ListaAdministradores.Add);
+            _mockContext.Setup(set => set.Administradores.AddRange(It.IsAny<IEnumerable<Administrador>>())).Callback<IEnumerable<Administrador>>(ListaAdministradores.AddRange);
+
+
 
             var ListaTipoTickets = new List<Tipo_Ticket>
             {
