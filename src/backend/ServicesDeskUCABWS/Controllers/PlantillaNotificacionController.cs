@@ -130,8 +130,7 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.RegistroPlantilla(plantillaDTO);
-                response.Data = resultService;
+                response.Data = _plantilla.RegistroPlantilla(plantillaDTO);
             }
             catch (ExceptionsControl ex)
             {
@@ -150,8 +149,7 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.ActualizarPlantilla(plantillaDTO, id);
-                response.Data = resultService;
+                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO, id);
             }
             catch (ExceptionsControl ex)
             {
@@ -170,8 +168,7 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.EliminarPlantilla(id);
-                response.Data = resultService;
+                response.Data = _plantilla.EliminarPlantilla(id); ;
             }
             catch(ExceptionsControl ex)
             {

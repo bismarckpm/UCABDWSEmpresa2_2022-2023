@@ -18,7 +18,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         private readonly IDataContext _plantillaContext;
         private readonly IMapper _mapper;
 
-
         public PlantillaNotificacionService(IDataContext plantillaContext, IMapper mapper)
         {
             _plantillaContext = plantillaContext;
