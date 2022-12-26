@@ -1,4 +1,5 @@
 ﻿using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +11,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
 
         public List<EstadoDTOUpdate> ConsultarEstadosPorEstadoPadre(Guid IdTipoEstado);
 
-        EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate);
+        public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado);
+
+
+		EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate);
 
         List<EstadoDTOUpdate> ConsultarEstadosDepartamentoTicket(Guid Id);
 

@@ -22,11 +22,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
             _mapper = mapper;
         }
 
-        /*public EstadoService(IDataContext Context)
+        public EstadoService(IDataContext Context)
         {
             _dataContext = Context;
 
-        }*/
+        }
 
         public List<EstadoDTOUpdate> ConsultarEstadosDepartamento(Guid IdDepartamento)
         {
@@ -43,7 +43,29 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
             return _mapper.Map<List<EstadoDTOUpdate>>(_dataContext.Estados.Where(e => e.Estado_Padre.Id == IdTipoEstado).ToList());
         }
 
-        public EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate)
+        //Agregar Estados de los Tipo Estados Agregados
+        public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
+        {
+            var listaEstados = new List<Estado>();
+
+            foreach (var departamento in _dataContext.Departamentos.ToList())
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + estado.nombre, estado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = estado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _dataContext.Estados.AddRange(listaEstados);
+            _dataContext.DbContext.SaveChanges();
+        }
+		
+
+		public EstadoDTOUpdate ModificarEstado(EstadoDTOUpdate estadoDTOUpdate)
         {
             try
             {
