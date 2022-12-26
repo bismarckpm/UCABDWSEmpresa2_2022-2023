@@ -29,7 +29,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         public TipoEstadoService(IDataContext tipoestadoContext)
         {
             _tipoEstadoContext = tipoestadoContext;
-
         }
 
         //GET: Servicio para consultar todos los tipos estados
@@ -77,7 +76,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                return _mapper.Map<TipoEstadoDTO>(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.Id == id).Single());
+                return _mapper.Map<TipoEstadoDTO>(
+                    _tipoEstadoContext.Tipos_Estados.AsNoTracking()
+                    .Include(t => t.etiquetaTipoEstado)
+                    .ThenInclude(e => e.etiqueta)
+                    .Where(t => t.Id == id)
+                    .Single()
+                );
             }
             catch (Exception ex)
             {
@@ -91,7 +96,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                return _mapper.Map<TipoEstadoDTO>(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.nombre == titulo).Single());
+                return _mapper.Map<TipoEstadoDTO>(
+                    _tipoEstadoContext.Tipos_Estados.AsNoTracking()
+                    .Include(t => t.etiquetaTipoEstado)
+                    .ThenInclude(e => e.etiqueta)
+                    .Where(t => t.nombre == titulo)
+                    .Single()
+                );
             }
             catch (Exception ex)
             {
@@ -100,14 +111,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //POST: Servicio para crear tipo estado
-        public TipoEstadoCreateDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
+        public TipoEstadoDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
         {
             try
             {
                 var tipoEstadoEntity = _mapper.Map<Tipo_Estado>(tipoEstado);
                 tipoEstadoEntity.Id = Guid.NewGuid();
                                
-                if ( tipoEstado.etiqueta.Count() > 0)
+                if (tipoEstado.etiqueta.Count() > 0)
                     tipoEstadoEntity.etiquetaTipoEstado = AñadirRelacionEtiquetaTipoEstado(tipoEstadoEntity.Id, tipoEstado.etiqueta);
 
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
@@ -116,7 +127,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
 
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return tipoEstado;
+                return _mapper.Map<TipoEstadoDTO>(tipoEstadoEntity);
             }
             catch (ExceptionsControl ex)
             {
@@ -133,7 +144,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //Agregar Estados de los Tipo Estados Agregados
-
         public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
         {
             var listaEstados = new List<Estado>();
@@ -154,19 +164,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             _tipoEstadoContext.DbContext.SaveChanges();
         }
 
-
         //PUT: Servicio para actualizar tipo estado
         public TipoEstadoDTO ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
         {
             try
             {
-
                 var tipoEstadoEntity = _mapper.Map<Tipo_Estado>(ConsultarTipoEstadoGUID(id));
                 tipoEstadoEntity.etiquetaTipoEstado.Clear();
 
                 //Actualizar la relación de tipo estado con etiquetas
                 if ( tipoEstadoAct.etiqueta.Count() > 0 )
-                    tipoEstadoEntity.etiquetaTipoEstado = AñadirRelacionEtiquetaTipoEstado( id, tipoEstadoAct.etiqueta);
+                    tipoEstadoEntity.etiquetaTipoEstado = AñadirRelacionEtiquetaTipoEstado(id, tipoEstadoAct.etiqueta);
 
                 //Si tiene permiso, quiere decir que puede modificar los atributos nombre y descripción del tipo estado
                 if (tipoEstadoEntity.permiso)
@@ -200,6 +208,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             try
             {
                 var tipoEstado = _mapper.Map<Tipo_Estado>(ConsultarTipoEstadoGUID(id));
+
                 //Si no tiene permiso, quiere decir que no podrá deshabilitar el tipo estado
                 if (!tipoEstado.permiso)
                 {
@@ -221,18 +230,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                     {
                         _estadoService.DeshabilitarEstado(hijo.Id);
                     }
-
                 }
 
-                //Verifica si hay una plantilla notificación asociada al tipo estado. De ser así, eliminar la relación en plantilla.
-                var plantilla = _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefault();
-/*APLICAR OBJETO NULO*/             if ((plantilla != null) && (tipoEstado.fecha_eliminacion != null)) 
-                {
-                    plantilla.TipoEstadoId = null;
-                    _tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
-                }
+                EliminarRelacionTipoEstadoPlantilla(tipoEstado, id);
 
-                _tipoEstadoContext.Tipos_Estados.Update(tipoEstado);
+				_tipoEstadoContext.Tipos_Estados.Update(tipoEstado);
                 _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
             }
@@ -240,8 +242,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             {
                 throw new ExceptionsControl("No se pudo habilitar o deshabilitar el tipo de estado", ex);
             }
-
         }
+
+        private void EliminarRelacionTipoEstadoPlantilla(Tipo_Estado tipoEstado, Guid id)
+        {
+			//Verifica si hay una plantilla notificación asociada al tipo estado. De ser así, eliminar la relación en plantilla.
+			var plantilla = _tipoEstadoContext.PlantillasNotificaciones.Where(p => p.TipoEstadoId == id).FirstOrDefault();
+			if ((plantilla != null) && (tipoEstado.fecha_eliminacion != null))
+			{
+				plantilla.TipoEstadoId = null;
+				_tipoEstadoContext.PlantillasNotificaciones.Update(plantilla);
+			}
+		}
 
         public HashSet<EtiquetaTipoEstado> AñadirRelacionEtiquetaTipoEstado(Guid tipoEstadoId, HashSet<Guid> etiquetas)
         {
