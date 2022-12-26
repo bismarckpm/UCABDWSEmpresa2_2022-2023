@@ -37,59 +37,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return json_respuesta;
         }
 
-        //Carga la lista de departamentos y grupos
-        public async Task<Tuple<List<DepartamentoModel>, List<GrupoModel>>> ListaDepartamentoGrupo()
-        {
-            List<DepartamentoModel> listaDepartamento = new List<DepartamentoModel>();
-            List<GrupoModel> listaGrupo = new List<GrupoModel>();
-
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
-            try
-            {
-                var responseDept = await cliente.GetAsync("Departamento/ConsultarDepartamentoNoEliminado");
-                var responseGrupo = await cliente.GetAsync("Grupo/ConsultarGrupoNoEliminado/");
-
-                if (responseDept.IsSuccessStatusCode && responseGrupo.IsSuccessStatusCode)
-                {
-                    var respuestaDept = await responseDept.Content.ReadAsStringAsync();
-                    JObject json_respuestaDept = JObject.Parse(respuestaDept);
-
-                    var respuestaGrupo = await responseGrupo.Content.ReadAsStringAsync();
-                    JObject json_respuestaGrupo = JObject.Parse(respuestaGrupo);
-
-
-                    //Obtengo la data del json respuesta Departamento
-                    string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
-                    var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
-
-                    //Obtengo la data del json respuesta Grupo
-                    string stringDataRespuestaGrupo = json_respuestaGrupo["data"].ToString();
-                    var resultadoGrupo = JsonConvert.DeserializeObject<List<GrupoModel>>(stringDataRespuestaGrupo);
-
-
-                    listaDepartamento = resultadoDept;
-                    listaGrupo = resultadoGrupo;
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            var tupla = new Tuple<List<DepartamentoModel>, List<GrupoModel>>(listaDepartamento, listaGrupo);
-
-            return tupla;
-        }
-
         //Almacenar la información de un nuevo departamento
         public async Task<JObject> RegistrarDepartamento(DepartamentoModel departamento)
         {
@@ -266,11 +213,16 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
                     departamento.departamentos = resultadoDept;
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-            return departamento.departamentos;
+			catch (HttpRequestException ex)
+			{
+				Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return departamento.departamentos;
         }
 
         public async Task<List<DepartamentoModel>> ListaDepartamentoNoAsociado()

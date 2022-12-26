@@ -10,7 +10,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 {
     public interface IServicioDepartamento_API
     {
-        Task<Tuple<List<DepartamentoModel>, List<GrupoModel>>> ListaDepartamentoGrupo();
         Task<JObject> RegistrarDepartamento(DepartamentoModel dept);
         Task<JObject> EditarDepartamento(DepartamentoModel dept);
         Task<JObject> EliminarDepartamento(Guid id);

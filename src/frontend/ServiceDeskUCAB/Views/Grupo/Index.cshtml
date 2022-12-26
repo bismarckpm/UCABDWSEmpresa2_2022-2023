@@ -1,0 +1,135 @@
+﻿@model List<ServiceDeskUCAB.Models.GrupoModel>
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+    
+</head>
+@{
+    ViewData["Title"] = "Gestion Grupo";
+}
+
+<!-- Scripts para mostrar ventanas emergentes -->
+@section scripts{
+    <!-- Scripts para grupos -->
+    <!-- Script para mostrar ventana Agregar Grupo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderAgregarGrupo');
+            $('button[data-toggle="agregarGrupo-modal"]').click(function (event) {
+                var url = $(this).data('url');
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Script para mostrar ventana Visualizar Departamentos asociados a un grupo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderVisualizarGrupo');
+            $('button[data-toggle="visualizarGrupo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idGrupo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+    <!-- Script para mostrar ventana Eliminar Grupo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderEliminarGrupo');
+            $('button[data-toggle="eliminarGrupo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idGrupo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+
+    <!-- Script para mostrar ventana Eliminar Grupo -->
+    <script>
+        $(function () {
+            var PlaceHolderElement = $('#PlaceHolderModificarGrupo');
+            $('button[data-toggle="editarGrupo-modal"]').click(function (event) {
+                var id = $(this).closest('tr').find('.id').text();
+                var url = $(this).data('url').replace("idGrupo", id);
+                $.get(url).done(function (data) {
+                    PlaceHolderElement.html(data);
+                    PlaceHolderElement.find('.modal').modal('show');
+                })
+            })
+        })
+    </script>
+
+}
+
+    <!-- Placeholders de las ventanas emergentes (Grupo)-->
+    <div id="PlaceHolderAgregarGrupo"></div>
+    <div id="PlaceHolderEliminarGrupo"></div>
+    <div id="PlaceHolderModificarGrupo"></div>
+    <div id="PlaceHolderVisualizarGrupo"></div>
+
+<div class="contenedor">
+    <div class="abajo">
+            <div class="area-boton">
+
+                <div class="titulo">
+                    <h1>Grupos</h1>
+                </div>
+
+                <div class="agregar">
+                    <!-- Boton Agregar Grupo -->
+                    <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("VentanaAgregarGrupo")">
+                        Crear Grupo
+                    </button>
+                </div>
+            </div>
+            <!-- Tabla Grupos -->
+        <table class="table">
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                </tr>
+                
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id" style="display:none" ;>
+                        @Html.DisplayFor(i => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <button id=btnVisualizar type="button" class="botonVisualizar" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","Grupo",new { id = "idGrupo"})">
+                            Visualizar
+                        </button>
+                        <button id=btnEditar type="button" class="botonEditar" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","Grupo",new { id = "idGrupo"})">
+                            Editar
+                        </button>
+                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","Grupo",new { id = "idGrupo"})">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
