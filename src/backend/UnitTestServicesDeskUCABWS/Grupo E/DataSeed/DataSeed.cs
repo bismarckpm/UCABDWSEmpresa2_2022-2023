@@ -396,7 +396,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             {
                 new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
-
+                    Id=Guid.Parse("23F0FB1D-25B5-4DFE-A432-408D1D9F6633")
                     
                 },
                 new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
@@ -580,6 +580,39 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Prioridad = ListaPrioridad[1],
                     nro_cargo_actual = 1
                 },
+                new Ticket("Prueba Flujo no Aprobacion", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02"),
+                    Tipo_Ticket= ListaTipoTickets[0],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Paralelo", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"),
+                    Tipo_Ticket= ListaTipoTickets[1],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Jerarquico", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04"),
+                    Tipo_Ticket= ListaTipoTickets[2],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                }
+
             };
 
             var ListaVotos = new List<Votos_Ticket>

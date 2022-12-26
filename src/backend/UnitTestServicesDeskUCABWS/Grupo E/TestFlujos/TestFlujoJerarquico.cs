@@ -4,7 +4,10 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mappers;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -46,16 +49,52 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
         }
 
 
-        [TestMethod()]
-        public void TestFlujoJerarquicoResIsNull()
+        [TestMethod]
+        public void CaminoFelizFlujoJerarquicoTest()
         {
-            //Preparación
-            var tickets = _TicketDAO.ConsultaListaTickets();
+            //arrange
+            var Ticket = _contextMock.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04"));
+
+
+            //context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
             plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
 
-            var res = _TicketDAO.FlujoJerarquico(tickets[1]);
 
-            Assert.IsNull(res);
+            //Act
+            _contextMock.Setup(a => a.DbContext.SaveChanges());
+
+            var result = _TicketDAO.FlujoJerarquico(Ticket);
+
+            //Assert
+            Assert.AreEqual("Pendiente D1", Ticket.Estado.nombre);
+            Assert.AreEqual(1, Ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(1, _contextMock.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
+            Assert.AreEqual(2, _contextMock.Object.Votos_Tickets.Where(x => x.IdTicket == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
+        }
+
+
+
+        //Test para el servicio de un excepcion para flujo paralelo
+        [TestMethod]
+        public void FlujoParaleloExceptions()
+        {
+            //Arrage
+            var Ticket = _contextMock.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"));
+
+            var Expected = new ApplicationResponse<string>()
+            {
+                Success = false,
+
+            };
+
+            //act
+            _contextMock.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));
+
+            var result = _TicketDAO.FlujoJerarquico(Ticket);
+
+            //assert
+            Assert.IsTrue(result!="Exitoso");
+
         }
     }
 

@@ -199,43 +199,33 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     break;
 
             }
-            return result;
+            return result; //Esto se remueve con simplifación de condicionales con polimorfismo
         }
 
         public string FlujoNoAprobacion(Ticket ticket)
         {
-            string result = null;
             try
             {
-                //EnviarNotificacion(ticket.Emisor, ticket.Estado);
                 List<Empleado> ListaEmpleado = _dataContext.Empleados.
                     Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
                     .ToList();
-                //EnviarNotificacion(ListaEmpleado, ticket.Estado);
 
                 //Cambiar estado Ticket
                 CambiarEstado(ticket, "Aprobado", ListaEmpleado);
                 _dataContext.DbContext.SaveChanges();
-                return result;
+                return "Exitoso";
             }
             catch (Exception ex)
             {
-                result = ex.Message;
-                return result;
+                return ex.Message;
             }
         }
 
 
         public string FlujoParalelo(Ticket ticket)
         {
-            string result = null;
             try
             {
-
-                /*var tipoCargos = _dataContext.Flujos_Aprobaciones
-                    .Include(x => x.Cargo)
-                    .ThenInclude(x => x.Cargos_Asociados)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id);*/
 
                 //var Cargos = new List<Cargo>();
                 var Flujos = _dataContext.Flujos_Aprobaciones.Include(s => s.Cargo)
@@ -268,12 +258,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 _dataContext.DbContext.SaveChanges();
 
-                return result;
+                return "Exitoso";
             }
             catch (ExceptionsControl ex)
             {
-                result = ex.Message;
-                return result;
+                return ex.Message;
             }
         }
 
@@ -316,12 +305,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 _dataContext.DbContext.SaveChanges();
 
-                return result;
+                return "Exitoso";
             }
             catch (ExceptionsControl ex)
             {
-                result = ex.Message;
-                return result;
+                return ex.Message;
             }
         }
 
@@ -351,7 +339,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
                 }
                 
-                //ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                ticket.Bitacora_Tickets.Add(nuevaBitacora);
                 _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
                 _dataContext.Tickets.Update(ticket);
                 _dataContext.DbContext.SaveChanges();
