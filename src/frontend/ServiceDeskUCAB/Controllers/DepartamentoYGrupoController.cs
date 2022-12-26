@@ -28,11 +28,10 @@ namespace ServiceDeskUCAB.Controllers
 
 
         //Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
-        public async Task<IActionResult> DepartamentoGrupo()
+        public async Task<IActionResult> Departamento()
         {
-            var tupla = new Tuple<List<DepartamentoModel>, List<GrupoModel>>(null, null);
-            tupla = await _servicioApiDepartamento.ListaDepartamentoGrupo();
-            return View(tupla);
+
+            return View("Departamento",_servicioApiDepartamento.ListaDepartamento());
         }
 
         //Retorna el modal para registrar un departamento nuevo

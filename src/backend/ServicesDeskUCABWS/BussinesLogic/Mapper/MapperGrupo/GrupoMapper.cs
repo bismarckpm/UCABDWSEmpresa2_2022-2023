@@ -49,7 +49,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
 				id = grupo.Id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_creacion = grupo.fecha_creacion,
                 fecha_ultima_edicion = grupo.fecha_ultima_edicion
             };
         }

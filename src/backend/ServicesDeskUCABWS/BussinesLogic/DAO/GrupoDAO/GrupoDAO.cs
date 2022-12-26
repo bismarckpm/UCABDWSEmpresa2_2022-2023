@@ -129,9 +129,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
 
-                    _dataContext.Grupos.Update(grupo);
-                    _dataContext.DbContext.SaveChanges();
-
+				if (!ExisteGrupoModificar(grupo))
+				{
+					_dataContext.Grupos.Update(grupo);
+					_dataContext.DbContext.SaveChanges();
+				}
 
                 var data = _dataContext.Grupos.Where(d => d.id == grupo.id).Select(
                     d => new GrupoDto_Update
@@ -139,7 +141,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                         Id = d.id,
                         nombre = d.nombre,
                         descripcion = d.descripcion,
-                        fecha_creacion = d.fecha_creacion,
                         fecha_ultima_edicion = d.fecha_ultima_edicion
                     }
 
@@ -219,6 +220,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 			}
 			return existe;
         }
-     
-    }
+
+
+		public bool ExisteGrupoModificar(Grupo grupo)
+		{
+			bool existe = false;
+
+			try
+			{
+				var buscarGrupoDiferente = _dataContext.Grupos.Where(d => (d.id != grupo.id) && (d.fecha_eliminacion == null)).ToList();
+                var buscarGrupoMismoNombre = buscarGrupoDiferente.Where(d => d.nombre == grupo.nombre).ToList();
+                if (buscarGrupoMismoNombre.Count() != 0)
+					existe = true;
+			}
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("No se encuentra el grupo" + " " + grupo.id, ex);
+			}
+			return existe;
+		}
+
+	}
 }

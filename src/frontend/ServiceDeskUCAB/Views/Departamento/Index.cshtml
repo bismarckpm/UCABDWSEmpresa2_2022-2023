@@ -1,0 +1,127 @@
+﻿@model List<ServiceDeskUCAB.Models.DepartamentoModel>
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+    
+</head>
+@{
+    ViewData["Title"] = "Gestion Departamento";
+}
+
+<!-- Scripts para mostrar ventanas emergentes -->
+@section scripts{
+
+<!-- Script para mostrar ventana Agregar Departamento -->
+<script>
+    $(function () {
+    var PlaceHolderElement = $('#PlaceHolderAgregarDepartamento');
+    $('button[data-toggle="agregarDepartamento-modal"]').click(function (event) {
+        var url = $(this).data('url');
+        $.get(url).done(function (data) {
+            PlaceHolderElement.html(data);
+            PlaceHolderElement.find('.modal').modal('show');
+        })
+    })
+})
+</script>
+
+<!-- Script para mostrar ventana Editar Departamento -->
+<script>
+    $(function () {
+        var PlaceHolderElement = $('#PlaceHolderModificarDepartamento');
+        $('button[data-toggle="editarDepartamento-modal"]').click(function (event) {
+            var id = $(this).closest('tr').find('.id').text();
+            var url = $(this).data('url').replace("idDepartamento", id);
+            $.get(url).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
+            })
+        })
+    })
+ </script>
+
+<!-- Script para mostrar ventana Eliminar Departamento -->
+<script>
+    $(function () {
+        var PlaceHolderElement = $('#PlaceHolderEliminarDepartamento');
+        $('button[data-toggle="eliminarDepartamento-modal"]').click(function (event) {
+            var id = $(this).closest('tr').find('.id').text();
+            var url = $(this).data('url').replace("idDepartamento", id);
+            $.get(url).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
+            })
+        })
+    })
+</script>
+
+}
+
+<!-- Placeholders de las ventanas emergentes (Departamento)-->
+ <div id="PlaceHolderAgregarDepartamento"></div>
+<div id="PlaceHolderEliminarDepartamento"></div>
+<div id="PlaceHolderModificarDepartamento"></div>
+
+ <div class="contenedor">
+
+      <div class="arriba">
+
+          <div class="area-boton">
+                <div class="titulo">
+                    <h1>Departamentos</h1>
+                </div>
+
+                <div class="agregar">
+                    <!-- Boton Agregar Departamento -->
+                    <button id=btnAgregarDepartamento class="boton" type="button" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
+                        Crear Departamento
+                    </button>
+                </div>               
+          </div>
+           
+
+            <!-- Tabla Departamentos -->
+            <table class="table">
+                    <tr>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Descripcion
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="id" style="display:none" ;>
+                            @Html.DisplayFor(i => item.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(i => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(i => item.descripcion)
+                        </td>
+                        <td>
+                            <button id=btnEditar type="button" class="botonEditar" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","Departamento",new { id = "idDepartamento" })">
+                                Editar
+                            </button>
+                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","Departamento",new { id = "idDepartamento" })">
+                                Eliminar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
+                        
+                             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
+                       
+                        </td>
+                    </tr>
+                }
+
+            </table>
+      </div>      
+</div>
+
+
