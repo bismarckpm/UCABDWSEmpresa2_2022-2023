@@ -66,5 +66,43 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             Assert.IsFalse(result.Success);
 
         }
+
+        //Test para el servicio consultar votos no pendientes
+        [TestMethod]
+        public void CaminoFelizConsultarVotosNoPendientes()
+        {
+            var entrada = Guid.Parse("C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A");
+
+            var result = VotoDAO.ConsultaVotosNoPendientes(entrada);
+
+            Assert.AreEqual(result.Data.ToList().Count(), 0);
+        }
+
+        //Test para el servicio de un excepcion consultar votos 
+        [TestMethod]
+        public void CaminoFelizConsultarVotosNoPendientesExceptions()
+        {
+            //arrage
+            var entrada = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+
+            var Expected = new ApplicationResponse<List<Votos_Ticket>>()
+            {
+                Success = false,
+
+            };
+
+            //act
+            context.Setup(x => x.Votos_Tickets).Throws(new Exception(""));
+
+            var result = VotoDAO.ConsultaVotosNoPendientes(entrada);
+
+            //assert
+            Assert.IsNotNull(result.Exception);
+            Assert.IsFalse(result.Success);
+
+        }
+
+
     }
 }
