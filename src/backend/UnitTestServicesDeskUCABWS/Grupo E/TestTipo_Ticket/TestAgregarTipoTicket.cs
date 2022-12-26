@@ -65,7 +65,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 }
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoAprobacionJerarquico()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
@@ -180,7 +180,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoAprobacionParalelo()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
@@ -276,7 +276,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 }
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoNoAprobacion()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
@@ -344,7 +344,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoNoAprobacion()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",

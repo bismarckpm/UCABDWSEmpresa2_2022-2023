@@ -208,8 +208,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 ValidarDatosEntradaTipo_Ticket(Tipo_TicketDTO);
 
                 //Construccion del Tipo Ticket
-                Tipo_Ticket tipo_ticket;
-                tipo_ticket = new Tipo_Ticket(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
+                Tipo_Ticket tipo_ticket = new TipoTicket_FlujoNoAprobacion();
+                if(Tipo_TicketDTO.tipo=="Modelo_No_Aprobacion")
+                    tipo_ticket = new TipoTicket_FlujoNoAprobacion(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
+                if (Tipo_TicketDTO.tipo == "Modelo_Paralelo")
+                    tipo_ticket = new TipoTicket_FlujoAprobacionParalelo(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
+                if (Tipo_TicketDTO.tipo == "Modelo_Jerarquico")
+                    tipo_ticket = new TipoTicket_FlujoAprobacionJerarquico(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
 
                 try
                 {

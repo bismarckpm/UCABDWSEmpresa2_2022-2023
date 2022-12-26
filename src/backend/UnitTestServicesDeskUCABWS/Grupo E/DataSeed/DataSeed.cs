@@ -394,28 +394,28 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaTipoTickets = new List<Tipo_Ticket>
             {
-                new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
+                new TipoTicket_FlujoNoAprobacion("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
                     Id=Guid.Parse("23F0FB1D-25B5-4DFE-A432-408D1D9F6633")
                     
                 },
-                new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
                 {
                     Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
                     
                 },
-                new Tipo_Ticket("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
                     
                 },
-                new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
                     
 
                 },
 
-                new Tipo_Ticket("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
                     
                 }
