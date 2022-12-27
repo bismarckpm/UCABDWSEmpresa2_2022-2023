@@ -70,7 +70,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_Jerarquico",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -185,7 +185,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_Paralelo",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -281,7 +281,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_No_Aprobacion",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -349,7 +349,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_No_Aprobacion",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,

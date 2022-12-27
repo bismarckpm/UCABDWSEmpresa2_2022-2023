@@ -28,10 +28,6 @@ namespace ServiceDeskUCAB.Controllers
 
         public async Task<IActionResult> VistaTipo(string idDepartamento)
         {
-
-            //var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            //DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
-            //var idDepartamento = "CCACD411-1B46-4117-AA84-73EA64DEAC87";
             TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
             tipoNuevoViewModel.idDepartamento = idDepartamento;
             tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();

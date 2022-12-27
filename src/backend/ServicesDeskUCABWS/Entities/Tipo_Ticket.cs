@@ -27,8 +27,7 @@ namespace ServicesDeskUCABWS.Entities
         [MaxLength(250)]
         [MinLength(4)]
         public string descripcion { get; set; } = string.Empty;
-        [Required]
-        public string tipo { get; set; }
+        
         [Required]
         public DateTime fecha_creacion { get; set; }
         [Required]
@@ -45,7 +44,6 @@ namespace ServicesDeskUCABWS.Entities
             Id = Guid.NewGuid();
             this.nombre = nombre;
             this.descripcion = descripcion;
-            this.tipo = tipo;
             Minimo_Aprobado = MinimoAprobado;
             Maximo_Rechazado = MaximoRechazado;
 
@@ -60,7 +58,6 @@ namespace ServicesDeskUCABWS.Entities
             Id = Guid.NewGuid();
             this.nombre = nombre;
             this.descripcion = descripcion;
-            this.tipo = tipo;
 
             fecha_creacion = DateTime.UtcNow;
             fecha_ult_edic = DateTime.UtcNow;
@@ -74,6 +71,8 @@ namespace ServicesDeskUCABWS.Entities
 
         }
 
+
+        public abstract string ObtenerTipoAprobacion();
         public abstract List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket);
 
         public abstract List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket);
@@ -151,6 +150,11 @@ namespace ServicesDeskUCABWS.Entities
             
         }
 
+        public override string ObtenerTipoAprobacion()
+        {
+            return "Modelo_No_Aprobacion";
+        }
+
         public TipoTicket_FlujoNoAprobacion(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo)
         {
 
@@ -221,6 +225,11 @@ namespace ServicesDeskUCABWS.Entities
             }
         }
 
+        public override string ObtenerTipoAprobacion()
+        {
+            return "Modelo_Jerarquico";
+        }
+
         public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }
 
         public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado){ }
@@ -286,6 +295,11 @@ namespace ServicesDeskUCABWS.Entities
             {
                 return false;
             }
+        }
+
+        public override string ObtenerTipoAprobacion()
+        {
+            return "Modelo_Paralelo";
         }
 
         public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }

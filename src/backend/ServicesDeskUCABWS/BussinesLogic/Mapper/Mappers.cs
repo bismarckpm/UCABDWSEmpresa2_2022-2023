@@ -57,6 +57,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Empleado, UsuarioGeneralDTO>();
             CreateMap<Usuario, UsuarioGeneralDTO>();
+
+
+            CreateMap<TipoTicket_FlujoAprobacionJerarquico, TipoTicket_FlujoAprobacionParalelo>();
+            CreateMap<TipoTicket_FlujoAprobacionJerarquico, TipoTicket_FlujoNoAprobacion>();
+            CreateMap<TipoTicket_FlujoAprobacionParalelo, TipoTicket_FlujoAprobacionJerarquico>();
+            CreateMap<TipoTicket_FlujoAprobacionParalelo, TipoTicket_FlujoNoAprobacion>();
+            CreateMap<TipoTicket_FlujoNoAprobacion, TipoTicket_FlujoAprobacionParalelo>();
+            CreateMap<TipoTicket_FlujoNoAprobacion, TipoTicket_FlujoAprobacionJerarquico>();
         }
 
         

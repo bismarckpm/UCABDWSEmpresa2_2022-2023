@@ -101,5 +101,10 @@ namespace ServicesDeskUCABWS.Data
                 return this;
             }
         }
+
+        public DbSet<TipoTicket_FlujoNoAprobacion> tipoTicket_FlujoNoAprobacions {get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionParalelo> tipoTicket_FlujoAprobacionParalelos { get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionJerarquico> tipoTicket_FlujoAprobacionJerarquicos { get; set; }
     }
+    
 }

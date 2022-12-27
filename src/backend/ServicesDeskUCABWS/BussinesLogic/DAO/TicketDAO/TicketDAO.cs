@@ -693,7 +693,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             nuevoTicket.Prioridad = _dataContext.Prioridades.Where(prioridad => prioridad.Id == solicitudTicket.prioridad_id).FirstOrDefault();
             nuevoTicket.Tipo_Ticket = _dataContext.Tipos_Tickets.Where(tipoTicket => tipoTicket.Id == solicitudTicket.tipoTicket_id).FirstOrDefault();
-            if (nuevoTicket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+            if (nuevoTicket.Tipo_Ticket.GetType()  == typeof(TipoTicket_FlujoAprobacionJerarquico))
                 nuevoTicket.nro_cargo_actual = 1;
             else
                 nuevoTicket.nro_cargo_actual = null;
@@ -942,6 +942,103 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Estado> buscarEstadosPorDepartamentoHl(Guid idDepartamento)
         {
             return _dataContext.Estados.Include(t => t.Departamento).Include(t => t.Estado_Padre).Where(t => t.Departamento.id == idDepartamento && t.Estado_Padre.nombre != "Aprobado" && t.Estado_Padre.nombre != "Rechazado" && t.Estado_Padre.nombre != "Pendiente").ToList();
+        }
+
+
+        //Quitar
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados)
+        {
+            try
+            {
+                var ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
+                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Include(x => x.Tipo_Ticket).Include(x => x.Votos_Ticket)
+                    .Include(x => x.Bitacora_Tickets)
+                    .Where(x => x.Id == ticketLlegada.Id).FirstOrDefault();
+
+                ticket.Estado = _dataContext.Estados
+                    .Include(x => x.Estado_Padre)
+                    .Include(x => x.Departamento).
+                    Where(s => s.Estado_Padre.nombre == Estado &&
+                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
+                    .FirstOrDefault();
+
+                _dataContext.Tickets.Update(ticket);
+                _dataContext.DbContext.SaveChanges();
+
+                Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
+                if (ticket.Bitacora_Tickets.Count != 0)
+                {
+                    ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
+                }
+
+                //ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
+                _dataContext.Tickets.Update(ticket);
+                _dataContext.DbContext.SaveChanges();
+                //vticket.State = EntityState.Modified;
+
+                if (Estado == "Aprobado")
+                {
+                    try
+                    {
+                        var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                        var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+
+                    }
+                    catch (ExceptionsControl) { }
+                    CambiarEstado(ticket, "Siendo Procesado", null);
+                    return true;
+                }
+
+                if (Estado == "Siendo Procesado")
+                {
+                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in empleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    return true;
+                }
+
+                if (Estado == "Pendiente")
+                {
+                    var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    foreach (var emp in ListaEmpleados)
+                    {
+                        try
+                        {
+                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    return true;
+                }
+
+                try
+                {
+                    var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+                    var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+                    notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                }
+                catch (ExceptionsControl) { }
+
+
+
+            }
+            catch (ExceptionsControl ex)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

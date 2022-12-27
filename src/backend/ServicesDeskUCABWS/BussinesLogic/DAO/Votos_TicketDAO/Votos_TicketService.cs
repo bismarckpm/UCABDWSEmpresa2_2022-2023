@@ -61,7 +61,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 contexto.DbContext.SaveChanges();
 
                 var temp = contexto.Tickets.Include(x => x.Tipo_Ticket)
-                    .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket.tipo;
+                    .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket.ObtenerTipoAprobacion();
 
                 string veredicto;
                 if (temp == "Modelo_Paralelo")
@@ -117,7 +117,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 throw new ExceptionsControl(ErroresVotos.VOTO_NO_PERMITIDO);
             }
 
-            if (ticket.Tipo_Ticket.tipo == "Modelo_Jerarquico")
+            if (ticket.Tipo_Ticket.ObtenerTipoAprobacion() == "Modelo_Jerarquico")
             {
                 if (ticket.nro_cargo_actual != voto.Turno)
                 {
