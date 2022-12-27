@@ -78,7 +78,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public abstract List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket);
 
-        public abstract List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo);
+        public abstract List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket);
 
         public abstract bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla);
 
@@ -113,17 +113,8 @@ namespace ServicesDeskUCABWS.Entities
                     .Where(x => x.Id == idTicket).FirstOrDefault();
         }
 
-        public int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
-        {
-            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Aprobado").Count();
-        }
-
-        public int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
-        {
-            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Rechazado").Count();
-        }
+        public abstract int ContarVotosAFavor(Guid idTicket, IDataContext contexto);
+        public abstract int ContarVotosEnContra(Guid idTicket, IDataContext contexto);
 
         public void CambiarEstadoVotosPendiente(Ticket ticket, IDataContext contexto)
         {

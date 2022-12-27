@@ -7,6 +7,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using System.Net.Sockets;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -22,17 +23,14 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                ticket.nro_cargo_actual = 1;
-
-
                 //Calcular Cargos
                 var ListaCargos = CargosAsociados(contexto, ticket);
 
                 //Agregar Votos
-                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
+                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos, ticket), ticket);
 
 
-                return EmpleadosVotantes(contexto, ListaCargos);
+                return EmpleadosVotantes(contexto, ListaCargos,ticket);
             }
             catch (ExceptionsControl ex)
             {
@@ -46,16 +44,13 @@ namespace ServicesDeskUCABWS.Entities
                     .Include(x => x.Cargo)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
-                    .OrderBy(x => x.OrdenAprobacion).First();
-            var ListaCargos = new List<Cargo>();
-            ListaCargos.Add(Flujos.Cargo);
-            return ListaCargos;
+                    .OrderBy(x => x.OrdenAprobacion).ToList();
+            return Flujos.Select(x => x.Cargo).ToList();
         }
 
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket)
         {
-
-            return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo.First().id).ToList();
+            return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo[ticket.nro_cargo_actual.GetValueOrDefault() - 1].id).ToList();
         }
 
         public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
@@ -82,120 +77,93 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                var tipo_ticket = contexto.Tickets.Include(x => x.Tipo_Ticket)
-                    .ThenInclude(x => x.Flujo_Aprobacion)
-                    .Where(x => x.Id == idTicket).First();
-
-                var ticket = contexto.Tickets
-                    .Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
-                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Where(x => x.Id == idTicket).First();
-
-
-
-                var minimo_aprobado = tipo_ticket.Tipo_Ticket.Flujo_Aprobacion
-                    .Where(x => x.OrdenAprobacion == ticket.nro_cargo_actual)
-                    .Select(x => x.Minimo_aprobado_nivel).First();
-
-                var maximo_rechazado = tipo_ticket.Tipo_Ticket.Flujo_Aprobacion
-                    .Where(x => x.OrdenAprobacion == ticket.nro_cargo_actual)
-                    .Select(x => x.Maximo_Rechazado_nivel).First();
-
-
-
-                //contar votos a favor
-                var votosfavor = contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Aprobado" && x.Turno == ticket.nro_cargo_actual).Count();
-
-                //Buscar votos necesarios para aprobar
-                if (votosfavor >= minimo_aprobado)
+                var ticket = ConsultarDatosTicket(idTicket, contexto);
+                if (EstaAprobadoORechazado(ticket,contexto)!=null)
                 {
-                    //Cambiar Estado a los votos restantes
-                    var l = contexto.Votos_Tickets
-                        .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
-                        .ToList();
-                    l.ForEach(x => x.voto = "Aprobado");
-
-                    //Ingreso siguiente ronda de votos
-                    ticket.nro_cargo_actual++;
-                    var fin = VotosSiguienteRonda(ticket, tipo_ticket,contexto);
-                    if (fin)
+                    CambiarEstadoVotosPendiente(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
+                    if (EstaAprobadoORechazado(ticket, contexto) == "Aprobado")
                     {
-                        ticket.CambiarEstado(ticket, "Aprobado", contexto);
-                        return "Aprobado";
+                        if (VotosSiguienteRonda(ticket, contexto))
+                        {
+                            ticket.CambiarEstado(ticket, "Aprobado", contexto);
+                            return EstaAprobadoORechazado(ticket, contexto);
+                        }
+                        return "Pendiente";
                     }
-                    return "Pendiente";
+                    return EstaAprobadoORechazado(ticket, contexto);
                 }
-
-                //contar votos en contra
-                var votoscontra = contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Rechazado" && x.Turno == ticket.nro_cargo_actual).Count();
-                if (votoscontra >= maximo_rechazado)
-                {
-                    //Cambiar Estado a los votos restantes
-                    var l = contexto.Votos_Tickets
-                        .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
-                        .ToList();
-                    l.ForEach(x => x.voto = "Rechazado");
-
-                    //Ingreso siguiente ronda de votos
-                    var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
-                    ticket.CambiarEstado(ticket, "Rechazado", contexto);
-                    contexto.DbContext.SaveChanges();
-                    //EnviarNotiicacion("Ticket Rechazado")
-                    return "Rechazado";
-
-                }
+                return "Pendiente";
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ExceptionsControl("Error en el calculo de los votos");
             }
 
-            return "Pendiente";
+            
         }
 
-        private bool VotosSiguienteRonda(Ticket ticket, Ticket tipo_ticket, IDataContext contexto)
+        private bool VotosSiguienteRonda(Ticket ticket, IDataContext contexto)
         {
-            if (contexto.Flujos_Aprobaciones
-                .Where(x => x.Tipo_Ticket.Id == tipo_ticket.Tipo_Ticket.Id &&
-            x.OrdenAprobacion == ticket.nro_cargo_actual).Count() == 0)
+            ticket.nro_cargo_actual++;
+            if (EsUltimaRonda(ticket,contexto))
             {
                 return true;
             }
-
-            var Flujos = contexto.Flujos_Aprobaciones
-                    .Include(x => x.Cargo)
-                    .ThenInclude(x => x.Departamento)
-                    .Where(x => x.IdTicket.ToString().ToUpper() == ticket.Tipo_Ticket.Id.ToString().ToUpper() &&
-                        x.OrdenAprobacion == ticket.nro_cargo_actual).FirstOrDefault();
-
-
-            var Cargos = Flujos.Cargo;
-
-
-            var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
-
-
-            var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
-            {
-                IdTicket = ticket.Id,
-                Ticket = ticket,
-                IdUsuario = x.Id,
-                Empleado = x,
-                voto = "Pendiente",
-                Turno = ticket.nro_cargo_actual
-            });
-
-            contexto.Votos_Tickets.AddRange(ListaVotos);
-            ticket.CambiarEstado(ticket, "Pendiente",contexto);
+            var ListaEmpleados = FlujoAprobacion(contexto, ticket);
             return false;
+        }
+
+        private bool EsUltimaRonda(Ticket ticket, IDataContext contexto)
+        {
+            return contexto.Flujos_Aprobaciones
+                .Where(x => x.Tipo_Ticket.Id == ticket.Tipo_Ticket.Id && x.OrdenAprobacion == ticket.nro_cargo_actual).Count() == 0;
+        }
+
+        public void CambiarEstadoVotosPendiente(Ticket ticket,string Estado, IDataContext contexto)
+        {
+            contexto.Votos_Tickets
+                .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
+                .ToList().ForEach(x => x.voto = Estado);
         }
 
         public override string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto)
         {
-            throw new NotImplementedException();
+            if (ContarVotosAFavor(ticket.Id, contexto) >= ObtenerMinimoAprobado(ticket, contexto))
+            {
+                return "Aprobado";
+            }
+            if (ContarVotosEnContra(ticket.Id, contexto) >= ObtenerMaximoRechazado(ticket, contexto))
+            {
+                return "Rechazado";
+            }
+            return null;
+        }
+
+        private int? ObtenerMinimoAprobado(Ticket ticket, IDataContext contexto)
+        {
+            return ticket.Tipo_Ticket.Flujo_Aprobacion
+                    .Where(x => x.OrdenAprobacion == ticket.nro_cargo_actual)
+                    .Select(x => x.Minimo_aprobado_nivel).FirstOrDefault();
+        }
+
+        private int? ObtenerMaximoRechazado(Ticket ticket, IDataContext contexto)
+        {
+            return ticket.Tipo_Ticket.Flujo_Aprobacion
+                .Where(x => x.OrdenAprobacion == ticket.nro_cargo_actual)
+                .Select(x => x.Maximo_Rechazado_nivel).FirstOrDefault();
+        }
+
+        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        {
+            return contexto.Votos_Tickets.Include(x => x.Ticket).Where(x => x.IdTicket == idTicket
+                && x.voto == "Aprobado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
+        }
+
+        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        {
+            return contexto.Votos_Tickets.Include(x=>x.Ticket).Where(x => x.IdTicket == idTicket
+                && x.voto == "Rechazado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace ServicesDeskUCABWS.Entities
             return new List<Cargo>();
         }
 
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket)
         {
             return new List<Empleado>();
         }
@@ -72,7 +72,17 @@ namespace ServicesDeskUCABWS.Entities
 
         public override string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto)
         {
-            throw new NotImplementedException();
+            return "Aprobado";
+        }
+
+        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        {
+            return 0;
+        }
+
+        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        {
+            return 0;
         }
     }
     

@@ -610,7 +610,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
-                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    nro_cargo_actual = 1
                 }
 
             };

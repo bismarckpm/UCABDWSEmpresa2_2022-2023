@@ -13,20 +13,21 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class TipoTicket_FlujoAprobacionParalelo : Tipo_Ticket
     {
+        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo) { }
+
+        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado) { }
+
+        public TipoTicket_FlujoAprobacionParalelo() { }
+
         public override List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket)
         {
             try
             {
-                //Calcular Cargos
                 var ListaCargos = CargosAsociados(contexto, ticket);
-
-                //Agregar Votos
-                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
-
-
-                return EmpleadosVotantes(contexto, ListaCargos);
+                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos, ticket), ticket);
+                return EmpleadosVotantes(contexto, ListaCargos,ticket);
             }
-            catch (ExceptionsControl ex)
+            catch (ExceptionsControl)
             {
                 return null;
             }
@@ -45,7 +46,7 @@ namespace ServicesDeskUCABWS.Entities
             return Cargos;
         }
 
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket)
         {
             var ListaEmpleado = new List<Empleado>();
             foreach (var c in ListaCargo)
@@ -116,10 +117,17 @@ namespace ServicesDeskUCABWS.Entities
             return null;
         }
 
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo) { }
+        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        {
+            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
+                && x.voto == "Aprobado").Count();
+        }
 
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado) { }
+        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        {
+            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
+                && x.voto == "Rechazado").Count();
+        }
 
-        public TipoTicket_FlujoAprobacionParalelo() { }
     }
 }
