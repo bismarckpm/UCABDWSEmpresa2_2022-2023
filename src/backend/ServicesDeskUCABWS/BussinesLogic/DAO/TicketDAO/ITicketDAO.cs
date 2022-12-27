@@ -36,5 +36,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id);
         public ApplicationResponse<List<Tipo_Ticket>> buscarTiposTickets();
         public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento);
+        public ApplicationResponse<List<Ticket>> obtenerTicketsPropios(Guid idEmpleado);
+        public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio);
     }
 }

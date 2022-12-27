@@ -899,6 +899,44 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+        public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio)
+        {
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
+            try
+            {
+                TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
+                validaciones.validarEmpleado(new Guid(ticketPropio.empleadoId));
+                validaciones.validarTicket(new Guid(ticketPropio.ticketId));
+                adquirirTicketHl(ticketPropio);
+                respuesta.Data = "Ticket adquirido exitosamente";
+                respuesta.Message = "Ticket adquirido exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<List<Ticket>> obtenerTicketsPropios(Guid idEmpleado)
+        {
+            ApplicationResponse<List<Ticket>> respuesta = new ApplicationResponse<List<Ticket>>();
+            try
+            {
+                respuesta.Data = obtenerTicketsPropiosHl(idEmpleado);
+                respuesta.Message = "Lista de tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
         
         //HELPERS
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
@@ -1174,6 +1212,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Estado> buscarEstadosPorDepartamentoHl(Guid idDepartamento)
         {
             return _dataContext.Estados.Include(t => t.Departamento).Include(t => t.Estado_Padre).Where(t => t.Departamento.id == idDepartamento && t.Estado_Padre.nombre != "Aprobado" && t.Estado_Padre.nombre != "Rechazado" && t.Estado_Padre.nombre != "Pendiente").ToList();
+        }
+        public void adquirirTicketHl(TicketTomarDTO ticketPropio)
+        {
+            Empleado empleado = _dataContext.Empleados.Where(t => t.Id == new Guid(ticketPropio.empleadoId)).Single();
+            Ticket ticket = _dataContext.Tickets.Where(t => t.Id == new Guid(ticketPropio.ticketId)).Single();
+            ticket.Responsable = empleado;
+            _dataContext.DbContext.Update(ticket);
+            _dataContext.DbContext.SaveChanges();
+        }
+        public List<Ticket> obtenerTicketsPropiosHl(Guid idEmpleado)
+        {
+            List<Ticket> tickets = _dataContext.Tickets.Include(t => t.Responsable).Where(t => t.Responsable.Id == idEmpleado).ToList();
+            if (tickets.Count() > 0)
+                return tickets;
+            else
+                throw new Exception("Empleado no tiene tickets propios");
         }
     }
 }
