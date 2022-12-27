@@ -1,10 +1,13 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-    --color-primary: #0E7B82;
-    --color-danger: #ff7782;
+    --color-primary: #109ea7;
+    --color-primary-dark: #0a767d;
+    --color-danger: #e74a3b;
+    --color-danger-dark: #bd2b1d;
     --color-success: #41f1b6;
     --color-warning: #ffbb55;
+    --color-warning-dark: #d88e1e;
     --color-white: #fff;
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
@@ -18,6 +21,7 @@
     --border-radius-1: 0.4rem;
     --border-radius-2: 0.8rem;
     --border-radius-3: 1.2rem;
+    --btn-radius: 10px;
     --card-padding: 1.8rem;
     --padding: 1.2rem;
     --box-shadow: 0 2rem 3rem var(--color-light);
@@ -60,17 +64,22 @@ h5 {
     color: var(--color-warning);
 }
 
+.white{
+    background-color: var(--color-white);
+}
+
 /*-- Vista Departamento y Grupo --*/
 
 main .boton {    
     border: none;
     background-color: var(--color-primary);
     color: var(--color-white);
-    border-radius: var(--border-radius-2);
+    border-radius: var(--border-radius-3);
     cursor: pointer;
-    height: 30px;
+    height: 38px;
     width: 200px;
-    margin-right: 40px;
+    margin-top:42px;
+    margin-right: 28px;
     transition: all 300ms ease;
 }
 
@@ -78,6 +87,9 @@ main .boton:hover {
    background-color: var(--color-primary-dark);
 }
 
+main .agregar i{
+    font-size:0px;
+}
 
 main .botonEditar {
     border: none;
@@ -127,6 +139,22 @@ main .botonVisualizar:hover{
     background-color: var(--color-primary-dark);
 }
 
+main .botonGeneral {
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 15px;
+    height: 30px;
+    width: 95px;
+    transition: all 300ms ease;
+}
+
+main .botonGeneral:hover {
+    background-color: var(--color-primary-dark);
+}
+
 main .contenedor {
     display:block;
     gap:1.8rem;
@@ -167,8 +195,12 @@ main .table {
     box-shadow: var(--box-shadow);
     transition: all 300ms ease;
     color: var(--color-sidebar);
+    
 }
 
+main .table td{
+    border-bottom-width:0;
+}
 
 main .table:hover {
     box-shadow: none;
@@ -181,6 +213,8 @@ main .table th {
 main .row{
     gap: 5rem;
 }
+
+
 
 /*-- Modales --*/
 
@@ -266,4 +300,139 @@ main .modal-content .modal-body .advertencia{
     color: var(--color-danger);
     font-size: 14px;
     text-align:center;
+}
+
+/*Dropdown de la tabla*/
+
+main .dropdown {
+    transform: translate(-600%,-5%);
+    background-color: none;  
+}
+
+main .dropdown i{
+    display:flex;
+    margin:auto;
+    font-size: 14px;
+}
+
+main .prueba{
+    background-color:red;
+}
+
+main .dropdown-toggle {
+    background-color: none;
+    border: none;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    transition: all 0.5s ease;
+}
+
+main .dropdown-toggle:focus{
+    background-color: var(--color-primary);
+    color:white;
+}
+
+main .dropdown-toggle::after{
+    display:none;
+}
+
+main .dropdown-toggle:hover{
+   background-color: #ccc;
+   color:white;
+}
+
+/*Buscador*/
+
+main .form-control:focus {
+    box-shadow: none;
+}
+
+main .input-group-prepend i{
+    transform: translateY(-11%);
+}
+
+main .form-control-underlined {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 0;
+    padding-left: 0;
+}
+
+main .buscador::placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
+}
+
+main .wrapperBuscador{
+  margin-left:10px;
+  background-color:var(--color-white);
+}
+
+main .form-control.buscador{
+    width: 200px;
+    height:32px;
+}
+
+main .buscador:focus {
+   box-shadow:none;
+}
+
+main .rounded-pill{
+    height:40px;
+}
+
+
+@media screen and (max-width: 990px) {
+
+    main .dropdown {
+        transform: translateY(-5%);
+        right: 80%;
+    }
+
+    main .boton{
+        width:180px;        
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    main .dropdown {
+        transform: translateY(-5%);
+        right: 70%;
+    }
+
+    main .boton {
+        width: 100px;
+        font-size:0;
+        transform:translateY(-14%);
+    }
+
+    main .agregar i {
+       font-size:12px;
+    }
+
+    main .input-group {
+        width: 170px;
+       
+    }
+
+    main .wrapperBuscador {
+        width: 180px;
+        height: 38px;
+    }
+
+    main .form-control.buscador{
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 200px) {
+
+    main .dropdown {
+        transform: translateY(-5%);
+        right: 70%;
+    }   
+
 }

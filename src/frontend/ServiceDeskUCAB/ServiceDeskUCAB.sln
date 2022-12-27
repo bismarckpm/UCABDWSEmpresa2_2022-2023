@@ -4,6 +4,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDeskUCAB", "ServiceDeskUCAB.csproj", "{255D4D87-7E7F-49F8-BA63-5B4BFC56CC58}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesDeskUCABWS", "..\..\backend\ServicesDeskUCABWS\ServicesDeskUCABWS.csproj", "{B8BF8CE9-CE4B-4FA1-A15B-BDE9C6D19300}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{255D4D87-7E7F-49F8-BA63-5B4BFC56CC58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255D4D87-7E7F-49F8-BA63-5B4BFC56CC58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255D4D87-7E7F-49F8-BA63-5B4BFC56CC58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8BF8CE9-CE4B-4FA1-A15B-BDE9C6D19300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BF8CE9-CE4B-4FA1-A15B-BDE9C6D19300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BF8CE9-CE4B-4FA1-A15B-BDE9C6D19300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BF8CE9-CE4B-4FA1-A15B-BDE9C6D19300}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
