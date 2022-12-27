@@ -12,15 +12,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public interface ITicketDAO
     {
-        public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
+        //public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
         public ApplicationResponse<TicketNuevoDTO> RegistroTicket(TicketNuevoDTO ticketDTO);
-        public void FlujoAprobacion(Ticket ticket);
-        public string FlujoParalelo(Ticket ticket);
-        public string FlujoNoAprobacion(Ticket ticket);
         public List<Ticket> ConsultaListaTickets();
         public Ticket ConsultaTicket(Guid id);
 
-        public bool CambiarEstado(Ticket ticket, string Estado,List<Empleado> ListaEmpleados);
+        //public bool CambiarEstado(Ticket ticket, string Estado,List<Empleado> ListaEmpleados);
         //public ApplicationResponse<Votos_TicketDTOCreate> RegistroVotos(Votos_TicketDTOCreate votos_TicketDTO);
         public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id);

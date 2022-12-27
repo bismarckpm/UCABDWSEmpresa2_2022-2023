@@ -1,11 +1,16 @@
 ﻿using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.Serialization;
 
 namespace ServicesDeskUCABWS.Entities
@@ -61,6 +66,7 @@ namespace ServicesDeskUCABWS.Entities
             fecha_ult_edic = DateTime.UtcNow;
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
             Departamentos = new List<DepartamentoTipo_Ticket>();
+
         }
 
         public Tipo_Ticket()
@@ -69,6 +75,30 @@ namespace ServicesDeskUCABWS.Entities
         }
 
         public abstract List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket);
+
+        public abstract List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket);
+
+        public abstract List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo);
+
+        public abstract bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla);
+
+
+        //public abstract void EnviarNotificaciones()
+
+        public void AgregarVotos(IDataContext contexto, List<Empleado> ListaEmpleados, Ticket ticket)
+        {
+            var ListaVotos = ListaEmpleados.Select(x => new Votos_Ticket
+            {
+                IdTicket = ticket.Id,
+                Ticket = ticket,
+                IdUsuario = x.Id,
+                Empleado = x,
+                voto = "Pendiente",
+                Turno = ticket.nro_cargo_actual
+            });
+
+            contexto.Votos_Tickets.AddRange(ListaVotos);
+        }
     }
 
     public class TipoTicket_FlujoNoAprobacion : Tipo_Ticket
@@ -77,17 +107,48 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                List<Empleado> ListaEmpleado = contexto.Empleados
+                return contexto.Empleados
                     .Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
-                    .ToList();
-
-                contexto.DbContext.SaveChanges();
-                return ListaEmpleado;
+                    .ToList(); 
             }
             catch (Exception ex)
             {
                 return null;
             }
+        }
+
+        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
+        {
+            return new List<Cargo>();
+        }
+
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
+        {
+            return new List<Empleado>();
+        }
+
+        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        {
+            try
+            {
+                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.ActualizarBitacora(ticket, _dataContext);
+
+                ticket.CambiarEstado(ticket, "Aprobado", _dataContext);
+                ticket.ActualizarBitacora(ticket, _dataContext);
+                ticket.EnviarNotificacion(ticket, "Aprobado", ListaEmpleados, _dataContext, notificacion, plantilla);
+
+                ticket.CambiarEstado(ticket, "Siendo Procesado", _dataContext);
+                ticket.ActualizarBitacora(ticket, _dataContext);
+                ticket.EnviarNotificacion(ticket, "Siendo Procesado", ListaEmpleados, _dataContext, notificacion, plantilla);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
         public TipoTicket_FlujoNoAprobacion(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo)
@@ -106,51 +167,64 @@ namespace ServicesDeskUCABWS.Entities
     {
         public override List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket)
         {
-            string result = null;
             try
             {
                 ticket.nro_cargo_actual = 1;
 
-                var Flujos = contexto.Flujos_Aprobaciones
-                    .Include(x => x.Cargo)
-                    .ThenInclude(x => x.Departamento)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
-                    .OrderBy(x => x.OrdenAprobacion).First();
 
-                var Cargos = Flujos.Cargo;
+                //Calcular Cargos
+                var ListaCargos = CargosAsociados(contexto, ticket);
 
-
-                var ListaEmpleado = contexto.Empleados.Where(x => x.Cargo.id == Cargos.id).ToList();
+                //Agregar Votos
+                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
 
 
-                var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
-                {
-                    IdTicket = ticket.Id,
-                    Ticket = ticket,
-                    IdUsuario = x.Id,
-                    Empleado = x,
-                    voto = "Pendiente",
-                    Turno = ticket.nro_cargo_actual
-                });
-
-                contexto.Votos_Tickets.AddRange(ListaVotos);
-
-                return ListaEmpleado;
+                return EmpleadosVotantes(contexto, ListaCargos);
             }
             catch (ExceptionsControl ex)
             {
                 return null;
             }
         }
-        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo)
-        {
 
+        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
+        {
+            var Flujos = contexto.Flujos_Aprobaciones
+                    .Include(x => x.Cargo)
+                    .ThenInclude(x => x.Departamento)
+                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
+                    .OrderBy(x => x.OrdenAprobacion).First();
+            var ListaCargos = new List<Cargo>();
+            ListaCargos.Add(Flujos.Cargo);
+            return ListaCargos;
         }
 
-        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado)
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
         {
-
+            
+            return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo.First().id).ToList();
         }
+
+        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        {
+            try
+            {
+                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.ActualizarBitacora(ticket, _dataContext);
+                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion,plantilla);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }
+
+        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado){ }
+        
         public TipoTicket_FlujoAprobacionJerarquico() { }
     }
 
@@ -160,33 +234,14 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                var Flujos = contexto.Flujos_Aprobaciones.Include(s => s.Cargo)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id).ToList();
+                //Calcular Cargos
+                var ListaCargos = CargosAsociados(contexto, ticket);
 
-                var Cargos = new List<Cargo>();
-                foreach (var f in Flujos)
-                {
-                    Cargos.Add(f.Cargo);
-                }
+                //Agregar Votos
+                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
 
-                var ListaEmpleado = new List<Empleado>();
-                foreach (var c in Cargos)
-                {
-                    ListaEmpleado.AddRange(contexto.Empleados.Where(x => x.Cargo.id == c.id));
-                }
 
-                var ListaVotos = ListaEmpleado.Select(x => new Votos_Ticket
-                {
-                    IdTicket = ticket.Id,
-                    Ticket = ticket,
-                    IdUsuario = x.Id,
-                    Empleado = x,
-                    voto = "Pendiente"
-                });
-
-                contexto.Votos_Tickets.AddRange(ListaVotos);
-
-                return ListaEmpleado;
+                return EmpleadosVotantes(contexto, ListaCargos);
             }
             catch (ExceptionsControl ex)
             {
@@ -194,16 +249,48 @@ namespace ServicesDeskUCABWS.Entities
             }
         }
 
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo)
+        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
         {
+            var Flujos = contexto.Flujos_Aprobaciones.Include(s => s.Cargo)
+                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id).ToList();
 
+            var Cargos = new List<Cargo>();
+            foreach (var f in Flujos)
+            {
+                Cargos.Add(f.Cargo);
+            }
+            return Cargos;
         }
 
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado)
+        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
         {
-
+            var ListaEmpleado = new List<Empleado>();
+            foreach (var c in ListaCargo)
+            {
+                ListaEmpleado.AddRange(contexto.Empleados.Where(x => x.Cargo.id == c.id));
+            }
+            return ListaEmpleado;
         }
 
+        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        {
+            try
+            {
+                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.ActualizarBitacora(ticket, _dataContext);
+                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }
+
+        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado){ }
 
         public TipoTicket_FlujoAprobacionParalelo() { }
     }

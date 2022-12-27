@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 {
     [TestClass]
     public class FlujoJerarquicoTest
@@ -63,7 +63,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
             //Act
             _contextMock.Setup(a => a.DbContext.SaveChanges());
 
-            var result = _TicketDAO.FlujoJerarquico(Ticket);
+            _TicketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //Assert
             Assert.AreEqual("Pendiente D1", Ticket.Estado.nombre);
@@ -76,7 +76,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
 
         //Test para el servicio de un excepcion para flujo paralelo
         [TestMethod]
-        public void FlujoParaleloExceptions()
+        public void FlujoJerarquicoExceptions()
         {
             //Arrage
             var Ticket = _contextMock.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"));
@@ -90,7 +90,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.FlujoJerarquicoTest
             //act
             _contextMock.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));
 
-            var result = _TicketDAO.FlujoJerarquico(Ticket);
+            var result = _TicketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //assert
             Assert.IsTrue(result!="Exitoso");

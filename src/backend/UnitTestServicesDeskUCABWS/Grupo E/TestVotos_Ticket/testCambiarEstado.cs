@@ -68,7 +68,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.CambiarEstado(entrada, "Pendiente" , ListaEmpleado);
+            var result = entrada.CambiarEstado(entrada, "Pendiente", context.Object);
 
             //Assert
             Assert.AreEqual(result,true);
@@ -96,7 +96,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.CambiarEstado(entrada, "Aprobado", ListaEmpleado);
+            var result = entrada.CambiarEstado(entrada, "Aprobado",context.Object);
 
             //Assert
             Assert.AreEqual(result, true);
@@ -105,7 +105,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
         //Prueba Unitaria para cuando el Estado es Aprobado
         [TestMethod]
-        public void CaminoFelizCambiarEstadoAprobadoException()
+        public void CambiarEstadoAprobadoException()
         {
             //arrange
             var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
@@ -124,7 +124,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.CambiarEstado(entrada, "Aprobado", ListaEmpleado);
+            var result = entrada.CambiarEstado(entrada, "Aprobado", context.Object);
 
             //Assert
             Assert.AreEqual(result, true);
@@ -133,7 +133,7 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
         //Prueba Unitaria para cuando el Estado es Siendo Procesado
         [TestMethod]
-        public void CaminoFelizCambiarEstadoProcesadoException()
+        public void CambiarEstadoProcesadoException()
         {
             //arrange
             var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
@@ -152,15 +152,14 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.CambiarEstado(entrada, "Aprobado", ListaEmpleado);
-
+            var result = entrada.CambiarEstado(entrada, "Aprobado", context.Object);
             //Assert
             Assert.AreEqual(result, true);
 
         }
         //Prueba Unitaria para cuando el Estado es Pendiente
         [TestMethod]
-        public void CaminoFelizCambiarEstadoPendienteException()
+        public void CambiarEstadoPendienteException()
         {
             //arrange
             var entrada = context.Object.Tickets.Find(Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"));
@@ -175,12 +174,11 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
             };
 
             //Act
-            plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+            context.Setup(x => x.Tickets).Throws(new ExceptionsControl("", new Exception()));
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.CambiarEstado(entrada, "Pendiente", ListaEmpleado);
-
+            var result = entrada.CambiarEstado(entrada, "Pendiente", context.Object);
             //Assert
             Assert.AreEqual(result, false);
 

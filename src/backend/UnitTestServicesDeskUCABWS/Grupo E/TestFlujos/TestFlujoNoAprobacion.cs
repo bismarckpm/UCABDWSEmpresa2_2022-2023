@@ -54,7 +54,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             context.Setup(a => a.DbContext.SaveChanges());
             plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
 
-            ticketDAO.FlujoAprobacion(Ticket);
+            ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //Assert
             Assert.AreEqual("Siendo Procesado", Ticket.Estado.nombre);
@@ -75,8 +75,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 
             };
             //act
-            context.Setup(x => x.Tickets).Throws(new Exception(""));
-            var result = ticketDAO.FlujoNoAprobacion(Ticket);
+            context.Setup(x => x.Empleados).Throws(new Exception(""));
+            var result = ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //assert
             Assert.IsTrue(result != "Exitoso");

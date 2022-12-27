@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -50,7 +52,9 @@ namespace ServicesDeskUCABWS.Entities
         public Ticket? Ticket_Padre { get; set; }
 
         public Empleado Emisor { get; set; }
+        
         public Ticket() { }
+
         public Ticket(string titulo, string descripcion)
         {
             Id = Guid.NewGuid();
@@ -74,7 +78,9 @@ namespace ServicesDeskUCABWS.Entities
 
         public int? nro_cargo_actual { get; set; }
 
-        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados, IDataContext _dataContext)
+        
+
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, IDataContext _dataContext)
         {
             try
             {
@@ -93,58 +99,6 @@ namespace ServicesDeskUCABWS.Entities
 
                 _dataContext.Tickets.Update(ticket);
                 _dataContext.DbContext.SaveChanges();
-
-                
-
-                /*if (Estado == "Aprobado")
-                {
-                    try
-                    {
-                        
-                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
-
-                    }
-                    catch (ExceptionsControl) { }
-                    CambiarEstado(ticket, "Siendo Procesado", null,_dataContext);
-                    return true;
-                }
-
-                if (Estado == "Siendo Procesado")
-                {
-                    
-                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
-                    foreach (var emp in empleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    return true;
-                }
-
-                if (Estado == "Pendiente")
-                {
-                    foreach (var emp in ListaEmpleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    return true;
-                }
-
-                try
-                {
-                    
-                    //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
-                }
-                catch (ExceptionsControl) { }
-
-                */
 
             }
             catch (ExceptionsControl ex)
@@ -181,6 +135,54 @@ namespace ServicesDeskUCABWS.Entities
             _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Tickets.Update(ticket);
         }
+
+        public bool EnviarNotificacion(Ticket ticket, string Estado, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion,IPlantillaNotificacion plantilla)
+        {
+            var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+            var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+            switch (Estado)
+            {
+                case "Aprobado":
+                    try
+                    {
+                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                    }
+                    catch (ExceptionsControl) { }
+                    break;
+                case "Siendo Procesado":
+                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
+                    foreach (var emp in empleados)
+                    {
+                        try
+                        {
+                            //notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    break;
+                case "Pendiente":
+                    foreach (var emp in ListaEmpleados)
+                    {
+                        try
+                        {
+                            //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, emp.correo);
+                        }
+                        catch (ExceptionsControl) { }
+                    }
+                    break;
+                default:
+                    try
+                    {
+                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                    }
+                    catch (ExceptionsControl) { }
+                    break;
+
+            }
+            return true;
+        }
+
+        
     }
 }
 
