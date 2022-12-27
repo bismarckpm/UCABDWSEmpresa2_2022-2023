@@ -99,7 +99,7 @@ namespace ServicesDeskUCABWS.Entities
 
                 _dataContext.Tickets.Update(ticket);
                 _dataContext.DbContext.SaveChanges();
-
+                ActualizarBitacora(ticket, _dataContext);
             }
             catch (ExceptionsControl ex)
             {

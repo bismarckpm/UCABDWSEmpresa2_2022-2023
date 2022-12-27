@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
@@ -81,6 +82,9 @@ namespace ServicesDeskUCABWS.Entities
 
         public abstract bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla);
 
+        public abstract string VerificarVotacion(Guid idTicket, IDataContext contexto);
+
+        public abstract string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto);
 
         //public abstract void EnviarNotificaciones()
 
@@ -98,215 +102,35 @@ namespace ServicesDeskUCABWS.Entities
 
             contexto.Votos_Tickets.AddRange(ListaVotos);
         }
-    }
 
-    public class TipoTicket_FlujoNoAprobacion : Tipo_Ticket
-    {
-        public override List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket)
+        public Ticket ConsultarDatosTicket(Guid idTicket, IDataContext contexto)
         {
-            try
-            {
-                return contexto.Empleados
-                    .Where(s => s.Cargo.Departamento.id == ticket.Departamento_Destino.id)
-                    .ToList(); 
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return contexto.Tickets
+                    .AsNoTracking()
+                    .Include(x => x.Departamento_Destino).Include(x => x.Tipo_Ticket)
+                    .Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
+                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
+                    .Where(x => x.Id == idTicket).FirstOrDefault();
         }
 
-        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
+        public int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
         {
-            return new List<Cargo>();
+            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
+                && x.voto == "Aprobado").Count();
         }
 
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
+        public int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
         {
-            return new List<Empleado>();
+            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
+                && x.voto == "Rechazado").Count();
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public void CambiarEstadoVotosPendiente(Ticket ticket, IDataContext contexto)
         {
-            try
-            {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
-                ticket.ActualizarBitacora(ticket, _dataContext);
-
-                ticket.CambiarEstado(ticket, "Aprobado", _dataContext);
-                ticket.ActualizarBitacora(ticket, _dataContext);
-                ticket.EnviarNotificacion(ticket, "Aprobado", ListaEmpleados, _dataContext, notificacion, plantilla);
-
-                ticket.CambiarEstado(ticket, "Siendo Procesado", _dataContext);
-                ticket.ActualizarBitacora(ticket, _dataContext);
-                ticket.EnviarNotificacion(ticket, "Siendo Procesado", ListaEmpleados, _dataContext, notificacion, plantilla);
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            
+            contexto.Votos_Tickets
+                .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
+                .ToList().ForEach(x => x.voto = ticket.Estado.Estado_Padre.nombre);
         }
-
-        public override string ObtenerTipoAprobacion()
-        {
-            return "Modelo_No_Aprobacion";
-        }
-
-        public TipoTicket_FlujoNoAprobacion(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo)
-        {
-
-        }
-
-        public TipoTicket_FlujoNoAprobacion(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre,descripcion,tipo,MinimoAprobado,MaximoRechazado)
-        {
-            
-        }
-        public TipoTicket_FlujoNoAprobacion() { }
-    }
-
-    public class TipoTicket_FlujoAprobacionJerarquico : Tipo_Ticket
-    {
-        public override List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket)
-        {
-            try
-            {
-                ticket.nro_cargo_actual = 1;
-
-
-                //Calcular Cargos
-                var ListaCargos = CargosAsociados(contexto, ticket);
-
-                //Agregar Votos
-                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
-
-
-                return EmpleadosVotantes(contexto, ListaCargos);
-            }
-            catch (ExceptionsControl ex)
-            {
-                return null;
-            }
-        }
-
-        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
-        {
-            var Flujos = contexto.Flujos_Aprobaciones
-                    .Include(x => x.Cargo)
-                    .ThenInclude(x => x.Departamento)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
-                    .OrderBy(x => x.OrdenAprobacion).First();
-            var ListaCargos = new List<Cargo>();
-            ListaCargos.Add(Flujos.Cargo);
-            return ListaCargos;
-        }
-
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
-        {
-            
-            return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo.First().id).ToList();
-        }
-
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
-        {
-            try
-            {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
-                ticket.ActualizarBitacora(ticket, _dataContext);
-                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion,plantilla);
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public override string ObtenerTipoAprobacion()
-        {
-            return "Modelo_Jerarquico";
-        }
-
-        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }
-
-        public TipoTicket_FlujoAprobacionJerarquico(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado){ }
-        
-        public TipoTicket_FlujoAprobacionJerarquico() { }
-    }
-
-    public class TipoTicket_FlujoAprobacionParalelo : Tipo_Ticket
-    {
-        public override List<Empleado> FlujoAprobacion(IDataContext contexto, Ticket ticket)
-        {
-            try
-            {
-                //Calcular Cargos
-                var ListaCargos = CargosAsociados(contexto, ticket);
-
-                //Agregar Votos
-                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos), ticket);
-
-
-                return EmpleadosVotantes(contexto, ListaCargos);
-            }
-            catch (ExceptionsControl ex)
-            {
-                return null;
-            }
-        }
-
-        public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
-        {
-            var Flujos = contexto.Flujos_Aprobaciones.Include(s => s.Cargo)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id).ToList();
-
-            var Cargos = new List<Cargo>();
-            foreach (var f in Flujos)
-            {
-                Cargos.Add(f.Cargo);
-            }
-            return Cargos;
-        }
-
-        public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo)
-        {
-            var ListaEmpleado = new List<Empleado>();
-            foreach (var c in ListaCargo)
-            {
-                ListaEmpleado.AddRange(contexto.Empleados.Where(x => x.Cargo.id == c.id));
-            }
-            return ListaEmpleado;
-        }
-
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
-        {
-            try
-            {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
-                ticket.ActualizarBitacora(ticket, _dataContext);
-                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public override string ObtenerTipoAprobacion()
-        {
-            return "Modelo_Paralelo";
-        }
-
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo) : base(nombre, descripcion, tipo){ }
-
-        public TipoTicket_FlujoAprobacionParalelo(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null) : base(nombre, descripcion, tipo, MinimoAprobado, MaximoRechazado){ }
-
-        public TipoTicket_FlujoAprobacionParalelo() { }
     }
 
 }

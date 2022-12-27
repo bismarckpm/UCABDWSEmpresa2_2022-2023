@@ -49,30 +49,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             try
             {
                 ValidarDatosEntradaVotos(votoDTO);
+
+                Votos_Ticket voto = ActualizarVoto(votoDTO);
+
+
+                //Verificar Aprobacion
                 
-                //actualizamos el voto 
-                var voto = contexto.Votos_Tickets
-                    .Where(x => x.IdTicket.ToString().ToUpper() == votoDTO.IdTicket &&
-                    x.IdUsuario.ToString().ToUpper() == votoDTO.IdUsuario).First();
-                voto.comentario = votoDTO.comentario;
-                voto.voto = votoDTO.voto;
-                voto.fecha = DateTime.UtcNow;
-
-                contexto.DbContext.SaveChanges();
-
                 var temp = contexto.Tickets.Include(x => x.Tipo_Ticket)
-                    .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket.ObtenerTipoAprobacion();
+                    .Where(x => x.Id == voto.IdTicket).First().Tipo_Ticket;
 
-                string veredicto;
-                if (temp == "Modelo_Paralelo")
-                {
-                    veredicto = VerificarAprobacionTicketParalelo(Guid.Parse(votoDTO.IdTicket));
-                }
-                if (temp == "Modelo_Jerarquico")
-                {
-                    veredicto = VerificarAprobacionTicketJerarquico(Guid.Parse(votoDTO.IdTicket));
-                }
-
+                string veredicto = temp.VerificarVotacion(voto.IdTicket,contexto);
+                
                 contexto.DbContext.SaveChanges();
                 response.Data = voto;
 
@@ -85,6 +72,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             }
 
             return response;
+        }
+
+        private Votos_Ticket ActualizarVoto(Votos_TicketDTOCreate votoDTO)
+        {
+            //actualizamos el voto 
+            var voto = contexto.Votos_Tickets
+                .Where(x => x.IdTicket.ToString().ToUpper() == votoDTO.IdTicket &&
+                x.IdUsuario.ToString().ToUpper() == votoDTO.IdUsuario).First();
+            voto.comentario = votoDTO.comentario;
+            voto.voto = votoDTO.voto;
+            voto.fecha = DateTime.UtcNow;
+            contexto.DbContext.SaveChanges();
+            return voto;
         }
 
         public void ValidarDatosEntradaVotos(Votos_TicketDTOCreate votosDTO)

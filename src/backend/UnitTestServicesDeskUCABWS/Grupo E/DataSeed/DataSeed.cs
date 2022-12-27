@@ -406,7 +406,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                 },
                 new TipoTicket_FlujoAprobacionJerarquico("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    
+                    Id = Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19")
                 },
                 new TipoTicket_FlujoAprobacionParalelo("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {

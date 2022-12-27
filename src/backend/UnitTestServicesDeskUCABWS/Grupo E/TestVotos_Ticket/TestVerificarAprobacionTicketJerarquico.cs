@@ -96,7 +96,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             };
             //act
 
-
             var result = VotoDAO.Votar(Voto);
 
             //assert
@@ -106,7 +105,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             var listavotos = context.Object.Votos_Tickets.Where(c => c.IdTicket.ToString().ToUpper() == Voto.IdTicket.ToUpper());
             Assert.IsTrue(listavotos.TakeWhile(c => c.voto == "Aprobado").Count() == listavotos.Count());
             var ticket = context.Object.Tickets.Find(Guid.Parse(Voto.IdTicket));
-            Assert.AreEqual(ticket.Estado.nombre, "Pendiente D1");
+            Assert.AreEqual(ticket.Estado.nombre, "Aprobado D1");
         }
 
         [TestMethod]
@@ -115,27 +114,29 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             //arrange
 
             var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
+            var tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19"));
 
             //act
-            var result = VotoDAO.VerificarAprobacionTicketJerarquico(entrada);
+            var result = tipo_Ticket.VerificarVotacion(entrada,context.Object);
 
             //assert
             Assert.AreEqual(result, "Pendiente");
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ExceptionsControl))]
         public void EntraEnLaExcepccionDevuelveFallido()
         {
             //arrange
 
             var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
+            
+            var tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19"));
+
             context.Setup(c => c.Tickets).Throws(new Exception());
-
             //act
-            var result = VotoDAO.VerificarAprobacionTicketJerarquico(entrada);
+            var result = tipo_Ticket.VerificarVotacion(entrada, context.Object);
 
-            //assert
-            Assert.AreEqual(result, "Fallido");
         }
 
     }
