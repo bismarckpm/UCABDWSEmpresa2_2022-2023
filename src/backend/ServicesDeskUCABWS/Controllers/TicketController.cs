@@ -114,8 +114,8 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.adquirirTicket(ticketPropio);
         }
         [HttpGet, Route("ObtenerTicketsPropios/{idEmpleado}")]
-        public ApplicationResponse<List<Ticket>> obtenerTicketsPropiosCtrl(string idEmpleado)
-        {
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropiosCtrl(string idEmpleado)
+        {   
             return _ticketDAO.obtenerTicketsPropios(new Guid(idEmpleado));
         }
     }

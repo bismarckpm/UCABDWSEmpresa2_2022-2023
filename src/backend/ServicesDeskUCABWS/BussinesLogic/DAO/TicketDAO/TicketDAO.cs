@@ -920,9 +920,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
-        public ApplicationResponse<List<Ticket>> obtenerTicketsPropios(Guid idEmpleado)
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropios(Guid idEmpleado)
         {
-            ApplicationResponse<List<Ticket>> respuesta = new ApplicationResponse<List<Ticket>>();
+            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
             try
             {
                 respuesta.Data = obtenerTicketsPropiosHl(idEmpleado);
@@ -1221,11 +1221,35 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
         }
-        public List<Ticket> obtenerTicketsPropiosHl(Guid idEmpleado)
+        public List<TicketInfoBasicaDTO> obtenerTicketsPropiosHl(Guid idEmpleado)
         {
-            List<Ticket> tickets = _dataContext.Tickets.Include(t => t.Responsable).Where(t => t.Responsable.Id == idEmpleado).ToList();
+            List<Ticket> tickets = _dataContext.Tickets
+                                                .Include(t => t.Responsable)
+                                                .Include(t =>t.Emisor)
+                                                .Include(t => t.Prioridad)
+                                                .Include(t=>t.Tipo_Ticket)
+                                                .Include(t=>t.Estado)
+                                                .Where(t => t.Responsable.Id == idEmpleado)
+                                                .ToList();
             if (tickets.Count() > 0)
-                return tickets;
+            {
+                List<TicketInfoBasicaDTO> respuesta = new List<TicketInfoBasicaDTO>();
+                tickets.ForEach(delegate (Ticket ticket)
+                {
+                    respuesta.Add(new TicketInfoBasicaDTO
+                    {
+                        Id = ticket.Id,
+                        titulo = ticket.titulo,
+                        empleado_correo = ticket.Emisor.correo,
+                        prioridad_nombre = ticket.Prioridad.nombre,
+                        fecha_creacion = ticket.fecha_creacion,
+                        fecha_eliminacion = ticket.fecha_eliminacion,
+                        tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
+                        estado_nombre = ticket.Estado.nombre
+                    });
+                });
+                return respuesta;
+            }
             else
                 throw new Exception("Empleado no tiene tickets propios");
         }
