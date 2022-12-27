@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 {
     [TestClass]
     public class TestUpdateTipoTicket
