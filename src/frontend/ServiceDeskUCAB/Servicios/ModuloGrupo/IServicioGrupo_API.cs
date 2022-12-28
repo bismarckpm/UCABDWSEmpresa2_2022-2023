@@ -14,5 +14,8 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         public Task<GrupoModel> BuscarGrupo(Guid id);
         public Task<JObject> RegistrarGrupo(GrupoModel grupo);
         public Task<JObject> EditarGrupo(GrupoModel grupo);
+        Task<JObject> EditarRelacion(Guid id, List<string> idDepartamentos);
+        Task<JObject> AsociarDepartamento(Guid id, List<string> idDepartamentos);
+        Task<List<DepartamentoModel>> DepartamentoAsociadoGrupo(Guid id);
     }
 }

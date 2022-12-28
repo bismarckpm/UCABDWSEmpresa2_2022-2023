@@ -128,68 +128,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return _json_respuesta;
         }
 
-        public async Task<List<DepartamentoModel>> DepartamentoAsociadoGrupo(Guid id)
-        {
-            DepartamentoModel departamento = new DepartamentoModel();
-
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
-            try
-            {
-                var responseDept = await cliente.GetAsync($"Departamento/ConsultarDepartamentosPorIdGrupo/{id}");
-
-                if (responseDept.IsSuccessStatusCode)
-                {
-                    var respuestaDept = await responseDept.Content.ReadAsStringAsync();
-                    JObject json_respuestaDept = JObject.Parse(respuestaDept);
-
-                    string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
-                    var resultadoDept = JsonConvert.DeserializeObject<List<DepartamentoModel>>(stringDataRespuestaDept);
-                    departamento.departamentos = resultadoDept;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex.InnerException!;
-            }
-            return departamento.departamentos;
-        }
-
-        //Asociar un departamento seleccionado
-        public async Task<JObject> AsociarDepartamento(Guid id, List<string> idDepartamentos)
-        {
-            GrupoModel model = new GrupoModel();
-
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
-            string combinedString = string.Join(",", idDepartamentos);
-            var contentDept = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
-
-            try
-            {
-                var responseDepartamento = await cliente.PutAsync($"Departamento/AsignarGrupoToDepartamento/{id}", contentDept);
-                var respuestaDepartamento = await responseDepartamento.Content.ReadAsStringAsync();
-                JObject json_respuesta = JObject.Parse(respuestaDepartamento);
-                return json_respuesta;
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return _json_respuesta;
-        }
-
         public async Task<List<DepartamentoModel>> ListaDepartamento()
         {
             DepartamentoModel departamento = new DepartamentoModel();
@@ -255,34 +193,5 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return departamento.departamentos;
         }
 
-        public async Task<JObject> EditarRelacion(Guid id, List<string> idDepartamentos)
-        {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
-            string combinedString = string.Join(",", idDepartamentos);
-            var content = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await cliente.PutAsync($"Departamento/EditarRelacion/{id}", content);
-                var respuesta = await response.Content.ReadAsStringAsync();
-                JObject _json_respuesta = JObject.Parse(respuesta);
-                return _json_respuesta;
-
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return _json_respuesta;
-        }
     }
 }
