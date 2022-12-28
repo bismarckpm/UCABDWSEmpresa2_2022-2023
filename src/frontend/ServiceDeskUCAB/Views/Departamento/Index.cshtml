@@ -184,10 +184,10 @@
                             @Html.DisplayFor(i => item.descripcion)
                         </td>
                         <td>
-                            <div class="dropdown" style="float: right;">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                            <div class="dropdown" >
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
                                         <button id="btnEditar" type="button" class="dropdown-item" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","Departamento",new { id = "idDepartamento" })">
