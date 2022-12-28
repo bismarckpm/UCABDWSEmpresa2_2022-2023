@@ -240,5 +240,96 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 			return existe;
 		}
 
-	}
+
+        public List<string> AsignarGrupoToDepartamento(Guid id, string idDept)
+        {
+
+            try
+            {
+                List<string> listaDept = idDept.Split(',').ToList();
+
+
+                foreach (var dept in listaDept)
+                {
+
+                    var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
+                    nuevoDepartamento.id_grupo = id;
+                    _dataContext.DbContext.SaveChanges();
+                }
+
+                return listaDept;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Fallo al asignar departamento", ex);
+            }
+        }
+
+        public List<string> EditarRelacion(Guid id, string idDepartamentos)
+        {
+            try
+            {
+                List<string> listaDept = idDepartamentos.Split(',').ToList();
+
+                if (idDepartamentos.Equals(""))
+                {
+
+                    _servicioGrupo.QuitarAsociacion(id);
+
+                    return listaDept;
+
+                }
+                else if (_servicioGrupo.QuitarAsociacion(id))
+                {
+
+                    foreach (var nuevoDept in listaDept)
+                    {
+
+                        var relacionado = _dataContext.Departamentos.Where(x => x.id.ToString() == nuevoDept).FirstOrDefault();
+                        if (relacionado != null)
+                        {
+                            relacionado.id_grupo = id;
+                            relacionado.fecha_ultima_edicion = DateTime.Now.Date;
+                            _dataContext.DbContext.SaveChanges();
+                        }
+
+
+                    }
+
+                }
+                return listaDept;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Fallo al asignar grupo", ex);
+            }
+        }
+
+        //Listar departamentos por el identificador de un grupo
+        public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
+        {
+            try
+            {
+
+                var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
+                        d => new DepartamentoDto
+                        {
+                            id = d.id,
+                            nombre = d.nombre,
+                            descripcion = d.descripcion,
+                            fecha_creacion = d.fecha_creacion,
+                            fecha_ultima_edicion = d.fecha_ultima_edicion,
+                            fecha_eliminacion = d.fecha_eliminacion
+                        }
+                     );
+                return departamentos.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("El departamento" + idGrupo + "No esta registrado", ex);
+            }
+        }
+
+
+    }
 }

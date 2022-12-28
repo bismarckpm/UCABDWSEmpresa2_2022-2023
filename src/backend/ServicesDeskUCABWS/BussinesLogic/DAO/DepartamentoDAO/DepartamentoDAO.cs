@@ -21,7 +21,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
     public class DepartamentoDAO : IDepartamentoDAO
     {
         private readonly IDataContext _dataContext;
-        private readonly IGrupoDAO _servicioGrupo;
         private readonly IMapper mapper;
 
         //Constructor
@@ -250,30 +249,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        public List<string> AsignarGrupoToDepartamento(Guid id, string idDept)
-        {
-
-            try
-            {
-                List<string> listaDept = idDept.Split(',').ToList();
-
-
-                foreach (var dept in listaDept)
-                {
-
-                    var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id.ToString() == dept).FirstOrDefault();
-                    nuevoDepartamento.id_grupo = id;
-                    _dataContext.DbContext.SaveChanges();
-                }
-
-                return listaDept;
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("Fallo al asignar departamento", ex);
-            }
-        }
-
         public List<DepartamentoDto> NoAsociado()
         {
 			try
@@ -313,46 +288,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 throw new ExceptionsControl("El departamento" + departamento.id + "ya está registrado", ex);
             }
             return existe;
-        }
-
-        public List<string> EditarRelacion(Guid id, string idDepartamentos)
-        {
-            try
-            {
-                List<string> listaDept = idDepartamentos.Split(',').ToList();
-
-                if (idDepartamentos.Equals(""))
-                {
-
-                    _servicioGrupo.QuitarAsociacion(id);
-
-                    return listaDept;
-
-                }
-                else if (_servicioGrupo.QuitarAsociacion(id))
-                {
-
-                    foreach (var nuevoDept in listaDept)
-                    {
-
-                        var relacionado = _dataContext.Departamentos.Where(x => x.id.ToString() == nuevoDept).FirstOrDefault();
-                        if (relacionado != null)
-                        {
-                            relacionado.id_grupo = id;
-                            relacionado.fecha_ultima_edicion = DateTime.Now.Date;
-                            _dataContext.DbContext.SaveChanges();
-                        }
-
-
-                    }
-
-                }
-                return listaDept;
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("Fallo al asignar grupo", ex);
-            }
         }
 
         public IEnumerable<DepartamentoSearchDTO> ConsultaDepartamentoExcluyente(Guid IdDepartamento)
