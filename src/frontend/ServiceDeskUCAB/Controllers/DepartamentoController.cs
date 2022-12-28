@@ -54,7 +54,7 @@ namespace ServiceDeskUCAB.Controllers
 
 				if ((bool)respuesta["success"])
 				{
-					return RedirectToAction("Index");
+					return RedirectToAction("Index", new { message = "Se ha agregado correctamente" });
 				}
 			}
 			catch (Exception ex)
