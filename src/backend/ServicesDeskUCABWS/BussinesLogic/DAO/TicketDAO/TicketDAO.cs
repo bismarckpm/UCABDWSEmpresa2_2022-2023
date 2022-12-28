@@ -1181,9 +1181,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             if (empleado.Cargo == null)
                 throw new Exception("Empleado no tiene cargo asignado");
             Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
-            if (!_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).Any())
+            if (!_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Any())
                 throw new Exception("No existen departamentos acorde al cargo del empleado");
-            return _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
+            List<DepartamentoSearchDTO> lista = _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).ToList());
+            Console.WriteLine($"Lista: {lista.Count()}");
+            return lista;
         }
 
         public DepartamentoSearchDTO buscarDepartamentoUsuarioHl(Guid idEmpleado)
@@ -1215,10 +1217,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         }
         public void adquirirTicketHl(TicketTomarDTO ticketPropio)
         {
-            Empleado empleado = _dataContext.Empleados.Where(t => t.Id == new Guid(ticketPropio.empleadoId)).Single();
+            Empleado empleado = _dataContext.Empleados.Include(t=>t.Tickets_Propios).Where(t => t.Id == new Guid(ticketPropio.empleadoId)).Single();
             Ticket ticket = _dataContext.Tickets.Where(t => t.Id == new Guid(ticketPropio.ticketId)).Single();
             ticket.Responsable = empleado;
+            if (empleado.Tickets_Propios == null)
+                empleado.Tickets_Propios = new List<Ticket>();
+            empleado.Tickets_Propios.Add(ticket);
             _dataContext.DbContext.Update(ticket);
+            _dataContext.DbContext.Update(empleado);
             _dataContext.DbContext.SaveChanges();
         }
         public List<TicketInfoBasicaDTO> obtenerTicketsPropiosHl(Guid idEmpleado)

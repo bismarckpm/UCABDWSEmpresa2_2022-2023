@@ -108,8 +108,8 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.buscarEstadosPorDepartamento(new Guid(idDepartamento));
         }
 
-        [HttpPost, Route("AdquirirTicket/")]
-        public ApplicationResponse<string> adquirirTicketCtrl([FromBody] TicketTomarDTO ticketPropio)
+        [HttpPost, Route("Tomar/")]
+        public ApplicationResponse<string> tomarTicketCtrl([FromBody] TicketTomarDTO ticketPropio)
         {
             return _ticketDAO.adquirirTicket(ticketPropio);
         }
