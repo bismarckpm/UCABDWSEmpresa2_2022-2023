@@ -143,7 +143,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var tipoEstadoEntity = _mapper.Map<Tipo_Estado>(ConsultarTipoEstadoGUID(id));
+                var tipoEstadoEntity = _tipoEstadoContext.Tipos_Estados.Include(et => et.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(et => et.Id == id).Single();
                 tipoEstadoEntity.etiquetaTipoEstado.Clear();
 
                 //Actualizar la relación de tipo estado con etiquetas
