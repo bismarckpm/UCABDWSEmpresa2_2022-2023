@@ -274,12 +274,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 if (idDepartamentos.Equals(""))
                 {
 
-                    _servicioGrupo.QuitarAsociacion(id);
+                    QuitarAsociacion(id);
 
                     return listaDept;
 
                 }
-                else if (_servicioGrupo.QuitarAsociacion(id))
+                else if (QuitarAsociacion(id))
                 {
 
                     foreach (var nuevoDept in listaDept)

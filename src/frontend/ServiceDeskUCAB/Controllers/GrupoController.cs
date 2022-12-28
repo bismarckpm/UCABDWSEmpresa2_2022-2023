@@ -39,7 +39,7 @@ namespace ServiceDeskUCAB.Controllers
 			try
 			{
 
-				respuesta = await _servicioApiDepartamento.AsociarDepartamento(grupo.id, idDepartamentos);
+				respuesta = await _servicioApiGrupo.AsociarDepartamento(grupo.id, idDepartamentos);
 				if ((bool)respuesta["success"])
 					return RedirectToAction("DepartamentoGrupo", new { message = "Se ha asociado correctamente" });
 				else
@@ -78,7 +78,7 @@ namespace ServiceDeskUCAB.Controllers
 
 			try
 			{
-				viewModel.deptAsociado = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
+				viewModel.deptAsociado = await _servicioApiGrupo.DepartamentoAsociadoGrupo(id);
 				viewModel.departamento = await _servicioApiDepartamento.ListaDepartamento();
 				viewModel.grupo = await _servicioApiGrupo.BuscarGrupo(id);
 				return PartialView(viewModel);
@@ -96,7 +96,7 @@ namespace ServiceDeskUCAB.Controllers
 			respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
 			//if ((bool)respuesta["success"])
 
-			respuestaDept = await _servicioApiDepartamento.EditarRelacion(grupo.id, idDepartamentos);
+			respuestaDept = await _servicioApiGrupo.EditarRelacion(grupo.id, idDepartamentos);
 			return RedirectToAction("Index", new { message = "Se ha modificado correctamente" });
 			//else
 			//return NoContent();
@@ -112,7 +112,7 @@ namespace ServiceDeskUCAB.Controllers
 			{
 				model = await _servicioApiGrupo.BuscarGrupo(id);
 				ViewData["nombre"] = model.nombre;
-				departamento.departamentos = await _servicioApiDepartamento.DepartamentoAsociadoGrupo(id);
+				departamento.departamentos = await _servicioApiGrupo.DepartamentoAsociadoGrupo(id);
 				return PartialView(departamento);
 			}
 			catch (Exception ex)

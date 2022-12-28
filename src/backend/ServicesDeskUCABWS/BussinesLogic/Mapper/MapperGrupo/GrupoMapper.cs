@@ -42,7 +42,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
             };
         }
 
-        public static Grupo MapperDTOToEntityUpdate(GrupoDto_Update grupo)
+        public static Grupo MapperDTOToEntityModificar(GrupoDto_Update grupo)
         {
             return new Grupo
             {

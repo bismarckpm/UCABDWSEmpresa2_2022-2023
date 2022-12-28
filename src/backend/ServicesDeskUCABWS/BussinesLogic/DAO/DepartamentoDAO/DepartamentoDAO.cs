@@ -24,10 +24,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         private readonly IMapper mapper;
 
         //Constructor
-        public DepartamentoDAO(IDataContext dataContext, IGrupoDAO servicioGrupo, IMapper mapper)
+        public DepartamentoDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
-            _servicioGrupo = servicioGrupo;
             this.mapper = mapper;
         }
 
@@ -272,11 +271,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 throw new ExceptionsControl("El departamento" + departamento.id + "ya está registrado", ex);
             }
             return existe;
-        }
-
-        }
-
-        }
+        } 
 
         public IEnumerable<DepartamentoSearchDTO> ConsultaDepartamentoExcluyente(Guid IdDepartamento)
         {

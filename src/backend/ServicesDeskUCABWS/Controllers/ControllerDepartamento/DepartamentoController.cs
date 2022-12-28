@@ -129,23 +129,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
-        [HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
-        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
-        {
-            var response = new ApplicationResponse<List<DepartamentoDto>>();
-            try
-            {
-                response.Data = _departamentoDAO.GetByIdDepartamento(idGrupo);
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
         [HttpGet("ConsultarDepartamentoNoAsociado/")]
         public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentoNoAsociado()
         {
