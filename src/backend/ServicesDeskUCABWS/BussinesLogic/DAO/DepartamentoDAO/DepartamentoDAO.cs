@@ -40,24 +40,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 if (!ExisteDepartamento(departamento)) {
                     _dataContext.Departamentos.Add(departamento);
                     _dataContext.DbContext.SaveChanges();
-                }    
+                }
 
-				var nuevoDepartamento = _dataContext.Departamentos.Where(d => d.id == departamento.id)
-						.Select(d => new DepartamentoDto
-						{
-							id = d.id,
-							descripcion = d.descripcion,
-							nombre = d.nombre,
-							fecha_creacion = d.fecha_creacion
-
-						}).First();
+                var nuevoDepartamento = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();
 
                 AgregarEstadoADepartamentoCreado(departamento);
                 AgregarCargosADepartamentoCreado(departamento);
-                
-                _dataContext.DbContext.SaveChanges();
-                return nuevoDepartamento;
-			}
+
+                return DepartamentoMapper.MapperEntityToDto(nuevoDepartamento);
+            }
             catch (Exception ex) {
 				throw new ExceptionsControl("No se pudo registrar el departamento"+" "+departamento.nombre, ex);
 			}
@@ -135,18 +126,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                     _dataContext.Departamentos.Update(departamento);
-				            _dataContext.DbContext.SaveChanges();
-				            var data = _dataContext.Departamentos.Where(d => d.id == departamento.id).Select(
-                    d => new DepartamentoDto_Update
-                    {
-                        id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion
-                    }
+				    _dataContext.DbContext.SaveChanges();
 
-                );
-                return data.First();
+                    var data = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();               
+                    return DepartamentoMapper.MapperEntityToDTOModificar(data);
             }           
             catch (DbUpdateException ex)
             {
@@ -205,6 +188,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 		{
 			try
 			{
+
 				var lista = _dataContext.Departamentos.Where(x => x.fecha_eliminacion == null).Select(
 					d => new DepartamentoDto
 					{
@@ -342,8 +326,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                             relacionado.fecha_ultima_edicion = DateTime.Now.Date;
                             _dataContext.DbContext.SaveChanges();
                         }
-
-
                     }
 
                 }
@@ -361,7 +343,5 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
             return ListaDepartamento;
         }
-
-
     }
 }
