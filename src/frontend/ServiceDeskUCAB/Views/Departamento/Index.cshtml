@@ -8,6 +8,15 @@
     ViewData["Title"] = "Gestion Departamento";
 }
 
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+
 <!-- Scripts para mostrar ventanas emergentes -->
 @section scripts{
 <!-- Script para mostrar ventana Agregar Departamento -->
