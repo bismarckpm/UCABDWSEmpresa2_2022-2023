@@ -304,19 +304,20 @@ main .modal-content .modal-body .advertencia{
 
 /*Dropdown de la tabla*/
 
-main .dropdown {
-    transform: translate(-600%,-5%);
-    background-color: none;  
+main .dropdown {  
+    
+    display:flex;
+    margin:auto;
+    justify-content:center;
+    background-color:none;
+
 }
 
 main .dropdown i{
     display:flex;
     margin:auto;
+    justify-content:center;
     font-size: 14px;
-}
-
-main .prueba{
-    background-color:red;
 }
 
 main .dropdown-toggle {
@@ -386,11 +387,6 @@ main .rounded-pill{
 
 @media screen and (max-width: 990px) {
 
-    main .dropdown {
-        transform: translateY(-5%);
-        right: 80%;
-    }
-
     main .boton{
         width:180px;        
     }
@@ -398,10 +394,7 @@ main .rounded-pill{
 
 @media screen and (max-width: 768px) {
 
-    main .dropdown {
-        transform: translateY(-5%);
-        right: 70%;
-    }
+    
 
     main .boton {
         width: 100px;
@@ -428,11 +421,3 @@ main .rounded-pill{
     }
 }
 
-@media screen and (max-width: 200px) {
-
-    main .dropdown {
-        transform: translateY(-5%);
-        right: 70%;
-    }   
-
-}
