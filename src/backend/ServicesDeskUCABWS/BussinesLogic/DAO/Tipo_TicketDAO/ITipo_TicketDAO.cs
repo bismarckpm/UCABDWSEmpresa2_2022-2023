@@ -16,7 +16,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         public void ValidarDatosEntradaTipo_Ticket_Update(Tipo_TicketDTOUpdate tipo_TicketDTOUpdate);
         public void ValidarDatosEntradaTipo_Ticket(Tipo_TicketDTOCreate tipo_TicketDTOCreate);
         public Tipo_TicketDTOSearch ConsultarTipoTicketGUID(Guid id);
-        public Tipo_TicketDTOSearch ConsultarTipoTicketNomb(string nombre);
+        public Tipo_TicketDTOSearch ConsultarNombreTipoTicket(string nombre);
         public Boolean EliminarTipoTicket(Guid id);
 
         public List<Tipo_TicketDTOSearch> ConsultaTipoTicketAgregarTicket(Guid Id);

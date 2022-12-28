@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.Data;
@@ -17,11 +18,12 @@ namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
         private readonly ITicketDAO ticketDAO;
+        private IMapper mapper;
 
         public TestAgregarVoto()
         {
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketService(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object, mapper);
             context.SetupDbContextData();
         }
 

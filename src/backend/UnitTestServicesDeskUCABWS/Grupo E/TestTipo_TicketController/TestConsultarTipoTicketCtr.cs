@@ -98,7 +98,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_TicketController
         [TestMethod]
         public void ConsultarNombreTipoTicketCtrlTest()
         {
-            _serviceMock.Setup(p => p.ConsultarTipoTicketNomb(It.IsAny<String>())).Returns(new Tipo_TicketDTOSearch());
+            _serviceMock.Setup(p => p.ConsultarNombreTipoTicket(It.IsAny<String>())).Returns(new Tipo_TicketDTOSearch());
             var application = new ApplicationResponse<Tipo_TicketDTOSearch>();
 
             //act
@@ -115,7 +115,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_TicketController
         public void ConsultarNombreTipoTicketCtrlExceptionTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.ConsultarTipoTicketNomb(It.IsAny<String>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.ConsultarNombreTipoTicket(It.IsAny<String>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
             var ex = _controller.ConsultarNombreTipoTicket(It.IsAny<String>());
