@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221222142528_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221223175331_initrefact")]
+    partial class initrefact
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -657,7 +657,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 12, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2022, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

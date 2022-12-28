@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Models.ViewModel;
-using ServiceDeskUCAB.Servicios;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Dynamic;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
 
 namespace ServiceDeskUCAB.Controllers
 {

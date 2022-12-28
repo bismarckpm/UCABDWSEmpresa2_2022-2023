@@ -362,8 +362,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     try
                     {
                         var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                        var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
-                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                        plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
+                        notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
 
                     }
                     catch (ExceptionsControl) { }
@@ -380,7 +380,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     {
                         try
                         {
-                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                            notificacion.EnviarCorreo(plant2, emp.correo);
                         }
                         catch (ExceptionsControl) { }
                     }
@@ -395,7 +395,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     {
                         try
                         {
-                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                            notificacion.EnviarCorreo(plant2, emp.correo);
                         }
                         catch (ExceptionsControl) { }
                     }
@@ -406,7 +406,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 {
                     var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
                     var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
-                    notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                    notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
                 }
                 catch (ExceptionsControl) { }
 
