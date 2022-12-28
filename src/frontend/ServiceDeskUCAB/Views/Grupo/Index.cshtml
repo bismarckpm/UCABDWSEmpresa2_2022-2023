@@ -70,6 +70,65 @@
             })
         })
     </script>
+
+   <!--  Script para buscar grupos por nombre o descripción-->
+    <script>
+
+        const buscador = document.getElementById('search');
+
+        buscador.addEventListener("keyup", function () {
+            var keyword = this.value;
+            keyword = keyword.toUpperCase();
+            var table = document.getElementById("table");
+            var all_tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < all_tr.length; i++) {
+                var name_column = all_tr[i].getElementsByTagName("td")[1];
+                var description_column = all_tr[i].getElementsByTagName("td")[2];
+                if (name_column && description_column) {
+                    var name_value = name_column.textContent || name_column.innerText;
+                    var description_value = description_column.textContent || description_column.innerText;
+                    name_value = name_value.toUpperCase();
+                    description_value = description_value.toUpperCase();
+                    if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
+                        all_tr[i].style.display = ""; // show
+                    } else {
+                        all_tr[i].style.display = "none"; // hide
+                    }
+                }
+            }
+        })
+    </script>
+
+    <script>
+
+        const searchFocus = document.getElementById('search');
+        const keys = [
+            { keyCode: 'AltLeft', isTriggered: false },
+            { keyCode: 'ControlLeft', isTriggered: false },
+        ];
+
+        window.addEventListener('keydown', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = true;
+                }
+            });
+
+            const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+            if (shortcutTriggered) {
+                searchFocus.focus();
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = false;
+                }
+            });
+        });
+    </script>
 }
 
     <!-- Placeholders de las ventanas emergentes (Grupo)-->
@@ -78,14 +137,31 @@
     <div id="PlaceHolderModificarGrupo"></div>
     <div id="PlaceHolderVisualizarGrupo"></div>
 
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="contenedor">
     <div class="abajo">
             <div class="area-boton">
+                <div>
+                        <div class="titulo">
+                            <h1>Grupos</h1>
+                        </div>
 
-                <div class="titulo">
-                    <h1>Grupos</h1>
-                </div>
-
+                        <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
+                                </div>
+                                <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+                            </div>
+                        </div>
+                  </div>
                 <div class="agregar">
                     <!-- Boton Agregar Grupo -->
                     <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("VentanaAgregarGrupo")">
@@ -94,7 +170,7 @@
                 </div>
             </div>
             <!-- Tabla Grupos -->
-        <table class="table">
+        <table class="table" id="table">
                 <tr>
                     <th>
                         Nombre

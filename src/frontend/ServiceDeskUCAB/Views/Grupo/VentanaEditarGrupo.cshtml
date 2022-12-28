@@ -43,55 +43,56 @@
                     @Html.TextAreaFor(m => m.grupo.descripcion, new { @Value = Model.grupo.descripcion, Class="form-control"})
                     @Html.ValidationMessageFor(m => m.grupo.descripcion ,null, new { @class = "text-danger" })
 
-                    <table class="table" id="DeptTable">
-                        <tr>
-                            <th>
+                        <table class="table table-scroll" id="DeptTable">
+                            <tr>
+                                <th>
                                 
-                            </th>
-                            <th>
-                                Nombre
-                            </th>
-                        </tr>
-                        @if (Model.deptAsociado == null && Model.departamento == null || Model.deptAsociado.Count == 0 && Model.departamento.Count == 0)
-                        {
-                            <p class="fst-italic text-danger">No existen en el sistema</p>
-                        }else{
-
-                            @foreach (var item in Model.departamento)
-                            {
-                                @if (Model.deptAsociado.Any(x => x.id == item.id))
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                            </tr>
+                            <tbody>
+                                @if (Model.deptAsociado == null && Model.departamento == null || Model.deptAsociado.Count == 0 && Model.departamento.Count == 0)
                                 {
-                                    <tr>
-                                        <td class="id" style="display:none" ;>
-                                            @Html.DisplayFor(i => item.id)
-                                        </td>
-                                        <td>
-                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" checked />
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(i => item.nombre)
-                                        </td>
-
-                                    </tr>
+                                    <p class="fst-italic text-danger">No existen en el sistema</p>
                                 }else{
-                                    <tr>
-                                        <td class="id" style="display:none" ;>
-                                            @Html.DisplayFor(i => item.id)
-                                        </td>
-                                        <td>
-                                            <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" />
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(i => item.nombre)
-                                        </td>
 
-                                    </tr>
-                                }
-                            }
+                                    @foreach (var item in Model.departamento)
+                                    {
+                                        @if (Model.deptAsociado.Any(x => x.id == item.id))
+                                        {
+                                            <tr>
+                                                <td class="id" style="display:none" ;>
+                                                    @Html.DisplayFor(i => item.id)
+                                                </td>
+                                                <td>
+                                                    <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" checked />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(i => item.nombre)
+                                                </td>
+
+                                            </tr>
+                                        }else{
+                                            <tr>
+                                                <td class="id" style="display:none" ;>
+                                                    @Html.DisplayFor(i => item.id)
+                                                </td>
+                                                <td>
+                                                    <input class="check" name="idDepartamentos" id="@item.id" type="checkbox" value="@item.id" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(i => item.nombre)
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
           
-                        }
-
-                    </table>
+                                }
+                            </tbody>
+                        </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>

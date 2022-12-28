@@ -39,7 +39,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			try
             {
                 response.Data = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
-                
 
             }
 			catch (ExceptionsControl ex)
