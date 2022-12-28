@@ -10,6 +10,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion
     {
         Task<List<PlantillaNotificacion>> Lista();
         Task<PlantillaNotificacion> Obtener(Guid idPlantilla);
+        Task<JObject> Guardar(PlantillaNotificacionNueva plantilla);
         Task<JObject> Editar(PlantillaNotificacionNueva plantilla, string id);
         Task<JObject> Eliminar(Guid idPlantilla);
     }
