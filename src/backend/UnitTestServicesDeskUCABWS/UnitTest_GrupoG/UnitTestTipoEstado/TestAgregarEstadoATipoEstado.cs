@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
@@ -20,12 +21,12 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
     {
         Mock<IDataContext> context;
      
-        private readonly TipoEstadoService TipoEstadoDAO;
+        private readonly EstadoService EstadoDAO;
         private IMapper mapper;
         public TestAgregarEstadoATipoEstado()
         {
             context = new Mock<IDataContext>();
-            TipoEstadoDAO= new TipoEstadoService(context.Object);
+            EstadoDAO= new EstadoService(context.Object);
             context.SetupDbContextData();
         }
 
@@ -41,7 +42,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-           TipoEstadoDAO.AgregarEstadoATipoEstadoCreado(arrange);
+			EstadoDAO.AgregarEstadoATipoEstadoCreado(arrange);
 
         }
 

@@ -34,6 +34,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTicket;
+using System.Numerics;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
@@ -983,8 +984,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     try
                     {
                         var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                        var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
-                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                        plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
+                        notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
 
                     }
                     catch (ExceptionsControl) { }
@@ -996,12 +997,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 {
                     var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
                     var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    plant2.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant2);
                     foreach (var emp in empleados)
                     {
                         try
                         {
-                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                            notificacion.EnviarCorreo(plant2, emp.correo);
                         }
                         catch (ExceptionsControl) { }
                     }
@@ -1011,12 +1012,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 if (Estado == "Pendiente")
                 {
                     var plant2 = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                    var descripcionPlantilla2 = notificacion.ReemplazoEtiqueta(ticket, plant2);
+                    plant2.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant2);
                     foreach (var emp in ListaEmpleados)
                     {
                         try
                         {
-                            notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
+                            notificacion.EnviarCorreo(plant2, emp.correo);
                         }
                         catch (ExceptionsControl) { }
                     }
@@ -1026,8 +1027,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 try
                 {
                     var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-                    var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
-                    notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                    plant.Descripcion= notificacion.ReemplazoEtiqueta(ticket, plant);
+                    notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
                 }
                 catch (ExceptionsControl) { }
 

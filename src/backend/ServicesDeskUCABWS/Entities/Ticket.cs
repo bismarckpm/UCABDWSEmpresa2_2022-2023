@@ -138,13 +138,13 @@ namespace ServicesDeskUCABWS.Entities
         public bool EnviarNotificacion(Ticket ticket, string Estado, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion,IPlantillaNotificacion plantilla)
         {
             var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-            var descripcionPlantilla = notificacion.ReemplazoEtiqueta(ticket, plant);
+            plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
             switch (Estado)
             {
                 case "Aprobado":
                     try
                     {
-                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                        notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
                     }
                     catch (ExceptionsControl) { }
                     break;

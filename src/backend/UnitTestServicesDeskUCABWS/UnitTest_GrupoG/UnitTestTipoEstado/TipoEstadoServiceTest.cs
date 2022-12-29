@@ -189,17 +189,19 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c")
                 }
             };
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
 
-            var departamento = new List<Departamento> { new Departamento { nombre = "Departamento 1" } };
-            _contextMock.Setup(x => x.Departamentos).Returns(departamento.AsQueryable().BuildMockDbSet().Object);
+			var expected = new TipoEstadoDTO
+			{
+				nombre = "Plantilla Aprobado",
+				descripcion = "Hola @Usuario su @Ticket fue @Estado"
+			};
 
             //act
             var result = _TipoEstadoService.RegistroTipoEstado(tipoEstado);
 
             //assert
-            Assert.AreEqual(result.nombre, tipoEstado.nombre);
-            Assert.AreEqual(result.GetType(), tipoEstado.GetType());
+            Assert.AreEqual(result.nombre, expected.nombre);
+            Assert.AreEqual(result.GetType(), expected.GetType());
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando el registro del tipo estado falla por campos vacios")]
@@ -208,8 +210,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             //arrange
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
             var tipoEstadoTest = new TipoEstadoCreateDTO() { nombre = "Hola" };
-
-          
 
             //assert
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(tipoEstadoTest));

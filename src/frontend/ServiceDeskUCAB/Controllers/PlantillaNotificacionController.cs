@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using ServiceDeskUCAB.Models.PlantillaNotificaciones;
-using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel.PlantillaNotificaciones;
 using ServiceDeskUCAB.Models.EstadoTicket;
 using Microsoft.AspNetCore.Authorization;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Servicios.ModuloTipoEstado;
 
 namespace ServiceDeskUCAB.Controllers
 {

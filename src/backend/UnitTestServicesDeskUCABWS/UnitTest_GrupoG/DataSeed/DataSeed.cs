@@ -136,8 +136,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
 
             var requestCliente = new List<Cliente>();
 
+			var departamento = new List<Departamento> { new Departamento { nombre = "Departamento 1" } };
 
-            var requestTipoEstado = request.Select(q => q.TipoEstado).ToList();
+			var requestTipoEstado = request.Select(q => q.TipoEstado).ToList();
 
             _mockContext.Setup(c => c.PlantillasNotificaciones).Returns(request.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(c => c.Tipos_Estados).Returns(requestTipoEstado.AsQueryable().BuildMockDbSet().Object);
@@ -149,7 +150,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
             _mockContext.Setup(e => e.PlantillasNotificaciones.Remove(It.IsAny<PlantillaNotificacion>()));
             _mockContext.Setup(set => set.DbContext.SaveChanges());
 
-            _mockContext.Setup(set => set.Tipos_Estados.Add(It.IsAny<Tipo_Estado>()));
+			_mockContext.Setup(x => x.Departamentos).Returns(departamento.AsQueryable().BuildMockDbSet().Object);
+
+			_mockContext.Setup(set => set.Tipos_Estados.Add(It.IsAny<Tipo_Estado>()));
             _mockContext.Setup(e => e.Tipos_Estados.Update(It.IsAny<Tipo_Estado>()));
             _mockContext.Setup(e => e.Tipos_Estados.Remove(It.IsAny<Tipo_Estado>()));
 

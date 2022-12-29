@@ -13,7 +13,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         public TipoEstadoDTO ConsultarTipoEstadoGUID(Guid id);
         public List<TipoEstadoDTO> ConsultaTipoEstadosHabilitados();
         public TipoEstadoDTO ConsultarTipoEstadoTitulo(string titulo);
-        public TipoEstadoCreateDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
+        public TipoEstadoDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado);
         public TipoEstadoDTO ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id); 
         public Boolean HabilitarDeshabilitarTipoEstado(Guid id);
         //public TipoEstadoCreateDTO EliminarTipoEstado(Guid id);
