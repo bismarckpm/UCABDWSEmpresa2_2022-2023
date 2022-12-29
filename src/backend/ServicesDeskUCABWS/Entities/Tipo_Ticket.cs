@@ -4,6 +4,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -136,6 +137,8 @@ namespace ServicesDeskUCABWS.Entities
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
             Departamentos = new List<DepartamentoTipo_Ticket>();
         }
+
+
     }
 
 }
