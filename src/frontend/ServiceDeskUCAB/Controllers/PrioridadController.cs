@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
-using ServicesDeskUCAB.Models;
-using ServicesDeskUCAB.Servicios;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.DTO.PrioridadDTO;
+using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Servicios;
 
-namespace ServicesDeskUCAB.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     public class PrioridadController : Controller
     {
@@ -20,16 +22,17 @@ namespace ServicesDeskUCAB.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Prioridad> lista = await _servicioAPI.Lista();
+            List<PrioridadDTO> lista = await _servicioAPI.Lista();
             return View(lista);
         }
 
         public async Task<IActionResult> Prioridad(Guid prioridadID)
         {
-            Prioridad prioridad = new Prioridad();
+            PrioridadDTO prioridad = new PrioridadDTO();
             ViewBag.Accion = "Nueva Prioridad";
-            Console.WriteLine("Esta es la guid ",prioridadID);
-            if (prioridadID != Guid.Empty){
+            Console.WriteLine("Esta es la guid ", prioridadID);
+            if (prioridadID != Guid.Empty)
+            {
                 prioridad = await _servicioAPI.Obtener(prioridadID);
                 ViewBag.Accion = "Editar Prioridad";
                 Console.WriteLine(await _servicioAPI.Obtener(prioridadID));
@@ -38,7 +41,7 @@ namespace ServicesDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarCambios(Prioridad prioridad){
+        public async Task<IActionResult> GuardarCambios(PrioridadDTO prioridad){
             Console.WriteLine("guardar", prioridad.Id);
             JObject respuesta;
             try
@@ -47,7 +50,7 @@ namespace ServicesDeskUCAB.Controllers
                 {
                     respuesta = await _servicioAPI.Guardar(prioridad);
                     Console.WriteLine(respuesta.ToString());
-                    if ((bool) respuesta["success"])
+                    if ((bool)respuesta["success"])
                     {
                         Console.WriteLine("La respuesta fue verdadera");
                         return RedirectToAction("Index", new { message = (string)respuesta["message"] });
@@ -57,7 +60,7 @@ namespace ServicesDeskUCAB.Controllers
                     {
                         Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                         string message = (string)respuesta["message"];
-                        throw new Exception(message);
+                        return RedirectToAction("Prioridad", new { message = (string)respuesta["message"] });
                     }
                 }
                 else
@@ -82,4 +85,4 @@ namespace ServicesDeskUCAB.Controllers
 
     }
 
- }
+}

@@ -38,12 +38,12 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
         //Crear Cargo
         [HttpPost]
         [Route("CrearCargo/")]
-        public ApplicationResponse<CargoDto> AgregarCargoDAO([FromBody] CargoDto dto1)
+        public ApplicationResponse<CargoDTOCreate> AgregarCargoDAO([FromBody] CargoDTOCreate dto1)
         {
-            var response = new ApplicationResponse<CargoDto>();
+            var response = new ApplicationResponse<CargoDTOCreate>();
             try
             {
-                response.Data = _cargoDAO.AgregarCargoDAO(CargoMapper.MapperDTOToEntity(dto1));
+                response.Data = _cargoDAO.AgregarCargoDAO(dto1);
 
 
             }
@@ -189,7 +189,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
 
 
         }*/
-        [HttpGet("ConsultarCargoPorIdTipoCargo/{idTipo}")]
+        /*[HttpGet("ConsultarCargoPorIdTipoCargo/{idTipo}")]
         public ApplicationResponse<List<CargoDto>> ListaCargosTipoCargo(Guid idTipo)
         {
             var response = new ApplicationResponse<List<CargoDto>>();
@@ -204,7 +204,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
         [HttpGet("ConsultarCargoPorDepartamento/{id}")]
         public ApplicationResponse<List<CargoDTOUpdate>> ConsultarCargosPorDepartamento([FromRoute]Guid id)

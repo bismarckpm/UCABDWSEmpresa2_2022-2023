@@ -212,7 +212,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
         }*/
 
-        [TestMethod(displayName: "Excepcion Prueba Unitaria para consultar Cargo por ID de tipo cargo")]
+        /*[TestMethod(displayName: "Excepcion Prueba Unitaria para consultar Cargo por ID de tipo cargo")]
         public void ExcepcionConsultarCargoPorIDTipoCargo()
         {
 
@@ -241,7 +241,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             _contextMock.Setup(p => p.Cargos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _CargoDAO.GetByIdCargo(cargo.id));
 
-        }
+        }*/
 
 
         /*[TestMethod(displayName: "Eliminar Cargo por ID")]

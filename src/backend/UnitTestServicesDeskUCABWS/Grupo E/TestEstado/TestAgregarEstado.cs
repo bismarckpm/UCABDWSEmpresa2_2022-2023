@@ -61,7 +61,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
             Assert.AreEqual(typeof(List<Estado>), result.GetType());
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void AgregarCargoADepartamentoCreadoTest()
         {
             var arrange = new Departamento()
@@ -80,6 +80,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestDepartamento
 
 
             Assert.AreEqual(typeof(List<Cargo>), result.GetType());
-        }
+        }*/
     }
 }

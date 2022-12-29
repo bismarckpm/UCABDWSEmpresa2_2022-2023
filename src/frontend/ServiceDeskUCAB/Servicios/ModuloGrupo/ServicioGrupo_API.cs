@@ -150,7 +150,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         }
 
         //Almacenar la información de un nuevo grupo
-        public async Task<JObject> RegistrarGrupo(GrupoModel grupo)
+        public async Task<JObject> RegistrarGrupo(GrupoModel grupo, List <string> idDepartamentos)
         {
             HttpClient cliente = new()
             {
@@ -299,6 +299,37 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
                 throw ex.InnerException!;
             }
             return departamento.departamentos;
+        }
+
+        public async Task<GrupoModel> BuscarNombreGrupo(string nombreGrupo)
+        {
+
+            GrupoModel grupo = new GrupoModel();
+
+            HttpClient cliente = new()
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+
+            try
+            {
+                var responseDept = await cliente.GetAsync($"Grupo/ConsultarPorNombreGrupo/{nombreGrupo}");
+
+                if (responseDept.IsSuccessStatusCode)
+                {
+                    var respuestaDept = await responseDept.Content.ReadAsStringAsync();
+                    JObject json_respuestaDept = JObject.Parse(respuestaDept);
+
+                    string stringDataRespuestaDept = json_respuestaDept["data"].ToString();
+                    var resultadoDept = JsonConvert.DeserializeObject<GrupoModel>(stringDataRespuestaDept);
+                    grupo = resultadoDept;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex.InnerException!;
+            }
+            return grupo;
         }
     }
 }

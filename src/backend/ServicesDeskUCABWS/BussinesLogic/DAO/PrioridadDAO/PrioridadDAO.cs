@@ -29,11 +29,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
             prioridadDTO.Id = Guid.NewGuid();
             prioridadDTO.fecha_ultima_edic = DateTime.UtcNow;
             prioridadDTO.fecha_descripcion = DateTime.UtcNow;
-                var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
-
-                _dataContext.Prioridades.Add(prioridadEntity);
+            var prioridadEntity = _mapper.Map<Prioridad>(prioridadDTO);
+            _dataContext.Prioridades.Add(prioridadEntity);
             _dataContext.DbContext.SaveChanges();
-                return "Prioridad creada satisfactoriamente";
+            return "Prioridad creada satisfactoriamente";
         }
         public List<PrioridadDTO> ObtenerPrioridades()
         {
@@ -44,8 +43,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PrioridadDAO
 
         public List<PrioridadDTO> ObtenerPrioridadesHabilitadas()
         {
-            var data = _dataContext.Prioridades.AsNoTracking();
-            var prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
+            List<Prioridad> data = _dataContext.Prioridades.Where(t=>t.estado == "Habilitado").ToList();
+            List<PrioridadDTO> prioridadDTO = _mapper.Map<List<PrioridadDTO>>(data);
             return prioridadDTO.ToList();
         }
 

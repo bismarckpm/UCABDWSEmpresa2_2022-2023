@@ -43,7 +43,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var nuevoDepartamento = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();
 
                 AgregarEstadoADepartamentoCreado(departamento);
-                AgregarCargosADepartamentoCreado(departamento);
+             //   AgregarCargosADepartamentoCreado(departamento);
 
                 return DepartamentoMapper.MapperEntityToDto(nuevoDepartamento);
             }
@@ -78,7 +78,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
         //Agregar Estados de los departamentos agregados
 
-        public List<Cargo> AgregarCargosADepartamentoCreado(Departamento departamento)
+        /*public List<Cargo> AgregarCargosADepartamentoCreado(Departamento departamento)
         {
             var listaTipoCargos = _dataContext.Tipos_Cargos.ToList();
 
@@ -96,7 +96,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
             _dataContext.Cargos.AddRange(ListaCargos);
             return ListaCargos;
-        }
+        }*/
 
         //Eliminar un Departamento
         public DepartamentoDto eliminarDepartamento(Guid id)
@@ -108,7 +108,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
-					departamento.id_grupo = null;
                     _dataContext.DbContext.SaveChanges();
                     return DepartamentoMapper.MapperEntityToDto(departamento);
             }
@@ -123,8 +122,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
             try
             {
+                if (!ExisteDepartamentoModificar(departamento)) {
                     _dataContext.Departamentos.Update(departamento);
-				    _dataContext.DbContext.SaveChanges();
+                    _dataContext.DbContext.SaveChanges();
+                }
 
                     var data = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();               
                     return DepartamentoMapper.MapperEntityToDTOModificar(data);
@@ -278,6 +279,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
 
             return ListaDepartamento;
+        }
+        public bool ExisteDepartamentoModificar(Departamento dept)
+        {
+            bool existe = false;
+
+            try
+            {
+                //Lista de grupos que no tienen el ID del departamento a modificar y no están eliminados
+                var buscarDepartamentoDiferente = _dataContext.Departamentos.Where(d => (d.id != dept.id) && (d.fecha_eliminacion == null)).ToList();
+
+                //Lista de los grupos que tienen el mismo nombre que el departamento a modificar
+                var buscarDepartamentoMismoNombre = buscarDepartamentoDiferente.Where(d => d.nombre == dept.nombre).ToList();
+
+                if (buscarDepartamentoMismoNombre.Count() != 0)
+                    existe = true;
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("No se encuentra el departamento" + " " + dept.id, ex);
+            }
+            return existe;
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -41,10 +43,10 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
         }
 
-        [HttpPut, Route("cambiarEstadoTicket/{ticketId}/{estadoId}")]
-        public ApplicationResponse<string> cambiarEstadoTicketCtrl(string ticketId, string estadoId)
+        [HttpPut, Route("CambiarEstado")]
+        public ApplicationResponse<string> cambiarEstadoTicketCtrl([FromBody] ActualizarDTO actualizarDTO)
         {
-            return _ticketDAO.cambiarEstadoTicket(new Guid(ticketId), new Guid(estadoId));
+            return _ticketDAO.cambiarEstadoTicket(new Guid(actualizarDTO.ticketId), new Guid(actualizarDTO.estadoId));
         }
 
         [HttpGet, Route("Bitacora/{ticketId}")]
@@ -53,7 +55,7 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerBitacoras(new Guid(ticketId));
         }
 
-        [HttpPut, Route("Merge")]
+        [HttpPost, Route("Merge")]
         public ApplicationResponse<string> mergeTicketsCtrl([FromBody] TicketsMergeDTO ticketsMerge)
         {
             return _ticketDAO.mergeTickets(ticketsMerge.ticketPrincipalId, ticketsMerge.ticketsSecundariosId);
@@ -76,5 +78,34 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.eliminarTicket(new Guid(id));
         }
 
+        [HttpGet, Route("ObtenerDepartamentos/{id}")]
+        public ApplicationResponse<List<DepartamentoSearchDTO>> obtenerDepartamentos(string id)
+        {
+            return _ticketDAO.buscarDepartamentos(new Guid(id));
+        }
+
+        [HttpGet, Route("ObtenerDepartamentoEmpleado/{idEmpleado}")]
+        public ApplicationResponse<DepartamentoSearchDTO> obtenerDepartamentoEmpleado(string idEmpleado)
+        {
+            return _ticketDAO.buscarDepartamentoEmpleado(new Guid(idEmpleado));
+        }
+
+        [HttpGet, Route("ObtenerTipoTickets/{idDepartamento}")]
+        public ApplicationResponse<List<Tipo_TicketDTOSearch>> obtenerTipoTicketPorDepartamento(string idDepartamento)
+        {
+            return _ticketDAO.buscarTipoTickets(new Guid(idDepartamento));
+        }
+        
+        [HttpGet, Route("ObtenerTiposTickets/")]
+        public ApplicationResponse<List<Tipo_Ticket>> obtenerTiposTicketsPorDepartamento()
+        {
+            return _ticketDAO.buscarTiposTickets();
+        }
+
+        [HttpGet, Route("ObtenerEstadosPorDepartamento/{idDepartamento}")]
+        public ApplicationResponse<List<Estado>> obtenerEstadosPorDepartamento(string idDepartamento)
+        {
+            return _ticketDAO.buscarEstadosPorDepartamento(new Guid(idDepartamento));
+        }
     }
 }

@@ -336,7 +336,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.IsFalse(ex.Success);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar cargo por id de tipo de cargo exitoso")]
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para modificar cargo por id de tipo de cargo exitoso")]
         public void ConsultarCargoPorIDTipoCargo()
         {
             var tipo = new Tipo_Cargo
@@ -408,7 +408,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
-        }
+        }*/
 
         /*[TestMethod(displayName: "Prueba Unitaria Controlador para asignar tipo cargo a cargo exitoso")]
         public void AsignarTipoCargoToCargo()

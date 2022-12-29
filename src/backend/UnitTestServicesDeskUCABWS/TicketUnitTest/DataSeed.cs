@@ -65,24 +65,101 @@ namespace TicketUnitTest
             _mockContext.Setup(set => set.Tickets.Add(It.IsAny<Ticket>()));
             _mockContext.Setup(e => e.Tickets.Update(It.IsAny<Ticket>()));
 
+            List<Empleado> ListaEmpleado = new List<Empleado>
+            {
+                
+            
+                
+              
+            };
+            _mockContext.Setup(c => c.Empleados).Returns(ListaEmpleado.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Empleados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaEmpleado.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Empleados.Add(It.IsAny<Empleado>())).Callback<Empleado>(ListaEmpleado.Add);
+            _mockContext.Setup(set => set.Empleados.AddRange(It.IsAny<IEnumerable<Empleado>>())).Callback<IEnumerable<Empleado>>(ListaEmpleado.AddRange);
 
 
         }
 
-        
 
 
-        public static void SetUpContextDataVacio(this Mock<IDataContext> _mockContext)
+
+        public static void SetUpContextDataVacioTicket(this Mock<IDataContext> _mockContext)
         {
             var request = new List<Ticket>() { };
+            
 
             _mockContext.Setup(c => c.Tickets).Returns(request.AsQueryable().BuildMockDbSet().Object);
         }
 
 
+        public static void SetUpContextDataVacioEmpleado(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Empleado>() { };
 
 
-       
+            _mockContext.Setup(c => c.Empleados).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioDeptartamento(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Departamento>() { };
+
+
+            _mockContext.Setup(c => c.Departamentos).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+
+
+        public static void SetUpContextDataVacioUsuario(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Usuario>() { };
+
+
+            _mockContext.Setup(c => c.Usuarios).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioEstado(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Estado>() { };
+
+
+            _mockContext.Setup(c => c.Estados).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioPrioridad(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Prioridad>() { };
+
+            _mockContext.Setup(c => c.Prioridades).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioVotos(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Votos_Ticket>() { };
+
+            _mockContext.Setup(c => c.Votos_Tickets).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioFamilia(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Familia_Ticket>() { };
+
+            _mockContext.Setup(c => c.Familia_Tickets).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioBitacora(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Bitacora_Ticket>() { };
+
+            _mockContext.Setup(c => c.Bitacora_Tickets).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
+
+        public static void SetUpContextDataVacioTipo(this Mock<IDataContext> _mockContext)
+        {
+            var request = new List<Tipo_Ticket>() { };
+
+            _mockContext.Setup(c => c.Tipos_Tickets).Returns(request.AsQueryable().BuildMockDbSet().Object);
+        }
 
 
     }

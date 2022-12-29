@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221228154444_Update-Departamento-Grupo")]
-    partial class UpdateDepartamentoGrupo
+    [Migration("20221229143315_Update_Modulo_Grupo")]
+    partial class Update_Modulo_Grupo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,9 +60,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid>("Departamentoid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("Tipo_Cargoid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("descripcion")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -85,8 +82,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("Departamentoid");
-
-                    b.HasIndex("Tipo_Cargoid");
 
                     b.ToTable("Cargos");
                 });
@@ -235,9 +230,13 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.Property<Guid>("IdTicket")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdTipo_cargo")
+                    b.Property<Guid?>("Cargoid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdCargo")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Maximo_Rechazado_nivel")
@@ -249,15 +248,12 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<int?>("OrdenAprobacion")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("Tipo_Cargoid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IdTicket", "IdTipo_cargo");
+                    b.HasKey("IdTicket");
 
-                    b.HasIndex("Tipo_Cargoid");
+                    b.HasIndex("Cargoid");
 
                     b.HasIndex("Tipo_TicketId");
 
@@ -474,41 +470,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
-                {
-                    b.Property<Guid>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime>("fecha_creacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("fecha_eliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("fecha_ult_edic")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("nivel_jerarquia")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Tipos_Cargos");
-                });
-
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Estado", b =>
                 {
                     b.Property<Guid>("Id")
@@ -691,7 +652,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 12, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2022, 12, 29, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",
@@ -750,15 +711,7 @@ namespace ServicesDeskUCABWS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "Tipo_Cargo")
-                        .WithMany("Cargos_Asociados")
-                        .HasForeignKey("Tipo_Cargoid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Departamento");
-
-                    b.Navigation("Tipo_Cargo");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
@@ -825,15 +778,15 @@ namespace ServicesDeskUCABWS.Migrations
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
-                    b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Cargo", "Tipo_Cargo")
+                    b.HasOne("ServicesDeskUCABWS.Entities.Cargo", "Cargo")
                         .WithMany("Flujo_Aprobacion")
-                        .HasForeignKey("Tipo_Cargoid");
+                        .HasForeignKey("Cargoid");
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Tipo_Ticket", "Tipo_Ticket")
                         .WithMany("Flujo_Aprobacion")
                         .HasForeignKey("Tipo_TicketId");
 
-                    b.Navigation("Tipo_Cargo");
+                    b.Navigation("Cargo");
 
                     b.Navigation("Tipo_Ticket");
                 });
@@ -941,6 +894,11 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Cargo");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Cargo", b =>
+                {
+                    b.Navigation("Flujo_Aprobacion");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Departamento", b =>
                 {
                     b.Navigation("Tipo_Tickets");
@@ -978,13 +936,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Bitacora_Tickets");
 
                     b.Navigation("Votos_Ticket");
-                });
-
-            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Cargo", b =>
-                {
-                    b.Navigation("Cargos_Asociados");
-
-                    b.Navigation("Flujo_Aprobacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Tipo_Estado", b =>

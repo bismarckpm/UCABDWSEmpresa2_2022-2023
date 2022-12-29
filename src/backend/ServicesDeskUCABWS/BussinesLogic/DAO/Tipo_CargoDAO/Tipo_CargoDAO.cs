@@ -24,7 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
         {
             _dataContext = dataContext;
         }
-        private bool ExisteTipoCargo(Tipo_Cargo tipo)
+        /*private bool ExisteTipoCargo(Tipo_Cargo tipo)
         {
             bool existe = false;
 
@@ -190,7 +190,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                     item.id = null;
 
                 }*/
-                _dataContext.DbContext.SaveChanges();
+                /*_dataContext.DbContext.SaveChanges();
                 return true;
 
             }
@@ -301,7 +301,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
                 Console.WriteLine(ex.Message + " : " + ex.StackTrace);
                 throw ex.InnerException!;
             }
-        }
+        }*/
 
         
 
