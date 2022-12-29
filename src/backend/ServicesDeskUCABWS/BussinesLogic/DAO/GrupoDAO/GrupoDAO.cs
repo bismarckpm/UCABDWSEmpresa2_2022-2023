@@ -36,17 +36,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                     _dataContext.Grupos.Add(grupo);
                     _dataContext.DbContext.SaveChanges();
                 }
-                
-
-                var nuevoGrupo = _dataContext.Grupos.Where(d => d.id == grupo.id)
-                                        .Select(d => new GrupoDto
-                                        {
-                                            id = d.id,
-                                            descripcion = d.descripcion,
-                                            nombre = d.nombre,
-                                            fecha_creacion = d.fecha_creacion
-                                        });
-                return nuevoGrupo.First();
+                return GrupoMapper.MapperEntityToDto(_dataContext.Grupos.Where(d => d.id == grupo.id).First());
             }
             catch (Exception ex)
             {
@@ -135,17 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 					_dataContext.DbContext.SaveChanges();
 				}
 
-                var data = _dataContext.Grupos.Where(d => d.id == grupo.id).Select(
-                    d => new GrupoDto_Update
-                    {
-                        Id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion
-                    }
-
-                );
-                return data.First();
+                return GrupoMapper.MapperEntityToDTOModificar(_dataContext.Grupos.Where(d => d.id == grupo.id).First());
 			}
 			catch (DbUpdateException ex)
 			{
@@ -156,7 +136,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 				throw new ExceptionsControl("Fallo al actualizar un grupo", ex);
 			}
 		}
-
 
         public bool QuitarAsociacion(Guid grupoId)
         {
@@ -228,8 +207,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
 			try
 			{
+                //Lista de grupos que no tienen el ID del grupo a modificar y no están eliminados
 				var buscarGrupoDiferente = _dataContext.Grupos.Where(d => (d.id != grupo.id) && (d.fecha_eliminacion == null)).ToList();
+                
+                //Lista de los grupos que tienen el mismo nombre que el grupo a modificar
                 var buscarGrupoMismoNombre = buscarGrupoDiferente.Where(d => d.nombre == grupo.nombre).ToList();
+             
                 if (buscarGrupoMismoNombre.Count() != 0)
 					existe = true;
 			}

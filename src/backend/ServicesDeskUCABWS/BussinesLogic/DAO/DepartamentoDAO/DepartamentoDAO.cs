@@ -108,7 +108,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
 
 					departamento.fecha_eliminacion = DateTime.Now.Date;
-					departamento.id_grupo = null;
                     _dataContext.DbContext.SaveChanges();
                     return DepartamentoMapper.MapperEntityToDto(departamento);
             }

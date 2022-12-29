@@ -63,5 +63,13 @@
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="BussinesLogic\Recursos\ErroresGrupo.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="BussinesLogic\Recursos\ErroresGrupo.resx" />
+  </ItemGroup>
+
 
 </Project>

@@ -14,7 +14,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO
 
     public class GrupoDto_Update
     {
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public DateTime? fecha_ultima_edicion { get; set; } = DateTime.Now.Date;
