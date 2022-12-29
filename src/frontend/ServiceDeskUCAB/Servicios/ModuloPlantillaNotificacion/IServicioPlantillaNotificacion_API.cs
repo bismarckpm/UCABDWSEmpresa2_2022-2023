@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ServiceDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion
 {
     public interface IServicioPlantillaNotificacion_API
     {

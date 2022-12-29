@@ -293,6 +293,23 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Grupos");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Modelo_Aprobacion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("discrimanador")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Modelos_Aprobacion");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.PlantillaNotificacion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -509,6 +526,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Maximo_Rechazado")
                         .HasColumnType("int");
 
@@ -534,13 +555,11 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tipos_Tickets");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Tipo_Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Usuario", b =>
@@ -655,7 +674,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 12, 22, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2022, 12, 28, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",
@@ -685,6 +704,27 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Cargoid");
 
                     b.HasDiscriminator().HasValue("2");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoAprobacionJerarquico", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_Jerarquico");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoAprobacionParalelo", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_Paralelo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoNoAprobacion", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_No_Aprobacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Bitacora_Ticket", b =>

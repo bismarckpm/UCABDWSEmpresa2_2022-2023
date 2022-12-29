@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 {
     [TestClass]
     public class TestEliminarTipoTicket
@@ -40,7 +40,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         {
             //arrage
 
-            var data = new Tipo_Ticket
+            var data = new TipoTicket_FlujoNoAprobacion
             {
                 Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
 

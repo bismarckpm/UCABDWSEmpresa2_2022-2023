@@ -17,6 +17,9 @@ using Microsoft.Data.SqlClient;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using System.Runtime.CompilerServices;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.Factory;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {
@@ -57,7 +60,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                                 nombre = t.departamento.nombre
                             });
                         }
-
+                        
                         tipo_ticketsDTO.Add(new Tipo_TicketDTOSearch
                         {
                             Id = r.Id,
@@ -65,7 +68,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                             descripcion = r.descripcion,
                             Minimo_Aprobado = r.Minimo_Aprobado,
                             Maximo_Rechazado = r.Maximo_Rechazado,
-                            tipo = r.tipo,
+                            tipo = r.ObtenerTipoAprobacion(),
                             Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
                             Departamento = listaDept
                         }) ;    
@@ -93,9 +96,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 
                 //Actualizando Datos 
                 var tipo_ticket = context.Tipos_Tickets.Find(Guid.Parse(tipo_TicketDTO.Id));
+                tipo_ticket = TipoTicketMapper.CambiarFlujoTipoTicket(tipo_ticket,tipo_TicketDTO.tipo,_mapper);
                 tipo_ticket.nombre = tipo_TicketDTO.nombre;
                 tipo_ticket.descripcion = tipo_TicketDTO.descripcion;
-                tipo_ticket.tipo = tipo_TicketDTO.tipo;
+                //tipo_ticket.tipo = tipo_TicketDTO.tipo;
                 tipo_ticket.fecha_ult_edic = DateTime.UtcNow;
                 tipo_ticket.Minimo_Aprobado = tipo_TicketDTO.Minimo_Aprobado;
                 tipo_ticket.Maximo_Rechazado = tipo_TicketDTO.Maximo_Rechazado;
@@ -111,6 +115,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 context.DepartamentoTipo_Ticket.RemoveRange(context.DepartamentoTipo_Ticket
                     .Where(x => x.Tipo_Ticekt_Id.ToString().ToUpper() == tipo_TicketDTO.Id.ToUpper()).ToList());
 
+                context.Tipos_Tickets.Remove(context.Tipos_Tickets.Find(tipo_ticket.Id));
                 //Agregando las nuevas relaciones
                 try 
                 {
@@ -167,11 +172,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 } catch(Exception) { }
 
                 //Actualizacion de la BD
-                //context.Tipos_Tickets.Update(tipo_ticket);
+                context.Tipos_Tickets.Add(tipo_ticket);
                 context.DbContext.SaveChanges();
 
                 //Paso a AR
-                response.Data = tipo_TicketDTO;
+                response.Data = TipoTicketMapper.MapperTipoTicketToTipoTicketDTOUpdate(tipo_ticket);
             }
             catch (ExceptionsControl ex)
             {
@@ -182,8 +187,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             return response;
         }
 
-
-
         public ApplicationResponse<Tipo_TicketDTOCreate> RegistroTipo_Ticket(Tipo_TicketDTOCreate Tipo_TicketDTO)
         {
             var response = new ApplicationResponse<Tipo_TicketDTOCreate>();
@@ -192,10 +195,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 //ValidarDatos
                 ValidarDatosEntradaTipo_Ticket(Tipo_TicketDTO);
 
-                //Construccion del Tipo Ticket
-                Tipo_Ticket tipo_ticket;
-                tipo_ticket = new Tipo_Ticket(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
-
+                var tipo_ticket = TipoTicketFactory.ObtenerInstancia(Tipo_TicketDTO.tipo);
+                tipo_ticket.LlenarDatos(Tipo_TicketDTO.nombre, Tipo_TicketDTO.descripcion, Tipo_TicketDTO.tipo, Tipo_TicketDTO.Minimo_Aprobado, Tipo_TicketDTO.Maximo_Rechazado);
+                
                 try
                 {
                     tipo_ticket.Departamentos =
@@ -253,7 +255,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 context.DbContext.SaveChanges();
 
                 //Paso a AR
-                response.Data = Tipo_TicketDTO;
+
+                response.Data = TipoTicketMapper.MapperTipoTicketToTipoTicketDTOCreate(tipo_ticket);
             }
             catch (ExceptionsControl ex)
             {
@@ -277,7 +280,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
 
 
-                if (tipo_Ticket.tipo != tipo_TicketDTOUpdate.tipo)
+                if (tipo_Ticket.ObtenerTipoAprobacion() != tipo_TicketDTOUpdate.tipo)
                 {
                     var ticketsPendientes = context.Tickets.Include(x => x.Tipo_Ticket).Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
                         .Where(x => x.Tipo_Ticket.Id == tipo_Ticket.Id &&
@@ -310,108 +313,44 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
+                var validaciones = new TipoTicketValidaciones(context);
 
-                if (tipo_TicketDTOCreate.nombre.Length < 4 || tipo_TicketDTOCreate.nombre.Length > 150)
+                validaciones.LongitudNombre(tipo_TicketDTOCreate.nombre);
+                validaciones.LongitudDescripcion(tipo_TicketDTOCreate.descripcion);
+                validaciones.VerificarTipoFlujo(tipo_TicketDTOCreate.tipo);
+                validaciones.VerificarDepartamento(tipo_TicketDTOCreate.Departamento);
+
+                if (tipo_TicketDTOCreate.tipo == "Modelo_Paralelo")
                 {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.NOMBRE_FUERA_DE_RANGO);
-                }
-                if (tipo_TicketDTOCreate.descripcion.Length < 4 || tipo_TicketDTOCreate.descripcion.Length > 250)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.DESCRIPCION_FUERA_DE_RANGO);
-                }
-
-                var Lista = new string[] { "Modelo_Jerarquico", "Modelo_Paralelo", "Modelo_No_Aprobacion", };
-                if (!Lista.Contains(tipo_TicketDTOCreate.tipo))
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_NO_VALIDO);
-                }
-
-                var cargos = tipo_TicketDTOCreate.Flujo_Aprobacion;
-
-                var departamentos = tipo_TicketDTOCreate.Departamento;
-
-                if (departamentos != null)
-                {
-                    foreach (var d in departamentos.ToList())
-                    {
-                        if (context.Departamentos.Find(Guid.Parse(d)) == null)
-                        {
-                            throw new ExceptionsControl(ErroresTipo_Tickets.DEPARTAMENTO_NO_VALIDO);
-                        }
-                    }
+                    validaciones.HayCargos(tipo_TicketDTOCreate);
+                    validaciones.VerificarCargos(tipo_TicketDTOCreate.Flujo_Aprobacion.Select(x => x.IdCargo));
+                    validaciones.VerificarMinimoMaximoAprobadoFlujoParalelo(tipo_TicketDTOCreate);
+                    validaciones.VerificarCargosFlujoParalelo(tipo_TicketDTOCreate);
                 }
 
-                if (tipo_TicketDTOCreate.tipo != "Modelo_No_Aprobacion")
+                if (tipo_TicketDTOCreate.tipo == "Modelo_Jerarquico")
                 {
-                    if (cargos == null)
-                    {
-                        throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_VACIO);
-                    }
-                    foreach (var c in cargos)
-                    {
-                        if (context.Cargos.Find(Guid.Parse(c.IdCargo)) == null)
-                        {
-                            throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_NO_VALIDO);
-                        }
-                    }
-
-                    if (tipo_TicketDTOCreate.tipo == "Modelo_Paralelo")
-                    {
-
-                        if (tipo_TicketDTOCreate.Minimo_Aprobado == null || tipo_TicketDTOCreate.Maximo_Rechazado == null)
-                        {
-                            throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NO_VALIDO);
-                        }
-
-                        foreach (var c in cargos)
-                        {
-                            if (c.Minimo_aprobado_nivel != null || c.Maximo_Rechazado_nivel != null || c.OrdenAprobacion != null)
-                            {
-                                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NULL);
-                            }
-                        }
-                    }
-
-                    if (tipo_TicketDTOCreate.tipo == "Modelo_Jerarquico")
-                    {
-                        if (tipo_TicketDTOCreate.Minimo_Aprobado != null || tipo_TicketDTOCreate.Maximo_Rechazado != null)
-                        {
-                            throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NO_VALIDO);
-                        }
-
-                        List<int> orden = new List<int>();
-                        int i = 1;
-                        var cargosOrd = cargos.OrderBy(x => x.OrdenAprobacion);
-                        foreach (var c in cargosOrd)
-                        {
-
-                            if (c.Minimo_aprobado_nivel == null || c.Maximo_Rechazado_nivel == null || c.OrdenAprobacion == null)
-                            {
-                                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NULL);
-                            }
-
-
-                            if (i != c.OrdenAprobacion)
-                            {
-                                throw new ExceptionsControl(ErroresTipo_Tickets.ERROR_SEC_ORDEN_APROB);
-                            }
-                            i++;
-                        }
-
-                    }
+                    validaciones.HayCargos(tipo_TicketDTOCreate);
+                    validaciones.VerificarCargos(tipo_TicketDTOCreate.Flujo_Aprobacion.Select(x => x.IdCargo));
+                    validaciones.VerificarMinimoMaximoAprobadoFlujoJerarquico(tipo_TicketDTOCreate);
+                    validaciones.VerificarCargosFlujoJerarquico(tipo_TicketDTOCreate);
+                    validaciones.VerificarSecuenciaOrdenAprobacion(tipo_TicketDTOCreate);
                 }
+
                 if (tipo_TicketDTOCreate.tipo == "Modelo_No_Aprobacion")
                 {
+                    //Verificar si MA y MR son null
                     if (tipo_TicketDTOCreate.Minimo_Aprobado != null || tipo_TicketDTOCreate.Maximo_Rechazado != null)
                     {
                         throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_NO_VALIDO);
                     }
+
+                    //Verificar si el flujo es null
                     if (tipo_TicketDTOCreate.Flujo_Aprobacion != null)
                     {
                         throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
                     }
                 }
-
             }
             catch (FormatException ex)
             {
@@ -420,6 +359,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
 
         }
+
+        private static List<FlujoAprobacionDTOCreate> ObtenerCargos(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        {
+            return tipo_TicketDTOCreate.Flujo_Aprobacion;
+        }
+
         //GET: Servicio para consultar un tipo de ticket por un ID en específico
         public Tipo_TicketDTOSearch ConsultarTipoTicketGUID(Guid id)
         {
@@ -452,7 +397,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                     descripcion = data.descripcion,
                     Minimo_Aprobado = data.Minimo_Aprobado,
                     Maximo_Rechazado = data.Maximo_Rechazado,
-                    tipo = data.tipo,
+                    tipo = data.ObtenerTipoAprobacion(),
                     Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(data.Flujo_Aprobacion),
                     Departamento = listaDept
                 };
@@ -496,7 +441,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                     descripcion = data.descripcion,
                     Minimo_Aprobado = data.Minimo_Aprobado,
                     Maximo_Rechazado = data.Maximo_Rechazado,
-                    tipo = data.tipo,
+                    tipo = data.ObtenerTipoAprobacion(),
                     Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(data.Flujo_Aprobacion),
                     Departamento = listaDept
                 };

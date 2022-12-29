@@ -394,28 +394,28 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             var ListaTipoTickets = new List<Tipo_Ticket>
             {
-                new Tipo_Ticket("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
+                new TipoTicket_FlujoNoAprobacion("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
                 {
-
+                    Id=Guid.Parse("23F0FB1D-25B5-4DFE-A432-408D1D9F6633")
                     
                 },
-                new Tipo_Ticket("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
                 {
                     Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
                     
                 },
-                new Tipo_Ticket("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
-                    
+                    Id = Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19")
                 },
-                new Tipo_Ticket("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
                 {
                     Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
                     
 
                 },
 
-                new Tipo_Ticket("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
                 {
                     
                 }
@@ -580,6 +580,40 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Prioridad = ListaPrioridad[1],
                     nro_cargo_actual = 1
                 },
+                new Ticket("Prueba Flujo no Aprobacion", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02"),
+                    Tipo_Ticket= ListaTipoTickets[0],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Paralelo", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"),
+                    Tipo_Ticket= ListaTipoTickets[1],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Jerarquico", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04"),
+                    Tipo_Ticket= ListaTipoTickets[2],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    nro_cargo_actual = 1
+                }
+
             };
 
             var ListaVotos = new List<Votos_Ticket>
@@ -748,6 +782,34 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Bitacora_Tickets.Add(It.IsAny<Bitacora_Ticket>())).Callback<Bitacora_Ticket>(ListaBitacora.Add);
             _mockContext.Setup(set => set.Bitacora_Tickets.AddRange(It.IsAny<IEnumerable<Bitacora_Ticket>>())).Callback<IEnumerable<Bitacora_Ticket>>(ListaBitacora.AddRange);
             _mockContext.Setup(set => set.Bitacora_Tickets.Update(It.IsAny<Bitacora_Ticket>()));
+
+            var ListaModelosAprobacion = new List<Modelo_Aprobacion>()
+            {
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("8F8E3B42-59C5-41C4-AEBB-9DDF31241DEE"),
+                    nombre="Modelo No Aprobacion",
+                    discrimanador= "Modelo_No_Aprobacion"
+                },
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("D6246415-B186-48FC-81E4-C15AEFB4F7F6"),
+                    nombre="Modelo Paralelo",
+                    discrimanador= "Modelo_Paralelo"
+                },
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("C846C1EA-4328-4157-B1F4-D6417BA804AF"),
+                    nombre="Modelo Jerarquico",
+                    discrimanador= "Modelo_Jerarquico"
+                }
+            };
+
+            _mockContext.Setup(c => c.Modelos_Aprobacion).Returns(ListaModelosAprobacion.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.Add(It.IsAny<Modelo_Aprobacion>())).Callback<Modelo_Aprobacion>(ListaModelosAprobacion.Add);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.AddRange(It.IsAny<IEnumerable<Modelo_Aprobacion>>())).Callback<IEnumerable<Modelo_Aprobacion>>(ListaModelosAprobacion.AddRange);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.Update(It.IsAny<Modelo_Aprobacion>()));
+
 
             _mockContext.Setup(set => set.DbContext.SaveChanges());
         }

@@ -1,77 +1,38 @@
 ﻿using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
-using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Net;
 using System.Text.RegularExpressions;
 using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
     public class NotificacionService : INotificacion
     {
-        private readonly IDataContext _context;
         const string correo = "DesarrolloSoftwareUCAB2@hotmail.com";
         const string clave = "Desarrollo_SoftwareUCAB_2";
         const string alias = "ServiceDeskUCAB";
         const string host = "smtp.office365.com";
         const int puerto = 587;
+		Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
 
-        public NotificacionService(IDataContext context)
+		//Servicio para reeemplazar las etiquetas de la plantilla notificación
+		public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
         {
-            _context = context;
-        }
-
-        //Servicio para reeemplazar las etiquetas de la plantilla notificación
-        public String ReemplazoEtiqueta(Ticket ticket, PlantillaNotificacionDTO Plantilla)
-        {
-            Dictionary<string, string> etiquetasEstatico = new Dictionary<string, string>();
-            
-            //Empleado empleado = null;
-            //var cliente = _context.Clientes.Where(u => u.Id == ticket.cliente.Id).FirstOrDefault();
-            //var empleados = _context.Empleados.Where(u => u.Id == ticket.empleado.Id).FirstOrDefault();
-
-            try
+			try
             {
-                /*if (ticket.Emisor != null)
-                {*/
-                    etiquetasEstatico.Add("@Cargo", ticket.Emisor.Cargo.nombre_departamental.ToString());
-                    etiquetasEstatico.Add("@Usuario", ticket.Emisor.primer_nombre.ToString() + " " + ticket.Emisor.primer_apellido.ToString());
-                /*}
-                else
-                {
-                    etiquetasEstatico.Add("@Usuario", ticket.cliente.primer_nombre.ToString() + " " + ticket.cliente.primer_apellido.ToString());
-                }*/
+				AgregarEtiquetasDiccionario(ticket);
 
-                etiquetasEstatico.Add("@Ticket", ticket.titulo.ToString());
-                if (ticket.Estado != null)
-                    etiquetasEstatico.Add("@Estado", ticket.Estado.Estado_Padre.nombre.ToString());
-                if (ticket.Departamento_Destino != null)
-                {
-                    etiquetasEstatico.Add("@Departamento", ticket.Departamento_Destino.nombre.ToString());
-                    if(ticket.Departamento_Destino.grupo != null)
-                    {
-                        etiquetasEstatico.Add("@Grupo", ticket.Departamento_Destino.grupo.nombre.ToString());
-                    }
-                        
-                }  
-                etiquetasEstatico.Add("@Prioridad", ticket.Prioridad.nombre.ToString());
-                etiquetasEstatico.Add("@TipoTicket", ticket.Tipo_Ticket.nombre.ToString());
-
-
-                string input = Plantilla.Descripcion;
                 foreach (EtiquetaDTO etiqueta in Plantilla.TipoEstado.etiqueta)
                 {
-
-                    input = Regex.Replace(input, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
+					Plantilla.Descripcion = Regex.Replace(Plantilla.Descripcion, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
                 }
 
-                return input;
+                return Plantilla.Descripcion;
             }
             catch (Exception ex)
             {
@@ -79,38 +40,66 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
             }
         }
 
-        //Metodo para hacer el envio del correo
-        public Boolean EnviarCorreo(string tituloPlantilla, string body, string correoDestino)
+		//Metodo para agregar las etiquetas al diccionario
+        private void AgregarEtiquetasDiccionario(Ticket ticket)
         {
-            try
-            {
-                var credenciales = new NetworkCredential(correo, clave);
-                var mail = new MailMessage()
-                {
-                    From = new MailAddress(correo, alias),
-                    Subject = tituloPlantilla,
-                    Body = body,
-                    IsBodyHtml = true
-                };
+			if(ticket.Emisor.Cargo != null)
+				etiquetasEstatico.Add("@Cargo", $"{ticket.Emisor.Cargo.nombre_departamental}");
 
-                mail.To.Add(correoDestino);
-                var clienteServidor = new SmtpClient()
-                {
-                    Credentials = credenciales,
-                    Host = host,
-                    Port = puerto,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    EnableSsl = true
-                };
+			if(ticket.Emisor != null)
+				etiquetasEstatico.Add("@Usuario", $"{ticket.Emisor.primer_nombre} {ticket.Emisor.primer_apellido}");
 
-                clienteServidor.Send(mail);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("No se pudo enviar el correo. Verifica el correo electrónico que ingresó", ex);
-            }
-        }
-    }
+			if(ticket != null)
+				etiquetasEstatico.Add("@Ticket", $"{ticket.titulo}");
+
+			if(ticket.Prioridad != null)
+				etiquetasEstatico.Add("@Prioridad", $"{ticket.Prioridad.nombre}");
+
+			if(ticket.Tipo_Ticket != null)
+				etiquetasEstatico.Add("@TipoTicket", $"{ticket.Tipo_Ticket.nombre}");
+
+			if (ticket.Estado != null)
+				etiquetasEstatico.Add("@Estado", $"{ticket.Estado.Estado_Padre.nombre}");
+
+			if (ticket.Departamento_Destino != null)
+				etiquetasEstatico.Add("@Departamento", $"{ticket.Departamento_Destino.nombre}");
+
+			if (ticket.Departamento_Destino.grupo != null)
+				etiquetasEstatico.Add("@Grupo", $"{ticket.Departamento_Destino.grupo.nombre}");
+		}
+
+		//Metodo para hacer el envio del correo
+		public Task EnviarCorreo(PlantillaNotificacionDTO plantilla, string correoDestino)
+		{
+			try
+			{
+				var credenciales = new NetworkCredential(correo, clave);
+				var mail = new MailMessage()
+				{
+					From = new MailAddress(correo, alias),
+					Subject = plantilla.Titulo,
+					Body = plantilla.Descripcion,
+					IsBodyHtml = true
+				};
+
+				mail.To.Add(correoDestino);
+				var clienteServidor = new SmtpClient()
+				{
+					Credentials = credenciales,
+					Host = host,
+					Port = puerto,
+					DeliveryMethod = SmtpDeliveryMethod.Network,
+					UseDefaultCredentials = false,
+					EnableSsl = true
+				};
+
+				clienteServidor.Send(mail);
+				return Task.CompletedTask;
+			}
+			catch (Exception ex)
+			{
+				throw new ExceptionsControl("No se pudo enviar el correo. Verifica el correo electrónico que ingresó", ex);
+			}
+		}
+	}
 }

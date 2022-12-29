@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestVotos_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 {
     [TestClass]
     public class TestAgregarVoto
