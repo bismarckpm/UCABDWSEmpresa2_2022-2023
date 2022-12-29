@@ -313,44 +313,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
-                var validaciones = new TipoTicketValidaciones(context);
-
-                validaciones.LongitudNombre(tipo_TicketDTOCreate.nombre);
-                validaciones.LongitudDescripcion(tipo_TicketDTOCreate.descripcion);
-                validaciones.VerificarTipoFlujo(tipo_TicketDTOCreate.tipo);
-                validaciones.VerificarDepartamento(tipo_TicketDTOCreate.Departamento);
-
-                if (tipo_TicketDTOCreate.tipo == "Modelo_Paralelo")
-                {
-                    validaciones.HayCargos(tipo_TicketDTOCreate);
-                    validaciones.VerificarCargos(tipo_TicketDTOCreate.Flujo_Aprobacion.Select(x => x.IdCargo));
-                    validaciones.VerificarMinimoMaximoAprobadoFlujoParalelo(tipo_TicketDTOCreate);
-                    validaciones.VerificarCargosFlujoParalelo(tipo_TicketDTOCreate);
-                }
-
-                if (tipo_TicketDTOCreate.tipo == "Modelo_Jerarquico")
-                {
-                    validaciones.HayCargos(tipo_TicketDTOCreate);
-                    validaciones.VerificarCargos(tipo_TicketDTOCreate.Flujo_Aprobacion.Select(x => x.IdCargo));
-                    validaciones.VerificarMinimoMaximoAprobadoFlujoJerarquico(tipo_TicketDTOCreate);
-                    validaciones.VerificarCargosFlujoJerarquico(tipo_TicketDTOCreate);
-                    validaciones.VerificarSecuenciaOrdenAprobacion(tipo_TicketDTOCreate);
-                }
-
-                if (tipo_TicketDTOCreate.tipo == "Modelo_No_Aprobacion")
-                {
-                    //Verificar si MA y MR son null
-                    if (tipo_TicketDTOCreate.Minimo_Aprobado != null || tipo_TicketDTOCreate.Maximo_Rechazado != null)
-                    {
-                        throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_NO_VALIDO);
-                    }
-
-                    //Verificar si el flujo es null
-                    if (tipo_TicketDTOCreate.Flujo_Aprobacion != null)
-                    {
-                        throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
-                    }
-                }
+                var tipoticket = TipoTicketMapper.MapperTipoTicketDTOCreatetoTipoTicket(tipo_TicketDTOCreate);
+                tipoticket.ValidarTipoticketAgregar(context);
             }
             catch (FormatException ex)
             {

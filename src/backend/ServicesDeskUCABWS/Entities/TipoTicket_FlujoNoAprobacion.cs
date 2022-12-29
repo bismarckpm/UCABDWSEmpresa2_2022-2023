@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -83,6 +87,31 @@ namespace ServicesDeskUCABWS.Entities
         public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
         {
             return 0;
+        }
+
+        public override void ValidarTipoticketAgregar(IDataContext contexto)
+        {
+            LongitudNombre();
+            LongitudDescripcion();
+            VerificarDepartamento(contexto);
+            VerificarMinimoMaximoAprobado();
+            VerificarFlujos();
+        }
+
+        public override void VerificarFlujos()
+        {
+            if (ObtenerCargos().Count!=0)
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
+            }
+        }
+
+        public override void VerificarMinimoMaximoAprobado()
+        {
+            if (HayMinimoAprobado() || HayMaximo_Rechazado())
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_NO_VALIDO);
+            }
         }
     }
     

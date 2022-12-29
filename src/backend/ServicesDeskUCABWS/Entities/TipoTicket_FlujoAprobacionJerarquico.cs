@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using System.Net.Sockets;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -168,5 +171,51 @@ namespace ServicesDeskUCABWS.Entities
             return contexto.Votos_Tickets.Include(x=>x.Ticket).Where(x => x.IdTicket == idTicket
                 && x.voto == "Rechazado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
         }
+
+        public override void ValidarTipoticketAgregar(IDataContext contexto)
+        {
+            LongitudNombre();
+            LongitudDescripcion();
+            VerificarDepartamento(contexto);
+            HayCargos();
+            VerificarCargos(contexto);
+            VerificarMinimoMaximoAprobado();
+            VerificarFlujos();
+            VerificarSecuenciaOrdenAprobacion();
+        }
+
+        //Validaciones
+        public override void VerificarFlujos()
+        {
+            foreach (var cargo in ObtenerCargos())
+            {
+                if (!HayMinimo_Aprobado_nivel(cargo) || !HayMaximo_Aprobado_nivel(cargo) || !HayOrdenAprobacion(cargo))
+                {
+                    throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NULL);
+                }
+            }
+        }
+
+        public override void VerificarMinimoMaximoAprobado()
+        {
+            if (HayMinimoAprobado() || HayMaximo_Rechazado())
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NO_VALIDO);
+            }
+        }
+
+        public void VerificarSecuenciaOrdenAprobacion()
+        {
+            int i = 1;
+            foreach (var c in ObtenerCargosOrdenados())
+            {
+                if (i != c.OrdenAprobacion)
+                {
+                    throw new ExceptionsControl(ErroresTipo_Tickets.ERROR_SEC_ORDEN_APROB);
+                }
+                i++;
+            }
+        }
+
     }
 }

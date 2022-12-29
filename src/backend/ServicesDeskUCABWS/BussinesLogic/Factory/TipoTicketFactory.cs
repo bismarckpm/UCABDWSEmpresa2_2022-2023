@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.Entities;
 
 namespace ServicesDeskUCABWS.BussinesLogic.Factory
@@ -17,7 +18,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Factory
                 case "Modelo_Jerarquico":
                     return new TipoTicket_FlujoAprobacionJerarquico();
                 default: 
-                    throw new ExceptionsControl("El tipo de aprobacion ingresado no es valido");
+                    throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_NO_VALIDO);
             }
         }
     }

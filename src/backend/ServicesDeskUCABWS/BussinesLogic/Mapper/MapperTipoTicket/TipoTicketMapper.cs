@@ -2,8 +2,10 @@
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Factory;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,8 +13,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket
 {
     public class TipoTicketMapper
     {
-
-       
 
         public static Tipo_Ticket CambiarFlujoTipoTicket(Tipo_Ticket llegada, string tipo,IMapper mapper)
         {
@@ -70,6 +70,36 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket
                     OrdenAprobacion = x.OrdenAprobacion
                 }).ToList();
             return DTO;
+        }
+
+        public static Tipo_Ticket MapperTipoTicketDTOCreatetoTipoTicket(Tipo_TicketDTOCreate DTO)
+        {
+            var tipo_ticket = TipoTicketFactory.ObtenerInstancia(DTO.tipo);
+            tipo_ticket.nombre = DTO.nombre;
+            tipo_ticket.descripcion = DTO.descripcion;
+            tipo_ticket.Maximo_Rechazado = DTO.Maximo_Rechazado;
+            tipo_ticket.Minimo_Aprobado = DTO.Minimo_Aprobado;
+            tipo_ticket.Departamentos = new List<DepartamentoTipo_Ticket>();
+            foreach (var dept in DTO.Departamento ?? new List<string>())
+            {
+                tipo_ticket.Departamentos.Add(new DepartamentoTipo_Ticket()
+                {
+                    DepartamentoId = Guid.Parse(dept)
+                });
+            }
+            tipo_ticket.Flujo_Aprobacion = new List<Flujo_Aprobacion>();
+            foreach (var fa in DTO.Flujo_Aprobacion ?? new List<FlujoAprobacionDTOCreate>())
+            {
+                tipo_ticket.Flujo_Aprobacion.Add(new Flujo_Aprobacion()
+                {
+                    IdCargo = Guid.Parse(fa.IdCargo),
+                    Maximo_Rechazado_nivel = fa.Maximo_Rechazado_nivel,
+                    Minimo_aprobado_nivel = fa.Minimo_aprobado_nivel,
+                    OrdenAprobacion = fa.OrdenAprobacion,
+                    
+                });
+            }
+            return tipo_ticket;
         }
     }
 }

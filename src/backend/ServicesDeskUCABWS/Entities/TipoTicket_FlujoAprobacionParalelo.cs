@@ -8,6 +8,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using System.Net.Sockets;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -83,7 +86,6 @@ namespace ServicesDeskUCABWS.Entities
                 //Consultar Ticket
                 var ticket = ConsultarDatosTicket(idTicket, contexto);
                     
-
                 //Comparar Votos
                 if (EstaAprobadoORechazado(ticket, contexto)!=null)
                 {
@@ -129,5 +131,36 @@ namespace ServicesDeskUCABWS.Entities
                 && x.voto == "Rechazado").Count();
         }
 
+        public override void ValidarTipoticketAgregar(IDataContext contexto)
+        {
+            LongitudNombre();
+            LongitudDescripcion();
+            VerificarDepartamento(contexto);
+            HayCargos();
+            VerificarCargos(contexto);
+            VerificarMinimoMaximoAprobado();
+            VerificarFlujos();
+        }
+
+
+        //Validaciones
+        public override void VerificarFlujos()
+        {
+            foreach (var cargo in ObtenerCargos())
+            {
+                if (HayMinimo_Aprobado_nivel(cargo) || HayMaximo_Aprobado_nivel(cargo) || HayOrdenAprobacion(cargo))
+                {
+                    throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NULL);
+                }
+            }
+        }
+
+        public override void VerificarMinimoMaximoAprobado()
+        {
+            if (!HayMinimoAprobado() || !HayMaximo_Rechazado())
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NO_VALIDO);
+            }
+        }
     }
 }

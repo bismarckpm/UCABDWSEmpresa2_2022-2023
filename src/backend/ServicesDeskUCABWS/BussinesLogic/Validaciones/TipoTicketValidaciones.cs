@@ -18,12 +18,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             _dataContext = dataContext;
         }
 
-        private static List<FlujoAprobacionDTOCreate> ObtenerCargos(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        private static List<Flujo_Aprobacion> ObtenerCargos(Tipo_Ticket tipo_TicketDTOCreate)
         {
             return tipo_TicketDTOCreate.Flujo_Aprobacion;
         }
 
-        private static List<FlujoAprobacionDTOCreate> ObtenerCargosOrdenados(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        private static List<Flujo_Aprobacion> ObtenerCargosOrdenados(Tipo_Ticket tipo_TicketDTOCreate)
         {
             return tipo_TicketDTOCreate.Flujo_Aprobacion.OrderBy(x => x.OrdenAprobacion).ToList();
         }
@@ -63,9 +63,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             }
         }
 
-        public void HayCargos(Tipo_TicketDTOCreate tipoticket)
+        public void HayCargos(Tipo_Ticket tipoticket)
         {
-            if (ObtenerCargos(tipoticket) == null)
+            if (ObtenerCargos(tipoticket).Count() == 0)
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_VACIO);
             }
@@ -79,39 +79,38 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
                 {
                     throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_NO_VALIDO);
                 }
-
             }
         }
 
-        public bool HayMinimoAprobado(Tipo_TicketDTOCreate tipo)
+        public bool HayMinimoAprobado(Tipo_Ticket tipo)
         {
             return tipo.Minimo_Aprobado != null;
         }
 
-        public bool HayMaximo_Rechazado(Tipo_TicketDTOCreate tipo)
+        public bool HayMaximo_Rechazado(Tipo_Ticket tipo)
         {
             return tipo.Maximo_Rechazado != null;
         }
 
-        public bool HayMinimo_Aprobado_nivel(FlujoAprobacionDTOCreate cargo)
+        public bool HayMinimo_Aprobado_nivel(Flujo_Aprobacion cargo)
         {
             return cargo.Minimo_aprobado_nivel != null;
         }
 
-        public bool HayMaximo_Aprobado_nivel(FlujoAprobacionDTOCreate cargo)
+        public bool HayMaximo_Aprobado_nivel(Flujo_Aprobacion cargo)
         {
             return cargo.Maximo_Rechazado_nivel != null;
         }
 
-        public bool HayOrdenAprobacion(FlujoAprobacionDTOCreate cargo)
+        public bool HayOrdenAprobacion(Flujo_Aprobacion cargo)
         {
             return cargo.OrdenAprobacion != null;
         }
 
         //Flujo Paralelo
-        public void VerificarCargosFlujoParalelo(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        public void VerificarCargosFlujoParalelo(Tipo_Ticket tipo_ticket)
         {
-            foreach (var cargo in ObtenerCargos(tipo_TicketDTOCreate))
+            foreach (var cargo in ObtenerCargos(tipo_ticket))
             {
                 if (HayMinimo_Aprobado_nivel(cargo) || HayMaximo_Aprobado_nivel(cargo) || HayOrdenAprobacion(cargo))
                 {
@@ -120,18 +119,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             }
         }
 
-        public void VerificarMinimoMaximoAprobadoFlujoParalelo(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        public void VerificarMinimoMaximoAprobadoFlujoParalelo(Tipo_Ticket tipo_ticket)
         {
-            if (!HayMinimoAprobado(tipo_TicketDTOCreate) || !HayMaximo_Rechazado(tipo_TicketDTOCreate))
+            if (!HayMinimoAprobado(tipo_ticket) || !HayMaximo_Rechazado(tipo_ticket))
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NO_VALIDO);
             }
         }
 
         //Flujo Jerarquico
-        public void VerificarCargosFlujoJerarquico(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        public void VerificarCargosFlujoJerarquico(Tipo_Ticket tipo_ticket)
         {
-            foreach (var cargo in ObtenerCargos(tipo_TicketDTOCreate))
+            foreach (var cargo in ObtenerCargos(tipo_ticket))
             {
                 if (!HayMinimo_Aprobado_nivel(cargo) || !HayMaximo_Aprobado_nivel(cargo) || !HayOrdenAprobacion(cargo))
                 {
@@ -140,18 +139,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             }
         }
 
-        public void VerificarMinimoMaximoAprobadoFlujoJerarquico(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        public void VerificarMinimoMaximoAprobadoFlujoJerarquico(Tipo_Ticket tipo_ticket)
         {
-            if (HayMinimoAprobado(tipo_TicketDTOCreate) || HayMaximo_Rechazado(tipo_TicketDTOCreate))
+            if (HayMinimoAprobado(tipo_ticket) || HayMaximo_Rechazado(tipo_ticket))
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NO_VALIDO);
             }
         }
 
-        public void VerificarSecuenciaOrdenAprobacion(Tipo_TicketDTOCreate tipo_TicketDTOCreate)
+        public void VerificarSecuenciaOrdenAprobacion(Tipo_Ticket tipo_ticket)
         {
             int i = 1;
-            foreach (var c in ObtenerCargosOrdenados(tipo_TicketDTOCreate))
+            foreach (var c in ObtenerCargosOrdenados(tipo_ticket))
             {
                 if (i != c.OrdenAprobacion)
                 {
@@ -162,6 +161,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         }
 
         //Flujo No Aprobacion
+        public void VerificarMinimoMaximoAprobadoFlujoNoAprobacion(Tipo_Ticket tipo_ticket)
+        {
+            if (HayMinimoAprobado(tipo_ticket) || HayMaximo_Rechazado(tipo_ticket))
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_NO_VALIDO);
+            }
+        }
 
+        public void VerificarCargosFlujoNoAprobacion(Tipo_Ticket tipo_ticket)
+        {
+            if (tipo_ticket.Flujo_Aprobacion != null)
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
+            }
+        }
     }
 }
