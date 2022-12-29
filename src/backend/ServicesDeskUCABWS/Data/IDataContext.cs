@@ -31,6 +31,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<RolUsuario> RolUsuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
 
+        public DbSet<Modelo_Aprobacion> Modelos_Aprobacion { get; set; }
 
         public DbSet<DepartamentoTipo_Ticket> DepartamentoTipo_Ticket { get; set; }
     }

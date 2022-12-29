@@ -140,6 +140,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //assert
 
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_Jerarquico");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
@@ -255,6 +256,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_Paralelo");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
@@ -328,6 +330,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_No_Aprobacion");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
         }
 
@@ -361,8 +364,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento== null);
-            Assert.IsTrue(result.Data.Flujo_Aprobacion == null);
+            Assert.IsTrue(result.Data.Departamento.Count== 0);
+            Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == 0);
         }
         [TestMethod]
         public void RegistroTipoTicketExcepcion()

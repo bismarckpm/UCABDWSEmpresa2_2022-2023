@@ -81,7 +81,11 @@ namespace ServicesDeskUCABWS.Entities
                 if (EstaAprobadoORechazado(ticket,contexto)!=null)
                 {
                     CambiarEstadoVotosPendiente(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
-                    if (EstaAprobadoORechazado(ticket, contexto) == "Aprobado")
+                    if (EstaAprobadoORechazado(ticket, contexto) != "Aprobado")
+                    {
+                        return EstaAprobadoORechazado(ticket, contexto);
+                    }
+                    else
                     {
                         if (VotosSiguienteRonda(ticket, contexto))
                         {
@@ -90,10 +94,9 @@ namespace ServicesDeskUCABWS.Entities
                         }
                         return "Pendiente";
                     }
-                    return EstaAprobadoORechazado(ticket, contexto);
                 }
                 return "Pendiente";
-
+                
             }
             catch (Exception)
             {
@@ -106,12 +109,12 @@ namespace ServicesDeskUCABWS.Entities
         private bool VotosSiguienteRonda(Ticket ticket, IDataContext contexto)
         {
             ticket.nro_cargo_actual++;
-            if (EsUltimaRonda(ticket,contexto))
+            if (!EsUltimaRonda(ticket,contexto))
             {
-                return true;
+                FlujoAprobacion(contexto, ticket);
+                return false;
             }
-            var ListaEmpleados = FlujoAprobacion(contexto, ticket);
-            return false;
+            return true;
         }
 
         private bool EsUltimaRonda(Ticket ticket, IDataContext contexto)

@@ -124,7 +124,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //assert
 
-            Assert.AreEqual(result.Data.Departamento, null);
+            Assert.AreEqual(result.Data.Departamento.Count(), 0);
             Assert.AreEqual(result.Data.Flujo_Aprobacion.Count(), 2);
 
             Assert.AreEqual(result.Data.nombre, "Mantenimiento");
@@ -159,7 +159,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //assert
 
             Assert.AreEqual(result.Data.Departamento.Count(), 2);
-            Assert.AreEqual(result.Data.Flujo_Aprobacion, null);
+            Assert.AreEqual(result.Data.Flujo_Aprobacion.Count(), 0);
 
             Assert.AreEqual(result.Data.nombre, "Mantenimiento");
             Assert.AreEqual(result.Data.descripcion, "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento");

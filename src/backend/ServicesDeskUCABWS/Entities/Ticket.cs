@@ -71,9 +71,8 @@ namespace ServicesDeskUCABWS.Entities
             this.descripcion = descripcion;
             this.Departamento_Destino = Departamento_Destino;
             this.fecha_creacion = DateTime.UtcNow;
-            //this.Estado=
-
         }
+
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
 
         public int? nro_cargo_actual { get; set; }
@@ -145,7 +144,7 @@ namespace ServicesDeskUCABWS.Entities
                 case "Aprobado":
                     try
                     {
-                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
+                        notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
                     }
                     catch (ExceptionsControl) { }
                     break;

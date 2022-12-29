@@ -783,6 +783,34 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Bitacora_Tickets.AddRange(It.IsAny<IEnumerable<Bitacora_Ticket>>())).Callback<IEnumerable<Bitacora_Ticket>>(ListaBitacora.AddRange);
             _mockContext.Setup(set => set.Bitacora_Tickets.Update(It.IsAny<Bitacora_Ticket>()));
 
+            var ListaModelosAprobacion = new List<Modelo_Aprobacion>()
+            {
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("8F8E3B42-59C5-41C4-AEBB-9DDF31241DEE"),
+                    nombre="Modelo No Aprobacion",
+                    discrimanador= "Modelo_No_Aprobacion"
+                },
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("D6246415-B186-48FC-81E4-C15AEFB4F7F6"),
+                    nombre="Modelo Paralelo",
+                    discrimanador= "Modelo_Paralelo"
+                },
+                new Modelo_Aprobacion()
+                {
+                    Id=Guid.Parse("C846C1EA-4328-4157-B1F4-D6417BA804AF"),
+                    nombre="Modelo Jerarquico",
+                    discrimanador= "Modelo_Jerarquico"
+                }
+            };
+
+            _mockContext.Setup(c => c.Modelos_Aprobacion).Returns(ListaModelosAprobacion.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.Add(It.IsAny<Modelo_Aprobacion>())).Callback<Modelo_Aprobacion>(ListaModelosAprobacion.Add);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.AddRange(It.IsAny<IEnumerable<Modelo_Aprobacion>>())).Callback<IEnumerable<Modelo_Aprobacion>>(ListaModelosAprobacion.AddRange);
+            _mockContext.Setup(set => set.Modelos_Aprobacion.Update(It.IsAny<Modelo_Aprobacion>()));
+
+
             _mockContext.Setup(set => set.DbContext.SaveChanges());
         }
     }

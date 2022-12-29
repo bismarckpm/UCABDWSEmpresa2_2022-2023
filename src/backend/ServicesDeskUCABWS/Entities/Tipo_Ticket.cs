@@ -52,6 +52,7 @@ namespace ServicesDeskUCABWS.Entities
             fecha_ult_edic = DateTime.UtcNow;
             Flujo_Aprobacion = new List<Flujo_Aprobacion>();
             Departamentos = new List<DepartamentoTipo_Ticket>();
+
         }
 
         public Tipo_Ticket(string nombre, string descripcion, string tipo)
@@ -121,6 +122,19 @@ namespace ServicesDeskUCABWS.Entities
             contexto.Votos_Tickets
                 .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
                 .ToList().ForEach(x => x.voto = ticket.Estado.Estado_Padre.nombre);
+        }
+
+        public void LlenarDatos(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null)
+        {
+            Id = Guid.NewGuid();
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+            Minimo_Aprobado = MinimoAprobado;
+            Maximo_Rechazado = MaximoRechazado;
+            fecha_creacion = DateTime.UtcNow;
+            fecha_ult_edic = DateTime.UtcNow;
+            Flujo_Aprobacion = new List<Flujo_Aprobacion>();
+            Departamentos = new List<DepartamentoTipo_Ticket>();
         }
     }
 
