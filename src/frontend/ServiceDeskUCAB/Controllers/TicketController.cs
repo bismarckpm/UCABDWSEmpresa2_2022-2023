@@ -86,7 +86,7 @@ namespace ServiceDeskUCAB.Controllers
             FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
-                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Abiertos",idUsuario)
+                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Mis-Tickets",idUsuario)
             };
             return View(ticketMergeViewModel);
         }

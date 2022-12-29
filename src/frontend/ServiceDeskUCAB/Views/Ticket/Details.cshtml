@@ -21,7 +21,7 @@
         {
             <form method="post" asp-controller="Ticket" asp-action="CambiarEstado">
                 <div class="mb-3" style="display:inline-block">
-                    <input name="ticketId" value="@Model.ticket.ticket_id.ToString()" required readonly class="d-none" />
+                    <input name="ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none" />
                     <select name="estadoId" class="form-select" required>
                         <option value="" selected>Cambiar estado</option>
                         @try
