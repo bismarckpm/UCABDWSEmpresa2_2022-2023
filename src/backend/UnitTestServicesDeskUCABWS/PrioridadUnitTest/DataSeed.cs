@@ -30,7 +30,7 @@ namespace PrioridadUnitTest
                 Id = new Guid("2DF5B096-DC5A-421F-B109-2A1D1E650808"),
                 nombre ="nombre",
                 descripcion ="descripcion",
-                estado ="habilitado",
+                estado ="Habilitado",
                 fecha_descripcion=new DateTime(2008, 5, 1, 8, 30, 52),
                 fecha_ultima_edic=new DateTime(2008, 5, 1, 8, 30, 52)
                 }

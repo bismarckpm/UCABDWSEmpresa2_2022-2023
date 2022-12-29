@@ -18,13 +18,13 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
     [ApiController]
     public class Votos_TicketController : Controller
     {
-        private readonly DataContext _context;
+        //private readonly IDataContext _context;
 
         private readonly IVotos_TicketDAO _votos_ticketDAO;
 
-        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO, DataContext context, IMapper mapper)
+        public Votos_TicketController(IVotos_TicketDAO _votos_ticketDAO, IMapper mapper)
         {
-            _context = context;
+            //_context = context;
             this._votos_ticketDAO = _votos_ticketDAO;
 
         }

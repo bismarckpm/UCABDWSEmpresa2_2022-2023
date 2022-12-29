@@ -1,4 +1,5 @@
-﻿using ServiceDeskUCAB.Models.ModelsVotos;
+﻿using ServiceDeskUCAB.Models.DTO.CargoDTO;
+using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
 
@@ -22,7 +23,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<Departament>> ListaDepa();
 
-        Task<List<TipoCargo>> ListaCargos();
+        Task<List<CargoDTOUpdate>> ListaCargos(Guid IdDepartamento);
 
         Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario);
 

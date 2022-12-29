@@ -11,7 +11,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
 {
     public interface ITipo_CargoDAO
     {
-        public Tipo_CargoDto AgregarTipo_CargoDAO(Tipo_Cargo tipo);
+        /*public Tipo_CargoDto AgregarTipo_CargoDAO(Tipo_Cargo tipo);
         public List<Tipo_CargoDto> ConsultarTipo_Cargos();
         public Tipo_CargoDto ConsultarPorID(Guid id);
         public Tipo_CargoDto EliminarTipo_Cargo(Guid id);
@@ -23,7 +23,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO
         public List<Tipo_CargoDto> ConsultarGrupoNoEliminado();
 
         public Tipo_CargoDto UltimoTipoRegistradoDao();
-        public List<Tipo_CargoDTOSearch> ConsultarCargos();
+        public List<Tipo_CargoDTOSearch> ConsultarCargos();*/
 
     }
 }

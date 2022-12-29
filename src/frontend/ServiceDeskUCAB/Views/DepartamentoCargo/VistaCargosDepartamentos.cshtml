@@ -6,6 +6,9 @@
     <div class="col-12">
         <h1 id="ti">Gestionar Cargo Departamento @Model.Departamento.nombre</h1>
     </div>
+    <div class="col-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar Cargo</button>
+    </div>
 </div>
 
 @if (Context.Request.Query["message"].Count() > 0)
@@ -64,6 +67,51 @@
         </tbody>
     </table>
 </div>
+
+
+@*Agregar Cargo*@
+
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Nuevo Cargo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form asp-action="RegistrarCargo" asp-controller="DepartamentoCargo" method="post">
+
+                    <div class="mb-3" style="display: none;">
+                        <label for="recipient-name" class="col-form-label">Id departamento:</label>
+                        <input required type="text" value="@Model.Departamento.Id" name="idDept" />
+                    </div>
+
+                    <div class="mb-3" style="display: none;">
+                        <label for="recipient-name" class="col-form-label">Id departamento:</label>
+                        <input required type="text" value="@Model.Departamento.nombre" name="nombreDept" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input required type="text" name="nombre" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Descripción:</label>
+                        <input required type="text" name="descripcion" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @foreach (var cargos in Model.ListaCargos)
 {
     <div class="modal fade" id="modificarModal-@cargos.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,6 +196,9 @@
 }
 
 
+
+
+@*Modificar cargo*@
 @foreach (var cargos in Model.ListaCargos)
 {
     <div class="modal fade" id="modal2-@cargos.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -174,7 +225,8 @@
         </div>
     </div>
 }
-@*Modificar estado*@
+
+
 
 
 @section Scripts{

@@ -22,7 +22,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 	[TestClass]
 	public class TipoCargoDAOTest
 	{
-		private readonly Tipo_CargoDAO _TipoCargoDAO;
+		/*private readonly Tipo_CargoDAO _TipoCargoDAO;
 		private readonly Tipo_CargoDAO _TipoCargoDAO_CTC;
 
 		private readonly Mock<IDataContext> _contextMock;
@@ -64,7 +64,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			Assert.AreEqual(request.nombre, "Un tipo de cargo que funciona");
 		}*/
 
-		[TestMethod(displayName: "Prueba Unitaria para comprobar la excepcion general al registrar un Tipo de cargo")]
+		/*[TestMethod(displayName: "Prueba Unitaria para comprobar la excepcion general al registrar un Tipo de cargo")]
 		public void ExceptionGeneralRegistrarTipoCargoTest()
 		{
 			//arrange
@@ -113,7 +113,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			Assert.AreNotEqual(request.nombre, result.nombre);
 		}*/
 
-		[TestMethod(displayName: "Prueba Unitaria para consultar los tipos de cargos registrados")]
+		/*[TestMethod(displayName: "Prueba Unitaria para consultar los tipos de cargos registrados")]
 		public void ConsultarTipoCargosTest()
 		{
 			var result = _TipoCargoDAO.ConsultarTipo_Cargos();
@@ -127,7 +127,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			Assert.ThrowsException<ExceptionsControl>(() => _TipoCargoDAO.ConsultarTipo_Cargos());
 		}
 		*/
-		[TestMethod(displayName: "Prueba Unitaria para consultar los tipos de cargos por su ID")]
+		/*[TestMethod(displayName: "Prueba Unitaria para consultar los tipos de cargos por su ID")]
 		public void ConsultarTiposCargosIDTest()
 		{
 			var request = new Tipo_Cargo
@@ -238,7 +238,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			Assert.ThrowsException<ExceptionsControl>(() => _TipoCargoDAO.actualizarTipo_Cargo(request));
 		}*/
 
-		[TestMethod(displayName: "Prueba Unitaria Eliminar un tipo de cargo por su ID")]
+		/*[TestMethod(displayName: "Prueba Unitaria Eliminar un tipo de cargo por su ID")]
 		public void EliminarTipoCargoPorID()
 		{
 			var request = new Tipo_Cargo
@@ -327,7 +327,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			Assert.ThrowsException<ExceptionsControl>(() => _TipoCargoDAO.ExisteTipo(request));
 		}*/
 
-		[TestMethod(displayName: "Prueba Unitaria para quitar la asociacion de un cargo con un tipo")]
+		/*[TestMethod(displayName: "Prueba Unitaria para quitar la asociacion de un cargo con un tipo")]
 		public void QuitarAsociacionCargoTipoCargo()
 		{
 			var request = new Tipo_Cargo
@@ -338,7 +338,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Tipo_Cargo_Test
 			_contextMockCTC.Setup(set => set.DbContext.SaveChanges());
 			var result = _TipoCargoDAO_CTC.QuitarAsociacion(request.id);
 			Assert.IsTrue(result);
-		}
+		}*/
 	}
 
 }
