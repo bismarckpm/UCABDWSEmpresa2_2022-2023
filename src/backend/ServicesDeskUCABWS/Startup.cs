@@ -114,8 +114,7 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             //services.AddTransient<IDataContext, DataContext>();
-            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
-            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             //Se agrega en generador de Swagger
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();

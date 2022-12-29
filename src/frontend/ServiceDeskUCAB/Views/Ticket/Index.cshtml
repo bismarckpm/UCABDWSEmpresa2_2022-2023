@@ -26,28 +26,28 @@
             {
                 <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Mis-Tickets">Mis Tickets</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Finalizados</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
             }
             else if (ViewBag.opcion == "Abiertos")
             {
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Mis-Tickets">Mis Tickets</a>
                 <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Finalizados</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
             }
             else if (ViewBag.opcion == "Cerrados")
             {
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Mis-Tickets">Mis Tickets</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Finalizados</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
             }
             else
             {
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Mis-Tickets">Mis Tickets</a>
                 <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Abiertos</a>
-                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Cerrados</a>
+                <a class="btn btn-primary" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Cerrados">Finalizados</a>
                 <a class="btn btn-primary disabled" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Todos">Todos</a>
             }
         </div>
@@ -65,8 +65,12 @@
                 <th>ESTADO</th>
                 <th>FECHA DE CREACIÓN</th>
                 <th>EMISOR</th>
+                @if (ViewBag.opcion == "Cerrados" || ViewBag.opcion == "Todos")
+                {
+                    <th>ENCARGADO</th>
+                }
                 <th></th>
-            </tr>
+             </tr>
         </thead>
         <tbody>
             @try
@@ -82,13 +86,13 @@
                         <td>@item.empleado_correo</td>
                         @if (ViewBag.opcion == "Cerrados" || ViewBag.opcion == "Todos")
                         {
-                            if (@item.empleado_correo != null)
+                            if (@item.encargado_correo != null)
                             {
-                                <td>@item.empleado_correo</td> //Es el empleado que atendio
+                                <td>@item.encargado_correo</td>
                             }
                             else
                             {
-                                <td>-</td>
+                                <td>Libre</td>
                             }
                         }
                         <td>
@@ -99,7 +103,7 @@
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.Id">Ver detalles</a></li>
                                     @if (ViewBag.opcion == "Abiertos")
                                     {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Tomar" asp-route-ticketId="@item.Id">Tomar Ticket</a></li>
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@item.Id">Tomar Ticket</a></li>
                                     }
                                     else if (ViewBag.opcion == "Mis-Tickets")
                                     {
@@ -107,7 +111,7 @@
                                         <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-ticketId="@item.Id">Merge</a></li>
                                         @if (item.fecha_eliminacion == null)
                                         {
-                                            <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Cancelar" asp-route-ticketId="@item.Id">Cancelar</a></li>
+                                            <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Finalizar" asp-route-ticketId="@item.Id">Finalizar</a></li>
                                         }
                                     }
                                 </ul>

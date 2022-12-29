@@ -19,16 +19,16 @@
 
         @if (Model.ticket.fecha_eliminacion == null)
         {
-            <form method="post" asp-controller="Ticket" asp-action="CambiarEstado" asp-route-ticketId="@Model.ticket.ticket_id">
+            <form method="post" asp-controller="Ticket" asp-action="CambiarEstado">
                 <div class="mb-3" style="display:inline-block">
                     <input asp-for="@Model.actualizarDTO.ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none"/>
-                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" aria-label="Default select example" required>
+                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" required>
                         <option selected>Cambiar estado</option>
                         @try
                         {
                             @foreach (var item in Model.estados)
                             {
-                                <option value="@item">@item.nombre</option>
+                                <option value="@item.Id">@item.nombre</option>
                             }
                         }
                         catch (Exception e)

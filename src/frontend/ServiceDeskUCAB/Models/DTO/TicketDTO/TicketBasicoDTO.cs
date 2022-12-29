@@ -6,6 +6,7 @@ namespace ServiceDeskUCAB.Models
         public Guid Id { get; set; }
         public string titulo { get; set; } = string.Empty;
         public string empleado_correo { get; set; }
+        public string encargado_correo { get; set; }
         public string prioridad_nombre { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }

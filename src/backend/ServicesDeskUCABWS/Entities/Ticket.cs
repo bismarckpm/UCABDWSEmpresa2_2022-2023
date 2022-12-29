@@ -43,8 +43,10 @@ namespace ServicesDeskUCABWS.Entities
         public Familia_Ticket? Familia_Ticket { get; set; }
 
         public Ticket? Ticket_Padre { get; set; }
-
         public Empleado Emisor { get; set; }
+        public Guid EmisorId {get; set;}
+        public Empleado? Responsable {get; set;}
+        public Guid? ResponsableId {get; set;}
         public Ticket() { }
         public Ticket(string titulo, string descripcion)
         {
@@ -62,8 +64,6 @@ namespace ServicesDeskUCABWS.Entities
             this.descripcion = descripcion;
             this.Departamento_Destino = Departamento_Destino;
             this.fecha_creacion = DateTime.UtcNow;
-            //this.Estado=
-
         }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
 

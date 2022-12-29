@@ -62,11 +62,11 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
             modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
             modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
+
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Emisor).WithMany(t=>t.Lista_Ticket).HasForeignKey(t=>t.EmisorId);
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Responsable).WithMany(t=>t.Tickets_Propios).HasForeignKey(t=>t.ResponsableId).OnDelete(DeleteBehavior.ClientSetNull);
         }
 
-
-
-        
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }

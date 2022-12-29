@@ -32,7 +32,7 @@ namespace ServiceDeskUCAB.Controllers
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             ViewBag.opcion = opcion;
             DepartamentoSearchDTO departamento= await _servicioTicketAPI.departamentoEmpleado(idUsuario);
-            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Id, opcion);
+            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Id, opcion, idUsuario);
             return View(lista);
         }
 
@@ -86,24 +86,26 @@ namespace ServiceDeskUCAB.Controllers
             FamiliaMergeDTOViewModel ticketMergeViewModel = new FamiliaMergeDTOViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
-                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Abiertos")
+                tickets = await _servicioTicketAPI.Lista(departamento.Id, "Abiertos",idUsuario)
             };
             return View(ticketMergeViewModel);
         }
 
         public async Task<IActionResult> Details(string ticketId)
         {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
             TicketDetailsViewModel ticketDetailsViewModel = new TicketDetailsViewModel()
             {
                 ticket = await _servicioTicketAPI.Obtener(ticketId),
                 familiaTicket = await _servicioTicketAPI.FamiliaTicket(ticketId),
                 bitacoraTicket = await _servicioTicketAPI.BitacoraTicket(ticketId),
-                estados = new List<Estado>() //await _servicioEstadoAPI.Estados()
+                estados = await _servicioTicketAPI.DepartamentoEstados(departamento.Id)
             };
             return View(ticketDetailsViewModel);
         }
 
-        public async Task<IActionResult> Tomar(string ticketId)
+        public async Task<IActionResult> TomarTicket(string ticketId)
         {
             TicketTomarDTO tomar= new TicketTomarDTO();
             tomar.empleadoId = User.Identities.First().Claims.ToList()[0].Value;
@@ -111,7 +113,7 @@ namespace ServiceDeskUCAB.Controllers
             JObject respuesta;
             try
             {
-                respuesta = await _servicioTicketAPI.Tomar(tomar);
+                respuesta = await _servicioTicketAPI.TomarTicket(tomar);
                 Console.WriteLine(respuesta.ToString());
                 if ((bool)respuesta["success"])
                 {
@@ -123,6 +125,30 @@ namespace ServiceDeskUCAB.Controllers
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
                     // Falta retornar a la misma vista sin recargar
                     return RedirectToAction("Index", new { opcion = "Abiertos", message = (string)respuesta["message"] });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return NoContent();
+        }
+
+        public async Task<IActionResult> Finalizar(string ticketId)
+        {
+            JObject respuesta;
+            try
+            {
+                respuesta = await _servicioTicketAPI.Finalizar(ticketId);
+                if ((bool)respuesta["success"])
+                {
+                    Console.WriteLine("La respuesta fue verdadera");
+                    return RedirectToAction("Index", new { opcion = "Mis-Tickets", message = (string)respuesta["message"] });
+                }
+                else
+                {
+                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
+                    return RedirectToAction("Index", (new { opcion = "Mis-Tickets", message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)
@@ -226,46 +252,21 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cancelar(string ticketId)
+        public async Task<IActionResult> CambiarEstado(ActualizarDTO actualizar)
         {
             JObject respuesta;
             try
             {
-                respuesta = await _servicioTicketAPI.Cancelar(ticketId);
+                respuesta = await _servicioTicketAPI.CambiarEstado(actualizar);
                 if ((bool)respuesta["success"])
                 {
                     Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new {opcion = "Abiertos", message = (string)respuesta["message"] });
+                    return RedirectToAction("Index", new { opcion = "Mis-Tickets", message = (string)respuesta["message"] });
                 }
                 else
                 {
                     Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                    return RedirectToAction("Index", (new { opcion = "Abiertos", message = (string)respuesta["message"] }));
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CambiarEstado(ActualizarDTO ticketId)
-        {
-            JObject respuesta;
-            try
-            {
-                respuesta = await _servicioTicketAPI.CambiarEstado(ticketId);
-                if ((bool)respuesta["success"])
-                {
-                    Console.WriteLine("La respuesta fue verdadera");
-                    return RedirectToAction("Index", new { opcion = "Abiertos", message = (string)respuesta["message"] });
-                }
-                else
-                {
-                    Console.WriteLine("La respuesta fue falsa, porque hubo un error");
-                    return RedirectToAction("Details", (new { ticketId = ticketId, opcion = "Abiertos", message = (string)respuesta["message"] }));
+                    return RedirectToAction("Details", (new { ticketId = actualizar.ticketId, opcion = "Mis-Tickets", message = (string)respuesta["message"] }));
                 }
             }
             catch (Exception ex)

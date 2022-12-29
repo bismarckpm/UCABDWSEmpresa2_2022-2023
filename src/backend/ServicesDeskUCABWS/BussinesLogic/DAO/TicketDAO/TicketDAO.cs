@@ -503,14 +503,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             return respuesta;
         }
 
-        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado)
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado,Guid empleadoId)
         {
             ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
             try
             {
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.validarDepartamento(idDepartamento);
-                respuesta.Data = rellenarTicketInfoBasicaHl(idDepartamento, estado);
+                respuesta.Data = rellenarTicketInfoBasicaHl(idDepartamento, estado, empleadoId);
                 respuesta.Message = "Proceso de búsqueda exitoso";
                 respuesta.Success = true;
             } catch (TicketDepartamentoException e)
@@ -794,8 +794,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
                 eliminarTicketHl(id);
-                respuesta.Data = "Ticket eliminado satisfactoriamente";
-                respuesta.Message = "Ticket eliminado satisfactoriamente";
+                respuesta.Data = "Ticket finalizado satisfactoriamente";
+                respuesta.Message = "Ticket finalizado satisfactoriamente";
                 respuesta.Success = true;
             }
             catch (TicketException e)
@@ -890,6 +890,44 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 respuesta.Data = buscarEstadosPorDepartamentoHl(idDepartamento);
                 respuesta.Message = "Lista de Tipo tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio)
+        {
+            ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
+            try
+            {
+                TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
+                validaciones.validarEmpleado(new Guid(ticketPropio.empleadoId));
+                validaciones.validarTicket(new Guid(ticketPropio.ticketId));
+                adquirirTicketHl(ticketPropio);
+                respuesta.Data = "Ticket adquirido exitosamente";
+                respuesta.Message = "Ticket adquirido exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropios(Guid idEmpleado)
+        {
+            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
+            try
+            {
+                respuesta.Data = obtenerTicketsPropiosHl(idEmpleado);
+                respuesta.Message = "Lista de tickets obtenida exitosamente";
                 respuesta.Success = true;
             }
             catch (Exception e)
@@ -1061,7 +1099,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 empleado_correo = ticket.Emisor.correo,
             };
         }
-        public List<TicketInfoBasicaDTO> rellenarTicketInfoBasicaHl(Guid idDepartamento, string opcion)
+
+        public List<TicketInfoBasicaDTO> rellenarTicketInfoBasicaHl(Guid idDepartamento, string opcion, Guid empleadoId)
         {
             List<TicketDTO> tickets;
             if (opcion == "Todos")
@@ -1079,7 +1118,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Tipo_Ticket)
                                                                     .Include(t => t.Estado)
                                                                     .Include(t => t.Departamento_Destino)
-                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.ResponsableId == null && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else if (opcion == "Cerrados")
                 tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
                                                                     .Include(t => t.Emisor)
@@ -1088,6 +1127,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                                                     .Include(t => t.Estado)
                                                                     .Include(t => t.Departamento_Destino)
                                                                     .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.fecha_eliminacion != null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
+            else if (opcion == "Mis-Tickets")
+                tickets = _mapper.Map<List<TicketDTO>>(_dataContext.Tickets
+                                                                    .Include(t => t.Emisor)
+                                                                    .Include(t => t.Prioridad)
+                                                                    .Include(t => t.Tipo_Ticket)
+                                                                    .Include(t => t.Estado)
+                                                                    .Include(t => t.Departamento_Destino)
+                                                                    .Where(ticket => ticket.Departamento_Destino.id == idDepartamento && ticket.ResponsableId == empleadoId && ticket.fecha_eliminacion == null && ticket.Estado.Estado_Padre.nombre != "Pendiente" && ticket.Estado.Estado_Padre.nombre != "Rechazado").ToList());
             else
                 throw new TicketException("Lista de tickets no encontrada debido a que la opción de búsqueda no es válido");
             if (tickets.Count() == 0)
@@ -1101,6 +1148,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     Id = ticket.Id,
                     titulo = ticket.titulo,
                     empleado_correo = ticket.Emisor.correo,
+                    encargado_correo = ticket.Responsable != null ? ticket.Responsable.correo : null,
                     prioridad_nombre = ticket.Prioridad.nombre,
                     fecha_creacion = ticket.fecha_creacion,
                     fecha_eliminacion = ticket.fecha_eliminacion,
@@ -1144,9 +1192,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             if (empleado.Cargo == null)
                 throw new Exception("Empleado no tiene cargo asignado");
             Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
-            if (!_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).Any())
+            if (!_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Any())
                 throw new Exception("No existen departamentos acorde al cargo del empleado");
-            return _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
+            List<DepartamentoSearchDTO> lista = _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
+            Console.WriteLine($"Lista: {lista.Count()}");
+            return lista;
         }
 
         public DepartamentoSearchDTO buscarDepartamentoUsuarioHl(Guid idEmpleado)
@@ -1175,6 +1225,50 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Estado> buscarEstadosPorDepartamentoHl(Guid idDepartamento)
         {
             return _dataContext.Estados.Include(t => t.Departamento).Include(t => t.Estado_Padre).Where(t => t.Departamento.id == idDepartamento && t.Estado_Padre.nombre != "Aprobado" && t.Estado_Padre.nombre != "Rechazado" && t.Estado_Padre.nombre != "Pendiente").ToList();
+        }
+        public void adquirirTicketHl(TicketTomarDTO ticketPropio)
+        {
+            Empleado empleado = _dataContext.Empleados.Include(t=>t.Tickets_Propios).Where(t => t.Id == new Guid(ticketPropio.empleadoId)).Single();
+            Ticket ticket = _dataContext.Tickets.Where(t => t.Id == new Guid(ticketPropio.ticketId)).Single();
+            ticket.Responsable = empleado;
+            if (empleado.Tickets_Propios == null)
+                empleado.Tickets_Propios = new List<Ticket>();
+            empleado.Tickets_Propios.Add(ticket);
+            _dataContext.DbContext.Update(ticket);
+            _dataContext.DbContext.Update(empleado);
+            _dataContext.DbContext.SaveChanges();
+        }
+        public List<TicketInfoBasicaDTO> obtenerTicketsPropiosHl(Guid idEmpleado)
+        {
+            List<Ticket> tickets = _dataContext.Tickets
+                                                .Include(t => t.Responsable)
+                                                .Include(t =>t.Emisor)
+                                                .Include(t => t.Prioridad)
+                                                .Include(t=>t.Tipo_Ticket)
+                                                .Include(t=>t.Estado)
+                                                .Where(t => t.Responsable.Id == idEmpleado)
+                                                .ToList();
+            if (tickets.Count() > 0)
+            {
+                List<TicketInfoBasicaDTO> respuesta = new List<TicketInfoBasicaDTO>();
+                tickets.ForEach(delegate (Ticket ticket)
+                {
+                    respuesta.Add(new TicketInfoBasicaDTO
+                    {
+                        Id = ticket.Id,
+                        titulo = ticket.titulo,
+                        empleado_correo = ticket.Emisor.correo,
+                        prioridad_nombre = ticket.Prioridad.nombre,
+                        fecha_creacion = ticket.fecha_creacion,
+                        fecha_eliminacion = ticket.fecha_eliminacion,
+                        tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
+                        estado_nombre = ticket.Estado.nombre
+                    });
+                });
+                return respuesta;
+            }
+            else
+                throw new Exception("Empleado no tiene tickets propios");
         }
     }
 }
