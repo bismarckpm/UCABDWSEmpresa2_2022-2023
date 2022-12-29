@@ -309,5 +309,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
             }
             return response;
         }
+
+        public ApplicationResponse<List<Votos_Ticket>> ConsultaVotosNoPendientes(Guid id)
+        {
+            var response = new ApplicationResponse<List<Votos_Ticket>>();
+            try
+            {
+                response.Data = contexto.Votos_Tickets
+                    .Include(x => x.Ticket).ThenInclude(x => x.Tipo_Ticket)
+                    .Include(x => x.Empleado)
+                    .Where(x => x.IdUsuario == id && x.voto != "Pendiente").ToList();
+            }
+            catch (Exception ex)
+            {
+                response.Exception = ex.Message;
+                response.Success = false;
+            }
+            return response;
+        }
     }
 }

@@ -29,17 +29,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         private IDataContext context;
         private readonly IMapper _mapper;
 
-        public Tipo_TicketService(IDataContext Context)
-        {
-            context = Context;
-        
-        }
+        // Constructor para el servicio de Tipo Ticket
         public Tipo_TicketService(IDataContext Context, IMapper mapper)
         {
             context = Context;
             _mapper = mapper;
         }
-
 
         //GET: Servicio para consultar la lista de tipo ticket
         public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicket()
@@ -76,12 +71,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                             tipo = r.ObtenerTipoAprobacion(),
                             Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
                             Departamento = listaDept
-                            //r.Departamentos.Select(y=>new List<string> { y.DepartamentoId.ToString() }).ToList()//_mapper.Map<List<DepartamentoSearchDTO>>(r.Departamentos)
-                        }) ;
-                        
-                    }
-               
-                    
+                        }) ;    
+                    } 
                 return tipo_ticketsDTO;
             }
 
@@ -375,43 +366,94 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         }
 
         //GET: Servicio para consultar un tipo de ticket por un ID en específico
-
         public Tipo_TicketDTOSearch ConsultarTipoTicketGUID(Guid id)
         {
             try
             {
                 var data = context.Tipos_Tickets
+                   .AsNoTracking()
                    .Include(p => p.Departamentos)
+                   .ThenInclude(dep => dep.departamento)
                    .Include(fa => fa.Flujo_Aprobacion)
                    .ThenInclude(_fa => _fa.Cargo)
-                   .Where(p => p.Id == id).Single();
-                var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
-                return tipoticketSearchDTO;
+                   .Where(p => p.Id == id)
+                   .Single();
+
+                var tipo_ticketsDTO = new Tipo_TicketDTOSearch();
+
+                var listaDept = new List<DepartamentoSearchDTO>();
+                foreach (var t in data.Departamentos)
+                {
+                    listaDept.Add(new DepartamentoSearchDTO()
+                    {
+                        Id = t.DepartamentoId.ToString(),
+                        nombre = t.departamento.nombre
+                    });
+                }
+                tipo_ticketsDTO = new Tipo_TicketDTOSearch()
+                {
+                    Id = data.Id,
+                    nombre = data.nombre,
+                    descripcion = data.descripcion,
+                    Minimo_Aprobado = data.Minimo_Aprobado,
+                    Maximo_Rechazado = data.Maximo_Rechazado,
+                    tipo = data.ObtenerTipoAprobacion(),
+                    Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(data.Flujo_Aprobacion),
+                    Departamento = listaDept
+                };
+
+                return tipo_ticketsDTO;
             }
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No existe el tipo de ticket con ese ID", ex);
             }
-
         }
 
-        //GET: Servicio para consultar un tipo de ticket por un nombre en específico
-        public Tipo_TicketDTOSearch ConsultarTipoTicketNomb(string nombre)
+        //GET: Servicio para Consultar un tipo de ticket por un nombre en específico
+        public Tipo_TicketDTOSearch ConsultarNombreTipoTicket(string nombre)
         {
             try
             {
                 var data = context.Tipos_Tickets.AsNoTracking()
                    .Include(p => p.Departamentos)
+                   .ThenInclude(dep => dep.departamento)
                    .Include(fa => fa.Flujo_Aprobacion)
-                   .ThenInclude(_fa => _fa.Cargo).Where(t => t.nombre == nombre).Single();
-                var tipoticketSearchDTO = _mapper.Map<Tipo_TicketDTOSearch>(data);
-                return tipoticketSearchDTO;
+                   .ThenInclude(_fa => _fa.Cargo)
+                   .Where(t => t.nombre == nombre)
+                   .Single();
+
+                var tipo_ticketsDTO = new Tipo_TicketDTOSearch();
+
+                var listaDept = new List<DepartamentoSearchDTO>();
+                foreach (var t in data.Departamentos)
+                {
+                    listaDept.Add(new DepartamentoSearchDTO()
+                    {
+                        Id = t.DepartamentoId.ToString(),
+                        nombre = t.departamento.nombre
+                    });
+                }
+                tipo_ticketsDTO = new Tipo_TicketDTOSearch()
+                {
+                    Id = data.Id,
+                    nombre = data.nombre,
+                    descripcion = data.descripcion,
+                    Minimo_Aprobado = data.Minimo_Aprobado,
+                    Maximo_Rechazado = data.Maximo_Rechazado,
+                    tipo = data.ObtenerTipoAprobacion(),
+                    Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(data.Flujo_Aprobacion),
+                    Departamento = listaDept
+                };
+
+                return tipo_ticketsDTO;
             }
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No existe el tipo de ticket con ese nombre", ex);
             }
         }
+
         //DELETE: Servicio para eliminar un tipo de ticket por un id en especifico
         public Boolean EliminarTipoTicket(Guid id)
         {

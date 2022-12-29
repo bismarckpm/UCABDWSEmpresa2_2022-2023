@@ -22,6 +22,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
     {
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
+        private IMapper mapper;
 
         public TestEliminarTipoTicket()
         {
@@ -29,7 +30,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             context = new Mock<IDataContext>();
 
-            TipoticketDAO = new Tipo_TicketService(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object,mapper);
             context.SetupDbContextData();
         }
 

@@ -30,6 +30,8 @@ namespace ServiceDeskUCAB.Servicios
         Task<Ticket> ObtenerTicket(string id);
         Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipoTicketDTO);
 
-        
+        Task<List<Votos_Ticket>> ObtenerVotosNoPendientes(string idUsuario);
+
+
     }
 }

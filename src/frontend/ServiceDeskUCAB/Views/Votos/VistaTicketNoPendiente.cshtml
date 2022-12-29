@@ -1,0 +1,89 @@
+﻿@model List<ServiceDeskUCAB.Models.ModelsVotos.Votos_Ticket>
+@using ServiceDeskUCAB.Models.ModelsVotos
+@using ServiceDeskUCAB.Models.TipoTicketsModels
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+
+</head>
+
+
+<div class="row">
+    <div class="col-8">
+        <h1 id="ti">Lista de Votos</h1>
+    </div>
+</div>
+
+<div class="text-center" style="margin-top:30px">
+    <a asp-action="VistaTicket" asp-controller="Votos" class="btn btn-warning btn-sm">Ticket Pentientes</a>
+</div>
+
+<!-- LISTA DE LOS TICKETS APROBADOS Y RECHAZADOS DEL USUARIO -->
+<div class="contenedor">
+    <div class="arriba">
+        <table class="table">
+
+            <tr>
+                <th>Titulo</th>
+                <th>Descripción</th>
+                <th>Tipo Solicitud</th>
+                <th>Creado</th>
+                <th>Voto</th>
+
+            </tr>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ticket?.titulo</td>
+                        <td>@item.Ticket?.descripcion</td>
+                        <td>@item.Ticket?.Tipo_Ticket?.nombre</td>
+                        <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
+                        <td>@item.voto</td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron tipo tickets con esa características",
+                    "sEmptyTable": "No hay ningun tipo ticket en el sistema, registra uno para enviar tickets",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+    </script>
+
+
+
+}
