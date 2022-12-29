@@ -56,7 +56,8 @@ namespace ServiceDeskUCAB.Controllers
 				{
 					return RedirectToAction("Index", new { message = "Se ha agregado correctamente" });
 				}
-			}
+				else return RedirectToAction("Index", new { message2 = "El nombre del departamento ingresado ya existe" });
+            }
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
@@ -111,8 +112,10 @@ namespace ServiceDeskUCAB.Controllers
 				respuesta = await _servicioApiDepartamento.EditarDepartamento(dept);
 				if ((bool)respuesta["success"])
 					return RedirectToAction("Index", new { message = "Se ha modificado correctamente" });
-			}
-			catch (Exception ex)
+                else return RedirectToAction("Index", new { message2 = "El nombre del departamento ingresado ya existe" });
+            }	
+
+            catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
 			}

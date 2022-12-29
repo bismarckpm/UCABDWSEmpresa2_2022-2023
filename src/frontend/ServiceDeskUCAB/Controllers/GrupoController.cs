@@ -54,13 +54,12 @@ namespace ServiceDeskUCAB.Controllers
 			JObject respuesta;
 			JObject respuestaDept;
 			respuesta = await _servicioApiGrupo.EditarGrupo(grupo);
-			//if ((bool)respuesta["success"])
-
-			respuestaDept = await _servicioApiGrupo.EditarRelacion(grupo.id, idDepartamentos);
-			return RedirectToAction("Index", new { message = "Se ha modificado correctamente" });
-			//else
-			//return NoContent();
-		}
+			if ((bool)respuesta["success"]) {
+                respuestaDept = await _servicioApiGrupo.EditarRelacion(grupo.id, idDepartamentos);
+                return RedirectToAction("Index", new { message = "Se ha modificado correctamente" });
+            }else return RedirectToAction("Index", new { message2 = "El nombre del grupo ingresado ya existe" });
+            
+        }
 
 		//Retorna el modal con los departamentos que serán asociados a un grupo
 		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
@@ -137,13 +136,14 @@ namespace ServiceDeskUCAB.Controllers
 					{
 						var respuestaConsulta = await _servicioApiGrupo.BuscarNombreGrupo(grupo.nombre);
 						respuestaRelacion = await _servicioApiGrupo.AsociarDepartamento(respuestaConsulta.id, idDepartamentos);
-						return RedirectToAction("Index", new { message = "Se ha registrado corréctamente" });
+						return RedirectToAction("Index", new { message = "Se ha registrado correctamente" });
 					}
-						return RedirectToAction("Index", new { message = "Se ha registrado corréctamente, sin departamentos asociados" }); 
+					
+                    return RedirectToAction("Index", new { message = "Se ha registrado corréctamente, sin departamentos asociados" }); 
 				}
-				else {
-					return NoContent();
-				}
+				else return RedirectToAction("Index", new { message2 = "El nombre del grupo ingresado ya existe" });
+                    
+                
 			}
 			catch (Exception ex)
 			{
