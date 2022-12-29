@@ -229,6 +229,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
             try
             {
+
                 List<string> listaDept = idDept.Split(',').ToList();
 
 
@@ -310,6 +311,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             catch (Exception ex)
             {
                 throw new ExceptionsControl("El departamento" + idGrupo + "No esta registrado", ex);
+            }
+        }
+
+        public GrupoDto buscarGrupoNombre(string nombreGrupo) {
+            try
+            {
+                var resultado = _dataContext.Grupos.Where(grupo => grupo.nombre == nombreGrupo && grupo.fecha_eliminacion == null).First();
+                return GrupoMapper.MapperEntityToDtoDefault(resultado);
+            }
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("El grupo " + nombreGrupo + "No esta registrado", ex);
             }
         }
 

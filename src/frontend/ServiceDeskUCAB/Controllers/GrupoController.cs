@@ -4,11 +4,11 @@ using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
 using ServiceDeskUCAB.Servicios.ModuloDepartamento;
 using ServiceDeskUCAB.Servicios.ModuloGrupo;
-using ServiceDeskUCAB.ViewModel.DepartamentoGrupo;
+using ServiceDeskUCAB.ViewModel.Grupo;
 
 namespace ServiceDeskUCAB.Controllers
 {
-	[Authorize(Policy = "AdminAccess")]
+    [Authorize(Policy = "AdminAccess")]
 	public class GrupoController : Controller
     {
 		//Declaración de variables
@@ -29,46 +29,6 @@ namespace ServiceDeskUCAB.Controllers
 		{
 
 			return View(await _servicioApiGrupo.ListaGrupo());
-		}
-
-		//Retorna el modal con los departamentos que se desea asociar
-		public async Task<IActionResult> AsociarGrupo(GrupoModel grupo, List<string> idDepartamentos)
-		{
-			JObject respuesta;
-
-			try
-			{
-
-				respuesta = await _servicioApiGrupo.AsociarDepartamento(grupo.id, idDepartamentos);
-				if ((bool)respuesta["success"])
-					return RedirectToAction("DepartamentoGrupo", new { message = "Se ha asociado correctamente" });
-				else
-					return NoContent();
-			}
-			catch (Exception ex)
-			{
-				throw ex.InnerException!;
-			}
-		}
-
-		//Retorna el modal con los departamentos que se desea asociar
-		public async Task<IActionResult> VentanaAsociarDepartamento(Guid id)
-		{
-			DepartamentoAsociarViewModel departamento = new DepartamentoAsociarViewModel();
-
-
-			try
-			{
-				departamento.grupo = await _servicioApiGrupo.BuscarGrupo(id);
-				ViewData["nombre"] = departamento.grupo.nombre;
-				departamento.departamentoNoAsoc = await _servicioApiDepartamento.ListaDepartamentoNoAsociado();
-
-				return PartialView(departamento);
-			}
-			catch (Exception ex)
-			{
-				throw ex.InnerException!;
-			}
 		}
 
 		//Retorna el modal con la lista de departamentos y los datos del grupo seleccionado
@@ -148,11 +108,12 @@ namespace ServiceDeskUCAB.Controllers
 		//Retorna el modal para registrar un grupo nuevo
 		public async Task<IActionResult> VentanaAgregarGrupo()
 		{
-			GrupoModel grupo = new GrupoModel();
+			GrupoRegistrarViewModel viewModel = new GrupoRegistrarViewModel();
+            viewModel.deptNoAsociado = await _servicioApiDepartamento.ListaDepartamentoNoAsociado();
 
-			try
+            try
 			{
-				return PartialView(grupo);
+				return PartialView(viewModel);
 			}
 			catch (Exception ex)
 			{
@@ -162,18 +123,27 @@ namespace ServiceDeskUCAB.Controllers
 		}
 
 
-		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo)
+		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo, List<string> idDepartamentos)
 		{
 
 			JObject respuestaGrupo;
+			JObject respuestaRelacion;
 
 			try
 			{
-				respuestaGrupo = await _servicioApiGrupo.RegistrarGrupo(grupo);
-				if ((bool)respuestaGrupo["success"])
-					return RedirectToAction("Index", new { message = "Se ha registrado corréctamente" });
-				else
+				respuestaGrupo = await _servicioApiGrupo.RegistrarGrupo(grupo, idDepartamentos);
+				if ((bool)respuestaGrupo["success"]) {
+					if (idDepartamentos.Count() > 0)
+					{
+						var respuestaConsulta = await _servicioApiGrupo.BuscarNombreGrupo(grupo.nombre);
+						respuestaRelacion = await _servicioApiGrupo.AsociarDepartamento(respuestaConsulta.id, idDepartamentos);
+						return RedirectToAction("Index", new { message = "Se ha registrado corréctamente" });
+					}
+						return RedirectToAction("Index", new { message = "Se ha registrado corréctamente, sin departamentos asociados" }); 
+				}
+				else {
 					return NoContent();
+				}
 			}
 			catch (Exception ex)
 			{

@@ -12,13 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221228154444_Update-Departamento-Grupo.Designer.cs
-    [Migration("20221228154444_Update-Departamento-Grupo")]
-    partial class UpdateDepartamentoGrupo
-=======
-    [Migration("20221222142528_InitialMigration")]
-    partial class InitialMigration
->>>>>>> develop:src/backend/ServicesDeskUCABWS/Migrations/20221222142528_InitialMigration.Designer.cs
+    [Migration("20221229143315_Update_Modulo_Grupo")]
+    partial class Update_Modulo_Grupo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,12 +230,13 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.Property<Guid>("IdTicket")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdCargo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Cargoid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdCargo")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Maximo_Rechazado_nivel")
@@ -255,7 +251,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IdTicket", "IdCargo");
+                    b.HasKey("IdTicket");
 
                     b.HasIndex("Cargoid");
 
@@ -656,11 +652,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221228154444_Update-Departamento-Grupo.Designer.cs
-                            fecha_creacion = new DateTime(2022, 12, 28, 0, 0, 0, 0, DateTimeKind.Local),
-=======
-                            fecha_creacion = new DateTime(2022, 12, 22, 0, 0, 0, 0, DateTimeKind.Local),
->>>>>>> develop:src/backend/ServicesDeskUCABWS/Migrations/20221222142528_InitialMigration.Designer.cs
+                            fecha_creacion = new DateTime(2022, 12, 29, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

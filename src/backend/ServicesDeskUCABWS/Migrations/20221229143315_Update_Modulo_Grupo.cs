@@ -5,11 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221228154444_Update-Departamento-Grupo.cs
-    public partial class UpdateDepartamentoGrupo : Migration
-=======
-    public partial class InitialMigration : Migration
->>>>>>> develop:src/backend/ServicesDeskUCABWS/Migrations/20221222142528_InitialMigration.cs
+    public partial class Update_Modulo_Grupo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -261,17 +257,17 @@ namespace ServicesDeskUCABWS.Migrations
                 name: "Flujos_Aprobaciones",
                 columns: table => new
                 {
-                    IdCargo = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdTicket = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Cargoid = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OrdenAprobacion = table.Column<int>(type: "int", nullable: true),
                     Minimo_aprobado_nivel = table.Column<int>(type: "int", nullable: true),
-                    Maximo_Rechazado_nivel = table.Column<int>(type: "int", nullable: true)
+                    Maximo_Rechazado_nivel = table.Column<int>(type: "int", nullable: true),
+                    IdCargo = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Flujos_Aprobaciones", x => new { x.IdTicket, x.IdCargo });
+                    table.PrimaryKey("PK_Flujos_Aprobaciones", x => x.IdTicket);
                     table.ForeignKey(
                         name: "FK_Flujos_Aprobaciones_Cargos_Cargoid",
                         column: x => x.Cargoid,
@@ -468,11 +464,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Discriminator", "NumeroDeCuentasBloqueadas", "cedula", "correo", "fecha_creacion", "fecha_eliminacion", "fecha_nacimiento", "fecha_ultima_edicion", "gender", "password", "primer_apellido", "primer_nombre", "segundo_apellido", "segundo_nombre" },
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221228154444_Update-Departamento-Grupo.cs
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 28, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
-=======
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 22, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
->>>>>>> develop:src/backend/ServicesDeskUCABWS/Migrations/20221222142528_InitialMigration.cs
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 29, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
 
             migrationBuilder.InsertData(
                 table: "RolUsuarios",
