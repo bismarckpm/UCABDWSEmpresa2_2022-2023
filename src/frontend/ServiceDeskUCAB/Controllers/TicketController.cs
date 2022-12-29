@@ -252,8 +252,11 @@ namespace ServiceDeskUCAB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CambiarEstado(ActualizarDTO actualizar)
+        public async Task<IActionResult> CambiarEstado(string ticketId, string estadoId)
         {
+            ActualizarDTO actualizar = new ActualizarDTO();
+            actualizar.estadoId = estadoId;
+            actualizar.ticketId = ticketId;
             JObject respuesta;
             try
             {
