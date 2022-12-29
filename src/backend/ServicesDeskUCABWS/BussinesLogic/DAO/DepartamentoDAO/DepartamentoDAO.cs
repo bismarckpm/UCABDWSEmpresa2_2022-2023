@@ -127,7 +127,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                     _dataContext.DbContext.SaveChanges();
                 }
 
-                    var data = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();               
+                    var data = _dataContext.Departamentos.Where(u => u.id == departamento.id && u.nombre == departamento.nombre).First();               
                     return DepartamentoMapper.MapperEntityToDTOModificar(data);
             }           
             catch (DbUpdateException ex)
@@ -237,7 +237,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         {
 			try
 			{
-				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null).Select(
+				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion==null).Select(
 					d => new DepartamentoDto
 					{
 						id = d.id,
@@ -286,10 +286,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
             try
             {
-                //Lista de grupos que no tienen el ID del departamento a modificar y no están eliminados
+                //Lista de departamentos que no tienen el ID del departamento a modificar y no están eliminados
                 var buscarDepartamentoDiferente = _dataContext.Departamentos.Where(d => (d.id != dept.id) && (d.fecha_eliminacion == null)).ToList();
 
-                //Lista de los grupos que tienen el mismo nombre que el departamento a modificar
+                //Lista de los departamentos que tienen el mismo nombre que el departamento a modificar
                 var buscarDepartamentoMismoNombre = buscarDepartamentoDiferente.Where(d => d.nombre == dept.nombre).ToList();
 
                 if (buscarDepartamentoMismoNombre.Count() != 0)

@@ -1,13 +1,19 @@
 ﻿@model List<ServiceDeskUCAB.Models.DepartamentoModel>
 
-<head>
-    <link rel="stylesheet" href="~/css/Sidebar.css" />    
-</head>
-
 @{
     ViewData["Title"] = "Gestion Departamento";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />    
+</head>
+
+<!--Conexion con documento JavaScript (Departamento.js)-->
+@section scripts{
+    <script src="~/js/Departamento.js"></script>
+}
+
+<!--Alerta de mensajes exitosos-->
 @if (Context.Request.Query["message"].Count() > 0)
 {
     <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
@@ -16,218 +22,98 @@
     </div>
 }
 
-
-<!-- Scripts para mostrar ventanas emergentes -->
-@section scripts{
-<!-- Script para mostrar ventana Agregar Departamento -->
-<script>
-    $(function () {
-    var PlaceHolderElement = $('#PlaceHolderAgregarDepartamento');
-    $('button[data-toggle="agregarDepartamento-modal"]').click(function (event) {
-        var url = $(this).data('url');
-        $.get(url).done(function (data) {
-            PlaceHolderElement.html(data);
-            PlaceHolderElement.find('.modal').modal('show');
-        })
-    })
-})
-</script>
-
-<!-- Script para mostrar ventana Editar Departamento -->
-<script>
-    $(function () {
-        var PlaceHolderElement = $('#PlaceHolderModificarDepartamento');
-        $('button[data-toggle="editarDepartamento-modal"]').click(function (event) {
-            var id = $(this).closest('tr').find('.id').text();
-            console.log(id);
-            var url = $(this).data('url').replace("idDepartamento", id);
-            $.get(url).done(function (data) {
-                PlaceHolderElement.html(data);
-                PlaceHolderElement.find('.modal').modal('show');
-            })
-        })
-    })
- </script>
-
-<!-- Script para mostrar ventana Eliminar Departamento -->
-<script>
-    $(function () {
-        var PlaceHolderElement = $('#PlaceHolderEliminarDepartamento');
-        $('button[data-toggle="eliminarDepartamento-modal"]').click(function (event) {
-            var id = $(this).closest('tr').find('.id').text();
-            var url = $(this).data('url').replace("idDepartamento", id);
-            $.get(url).done(function (data) {
-                PlaceHolderElement.html(data);
-                PlaceHolderElement.find('.modal').modal('show');
-            })
-        })
-    })
-</script>
-
-<script>
-
-        const buscador = document.getElementById('search');
-
-            buscador.addEventListener("keyup", function () {
-            var keyword = this.value;
-            keyword = keyword.toUpperCase();
-            var table = document.getElementById("table");
-            var all_tr = table.getElementsByTagName("tr");
-            for (var i = 0; i < all_tr.length; i++) {
-                var name_column = all_tr[i].getElementsByTagName("td")[1];
-                var description_column = all_tr[i].getElementsByTagName("td")[2];
-                if (name_column && description_column) {
-                    var name_value = name_column.textContent || name_column.innerText;
-                    var description_value = description_column.textContent || description_column.innerText;
-                    name_value = name_value.toUpperCase();
-                    description_value = description_value.toUpperCase();
-                    if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
-                        all_tr[i].style.display = ""; // show
-                    } else {
-                        all_tr[i].style.display = "none"; // hide
-                    }
-                }
-            }
-        })
-</script>
-
-<script>
-  
-       const searchFocus = document.getElementById('search');
-       const keys = [
-           { keyCode: 'AltLeft', isTriggered: false },
-           { keyCode: 'ControlLeft', isTriggered: false },
-       ];
-    
-       window.addEventListener('keydown', (e) => {
-           keys.forEach((obj) => {
-               if (obj.keyCode === e.code) {
-                   obj.isTriggered = true;
-               }
-           });
-    
-           const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
-    
-           if (shortcutTriggered) {
-               searchFocus.focus();
-           }
-       });
-    
-       window.addEventListener('keyup', (e) => {
-           keys.forEach((obj) => {
-               if (obj.keyCode === e.code) {
-                   obj.isTriggered = false;
-               }
-           });
-       });
- </script>
-
-
-
-
+<!--Alerta de mensajes de error-->
+@if (Context.Request.Query["message2"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 
-<!-- Placeholders de las ventanas emergentes (Departamento)-->
+<!-- Placeholders de las ventanas emergentes -->
 <div id="PlaceHolderAgregarDepartamento"></div>
 <div id="PlaceHolderEliminarDepartamento"></div>
 <div id="PlaceHolderModificarDepartamento"></div>
 
  <div class="contenedor">
 
-      <div class="arriba">
-
-          <div class="area-boton">
-                            
-                <div>
-                    <div class="titulo">
-                        <h1>Departamentos</h1>
-                    </div>
-
-                    <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
-                            </div>
-                            <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+    <div class="arriba">
+    
+        <div class="area-boton">
+                          
+            <div>
+    
+                <!--Titulo-->
+                <div class="titulo">
+                    <h1>Departamentos</h1>
+                </div>
+    
+                <!--Buscador-->
+                <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
                         </div>
+                        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
                     </div>
                 </div>
-                   
+    
+            </div>                 
+    
+            <!-- Boton Agregar Departamento -->
+            <div class="agregar">
+                <button id=btnAgregarDepartamento class="boton" type="button" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
+                    Crear Departamento
+            <i class="fas fa-plus"></i>
+                </button>
+            </div>              
+                          
+        </div>
+    
+          <!-- Tabla Departamentos -->
+        <table class="table" id="table">
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                    <th></th>
+                </tr>
+        
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id" style="display:none";>
+                        @Html.DisplayFor(i => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <div class="dropdown">
 
-                <!-- Boton Agregar Departamento -->
-                <div class="agregar">
-                    <button id=btnAgregarDepartamento class="boton" type="button" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
-                        Crear Departamento
-                <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
 
-                             
-          </div>
-
-            <!-- Tabla Departamentos -->
-            <table class="table" id="table">
-                    <tr>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Descripcion
-                        </th>
-                        <th>
-
-                        </th>
-                    </tr>
-
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="id" style="display:none";>
-                            @Html.DisplayFor(i => item.id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(i => item.nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(i => item.descripcion)
-                        </td>
-                        <td>
-                            <div class="dropdown" >
-                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-
-                                        <button id="btnEditar" type="button" class="dropdown-item" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","Departamento",new { id = "idDepartamento" })">
-                                            Editar
-                                        </button>
-                                        <button id="btnEliminar" type="button" class="dropdown-item" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","Departamento",new { id = "idDepartamento" })">
-                                        Eliminar
-                                        </button>
-
-                                  
-                                  
-                                    
-                                        <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
-
-                                        <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
-
-                                    
-
-                                   
-                                    </ul>
-                            </div>                
-          
-                        </td>
-                      
-
-                    </tr>
-                }
-
-            </table>
-
-      </div>      
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        
+                                <button id="btnEditar" type="button" class="dropdown-item" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","Departamento",new { id = "idDepartamento" })">Editar</button>
+                                <button id="btnEliminar" type="button" class="dropdown-item" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","Departamento",new { id = "idDepartamento" })">Eliminar</button>
+                                <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
+                                <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
+        
+                            </ul>
+                        </div>                
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>      
 </div>
 
 

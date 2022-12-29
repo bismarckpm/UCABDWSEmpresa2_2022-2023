@@ -8,135 +8,12 @@
     ViewData["Title"] = "Gestion Grupo";
 }
 
-<!-- Scripts para mostrar ventanas emergentes -->
+<!--Conexion con documento JavaScript (Grupo.js)-->
 @section scripts{
-    <!-- Scripts para grupos -->
-    <!-- Script para mostrar ventana Agregar Grupo -->
-    <script>
-        $(function () {
-            var PlaceHolderElement = $('#PlaceHolderAgregarGrupo');
-            $('button[data-toggle="agregarGrupo-modal"]').click(function (event) {
-                var url = $(this).data('url');
-                $.get(url).done(function (data) {
-                    PlaceHolderElement.html(data);
-                    PlaceHolderElement.find('.modal').modal('show');
-                })
-            })
-        })
-    </script>
-
-    <!-- Script para mostrar ventana Visualizar Departamentos asociados a un grupo -->
-    <script>
-        $(function () {
-            var PlaceHolderElement = $('#PlaceHolderVisualizarGrupo');
-            $('button[data-toggle="visualizarGrupo-modal"]').click(function (event) {
-                var id = $(this).closest('tr').find('.id').text();
-                var url = $(this).data('url').replace("idGrupo", id);
-                $.get(url).done(function (data) {
-                    PlaceHolderElement.html(data);
-                    PlaceHolderElement.find('.modal').modal('show');
-                })
-            })
-        })
-    </script>
-
-    <!-- Script para mostrar ventana Eliminar Grupo -->
-    <script>
-        $(function () {
-            var PlaceHolderElement = $('#PlaceHolderEliminarGrupo');
-            $('button[data-toggle="eliminarGrupo-modal"]').click(function (event) {
-                var id = $(this).closest('tr').find('.id').text();
-                var url = $(this).data('url').replace("idGrupo", id);
-                $.get(url).done(function (data) {
-                    PlaceHolderElement.html(data);
-                    PlaceHolderElement.find('.modal').modal('show');
-                })
-            })
-        })
-    </script>
-
-
-    <!-- Script para mostrar ventana Eliminar Grupo -->
-    <script>
-        $(function () {
-            var PlaceHolderElement = $('#PlaceHolderModificarGrupo');
-            $('button[data-toggle="editarGrupo-modal"]').click(function (event) {
-                var id = $(this).closest('tr').find('.id').text();
-                var url = $(this).data('url').replace("idGrupo", id);
-                $.get(url).done(function (data) {
-                    PlaceHolderElement.html(data);
-                    PlaceHolderElement.find('.modal').modal('show');
-                })
-            })
-        })
-    </script>
-
-   <!--  Script para buscar grupos por nombre o descripción-->
-    <script>
-
-        const buscador = document.getElementById('search');
-
-        buscador.addEventListener("keyup", function () {
-            var keyword = this.value;
-            keyword = keyword.toUpperCase();
-            var table = document.getElementById("table");
-            var all_tr = table.getElementsByTagName("tr");
-            for (var i = 0; i < all_tr.length; i++) {
-                var name_column = all_tr[i].getElementsByTagName("td")[1];
-                var description_column = all_tr[i].getElementsByTagName("td")[2];
-                if (name_column && description_column) {
-                    var name_value = name_column.textContent || name_column.innerText;
-                    var description_value = description_column.textContent || description_column.innerText;
-                    name_value = name_value.toUpperCase();
-                    description_value = description_value.toUpperCase();
-                    if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
-                        all_tr[i].style.display = ""; // show
-                    } else {
-                        all_tr[i].style.display = "none"; // hide
-                    }
-                }
-            }
-        })
-    </script>
-
-    <script>
-
-        const searchFocus = document.getElementById('search');
-        const keys = [
-            { keyCode: 'AltLeft', isTriggered: false },
-            { keyCode: 'ControlLeft', isTriggered: false },
-        ];
-
-        window.addEventListener('keydown', (e) => {
-            keys.forEach((obj) => {
-                if (obj.keyCode === e.code) {
-                    obj.isTriggered = true;
-                }
-            });
-
-            const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
-
-            if (shortcutTriggered) {
-                searchFocus.focus();
-            }
-        });
-
-        window.addEventListener('keyup', (e) => {
-            keys.forEach((obj) => {
-                if (obj.keyCode === e.code) {
-                    obj.isTriggered = false;
-                }
-            });
-        });
-    </script>
+    <script src="~/js/Grupo.js"></script>
 }
 
-    <!-- Placeholders de las ventanas emergentes (Grupo)-->
-    <div id="PlaceHolderAgregarGrupo"></div>
-    <div id="PlaceHolderEliminarGrupo"></div>
-    <div id="PlaceHolderModificarGrupo"></div>
-    <div id="PlaceHolderVisualizarGrupo"></div>
-
+<!--Alerta de mensajes exitosos-->
 @if (Context.Request.Query["message"].Count() > 0)
 {
     <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
@@ -145,31 +22,51 @@
     </div>
 }
 
+<!--Alerta de mensajes de error-->
+@if (Context.Request.Query["message2"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Placeholders de las ventanas emergentes -->
+<div id="PlaceHolderAgregarGrupo"></div>
+<div id="PlaceHolderEliminarGrupo"></div>
+<div id="PlaceHolderModificarGrupo"></div>
+<div id="PlaceHolderVisualizarGrupo"></div>
+
 <div class="contenedor">
     <div class="abajo">
-            <div class="area-boton">
-                <div>
-                        <div class="titulo">
-                            <h1>Grupos</h1>
-                        </div>
+        <div class="area-boton">
+            <div>
+                <!--Titulo-->
+                <div class="titulo">
+                    <h1>Grupos</h1>
+                </div>
 
-                        <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
-                                </div>
-                                <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
-                            </div>
+                <!--Buscador-->
+                <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
                         </div>
-                  </div>
-                <div class="agregar">
-                    <!-- Boton Agregar Grupo -->
-                    <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("VentanaAgregarGrupo")">
-                        Crear Grupo
-                    </button>
+                        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+                    </div>
                 </div>
             </div>
-            <!-- Tabla Grupos -->
+
+            <div class="agregar">
+                <!-- Boton Agregar Grupo -->
+                <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("VentanaAgregarGrupo")">
+                    Crear Grupo
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Tabla Grupos -->
         <table class="table" id="table">
                 <tr>
                     <th>
@@ -193,15 +90,16 @@
                         @Html.DisplayFor(i => item.descripcion)
                     </td>
                     <td>
-                        <button id=btnVisualizar type="button" class="botonVisualizar" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","Grupo",new { id = "idGrupo"})">
-                            Visualizar
-                        </button>
-                        <button id=btnEditar type="button" class="botonEditar" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","Grupo",new { id = "idGrupo"})">
-                            Editar
-                        </button>
-                        <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","Grupo",new { id = "idGrupo"})">
-                            Eliminar
-                        </button>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <button id=btnVisualizar type="button" class="dropdown-item" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","Grupo",new { id = "idGrupo"})">Visualizar</button>
+                                <button id=btnEditar type="button" class="dropdown-item" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","Grupo",new { id = "idGrupo"})">Editar</button>
+                                <button id=btnEliminar type="button" class="dropdown-item" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","Grupo",new { id = "idGrupo"})">Eliminar</button>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
             }
