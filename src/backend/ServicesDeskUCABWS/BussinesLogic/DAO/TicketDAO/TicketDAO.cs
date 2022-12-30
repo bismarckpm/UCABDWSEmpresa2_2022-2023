@@ -435,6 +435,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 TicketValidaciones validaciones = new TicketValidaciones(_dataContext);
                 validaciones.nuevoTicketEsValido(solicitudTicket);
                 var ticketnuevo=RegistroTicket(solicitudTicket);
+                //TicketDTO ticketnuevo = crearNuevoTicket(solicitudTicket);
                 //FlujoAprobacion(_mapper.Map<Ticket>(ticketnuevo));
                 respuesta.Data = "Ticket creado satisfactoriamente";
                 respuesta.Message = "Ticket creado satisfactoriamente";
