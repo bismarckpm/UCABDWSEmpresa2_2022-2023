@@ -12,11 +12,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public interface ITicketDAO
     {
-        public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
+        //public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
         public ApplicationResponse<TicketNuevoDTO> RegistroTicket(TicketNuevoDTO ticketDTO);
-        public string FlujoAprobacion(Ticket ticket);
-        public string FlujoParalelo(Ticket ticket);
-        public string FlujoNoAprobacion(Ticket ticket);
         public List<Ticket> ConsultaListaTickets();
         public Ticket ConsultaTicket(Guid id);
 

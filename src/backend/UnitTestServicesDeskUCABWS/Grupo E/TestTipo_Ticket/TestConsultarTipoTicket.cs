@@ -15,7 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 {
     [TestClass]
     public class TestConsultarTipoTicket
@@ -108,7 +108,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             var nombre = "Solicitud";
 
             //act
-            var result = TipoticketDAO.ConsultarTipoTicketNomb(nombre);
+            var result = TipoticketDAO.ConsultarNombreTipoTicket(nombre);
 
             //assert
             Assert.AreEqual(nombre, result.nombre);
@@ -124,7 +124,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             context.Setup(a => a.Tipos_Tickets).Throws(new ExceptionsControl(""));
 
             //assert
-            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicketNomb(nombre));
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarNombreTipoTicket(nombre));
 
         }
 

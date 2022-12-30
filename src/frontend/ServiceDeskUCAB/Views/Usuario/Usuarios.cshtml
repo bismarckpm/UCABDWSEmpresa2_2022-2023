@@ -25,7 +25,53 @@
             })
         })
     </script>
+
+    <script type="text/javascript">
+        async function cargarDepartamentos(id) {
+
+            var select = document.getElementById("departamento-" + id);
+            select.textContent = "Cargando...";
+            select.innerHTML = "";
+            var response = await fetch(`https://localhost:44392/Departamento/ConsultarDepartamento`);
+            var tipos = await response.json();
+            select.textContent = "Seleccione una opción";
+            option = document.createElement("option");
+            option.value = "";
+            option.innerHTML = "Seleccione un Departamento";
+            select.appendChild(option);
+            tipos.data.forEach(e => {
+                option = document.createElement("option");
+                option.value = e.id;
+                option.innerHTML = e.nombre;
+                select.appendChild(option);
+            });
+            select.removeAttribute("disabled");
+
+        }
+    </script>
+    <script type="text/javascript">
+        async function cargarCargos(id,idDepart) {
+
+            var select = document.getElementById("cargo-" + id);
+            console.log(select);
+            select.textContent = "Cargando...";
+            select.innerHTML = "";
+            var response = await fetch(`https://localhost:44392/Cargo/ConsultarCargoPorDepartamento/${idDepart}`);
+            var tipos = await response.json();
+            select.textContent = "Seleccione una opción";
+            tipos.data.forEach(e => {
+                option = document.createElement("option");
+                option.value = e.id;
+                option.innerHTML = e.nombre_departamental;
+                select.appendChild(option);
+            });
+            select.removeAttribute("disabled");
+
+        }
+    </script>
+
 }
+
  <div id="PlaceHolderEliminarUsuario"></div>
 
 <h1>Usuarios</h1>
@@ -49,9 +95,11 @@
             Genero
         </th>
         <th>
-
+            Cargo
         </th>
-
+        <th>
+            Rol
+        </th>
 
     </tr>
 
@@ -74,14 +122,121 @@
                 @Html.DisplayFor(i => item.gender)
             </td>
             <td>
+                @if(item.roles.Select(x=>x.Rol.Name).Contains("Empleado")){
+                    @if(item.cargo!=null){
+                        @Html.DisplayFor(i => item.cargo.nombre_departamental)
+                    } else {
+                        <p>
+                            No tiene cargo
+                        </p>
+                    }
+                } else {
+                    <p>
+                        N/A
+                    </p>
+                }
+
+            </td>
+            <td>
+                @foreach(var rol in item.roles){
+                    @Html.DisplayFor(i => rol.Rol.Name)
+                    @Html.Display(" ")
+                }
+            </td>
+            <td>
                 <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
                     Eliminar
                 </button>
                 <a style="padding-top:4px" type="button" class="botonVisualizar" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
                     Visualizar
                 </a>
+                @if (item.roles.Select(x => x.Rol.Name).Contains("Empleado"))
+                {
+                    <div class="dropdown" style="float: right">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#agregarcargoModal-@item.id" onclick="cargarDepartamentos('@item.id')">Asignar Cargo</a></li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#revocarcargoModal-@item.id">Revocar Cargo</a></li>
+                        </ul>
+                    </div>
+
+                }
             </td>
         </tr>
     }
+    @*@*Asignar Cargo*@
+    @foreach (var tipo in Model.ToList())
+    {
+        <div class="modal fade" id="agregarcargoModal-@tipo.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Asignar Cargo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form asp-action="AsignarCargo" asp-controller="Usuario" method="post">
+
+                            <div class="mb-3" style="display: none;">
+                                <label for="recipient-name" class="col-form-label">Id:</label>
+                                <input required type="text" value="@tipo.id" name="idUsuario" />
+                            </div>
+
+                            <label for="recipient-name" class="col-form-label">Selecciona Departamento:</label>
+                            <select id="departamento-@tipo.id" onchange="cargarCargos('@tipo.id',this.value)" class="form-select" aria-label="Default select example" required></select>
+
+                            <label for="recipient-name" class="col-form-label">Selecciona Cargo:</label>
+                            <select id="cargo-@tipo.id" class="form-select" aria-label="Default select example" required name="idCargo"></select>
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+    @*Revocar Cargo*@
+    @foreach (var tipo in Model.ToList())
+    {
+        <div class="modal fade" id="revocarcargoModal-@tipo.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Asignar Cargo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form asp-action="RevocarCargo" asp-controller="Usuario" method="post">
+
+                            <div class="mb-3" style="display: none;">
+                                <label for="recipient-name" class="col-form-label">Id:</label>
+                                <input required type="text" value="@tipo.id" name="idUsuario" />
+                            </div>
+
+                            <div class="modal-body">
+                                ¿Está seguro de que desea revocar el cargo del usuario seleccionado?
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Revocar</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
 
 </table>

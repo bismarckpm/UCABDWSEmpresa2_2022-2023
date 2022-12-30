@@ -52,7 +52,7 @@ namespace TicketUnitTest
                     fecha_descripcion=new DateTime(2008, 5, 1, 8, 30, 52),
                     fecha_ultima_edic=new DateTime(2008, 5, 1, 8, 30, 52)
                 },
-                    Tipo_Ticket = new Tipo_Ticket() {}
+                    Tipo_Ticket = new TipoTicket_FlujoNoAprobacion() {}
                     }
 
 

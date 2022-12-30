@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Flujo_AprobacionDTO;
@@ -14,20 +15,20 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 {
     [TestClass]
     public class TestAgregarTipoTicket
     {
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
-
+        private IMapper mapper;
 
 
         public TestAgregarTipoTicket()
         {
             context = new Mock<IDataContext>();
-            TipoticketDAO = new Tipo_TicketService(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object, mapper);
             context.SetupDbContextData();
         }
 
@@ -65,12 +66,12 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 }
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoAprobacionJerarquico()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_Jerarquico",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -140,6 +141,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
             //assert
 
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_Jerarquico");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
@@ -180,12 +182,12 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoAprobacionParalelo()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_Paralelo",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -255,6 +257,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_Paralelo");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
             Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == expected.Flujo_Aprobacion.Count);
         }
@@ -276,12 +279,12 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 }
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoNoAprobacion()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_No_Aprobacion",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -328,6 +331,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
+            Assert.AreEqual(result.Data.tipo, "Modelo_No_Aprobacion");
             Assert.IsTrue(result.Data.Departamento.Count == expected.Departamentos.Count);
         }
 
@@ -344,12 +348,12 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
                 
             };
 
-            Tipo_Ticket expected = new Tipo_Ticket()
+            Tipo_Ticket expected = new TipoTicket_FlujoNoAprobacion()
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 nombre = "Mantenimiento",
                 descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
-                tipo = "Modelo_No_Aprobacion",
+                
                 fecha_creacion = DateTime.UtcNow,
                 fecha_ult_edic = DateTime.UtcNow,
                 fecha_elim = null,
@@ -361,8 +365,8 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             //assert
             Assert.AreEqual(result.Data.nombre, expected.nombre);
-            Assert.IsTrue(result.Data.Departamento== null);
-            Assert.IsTrue(result.Data.Flujo_Aprobacion == null);
+            Assert.IsTrue(result.Data.Departamento.Count== 0);
+            Assert.IsTrue(result.Data.Flujo_Aprobacion.Count == 0);
         }
         [TestMethod]
         public void RegistroTipoTicketExcepcion()

@@ -109,12 +109,10 @@ namespace ServicesDeskUCABWS
 				c.SwaggerDoc("v1", new OpenApiInfo
 				{ Title = "Empresa B", Version = "v1" });
 			});
-			services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             //services.AddTransient<IDataContext, DataContext>();
-            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner")));
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRebeca")));
             //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
             
             //Se agrega en generador de Swagger

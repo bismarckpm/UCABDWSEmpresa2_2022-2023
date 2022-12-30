@@ -44,7 +44,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestNotificacion
                         nombre = "nombrePadreEstado"
                     }
                 },
-                Tipo_Ticket = new Tipo_Ticket()
+                Tipo_Ticket = new TipoTicket_FlujoNoAprobacion()
                 {
                     nombre = "nombreTipoTicket"
                 },
