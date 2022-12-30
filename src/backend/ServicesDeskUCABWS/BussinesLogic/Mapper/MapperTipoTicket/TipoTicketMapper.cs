@@ -13,24 +13,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket
 {
     public class TipoTicketMapper
     {
-
-        public static Tipo_Ticket CambiarFlujoTipoTicket(Tipo_Ticket llegada, string tipo,IMapper mapper)
-        {
-            if (tipo == "Modelo_Jerarquico")
-            {
-                return mapper.Map<TipoTicket_FlujoAprobacionJerarquico>(llegada);
-            }
-            if (tipo == "Modelo_Paralelo")
-            {
-                return mapper.Map<TipoTicket_FlujoAprobacionParalelo>(llegada);
-            }
-            if (tipo == "Modelo_No_Aprobacion")
-            {
-                return mapper.Map<TipoTicket_FlujoNoAprobacion>(llegada);
-            }
-            return llegada;
-        }
-
         public static Tipo_TicketDTOCreate MapperTipoTicketToTipoTicketDTOCreate(Tipo_Ticket tipo_Ticket)
         {
             var DTO = new Tipo_TicketDTOCreate();

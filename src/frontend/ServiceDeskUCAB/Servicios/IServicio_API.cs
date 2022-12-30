@@ -32,6 +32,7 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<Votos_Ticket>> ObtenerVotosNoPendientes(string idUsuario);
 
+        Task<List<Modelo_Aprobacion>> ObtenerListaModelosAprobacion();
 
     }
 }

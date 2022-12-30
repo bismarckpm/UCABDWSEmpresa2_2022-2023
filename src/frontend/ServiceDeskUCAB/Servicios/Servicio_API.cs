@@ -377,6 +377,29 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
 
         }
+
+        public async Task<List<Modelo_Aprobacion>> ObtenerListaModelosAprobacion()
+        {
+            List<Modelo_Aprobacion> lista = new List<Modelo_Aprobacion>();
+            var cliente = new HttpClient();
+
+            // TODO: Obtener sesion y colocar id del usuario aqui
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync("api/Tipo_Ticket/ObtenerTipoFlujos");  //URL de Lista en el swagger
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Modelo_Aprobacion>>>(json_respuesta);
+
+                lista = resultado.Data;
+            }
+
+            return lista;
+        }
     }
 
 }

@@ -20,5 +20,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         public Boolean EliminarTipoTicket(Guid id);
 
         public List<Tipo_TicketDTOSearch> ConsultaTipoTicketAgregarTicket(Guid Id);
+        public List<Modelo_Aprobacion> ConsultarTipoFlujos();
     }
 }

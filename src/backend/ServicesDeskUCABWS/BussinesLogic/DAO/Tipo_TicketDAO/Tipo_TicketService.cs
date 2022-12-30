@@ -96,17 +96,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 
                 //Actualizando Datos 
                 var tipo_ticket = context.Tipos_Tickets.Find(Guid.Parse(tipo_TicketDTO.Id));
-                tipo_ticket = TipoTicketMapper.CambiarFlujoTipoTicket(tipo_ticket,tipo_TicketDTO.tipo,_mapper);
-                tipo_ticket.nombre = tipo_TicketDTO.nombre;
-                tipo_ticket.descripcion = tipo_TicketDTO.descripcion;
-                //tipo_ticket.tipo = tipo_TicketDTO.tipo;
-                tipo_ticket.fecha_ult_edic = DateTime.UtcNow;
-                tipo_ticket.Minimo_Aprobado = tipo_TicketDTO.Minimo_Aprobado;
-                tipo_ticket.Maximo_Rechazado = tipo_TicketDTO.Maximo_Rechazado;
-
+                var nuevo = TipoTicketFactory.ObtenerInstancia(tipo_TicketDTO.tipo);
+                //tipo_ticket = TipoTicketMapper.CambiarFlujoTipoTicket(tipo_ticket,tipo_TicketDTO.tipo,_mapper);
+                nuevo.nombre = tipo_TicketDTO.nombre;
+                nuevo.descripcion = tipo_TicketDTO.descripcion;
+                nuevo.fecha_ult_edic = DateTime.UtcNow;
+                nuevo.Minimo_Aprobado = tipo_TicketDTO.Minimo_Aprobado;
+                nuevo.Maximo_Rechazado = tipo_TicketDTO.Maximo_Rechazado;
+                nuevo.fecha_creacion = tipo_ticket.fecha_creacion;
+                nuevo.fecha_elim = tipo_ticket.fecha_elim;
+                nuevo.fecha_ult_edic = tipo_ticket.fecha_ult_edic;
+                nuevo.Departamentos = new List<DepartamentoTipo_Ticket>();
+                nuevo.Flujo_Aprobacion = new List<Flujo_Aprobacion>();
                 //Eliminando referencia en el tipo Ticket
-                if (tipo_ticket.Departamentos != null) tipo_ticket.Departamentos.Clear();
-                if (tipo_ticket.Flujo_Aprobacion != null) tipo_ticket.Flujo_Aprobacion.Clear();
+                //if (tipo_ticket.Departamentos != null) tipo_ticket.Departamentos.Clear();
+                //if (tipo_ticket.Flujo_Aprobacion != null) tipo_ticket.Flujo_Aprobacion.Clear();
 
                 //Eliminando Entidades intermedias de flujo de aprobacion
                 context.Flujos_Aprobaciones.RemoveRange(context.Flujos_Aprobaciones
@@ -121,13 +125,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 {
                     var Cargos = context.Cargos.Where(x=>tipo_TicketDTO.Flujo_Aprobacion
                         .Select(x=>x.IdCargo.ToUpper()).ToList().Contains(x.id.ToString().ToUpper()));
-                    tipo_ticket.Flujo_Aprobacion = new List<Flujo_Aprobacion>();
+                    nuevo.Flujo_Aprobacion = new List<Flujo_Aprobacion>();
                     foreach(var c in Cargos)
                     {
-                        tipo_ticket.Flujo_Aprobacion.Add(new Flujo_Aprobacion()
+                        nuevo.Flujo_Aprobacion.Add(new Flujo_Aprobacion()
                         {
-                            IdTicket = tipo_ticket.Id,
-                            Tipo_Ticket = tipo_ticket,
+                            IdTicket = nuevo.Id,
+                            Tipo_Ticket = nuevo,
                             IdCargo = c.id,
                             Cargo = c
                         });
@@ -143,7 +147,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                        IdTicket = tipo_ticket.Id
 
                    }).ToList();*/
-                    foreach (Flujo_Aprobacion fa in tipo_ticket.Flujo_Aprobacion)
+                    foreach (Flujo_Aprobacion fa in nuevo.Flujo_Aprobacion)
                     {
                         var t = tipo_TicketDTO.Flujo_Aprobacion.Where(x => x.IdCargo.ToUpper() == fa.IdCargo.ToString().ToUpper()).FirstOrDefault();
                         
@@ -155,7 +159,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 catch (Exception) { }
                 try 
                 {
-                    tipo_ticket.Departamentos =
+                    nuevo.Departamentos =
                         context.Departamentos
                        .Where(x => tipo_TicketDTO.Departamento.Select(y => y.ToString().ToUpper()).Contains(x.id.ToString().ToUpper()))
                        .Select(s => new DepartamentoTipo_Ticket()
@@ -172,11 +176,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 } catch(Exception) { }
 
                 //Actualizacion de la BD
-                context.Tipos_Tickets.Add(tipo_ticket);
+                context.Tipos_Tickets.Add(nuevo);
                 context.DbContext.SaveChanges();
 
                 //Paso a AR
-                response.Data = TipoTicketMapper.MapperTipoTicketToTipoTicketDTOUpdate(tipo_ticket);
+                response.Data = TipoTicketMapper.MapperTipoTicketToTipoTicketDTOUpdate(nuevo);
             }
             catch (ExceptionsControl ex)
             {
@@ -465,27 +469,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             return ListaTipoTicketDTO;
         }
 
-        //DELETE: Servicio para eliminar un tipo de ticket por un id en especifico
-        /*public Boolean HabilitarTipoTicket(Guid id)
+        public List<Modelo_Aprobacion> ConsultarTipoFlujos()
         {
-
             try
             {
-                ValidarDatosEntradaTipo_Ticket_Delete(id);
-                var tipo_ticket = context.Tipos_Tickets.Find(id);
-
-                tipo_ticket.fecha_elim = null;
-                context.DbContext.SaveChanges();
-                return true;
-
+                return context.Modelos_Aprobacion.ToList();
             }
             catch (Exception ex)
             {
-                throw new ExceptionsControl("No se pudo eliminar el tipo de ticket", ex);
+                throw new ExceptionsControl("Error en la conexion con la base de datos", ex);
             }
-
-        }*/
-
-
+        }
     }
 }

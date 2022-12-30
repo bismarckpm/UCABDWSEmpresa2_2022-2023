@@ -140,7 +140,23 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
             return response;
         }
 
+        [HttpGet]
+        [Route("ObtenerTipoFlujos")]
+        public ApplicationResponse<List<Modelo_Aprobacion>> ObtenerTipoFlujos()
+        {
+            var response = new ApplicationResponse<List<Modelo_Aprobacion>>();
+            try
+            {
+                response.Data = _ticketDAO.ConsultarTipoFlujos(); 
+            }
 
-     
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+            }
+            return response;
+        }
+
     }
 }

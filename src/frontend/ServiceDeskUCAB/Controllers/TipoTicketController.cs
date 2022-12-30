@@ -36,6 +36,7 @@ namespace ServiceDeskUCAB.Controllers
             tipoNuevoViewModel.tipoCargoNuevo = new();
             tipoNuevoViewModel.ListaDepartamento = await _servicioApi.ListaDepa();
             tipoNuevoViewModel.ListaCargos = await _servicioApi.ListaCargos(Guid.Parse(idDepartamento));
+            tipoNuevoViewModel.listaModelos = await _servicioApi.ObtenerListaModelosAprobacion();
 
             int i = 0;
             foreach (var r in tipoNuevoViewModel.ListaCargos)
