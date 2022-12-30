@@ -438,7 +438,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var response = await cliente.PostAsync($"Ticket/CambiarEstado/", content);
+                var response = await cliente.PostAsync("Ticket/CambiarEstado/", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;
@@ -450,7 +450,7 @@ namespace ServiceDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+                Console.WriteLine("No cambia el estado algo sucedio ", e.Message);
             }
             return null;
         }
