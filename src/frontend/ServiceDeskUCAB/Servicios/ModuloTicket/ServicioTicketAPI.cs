@@ -15,6 +15,7 @@ using ServiceDeskUCAB.Models.ModelsVotos;
 using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 using ServiceDeskUCAB.Models.DTO.Tipo_TicketDTO;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
+using ServiceDeskUCAB.Models.Response;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -273,9 +274,10 @@ namespace ServiceDeskUCAB.Servicios
             return objeto;
         }
 
-        public async Task<DepartamentoSearchDTO> departamentoEmpleado(string empleadoId)
+      
+        public async Task<ApplicationResponse<DepartamentoSearchDTO>> departamentoEmpleado(string empleadoId)
         {
-            DepartamentoSearchDTO objeto = new DepartamentoSearchDTO();
+            var objeto = new ApplicationResponse<DepartamentoSearchDTO>();
             try
             {
                 var cliente = new HttpClient();
@@ -284,11 +286,12 @@ namespace ServiceDeskUCAB.Servicios
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadAsStringAsync();
-                    JObject json_respuesta = JObject.Parse(respuesta);
-                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var json_respuesta = JsonConvert.DeserializeObject<ApplicationResponse<DepartamentoSearchDTO>>(respuesta);
+                    /*string stringDataRespuesta = json_respuesta["data"].ToString();
+
                     var resultado = JsonConvert.DeserializeObject<DepartamentoSearchDTO>(stringDataRespuesta);
-                    if (resultado == null) { resultado = new DepartamentoSearchDTO(); }
-                    objeto = resultado;
+                    if (resultado == null) { resultado = new DepartamentoSearchDTO(); }*/
+                    objeto = json_respuesta;
                     Console.WriteLine("Obtiene el departamento del empleado");
                 }
             }
@@ -301,6 +304,7 @@ namespace ServiceDeskUCAB.Servicios
             {
                 Console.WriteLine("No obtiene los departamentos, algo ha sucedido ", e.Message);
             }
+            
             return objeto;
         }
 

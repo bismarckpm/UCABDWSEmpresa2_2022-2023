@@ -24,7 +24,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public DateTime? fecha_eliminacion { get; set; }
 
-        public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; }
+        public HashSet<EtiquetaTipoEstado> etiquetaTipoEstado { get; set; } = new HashSet<EtiquetaTipoEstado>();
         public Boolean permiso { get; set; }
 
         public Tipo_Estado(string nombre, string descripcion)

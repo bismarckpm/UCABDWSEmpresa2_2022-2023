@@ -87,7 +87,7 @@ namespace TicketUnitTest
         //*
         //Prueba Unitaria para consultar tickets por estado y departamento
         //*
-        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para consultar tickets por estado y departamento exitosamente")]
+        /*[TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para consultar tickets por estado y departamento exitosamente")]
 
         public void TestObtenerTicketsPorEstadoYDepartamentoCtrl()
 
@@ -105,7 +105,7 @@ namespace TicketUnitTest
             Assert.IsNotNull(resultado);
             Assert.IsTrue(resultado.Success);
 
-        }
+        }*/
 
        
 

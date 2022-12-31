@@ -1,10 +1,19 @@
 ﻿@model List<ServiceDeskUCAB.Models.TicketBasicoDTO>
 
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
+
+<div class="agregar d-grid gap-2 d-md-flex justify-content-md-end">
+    
+    <a class="btn btn-success" asp-controller="Ticket" asp-action="Ticket"> <i class="fas fa-plus"></i>Crear ticket</a>
+</div>
+
 <div class="row">
     <div class="col-12">
-        <h1>Tickets</h1>
-        <hr />
-
+        <h1>Lista de Tickets Recibidos</h1>
+   
+    
         @if (Context.Request.Query["message"].Count() > 0)
         {
             <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
@@ -13,13 +22,16 @@
             </div>
         }
 
-        <div class="text-center" style="margin-top:30px">
-            <a class="btn btn-primary" asp-controller="Ticket" asp-action="Ticket">Crear ticket</a>
-        </div>
-    </div>
+        @if (Context.Request.Query["message2"].Count() > 0)
+        {
+            <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+                <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+</div>
 
-  
-    <div class="row" style="margin-top:30px">
+<div class="row" >
         <div class="col-2"></div>
         <div class="btn-group col-8" role="group">
             @if (ViewBag.opcion == "Mis-Tickets")
@@ -52,12 +64,23 @@
             }
         </div>
         <div class="col-2"></div>
+        </div>
+</div>
+
+<div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
+        </div>
+        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
     </div>
 </div>
 
-<div class="container" style="margin-top:30px;">
-    <table id="table_id" class="display">
-        <thead>
+
+<!-- LISTA DE LOS TICKETS RECIBIDOS -->
+<div class="contenedor">
+    <div class="arriba">
+        <table class="table" id= "table_id">
             <tr>
                 <th>TITULO</th>
                 <th>TIPO TICKET</th>
@@ -124,42 +147,65 @@
                 {
                     Console.WriteLine(e.Message);
                 }
-         </tbody>
-    </table>
+            
+        </table>
+    </div>
 </div>
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable({
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        const searchFocus = document.getElementById('search-focus');
+        const keys = [
+            { keyCode: 'AltLeft', isTriggered: false },
+            { keyCode: 'ControlLeft', isTriggered: false },
+        ];
+        window.addEventListener('keydown', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = true;
+                }
+            });
+            const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+            if (shortcutTriggered) {
+                searchFocus.focus();
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = false;
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        const buscador = document.getElementById('search');
+        buscador.addEventListener("keyup", function () {
+            var keyword = this.value;
+            keyword = keyword.toUpperCase();
+            var table = document.getElementById("table_id");
+            var all_tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < all_tr.length; i++) {
+                var name_column = all_tr[i].getElementsByTagName("td")[0];
+                var description_column = all_tr[i].getElementsByTagName("td")[1];
+                if (name_column && description_column) {
+                    var name_value = name_column.textContent || name_column.innerText;
+                    var description_value = description_column.textContent || description_column.innerText;
+                    name_value = name_value.toUpperCase();
+                    description_value = description_value.toUpperCase();
+                    if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
+                        all_tr[i].style.display = ""; // show
+                    } else {
+                        all_tr[i].style.display = "none"; // hide
                     }
                 }
-
-            },);
-        });</script>
-
+            }
+        })
+    </script>
 }
+
+
 
 

@@ -45,5 +45,13 @@ namespace ServicesDeskUCABWS.Controllers.Votos_TicketCtr
             return response;
         }
 
+        // GET: Votos_Ticket/Details/NP
+        [HttpGet("ConsultaNP/{id}")]
+        public ApplicationResponse<List<Votos_Ticket>> DetailsPen([FromRoute] Guid id)
+        {
+            var response = _votos_ticketDAO.ConsultaVotosNoPendientes(id);
+
+            return response;
+        }
     }
 }

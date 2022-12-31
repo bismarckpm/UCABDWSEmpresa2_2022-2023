@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_TicketController
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_TicketController
 {
     [TestClass]
     public class TestEliminarTipo_TicketCtrl

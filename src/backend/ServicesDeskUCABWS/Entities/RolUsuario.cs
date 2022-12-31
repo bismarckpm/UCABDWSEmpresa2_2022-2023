@@ -9,7 +9,7 @@ namespace ServicesDeskUCABWS.Entities
         [JsonIgnore]
         public Usuario User { get; set; }
         public Guid RolId { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public Rol Rol { get; set; }
     }
 }

@@ -83,5 +83,13 @@ namespace ServiceDeskUCAB.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> VistaTicketNoPendiente()
+        {
+            var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
+            List<Votos_Ticket> listaNP = await _servicioApi.ObtenerVotosNoPendientes(idUsuario);
+
+            return View(listaNP);
+        }
     }
 }

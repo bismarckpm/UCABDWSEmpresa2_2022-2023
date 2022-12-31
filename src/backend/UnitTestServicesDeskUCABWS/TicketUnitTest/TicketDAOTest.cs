@@ -108,10 +108,10 @@ namespace TicketUnitTest
 
 
 
-        //*
+        /*
         //Prueba Unitaria para consultar tickets por estado y departamento
         //*
-        [TestMethod(displayName: "Prueba Unitaria para consultar los tickets por estado y departamento")]
+        /*[TestMethod(displayName: "Prueba Unitaria para consultar los tickets por estado y departamento")]
         public void ObtenerTicketPorEstadoYDepartamentoTest()
         {
             //Preparación
@@ -128,8 +128,8 @@ namespace TicketUnitTest
             StringAssert.Equals(application.GetType(), resultado.GetType());
             /*StringAssert.Equals(application, resultado);
             Assert.Equals(application, resultado);
-            Assert.IsTrue(resultado.Success);*/
-        }
+            Assert.IsTrue(resultado.Success);
+        }*/
 
         //*
         //Prueba Unitaria para cambiar el estado del ticket

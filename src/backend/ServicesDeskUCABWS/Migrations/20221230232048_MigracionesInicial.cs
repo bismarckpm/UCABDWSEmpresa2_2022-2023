@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class MigracionesInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,19 @@ namespace ServicesDeskUCABWS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grupos", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Modelos_Aprobacion",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    discrimanador = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modelos_Aprobacion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,12 +113,12 @@ namespace ServicesDeskUCABWS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_elim = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Minimo_Aprobado = table.Column<int>(type: "int", nullable: true),
-                    Maximo_Rechazado = table.Column<int>(type: "int", nullable: true)
+                    Maximo_Rechazado = table.Column<int>(type: "int", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -394,8 +407,7 @@ namespace ServicesDeskUCABWS.Migrations
                         name: "FK_Tickets_Usuarios_EmisorId",
                         column: x => x.EmisorId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_Usuarios_ResponsableId",
                         column: x => x.ResponsableId,
@@ -645,6 +657,9 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Flujos_Aprobaciones");
+
+            migrationBuilder.DropTable(
+                name: "Modelos_Aprobacion");
 
             migrationBuilder.DropTable(
                 name: "PlantillasNotificaciones");

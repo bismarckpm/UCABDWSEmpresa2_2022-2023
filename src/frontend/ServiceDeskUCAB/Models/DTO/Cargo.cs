@@ -20,8 +20,8 @@ namespace ServiceDeskUCAB.Models.DTO
         [Required]
         public DateTime fecha_creacion { get; set; }
 
-        [Required]
-        public DateTime fecha_ultima_edicion { get; set; }
+        //[Required]
+        //public DateTime fecha_ultima_edicion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         [Required]
         public TipoCargo Tipo_Cargo { get; set; }
@@ -34,7 +34,7 @@ namespace ServiceDeskUCAB.Models.DTO
             nombre_departamental = nombre_departamenta;
             this.descripcion = descripcion;
             fecha_creacion = DateTime.UtcNow;
-            fecha_ultima_edicion = fecha_ultima_edicion;
+            //fecha_ultima_edicion = fecha_ultima_edicion;
         }
 
         public Cargo()

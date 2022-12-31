@@ -13,7 +13,9 @@ using ServiceDeskUCAB.Servicios.ModuloCargo;
 using ServiceDeskUCAB.Servicios.ModuloTipoCargo;
 
 using Microsoft.Extensions.Hosting;
-using ServiceDeskUCAB.Servicios;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Servicios.ModuloTipoEstado;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

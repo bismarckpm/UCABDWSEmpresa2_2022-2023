@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
-using PrioridadUnitTest;
+using UnitTestServicesDeskUCABWS.DataSeed;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
@@ -48,115 +48,38 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
         public void CaminoFelizFlujoNoAprobacionTest()
         {
             //arrange
-            var Ticket = new Ticket()
-            {
-                Id = Guid.NewGuid(),
-                titulo = "titulo",
-                descripcion = "descripcion",
-                fecha_creacion = DateTime.Now,
-                Estado = new Estado()
-                {
-                    Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
-                },
-                Tipo_Ticket = new Tipo_Ticket()
-                {
-                    nombre = "nombreTipoTicket"
-                },
-                Departamento_Destino = new Departamento()
-                {
-                    nombre = "nombreDepartamento",
-                    grupo = new Grupo()
-                    {
-                        nombre = "nombreGrupo"
-                    }
-                },
-                Prioridad = new Prioridad()
-                {
-                    nombre = "nombrePrioridad"
-                },
-                Emisor = new Empleado()
-                {
-                    Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
-                    primer_nombre = "nombreEmpleado",
-                    primer_apellido = "apellidoEmpleado",
-                    Cargo = new Cargo()
-                    {
-                        id = Guid.NewGuid(),
-                        nombre_departamental = "nombreDepartamento",
-                        descripcion = "descrip",
-                        fecha_creacion = DateTime.Now,
-                    }
-                }
-            };
+            var Ticket = context.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02"));
+            
            //Act
             context.Setup(a => a.DbContext.SaveChanges());
+            plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
 
-            var result = ticketDAO.FlujoNoAprobacion(Ticket);
+            ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //Assert
-
+            Assert.AreEqual("Siendo Procesado", Ticket.Estado.nombre);
+            Assert.AreEqual(3, Ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(3 , context.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02")).Count());
         }
 
         //Test para el servicio de un excepcion para flujo no aprobacion
         [TestMethod]
-        public void CaminoFelizFlujoNoAprobacionExceptions()
+        public void FlujoNoAprobacionExceptions()
         {
             //Arrage
-            var Ticket = new Ticket()
-            {
-                Id = Guid.NewGuid(),
-                titulo = "titulo",
-                descripcion = "descripcion",
-                fecha_creacion = DateTime.Now,
-                Estado = new Estado()
-                {
-                    Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
-                },
-               
-                Departamento_Destino = new Departamento()
-                {
-                    nombre = "nombreDepartamento",
-                    grupo = new Grupo()
-                    {
-                        nombre = "nombreGrupo"
-                    }
-                },
-                Prioridad = new Prioridad()
-                {
-                    nombre = "nombrePrioridad"
-                },
-                Emisor = new Empleado()
-                {
-                    Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
-                    primer_nombre = "nombreEmpleado",
-                    primer_apellido = "apellidoEmpleado",
-                    Cargo = new Cargo()
-                    {
-                        id = Guid.NewGuid(),
-                        nombre_departamental = "nombreDepartamento",
-                        descripcion = "descrip",
-                        fecha_creacion = DateTime.Now,
-                    }
-                }
-            };
-
+            var Ticket = context.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02"));
 
             var Expected = new ApplicationResponse<string>()
             {
                 Success = false,
 
             };
-
             //act
-            context.Setup(x => x.Tickets).Throws(new Exception(""));
-
-            var result = ticketDAO.FlujoNoAprobacion(Ticket);
+            context.Setup(x => x.Empleados).Throws(new Exception(""));
+            var result = ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //assert
-            Assert.IsNotNull(result);
-           
+            Assert.IsTrue(result != "Exitoso");
         }
     }
 

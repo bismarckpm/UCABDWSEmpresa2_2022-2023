@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.EstadoTicket;
 using ServiceDeskUCAB.Models.ModelsVotos;
+using ServiceDeskUCAB.Models.PlantillaNotificaciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,12 +11,23 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios.ModuloTipoEstado
 {
     public class ServicioTipoEstado_API : IServicioTipoEstado_API
     {
         private static string _baseUrl;
         private JObject _json_respuesta;
+
+        // Crea una instancia de HttpClient configurada con la dirección base especificada
+        private HttpClient CrearCliente()
+        {
+            var cliente = new HttpClient
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            return cliente;
+        }
+
         public ServicioTipoEstado_API()
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
@@ -27,10 +39,8 @@ namespace ServiceDeskUCAB.Servicios
         {
             List<TipoEstado> listaTipoEstado = new();
 
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             try
             {
@@ -52,7 +62,6 @@ namespace ServiceDeskUCAB.Servicios
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
             }
             catch (Exception ex)
             {
@@ -66,10 +75,8 @@ namespace ServiceDeskUCAB.Servicios
         {
             List<TipoEstado> listaTipoEstado = new();
 
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             try
             {
@@ -91,7 +98,6 @@ namespace ServiceDeskUCAB.Servicios
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
             }
             catch (Exception ex)
             {
@@ -105,10 +111,8 @@ namespace ServiceDeskUCAB.Servicios
         {
             List<Etiqueta> listaEtiqueta = new();
 
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             try
             {
@@ -130,7 +134,6 @@ namespace ServiceDeskUCAB.Servicios
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
             }
             catch (Exception ex)
             {
@@ -142,10 +145,8 @@ namespace ServiceDeskUCAB.Servicios
         public async Task<JObject> Guardar(TipoEstadoNuevo tipoEstadoNuevo)
         {
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             var content = new StringContent(JsonConvert.SerializeObject(tipoEstadoNuevo), Encoding.UTF8, "application/json");
             Console.WriteLine(JsonConvert.SerializeObject(tipoEstadoNuevo));
@@ -186,10 +187,8 @@ namespace ServiceDeskUCAB.Servicios
 
         public async Task<JObject> HabilitarDeshabilitar(Guid idEstado)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             var content = new StringContent(JsonConvert.SerializeObject(idEstado), Encoding.UTF8, "application/json");
 
@@ -205,36 +204,31 @@ namespace ServiceDeskUCAB.Servicios
         {
             TipoEstado tipoEstado = new();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
             var response = await cliente.GetAsync($"TipoEstado/Consulta/{idEstado}");
 
-            var respuesta = await response.Content.ReadAsStringAsync();
-            JObject json_respuesta = JObject.Parse(respuesta);
-
-            if ((bool)json_respuesta["success"])
+            if (response.IsSuccessStatusCode)
             {
-                //Obtengo la data del json respuesta
-                string stringDataRespuesta = json_respuesta["data"].ToString();
+                var respuesta = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(respuesta);
 
-                var resultado = JsonConvert.DeserializeObject<TipoEstado>(stringDataRespuesta);
-                tipoEstado = resultado;
+                if ((bool)json["success"])
+                {
+                    // Obtiene la data del json de respuesta
+                    var stringDataRespuesta = json["data"].ToString();
+                    tipoEstado = JsonConvert.DeserializeObject<TipoEstado>(stringDataRespuesta);
+                }
             }
 
             return tipoEstado;
         }
         public async Task<JObject> Editar(TipoEstadoNuevo estado, string id)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             var content = new StringContent(JsonConvert.SerializeObject(estado), Encoding.UTF8, "application/json");
-
 
             try
             {

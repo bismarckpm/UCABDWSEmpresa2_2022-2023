@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models.EstadoTicket;
-using ServiceDeskUCAB.Servicios;
 using ServiceDeskUCAB.ViewModel.EstadoTicket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Servicios.ModuloTipoEstado;
 
 namespace ServiceDeskUCAB.Controllers
 {
