@@ -210,29 +210,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 		}
 
-		//Listar departamentos por el identificador de un grupo
-		public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
-        {
-            try {
-
-                var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
-                        d => new DepartamentoDto
-                        {
-                            id = d.id,
-                            nombre = d.nombre,
-                            descripcion = d.descripcion,
-                            fecha_creacion = d.fecha_creacion,
-                            fecha_ultima_edicion = d.fecha_ultima_edicion,
-                            fecha_eliminacion = d.fecha_eliminacion
-                        }
-                     );
-			return departamentos.ToList();
-            }
-            catch (Exception ex) {
-				throw new ExceptionsControl("El departamento"+idGrupo+"No esta registrado" , ex);
-			}
-        }
-
         public List<DepartamentoDto> NoAsociado()
         {
 			try
