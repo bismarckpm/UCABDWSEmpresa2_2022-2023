@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221223175331_initrefact.cs
+
     public partial class initrefact : Migration
-=======
-    public partial class Update_Modulo_Grupo : Migration
->>>>>>> modulo_departamento:src/backend/ServicesDeskUCABWS/Migrations/20221229143315_Update_Modulo_Grupo.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -468,11 +465,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Discriminator", "NumeroDeCuentasBloqueadas", "cedula", "correo", "fecha_creacion", "fecha_eliminacion", "fecha_nacimiento", "fecha_ultima_edicion", "gender", "password", "primer_apellido", "primer_nombre", "segundo_apellido", "segundo_nombre" },
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221223175331_initrefact.cs
                 values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 23, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
-=======
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 29, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
->>>>>>> modulo_departamento:src/backend/ServicesDeskUCABWS/Migrations/20221229143315_Update_Modulo_Grupo.cs
 
             migrationBuilder.InsertData(
                 table: "RolUsuarios",

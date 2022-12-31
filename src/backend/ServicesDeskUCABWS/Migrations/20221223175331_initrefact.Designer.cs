@@ -12,13 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221223175331_initrefact.Designer.cs
     [Migration("20221223175331_initrefact")]
     partial class initrefact
-=======
-    [Migration("20221229143315_Update_Modulo_Grupo")]
-    partial class Update_Modulo_Grupo
->>>>>>> modulo_departamento:src/backend/ServicesDeskUCABWS/Migrations/20221229143315_Update_Modulo_Grupo.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -657,11 +652,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20221223175331_initrefact.Designer.cs
                             fecha_creacion = new DateTime(2022, 12, 23, 0, 0, 0, 0, DateTimeKind.Local),
-=======
-                            fecha_creacion = new DateTime(2022, 12, 29, 0, 0, 0, 0, DateTimeKind.Local),
->>>>>>> modulo_departamento:src/backend/ServicesDeskUCABWS/Migrations/20221229143315_Update_Modulo_Grupo.Designer.cs
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",
