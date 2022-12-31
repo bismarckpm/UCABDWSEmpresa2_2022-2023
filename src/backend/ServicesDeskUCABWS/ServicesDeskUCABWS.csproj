@@ -60,6 +60,14 @@
     <Folder Include="Utilities\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="BussinesLogic\Recursos\ErroresGrupo.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="BussinesLogic\Recursos\ErroresGrupo.resx" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <Content Remove="appsettings.json" />

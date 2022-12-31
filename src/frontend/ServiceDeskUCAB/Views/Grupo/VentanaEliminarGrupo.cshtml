@@ -1,15 +1,10 @@
 ﻿@model Guid
 @{
-    ViewData["Title"] = "Gestion Departamento";
+    ViewData["Title"] = "Gestion Grupo";
 }
 
 <head>
     <title>@ViewData["Title"] - ServicesDeskUCAB</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
-    <link rel="stylesheet" href="~/css/sb-admin-2.css" />
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <!-- Ventana Emergente -->
@@ -27,7 +22,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="botonCancelar" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="botonCrear" onclick="location.href='@Url.Action("EliminarGrupo", "DepartamentoYGrupo",new { id = Model })'">Aceptar</button>
+                <button type="button" class="botonCrear" onclick="location.href='@Url.Action("EliminarGrupo", "Grupo",new { id = Model })'">Aceptar</button>
             </div>
         </div>
     </div>
