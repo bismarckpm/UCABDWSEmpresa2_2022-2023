@@ -76,7 +76,7 @@ namespace ServiceDeskUCAB.Controllers
             if (respuesta.Success)
                 return RedirectToAction("VistaTicket", new { message = "Voto registrado exitosamente"});
             else
-                return RedirectToAction("VistaVotarTicket", new { message = "Error ingresando voto" });
+                return RedirectToAction("VistaTicket", new { message = "Error ingresando voto" });
         }
 
         public IActionResult Index()

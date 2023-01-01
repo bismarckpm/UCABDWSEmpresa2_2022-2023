@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
@@ -81,7 +82,7 @@ namespace ServicesDeskUCABWS.Entities
 
         public abstract bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla);
 
-        public abstract string VerificarVotacion(Guid idTicket, IDataContext contexto);
+        public abstract string VerificarVotacion(Ticket ticket, IDataContext contexto);
 
         public abstract string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto);
 
@@ -100,28 +101,18 @@ namespace ServicesDeskUCABWS.Entities
                 voto = "Pendiente",
                 Turno = ticket.nro_cargo_actual
             });
-
-            contexto.Votos_Tickets.AddRange(ListaVotos);
+            ticket.Votos_Ticket.AddRange(ListaVotos);
         }
 
-        public Ticket ConsultarDatosTicket(Guid idTicket, IDataContext contexto)
-        {
-            return contexto.Tickets
-                    .AsNoTracking()
-                    .Include(x => x.Departamento_Destino).Include(x => x.Tipo_Ticket)
-                    .Include(x => x.Estado).ThenInclude(x => x.Estado_Padre)
-                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Where(x => x.Id == idTicket).FirstOrDefault();
-        }
+        
 
-        public abstract int ContarVotosAFavor(Guid idTicket, IDataContext contexto);
-        public abstract int ContarVotosEnContra(Guid idTicket, IDataContext contexto);
+        public abstract int ContarVotosAFavor(Ticket ticket, IDataContext contexto);
+        public abstract int ContarVotosEnContra(Ticket ticket, IDataContext contexto);
 
         public void CambiarEstadoVotosPendiente(Ticket ticket, IDataContext contexto)
         {
-            contexto.Votos_Tickets
-                .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
-                .ToList().ForEach(x => x.voto = ticket.Estado.Estado_Padre.nombre);
+            ticket.Votos_Ticket.Where(x=>x.voto == "Pendiente").ToList()
+                .ForEach(x => x.voto = ticket.Estado.Estado_Padre.nombre);
         }
 
         public void LlenarDatos(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null)

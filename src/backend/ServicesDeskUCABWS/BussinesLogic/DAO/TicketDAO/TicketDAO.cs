@@ -160,6 +160,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ticket.Tipo_Ticket = _dataContext.Tipos_Tickets.Find(ticketDTO.tipoTicket_id);
             ticket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
             x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
+            ticket.Votos_Ticket = new HashSet<Votos_Ticket>();
             try
             {
                 ticket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
@@ -183,7 +184,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 ticket.Ticket_Padre = null;
             }
-
+            if (ticket.Tipo_Ticket.GetType() == typeof(TipoTicket_FlujoAprobacionJerarquico))
+            {
+                ticket.nro_cargo_actual = 1;
+            }
             _dataContext.Tickets.Add(ticket);
             _dataContext.DbContext.SaveChanges();
             return ticket;
@@ -200,7 +204,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
             //Cambiar Estado
             ticket.Tipo_Ticket.CambiarEstadoCreacionTicket(ticket, ListaEmpleado,_dataContext,notificacion,plantilla);
-
+            _dataContext.DbContext.Update(ticket);
+            _dataContext.DbContext.SaveChanges();
             
             return "Exitoso";
         }

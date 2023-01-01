@@ -71,9 +71,12 @@ namespace ServicesDeskUCABWS.Data
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
 
 
-        
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }

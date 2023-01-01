@@ -47,12 +47,12 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.CambiarEstado( "Pendiente", _dataContext);
 
-                ticket.CambiarEstado(ticket, "Aprobado", _dataContext);
+                ticket.CambiarEstado( "Aprobado", _dataContext);
                 ticket.EnviarNotificacion(ticket, "Aprobado", ListaEmpleados, _dataContext, notificacion, plantilla);
 
-                ticket.CambiarEstado(ticket, "Siendo Procesado", _dataContext);
+                ticket.CambiarEstado( "Siendo Procesado", _dataContext);
                 ticket.EnviarNotificacion(ticket, "Siendo Procesado", ListaEmpleados, _dataContext, notificacion, plantilla);
 
                 return true;
@@ -69,7 +69,7 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_No_Aprobacion";
         }
 
-        public override string VerificarVotacion(Guid idTicket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticekt, IDataContext contexto)
         {
             return "Aprobado";
         }
@@ -79,12 +79,12 @@ namespace ServicesDeskUCABWS.Entities
             return "Aprobado";
         }
 
-        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosAFavor(Ticket ticket, IDataContext contexto)
         {
             return 0;
         }
 
-        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosEnContra(Ticket ticket, IDataContext contexto)
         {
             return 0;
         }

@@ -63,7 +63,7 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.CambiarEstado( "Pendiente", _dataContext);
                 ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
 
                 return true;
@@ -79,19 +79,15 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_Paralelo";
         }
 
-        public override string VerificarVotacion(Guid idTicket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticket, IDataContext contexto)
         {
             try
             {
-                //Consultar Ticket
-                var ticket = ConsultarDatosTicket(idTicket, contexto);
-                    
-                //Comparar Votos
                 if (EstaAprobadoORechazado(ticket, contexto)!=null)
                 {
                     //Cambiar Estado y mandar votos
                     var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
-                    ticket.CambiarEstado(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
+                    ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
                     //ticket.EnviarNotificacion(ticket, "Aprobado", contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
 
                     CambiarEstadoVotosPendiente(ticket, contexto);
@@ -110,25 +106,23 @@ namespace ServicesDeskUCABWS.Entities
 
         public override string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto)
         {
-            if (ContarVotosAFavor(ticket.Id, contexto) >= ticket.Tipo_Ticket.Minimo_Aprobado){
+            if (ContarVotosAFavor(ticket, contexto) >= ticket.Tipo_Ticket.Minimo_Aprobado){
                 return "Aprobado";
             }
-            if (ContarVotosEnContra(ticket.Id, contexto) >= ticket.Tipo_Ticket.Maximo_Rechazado){
+            if (ContarVotosEnContra(ticket, contexto) >= ticket.Tipo_Ticket.Maximo_Rechazado){
                 return "Rechazado";
             }
             return null;
         }
 
-        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosAFavor(Ticket ticket, IDataContext contexto)
         {
-            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Aprobado").Count();
+            return ticket.Votos_Ticket.Where(x=>x.voto == "Aprobado").Count();
         }
 
-        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosEnContra(Ticket ticket, IDataContext contexto)
         {
-            return contexto.Votos_Tickets.Where(x => x.IdTicket == idTicket
-                && x.voto == "Rechazado").Count();
+            return ticket.Votos_Ticket.Where(x => x.voto == "Rechazado").Count();
         }
 
         public override void ValidarTipoticketAgregar(IDataContext contexto)

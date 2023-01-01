@@ -30,7 +30,7 @@ namespace ServiceDeskUCAB.Controllers
         {
             TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
             tipoNuevoViewModel.idDepartamento = idDepartamento;
-            tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
+            tipoNuevoViewModel.ListaTipo = await _servicioApi.ListaxDepartamento(Guid.Parse(idDepartamento));
             tipoNuevoViewModel.tipo = new Tipo();
             tipoNuevoViewModel.tipoActualizar = new Tipo();
             tipoNuevoViewModel.tipoCargoNuevo = new();

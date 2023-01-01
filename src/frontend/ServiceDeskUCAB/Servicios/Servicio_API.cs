@@ -58,7 +58,38 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
         }
 
-        
+        public async Task<List<Tipo>> ListaxDepartamento(Guid id)
+        {
+            List<Tipo> lista = new List<Tipo>();
+
+
+            var cliente = new HttpClient();
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync("api/Tipo_Ticket/ConsultaxDepartamento/"+id);  //URL de Lista en el swagger
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+
+                string stringDataRespuesta = dataRespuesta["data"].ToString();
+                Console.WriteLine(stringDataRespuesta);
+
+                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
+
+
+                lista = resultado;
+            }
+
+
+            return lista;
+        }
+
+
+
         // Método para consumir la lista de Ticket desde el front
         public async Task<List<Ticket>> ListaTickets()
         {

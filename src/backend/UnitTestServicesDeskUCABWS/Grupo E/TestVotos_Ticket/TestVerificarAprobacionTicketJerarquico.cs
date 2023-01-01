@@ -87,15 +87,13 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             //arrange
             var Voto = new Votos_TicketDTOCreate()
             {
-
                 IdTicket = "0F636FB4-7F04-4A2E-B2C2-359B99BE85D1",
                 IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
                 comentario = "Perfecto",
                 voto = "Aprobado"
-
             };
-            //act
 
+            //act
             var result = VotoDAO.Votar(Voto);
 
             //assert
@@ -113,7 +111,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
         {
             //arrange
 
-            var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
+            var entrada =context.Object.Tickets.Find(new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751"));
             var tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19"));
 
             //act
@@ -129,11 +127,12 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
         {
             //arrange
 
-            var entrada = new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751");
-            
+            var entrada = context.Object.Tickets.Find(new Guid("5992E4A2-4737-42FB-88E2-FBC37EF26751"));
+
             var tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19"));
 
-            context.Setup(c => c.Tickets).Throws(new Exception());
+            entrada.Votos_Ticket = null;
+            //context.Setup(c => c.Tickets).Throws(new Exception());
             //act
             var result = tipo_Ticket.VerificarVotacion(entrada, context.Object);
 

@@ -10,6 +10,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
     public interface ITipo_TicketDAO
     {
         public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicket();
+        public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicketxDepartamento(Guid Id);
         public ApplicationResponse<Tipo_TicketDTOCreate> RegistroTipo_Ticket(Tipo_TicketDTOCreate Tipo_TicketDTO);
         public ApplicationResponse<Tipo_TicketDTOUpdate> ActualizarTipo_Ticket(Tipo_TicketDTOUpdate tipo_Ticket);
 

@@ -68,8 +68,12 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             //Assert
             Assert.AreEqual("Pendiente D1", Ticket.Estado.nombre);
             Assert.AreEqual(1, Ticket.Bitacora_Tickets.Count);
-            Assert.AreEqual(1, _contextMock.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
-            Assert.AreEqual(2, _contextMock.Object.Votos_Tickets.Where(x => x.IdTicket == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
+            Assert.AreEqual(1, Ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(2, Ticket.Votos_Ticket.Count);
+
+
+            //Assert.AreEqual(1, _contextMock.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
+            //Assert.AreEqual(2, _contextMock.Object.Votos_Tickets.Where(x => x.IdTicket == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
         }
 
 

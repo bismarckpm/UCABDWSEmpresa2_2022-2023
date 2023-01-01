@@ -94,13 +94,16 @@
         <th>
             Genero
         </th>
+            <th>
+                Correo
+            </th>
         <th>
             Cargo
         </th>
         <th>
             Rol
         </th>
-
+        
     </tr>
 
     @foreach (var item in Model.ToList())
@@ -120,6 +123,9 @@
             </td>
             <td>
                 @Html.DisplayFor(i => item.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.correo)
             </td>
             <td>
                 @if(item.roles.Select(x=>x.Rol.Name).Contains("Empleado")){

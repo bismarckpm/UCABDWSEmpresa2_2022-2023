@@ -9,6 +9,7 @@ namespace ServiceDeskUCAB.Servicios
     {
 
         Task<List<Tipo>> Lista();
+        Task<List<Tipo>> ListaxDepartamento(Guid id);
         // Task<bool> AgregarTicket(NuevoTicket ticket);
         Task<ApplicationResponse<Votos_Ticket>> VotarTicket(VotarTicket voto_ticket);
         Task<List<Ticket>> ListaTickets();
