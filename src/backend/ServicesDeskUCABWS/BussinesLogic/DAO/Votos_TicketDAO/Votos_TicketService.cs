@@ -158,7 +158,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
                 response.Data = contexto.Votos_Tickets
                     .Include(x => x.Ticket).ThenInclude(x => x.Tipo_Ticket)
                     .Include(x => x.Empleado)
-                    .Where(x => x.IdUsuario == id && x.voto != "Pendiente").ToList();
+                    .Where(x => x.IdUsuario == id && x.voto != "Pendiente" && x.fecha!=null).ToList();
             }
             catch (Exception ex)
             {
