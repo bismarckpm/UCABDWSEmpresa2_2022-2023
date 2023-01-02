@@ -72,7 +72,6 @@
   <!--<ItemGroup>
     <Content Remove="appsettings.json" />
   </ItemGroup>-->
-  <ItemGroup>
 
   <ItemGroup>
     <None Remove="Entities\TipoTicket_FlujoAprobacionParalelo.cs~RFa9979d7.TMP" />
