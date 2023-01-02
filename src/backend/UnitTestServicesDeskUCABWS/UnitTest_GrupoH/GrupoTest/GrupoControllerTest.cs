@@ -22,6 +22,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 	{
 		private readonly GrupoController _controller;
 		private readonly Mock<IGrupoDAO> _serviceMock;
+		//private readonly Mock<IGrupoDAO> _contextMockDG;
 		public Grupo grupo = It.IsAny<Grupo>();
 		public GrupoDto grupoDto = It.IsAny<GrupoDto>();
 
