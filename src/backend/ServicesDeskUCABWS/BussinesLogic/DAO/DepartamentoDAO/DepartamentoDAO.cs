@@ -253,10 +253,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
         public IEnumerable<DepartamentoSearchDTO> ConsultaDepartamentoExcluyente(Guid IdDepartamento)
         {
-            var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
-
-            return ListaDepartamento;
+           var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
+           return ListaDepartamento;       
         }
+
         public bool ExisteDepartamentoModificar(Departamento dept)
         {
             bool existe = false;
