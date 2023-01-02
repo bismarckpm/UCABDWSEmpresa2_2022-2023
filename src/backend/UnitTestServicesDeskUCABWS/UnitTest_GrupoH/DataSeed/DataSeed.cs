@@ -25,9 +25,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 				{
 					id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-					nombre = "Grupo Nuevo",
+					nombre = "Departamento Nuevo",
 
-					descripcion = "Es un grupo",
+					descripcion = "Es un departamento",
 
 					fecha_creacion = DateTime.Now.Date,
 
@@ -41,9 +41,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 					{
 					   id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-					   nombre = "Seguridad Ambiental",
+					   nombre = "Grupo Nuevo",
 
-					   descripcion = "Cuida el ambiente",
+					   descripcion = "Es un grupo",
 
 					   fecha_creacion = DateTime.Now.Date,
 
@@ -94,9 +94,27 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 
 					id_grupo = null
 
-				}
+				},
+                new Departamento
+                {
+                    id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-			};
+                    nombre = "Seguridad informatica",
+
+                    descripcion = "Protege de ataques informaticos",
+
+                    fecha_creacion = DateTime.Now.Date,
+
+                    fecha_ultima_edicion = null,
+
+                    fecha_eliminacion = null,
+
+                    id_grupo = null
+
+                }
+
+
+            };
 
 			_mockContext.Setup(c => c.Departamentos).Returns(request.AsQueryable().BuildMockDbSet().Object);
 			_mockContext.Setup(set => set.Departamentos.Add(It.IsAny<Departamento>()));
