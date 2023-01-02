@@ -69,9 +69,9 @@
   </ItemGroup>
 
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Content Remove="appsettings.json" />
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <None Remove="System.IdentityModel.Tokens.Jwt" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
