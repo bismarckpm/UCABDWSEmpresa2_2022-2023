@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Modelos_de_Usuario\" />
     <Folder Include="Models\ViewModel\" />
     <Folder Include="Views\TipoTicket\" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />

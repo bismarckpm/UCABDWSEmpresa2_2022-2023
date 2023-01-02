@@ -11,5 +11,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
         public ApplicationResponse<Votos_Ticket> Votar(Votos_TicketDTOCreate votoDTO);
         bool AgregarVoto(List<Votos_Ticket> ListaVotos);
         ApplicationResponse<List<Votos_Ticket>> ConsultaVotos(Guid id);
+
+        ApplicationResponse<List<Votos_Ticket>> ConsultaVotosNoPendientes(Guid id);
     }
 }

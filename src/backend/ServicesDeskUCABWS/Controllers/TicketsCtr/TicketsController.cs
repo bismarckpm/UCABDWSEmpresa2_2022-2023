@@ -86,14 +86,14 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
 
         // POST: api/Tickets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        /*[HttpPost]
         public ApplicationResponse<TicketCreateDTO> PostTicket(TicketCreateDTO ticketDTO)
         {
 
             var result = _ticketDAO.RegistroTicket(ticketDTO);
             //_context.SaveChanges();
             return result;
-        }
+        }*/
 
         // DELETE: api/Tickets/5
         [HttpDelete("{id}")]

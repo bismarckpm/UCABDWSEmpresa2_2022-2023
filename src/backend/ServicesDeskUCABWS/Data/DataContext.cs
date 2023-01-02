@@ -60,6 +60,13 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<Prioridad>().HasKey(x => new { x.Id });
             modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
             modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
+
+            modelBuilder.Entity<Tipo_Ticket>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<TipoTicket_FlujoNoAprobacion>("Modelo_No_Aprobacion")
+                .HasValue<TipoTicket_FlujoAprobacionParalelo>("Modelo_Paralelo")
+                .HasValue<TipoTicket_FlujoAprobacionJerarquico>("Modelo_Jerarquico");
+
         }
 
 
@@ -99,5 +106,11 @@ namespace ServicesDeskUCABWS.Data
                 return this;
             }
         }
+
+        public DbSet<TipoTicket_FlujoNoAprobacion> tipoTicket_FlujoNoAprobacions {get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionParalelo> tipoTicket_FlujoAprobacionParalelos { get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionJerarquico> tipoTicket_FlujoAprobacionJerarquicos { get; set; }
+        public DbSet<Modelo_Aprobacion> Modelos_Aprobacion { get; set; }
     }
+    
 }

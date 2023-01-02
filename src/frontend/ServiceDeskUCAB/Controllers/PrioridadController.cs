@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using ServiceDeskUCAB.Models;
@@ -11,6 +12,8 @@ using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
+
+    [Authorize(Policy = "AdminAccess")]
     public class PrioridadController : Controller
     {
         private readonly IServicioPrioridadAPI _servicioAPI;

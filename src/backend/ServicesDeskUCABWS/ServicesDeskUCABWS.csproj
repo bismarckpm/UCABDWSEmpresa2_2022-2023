@@ -73,6 +73,9 @@
     <Content Remove="appsettings.json" />
   </ItemGroup>-->
   <ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Entities\TipoTicket_FlujoAprobacionParalelo.cs~RFa9979d7.TMP" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>

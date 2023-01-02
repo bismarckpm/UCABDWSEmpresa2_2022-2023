@@ -2,12 +2,14 @@
 @using ServiceDeskUCAB.Models.ModelsVotos
 @using ServiceDeskUCAB.Models.TipoTicketsModels
 
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
 
 <div class="row">
     <div class="col-8">
         <h1 id="ti">Gestionar Votos</h1>
     </div>
-    
 </div>
 
 @if (Context.Request.Query["message"].Count() > 0)
@@ -17,10 +19,23 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
+<div class="text-center" style="margin-top:30px">
+    <a class="btn btn-primary" asp-controller="Votos" asp-action="VistaTicketNoPendiente">Lista de Votos</a>
+</div>
 
-<div style="margin-top:30px;">
-    <table id="table_id" class="display">
-        <thead>
+<div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
+        </div>
+        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+    </div>
+</div>
+
+<!-- LISTA DE LOS TICKETS PENDIENTES DEL USUARIO -->
+<div class="contenedor">
+    <div class="arriba">
+        <table class="table" id="table_id">
             <tr>
                 <th>Titulo</th>
                 <th>Descripción</th>
@@ -28,98 +43,78 @@
                 <th>Creado</th>
                 <th>Voto</th>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model) {
-                <tr>
-                    <td>@item.Ticket?.titulo</td>
-                    <td>@item.Ticket?.descripcion</td>
-                    <td>@item.Ticket?.Tipo_Ticket?.nombre</td>
-                    <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
-                    <td>@item.voto</td>
-                    <td>
-                        <div class="dropdown" style="float: right">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                 <li>
-                                    <a asp-action="VistaVotarTicket" asp-controller="Votos" asp-route-ticket="@(item.Ticket as Ticket)" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
-                                        Votar
-                                    </a>
-                                 </li>
-                                <!--<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</a></li>-->
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            }
+          
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ticket?.titulo</td>
+                        <td>@item.Ticket?.descripcion</td>
+                        <td>@item.Ticket?.Tipo_Ticket?.nombre</td>
+                        <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
+                        <td>@item.voto</td>
+                        <td>
 
-        </tbody>
-    </table>
-</div>
-
-<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este ticket?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Eliminar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                            <a class="btn btn-secondary" asp-action="VistaVotarTicket" asp-controller="Votos" asp-route-ticket="@(item.Ticket as Ticket)" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
+                            Votar
+                            </a>      
+                        </td>
+                    </tr>
+                }
+          
+        </table>
     </div>
 </div>
 
 @section Scripts{
-    <script type="text/javascript">
-        function mostrar() {
-            document.getElementById('Modelo_Paralelo').style.display = 'block';
-
-        }
-
-    </script>
     <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable({
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron tipo tickets con esa características",
-                    "sEmptyTable": "No hay ningun tipo ticket en el sistema, registra uno para enviar tickets",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+        const searchFocus = document.getElementById('search-focus');
+        const keys = [
+            { keyCode: 'AltLeft', isTriggered: false },
+            { keyCode: 'ControlLeft', isTriggered: false },
+        ];
+        window.addEventListener('keydown', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = true;
                 }
-
+            });
+            const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+            if (shortcutTriggered) {
+                searchFocus.focus();
+            }
+        });
+        window.addEventListener('keyup', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = false;
+                }
             });
         });
     </script>
 
 
-
+    <script>
+        const buscador = document.getElementById('search');
+        buscador.addEventListener("keyup", function () {
+            var keyword = this.value;
+            keyword = keyword.toUpperCase();
+            var table = document.getElementById("table_id");
+            var all_tr = table.getElementsByTagName("tr");
+            for (var i = 0; i < all_tr.length; i++) {
+                var name_column = all_tr[i].getElementsByTagName("td")[0];
+                var description_column = all_tr[i].getElementsByTagName("td")[1];
+                if (name_column && description_column) {
+                    var name_value = name_column.textContent || name_column.innerText;
+                    var description_value = description_column.textContent || description_column.innerText;
+                    name_value = name_value.toUpperCase();
+                    description_value = description_value.toUpperCase();
+                    if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
+                        all_tr[i].style.display = ""; // show
+                    } else {
+                        all_tr[i].style.display = "none"; // hide
+                    }
+                }
+            }
+        })
+    </script>
 }

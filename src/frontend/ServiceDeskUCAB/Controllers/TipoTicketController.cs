@@ -26,10 +26,6 @@ namespace ServiceDeskUCAB.Controllers
 
         public async Task<IActionResult> VistaTipo(string idDepartamento)
         {
-
-            //var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            //DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
-            //var idDepartamento = "CCACD411-1B46-4117-AA84-73EA64DEAC87";
             TipoNuevoViewModel tipoNuevoViewModel = new TipoNuevoViewModel();
             tipoNuevoViewModel.idDepartamento = idDepartamento;
             tipoNuevoViewModel.ListaTipo = await _servicioApi.Lista();
@@ -56,7 +52,7 @@ namespace ServiceDeskUCAB.Controllers
         public async Task<IActionResult> ActualizarCambios (Tipo tipo,string tipot, List<string> departamentos, List<string> cargos2, List<int> ordenaprobacion, List<int> minimo_aprobado_nivel, List<int> maximo_rechazado_nivel, string idDepartOrigen)
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
-            DepartamentoSearchDTO departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
+            var departamento = await _servicioTicketAPI.departamentoEmpleado(idUsuario);
 
             ApplicationResponse<Tipo_TicketDTOUpdate> respuesta;
 

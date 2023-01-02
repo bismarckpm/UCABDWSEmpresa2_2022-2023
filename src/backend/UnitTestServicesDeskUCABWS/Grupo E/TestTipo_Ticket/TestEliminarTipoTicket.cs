@@ -15,13 +15,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
 
-namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
+namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 {
     [TestClass]
     public class TestEliminarTipoTicket
     {
         Mock<IDataContext> context;
         private readonly Tipo_TicketService TipoticketDAO;
+        private IMapper mapper;
 
         public TestEliminarTipoTicket()
         {
@@ -29,7 +30,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
 
             context = new Mock<IDataContext>();
 
-            TipoticketDAO = new Tipo_TicketService(context.Object);
+            TipoticketDAO = new Tipo_TicketService(context.Object,mapper);
             context.SetupDbContextData();
         }
 
@@ -39,7 +40,7 @@ namespace UnitTestServicesDeskUCABWS.TestTipo_Ticket
         {
             //arrage
 
-            var data = new Tipo_Ticket
+            var data = new TipoTicket_FlujoNoAprobacion
             {
                 Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
 

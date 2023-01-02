@@ -105,7 +105,7 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
             var response = new ApplicationResponse<Tipo_TicketDTOSearch>();
             try
             {
-              response.Data = _ticketDAO.ConsultarTipoTicketNomb(nombre);
+              response.Data = _ticketDAO.ConsultarNombreTipoTicket(nombre);
 
             }
             catch (ExceptionsControl ex)

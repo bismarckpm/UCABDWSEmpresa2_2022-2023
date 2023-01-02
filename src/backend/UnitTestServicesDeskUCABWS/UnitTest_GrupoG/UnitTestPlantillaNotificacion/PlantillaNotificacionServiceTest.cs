@@ -19,13 +19,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
     {
         private readonly PlantillaNotificacionService _plantillaService;
         private readonly Mock<IDataContext> _contextMock;
-        private readonly Mock<INotificacion> _notificacion;
         private readonly IMapper _mapper;
 
         public PlantillaNotificacionServiceTest()
         {
             _contextMock = new Mock<IDataContext>();
-            _notificacion = new Mock<INotificacion>();
             var myProfile = new List<Profile>
             {
                 new PlantillaNotificacionMapper(),
@@ -57,7 +55,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ConsultarPlantillasRetornaVaciaServiceTest()
         {
             _contextMock.SetUpContextDataVacio();
-            //_contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new ExceptionsControl(""));
             Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.ConsultaPlantillas());
         }
 
@@ -202,12 +199,18 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
                 TipoEstadoId = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c86"),
             };
 
-            //act
-            var response = _plantillaService.RegistroPlantilla(plantilla);
+			var expected = new PlantillaNotificacionDTO
+			{
+				Titulo = "Plantilla Aprobado",
+				Descripcion = "Hola @Usuario su @Ticket fue @Estado",
+			};
+
+			//act
+			var response = _plantillaService.RegistroPlantilla(plantilla);
 
             //Assert
-            Assert.AreEqual(response.Titulo, plantilla.Titulo);
-            Assert.AreEqual(response.GetType(), plantilla.GetType());   
+            Assert.AreEqual(response.Titulo, expected.Titulo);
+            Assert.AreEqual(response.GetType(), expected.GetType());   
         }
 
 
@@ -232,7 +235,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         public void ExcepcionAgregarPlantilla()
         {
             //arrange
-            //_contextMock.Setup(p => p.PlantillasNotificaciones).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _plantillaService.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
         }
 
@@ -251,15 +253,19 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
             {
                 Titulo = "Plantilla Aprobado",
                 Descripcion = "Hola @Usuario su @Ticket",
-                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
             };
+			var expected = new PlantillaNotificacionDTO
+			{
+				Titulo = "Plantilla Aprobado",
+				Descripcion = "Hola @Usuario su @Ticket fue @Estado",
+			};
 
-            //act
-            var response = _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
+			//act
+			var response = _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
 
             //assert
-            Assert.AreEqual(response.Titulo, plantillaUpdate.Titulo);
-            Assert.AreEqual(response.GetType(), plantillaUpdate.GetType());
+            Assert.AreEqual(response.Titulo, expected.Titulo);
+            Assert.AreEqual(response.GetType(), expected.GetType());
         }
 
 
@@ -296,11 +302,10 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         {
             //arrange
 
-            var expected = new PlantillaNotificacionDTOCreate
+            var expected = new PlantillaNotificacionDTO
             {
                 Titulo = "Plantilla Rechazado",
                 Descripcion = "Hola @Usuario su @Ticket",
-                TipoEstadoId = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
             };
 
             _contextMock.Setup(set => set.DbContext.SaveChanges());
