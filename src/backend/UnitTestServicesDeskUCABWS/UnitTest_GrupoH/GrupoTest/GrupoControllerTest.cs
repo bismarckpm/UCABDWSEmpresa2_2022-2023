@@ -356,8 +356,275 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			Assert.IsFalse(ex.Success);
 		}
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento por id de grupo exitoso")]
-        public void ConsultarDepartamentoPorIDGrupo()
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento por id de grupo exitoso")]
+		public void ConsultarDepartamentoPorIDGrupo()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			var dept = new DepartamentoDto()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+				nombre = "Seguridad Ambiental",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Returns(new List<DepartamentoDto>());
+			var application = new ApplicationResponse<List<DepartamentoDto>>();
+
+			//act
+			var result = _controller.ListaDepartamentosGrupo(grupo.id);
+
+			//assert
+			Assert.AreEqual(application.GetType(), result.GetType());
+		}
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para consultar departamento por id de grupo excepcion")]
+		public void ExcepcionConsultarDepartamentoPorIDGrupo()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+			//act
+			var ex = _controller.ListaDepartamentosGrupo(grupo.id);
+
+			//assert
+			Assert.IsNotNull(ex);
+			Assert.IsFalse(ex.Success);
+		}
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento exitoso")]
+		public void AsignarGrupoToDepartamento()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			var dept = new DepartamentoDto()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+				nombre = "Seguridad Ambiental",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
+			var application = new ApplicationResponse<List<string>>();
+
+			//act
+			var result = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
+
+			//assert
+			Assert.AreEqual(application.GetType(), result.GetType());
+		}
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento excepcion")]
+		public void ExcepcionAsignarGrupoToDepartamento()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			var dept = new DepartamentoDto()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+				nombre = "Seguridad Ambiental",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
+
+			//act
+			var ex = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
+
+			//assert
+			Assert.IsNotNull(ex);
+			Assert.IsFalse(ex.Success);
+		}
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma exitosa")]
+		public void EditarRelacion()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			var dept = new DepartamentoDto()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+				nombre = "Seguridad Ambiental",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
+			var application = new ApplicationResponse<List<string>>();
+
+			//act
+			var result = _controller.EditarRelacion(grupo.id, dept.id.ToString());
+
+			//assert
+			Assert.AreEqual(application.GetType(), result.GetType());
+		}
+
+
+		[TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma excepcion")]
+		public void ExcepcionEditarRelacion()
+		{
+			var grupo = new Grupo()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Nuevo Grupo",
+
+				descripcion = "Grupo nuevo",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+			};
+
+			var dept = new DepartamentoDto()
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+				nombre = "Seguridad Ambiental",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = null,
+
+				fecha_eliminacion = null
+
+			};
+
+			//arrange
+			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
+
+			//act
+			var ex = _controller.EditarRelacion(grupo.id, dept.id.ToString());
+
+			//assert
+			Assert.IsNotNull(ex);
+			Assert.IsFalse(ex.Success);
+		}
+
+        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar el nombre de grupo de forma exitosa")]
+        public void ConsultarNombreGrupo()
         {
             var grupo = new Grupo()
             {
@@ -375,36 +642,19 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
                 fecha_eliminacion = null
             };
 
-            var dept = new DepartamentoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
             //arrange
-            _serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Returns(new List<DepartamentoDto>());
-            var application = new ApplicationResponse<List<DepartamentoDto>>();
+            _serviceMock.Setup(p => p.buscarGrupoNombre(It.IsAny<string>())).Returns(new GrupoDto());
+            var application = new ApplicationResponse<GrupoDto>();
 
             //act
-            var result = _controller.ListaDepartamentosGrupo(grupo.id);
+            var result = _controller.ConsultarNombreGrupo(grupo.nombre);
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar departamento por id de grupo excepcion")]
-        public void ExcepcionConsultarDepartamentoPorIDGrupo()
+        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar el nombre de grupo excepcion")]
+        public void ExcepcionConsultarNombreGrupo()
         {
             var grupo = new Grupo()
             {
@@ -423,278 +673,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             };
 
             //arrange
-            _serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.buscarGrupoNombre(It.IsAny<string>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.ListaDepartamentosGrupo(grupo.id);
+            var ex = _controller.ConsultarNombreGrupo(grupo.nombre);
 
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento exitoso")]
-        public void AsignarGrupoToDepartamento()
-        {
-            var grupo = new Grupo()
-            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Grupo",
-
-                descripcion = "Grupo nuevo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            var dept = new DepartamentoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
-            var application = new ApplicationResponse<List<string>>();
-
-            //act
-            var result = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
-
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento excepcion")]
-        public void ExcepcionAsignarGrupoToDepartamento()
-        {
-            var grupo = new Grupo()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Grupo",
-
-                descripcion = "Grupo nuevo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            var dept = new DepartamentoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos con lista de IDs de Departamentos vacios")]
-        public void EditarRelacionPrimerCondicional()
-        {
-
-            _contextMockDG.Setup(set => set.DbContext.SaveChanges());
-            var result = _G.EditarRelacion(It.IsAny<Guid>(), String.Empty);
-            Assert.AreEqual(result.Count, 1);
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria para editar relacion de los departamentos con los grupos con lista de IDs de Departamentos asignado")]
-        public void EditarRelacionElse()
-        {
-
-            var grupo = new Grupo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
-            };
-
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = grupo.id
-
-            };
-
-
-            _contextMockDG.Setup(set => set.DbContext.SaveChanges());
-            var result = _DepartamentoDAO.EditarRelacion(It.IsAny<Guid>(), request.id.ToString());
-            Assert.AreEqual(result.Count, 1);
-        }
-
-
-
-        [TestMethod(displayName: "Prueba Unitaria para la excepcion de editar relacion de los departamentos con los grupos")]
-        public void ExcepcionEditarRelacion()
-        {
-            var grupo = new Grupo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
-            };
-
-            var request = new Departamento
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null,
-
-                id_grupo = grupo.id
-
-            };
-
-            _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.EditarRelacion(grupo.id, request.id.ToString()));
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma exitosa")]
-        public void EditarRelacion()
-        {
-            var grupo = new Grupo()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Grupo",
-
-                descripcion = "Grupo nuevo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            var dept = new DepartamentoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
-            var application = new ApplicationResponse<List<string>>();
-
-            //act
-            var result = _controller.EditarRelacion(grupo.id, dept.id.ToString());
-
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma excepcion")]
-        public void ExcepcionEditarRelacion()
-        {
-            var grupo = new Grupo()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Grupo",
-
-                descripcion = "Grupo nuevo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            var dept = new DepartamentoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre = "Seguridad Ambiental",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.EditarRelacion(grupo.id, dept.id.ToString());
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
     }
+
 }
