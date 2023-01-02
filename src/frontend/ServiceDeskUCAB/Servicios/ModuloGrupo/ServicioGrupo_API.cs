@@ -11,15 +11,13 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
     public class ServicioGrupo_API : IServicioGrupo_API
     {
         //Declaracion de variables
-        private static string _baseUrl;
         private JObject _json_respuesta;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         //Constructor
-        public ServicioGrupo_API()
+        public ServicioGrupo_API(IHttpClientFactory _httpClientFactory) 
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-
-            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
+            this._httpClientFactory = _httpClientFactory;
         }
 
 		//Carga la lista de grupos
@@ -27,12 +25,9 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 		{
 			List<GrupoModel> listaGrupo = new List<GrupoModel>();
 
-			var cliente = new HttpClient
-			{
-				BaseAddress = new Uri(_baseUrl)
-			};
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
-			try
+            try
 			{
 				var responseGrupo = await cliente.GetAsync("Grupo/ConsultarGrupoNoEliminado/");
 
@@ -67,10 +62,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
             GrupoModel grupo = new GrupoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -95,10 +87,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
         public async Task<JObject> EliminarGrupo(Guid id)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
             var response = await cliente.DeleteAsync($"Grupo/EliminarGrupo/{id}");
 
             var respuesta = await response.Content.ReadAsStringAsync();
@@ -114,10 +103,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
             DepartamentoModel departamentoModel = new DepartamentoModel();
             List<DepartamentoModel> listaDepartamentos = new List<DepartamentoModel>();
 
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -152,10 +138,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         //Almacenar la información de un nuevo grupo
         public async Task<JObject> RegistrarGrupo(GrupoModel grupo, List <string> idDepartamentos)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
             Console.WriteLine(JsonConvert.SerializeObject(grupo));
@@ -182,10 +165,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
         public async Task<JObject> EditarGrupo(GrupoModel grupo)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(grupo), Encoding.UTF8, "application/json");
 
@@ -214,10 +194,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         {
             GrupoModel model = new GrupoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             string combinedString = string.Join(",", idDepartamentos);
             var contentDept = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
@@ -243,10 +220,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
         public async Task<JObject> EditarRelacion(Guid id, List<string> idDepartamentos)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             string combinedString = string.Join(",", idDepartamentos);
             var content = new StringContent(JsonConvert.SerializeObject(combinedString), Encoding.UTF8, "application/json");
@@ -275,10 +249,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -303,13 +274,8 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
 
         public async Task<GrupoModel> BuscarNombreGrupo(string nombreGrupo)
         {
-
             GrupoModel grupo = new GrupoModel();
-
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
