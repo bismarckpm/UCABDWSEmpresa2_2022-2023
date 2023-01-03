@@ -46,10 +46,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new Grupo
             {
-				id = grupo.Id,
+				id = grupo.id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_creacion = grupo.fecha_creacion,
+                fecha_ultima_edicion = grupo.fecha_ultima_edicion
+            };
+        }
+
+        public static GrupoDto_Update MapperEntityToDTOModificar(Grupo grupo)
+        {
+            return new GrupoDto_Update
+            {
+                id = grupo.id,
+                nombre = grupo.nombre,
+                descripcion = grupo.descripcion,
                 fecha_ultima_edicion = grupo.fecha_ultima_edicion
             };
         }

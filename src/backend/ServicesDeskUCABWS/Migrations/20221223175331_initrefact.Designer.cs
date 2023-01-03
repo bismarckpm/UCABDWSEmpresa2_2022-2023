@@ -118,9 +118,6 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasIndex("id_grupo");
 
-                    b.HasIndex("nombre")
-                        .IsUnique();
-
                     b.ToTable("Departamentos");
                 });
 
@@ -233,12 +230,13 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.Property<Guid>("IdTicket")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdCargo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Cargoid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdCargo")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Maximo_Rechazado_nivel")
@@ -253,7 +251,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IdTicket", "IdCargo");
+                    b.HasKey("IdTicket");
 
                     b.HasIndex("Cargoid");
 
@@ -288,9 +286,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("nombre")
-                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });

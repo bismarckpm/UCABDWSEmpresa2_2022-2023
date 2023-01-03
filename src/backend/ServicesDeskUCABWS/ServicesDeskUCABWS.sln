@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestServicesDeskUCABWS"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReporteFechas", "..\ReporteFechas\ReporteFechas.csproj", "{C4285551-532D-4EEC-A54B-FB3D64A12011}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceDeskUCAB", "..\..\frontend\ServiceDeskUCAB\ServiceDeskUCAB.csproj", "{6CD75790-ED76-4A6F-BD6D-CA528E97164A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4285551-532D-4EEC-A54B-FB3D64A12011}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD75790-ED76-4A6F-BD6D-CA528E97164A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD75790-ED76-4A6F-BD6D-CA528E97164A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD75790-ED76-4A6F-BD6D-CA528E97164A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD75790-ED76-4A6F-BD6D-CA528E97164A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

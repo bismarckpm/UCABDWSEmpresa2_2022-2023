@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"] - ServicesDeskUCAB</title>
@@ -22,7 +21,6 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -59,9 +57,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
+                <a class="nav-link" asp-area="" asp-controller="CargoYTipoCargo" asp-action="CargoTipoCargo">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Cargos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Departamento" asp-action="Index">
                     <i class="fas fa-city"></i>
-                    <span>Departamentos y Grupos</span>
+                    <span>Departamentos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Grupo" asp-action="Index">
+                    <i class="fas fa-users"></i>
+                    <span>Grupos</span>
                 </a>
             </li>
 

@@ -39,7 +39,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			try
             {
                 response.Data = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
-                
 
             }
 			catch (ExceptionsControl ex)
@@ -149,5 +148,75 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
-	}
+        [HttpPut]
+        [Route("AsignarGrupoToDepartamento/{id}")]
+        public ApplicationResponse<List<string>> AsignarGrupoToDepartamento([FromRoute] Guid id, [FromBody] string idDepartamentos)
+        {
+            var response = new ApplicationResponse<List<string>>();
+            try
+            {
+                response.Data = _grupoDAO.AsignarGrupoToDepartamento(id, idDepartamentos);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPut]
+        [Route("EditarRelacion/{id}")]
+        public ApplicationResponse<List<string>> EditarRelacion([FromRoute] Guid id, [FromBody] string idDepartamentos)
+        {
+            var response = new ApplicationResponse<List<string>>();
+            try
+            {
+                response.Data = _grupoDAO.EditarRelacion(id, idDepartamentos);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo(Guid idGrupo)
+        {
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
+            try
+            {
+                response.Data = _grupoDAO.GetByIdDepartamento(idGrupo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpGet("ConsultarPorNombreGrupo/{nombreGrupo}")]
+        public ApplicationResponse<GrupoDto> ConsultarNombreGrupo(string nombreGrupo)
+        {
+            var response = new ApplicationResponse<GrupoDto>();
+            try
+            {
+                response.Data = _grupoDAO.buscarGrupoNombre(nombreGrupo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+    }
 }

@@ -14,8 +14,6 @@ namespace ServiceDeskUCAB.Controllers
     public class TipoTicketController : Controller
     {
        
-       
-
         private readonly IServicio_API _servicioApi;
         private readonly IServicioTicketAPI _servicioTicketAPI;
 
@@ -115,8 +113,6 @@ namespace ServiceDeskUCAB.Controllers
                     return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = respuesta.Message });
                 }
             }
-
-
             else
                 return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = "Fallo la creacion del tipo ticket por error en la comunicacion con el servidor" });
         }
