@@ -9,7 +9,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
     {
 
         public static GrupoDto MapperEntityToDto(Grupo grupo)
-        {
+        {         
             return new GrupoDto
             {
                 id = Guid.NewGuid(),

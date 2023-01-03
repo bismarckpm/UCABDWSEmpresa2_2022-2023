@@ -11,24 +11,19 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
     public class ServicioDepartamento_API : IServicioDepartamento_API
     {
         //Declaracion de variables
-        private static string _baseUrl;
         private JObject _json_respuesta;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         //Constructor
-        public ServicioDepartamento_API()
+        public ServicioDepartamento_API(IHttpClientFactory _httpClientFactory)
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-
-            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
+            this._httpClientFactory = _httpClientFactory;
         }
 
         //Eliminar un departamento seleccionado
         public async Task<JObject> EliminarDepartamento(Guid id)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
             var response = await cliente.DeleteAsync($"Departamento/EliminarDepartamento/{id}");
 
             var respuesta = await response.Content.ReadAsStringAsync();
@@ -40,10 +35,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         //Almacenar la información de un nuevo departamento
         public async Task<JObject> RegistrarDepartamento(DepartamentoModel departamento)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(departamento), Encoding.UTF8, "application/json");
             Console.WriteLine(JsonConvert.SerializeObject(departamento));
@@ -73,10 +65,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -101,10 +90,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 
         public async Task<JObject> EditarDepartamento(DepartamentoModel dept)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(dept), Encoding.UTF8, "application/json");
 
@@ -132,10 +118,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -167,10 +150,7 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
