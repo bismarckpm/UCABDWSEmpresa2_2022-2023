@@ -400,17 +400,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
 
-                Ticket ticket = new Ticket();
+                //Ticket ticket = new Ticket();
                 //ticket = _dataContext.Tickets.Find(solicitudTicket.ticketPadre_Id);
-                ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
-                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Include(x => x.Tipo_Ticket)
-                    .Include(x=> x.Estado)
-                    .Include(x=>x.Familia_Ticket)
-                    .Include(x=>x.Prioridad)
-                    .Include(x=>x.Votos_Ticket)
-                    .Include(x=>x.Responsable)
-                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                Ticket ticket = _dataContext.Tickets
+                                                    .Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo)
+                                                    .Include(x => x.Prioridad)
+                                                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
+                                                    .Include(x => x.Tipo_Ticket)
+                                                    .Include(x=> x.Estado)
+                                                    .Include(x=>x.Familia_Ticket)
+                                                    .Include(x=>x.Prioridad)
+                                                    .Include(x=>x.Votos_Ticket)
+                                                    .Include(x=>x.Responsable)
+                                                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
                 Ticket nuevoTicket = new Ticket()
                 {
                     Id = Guid.NewGuid(),
@@ -424,7 +426,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     Tipo_Ticket = ticket.Tipo_Ticket,
                     Votos_Ticket = ticket.Votos_Ticket,
                     Familia_Ticket = ticket.Familia_Ticket,
-                    Ticket_Padre = _dataContext.Tickets.Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault(),
+                    Ticket_Padre = ticket,
                     Emisor = ticket.Emisor,
                     Responsable = null,
                     ResponsableId = null,
@@ -432,13 +434,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 };
                 //ticket.fecha_creacion = DateTime.UtcNow;
                 //ticket.Id = Guid.NewGuid();
-                ticket.Departamento_Destino = _dataContext.Departamentos.Find(solicitudTicket.departamentoDestino_Id);
+                //ticket.Departamento_Destino = _dataContext.Departamentos.Find(solicitudTicket.departamentoDestino_Id);
                 var bitacoras = new HashSet<Bitacora_Ticket>();
-                bitacoras.AddRange(_dataContext.Bitacora_Tickets.Include(x => x.Ticket)
-                    .Where(x => x.Ticket.Id == solicitudTicket.ticketPadre_Id));
+                bitacoras.AddRange(_dataContext.Bitacora_Tickets.Include(x => x.Ticket).Where(x => x.Ticket.Id == solicitudTicket.ticketPadre_Id));
 
-                ticket.Ticket_Padre = _dataContext.Tickets
-                    .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                //ticket.Ticket_Padre = _dataContext.Tickets.Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
+                //Console.WriteLine($"Ticket Padre: {ticket.Ticket_Padre.Id}");
                 foreach (var bitacora in bitacoras)
                 {
                     var nuevabitacora = new Bitacora_Ticket();
