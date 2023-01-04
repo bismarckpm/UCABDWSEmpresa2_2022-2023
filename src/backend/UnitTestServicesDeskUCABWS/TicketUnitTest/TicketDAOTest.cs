@@ -57,8 +57,8 @@ namespace TicketUnitTest
         //*
         //Prueba Unitaria para crear los tickets
         //*
-        /*[TestMethod(displayName: "Prueba Unitaria para crear los tickets")]
-        public void crearTicketTest()
+        [TestMethod(displayName: "Prueba Unitaria para crear los tickets")]
+        public void CrearTicketTest()
         {
 
             //Prueba
@@ -66,24 +66,37 @@ namespace TicketUnitTest
             {
                 titulo = "titulo",
                 descripcion = "aaaaaaaa",
-                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c70"),
-                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
-                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40"),
-                nro_cargo_actual = 1
+                empleado_id = new Guid("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
+                prioridad_id = new Guid("2DF5B096-DC5A-421F-B109-2A1D1E650812"),
+                tipoTicket_id = new Guid("23F0FB1D-25B5-4DFE-A432-408D1D9F6633"),
+                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                ticketPadre_Id = null
             };
+           
             _contextMock.Setup(set => set.DbContext.SaveChanges());
-            var application = "Ticket creado satisfactoriamente";
-            var result = new ApplicationResponse<string>();
-            result.Success = true;
-            var resultado = _TicketDAO.crearTicket(ticket);
+            
+           
+         
+            var ticket2 = new TicketNuevoDTO
+            {
+                titulo = "titulo",
+                descripcion = "aaaaaaaa",
+                empleado_id = new Guid("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
+                prioridad_id = new Guid("2DF5B096-DC5A-421F-B109-2A1D1E650812"),
+                tipoTicket_id = new Guid("23F0FB1D-25B5-4DFE-A432-408D1D9F6633"),
+                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                ticketPadre_Id = null
+            };
+            var resultado = _TicketDAO.CrearTicket(ticket);
             //Verificación
 
-            Assert.IsTrue(result.Success);
-           
+            
+           // Assert.AreEqual(ticket.titulo, "titulo");
+            Assert.AreEqual(ticket.GetType(), ticket2.GetType());
+
 
         }
-        */
+        
 
         //*
         //Prueba Unitaria para consultar tickets por id

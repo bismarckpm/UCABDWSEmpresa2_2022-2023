@@ -35,5 +35,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropios(Guid idEmpleado);
         public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio);
         public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados);
+
+        public Ticket CrearTicket(TicketNuevoDTO ticketDTO);
     }
 }

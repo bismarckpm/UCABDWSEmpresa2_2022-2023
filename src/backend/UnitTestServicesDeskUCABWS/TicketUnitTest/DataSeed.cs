@@ -12,6 +12,7 @@ using System.Threading;
 using ServicesDeskUCABWS.Entities;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ServicesDeskUCABWS.BussinesLogic.DTO.PrioridadDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 
 //Información Falsa creada con el fin de usarse en Pruebas Unitarias//
 
@@ -67,16 +68,66 @@ namespace TicketUnitTest
 
             List<Empleado> ListaEmpleado = new List<Empleado>
             {
-                
-            
-                
-              
+
+               new Empleado(45678, "Jorge", "Perez", "Bosquejo", "20/12/1999", 'M', "jpbosquejo@gmail.com", "1234", "Valentino")
+                {
+                    Id = Guid.Parse("0F636FB4-7F04-4A2E-B2C2-359B99BE85D1"),
+                  
+                },
+
+
             };
             _mockContext.Setup(c => c.Empleados).Returns(ListaEmpleado.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(c => c.Empleados.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaEmpleado.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
             _mockContext.Setup(set => set.Empleados.Add(It.IsAny<Empleado>())).Callback<Empleado>(ListaEmpleado.Add);
             _mockContext.Setup(set => set.Empleados.AddRange(It.IsAny<IEnumerable<Empleado>>())).Callback<IEnumerable<Empleado>>(ListaEmpleado.AddRange);
 
+
+            var ListaTicketNuevoDTO = new List<TicketNuevoDTO>
+            {
+
+                new TicketNuevoDTO {
+
+                titulo = "titulo",
+                descripcion = "aaaaaaaa",
+                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c70"),
+                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
+                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
+                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40"),
+                ticketPadre_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c30")
+
+}
+
+};
+
+            var ListaTipoTickets = new List<Tipo_Ticket>
+            {
+                new TipoTicket_FlujoNoAprobacion("Solicitud","Descripcion TT1", "Modelo_No_Aprobacion")
+                {
+                    Id=Guid.Parse("23F0FB1D-25B5-4DFE-A432-408D1D9F6633")
+
+                },
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud2","Descripcion TT2", "Modelo_Paralelo",1,1)
+                {
+                    Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
+
+                },
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud3","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                {
+                    Id = Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19")
+                },
+                new TipoTicket_FlujoAprobacionParalelo("Solicitud4","Descripcion TT4", "Modelo_Paralelo", 1, 2)
+                {
+                    Id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
+
+
+                },
+
+                new TipoTicket_FlujoAprobacionJerarquico("Solicitud5","Descripcion TT3", "Modelo_Jerarquico",null,null)
+                {
+
+                }
+            };
 
         }
 
