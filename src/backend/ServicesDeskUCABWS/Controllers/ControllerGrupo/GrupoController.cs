@@ -50,26 +50,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
-        
-        //Consultar Grupo
-        [HttpGet]
-        [Route("ConsultarGrupo/")]
-        public ApplicationResponse<List<GrupoDto>> ConsultarGrupos()
-        {
-            var response = new ApplicationResponse<List<GrupoDto>>();
-            try
-            {
-                response.Data = _grupoDAO.ConsultarGruposDao();
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
         //Consultar Grupo por ID
         [HttpGet]
         [Route("ConsultarGrupoPorID/{id}")]
