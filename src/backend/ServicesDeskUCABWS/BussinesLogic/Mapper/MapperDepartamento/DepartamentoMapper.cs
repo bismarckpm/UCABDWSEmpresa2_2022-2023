@@ -9,6 +9,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
     public class DepartamentoMapper : Profile
     {
 
+        /// <summary>
+        /// Define una forma de acceso de la entidad Departamento a la clase DTO.
+        /// Se crea un nuevo identificador, este es utilizado para el registro de nuevos departamentos.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de la clase departamento</param>
+        /// <returns>Retorna un objeto del tipo DepartamentoDto</returns>
+
         public static DepartamentoDto MapperEntityToDto(Departamento dept)
         {
             return new DepartamentoDto
@@ -20,7 +27,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
             };
         }
 
-		public static DepartamentoDto MapperEntityToDtoDefault(Departamento dept)
+        /// <summary>
+        /// Define una forma de acceso de la entidad Departamento a la clase DTO.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de la clase departamento</param>
+        /// <returns>Retorna un objeto del tipo DepartamentoDto</returns>
+        
+        public static DepartamentoDto MapperEntityToDtoDefault(Departamento dept)
         {
             return new DepartamentoDto
             {
@@ -30,6 +43,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
                 fecha_creacion = DateTime.Now.Date
             };
         }
+
+        /// <summary>
+        /// Define una forma de acceso del DTO a la entidad Departamento.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de la clase departamentoDTO</param>
+        /// <returns>Retorna un objeto del tipo Departamento</returns>
 
         public static Departamento MapperDTOToEntity(DepartamentoDto dept)
         {
@@ -41,6 +60,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
                 fecha_creacion = dept.fecha_creacion
             };
         }
+
+        /// <summary>
+        /// Define una forma de acceso de la clase DTO a la entidad Departamento.
+        /// Este es utilizado para la modificación de departamentos.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de la clase DepartamentoDto_Update</param>
+        /// <returns>Retorna un objeto del tipo Departamento</returns>
 
         public static Departamento MapperDTOToEntityModificar(DepartamentoDto_Update dept)
         {
@@ -54,6 +80,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
                 id_grupo = dept.id_grupo
             };
         }
+
+        /// <summary>
+        /// Define una forma de acceso de la entidad Departamento a la clase DTO.
+        /// Este es utilizado para la modificación de departamentos.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de la clase DepartamentoDto_Update</param>
+        /// <returns>Retorna un objeto del tipo Departamento</returns>
 
         public static DepartamentoDto_Update MapperEntityToDTOModificar(Departamento dept)
         {
