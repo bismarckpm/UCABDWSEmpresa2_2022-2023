@@ -118,7 +118,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             var response = new ApplicationResponse<GrupoDto_Update>();
             try
             {
-                response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
+                response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityUpdate(grupo));
 
             }
             catch (ExceptionsControl ex)

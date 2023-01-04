@@ -125,7 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 					_dataContext.DbContext.SaveChanges();
 				}
 
-                return GrupoMapper.MapperEntityToDTOModificar(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
+                return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
 			}
 			catch (DbUpdateException ex)
 			{
