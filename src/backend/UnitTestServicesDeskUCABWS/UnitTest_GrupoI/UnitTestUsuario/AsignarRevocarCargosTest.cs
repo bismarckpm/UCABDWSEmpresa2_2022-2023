@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 {

@@ -167,13 +167,12 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             _serviceMock.Setup(p => p.RegistroTipoEstado(It.IsAny<TipoEstadoCreateDTO>()));
-            var application = new ApplicationResponse<TipoEstadoDTO>();
 
             //act
             var result = _controller.CrearTipoEstadoCtrl(It.IsAny<TipoEstadoCreateDTO>());
 
             //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
+            Assert.IsTrue(result.Success);
         }
 
 
@@ -201,14 +200,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             _serviceMock.Setup(p => p.ActualizarTipoEstado(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>()));//.Returns(true);
-            var application = new ApplicationResponse<TipoEstadoDTO>();
 
             //act
             var result = _controller.ActualizarTipoEstadoCtrl(It.IsAny<TipoEstadoUpdateDTO>(), It.IsAny<Guid>());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+			//assert
+			Assert.IsTrue(result.Success);
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria controlador para crear tipo estado excepcion")]
@@ -234,15 +232,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void HabilitarDeshabilitarTipoEstadoCtrlTest()
         {
             //arrange
-            _serviceMock.Setup(p => p.HabilitarDeshabilitarTipoEstado(It.IsAny<Guid>()));//.Returns(true);
-            var application = new ApplicationResponse<String>();
+            _serviceMock.Setup(p => p.HabilitarDeshabilitarTipoEstado(It.IsAny<Guid>()));
 
             //act
             var result = _controller.HabilitarDeshabilitarTipoEstadoCtrl(It.IsAny<Guid>());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+			//assert
+			Assert.IsTrue(result.Success);
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria controlador para habilitar y deshabilitar tipo estado excepcion")]

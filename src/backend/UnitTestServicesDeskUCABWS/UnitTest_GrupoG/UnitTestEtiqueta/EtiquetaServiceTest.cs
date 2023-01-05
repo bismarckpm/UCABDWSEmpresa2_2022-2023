@@ -5,6 +5,8 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 using ServicesDeskUCABWS.Data;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
 

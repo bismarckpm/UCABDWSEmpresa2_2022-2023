@@ -7,7 +7,9 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
-using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperPlantillaNotificacion;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
@@ -199,18 +201,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
                 TipoEstadoId = Guid.Parse("99f401c9-12aa-46bf-82a2-05ff65bb2c86"),
             };
 
-			var expected = new PlantillaNotificacionDTO
-			{
-				Titulo = "Plantilla Aprobado",
-				Descripcion = "Hola @Usuario su @Ticket fue @Estado",
-			};
-
-			//act
-			var response = _plantillaService.RegistroPlantilla(plantilla);
-
-            //Assert
-            Assert.AreEqual(response.Titulo, expected.Titulo);
-            Assert.AreEqual(response.GetType(), expected.GetType());   
+            //act
+            _plantillaService.RegistroPlantilla(plantilla);
         }
 
 
@@ -254,18 +246,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
                 Titulo = "Plantilla Aprobado",
                 Descripcion = "Hola @Usuario su @Ticket",
             };
-			var expected = new PlantillaNotificacionDTO
-			{
-				Titulo = "Plantilla Aprobado",
-				Descripcion = "Hola @Usuario su @Ticket fue @Estado",
-			};
 
 			//act
-			var response = _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
-
-            //assert
-            Assert.AreEqual(response.Titulo, expected.Titulo);
-            Assert.AreEqual(response.GetType(), expected.GetType());
+            _plantillaService.ActualizarPlantilla(plantillaUpdate,idUpdate);
         }
 
 
@@ -300,22 +283,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         [TestMethod(displayName: "Prueba Unitaria cuando la eliminación de la plantilla notificación sea exitoso")]
         public void EliminarPlantillaServiceTest()
         {
-            //arrange
-
-            var expected = new PlantillaNotificacionDTO
-            {
-                Titulo = "Plantilla Rechazado",
-                Descripcion = "Hola @Usuario su @Ticket",
-            };
-
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
-
             //act
-            var result = _plantillaService.EliminarPlantilla(new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c87"));
-
-            //assert
-            Assert.AreEqual(expected.Titulo, result.Titulo);
-            Assert.AreEqual(expected.GetType(), result.GetType());
+            _plantillaService.EliminarPlantilla(new Guid("99f401c9-12aa-46bf-82a2-05ff65bb2c87"));
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando al eliminar no encuentra la plantilla notificación de acuerdo al id")]

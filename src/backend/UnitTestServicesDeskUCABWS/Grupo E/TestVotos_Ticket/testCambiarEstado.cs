@@ -9,6 +9,8 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;

@@ -279,7 +279,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var grupo = new GrupoDto_Update()
 			{
 
-				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c90"),
+				//Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c90"),
 
 				nombre = "Nuevo Grupo",
 
@@ -306,7 +306,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var grupo = new GrupoDto_Update()
 			{
 
-				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"),
+				//Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"),
 
 				nombre = "Nuevo Grupo",
 
