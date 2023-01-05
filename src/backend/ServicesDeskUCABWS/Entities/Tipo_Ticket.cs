@@ -138,6 +138,20 @@ namespace ServicesDeskUCABWS.Entities
             Departamentos = new List<DepartamentoTipo_Ticket>();
         }
 
+        public void RelacionConDepartamento(Tipo_Ticket tipo_ticket, Tipo_TicketDTOCreate Tipo_TicketDTO, IDataContext contexto)
+        {
+
+            tipo_ticket.Departamentos = contexto.Departamentos
+                    .Where(x => Tipo_TicketDTO.Departamento.Select(y => y).Contains(x.id.ToString().ToUpper()))
+                    .Select(s => new DepartamentoTipo_Ticket()
+                    {
+                        departamento = s,
+                        DepartamentoId = s.id,
+                        tipo_Ticket = tipo_ticket,
+                        Tipo_Ticekt_Id = tipo_ticket.Id
+                    }).ToList();
+        }
+
 
     }
 

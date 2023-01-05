@@ -234,7 +234,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
         public void RelacionConDepartamento(Tipo_Ticket tipo_ticket, Tipo_TicketDTOCreate Tipo_TicketDTO)
         {
-
             tipo_ticket.Departamentos = context.Departamentos
                     .Where(x => Tipo_TicketDTO.Departamento.Select(y => y).Contains(x.id.ToString().ToUpper()))
                     .Select(s => new DepartamentoTipo_Ticket()
@@ -248,7 +247,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
         public void RelacionConFLujoAprobacion(Tipo_Ticket tipo_ticket, Tipo_TicketDTOCreate Tipo_TicketDTO)
         {
-
             var Cargos = context.Cargos
             .Where(x => Tipo_TicketDTO.Flujo_Aprobacion.Select(x => x.IdCargo.ToUpper()).ToList().Contains(x.id.ToString().ToUpper()));
             tipo_ticket.Flujo_Aprobacion = new List<Flujo_Aprobacion>();
@@ -275,6 +273,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
+              
                 var tipo_Ticket = context.Tipos_Tickets.Find(Guid.Parse(tipo_TicketDTOUpdate.Id));
                 if (tipo_Ticket == null)
                 {
@@ -467,8 +466,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 
         public void ValidarDatosEntradaTipo_Ticket_Delete(Guid Id)
         {
-            
+
             var tipo_Ticket = context.Tipos_Tickets.Find(Id);
+
             if (tipo_Ticket == null)
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_TICKET_DESC);
