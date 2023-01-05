@@ -147,7 +147,7 @@ namespace ServiceDeskUCAB.Controllers
 			if ((bool)respuesta["success"])
 				return RedirectToAction("Index", new { message = "Se ha eliminado correctamente" });
 			else
-				return NoContent();
+				return RedirectToAction("Index", new { message2 = "Hubo un error en la operación" });
 		}
 
         //Retorna el modal para registrar un grupo nuevo
