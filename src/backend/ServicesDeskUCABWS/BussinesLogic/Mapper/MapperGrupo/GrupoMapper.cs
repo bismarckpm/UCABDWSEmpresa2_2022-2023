@@ -93,7 +93,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
                 id = grupo.id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_ultima_edicion = grupo.fecha_ultima_edicion
+                fecha_ultima_edicion = DateTime.Now.Date
             };
         }
     }
