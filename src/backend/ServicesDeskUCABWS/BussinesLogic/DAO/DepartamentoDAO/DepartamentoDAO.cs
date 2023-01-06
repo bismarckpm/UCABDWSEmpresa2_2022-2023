@@ -20,17 +20,32 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
     public class DepartamentoDAO : IDepartamentoDAO
     {
+        /// <summary>
+        /// Declaración de variables.
+        /// </summary>
+       
         private readonly IDataContext _dataContext;
         private readonly IMapper mapper;
 
-        //Constructor
+        /// <summary>
+        /// Constructor. Inicializa la variable _dataContext
+        /// </summary>
+        /// <param name="dataContext">Ingresa un objeto de la interfaz DataContext</param>
+        /// <param name="mapper">Ingresa un objeto de la interfaz IMapper</param>
         public DepartamentoDAO(IDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             this.mapper = mapper;
         }
 
-        //Registrar un Departamento
+        /// <summary>
+        /// Método que permite agregar un nuevo departamento, y asignar 
+        /// un estado a un departamento previamente creado,
+        /// si este tiene un nombre que ya existe devuelve un objeto nulo.
+        /// </summary>
+        /// <param name="departamento">Ingresa un objeto del tipo Departamento</param>
+        /// <returns>Devuelve un objeto del tipo DepartamentoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parametro sea nulo, muestra la excepción</exception>
         public DepartamentoDto AgregarDepartamentoDAO(Departamento departamento)
         {
             try
@@ -52,8 +67,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        //Agregar Estados de los departamentos agregados
-
+        
         public List<Estado> AgregarEstadoADepartamentoCreado(Departamento departamento)
         {
             var listaTipoEstados = _dataContext.Tipos_Estados.ToList();
@@ -98,7 +112,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             return ListaCargos;
         }*/
 
-        //Eliminar un Departamento
+        /// <summary>
+        /// Método que elimina un departamento y agrega la fecha 
+        /// actual en la columna de fecha_eliminacion.
+        /// </summary>
+        /// <param name="id">Ingresa un identificador de un departamento</param>
+        /// <returns>Devuelve un objeto de tipo DepartamentoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         public DepartamentoDto eliminarDepartamento(Guid id)
         {
             try
@@ -117,7 +137,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        //Actualizar departamentos
+        /// <summary>
+        /// Método que modifica y almacena los valores de un departamento, solo si el 
+        /// nombre modificado no esté registrado previamente.
+        /// </summary>
+        /// <param name="departamento">Ingresa un objeto del tipo departamento.</param>
+        /// <returns>Devuelve un objeto del tipo DepartamentoDto_Update con los cambios realizados.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento)
         {
             try
@@ -140,7 +166,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        //Consultar Departamento por ID
+        /// <summary>
+        /// Método que consulta por ID los valores de un departamento
+        /// </summary>
+        /// <param name="id">Ingresa un identificador de un departamento</param>
+        /// <returns>Devuelve un objeto del tipo DepartamentoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         public DepartamentoDto ConsultarPorID(Guid id)
         {
             try {
@@ -155,7 +186,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
         }
 
-        //Consulta todos los departamentos (Eliminados y disponibles)
+        /// <summary>
+        /// Método que lista todos los departamentos existentes y eliminados en el sistema.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos del tipo DepartamentoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que no haya departamentos registrados..</exception>
+
         public List<DepartamentoDto> ConsultarDepartamentos()
         {
             try
@@ -182,8 +218,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             }
         }
 
-        //Retorna una lista de departamentos que no están eliminados
-		public List<DepartamentoDto> DeletedDepartamento()
+        /// <summary>
+        /// Método que consulta todos los departamentos que están activos.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos de tipo DepartamentoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que no haya departamentos registrados.</exception>
+		public List<DepartamentoDto> DepartamentosNoEliminados()
 		{
 			try
 			{
@@ -210,6 +250,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 		}
 
+        /// <summary>
+        /// Método que lista todos los departamentos no asociados a un grupo.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos del tipo DepartamentoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que no haya departamentos registrados.</exception>
         public List<DepartamentoDto> NoAsociado()
         {
 			try
@@ -233,6 +278,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 			}
 		}
 
+        /// <summary>
+        /// Método que verifica si el nombre del departamento esta activo y ya existe en el sistema.
+        /// </summary>
+        /// <param name="departamento">Ingresa un objeto de tipo de Departamento.</param>
+        /// <returns>Devuelve un tipo de dato bool.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         public bool ExisteDepartamento(Departamento departamento)
         {
             
@@ -256,6 +307,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
            var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
            return ListaDepartamento;       
         }
+
+        /// <summary>
+        /// Método que verifica si el nuevo nombre del departamento ya está registrado.
+        /// </summary>
+        /// <param name="dept">Ingresa un objeto de tipo de Departamento, contiene los datos a almacenar.</param>
+        /// <returns>Devuelve un tipo de dato bool.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
 
         public bool ExisteDepartamentoModificar(Departamento dept)
         {

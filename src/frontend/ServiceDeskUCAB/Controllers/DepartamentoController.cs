@@ -10,26 +10,40 @@ namespace ServiceDeskUCAB.Controllers
 	[Authorize(Policy = "AdminAccess")]
 	public class DepartamentoController : Controller
     {
-		//Declaración de variables
-		private readonly ILogger<DepartamentoController> _logger;
+        /// <summary>
+        /// Declaración de variables.
+        /// </summary>
+		
+        private readonly ILogger<DepartamentoController> _logger;
 		private readonly IServicioDepartamento_API _servicioApiDepartamento;
 
-		//Constructor
-		public DepartamentoController(ILogger<DepartamentoController> logger, IServicioDepartamento_API servicioApiDepartamento)
+        /// <summary>
+        /// Constructor. 
+        /// Inicialización de variables.
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="servicioApiDepartamento">Objeto de la interfaz que contiene los servicios de Departamento.</param>
+        public DepartamentoController(ILogger<DepartamentoController> logger, IServicioDepartamento_API servicioApiDepartamento)
 		{
 			_logger = logger;
 			_servicioApiDepartamento = servicioApiDepartamento;
 		}
 
-		//Inicia la petición HTTP a la API para Obtener todas los departamentos a traves del servicio ServicioDepartamento_API
-		public async Task<IActionResult> Index()
+        /// <summary>
+        /// Inicia la petición HTTP a la API para obtener todas los departamentos a traves del servicio ServicioDepartamento_API.
+        /// </summary>
+        /// <returns>Devuelve una vista con una lista de departamentos activos.</returns>
+        public async Task<IActionResult> Index()
 		{
 
 			return View(await _servicioApiDepartamento.ListaDepartamento());
 		}
 
-		//Retorna el modal para registrar un departamento nuevo
-		public IActionResult AgregarDepartamento()
+        /// <summary>
+        /// Método que invoca una view para agregar un departamento.
+        /// </summary>
+        /// <returns>Devuelve un modal con los campos necesarios para registrar un departamento.</returns>
+        public IActionResult AgregarDepartamento()
 		{
 			try
 			{
@@ -41,8 +55,13 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		//Almacena la información referente a un nuevo departamento
-		[HttpPost]
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para almacenar un departamento 
+		/// Se hace a través del servicio ServicioDepartamento_API.
+        /// </summary>
+        /// <param name="departamento">Objeto de tipo DepartamentoModel</param>
+        /// <returns>Devuelve la view principal con una notificación.</returns>
+        [HttpPost]
 		public async Task<IActionResult> GuardarDepartamento(DepartamentoModel departamento)
 		{
 
@@ -65,8 +84,12 @@ namespace ServiceDeskUCAB.Controllers
 			return NoContent();
 		}
 
-		//Retorna el modal para eliminar un departamento
-		public IActionResult VentanaEliminarDepartamento(Guid id)
+        /// <summary>
+        /// Método que invoca una view para eliminar un departamento seleccionado.
+        /// </summary>
+        /// <param name="id">Identificador del departamento.</param>
+        /// <returns>Devuelve un modal con mensaje de confirmación.</returns>
+        public IActionResult VentanaEliminarDepartamento(Guid id)
 		{
 			try
 			{
@@ -78,8 +101,12 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		//Elimina a un departamento que ha sido seleccionado previamente
-		[HttpGet]
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para eliminar un departamento a traves del servicio ServicioDepartamento_API.
+        /// </summary>
+        /// <param name="id">Identificador de un departamento.</param>
+        /// <returns>Devuelve la view principal con una notificación.</returns>
+        [HttpGet]
 		public async Task<IActionResult> EliminarDepartamento(Guid id)
 		{
 			JObject respuesta;
@@ -90,7 +117,11 @@ namespace ServiceDeskUCAB.Controllers
 				return NoContent();
 		}
 
-		public async Task<IActionResult> VentanaEditarDepartamento(Guid id)
+        /// <summary>
+        /// Método que invoca una view para editar el departamento seleccionado.
+        /// </summary>
+        /// <returns>Devuelve un modal con los campos necesarios para editar un departamento.</returns>
+        public async Task<IActionResult> VentanaEditarDepartamento(Guid id)
 		{
 			try
 			{
@@ -104,7 +135,13 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		public async Task<IActionResult> ModificarDepartamento(DepartamentoModel dept)
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para modificar los datos de un departamento a traves del servicio ServicioDepartamento_API.
+        /// </summary>
+        /// <param name="dept">Objeto del tipo DepartamentoModel.
+        /// Contiene la información suministrada en la View.</param>
+        /// <returns>Redirecciona a la view principal de departamento con una notificación.</returns>
+        public async Task<IActionResult> ModificarDepartamento(DepartamentoModel dept)
 		{
 			try
 			{
