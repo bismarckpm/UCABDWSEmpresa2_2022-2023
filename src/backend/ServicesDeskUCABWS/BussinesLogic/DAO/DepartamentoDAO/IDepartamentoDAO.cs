@@ -15,7 +15,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public DepartamentoDto ConsultarPorID(Guid id);
         public DepartamentoDto eliminarDepartamento(Guid id);
         public DepartamentoDto_Update ActualizarDepartamento(Departamento departamento);
-        public List<DepartamentoDto> DeletedDepartamento();
+        public List<DepartamentoDto> DepartamentosNoEliminados();
         public List<DepartamentoDto> NoAsociado();
         public bool ExisteDepartamentoModificar(Departamento dept);
     }
