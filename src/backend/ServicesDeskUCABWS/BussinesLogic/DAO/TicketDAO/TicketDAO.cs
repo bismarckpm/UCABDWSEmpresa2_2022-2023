@@ -730,6 +730,23 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
             return respuesta;
         }
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviados(Guid idEmpleado)
+        {
+            ApplicationResponse<List<TicketInfoBasicaDTO>> respuesta = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
+            try
+            {
+                respuesta.Data = obtenerTicketsEnviadosHl(idEmpleado);
+                respuesta.Message = "Lista de tickets obtenida exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = e.Message;
+                respuesta.Success = true;
+            }
+            return respuesta;
+        }
         
         //HELPERS
         public TicketDTO crearNuevoTicket(TicketNuevoDTO solicitudTicket)
@@ -1155,6 +1172,37 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 return false;
             }
             return true;
+        }
+        public List<TicketInfoBasicaDTO> obtenerTicketsEnviadosHl(Guid idEmpleado)
+        {
+            List<TicketInfoBasicaDTO> nuevaLista = new List<TicketInfoBasicaDTO>();
+            List<Ticket> tickets = _dataContext.Tickets
+                                                        .Include(t=>t.Emisor)
+                                                        .Include(t=>t.Responsable)
+                                                        .Include(t=>t.Prioridad)
+                                                        .Include(t=>t.Tipo_Ticket)
+                                                        .Include(t=>t.Estado)
+                                                        .Where(t=>t.Emisor.Id == idEmpleado)
+                                                        .ToList();
+                                                        
+            if (tickets.Count() == 0)
+                throw new Exception("Empleado no tiene tickets creados");
+            tickets.ForEach(delegate (Ticket ticket)
+            {
+                nuevaLista.Add(new TicketInfoBasicaDTO
+                {
+                    Id = ticket.Id,
+                    titulo = ticket.titulo,
+                    empleado_correo = ticket.Emisor.correo,
+                    encargado_correo = ticket.Responsable != null ? ticket.Responsable.correo : null,
+                    prioridad_nombre = ticket.Prioridad.nombre,
+                    fecha_creacion = ticket.fecha_creacion,
+                    fecha_eliminacion = ticket.fecha_eliminacion,
+                    tipoTicket_nombre = ticket.Tipo_Ticket.nombre,
+                    estado_nombre = ticket.Estado.nombre
+                });
+            });
+            return nuevaLista;
         }
     }
 }

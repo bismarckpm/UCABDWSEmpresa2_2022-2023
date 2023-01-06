@@ -118,5 +118,10 @@ namespace ServicesDeskUCABWS.Controllers
         {   
             return _ticketDAO.obtenerTicketsPropios(new Guid(idEmpleado));
         }
+        [HttpGet, Route("ObtenerTicketsEnviados/{idEmpleado}")]
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviadosCtrl(string idEmpleado)
+        {   
+            return _ticketDAO.obtenerTicketsEnviados(new Guid(idEmpleado));
+        }
     }
 }
