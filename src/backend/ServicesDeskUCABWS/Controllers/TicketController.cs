@@ -26,9 +26,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPost, Route("Guardar")]
-        public ApplicationResponse<string> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
+        public Ticket crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
         {
-            return _ticketDAO.crearTicket(nuevoTicket);
+            return _ticketDAO.CrearTicket(nuevoTicket);
         }
 
         [HttpGet, Route("Obtener/{id}")]

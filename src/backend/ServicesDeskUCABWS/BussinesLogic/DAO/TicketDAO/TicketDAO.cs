@@ -150,7 +150,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
         }
 
-        private Ticket CrearTicket(TicketNuevoDTO ticketDTO)
+        public Ticket CrearTicket(TicketNuevoDTO ticketDTO)
         {
             var ticket = new Ticket(ticketDTO.titulo, ticketDTO.descripcion);
             ticket.Prioridad = _dataContext.Prioridades.Find(ticketDTO.prioridad_id);
@@ -458,6 +458,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 ticketviejo.fecha_eliminacion = DateTime.UtcNow;
                 _dataContext.Tickets.Update(ticketviejo);
                 _dataContext.DbContext.SaveChanges();
+                respuesta.Success = true;
             }
             catch (TicketException e)
             {
