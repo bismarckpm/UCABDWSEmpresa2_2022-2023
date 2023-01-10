@@ -216,160 +216,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    
-    
-    
 
-    function mostrarPremio(id) 
-    {
-        var listainputs = document.querySelectorAll(".inputModelos")
-        
-        listainputs.forEach((input) => {
-            if (input.checked == true){
-                input.click();
-            }
-        });
-        
-        
-
-        if (id == "Modelo_Jerarquico") 
-        {
-            document.getElementById('Modelo_Jerarquico').style.display = 'block';
-            document.getElementById('Modelo_Paralelo').style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input)=>{
-                input.removeAttribute('required');
-                input.value = '';
-            });
-            
-        }
-
-        if (id == "Modelo_Paralelo") {
-            document.getElementById('Modelo_Paralelo').style.display = 'block';
-            document.getElementById('Modelo_Jerarquico').style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input)=>{
-                input.required = 'true';
-                input.value = '';
-            });
-        }
-
-        if (id == "Modelo_No_Aprobacion") {
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'block';
-            document.getElementById('Modelo_Jerarquico').style.display = 'none';
-            document.getElementById('Modelo_Paralelo').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-    }
-
-    function OcultarCampos(cb, id) 
-    {
-        if (cb.checked == true) {
-            document.getElementById(id).style.display = 'block';
-            const hijos = document.getElementById(id).children;
-            hijos[0].required = 'true';
-            hijos[1].required = 'true';
-            hijos[2].required = 'true';
-        }
-
-        if (cb.checked == false) {
-            
-            const hijos = document.getElementById(id).children;
-
-            hijos[0].removeAttribute('required');
-            hijos[0].value = '';
-            hijos[1].removeAttribute('required');
-            hijos[1].value = '';
-            hijos[2].removeAttribute('required');
-            hijos[2].value = '';
-            document.getElementById(id).style.display = 'none';
-        }
-
-    }
-
-    function SelectTipoCambios(select,value) {
-
-        var listainputs = document.querySelectorAll(".inputModelos-"+select.id)
-        
-        listainputs.forEach((input) => {
-            if (input.checked == true){
-                input.click();
-            }
-        });
-
-        if (select.value == "Modelo_Jerarquico") {
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-
-        if (select.value == "Modelo_Paralelo") {
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.required = 'true';
-                input.value = '';
-            });
-        }
-
-        if (select.value == "Modelo_No_Aprobacion") {
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-        
-    }
-
-    function OcultarCamposModificar(cb, id) {
-
-        if (cb.checked == true) {
-            document.getElementById(cb.id+"-"+id).style.display = 'block';
-            const hijos = document.getElementById(cb.id + "-" + id).children;
-            hijos[0].required = 'true';
-            hijos[1].required = 'true';
-            hijos[2].required = 'true';
-        }
-
-        if (cb.checked == false) {
-            
-            const hijos = document.getElementById(cb.id + "-" + id).children;
-            hijos[0].removeAttribute('required');
-            hijos[0].value = '';
-            hijos[1].removeAttribute('required');
-            hijos[1].value = '';
-            hijos[2].removeAttribute('required');
-            hijos[2].value = '';
-            document.getElementById(cb.id + "-" + id).style.display = 'none';
-        }
-
-    }
-
-        
-
-
-</script>
 
 @*Modificar Tipo Ticket*@
 @foreach (var tipo in Model.ListaTipo)
@@ -669,6 +516,149 @@
         });
     </script>
 
+    <script type="text/javascript">
 
+        function mostrarPremio(id) {
+            var listainputs = document.querySelectorAll(".inputModelos")
+
+            listainputs.forEach((input) => {
+                if (input.checked == true) {
+                    input.click();
+                }
+            });
+
+
+
+            if (id == "Modelo_Jerarquico") {
+                document.getElementById('Modelo_Jerarquico').style.display = 'block';
+                document.getElementById('Modelo_Paralelo').style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+
+            }
+
+            if (id == "Modelo_Paralelo") {
+                document.getElementById('Modelo_Paralelo').style.display = 'block';
+                document.getElementById('Modelo_Jerarquico').style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.required = 'true';
+                    input.value = '';
+                });
+            }
+
+            if (id == "Modelo_No_Aprobacion") {
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'block';
+                document.getElementById('Modelo_Jerarquico').style.display = 'none';
+                document.getElementById('Modelo_Paralelo').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+        }
+
+        function OcultarCampos(cb, id) {
+            if (cb.checked == true) {
+                document.getElementById(id).style.display = 'block';
+                const hijos = document.getElementById(id).children;
+                hijos[0].required = 'true';
+                hijos[1].required = 'true';
+                hijos[2].required = 'true';
+            }
+
+            if (cb.checked == false) {
+
+                const hijos = document.getElementById(id).children;
+
+                hijos[0].removeAttribute('required');
+                hijos[0].value = '';
+                hijos[1].removeAttribute('required');
+                hijos[1].value = '';
+                hijos[2].removeAttribute('required');
+                hijos[2].value = '';
+                document.getElementById(id).style.display = 'none';
+            }
+
+        }
+
+        function SelectTipoCambios(select, value) {
+
+            var listainputs = document.querySelectorAll(".inputModelos-" + select.id)
+
+            listainputs.forEach((input) => {
+                if (input.checked == true) {
+                    input.click();
+                }
+            });
+
+            if (select.value == "Modelo_Jerarquico") {
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+
+            if (select.value == "Modelo_Paralelo") {
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.required = 'true';
+                    input.value = '';
+                });
+            }
+
+            if (select.value == "Modelo_No_Aprobacion") {
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+
+        }
+
+        function OcultarCamposModificar(cb, id) {
+
+            if (cb.checked == true) {
+                document.getElementById(cb.id + "-" + id).style.display = 'block';
+                const hijos = document.getElementById(cb.id + "-" + id).children;
+                hijos[0].required = 'true';
+                hijos[1].required = 'true';
+                hijos[2].required = 'true';
+            }
+
+            if (cb.checked == false) {
+
+                const hijos = document.getElementById(cb.id + "-" + id).children;
+                hijos[0].removeAttribute('required');
+                hijos[0].value = '';
+                hijos[1].removeAttribute('required');
+                hijos[1].value = '';
+                hijos[2].removeAttribute('required');
+                hijos[2].value = '';
+                document.getElementById(cb.id + "-" + id).style.display = 'none';
+            }
+
+        }
+    </script>
 
 }

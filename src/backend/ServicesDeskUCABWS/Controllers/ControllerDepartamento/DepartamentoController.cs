@@ -217,6 +217,25 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
+
+        [HttpGet]
+        [Route("ConsultarDepartamentoCargo/")]
+        public ApplicationResponse<List<DepartamentoCargoDTO>> ListaDepartamentonoCargo()
+        {
+
+            var response = new ApplicationResponse<List<DepartamentoCargoDTO>>();
+            try
+            {
+                response.Data = _departamentoDAO.ConsultarDepartamentoCargo();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
     }
 }
 

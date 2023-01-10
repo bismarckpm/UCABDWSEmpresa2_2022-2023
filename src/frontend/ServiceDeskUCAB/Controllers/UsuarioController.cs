@@ -19,6 +19,7 @@ namespace ServiceDeskUCAB.Controllers
     public class UsuarioController : Controller
     {
         private readonly ILogger<UsuarioController> _logger;
+        private string _baseUrl;
         private readonly IServicioUsuario_API _servicioApiUsuarios;
         private static Guid IdUser { get; set; }
 
@@ -26,12 +27,20 @@ namespace ServiceDeskUCAB.Controllers
         {
             _logger = logger;
             _servicioApiUsuarios = servicioApiUsuarios;
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
         public async Task<IActionResult> Usuarios()
         {
             List<UsuariosRol> ListaPlantillas = await _servicioApiUsuarios.Lista();
-            return View(ListaPlantillas);
+            List<DepartamentoCargoDTO> ListaDepartamentoCargo = await _servicioApiUsuarios.ListaDepartamento();
+            var viewModel = new ViewModelUsuario();
+            viewModel.ListaDepartamento = ListaDepartamentoCargo;
+            viewModel.ListaUsuario = ListaPlantillas;
+            ViewBag.BaseUrl = new Uri(_baseUrl);
+            return View(viewModel);
         }
 
         public IActionResult GuardarUsuarioView()

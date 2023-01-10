@@ -25,5 +25,6 @@ namespace ServiceDeskUCAB.Servicios
         Task<JObject> EliminarRol(RolUser roles);
         Task<ApplicationResponse<UsuarioDTOAsignarCargo>> AsignarCargo(Guid idUsuario, Guid idCargo);
         Task<ApplicationResponse<string>> RevocarCargo(Guid idUsuario);
+        Task<List<DepartamentoCargoDTO>> ListaDepartamento();
     }
 }

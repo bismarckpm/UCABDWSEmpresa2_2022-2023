@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Data;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
@@ -360,6 +361,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             var ListaDepartamento = mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(x => x.id != IdDepartamento).ToList());
 
             return ListaDepartamento;
+        }
+
+        public List<DepartamentoCargoDTO> ConsultarDepartamentoCargo()
+        {
+            var ListaDepartamentos = mapper.Map<List<DepartamentoCargoDTO>>(_dataContext.Departamentos.ToList());
+            foreach (var dept in ListaDepartamentos)
+            {
+                dept.Cargo = mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x=>x.Departamento.id == dept.id).ToList());
+            }
+            return ListaDepartamentos;
         }
     }
 }

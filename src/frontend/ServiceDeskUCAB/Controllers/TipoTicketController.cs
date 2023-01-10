@@ -165,11 +165,6 @@ namespace ServiceDeskUCAB.Controllers
                     i++;
                 }
             }
-
-            /*if (TipoTicketDTO.tipo == "Modelo_No_Aprobacion")
-            {
-                TipoTicketDTO.Flujo_Aprobacion = null;
-            }*/
             respuesta = await _servicioApi.Guardar(TipoTicketDTO);
 
             if (respuesta != null)
@@ -202,7 +197,6 @@ namespace ServiceDeskUCAB.Controllers
             else
                 return RedirectToAction("VistaTipo", new { idDepartamento = idDepartOrigen, message = "Error al eliminar el tipo ticket" });
         }
-
 
 
     }

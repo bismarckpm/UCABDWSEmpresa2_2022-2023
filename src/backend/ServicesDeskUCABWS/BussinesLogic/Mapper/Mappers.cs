@@ -30,6 +30,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Departamento, DepartamentoSearchDTO>();
             CreateMap<DepartamentoSearchDTO, Departamento>();
+            CreateMap<DepartamentoCargoDTO, Departamento>();
+            CreateMap<Departamento, DepartamentoCargoDTO>();
 
             CreateMap<Departamento, DepartamentoDto>();
             CreateMap<DepartamentoDto, Departamento>();

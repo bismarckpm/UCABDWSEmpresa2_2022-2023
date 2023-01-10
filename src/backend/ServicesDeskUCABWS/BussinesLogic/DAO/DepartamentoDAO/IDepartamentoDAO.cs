@@ -20,6 +20,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public List<DepartamentoDto> DeletedDepartamento();
         public List<DepartamentoDto> NoAsociado();
         public List<string> EditarRelacion(Guid id, string idDepartamentos);
+        public List<DepartamentoCargoDTO> ConsultarDepartamentoCargo();
 
     }
 }
