@@ -79,7 +79,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
+                TipoticketDAO.ActualizarTipo_Ticket(entrada);
             }
             catch (ExceptionsControl ex)
             {
@@ -130,7 +130,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
+                TipoticketDAO.ActualizarTipo_Ticket(entrada);
             }
             catch (ExceptionsControl ex)
             {
@@ -181,7 +181,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //act
 
-            TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
+            TipoticketDAO.ActualizarTipo_Ticket(entrada);
 
             //assert
 
@@ -228,7 +228,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
+                TipoticketDAO.ActualizarTipo_Ticket(entrada);
             }
             catch (ExceptionsControl ex)
             {

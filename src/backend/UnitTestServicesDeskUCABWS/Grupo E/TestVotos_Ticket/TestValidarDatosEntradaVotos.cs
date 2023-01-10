@@ -1,9 +1,11 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.Data;
 using System;
@@ -21,12 +23,19 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
         private readonly Mock<ITicketDAO> ticketDAO;
+        private readonly IMapper mapper;
 
         public TestValidarDatosEntradaVotos()
         {
+            var myprofile = new List<Profile>
+            {
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myprofile));
+            mapper = new Mapper(configuration);
             ticketDAO = new Mock<ITicketDAO>();
             context = new Mock<IDataContext>();
-            VotoDAO = new Votos_TicketService(context.Object,ticketDAO.Object);
+            VotoDAO = new Votos_TicketService(context.Object,ticketDAO.Object,mapper);
             context.SetupDbContextData();
         }
 
