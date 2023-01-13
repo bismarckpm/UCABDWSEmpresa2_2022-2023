@@ -20,11 +20,11 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
         /// <summary>
         /// Inicialización de variables.
         /// </summary>
-        /// <param name="_httpClientFactory">Objeto de la interfaz IHttpClientFactory.</param>
+        /// <param name="httpClientFactory">Objeto de la interfaz IHttpClientFactory.</param>
         
-        public ServicioGrupo_API(IHttpClientFactory _httpClientFactory) 
+        public ServicioGrupo_API(IHttpClientFactory httpClientFactory) 
         {
-            this._httpClientFactory = _httpClientFactory;
+            this._httpClientFactory = httpClientFactory;
         }
 
         /// <summary>

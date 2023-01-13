@@ -184,12 +184,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var lista = _dataContext.Grupos.Where(x => x.fecha_eliminacion == null).Select(
                     d => new GrupoDto
                     {
-                        id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_creacion = d.fecha_creacion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion,
-                        fecha_eliminacion = d.fecha_eliminacion
+                        Id = d.id,
+                        Nombre = d.nombre,
+                        Descripcion = d.descripcion,
+                        Fecha_creacion = d.fecha_creacion,
+                        Fecha_ultima_edicion = d.fecha_ultima_edicion,
+                        Fecha_eliminacion = d.fecha_eliminacion
 
                     }
                 );
@@ -353,12 +353,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
                         d => new DepartamentoDto
                         {
-                            id = d.id,
-                            nombre = d.nombre,
-                            descripcion = d.descripcion,
-                            fecha_creacion = d.fecha_creacion,
-                            fecha_ultima_edicion = d.fecha_ultima_edicion,
-                            fecha_eliminacion = d.fecha_eliminacion
+                            Id = d.id,
+                            Nombre = d.nombre,
+                            Descripcion = d.descripcion,
+                            Fecha_creacion = d.fecha_creacion,
+                            Fecha_ultima_edicion = d.fecha_ultima_edicion,
+                            Fecha_eliminacion = d.fecha_eliminacion
                         }
                      );
                 return departamentos.ToList();

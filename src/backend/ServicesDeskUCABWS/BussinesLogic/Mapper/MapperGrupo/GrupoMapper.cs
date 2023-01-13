@@ -19,10 +19,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {         
             return new GrupoDto
             {
-                id = Guid.NewGuid(),
-                nombre = grupo.nombre,
-                descripcion = grupo.descripcion,
-                fecha_creacion = DateTime.Now.Date
+                Id = Guid.NewGuid(),
+                Nombre = grupo.nombre,
+                Descripcion = grupo.descripcion,
+                Fecha_creacion = DateTime.Now.Date
             };
         }
 
@@ -36,10 +36,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto()
             {
-                id = grupo.id,
-                nombre = grupo.nombre,
-                descripcion = grupo.descripcion,
-                fecha_creacion = DateTime.Now.Date
+                Id = grupo.id,
+                Nombre = grupo.nombre,
+                Descripcion = grupo.descripcion,
+                Fecha_creacion = DateTime.Now.Date
             };
 
         }
@@ -55,9 +55,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
             return new Grupo
             {
 				id = Guid.NewGuid(),
-                nombre = grupo.nombre,
-                descripcion = grupo.descripcion,
-                fecha_creacion = grupo.fecha_creacion
+                nombre = grupo.Nombre,
+                descripcion = grupo.Descripcion,
+                fecha_creacion = grupo.Fecha_creacion
             };
         }
 
@@ -72,10 +72,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new Grupo
             {
-				id = grupo.id,
-                nombre = grupo.nombre,
-                descripcion = grupo.descripcion,
-                fecha_ultima_edicion = grupo.fecha_ultima_edicion
+				id = grupo.Id,
+                nombre = grupo.Nombre,
+                descripcion = grupo.Descripcion,
+                fecha_ultima_edicion = grupo.Fecha_ultima_edicion
             };
         }
 
@@ -90,10 +90,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto_Update
             {
-                id = grupo.id,
-                nombre = grupo.nombre,
-                descripcion = grupo.descripcion,
-                fecha_ultima_edicion = DateTime.Now.Date
+                Id = grupo.id,
+                Nombre = grupo.nombre,
+                Descripcion = grupo.descripcion,
+                Fecha_ultima_edicion = DateTime.Now.Date
             };
         }
     }

@@ -11,27 +11,27 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO
         private DateTime? _fecha_eliminacion;
         private DateTime? _fecha_ultima_edicion;
 
-        public Guid id {
+        public Guid Id {
             get {return _id; }
             set {_id = value; }
         }
-        public string nombre {
+        public string Nombre {
             get {return _nombre; }
             set {_nombre = value; }
         }
-        public string descripcion {
+        public string Descripcion {
             get {return _descripcion; }
             set {_descripcion = value; }
         }
-        public DateTime fecha_creacion {
+        public DateTime Fecha_creacion {
             get {return _fecha_creacion; }
             set {_fecha_creacion = value; }
         }
-        public DateTime? fecha_ultima_edicion {
+        public DateTime? Fecha_ultima_edicion {
             get {return _fecha_ultima_edicion; }
             set {_fecha_ultima_edicion = value; }
         }
-        public DateTime? fecha_eliminacion {
+        public DateTime? Fecha_eliminacion {
             get {return _fecha_eliminacion; }
             set {_fecha_eliminacion = value; }
         }
@@ -44,22 +44,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.GrupoDTO
         private string _descripcion;
         private DateTime? _fecha_ultima_edicion;
 
-        public Guid id
+        public Guid Id
         {
             get { return _id; }
             set { _id = value; }
         }
-        public string nombre
+        public string Nombre
         {
             get { return _nombre; }
             set { _nombre = value; }
         }
-        public string descripcion
+        public string Descripcion
         {
             get { return _descripcion; }
             set { _descripcion = value; }
         }
-        public DateTime? fecha_ultima_edicion
+        public DateTime? Fecha_ultima_edicion
         {
             get { return _fecha_ultima_edicion; }
             set { _fecha_ultima_edicion = value; }

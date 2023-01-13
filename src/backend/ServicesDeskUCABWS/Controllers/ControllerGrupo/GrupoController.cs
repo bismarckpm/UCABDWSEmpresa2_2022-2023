@@ -56,8 +56,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 
             }
 			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
+			{response.Success = false;
 				response.Message = ex.Mensaje;
 				response.Exception = ex.Excepcion.ToString();
 			}
