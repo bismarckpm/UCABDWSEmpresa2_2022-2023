@@ -199,18 +199,18 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var lista = _dataContext.Departamentos.Select(
                     d => new DepartamentoDto
                     {
-                        id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_creacion = d.fecha_creacion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion,
-                        fecha_eliminacion = d.fecha_eliminacion
+                        Id = d.id,
+                        Nombre = d.nombre,
+                        Descripcion = d.descripcion,
+                        Fecha_creacion = d.fecha_creacion,
+                        Fecha_ultima_edicion = d.fecha_ultima_edicion,
+                        Fecha_eliminacion = d.fecha_eliminacion
 
                     }
                 );
 
                 return lista.ToList();
-
+                
             }
             catch (Exception ex)
             {
@@ -231,12 +231,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				var lista = _dataContext.Departamentos.Where(x => x.fecha_eliminacion == null).Select(
 					d => new DepartamentoDto
 					{
-						id = d.id,
-						nombre = d.nombre,
-						descripcion = d.descripcion,
-						fecha_creacion = d.fecha_creacion,
-						fecha_ultima_edicion = d.fecha_ultima_edicion,
-						fecha_eliminacion = d.fecha_eliminacion
+						Id = d.id,
+						Nombre = d.nombre,
+						Descripcion = d.descripcion,
+						Fecha_creacion = d.fecha_creacion,
+						Fecha_ultima_edicion = d.fecha_ultima_edicion,
+						Fecha_eliminacion = d.fecha_eliminacion
 
 					}
 				);
@@ -262,12 +262,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 				var lista = _dataContext.Departamentos.Where(x => x.id_grupo == null && x.fecha_eliminacion==null).Select(
 					d => new DepartamentoDto
 					{
-						id = d.id,
-						nombre = d.nombre,
-						descripcion = d.descripcion,
-						fecha_creacion = d.fecha_creacion,
-						fecha_ultima_edicion = d.fecha_ultima_edicion,
-						fecha_eliminacion = d.fecha_eliminacion
+						Id = d.id,
+						Nombre = d.nombre,
+						Descripcion = d.descripcion,
+						Fecha_creacion = d.fecha_creacion,
+						Fecha_ultima_edicion = d.fecha_ultima_edicion,
+						Fecha_eliminacion = d.fecha_eliminacion
 					}
 				);
 				return lista.ToList();

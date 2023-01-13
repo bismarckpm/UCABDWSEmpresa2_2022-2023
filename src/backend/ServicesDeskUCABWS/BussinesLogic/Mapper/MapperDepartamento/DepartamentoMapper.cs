@@ -20,10 +20,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new DepartamentoDto
             {
-                id = Guid.NewGuid(),
-                nombre = dept.nombre,
-                descripcion = dept.descripcion,
-                fecha_creacion = DateTime.Now.Date
+                Id = Guid.NewGuid(),
+                Nombre = dept.nombre,
+                Descripcion = dept.descripcion,
+                Fecha_creacion = DateTime.Now.Date
             };
         }
 
@@ -37,10 +37,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new DepartamentoDto
             {
-                id = dept.id,
-                nombre = dept.nombre,
-                descripcion = dept.descripcion,
-                fecha_creacion = DateTime.Now.Date
+                Id = dept.id,
+                Nombre = dept.nombre,
+                Descripcion = dept.descripcion,
+                Fecha_creacion = DateTime.Now.Date
             };
         }
 
@@ -55,9 +55,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
             return new Departamento
             {
                 id = Guid.NewGuid(),
-                nombre = dept.nombre,
-                descripcion = dept.descripcion,
-                fecha_creacion = dept.fecha_creacion
+                nombre = dept.Nombre,
+                descripcion = dept.Descripcion,
+                fecha_creacion = dept.Fecha_creacion
             };
         }
 
@@ -72,12 +72,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new Departamento
             {
-                id = dept.id,
-                nombre = dept.nombre,
-                descripcion = dept.descripcion,
-                fecha_creacion = dept.fecha_creacion,
-                fecha_ultima_edicion = dept.fecha_ultima_edicion,
-                id_grupo = dept.id_grupo
+                id = dept.Id,
+                nombre = dept.Nombre,
+                descripcion = dept.Descripcion,
+                fecha_creacion = dept.Fecha_creacion,
+                fecha_ultima_edicion = dept.Fecha_ultima_edicion,
+                id_grupo = dept.Id_grupo
             };
         }
 
@@ -92,11 +92,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperDepartamento
         {
             return new DepartamentoDto_Update
             {
-                id = dept.id,
-                nombre = dept.nombre,
-                descripcion = dept.descripcion,
-                fecha_creacion = dept.fecha_creacion,
-                fecha_ultima_edicion = dept.fecha_ultima_edicion
+                Id = dept.id,
+                Nombre = dept.nombre,
+                Descripcion = dept.descripcion,
+                Fecha_creacion = dept.fecha_creacion,
+                Fecha_ultima_edicion = dept.fecha_ultima_edicion
             };
         }
     }

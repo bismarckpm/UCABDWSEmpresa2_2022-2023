@@ -20,11 +20,11 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
         /// <summary>
         /// Inicialización de variables.
         /// </summary>
-        /// <param name="_httpClientFactory">Objeto de la interfaz IHttpClientFactory.</param>
+        /// <param name="httpClientFactory">Objeto de la interfaz IHttpClientFactory.</param>
         
-        public ServicioDepartamento_API(IHttpClientFactory _httpClientFactory)
+        public ServicioDepartamento_API(IHttpClientFactory httpClientFactory)
         {
-            this._httpClientFactory = _httpClientFactory;
+            this._httpClientFactory = httpClientFactory;
         }
 
         /// <summary>
