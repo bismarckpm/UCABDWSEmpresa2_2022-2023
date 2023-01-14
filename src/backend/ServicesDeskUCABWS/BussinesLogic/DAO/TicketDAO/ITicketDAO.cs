@@ -18,7 +18,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public Ticket ConsultaTicket(Guid id);
 
         //public ApplicationResponse<Votos_TicketDTOCreate> RegistroVotos(Votos_TicketDTOCreate votos_TicketDTO);
-        public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
+        //public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id);
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado, Guid empleadoId);
         public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId);

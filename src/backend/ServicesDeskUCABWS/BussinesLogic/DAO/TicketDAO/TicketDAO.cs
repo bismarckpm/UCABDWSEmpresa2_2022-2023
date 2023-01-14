@@ -122,10 +122,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 //CrearTicket
                 var ticket = CrearTicket(ticketDTO);
-
+                ticket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
+                Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
+                ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
                 FlujoAprobacionCreacionTicket(ticket);
-
                 response.Data = TicketMapper.MapperTicketToTicketNuevoDTO(ticket);
+                response.Message = "Ticket creado satisfactoriamente";
             }
             catch (ExceptionsControl ex)
             {
@@ -163,7 +166,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             try
             {
                 ticket.Bitacora_Tickets = new HashSet<Bitacora_Ticket>();
-
+                Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
+                ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
             }
             catch (Exception e)
             {
@@ -213,9 +218,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             _mapper = mapper;
         }
 
-
-
-        public ApplicationResponse<string> crearTicket(TicketNuevoDTO solicitudTicket)
+        /*public ApplicationResponse<string> crearTicket(TicketNuevoDTO solicitudTicket)
         {
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
             try
@@ -265,7 +268,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 respuesta.Success = false;
             }
             return respuesta;
-        }
+        }*/
 
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id)
         {
@@ -335,7 +338,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             catch (Exception e)
             {
                 respuesta.Data = null;
-                respuesta.Message = $"Mano sendo error: {e.Message}";
+                respuesta.Message = $"Hubo un error: {e.Message}";
                 respuesta.Success = false;
             }
             return respuesta;
@@ -837,14 +840,19 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         }
         public void modificarEstadoTicket(Guid ticketId, Guid estadoId)
         {
-            Ticket ticket = _dataContext.Tickets.Include(t => t.Estado).Include(t => t.Bitacora_Tickets).Where(t => t.Id == ticketId).Single();
+            Ticket ticket = _dataContext.Tickets
+                                                .Include(t => t.Estado)
+                                                .Include(t => t.Bitacora_Tickets)
+                                                .Where(t => t.Id == ticketId).Single();
             Estado nuevoEstado = _dataContext.Estados.Where(t => t.Id == estadoId).Single();
             ticket.Estado = nuevoEstado;
-            ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
-            Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(_mapper.Map<TicketDTO>(ticket));
+            //ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
+            Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
             ticket.Bitacora_Tickets.Add(nuevaBitacora);
+            _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Tickets.Update(ticket);
             _dataContext.DbContext.SaveChanges();
+            Console.WriteLine("Aquí");
         }
         public List<TicketBitacorasDTO> obtenerBitacorasHl(Guid ticketId)
         {
