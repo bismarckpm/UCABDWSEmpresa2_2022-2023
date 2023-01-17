@@ -8,14 +8,19 @@ namespace ServicesDeskUCABWS.Entities
 {
     public class Departamento
     {
+        public Departamento()
+        {
+
+        }
+
         [Key]
         public Guid id { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(150)]
         public string nombre { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(150)]
+        [StringLength(250)]
         public string descripcion { get; set; } = string.Empty;
 
         [Required]
@@ -30,5 +35,15 @@ namespace ServicesDeskUCABWS.Entities
 	    [ForeignKey("id_grupo")]
 	    public Grupo grupo { get; set; }
 
+        public List<DepartamentoTipo_Ticket> Tipo_Tickets { get; set; } 
+
+        public Departamento(string nombre, string descripcion)
+        {
+            id = Guid.NewGuid();
+            this.nombre = nombre;
+            this.descripcion = descripcion;
+            fecha_creacion = DateTime.UtcNow;
+            fecha_ultima_edicion = DateTime.UtcNow;
+        }
     }
 }

@@ -54,6 +54,24 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("ConsultarEmpleado/")]
+        public ApplicationResponse<List<UsuarioGeneralDTO>> ConsultarEmpleados()
+        {
+            var response = new ApplicationResponse<List<UsuarioGeneralDTO>>();
+            try
+            {
+                response.Data = _usuarioDAO.ObtenerEmpleados();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
         [HttpPost]
         [Route("CrearAdministrador/")]
         public ApplicationResponse<Administrador> CrearAdministrador([FromBody] UsuarioDto Usuario)
@@ -172,6 +190,25 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
+        [HttpGet]
+        [Route("Consulta/Empleado/{id}")]
+        public ApplicationResponse<Empleado> GetByTipoEmpleadoId(Guid id)
+        {
+            var response = new ApplicationResponse<Empleado>();
+            try
+            {
+                response.Data = _usuarioDAO.consularEmpleadoID(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+
         [HttpDelete]
         [Route("EliminarUsuario/{id}")]
         public ApplicationResponse<UsuarioDto> EliminarUsuario([FromRoute] Guid id)
@@ -213,7 +250,7 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
-        [HttpPut]
+        /*[HttpPut]
         [Route("ActualizarUsuarioPassword/")]
         public ApplicationResponse<String> ActualizarPassword([FromBody] UserPasswordDto usuario)
         {
@@ -231,7 +268,7 @@ namespace ServicesDeskUCABWS.Controllers
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }
+        }*/
 
         [HttpPost]
         [Route("login/")]
@@ -247,6 +284,42 @@ namespace ServicesDeskUCABWS.Controllers
                 response.Success = false;
                 response.Message = ex.Mensaje;
                 response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPost]
+        [Route("AsignarCargo/")]
+        public ApplicationResponse<UsuarioDTOAsignarCargo> AsignarCargo([FromBody] UsuarioDTOAsignarCargo usuario)
+        {
+            var response = new ApplicationResponse<UsuarioDTOAsignarCargo>();
+            try
+            {
+                response.Data = _usuarioDAO.AsignarCargo(usuario);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                //response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPost]
+        [Route("RevocarCargo/")]
+        public ApplicationResponse<string> RevocarCargo([FromBody] Guid idusuario)
+        {
+            var response = new ApplicationResponse<string>();
+            try
+            {
+                response.Data = _usuarioDAO.RevocarCargo(idusuario);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                //response.Exception = ex.Excepcion.ToString();
             }
             return response;
         }

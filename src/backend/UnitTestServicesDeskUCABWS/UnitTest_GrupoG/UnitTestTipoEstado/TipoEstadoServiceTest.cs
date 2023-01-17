@@ -15,6 +15,11 @@ using Microsoft.EntityFrameworkCore;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
+using MockQueryable.Moq;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
+using MockQueryable.Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 {
@@ -23,11 +28,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
     {
         private readonly TipoEstadoService _TipoEstadoService;
         private readonly Mock<IDataContext> _contextMock;
+        private readonly Mock<IEstadoDAO> _estadoServiceMock;
         private readonly IMapper _mapper;
 
         public TipoEstadoServiceTest()
         {
             _contextMock = new Mock<IDataContext>();
+            _estadoServiceMock = new Mock<IEstadoDAO>();
             var myProfile = new List<Profile>
             {
                 new TipoEstadoMapper(),
@@ -36,22 +43,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
-            _TipoEstadoService = new TipoEstadoService(_contextMock.Object, _mapper);
+            _TipoEstadoService = new TipoEstadoService(_contextMock.Object, _mapper, _estadoServiceMock.Object);
             _contextMock.SetUpContextData();
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA CONSULTAR TODOS LOS TIPOS DE ESTADO
-        //*
+//*
+//PRUEBAS UNITARIAS PARA CONSULTAR TODOS LOS TIPOS DE ESTADO
+//*
 
-        [TestMethod(displayName: "Prueba Unitaria de la consulta de los Tipos de estado exitosa")]                       //Se le quitó la programación asíncrona a todo lo que respecta la consulta plantilla
+        [TestMethod(displayName: "Prueba Unitaria de la consulta de los Tipos de estado exitosa")]                       
         public void ConsultaTipoEstadoServiceTest()
         {
             var result = _TipoEstadoService.ConsultaTipoEstados();
             Assert.IsTrue(result.Count() > 0);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria cuando la consulta de los tipos de estados retorna vacio o null")]      //Esta prueba está bien? 
+        [TestMethod(displayName: "Prueba Unitaria cuando la consulta de los tipos de estados retorna vacio o null")]       
         //[ExpectedException(typeof(ExceptionsControl))]
         public void ConsultarTipoEstadosRetornaVaciaServiceTest()
         {
@@ -60,15 +67,11 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             _contextMock.SetUpContextDataTipoEstadoVacio();
             //_contextMock.Setup(p => p.Tipos_Estados).Returns(_contextMock.);
 
-            //act
-
-
-
             //assert
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstados());
         }
 
-        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]        //Esto está bueno?
+        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]        
         public void ConsultarTipoEstadosRetornaExceptionServiceTest()
         {
             //arrange
@@ -78,9 +81,41 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstados());
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA CONSULTAR TIPO ESTADO POR ID
-        //*
+//*
+//PRUEBAS UNITARIAS PARA CONSULTAR TODOS LOS TIPOS DE ESTADO HABILITADOS
+//*
+        [TestMethod(displayName: "Prueba Unitaria de la consulta de los Tipos de estado exitosa")]                       
+        public void ConsultaTipoEstadoHabilitadoServiceTest()
+        {
+            var result = _TipoEstadoService.ConsultaTipoEstadosHabilitados();
+            Assert.IsTrue(result.Count() > 0);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando la consulta de los tipos de estados habilitados retorna vacio o null")]
+        //[ExpectedException(typeof(ExceptionsControl))]
+        public void ConsultarTipoEstadosHabilitadoRetornaVaciaServiceTest()
+        {
+            //arrange
+            _contextMock.SetUpContextDataTipoEstadoVacio();
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstadosHabilitados());
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la consulta")]
+        public void ConsultarTipoEstadosHabilitadosRetornaExceptionServiceTest()
+        {
+            //arrange
+            _contextMock.Setup(p => p.Tipos_Estados).Throws(new Exception());
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultaTipoEstadosHabilitados());
+        }
+
+
+//*
+//PRUEBAS UNITARIAS PARA CONSULTAR TIPO ESTADO POR ID
+//*
 
         [TestMethod(displayName: "Prueba Unitaria de la consulta de un tipo estado por id exitosa")]
         public void ConsultaTipoEstadoIDServiceTest()
@@ -107,9 +142,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultarTipoEstadoGUID(It.IsAny<Guid>()));
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA CONSULTAR TIPO ESTADO POR TITULO
-        //*
+//*
+//PRUEBAS UNITARIAS PARA CONSULTAR TIPO ESTADO POR TITULO
+//*
 
         [TestMethod(displayName: "Prueba Unitaria de la consulta de un tipo estado por titulo exitosa")]
         public void ConsultaTipoEstadoTituloServiceTest()
@@ -136,9 +171,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.ConsultarTipoEstadoTitulo(It.IsAny<string>()));
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA REGISTRO DE PLANTILLA NOTIFICACION
-        //*
+//*
+//PRUEBAS UNITARIAS PARA REGISTRO DE PLANTILLA NOTIFICACION
+//*
 
         [TestMethod(displayName: "Prueba Unitaria cuando el registro del tipo estado notificación sea exitoso")]
         public void AgregarTipoEstadoServiceTest()
@@ -154,13 +189,19 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c")
                 }
             };
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+			var expected = new TipoEstadoDTO
+			{
+				nombre = "Plantilla Aprobado",
+				descripcion = "Hola @Usuario su @Ticket fue @Estado"
+			};
 
             //act
             var result = _TipoEstadoService.RegistroTipoEstado(tipoEstado);
 
             //assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(result.nombre, expected.nombre);
+            Assert.AreEqual(result.GetType(), expected.GetType());
         }
 
         [TestMethod(displayName: "Prueba Unitaria cuando el registro del tipo estado falla por campos vacios")]
@@ -169,8 +210,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             //arrange
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
             var tipoEstadoTest = new TipoEstadoCreateDTO() { nombre = "Hola" };
-
-          
 
             //assert
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(tipoEstadoTest));
@@ -209,16 +248,16 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.RegistroTipoEstado(tipoEstado));
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA ACTUALIZAR DE tIPO ESTADO
-        //*
+//*
+//PRUEBAS UNITARIAS PARA ACTUALIZAR DE tIPO ESTADO
+//*
 
         [TestMethod(displayName: "Prueba Unitaria cuando la actualización del tipo estado sea exitoso")]
         public void ActualizarTipoEstadoServiceTest()
         {
             //arrange
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstadoUpdate = new TipoEstadoCreateDTO()
+            var tipoEstadoUpdate = new TipoEstadoUpdateDTO()
             {
 
                 nombre = "Aprobado",
@@ -228,13 +267,30 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
                     new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c")
                 }
             };
+
+            var expect = new TipoEstadoDTO()
+            {
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                nombre = "Aprobado",
+                descripcion = "Cuando se aprueba un ticket",
+                etiqueta = new HashSet<EtiquetaDTO>
+                {
+                    new EtiquetaDTO {
+                        Id = new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                        Nombre = "@Usuario",
+                        Descripcion = "hola",
+                    }
+                },
+            };
+
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 
             //act
             var result = _TipoEstadoService.ActualizarTipoEstado(tipoEstadoUpdate, idUpdate);
 
             //assert
-            Assert.IsTrue(result);
+            Assert.AreEqual(result.nombre, expect.nombre);
+            Assert.AreEqual(result.GetType(), expect.GetType());
         }
 
 
@@ -244,7 +300,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             //arrange
          
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstadoUpdate = new TipoEstadoCreateDTO()
+            var tipoEstadoUpdate = new TipoEstadoUpdateDTO()
             {
 
                 nombre = "Aprobado",
@@ -270,7 +326,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             var idUpdate = It.IsAny<Guid>();
-            var tipoEstadoUpdate = It.IsAny<TipoEstadoCreateDTO>();
+            var tipoEstadoUpdate = It.IsAny<TipoEstadoUpdateDTO>();
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
 
             //assert
@@ -283,7 +339,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         {
             //arrange
             var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var tipoEstado = new TipoEstadoCreateDTO
+            var tipoEstado = new TipoEstadoUpdateDTO
             {
 
                 nombre = "Plantilla Aprobado",
@@ -303,47 +359,144 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 
         }
 
-        //*
-        //PRUEBAS UNITARIAS PARA ELIMINAR TIPO ESTADO
-        //*
 
-        [TestMethod(displayName: "Prueba Unitaria cuando la eliminación del tipo estado sea exitoso")]
-        public void EliminarTipoEstadoerviceTest()
+//*
+//PRUEBAS UNITARIAS PARA DESHABILITAR Y HABILITAR DE tIPO ESTADO
+//*
+
+
+        [TestMethod(displayName: "Prueba Unitaria cuando se deshabilita sea exitoso")]
+        public void DeshabilitarTipoEstadoServiceTest()
         {
             //arrange
-            
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
-           // _contextMock.Setup(set => set.PlantillasNotificaciones).Returns(It.IsAny<PlantillaNotificacion>);
+            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
             //act
-            var result = _TipoEstadoService.EliminarTipoEstado(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"));
+            var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);
 
             //assert
             Assert.IsTrue(result);
         }
 
 
-        [TestMethod(displayName: "Prueba Unitaria cuando la eliminación falla porque el tipo estado está en uso por un ticket")]
-        public void ExcepcionEliminarTipoEstadoEnUso()
+        [TestMethod(displayName: "Prueba Unitaria cuando se habilita sea exitoso")]
+        public void HabilitarTipoEstadoServiceTest()
         {
             //arrange
-            _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
-          
+            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87");
+
+            //act
+            var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);
+
             //assert
-            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+            Assert.IsTrue(result);
         }
 
 
-        [TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la eliminación")]
-        public void ExcepcionEliminarTipoEstado()
+        [TestMethod(displayName: "Prueba Unitaria cuando no se pudo habilitar o deshabilitar el tipo de estado")]
+        public void ExcepcionHabilitarDeshabilitarTipoEstado()
         {
             //arrange
+            var idUpdate = It.IsAny<Guid>();
+
             _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
- 
+
             //assert
-            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate));
 
         }
+
+        [TestMethod(displayName: "Prueba Unitaria cuando no se puede deshabilitar este tipo de estado por la integridad del sistema")]
+        public void ExcepcionDeshabilitarTipoEstadoPermisoDenegado()
+        {
+            //arrange
+            var tipoEstado = new TipoEstadoCreateDTO
+            {
+                nombre = "Aprobado",
+                descripcion = "Cuando se aprueba un ticket",
+                etiqueta = new HashSet<Guid>
+                {
+                    new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+                }
+            };
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.HabilitarDeshabilitarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c88")));
+        }
+
+
+        //*
+        //PRUEBAS UNITARIAS PARA ELIMINAR TIPO ESTADO
+        //*
+
+        //[TestMethod(displayName: "Prueba Unitaria cuando la eliminación del tipo estado sea exitoso")]
+        //public void EliminarTipoEstadoerviceTest()
+        //{
+        //    //arrange
+        //    var tipoEstado = new TipoEstadoCreateDTO
+        //    {
+        //        nombre = "Aprobado",
+        //        descripcion = "Cuando se aprueba un ticket",
+        //        etiqueta = new HashSet<Guid>
+        //        {
+        //            new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+        //        }
+        //    };
+
+        //    _contextMock.Setup(set => set.DbContext.SaveChanges());
+        //   // _contextMock.Setup(set => set.PlantillasNotificaciones).Returns(It.IsAny<PlantillaNotificacion>);
+
+        //    //act
+        //    var result = _TipoEstadoService.EliminarTipoEstado(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"));
+
+        //    //assert
+        //    Assert.AreEqual(tipoEstado.nombre, result.nombre);
+        //    Assert.AreEqual(tipoEstado.GetType(), result.GetType());
+        //}
+
+        //[TestMethod(displayName: "Prueba Unitaria cuando no se puede eliminar este tipo de estado por la integridad del sistema")]
+        //public void ExcepcionEliminarTipoEstadoPermisoDenegado()
+        //{
+        //    //arrange
+        //    var tipoEstado = new TipoEstadoCreateDTO
+        //    {
+        //        nombre = "Aprobado",
+        //        descripcion = "Cuando se aprueba un ticket",
+        //        etiqueta = new HashSet<Guid>
+        //        {
+        //            new Guid("c76a9916-4cbb-434c-b88e-1fc8152eca8c"),
+        //        }
+        //    };
+
+        //    _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+        //    //assert
+        //    Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87")));
+        //}
+
+        //[TestMethod(displayName: "Prueba Unitaria cuando la eliminación falla porque el tipo estado está en uso por un ticket")]
+        //public void ExcepcionEliminarTipoEstadoEnUso()
+        //{
+        //    //arrange
+        //    _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new DbUpdateException());
+
+        //    //assert
+        //    Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86")));
+        //}
+
+
+        //[TestMethod(displayName: "Prueba Unitaria cuando ocurre cualquier error imprevisto en la eliminación")]
+        //public void ExcepcionEliminarTipoEstado()
+        //{
+        //    //arrange
+        //    _contextMock.Setup(set => set.DbContext.SaveChanges()).Throws(new Exception());
+
+        //    //assert
+        //    Assert.ThrowsException<ExceptionsControl>(() => _TipoEstadoService.EliminarTipoEstado(Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86")));
+
+        //}
 
         //*
         //PRUEBAS UNITARIAS PARA AÑADIR RELACION DE ETIQUETA Y TIPO ESTADO

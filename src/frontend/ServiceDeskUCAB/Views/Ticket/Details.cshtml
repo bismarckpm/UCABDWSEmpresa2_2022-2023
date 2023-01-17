@@ -1,0 +1,298 @@
+﻿@model ServiceDeskUCAB.ViewModel.TicketDetailsViewModel;
+
+<div>
+    <h1 style="display:inline-block">Detalles del Ticket -</h1> <h4 style="display:inline-block">@Model.ticket.ticket_id</h4>
+
+    <hr />
+</div>
+
+
+<div class="row" style="margin-top:30px">
+    <div class="col-8"></div>
+
+    <div class="col-4 text-right">
+        @if (Model.ticket.ticketPadre_id != Guid.Empty)
+        {
+            <h6><span class="badge bg-primary rounded-pill"><a asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id">Ticket reenviado</a></span></h6>
+        }
+
+        @if (Model.ticket.fecha_eliminacion == null)
+        {
+            <form method="post" asp-controller="Ticket" asp-action="CambiarEstado" asp-route-ticketId="@Model.ticket.ticket_id">
+                <div class="mb-3">
+                    <input asp-for="@Model.actualizarDTO.ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none"/>
+                    <select asp-for="@Model.actualizarDTO.estadoId" class="form-select" style="display:inline-block" aria-label="Default select example" required>
+                        <option selected>Cambiar estado</option>
+                        @try
+                        {
+                            @foreach (var item in Model.estados)
+                            {
+                                <option value="@item">@item.nombre</option>
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+                    </select>
+                </div>
+                <button style="display:inline-block" type="submit" class="btn btn-success">Enviar</button>
+            </form>
+
+        }
+    </div>
+
+    <div class="container">
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Departamento destino:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.departamentoDestino_nombre">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Tipo ticket:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.tipoTicket_nombre">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Estado:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.estado_nombre">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Prioridad:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.prioridad_nombre">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Titulo:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.titulo">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Descripción:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.descripcion">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de creación:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+            </div>
+        </div>
+
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Fecha de eliminación:</b></label>
+            <div class="col-sm-8">
+                @if (Model.ticket.fecha_eliminacion != null)
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="-">
+                }
+                else
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.fecha_creacion">
+                }
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Emisor:</b></label>
+            <div class="col-sm-8">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.empleado_correo">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="col-12 text-right" style="margin-top: 20px">
+    <a id="botonAnidado" type="button" class="btn btn-success" onclick="mostrarAnidados()" href="#ticketsAnidados">Ver tickets anidados</a>
+    <a class="btn btn-primary" asp-area="" asp-controller="Ticket" asp-action="Index" asp-route-opcion="Abiertos">Aceptar</a>
+</div>
+
+<div style="margin-top:30px;">
+    <h2 style="margin-bottom: 20px;">Bitacora del ticket</h2>
+    <table id="table_id">
+        <thead>
+            <tr>
+                <th>ESTADO</th>
+                <th>FECHA INICIO</th>
+                <th>FECHA FIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            @try
+            {
+                @foreach (var item in Model.bitacoraTicket)
+                {
+                    <tr>
+                        <td>@item.estado_nombre</td>
+                        <td>@item.fecha_inicio</td>
+                        @if (item.fecha_fin == null)
+                        {
+                            <td>-</td>
+                        }
+                        else
+                        {
+                            <td>@item.fecha_fin</td>
+                        }
+                    </tr>
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<div id="ticketsAnidados" class="container d-none" style="margin-top:30px;">
+    <h2 style="margin-bottom: 20px;">Tickets anidados</h2>
+    <div>
+        <table id="table_id2">
+            <thead>
+                <tr>
+                    <th>TITULO</th>
+                    <th>TIPO TICKET</th>
+                    <th>PRIORIDAD</th>
+                    <th>ESTADO</th>
+                    <th>FECHA DE CREACIÓN</th>
+                    <th>FECHA DE ELIMINACIÓN</th>
+                    <th>EMISOR</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @try
+                {
+                    @if (Model.familiaTicket!= null)
+                    {
+                        @foreach (var item in Model.familiaTicket)
+                        {
+                        <tr>
+                            <td>@item.titulo</td>
+                            <td>@item.tipoTicket_nombre</td>
+                            <td>@item.prioridad_nombre</td>
+                            <td>@item.estado_nombre</td>
+                            <td>@item.fecha_creacion</td>
+                            <td>@item.fecha_eliminacion</td>
+                            <td>
+                                <div class="dropdown" style="float: right">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@item.ticket_id">Ver detalles</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+
+        $(document).ready(function () {
+            $('#table_id2').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+
+        function mostrarAnidados() {
+            boton = document.getElementById("botonAnidado");
+            contenedor = document.getElementById("ticketsAnidados");
+            if (boton.innerHTML == "Ver tickets anidados") {
+                contenedor.className = "d-display";
+                boton.innerHTML = "Ocultar tickets anidados";
+                boton.className = "btn btn-danger";
+            } else {
+                contenedor.className = "d-none";
+                boton.innerHTML = "Ver tickets anidados";
+                boton.className = "btn btn-success";
+            }
+
+        }</script>
+
+}

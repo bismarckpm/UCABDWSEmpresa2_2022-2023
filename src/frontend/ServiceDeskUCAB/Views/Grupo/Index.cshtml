@@ -1,0 +1,108 @@
+﻿@model List<ServiceDeskUCAB.Models.GrupoModel>
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+    
+</head>
+@{
+    ViewData["Title"] = "Gestion Grupo";
+}
+
+<!--Conexion con documento JavaScript (Grupo.js)-->
+@section scripts{
+    <script src="~/js/Grupo.js"></script>
+}
+
+<!--Alerta de mensajes exitosos-->
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!--Alerta de mensajes de error-->
+@if (Context.Request.Query["message2"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Placeholders de las ventanas emergentes -->
+<div id="PlaceHolderAgregarGrupo"></div>
+<div id="PlaceHolderEliminarGrupo"></div>
+<div id="PlaceHolderModificarGrupo"></div>
+<div id="PlaceHolderVisualizarGrupo"></div>
+
+<div class="contenedor">
+    <div class="abajo">
+        <div class="area-boton">
+            <div>
+                <!--Titulo-->
+                <div class="titulo">
+                    <h1>Grupos</h1>
+                </div>
+
+                <!--Buscador-->
+                <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
+                        </div>
+                        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+                    </div>
+                </div>
+            </div>
+
+            <div class="agregar">
+                <!-- Boton Agregar Grupo -->
+                <button id=btnAgregarGrupo type="button" class="boton" data-toggle="agregarGrupo-modal" data-target="#popUpAgregarGrupo" data-url="@Url.Action("VentanaAgregarGrupo")">
+                    Crear Grupo
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Tabla Grupos -->
+        <table class="table" id="table">
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                </tr>
+                
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id" style="display:none" ;>
+                        @Html.DisplayFor(i => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <button id=btnVisualizar type="button" class="dropdown-item" data-toggle="visualizarGrupo-modal" data-target="#popUpVisualizarGrupo" data-url="@Url.Action("VentanaVisualizarDepartamento","Grupo",new { id = "idGrupo"})">Visualizar</button>
+                                <button id=btnEditar type="button" class="dropdown-item" data-toggle="editarGrupo-modal" data-target="#popUpEditarGrupo" data-url="@Url.Action("VentanaEditarGrupo","Grupo",new { id = "idGrupo"})">Editar</button>
+                                <button id=btnEliminar type="button" class="dropdown-item" data-toggle="eliminarGrupo-modal" data-target="#popUpEliminarGrupo" data-url="@Url.Action("VentanaEliminarGrupo","Grupo",new { id = "idGrupo"})">Eliminar</button>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

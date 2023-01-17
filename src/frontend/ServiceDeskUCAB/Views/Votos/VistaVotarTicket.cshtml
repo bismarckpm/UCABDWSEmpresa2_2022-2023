@@ -1,0 +1,70 @@
+﻿@using ServiceDeskUCAB.Models.ModelsVotos
+@using ServiceDeskUCAB.Models.TipoTicketsModels
+@model ServiceDeskUCAB.Models.ModelsVotos.VotarTicket
+@{
+    ViewData["Title"] = "Votar Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-header">
+        Votar Ticket
+    </div>
+    <div class="card-body">
+
+        <form asp-action="VotarTicket" asp-controller="Votos" method="post">
+            <input type="hidden" asp-for="IdUsuario" required />
+            <input type="hidden" asp-for="IdTicket" required />
+
+            <div class="mb-2 d-flex">
+                <div class="mx-2">
+                    <p><b>Titulo:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.titulo)</p>
+                </div>
+                <br />
+                <div class="mx-2">
+                    <p><b>Descripción:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.descripcion)</p>
+                </div>
+                <div class="mx-2">
+                    <p><b>Emisor:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.Emisor?.primer_nombre) @((ViewData["Ticket"] as Ticket)?.Emisor?.primer_apellido)</p>
+                </div>
+                <div>
+                    <p><b>Tipo Solicitud:</b></p>
+                    <p>@((ViewData["Ticket"] as Ticket)?.Tipo_Ticket?.nombre)</p>
+                </div>
+
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Voto</label>
+                <select required type="text" class="form-control form-control-sm" asp-for="voto" required>
+                    <option>-- Seleccionar --</option>
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="form-label">Comentario</label>
+                <textarea type="text" class="form-control form-control-sm" asp-for="comentario" required >
+                </textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-sm">Guardar Cambios</button>
+            <a asp-action="VistaTicket" asp-controller="Votos" class="btn btn-warning btn-sm">Volver a lista</a>
+        </form>
+
+    </div>
+
+</div>
+
+

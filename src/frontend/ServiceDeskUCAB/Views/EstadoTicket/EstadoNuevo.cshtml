@@ -1,4 +1,4 @@
-﻿@model ModuloPlantillasNotificaciones.ViewModel.EstadoTicket.EstadoNuevoViewModel;
+﻿@model ServiceDeskUCAB.ViewModel.EstadoTicket.EstadoNuevoViewModel;
 @{
     ViewData["Title"] = "Estado Nuevo";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +25,7 @@
                     <div class="col-8">
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Nombre</label>
-                            <input required type="text" class="form-control form-control-sm" name="Nombre" asp-for="Estado.Nombre" />
+                            <input required type="text" class="form-control form-control-sm" onkeypress="return check(event)" name="Nombre" asp-for="Estado.Nombre" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label fs-6 fw-bold mb-1">Descripción</label>
@@ -34,6 +34,18 @@
                     </div>
                     <div class="col-4">
                         <div class="mb-1">
+                            <label class="form-label fs-6 fw-bold mb-1 d-flex">
+                                <span class="mr-2">Restricción de tipo de estado</span>
+                                <button type="button" style="width: 25px; height: 25px" class="fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#modalHelpModal">
+                                    ?
+                                </button>
+                            </label>
+                            <div class="form-check form-switch ml-4">
+                                <input name="Permiso" class="form-check-input" checked data-bs-toggle="modal" data-bs-target="#desactivarHelpModal" value="True" type="checkbox" id="Permiso">
+                                <label class="form-check-label">Permiso de edición</label>
+                            </div>
+                        </div>
+                        <div class="mb-1 mt-4">
                             <label class="form-label fs-6 fw-bold mb-1">Asociar etiquetas:</label>
                             @if (Model.Etiquetas != null && Model.Etiquetas.Count() == 0)
                             {
@@ -43,7 +55,7 @@
                             {
                                 @foreach (var etiqueta in Model.Etiquetas)
                                 {
-                                    <div class="form-check form-switch">
+                                    <div class="form-check form-switch ml-4">
                                         <input name="Etiqueta" class="form-check-input" value="@etiqueta.Id" type="checkbox" id="@etiqueta.Id">
                                         <label class="form-check-label">@etiqueta.Nombre</label>
                                     </div>
@@ -63,3 +75,65 @@
         </form>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalHelpModal" tabindex="-1" aria-labelledby="modalHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body d-flex align-items-md-center text-black">
+                <button type="button" style="min-width: 40px; min-height: 40px" class="fs-5 mr-2 fw-bold btn btn-sm btn-danger rounded-circle d-flex justify-content-center align-items-center">
+                    ?
+                </button>
+                Con esta opción podrás restingir los permisos de edición para este tipo de estado, así como la eliminación del mismo.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="desactivarHelpModal" tabindex="-1" aria-labelledby="desactivarHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body d-flex align-items-md-center justify-content-between text-black">
+                <button type="button" style="min-width: 40px; min-height: 40px" class="fs-5 mr-2 fw-bold btn btn-sm btn-warning rounded-circle d-flex justify-content-center align-items-center">
+                    !
+                </button>
+                <div class="form-check form-switch" style="width: 85%">
+                    <p class="d-flex align-items-md-center">
+                        <input class="form-check-input" checked disabled type="checkbox">
+                        <span>Al <b>activar</b> los permisos de este tipo de estado podrás editar todos los campos de texto asociados de este registro, también podrás borrarlo.</span>
+                    </p>
+                    <p class="mb-0 d-flex align-items-md-center">
+                        <input class="form-check-input" disabled type="checkbox">
+                        <span>Al <b>desactivar</b> los permisos de este tipo de estado <b>NO podrás editar</b> los campos de texto asociados a este registro y <b>NO</b> podrás borrarlo.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+
+        function check(e) {
+            tecla = (document.all) ? e.keyCode : e.which;
+
+            //Tecla de retroceso para borrar, siempre la permite
+            if (tecla == 8) {
+                return true;
+            }
+
+            // Patrón de entrada, en este caso solo acepta numeros y letras
+            patron = /^[a-zA-Z ]+$/;
+            tecla_final = String.fromCharCode(tecla);
+            return patron.test(tecla_final);
+        }
+
+    </script>
+}

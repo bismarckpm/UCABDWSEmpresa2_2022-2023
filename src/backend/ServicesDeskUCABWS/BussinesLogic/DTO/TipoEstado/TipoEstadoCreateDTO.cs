@@ -10,6 +10,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TipoEstado
     {
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public HashSet<Guid> etiqueta { get; set; }
+        public HashSet<Guid> etiqueta { get; set; } = new HashSet<Guid>();
+        public Boolean permiso { get; set; }
     }
 }

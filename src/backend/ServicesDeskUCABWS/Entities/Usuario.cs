@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.Entities
-
 {
     public class Usuario
     {

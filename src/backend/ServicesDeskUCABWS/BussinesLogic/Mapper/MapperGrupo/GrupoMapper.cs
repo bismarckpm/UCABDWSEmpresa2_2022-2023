@@ -12,7 +12,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto
             {
-				id = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -23,7 +23,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
         {
             return new GrupoDto()
             {
-				id = grupo.id,
+                id = grupo.id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
                 fecha_creacion = DateTime.Now.Date
@@ -38,18 +38,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperGrupo
 				id = Guid.NewGuid(),
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_creacion = DateTime.Now.Date
-			};
+                fecha_creacion = grupo.fecha_creacion
+            };
         }
 
         public static Grupo MapperDTOToEntityModificar(GrupoDto_Update grupo)
         {
             return new Grupo
             {
-				id = grupo.Id,
+				id = grupo.id,
                 nombre = grupo.nombre,
                 descripcion = grupo.descripcion,
-                fecha_creacion = grupo.fecha_creacion,
+                fecha_ultima_edicion = grupo.fecha_ultima_edicion
+            };
+        }
+
+        public static GrupoDto_Update MapperEntityToDTOModificar(Grupo grupo)
+        {
+            return new GrupoDto_Update
+            {
+                id = grupo.id,
+                nombre = grupo.nombre,
+                descripcion = grupo.descripcion,
                 fecha_ultima_edicion = grupo.fecha_ultima_edicion
             };
         }

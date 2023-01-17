@@ -7,6 +7,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System.Diagnostics;
@@ -20,11 +21,21 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 
         private readonly UsuarioDAO _userService;
         private readonly Mock<IDataContext> _contextMock;
+        private readonly IMapper mapper;
 
         public UsuarioServiceTest()
         {
+            var myProfile = new List<Profile>
+            {
+                new TipoEstadoMapper(),
+                new EtiquetaMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
+            mapper = new Mapper(configuration);
             _contextMock = new Mock<IDataContext>();
-            _userService = new UsuarioDAO(_contextMock.Object);
+            _userService = new UsuarioDAO(_contextMock.Object,mapper);
             _contextMock.SetupDataContextUser();
         }
 
@@ -397,7 +408,33 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
         }
 
 
+        [TestMethod(displayName: "Prueba Unitaria para editar un Usuario")]
+        public void ActualizarUsuarioTest()
+        {
+            //arrange
+            var requestUserAdmin = new Usuario
+            {
+                Id = new Guid("69C30E04-4EB1-4B87-9F32-67DAC2FDC19B"),
+                cedula = 12345,
+                primer_nombre = "Gabriel",
+                segundo_nombre = "David",
+                primer_apellido = "Ojeda",
+                segundo_apellido = "Cruz",
+                fecha_nacimiento = "21/12/2020",
+                gender = 'M',
+                correo = "gabrielojeda7@gmail.com",
+                password = "qwertyuiop",
+                fecha_creacion = DateTime.Now.Date,
+                fecha_ultima_edicion = default(DateTime),
+                fecha_eliminacion = default(DateTime),
+            };
 
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+
+            var result = _userService.ActualizarUsuario(requestUserAdmin);
+
+            Assert.AreEqual(result.primer_nombre, "Gabriel");
+        }
 
         /*[TestMethod(displayName: "Prueba Unitaria para logeo satisfactorio")]
         public void LoginTest()
@@ -405,7 +442,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
 
         }*/
 
-
+        
 
     }
 }
