@@ -144,7 +144,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloTipoEstado
         }
         public async Task<JObject> Guardar(TipoEstadoNuevo tipoEstadoNuevo)
         {
-
             // Crea una instancia de HttpClient configurada
             var cliente = CrearCliente();
 
