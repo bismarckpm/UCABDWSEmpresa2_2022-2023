@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
-using ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones;
-using ModuloPlantillasNotificaciones.Servicios;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
+using ServiceDeskUCAB.Models.PlantillaNotificaciones;
+using ServiceDeskUCAB.ViewModel.PlantillaNotificaciones;
+using ServiceDeskUCAB.Models.EstadoTicket;
 using Microsoft.AspNetCore.Authorization;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Servicios.ModuloTipoEstado;
 
-namespace ModuloPlantillasNotificaciones.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminAccess")]
     public class PlantillaNotificacionController : Controller
     {
         private readonly ILogger<PlantillaNotificacionController> _logger;
@@ -40,7 +41,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
             PlantillaEditarViewModel plantillaEditarViewModel = new();
 
             PlantillaNotificacion plantillaNotificacion = await _servicioApiPlantillaNotificacion.Obtener(id);
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
 
             plantillaEditarViewModel.TipoEstados = ListaEstados;
             plantillaEditarViewModel.Plantilla = plantillaNotificacion;
@@ -53,8 +54,8 @@ namespace ModuloPlantillasNotificaciones.Controllers
         {
             PlantillaNuevaViewModel plantillaNuevaViewModel = new();
 
-            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.Lista();
-            
+            List<TipoEstado> ListaEstados = await _servicioApiTipoEstado.ListaHabilitados();
+
             plantillaNuevaViewModel.TipoEstados = ListaEstados;
             plantillaNuevaViewModel.Plantilla = new();
 
@@ -124,7 +125,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
 
             if ((bool)respuesta["success"])
                 return RedirectToAction("PlantillasNotificacion", new { message = "Se ha eliminado correctamente" });
-                //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+            //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
                 return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
         }

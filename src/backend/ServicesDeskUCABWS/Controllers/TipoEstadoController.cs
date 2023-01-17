@@ -14,13 +14,10 @@ namespace ServicesDeskUCABWS.Controllers
     [ApiController]
     public class TipoEstadoController:ControllerBase
     {
-        private readonly ITipoEstado _tipoEstado;
-        
-
-        public TipoEstadoController(ITipoEstado tipoEstadoContext)
+        private readonly ITipoEstado _tipoEstadoService;
+        public TipoEstadoController(ITipoEstado tipoEstadoService)
         {
-            _tipoEstado = tipoEstadoContext;
-            
+            _tipoEstadoService = tipoEstadoService;
         }
 
         //GET: Controlador para consultar todas los tipos estados
@@ -32,7 +29,27 @@ namespace ServicesDeskUCABWS.Controllers
 
             try
             {
-                response.Data = _tipoEstado.ConsultaTipoEstados();
+                response.Data = _tipoEstadoService.ConsultaTipoEstados();
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        //GET: Controlador para consultar todas los tipos estados habilitados
+        [HttpGet]
+        [Route("ConsultaHabilitado/")]
+        public ApplicationResponse<List<TipoEstadoDTO>> ConsultaTipoEstadosHabilitadosCtrl()
+        {
+            var response = new ApplicationResponse<List<TipoEstadoDTO>>();
+
+            try
+            {
+                response.Data = _tipoEstadoService.ConsultaTipoEstadosHabilitados();
             }
             catch (ExceptionsControl ex)
             {
@@ -52,7 +69,7 @@ namespace ServicesDeskUCABWS.Controllers
 
             try
             {
-                response.Data = _tipoEstado.ConsultarTipoEstadoGUID(id);
+                response.Data = _tipoEstadoService.ConsultarTipoEstadoGUID(id);
             }
             catch (ExceptionsControl ex)
             {
@@ -72,7 +89,7 @@ namespace ServicesDeskUCABWS.Controllers
             var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
-                response.Data = _tipoEstado.ConsultarTipoEstadoTitulo(titulo);
+                response.Data = _tipoEstadoService.ConsultarTipoEstadoTitulo(titulo);
             }
             catch (ExceptionsControl ex)
             {
@@ -86,13 +103,12 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<TipoEstadoDTO> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
-                var resultSevice = _tipoEstado.RegistroTipoEstado(tipoEstadoDTO);
-                response.Data = resultSevice.ToString();
+                response.Data = _tipoEstadoService.RegistroTipoEstado(tipoEstadoDTO); ;
             }
             catch (ExceptionsControl ex)
             {
@@ -106,13 +122,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoCreateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<TipoEstadoDTO> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<TipoEstadoDTO>();
             try
             {
-                var resultSevice = _tipoEstado.ActualizarTipoEstado(tipoEstadoDTO, id);
-                response.Data = resultSevice.ToString();
+                response.Data = _tipoEstadoService.ActualizarTipoEstado(tipoEstadoDTO, id);
             }
             catch (ExceptionsControl ex)
             {
@@ -123,24 +138,23 @@ namespace ServicesDeskUCABWS.Controllers
             return response;
         }
 
-        //DELETE: Controlador para eliminar tipo estado
-        [HttpDelete]
-        [Route("Eliminar/{id}")]
-        public ApplicationResponse<String> EliminarTipoEstadoCtrl(Guid id)
+        //UPDATE: Controlador para habilitar y deshabilitar tipo estado
+        [HttpPut]
+        [Route("HabilitarDeshabilitar/{id}")]
+        public ApplicationResponse<String> HabilitarDeshabilitarTipoEstadoCtrl(Guid id)
         {
             var response = new ApplicationResponse<String>();
             try
             {
-                var resultSevice = _tipoEstado.EliminarTipoEstado(id);
-                response.Data = resultSevice.ToString();
-                      
+                response.Data = _tipoEstadoService.HabilitarDeshabilitarTipoEstado(id).ToString();
+
             }
             catch (ExceptionsControl ex)
             {
                 response.Success = false;
                 response.Message = ex.Mensaje;
                 response.Exception = ex.Excepcion.ToString();
-            } 
+            }
             return response;
         }
 

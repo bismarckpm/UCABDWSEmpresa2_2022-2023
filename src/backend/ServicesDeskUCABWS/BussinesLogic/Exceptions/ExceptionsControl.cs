@@ -2,7 +2,7 @@
 
 namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
 {
-    public class ExceptionsControl:Exception
+    public class ExceptionsControl : Exception
 	{
 		public string Mensaje { get; set; }
 		public Exception Excepcion { get; set; }
@@ -23,3 +23,4 @@ namespace ServicesDeskUCABWS.BussinesLogic.Exceptions
         }
 	}
 }
+

@@ -19,6 +19,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<TipoEstadoCreateDTO, Tipo_Estado>();
             CreateMap<Tipo_Estado, TipoEstadoCreateDTO>();
 
+            CreateMap<TipoEstadoUpdateDTO, Tipo_Estado>();
+            CreateMap<Tipo_Estado, TipoEstadoUpdateDTO>();
+
         }
     }
 }

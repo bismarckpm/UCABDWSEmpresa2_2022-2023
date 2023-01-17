@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
-using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacioneDAO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.Entities;
 using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 
 namespace ServicesDeskUCABWS.Controllers
 {
@@ -125,14 +125,12 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear plantilla notificacion
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<String> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
+        public ApplicationResponse<PlantillaNotificacionDTO> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.RegistroPlantilla(plantillaDTO);
-                response.Data = resultService.ToString();
-
+                response.Data = _plantilla.RegistroPlantilla(plantillaDTO);
             }
             catch (ExceptionsControl ex)
             {
@@ -146,13 +144,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar plantilla notificacion
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<String> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
+        public ApplicationResponse<PlantillaNotificacionDTO> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.ActualizarPlantilla(plantillaDTO, id);
-                response.Data = resultService.ToString();
+                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO, id);
             }
             catch (ExceptionsControl ex)
             {
@@ -166,13 +163,12 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar plantilla notificacion
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public ApplicationResponse<String> EliminarPlantillaCtrl(Guid id)
+        public ApplicationResponse<PlantillaNotificacionDTO> EliminarPlantillaCtrl(Guid id)
         {
-            var response = new ApplicationResponse<String>();
+            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
             try
             {
-                var resultService = _plantilla.EliminarPlantilla(id);
-                response.Data = resultService.ToString();
+                response.Data = _plantilla.EliminarPlantilla(id); ;
             }
             catch(ExceptionsControl ex)
             {

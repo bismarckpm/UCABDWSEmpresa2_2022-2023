@@ -1,0 +1,213 @@
+﻿@model ServiceDeskUCAB.ViewModel.EstadoDepartamento.ViewModelEstadoDepartamento;
+
+
+
+<div class="row">
+    <div class="col-12">
+        <h1 id="ti">Gestionar Estado Departamento @Model.Departamento.nombre</h1>
+    </div>
+</div>
+
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div style="margin-top:30px;">
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaEstado)
+            {
+                <tr>
+                    <td>@item.nombre</td>
+                    <td>@item.descripcion</td>
+                    @if(item.fecha_eliminacion==null){
+                        <td>Habilitado</td>
+                    } else {
+                        <td>Deshabilitado</td>
+                    }
+                    <td>
+                        <div class="dropdown" style="float: right">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modificarModal-@item.Id">Modificar</a>
+                                    @if (item.fecha_eliminacion == null)
+                                    {
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">Desahabilitar</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal2-@item.Id">Habilitar</a>
+                                    }
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+@*Modificar estado*@
+@foreach (var estado in Model.ListaEstado)
+{
+    <div class="modal fade" id="modificarModal-@estado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Nuevo Tipo de Ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form asp-action="ActualizarEstado" asp-controller="DepartamentoEstado" method="post">
+
+                        <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id:</label>
+                            <input required type="text" value="@estado.Id" name="id" />
+                        </div>
+
+                        <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id departamento:</label>
+                            <input required type="text" value="@Model.Departamento.Id" name="idDept" />
+                        </div>
+
+                        <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id departamento:</label>
+                            <input required type="text" value="@Model.Departamento.nombre" name="nombreDept" />
+                        </div>
+
+                        <div class="mb-3" style="display: none;">
+                            <label for="recipient-name" class="col-form-label">Id:</label>
+                            <input required type="text" value="@estado.Id" name="id" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Nombre:</label>
+                            <input required type="text"  value="@estado.nombre" name="nombre" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Descripción:</label>
+                            <input required type="text" value="@estado.descripcion" name="descripcion" />
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@*Deshabilitar o Habilitar estado*@
+@*Modal para Eliminar Tipo Ticket --- Fino*@
+@foreach (var estado in Model.ListaEstado)
+{
+    <div class="modal fade" id="modal-@estado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Desahabilitar Estado "@estado.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar este Estado "@estado.nombre"?</label>
+                        </div>
+                        <input type="hidden" asp-for="Departamento.Id" name="IdDept" required />
+                        <input type="hidden" asp-for="Departamento.nombre" name="nombreDept" required />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" asp-action="DeshabilitarEstado" asp-controller="DepartamentoEstado" asp-route-id="@estado.Id" asp-route-IdDept="Departamento.Id" asp-route-nombreDept="Departamento.nombre">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@foreach (var estado in Model.ListaEstado)
+{
+    <div class="modal fade" id="modal2-@estado.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Desahabilitar Estado "@estado.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea deshabilitar este Estado "@estado.nombre"?</label>
+                        </div>
+                        <input type="hidden" asp-for="Departamento.Id" name="IdDept" required />
+                        <input type="hidden" asp-for="Departamento.nombre" name="nombreDept" required />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" asp-action="HabilitarEstado" asp-controller="DepartamentoEstado" asp-route-id="@estado.Id" asp-route-IdDept="Departamento.Id" asp-route-nombreDept="Departamento.nombre">Habilitar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+
+            });
+        });
+    </script>
+}

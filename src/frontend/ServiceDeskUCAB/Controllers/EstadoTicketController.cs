@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ModuloPlantillasNotificaciones.Models.EstadoTicket;
-using ModuloPlantillasNotificaciones.Models.PlantillaNotificaciones;
-using ModuloPlantillasNotificaciones.Servicios;
-using ModuloPlantillasNotificaciones.ViewModel.EstadoTicket;
-using ModuloPlantillasNotificaciones.ViewModel.PlantillaNotificaciones;
 using Newtonsoft.Json.Linq;
+using ServiceDeskUCAB.Models.EstadoTicket;
+using ServiceDeskUCAB.ViewModel.EstadoTicket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Servicios.ModuloTipoEstado;
 
-namespace ModuloPlantillasNotificaciones.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminAccess")]
     public class EstadoTicketController : Controller
     {
         private readonly ILogger<EstadoTicketController> _logger;
         private readonly IServicioPlantillaNotificacion_API _servicioApiPlantillaNotificacion;
         private readonly IServicioTipoEstado_API _servicioApiTipoEstado;
+
 
         public EstadoTicketController(ILogger<EstadoTicketController> logger, IServicioTipoEstado_API servicioApiTipoEstado)
         {
@@ -44,11 +45,11 @@ namespace ModuloPlantillasNotificaciones.Controllers
 
             return View(estadoNuevoViewModel);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> GuardarEstado(TipoEstadoNuevo tipoEstadoNuevo)
         {
-            
+
             JObject respuesta;
 
             try
@@ -71,16 +72,29 @@ namespace ModuloPlantillasNotificaciones.Controllers
             return NoContent();
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> EliminarEstado(Guid id)
+        //{
+        //    JObject respuesta;
+        //    respuesta = await _servicioApiTipoEstado.Eliminar(id);
+        //    if ((bool)respuesta["success"])
+        //        return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
+        //    //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+        //    else
+        //        return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> EliminarEstado(Guid id)
+        public async Task<IActionResult> HabilitarDeshabilitarEstado(Guid id)
         {
+            Console.WriteLine(id);
             JObject respuesta;
-            respuesta = await _servicioApiTipoEstado.Eliminar(id);
+            respuesta = await _servicioApiTipoEstado.HabilitarDeshabilitar(id);
             if ((bool)respuesta["success"])
-                return RedirectToAction("EstadosTicket", new { message = "Se ha eliminado correctamente" });
-              //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+                return RedirectToAction("EstadosTicket", new { message = "Se ha actualizado correctamente" });
+            //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
-                return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
+                return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });
         }
 
         public async Task<IActionResult> EstadoEditar(Guid id)
@@ -100,7 +114,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
         public async Task<IActionResult> EditarEstado(TipoEstadoNuevo estado, string id)
         {
 
-            if(estado.Etiqueta == null)
+            if (estado.Etiqueta == null)
             {
                 estado.Etiqueta = new();
             }

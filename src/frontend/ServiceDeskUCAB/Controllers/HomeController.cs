@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ServiceDeskUCAB.Models;
+using ServiceDeskUCAB.Models.ViewModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using ModuloPlantillasNotificaciones.Models;
-using ModuloPlantillasNotificaciones.Servicios;
 using System.Diagnostics;
+using System.Dynamic;
+using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
 
-namespace ModuloPlantillasNotificaciones.Controllers
+namespace ServiceDeskUCAB.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -20,7 +26,7 @@ namespace ModuloPlantillasNotificaciones.Controllers
             _servicioApi = servicioApi;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             //var current = User.Identities.First().Claims.ToList()[2].Value;
             var current = User.Identities.First().Claims;
@@ -44,3 +50,4 @@ namespace ModuloPlantillasNotificaciones.Controllers
         }
     }
 }
+

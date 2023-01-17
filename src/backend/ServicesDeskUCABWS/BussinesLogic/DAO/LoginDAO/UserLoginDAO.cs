@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Common;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.UserMapper;
@@ -36,7 +37,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO
             try
             {
                var passwordEncrypt = user.password;
-               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == passwordEncrypt && u.fecha_eliminacion == default(DateTime)).FirstOrDefault();
+               var usuario  =  _dataContext.Usuarios.Where(u => u.correo == user.correo && u.password == passwordEncrypt /*&& u.fecha_eliminacion == default(DateTime)*/).FirstOrDefault();
                return UserMapper.MapperDtoToEntityUserLogin(usuario, GetToken(usuario));
             }
             catch (Exception ex)

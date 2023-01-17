@@ -285,8 +285,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 
 				descripcion = "Grupo nuevo",
 
-				fecha_creacion = DateTime.Now.Date,
-
 				fecha_ultima_edicion = null
 			};
 
@@ -313,8 +311,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 				nombre = "Nuevo Grupo",
 
 				descripcion = "Grupo nuevo",
-
-				fecha_creacion = DateTime.Now.Date,
 
 				fecha_ultima_edicion = null
 			};
