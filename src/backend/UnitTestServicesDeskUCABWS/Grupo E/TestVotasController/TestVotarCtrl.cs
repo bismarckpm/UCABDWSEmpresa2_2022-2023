@@ -2,6 +2,8 @@
 using Moq;
 
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Response;
@@ -22,6 +24,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TesVotosController
         private readonly Votos_TicketController _controller;
         private readonly Mock<IVotos_TicketDAO> _serviceMock;
         private readonly Mock<IDataContext> context;
+        
         private IMapper mapper;
         public TestVotosController()
         {
@@ -33,6 +36,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TesVotosController
             {
                 Success = true,
             });
+
+         
         }
 
         [TestMethod]
@@ -43,8 +48,22 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TesVotosController
             Assert.IsTrue(res.Success);
         }
 
+        //Prueba Unitaria del controlador para consultar votos no pendientes por IdUsuario 
 
+        [TestMethod]
+        public void ConsultarVotosNoPendientesCtrlTest()
+        {
+            //Arrange
+            _serviceMock.Setup(p => p.ConsultaVotosNoPendientes(It.IsAny<Guid>())).Returns(new ApplicationResponse<List<Votos_Ticket>>());
+            var application = new ApplicationResponse<List<Votos_Ticket>>();
 
+            //act
+            var result = _controller.DetailsPen(It.IsAny<Guid>());
+
+            //assert
+            Assert.AreEqual(application.GetType(), result.GetType());
+
+        }
     }
 
 }

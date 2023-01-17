@@ -53,81 +53,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
         public void CaminoFelizFlujoParaleloTest()
         {
             //arrange
-            var Ticket = new Ticket()
-            {
-                Id = Guid.Parse("132A191C-95AE-4538-8E78-C5EDD3092552"),
-                titulo = "titulo",
-                descripcion = "descripcion",
-                fecha_creacion = DateTime.Now,
-                Estado = new Estado()
-                {
-                    Id = Guid.NewGuid(),
-                    nombre = "nombreEstado"
-                },
-                Tipo_Ticket = new Tipo_Ticket()
-                {
-                    Id = Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"),
-                },
-
-                Prioridad = new Prioridad()
-                {
-                    nombre = "nombrePrioridad"
-                },
-                Emisor = new Empleado()
-                {
-                    Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
-                    primer_nombre = "nombreEmpleado",
-                    primer_apellido = "apellidoEmpleado",
-                    Cargo = new Cargo()
-                    {
-                        id = Guid.NewGuid(),
-                        nombre_departamental = "nombreDepartamento",
-                        descripcion = "descrip",
-                        fecha_creacion = DateTime.Now,
-                        Departamento = new Departamento()
-                        {
-                            id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
-                            nombre = "nombreDepartamento",
-                            grupo = new Grupo()
-                            {
-                                nombre = "nombreGrupo"
-                            }
-                        },
-                    }
-
-                },
-                
-        };
-           var ListaFlujo = new List<Flujo_Aprobacion>
-            { 
-                new Flujo_Aprobacion { 
-                    IdTicket = new Guid("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E"),
-                    Cargo=new Cargo {
-                            nombre_departamental= "Cargos 1",
-                            descripcion= "Descripcion 1",
-
-                            Departamento = new Departamento {
-                                id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
-                                 nombre = "Cargos 1",
-                                descripcion= "Descripcion 1"
-                            }
-                        }
-                    /*Cargo = new Cargo("Nombre 1", "Descripcion 1"){ 
-                    Cargos_Asociados= new List<Cargo> {
-                       new Cargo {
-                            nombre_departamental= "Cargos 1",
-                            descripcion= "Descripcion 1",
-
-                            Departamento = new Departamento {
-                                id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87"),
-                                 nombre = "Cargos 1",
-                                descripcion= "Descripcion 1"
-                            }
-                        }
-                    }
-                  }*/
-                } 
-            };
+            var Ticket = context.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"));
+            
 
             //context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
             plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
@@ -136,74 +63,39 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             //Act
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = ticketDAO.FlujoParalelo(Ticket);
+            var result = ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //Assert
-
+            Assert.AreEqual("Pendiente D1", Ticket.Estado.nombre);
+            Assert.AreEqual(1, Ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(1, context.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03")).Count());
+            Assert.AreEqual(4, context.Object.Votos_Tickets.Where(x => x.IdTicket == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03")).Count());
         }
 
-   
 
-    //Test para el servicio de un excepcion para flujo paralelo
-    [TestMethod]
-    public void CaminoFelizFlujoParaleloExceptions()
-    {
-        //Arrage
-        var Ticket = new Ticket()
+
+        //Test para el servicio de un excepcion para flujo paralelo
+        [TestMethod]
+        public void FlujoParaleloExceptions()
         {
-            Id = Guid.NewGuid(),
-            titulo = "titulo",
-            descripcion = "descripcion",
-            fecha_creacion = DateTime.Now,
-            Estado = new Estado()
+            //Arrage
+            var Ticket = context.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA03"));
+
+            var Expected = new ApplicationResponse<string>()
             {
-                Id = Guid.NewGuid(),
-                nombre = "nombreEstado"
-            },
+                Success = false,
 
-            Departamento_Destino = new Departamento()
-            {
-                nombre = "nombreDepartamento",
-                grupo = new Grupo()
-                {
-                    nombre = "nombreGrupo"
-                }
-            },
-            Prioridad = new Prioridad()
-            {
-                nombre = "nombrePrioridad"
-            },
-            Emisor = new Empleado()
-            {
-                Id = Guid.Parse("18f401c9-12aa-460f-80a2-00ff05bb0c06"),
-                primer_nombre = "nombreEmpleado",
-                primer_apellido = "apellidoEmpleado",
-                Cargo = new Cargo()
-                {
-                    id = Guid.NewGuid(),
-                    nombre_departamental = "nombreDepartamento",
-                    descripcion = "descrip",
-                    fecha_creacion = DateTime.Now,
-                }
-            }
-        };
+            };
 
+            //act
+            context.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));
 
-        var Expected = new ApplicationResponse<string>()
-        {
-            Success = false,
+            ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
-        };
+            //assert
+            //Assert.IsTrue(result != "Exitoso");
 
-        //act
-        context.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));
-
-        var result = ticketDAO.FlujoParalelo(Ticket);
-
-        //assert
-        Assert.IsNotNull(result);
-
-    }
+        }
 
     }
 }

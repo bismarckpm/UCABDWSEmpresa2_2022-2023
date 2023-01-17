@@ -63,8 +63,15 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<Prioridad>().HasCheckConstraint("prioridad_estado_chk", "estado = 'Habilitado' or estado = 'Deshabilitado'");
             modelBuilder.Entity<Prioridad>().HasIndex(p => p.nombre).IsUnique();
 
-            modelBuilder.Entity<Ticket>().HasOne(t=>t.Emisor).WithMany(t=>t.Lista_Ticket).HasForeignKey(t=>t.EmisorId);
-            modelBuilder.Entity<Ticket>().HasOne(t=>t.Responsable).WithMany(t=>t.Tickets_Propios).HasForeignKey(t=>t.ResponsableId).OnDelete(DeleteBehavior.ClientSetNull);
+            modelBuilder.Entity<Tipo_Ticket>()
+                .HasDiscriminator<string>("Discriminator")
+                .HasValue<TipoTicket_FlujoNoAprobacion>("Modelo_No_Aprobacion")
+                .HasValue<TipoTicket_FlujoAprobacionParalelo>("Modelo_Paralelo")
+                .HasValue<TipoTicket_FlujoAprobacionJerarquico>("Modelo_Jerarquico");
+
+
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Emisor).WithMany(t=>t.Lista_Ticket).HasForeignKey(t=>t.EmisorId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Responsable).WithMany(t=>t.Tickets_Propios).HasForeignKey(t=>t.ResponsableId).OnDelete(DeleteBehavior.NoAction);
         }
 
         //Creacion de los DbSeT
@@ -101,5 +108,11 @@ namespace ServicesDeskUCABWS.Data
                 return this;
             }
         }
+
+        public DbSet<TipoTicket_FlujoNoAprobacion> tipoTicket_FlujoNoAprobacions {get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionParalelo> tipoTicket_FlujoAprobacionParalelos { get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionJerarquico> tipoTicket_FlujoAprobacionJerarquicos { get; set; }
+        public DbSet<Modelo_Aprobacion> Modelos_Aprobacion { get; set; }
     }
+    
 }

@@ -26,9 +26,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPost, Route("Guardar")]
-        public ApplicationResponse<string> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
+        public ApplicationResponse<TicketNuevoDTO> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
         {
-            return _ticketDAO.crearTicket(nuevoTicket);
+            return _ticketDAO.RegistroTicket(nuevoTicket);
         }
 
         [HttpGet, Route("Obtener/{id}")]
@@ -117,6 +117,11 @@ namespace ServicesDeskUCABWS.Controllers
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropiosCtrl(string idEmpleado)
         {   
             return _ticketDAO.obtenerTicketsPropios(new Guid(idEmpleado));
+        }
+        [HttpGet, Route("ObtenerTicketsEnviados/{idEmpleado}")]
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviadosCtrl(string idEmpleado)
+        {   
+            return _ticketDAO.obtenerTicketsEnviados(new Guid(idEmpleado));
         }
     }
 }

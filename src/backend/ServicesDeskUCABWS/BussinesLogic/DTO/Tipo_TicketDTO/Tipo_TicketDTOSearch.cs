@@ -13,7 +13,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO
 
         public string descripcion { get; set; } = string.Empty;
 
-        public String tipo { get; set; }
+        public string tipo { get; set; }
 
         public int? Minimo_Aprobado { get; set; }
 

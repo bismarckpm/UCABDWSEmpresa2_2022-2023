@@ -12,17 +12,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 {
     public interface ITicketDAO
     {
-        public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
+        //public ApplicationResponse<TicketCreateDTO> RegistroTicket(TicketCreateDTO ticketDTO);
         public ApplicationResponse<TicketNuevoDTO> RegistroTicket(TicketNuevoDTO ticketDTO);
-        public string FlujoAprobacion(Ticket ticket);
-        public string FlujoParalelo(Ticket ticket);
-        public string FlujoNoAprobacion(Ticket ticket);
         public List<Ticket> ConsultaListaTickets();
         public Ticket ConsultaTicket(Guid id);
 
-        public bool CambiarEstado(Ticket ticket, string Estado,List<Empleado> ListaEmpleados);
         //public ApplicationResponse<Votos_TicketDTOCreate> RegistroVotos(Votos_TicketDTOCreate votos_TicketDTO);
-        public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
+        //public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id);
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado, Guid empleadoId);
         public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId);
@@ -38,5 +34,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento);
         public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropios(Guid idEmpleado);
         public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio);
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados);
+        public Ticket CrearTicket(TicketNuevoDTO ticketDTO);
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviados(Guid idEmpleado);
     }
 }

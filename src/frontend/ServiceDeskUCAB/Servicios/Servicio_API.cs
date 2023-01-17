@@ -352,6 +352,31 @@ namespace ServiceDeskUCAB.Servicios
 
             return null;
         }
+
+        public async Task<List<Votos_Ticket>> ObtenerVotosNoPendientes(string idUsuario)
+        {
+            List<Votos_Ticket> lista = new List<Votos_Ticket>();
+            var cliente = new HttpClient();
+
+            // TODO: Obtener sesion y colocar id del usuario aqui
+
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync($"api/Votos_Ticket/ConsultaNP/" + idUsuario);  //URL de Lista en el swagger
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
+                var newList = new List<Votos_Ticket>();
+
+                lista = resultado.Data;
+            }
+
+            return lista;
+
+        }
     }
 
 }

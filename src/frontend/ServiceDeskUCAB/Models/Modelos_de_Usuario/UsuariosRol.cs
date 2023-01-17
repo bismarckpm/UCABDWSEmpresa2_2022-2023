@@ -1,4 +1,7 @@
-﻿using ServiceDeskUCAB.Models.Enums;
+﻿using ServiceDeskUCAB.Models.DTO;
+using ServiceDeskUCAB.Models.DTO.CargoDTO;
+using ServiceDeskUCAB.Models.Enums;
+using ServicesDeskUCAB.Models.DTO.CargoDTO;
 using System.ComponentModel.DataAnnotations;
 
 namespace ServiceDeskUCAB.Models.Modelos_de_Usuario
@@ -17,6 +20,7 @@ namespace ServiceDeskUCAB.Models.Modelos_de_Usuario
         public string password { get; set; } = string.Empty;
         public List<Roles> roles { get; set; } = new List<Roles>();
         public string prueba { get; set; }
+        public CargoDTOUpdate cargo { get; set; }
         public Rol Rol { get; set; }
     }
 

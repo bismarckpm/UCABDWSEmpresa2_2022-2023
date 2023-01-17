@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221230164816_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221230232048_MigracionesInicial")]
+    partial class MigracionesInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -295,6 +295,23 @@ namespace ServicesDeskUCABWS.Migrations
                     b.ToTable("Grupos");
                 });
 
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.Modelo_Aprobacion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("discrimanador")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Modelos_Aprobacion");
+                });
+
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.PlantillaNotificacion", b =>
                 {
                     b.Property<Guid>("Id")
@@ -516,6 +533,10 @@ namespace ServicesDeskUCABWS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Maximo_Rechazado")
                         .HasColumnType("int");
 
@@ -541,13 +562,11 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tipos_Tickets");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Tipo_Ticket");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Usuario", b =>
@@ -692,6 +711,27 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Cargoid");
 
                     b.HasDiscriminator().HasValue("2");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoAprobacionJerarquico", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_Jerarquico");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoAprobacionParalelo", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_Paralelo");
+                });
+
+            modelBuilder.Entity("ServicesDeskUCABWS.Entities.TipoTicket_FlujoNoAprobacion", b =>
+                {
+                    b.HasBaseType("ServicesDeskUCABWS.Entities.Tipo_Ticket");
+
+                    b.HasDiscriminator().HasValue("Modelo_No_Aprobacion");
                 });
 
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Bitacora_Ticket", b =>
@@ -840,7 +880,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasOne("ServicesDeskUCABWS.Entities.Empleado", "Emisor")
                         .WithMany("Lista_Ticket")
                         .HasForeignKey("EmisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Estado", "Estado")
@@ -859,7 +899,8 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Empleado", "Responsable")
                         .WithMany("Tickets_Propios")
-                        .HasForeignKey("ResponsableId");
+                        .HasForeignKey("ResponsableId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Ticket", "Ticket_Padre")
                         .WithMany()

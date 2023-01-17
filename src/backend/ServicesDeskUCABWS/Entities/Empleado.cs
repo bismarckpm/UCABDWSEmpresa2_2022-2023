@@ -10,6 +10,7 @@ namespace ServicesDeskUCABWS.Entities
         public HashSet<Votos_Ticket> Votos_Ticket { get; set; }
         public List<Ticket>? Tickets_Propios {get; set;}
         public Empleado(int cedula, string primer_nombre, string primer_apellido, string segundo_apellido, string fecha_nacimiento, char gender, string correo, string password, string segundo_nombre)
+
         {
             Id = Guid.NewGuid();
             this.cedula = cedula;

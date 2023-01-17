@@ -9,12 +9,23 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceDeskUCAB.Servicios
+namespace ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion
 {
     public class ServicioPlantillaNotificacion_API : IServicioPlantillaNotificacion_API
     {
         private static string _baseUrl;
         private JObject _json_respuesta;
+
+        // Crea una instancia de HttpClient configurada con la dirección base especificada
+        private HttpClient CrearCliente()
+        {
+            var cliente = new HttpClient
+            {
+                BaseAddress = new Uri(_baseUrl)
+            };
+            return cliente;
+        }
+
         public ServicioPlantillaNotificacion_API()
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
@@ -26,10 +37,8 @@ namespace ServiceDeskUCAB.Servicios
         {
             List<PlantillaNotificacion> listaPlantilla = new();
 
-            var cliente = new HttpClient
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             try
             {
@@ -51,7 +60,6 @@ namespace ServiceDeskUCAB.Servicios
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
-
             }
             catch (Exception ex)
             {
@@ -65,23 +73,21 @@ namespace ServiceDeskUCAB.Servicios
         {
             PlantillaNotificacion plantilla = new();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
-
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
             var response = await cliente.GetAsync($"PlantillaNotificacion/Consulta/{idPlantilla}");
 
-            var respuesta = await response.Content.ReadAsStringAsync();
-            JObject json_respuesta = JObject.Parse(respuesta);
-
-            if ((bool)json_respuesta["success"])
+            if (response.IsSuccessStatusCode)
             {
-                //Obtengo la data del json respuesta
-                string stringDataRespuesta = json_respuesta["data"].ToString();
+                var respuesta = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(respuesta);
 
-                var resultado = JsonConvert.DeserializeObject<PlantillaNotificacion>(stringDataRespuesta);
-                plantilla = resultado;
+                if ((bool)json["success"])
+                {
+                    // Obtiene la data del json de respuesta
+                    var stringDataRespuesta = json["data"].ToString();
+                    plantilla = JsonConvert.DeserializeObject<PlantillaNotificacion>(stringDataRespuesta);
+                }
             }
 
             return plantilla;
@@ -89,10 +95,8 @@ namespace ServiceDeskUCAB.Servicios
 
         public async Task<JObject> Guardar(PlantillaNotificacionNueva plantilla)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             var content = new StringContent(JsonConvert.SerializeObject(plantilla), Encoding.UTF8, "application/json");
             Console.WriteLine(JsonConvert.SerializeObject(plantilla));
@@ -119,13 +123,10 @@ namespace ServiceDeskUCAB.Servicios
 
         public async Task<JObject> Editar(PlantillaNotificacionNueva plantilla, string id)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
 
             var content = new StringContent(JsonConvert.SerializeObject(plantilla), Encoding.UTF8, "application/json");
-
 
             try
             {
@@ -149,10 +150,9 @@ namespace ServiceDeskUCAB.Servicios
         public async Task<JObject> Eliminar(Guid idPlantilla)
         {
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            // Crea una instancia de HttpClient configurada
+            var cliente = CrearCliente();
+
             var response = await cliente.DeleteAsync($"PlantillaNotificacion/Eliminar/{idPlantilla}");
 
             var respuesta = await response.Content.ReadAsStringAsync();

@@ -14,6 +14,9 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Tipo_Ticket> Tipos_Tickets { get; set; }
+        public DbSet<TipoTicket_FlujoNoAprobacion> tipoTicket_FlujoNoAprobacions { get; set; }
+        public DbSet<TipoTicket_FlujoAprobacionParalelo> tipoTicket_FlujoAprobacionParalelos { get; set; } 
+        public DbSet<TipoTicket_FlujoAprobacionJerarquico> tipoTicket_FlujoAprobacionJerarquicos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
         public DbSet<Flujo_Aprobacion> Flujos_Aprobaciones { get; set; }
         public DbSet<Votos_Ticket> Votos_Tickets { get; set; }
@@ -28,6 +31,7 @@ namespace ServicesDeskUCABWS.Data
         public DbSet<RolUsuario> RolUsuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
 
+        public DbSet<Modelo_Aprobacion> Modelos_Aprobacion { get; set; }
 
         public DbSet<DepartamentoTipo_Ticket> DepartamentoTipo_Ticket { get; set; }
     }
