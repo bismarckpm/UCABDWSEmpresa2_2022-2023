@@ -102,6 +102,7 @@ namespace ServiceDeskUCAB.Controllers
                 bitacoraTicket = await _servicioTicketAPI.BitacoraTicket(ticketId),
                 estados = await _servicioTicketAPI.DepartamentoEstados(departamento.Id)
             };
+            ViewBag.responsable = idUsuario;
             return View(ticketDetailsViewModel);
         }
 

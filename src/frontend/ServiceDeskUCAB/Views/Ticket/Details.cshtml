@@ -8,43 +8,66 @@
 
 
 <div class="row" style="margin-top:30px">
-    <div class="col-8"></div>
+    <div class="col-8" style="margin-bottom:30px">
+        @if(Model.ticket.responsable == null)
+        {
+            <a class="btn btn-primary" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@Model.ticket.ticket_id">Tomar Ticket</a>
+        }
+    </div>
 
     <div class="col-4 text-right">
         @if (Model.ticket.ticketPadre_id != null)
         {
-            <h1>@Model.ticket.ticketPadre_id</h1>
             <h6><span class="badge bg-primary"><a class="btn-primary" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id.">Ticket Reenviado</a></span></h6>
         }
 
-        @if (Model.ticket.fecha_eliminacion == null)
+        @if (Guid.Parse(ViewBag.responsable) == Model.ticket.responsable)
         {
-            <form method="post" asp-controller="Ticket" asp-action="CambiarEstado">
-                <div class="mb-3" style="display:inline-block">
-                    <input name="ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none" />
-                    <select name="estadoId" class="form-select" required>
-                        <option value="" selected>Cambiar estado</option>
-                        @try
-                        {
-                            @foreach (var item in Model.estados)
+            @if (Model.ticket.fecha_eliminacion == null)
+            {
+                <form method="post" asp-controller="Ticket" asp-action="CambiarEstado">
+                    <div class="mb-3" style="display:inline-block">
+                        <input name="ticketId" value="@Model.ticket.ticket_id" required readonly class="d-none" />
+                        <select name="estadoId" class="form-select" required>
+                            <option value="" selected>Cambiar estado</option>
+                            @try
                             {
-                                <option value="@item.Id">@item.nombre</option>
+                                @foreach (var item in Model.estados)
+                                {
+                                    <option value="@item.Id">@item.nombre</option>
+                                }
                             }
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                        }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
 
-                    </select>
-                </div>
-                <button style="display:inline-block" type="submit" class="btn btn-success">Enviar</button>
-            </form>
+                        </select>
+                    </div>
+                    <button style="display:inline-block" type="submit" class="btn btn-success">Enviar</button>
+                </form>
 
+            }
         }
+
     </div>
 
     <div class="container">
+
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-4 col-form-label"><b>Encargado:</b></label>
+            <div class="col-sm-8">
+                @if(Model.ticket.encargado_correo != null)
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="@Model.ticket.encargado_correo">
+                }
+                else
+                {
+                    <input type="text" readonly class="form-control-plaintext" value="Libre">
+                }
+            </div>
+        </div>
+
 
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-4 col-form-label"><b>Departamento destino:</b></label>

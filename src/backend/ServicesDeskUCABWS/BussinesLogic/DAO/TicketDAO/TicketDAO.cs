@@ -1089,6 +1089,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             {
                 ticket_id = id,
                 ticketPadre_id = idPadre,
+                encargado_correo = ticket.Responsable != null ? ticket.Responsable.correo : null,
+                responsable = ticket.ResponsableId,
                 fecha_creacion = ticket.fecha_creacion,
                 fecha_eliminacion = ticket.fecha_eliminacion,
                 titulo = ticket.titulo,
