@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221228144359_AgregueModeloAprobacion")]
-    partial class AgregueModeloAprobacion
+    [Migration("20230117214649_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,9 +117,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("id_grupo");
-
-                    b.HasIndex("nombre")
-                        .IsUnique();
 
                     b.ToTable("Departamentos");
                 });
@@ -233,12 +230,13 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.Property<Guid>("IdTicket")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdCargo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Cargoid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdCargo")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Maximo_Rechazado_nivel")
@@ -253,7 +251,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IdTicket", "IdCargo");
+                    b.HasKey("IdTicket");
 
                     b.HasIndex("Cargoid");
 
@@ -288,9 +286,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("nombre")
-                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });
@@ -676,7 +671,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 12, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2023, 1, 17, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

@@ -57,7 +57,7 @@ namespace ServiceDeskUCAB.Controllers
             JObject respuesta;
             respuesta = await _servicioApiUsuarios.Eliminar(IdUser);
             if ((bool)respuesta["success"])
-                return RedirectToAction("Usuarios");
+                return RedirectToAction("Usuarios", new { message = "Se ha eliminado correctamente" });
             else
                 return NoContent();
         }
@@ -101,7 +101,14 @@ namespace ServiceDeskUCAB.Controllers
                 respuesta = await _servicioApiUsuarios.EditarUsuario(TransformUser(user));
                 //eliminateRol = await _servicioApiUsuarios.EliminarRol(TransformRol(user));
                 if ((bool)eliminateRol["success"] && (bool)respuesta["success"])
-                return RedirectToAction("Usuarios");
+                {
+                    return RedirectToAction("Usuarios", new { message = "Se ha Editado correctamente" });
+                }
+                else
+                {
+                    return RedirectToAction("Usuarios", new { message2 = "Se ha Editado correctamente" });
+                }
+
             }
             catch (Exception ex)
             {
@@ -178,11 +185,11 @@ namespace ServiceDeskUCAB.Controllers
 
                 if ((bool)respuesta["success"])
                 {
-                    return RedirectToAction("Usuarios");
+                    return RedirectToAction("Usuarios", new { message = "Se ha agregado correctamente" });
                 }
                 else
                 {
-                    return RedirectToAction("Usuarios", new { message = (string)respuesta["message"] });
+                    return RedirectToAction("Usuarios", new { message2 = (string)respuesta["message"] });
                 }
             }
             catch (Exception ex)
