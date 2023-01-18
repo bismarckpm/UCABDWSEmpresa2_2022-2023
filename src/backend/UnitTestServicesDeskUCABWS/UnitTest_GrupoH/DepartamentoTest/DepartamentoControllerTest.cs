@@ -40,17 +40,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
+                Fecha_eliminacion = null,
             };
 
             //arrange
@@ -71,17 +71,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
+                Fecha_eliminacion = null,
             };
 
             //arrange
@@ -101,18 +101,18 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+                Fecha_eliminacion = null,
+            };  
 
             //arrange
             _serviceMock.Setup(p => p.ConsultarDepartamentos()).Returns(new List<DepartamentoDto>());
@@ -132,17 +132,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
+                Fecha_eliminacion = null,
             };
 
             //arrange
@@ -162,17 +162,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
+                Fecha_eliminacion = null,
             };
 
 
@@ -181,7 +181,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var application = new ApplicationResponse<DepartamentoDto>();
 
             //act
-            var result = _controller.EliminarDepartamento(dept.id);
+            var result = _controller.EliminarDepartamento(dept.Id);
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
@@ -194,24 +194,24 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
             };
 
             //arrange
             _serviceMock.Setup(p => p.eliminarDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.EliminarDepartamento(dept.id);
+            var ex = _controller.EliminarDepartamento(dept.Id);
 
             //assert
             Assert.IsNotNull(ex);
@@ -224,17 +224,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto_Update()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = DateTime.Now.Date,
+                Fecha_ultima_edicion = DateTime.Now.Date,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
             };
 
             //arrange
@@ -255,17 +255,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto_Update()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
             };
 
             //arrange
@@ -286,17 +286,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
 
             };
 
@@ -305,7 +305,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var application = new ApplicationResponse<DepartamentoDto>();
 
             //act
-            var result = _controller.ConsultarPorID(dept.id);
+            var result = _controller.ConsultarPorID(dept.Id);
 
             //assert
             Assert.AreEqual(application.GetType(), result.GetType());
@@ -317,24 +317,24 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-                nombre = "Nuevo Grupo",
+                Nombre = "Nuevo Grupo",
 
-                descripcion = "Grupo nuevo",
+                Descripcion = "Grupo nuevo",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
             };
 
             //arrange
             _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.ConsultarPorID(dept.id);
+            var ex = _controller.ConsultarPorID(dept.Id);
 
             //assert
             Assert.IsNotNull(ex);
@@ -373,17 +373,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
 
             };
 
@@ -420,17 +420,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
 
             };
 
@@ -452,22 +452,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
 
             };
 
             //arrange
-            _serviceMock.Setup(p => p.DeletedDepartamento()).Returns(new List<DepartamentoDto>());
+            _serviceMock.Setup(p => p.DepartamentosNoEliminados()).Returns(new List<DepartamentoDto>());
             var application = new ApplicationResponse<List<DepartamentoDto>>();
 
             //act
@@ -499,22 +499,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             var dept = new DepartamentoDto()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+                Nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+                Descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+                Fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+                Fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+                Fecha_eliminacion = null
 
             };
 
             //arrange
-            _serviceMock.Setup(p => p.DeletedDepartamento()).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.DepartamentosNoEliminados()).Throws(new ExceptionsControl("", new Exception()));
 
             //act
             var ex = _controller.ListaDepartamentonoEliminado();

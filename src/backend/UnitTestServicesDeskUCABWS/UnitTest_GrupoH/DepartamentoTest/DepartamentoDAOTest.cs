@@ -141,7 +141,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 
             var result = _DepartamentoDAO.AgregarDepartamentoDAO(request);
 
-            Assert.AreNotEqual(request.nombre, result.nombre);
+            Assert.AreNotEqual(request.nombre, result.Nombre);
         }
 
 
@@ -211,7 +211,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             };
 
             var result = _DepartamentoDAO.ConsultarPorID(request.id);
-            Assert.AreEqual(result.id, request.id);
+            Assert.AreEqual(result.Id, request.id);
         }
 
         [TestMethod(displayName: "Prueba Unitaria para consultar departamentos por ID excepcion")]
@@ -378,7 +378,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
 
             _contextMock.Setup(set => set.DbContext.SaveChanges());
 
-            var result = _DepartamentoDAO.DeletedDepartamento();
+            var result = _DepartamentoDAO.DepartamentosNoEliminados();
 
             Assert.AreEqual(result.Count(),2);
         }
@@ -406,14 +406,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             };
 
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DeletedDepartamento());
+            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DepartamentosNoEliminados());
         }
 
         [TestMethod(displayName: "Prueba Unitaria para mostrar departamentos no asociados a un grupo")]
         public void MostrarDepartamentosNoAsociados()
         {
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DeletedDepartamento());
+            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.DepartamentosNoEliminados());
         }
 
 

@@ -38,17 +38,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var grupo = new GrupoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-				nombre = "Seguridad Ambiental",
+				Nombre = "Seguridad Ambiental",
 
-				descripcion = "Cuida el ambiente",
+				Descripcion = "Cuida el ambiente",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null,
+				Fecha_eliminacion = null,
 			};
 
 			//arrange
@@ -69,17 +69,17 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new GrupoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-				nombre = "Seguridad Interna",
+				Nombre = "Seguridad Interna",
 
-				descripcion = "Cuidando la paz mental",
+				Descripcion = "Cuidando la paz mental",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null,
+				Fecha_eliminacion = null,
 			};
 
 			//arrange
@@ -87,67 +87,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 
 			//act
 			var ex = _controller.CrearGrupo(dept);
-
-			//assert
-			Assert.IsNotNull(ex);
-			Assert.IsFalse(ex.Success);
-		}
-
-		[TestMethod(displayName: "Prueba Unitaria Consultar Grupos sin excepciones")]
-		public void ConsultarGrupo()
-		{
-			var dept = new GrupoDto()
-			{
-
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-				nombre = "Seguridad Ambiental",
-
-				descripcion = "Cuida el ambiente",
-
-				fecha_creacion = DateTime.Now.Date,
-
-				fecha_ultima_edicion = null,
-
-				fecha_eliminacion = null,
-			};
-
-			//arrange
-			_serviceMock.Setup(p => p.ConsultarGruposDao()).Returns(new List<GrupoDto>());
-			var application = new ApplicationResponse<List<GrupoDto>>();
-
-			//act
-			var result = _controller.ConsultarGrupos();
-
-			//assert
-			Assert.AreEqual(application.GetType(), result.GetType());
-		}
-
-		[TestMethod(displayName: "Prueba Unitaria Consultar lista de grupos con excepcion")]
-		public void ExcepcionConsultarGrupo()
-		{
-
-			var dept = new GrupoDto()
-			{
-
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c91"),
-
-				nombre = "Seguridad Externa",
-
-				descripcion = "Externa",
-
-				fecha_creacion = DateTime.Now.Date,
-
-				fecha_ultima_edicion = null,
-
-				fecha_eliminacion = null,
-			};
-
-			//arrange
-			_serviceMock.Setup(p => p.ConsultarGruposDao()).Throws(new ExceptionsControl("", new Exception()));
-
-			//act
-			var ex = _controller.ConsultarGrupos();
 
 			//assert
 			Assert.IsNotNull(ex);
@@ -280,13 +219,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var grupo = new GrupoDto_Update()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c90"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c90"),
 
-				nombre = "Nuevo Grupo",
+				Nombre = "Nuevo Grupo",
 
-				descripcion = "Grupo nuevo",
+				Descripcion = "Grupo nuevo",
 
-				fecha_ultima_edicion = null
+				Fecha_ultima_edicion = null
 			};
 
 			//arrange
@@ -307,13 +246,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var grupo = new GrupoDto_Update()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"),
 
-				nombre = "Nuevo Grupo",
+				Nombre = "Nuevo Grupo",
 
-				descripcion = "Grupo nuevo",
+				Descripcion = "Grupo nuevo",
 
-				fecha_ultima_edicion = null
+				Fecha_ultima_edicion = null
 			};
 
 			//arrange
@@ -379,22 +318,22 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new DepartamentoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-				nombre = "Seguridad Ambiental",
+				Nombre = "Seguridad Ambiental",
 
-				descripcion = "Cuida el ambiente",
+				Descripcion = "Cuida el ambiente",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null
+				Fecha_eliminacion = null
 
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Returns(new List<DepartamentoDto>());
+			_serviceMock.Setup(p => p.DepartamentosAsociados(It.IsAny<Guid>())).Returns(new List<DepartamentoDto>());
 			var application = new ApplicationResponse<List<DepartamentoDto>>();
 
 			//act
@@ -424,7 +363,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+			_serviceMock.Setup(p => p.DepartamentosAsociados(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
 			//act
 			var ex = _controller.ListaDepartamentosGrupo(grupo.id);
@@ -456,26 +395,26 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new DepartamentoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+					
+				Nombre = "Seguridad Ambiental",
 
-				nombre = "Seguridad Ambiental",
+				Descripcion = "Cuida el ambiente",
 
-				descripcion = "Cuida el ambiente",
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_ultima_edicion = null,
 
-				fecha_ultima_edicion = null,
-
-				fecha_eliminacion = null
+				Fecha_eliminacion = null
 
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
+			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.Id.ToString())).Returns(new List<string>());
 			var application = new ApplicationResponse<List<string>>();
 
 			//act
-			var result = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
+			var result = _controller.AsignarGrupoToDepartamento(grupo.id, dept.Id.ToString());
 
 			//assert
 			Assert.AreEqual(application.GetType(), result.GetType());
@@ -503,25 +442,25 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new DepartamentoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-				nombre = "Seguridad Ambiental",
+				Nombre = "Seguridad Ambiental",
 
-				descripcion = "Cuida el ambiente",
+				Descripcion = "Cuida el ambiente",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null
+				Fecha_eliminacion = null
 
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
+			_serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.Id.ToString())).Throws(new ExceptionsControl("", new Exception()));
 
 			//act
-			var ex = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
+			var ex = _controller.AsignarGrupoToDepartamento(grupo.id, dept.Id.ToString());
 
 			//assert
 			Assert.IsNotNull(ex);
@@ -550,26 +489,26 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new DepartamentoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-				nombre = "Seguridad Ambiental",
+				Nombre = "Seguridad Ambiental",
 
-				descripcion = "Cuida el ambiente",
+				Descripcion = "Cuida el ambiente",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null
+				Fecha_eliminacion = null
 
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
+			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.Id.ToString())).Returns(new List<string>());
 			var application = new ApplicationResponse<List<string>>();
 
 			//act
-			var result = _controller.EditarRelacion(grupo.id, dept.id.ToString());
+			var result = _controller.EditarRelacion(grupo.id, dept.Id.ToString());
 
 			//assert
 			Assert.AreEqual(application.GetType(), result.GetType());
@@ -598,25 +537,25 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var dept = new DepartamentoDto()
 			{
 
-				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+				Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-				nombre = "Seguridad Ambiental",
+				Nombre = "Seguridad Ambiental",
 
-				descripcion = "Cuida el ambiente",
+				Descripcion = "Cuida el ambiente",
 
-				fecha_creacion = DateTime.Now.Date,
+				Fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = null,
+				Fecha_ultima_edicion = null,
 
-				fecha_eliminacion = null
+				Fecha_eliminacion = null
 
 			};
 
 			//arrange
-			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
+			_serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.Id.ToString())).Throws(new ExceptionsControl("", new Exception()));
 
 			//act
-			var ex = _controller.EditarRelacion(grupo.id, dept.id.ToString());
+			var ex = _controller.EditarRelacion(grupo.id, dept.Id.ToString());
 
 			//assert
 			Assert.IsNotNull(ex);
@@ -643,7 +582,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             };
 
             //arrange
-            _serviceMock.Setup(p => p.buscarGrupoNombre(It.IsAny<string>())).Returns(new GrupoDto());
+            _serviceMock.Setup(p => p.BuscarGrupoNombre(It.IsAny<string>())).Returns(new GrupoDto());
             var application = new ApplicationResponse<GrupoDto>();
 
             //act
@@ -673,7 +612,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             };
 
             //arrange
-            _serviceMock.Setup(p => p.buscarGrupoNombre(It.IsAny<string>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.BuscarGrupoNombre(It.IsAny<string>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
             var ex = _controller.ConsultarNombreGrupo(grupo.nombre);

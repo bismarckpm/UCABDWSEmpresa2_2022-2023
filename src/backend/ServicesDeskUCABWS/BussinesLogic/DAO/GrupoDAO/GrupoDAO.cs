@@ -345,7 +345,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         /// <returns>Devuelve una lista de objetos de tipo DepartamentoDto.</returns>
         /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         
-        public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
+        public List<DepartamentoDto> DepartamentosAsociados(Guid idGrupo)
         {
             try
             {
@@ -376,7 +376,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         /// <returns>Devuelve un objeto de tipo GrupoDto</returns>
         /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         
-        public GrupoDto buscarGrupoNombre(string nombreGrupo) {
+        public GrupoDto BuscarGrupoNombre(string nombreGrupo) {
             try
             {
                 var resultado = _dataContext.Grupos.Where(grupo => grupo.nombre == nombreGrupo && grupo.fecha_eliminacion == null).First();

@@ -17,7 +17,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         public List<GrupoDto> ConsultarGrupoNoEliminado();
         public List<string> AsignarGrupoToDepartamento(Guid id, string idDept);
         public List<string> EditarRelacion(Guid id, string idDepartamentos);
-        public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo);
-        public GrupoDto buscarGrupoNombre(string nombreGrupo);
+        public List<DepartamentoDto> DepartamentosAsociados(Guid idGrupo);
+        public GrupoDto BuscarGrupoNombre(string nombreGrupo);
     }
 }
