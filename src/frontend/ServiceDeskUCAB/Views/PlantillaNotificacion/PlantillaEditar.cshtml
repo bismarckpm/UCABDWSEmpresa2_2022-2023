@@ -50,7 +50,7 @@
                                                     <label class="form-label fs-6 fw-bold mb-0 mt-2">Etiquetas:</label>
                                                     @foreach (var etiqueta in @estado.Etiqueta)
                                                     {
-                                                        <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="Descripción de etiqueta" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
+                                                        <a onclick="escribirMensaje(this);" tabindex="0" style="font-size: 13px" class="btn btn-sm btn-primary p-0 ps-1 pe-1" role="button" data-bs-placement="bottom" data-bs-toggle="popover" data-bs-trigger="focus" title="@etiqueta.Descripcion" data-bs-content="@etiqueta.Descripcion">@etiqueta.Nombre</a>
                                                     }
                                                 </div>
                                             }

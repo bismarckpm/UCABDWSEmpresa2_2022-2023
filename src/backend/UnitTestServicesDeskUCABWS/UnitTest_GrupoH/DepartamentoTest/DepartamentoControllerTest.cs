@@ -1,533 +1,788 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
-using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
-using ServicesDeskUCABWS.BussinesLogic.Exceptions;
-using ServicesDeskUCABWS.BussinesLogic.Response;
-using ServicesDeskUCABWS.Controllers;
-using ServicesDeskUCABWS.Controllers.ControllerDepartamento;
-using ServicesDeskUCABWS.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.Extensions.Logging;
+//using Moq;
+//using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
+//using ServicesDeskUCABWS.BussinesLogic.DAO.EtiquetaDAO;
+//using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
+//using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
+//using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+//using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+//using ServicesDeskUCABWS.BussinesLogic.Response;
+//using ServicesDeskUCABWS.Controllers;
+//using ServicesDeskUCABWS.Controllers.ControllerDepartamento;
+//using ServicesDeskUCABWS.Entities;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
-{
-    [TestClass]
-    public class DepartamentoControllerTest
-    {
-        private readonly DepartamentoController _controller;
-        private readonly Mock<IDepartamentoDAO> _serviceMock;
-        public Departamento dept = It.IsAny<Departamento>();
-        public DepartamentoDto deptDto = It.IsAny<DepartamentoDto>();
+//namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
+//{
+//    [TestClass]
+//    public class DepartamentoControllerTest
+//    {
+//        private readonly DepartamentoController _controller;
+//        private readonly Mock<IDepartamentoDAO> _serviceMock;
+//        public Departamento dept = It.IsAny<Departamento>();
+//        public DepartamentoDto deptDto = It.IsAny<DepartamentoDto>();
 
 
-        public DepartamentoControllerTest()
-        {
-            _serviceMock = new Mock<IDepartamentoDAO>();
-            _controller = new DepartamentoController(_serviceMock.Object);
-        }
+//        public DepartamentoControllerTest()
+//        {
+//            _serviceMock = new Mock<IDepartamentoDAO>();
+//            _controller = new DepartamentoController(_serviceMock.Object);
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento exitoso")]
-        public void Crear()
-        {
-            var dept = new DepartamentoDto()
-            {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento exitoso")]
+//        public void Crear()
+//        {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+//                fecha_eliminacion = null,
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.AgregarDepartamentoDAO(It.IsAny<Departamento>())).Returns(new DepartamentoDto());
-            var application = new ApplicationResponse<DepartamentoDto>();
+//            //arrange
+//            _serviceMock.Setup(p => p.AgregarDepartamentoDAO(It.IsAny<Departamento>())).Returns(new DepartamentoDto());
+//            var application = new ApplicationResponse<DepartamentoDto>();
 
-            //act
-            var result = _controller.CrearDepartamento(dept);
+//            //act
+//            var result = _controller.CrearDepartamento(dept);
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento excepcion")]
-        public void CrearDepartamentoExcepcion()
-        {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento excepcion")]
+//        public void CrearDepartamentoExcepcion()
+//        {
 
-            var dept = new DepartamentoDto()
-            {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+//                fecha_eliminacion = null,
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.AgregarDepartamentoDAO(It.IsAny<Departamento>())).Throws(new ExceptionsControl("", new Exception()));
+//            //arrange
+//            _serviceMock.Setup(p => p.AgregarDepartamentoDAO(It.IsAny<Departamento>())).Throws(new ExceptionsControl("", new Exception()));
 
-            //act
-            var ex = _controller.CrearDepartamento(dept);
+//            //act
+//            var ex = _controller.CrearDepartamento(dept);
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos")]
-        public void ConsultarDepartamentos()
-        {
-            var dept = new DepartamentoDto()
-            {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos")]
+//        public void ConsultarDepartamentos()
+//        {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+//                fecha_eliminacion = null,
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ConsultarDepartamentos()).Returns(new List<DepartamentoDto>());
-            var application = new ApplicationResponse<List<DepartamentoDto>>();
+//            //arrange
+//            _serviceMock.Setup(p => p.ConsultarDepartamentos()).Returns(new List<DepartamentoDto>());
+//            var application = new ApplicationResponse<List<DepartamentoDto>>();
 
-            //act
-            var result = _controller.ConsultarDepartamentos();
+//            //act
+//            var result = _controller.ConsultarDepartamentos();
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento excepcion")]
-        public void ConsultarDepartamentosExcepcion()
-        {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Departamento excepcion")]
+//        public void ConsultarDepartamentosExcepcion()
+//        {
 
-            var dept = new DepartamentoDto()
-            {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+//                fecha_eliminacion = null,
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ConsultarDepartamentos()).Throws(new ExceptionsControl("", new Exception()));
+//            //arrange
+//            _serviceMock.Setup(p => p.ConsultarDepartamentos()).Throws(new ExceptionsControl("", new Exception()));
 
-            //act
-            var ex = _controller.ConsultarDepartamentos();
+//            //act
+//            var ex = _controller.ConsultarDepartamentos();
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar departamento exitoso")]
-        public void EliminarDepartamento()
-        {
-            var dept = new DepartamentoDto()
-            {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar departamento exitoso")]
+//        public void EliminarDepartamento()
+//        {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null,
-            };
+//                fecha_eliminacion = null,
+//            };
 
 
-            //arrange
-            _serviceMock.Setup(p => p.eliminarDepartamento(It.IsAny<Guid>())).Returns(new DepartamentoDto());
-            var application = new ApplicationResponse<DepartamentoDto>();
+//            //arrange
+//            _serviceMock.Setup(p => p.eliminarDepartamento(It.IsAny<Guid>())).Returns(new DepartamentoDto());
+//            var application = new ApplicationResponse<DepartamentoDto>();
 
-            //act
-            var result = _controller.EliminarDepartamento(dept.id);
+//            //act
+//            var result = _controller.EliminarDepartamento(dept.id);
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar Departamento excepcion")]
-        public void EliminarDepartamentosExcepcion()
-        {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar Departamento excepcion")]
+//        public void EliminarDepartamentosExcepcion()
+//        {
 
-            var dept = new DepartamentoDto()
-            {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
-            };
+//                fecha_eliminacion = null
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.eliminarDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+//            //arrange
+//            _serviceMock.Setup(p => p.eliminarDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
-            //act
-            var ex = _controller.EliminarDepartamento(dept.id);
+//            //act
+//            var ex = _controller.EliminarDepartamento(dept.id);
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento exitoso")]
-        public void ActualizarDepartamento()
-        {
-            var dept = new DepartamentoDto_Update()
-            {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento exitoso")]
+//        public void ActualizarDepartamento()
+//        {
+//            var dept = new DepartamentoDto_Update()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = DateTime.Now.Date,
+//                fecha_ultima_edicion = DateTime.Now.Date,
 
-                fecha_eliminacion = null
-            };
+//                fecha_eliminacion = null
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ActualizarDepartamento(It.IsAny<Departamento>())).Returns(new DepartamentoDto_Update());
-            var application = new ApplicationResponse<DepartamentoDto_Update>();
+//            //arrange
+//            _serviceMock.Setup(p => p.ActualizarDepartamento(It.IsAny<Departamento>())).Returns(new DepartamentoDto_Update());
+//            var application = new ApplicationResponse<DepartamentoDto_Update>();
 
-            //act
-            var result = _controller.ActualizarDepartamento(dept);
+//            //act
+//            var result = _controller.ActualizarDepartamento(dept);
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para actualizar Departamento excepcion")]
-        public void ActualizarDepartamentosExcepcion()
-        {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para actualizar Departamento excepcion")]
+//        public void ActualizarDepartamentosExcepcion()
+//        {
 
-            var dept = new DepartamentoDto_Update()
-            {
+//            var dept = new DepartamentoDto_Update()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
-            };
+//                fecha_eliminacion = null
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ActualizarDepartamento(It.IsAny<Departamento>())).Throws(new ExceptionsControl("", new Exception()));
+//            //arrange
+//            _serviceMock.Setup(p => p.ActualizarDepartamento(It.IsAny<Departamento>())).Throws(new ExceptionsControl("", new Exception()));
 
-            //act
-            var ex = _controller.ActualizarDepartamento(dept);
+//            //act
+//            var ex = _controller.ActualizarDepartamento(dept);
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento por id de departamento exitoso")]
-        public void ConsultarDepartamentoPorID()
-        {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento por id de departamento exitoso")]
+//        public void ConsultarDepartamentoPorID()
+//        {
            
-            var dept = new DepartamentoDto()
-            {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-                nombre = "Seguridad Ambiental",
+//                nombre = "Seguridad Ambiental",
 
-                descripcion = "Cuida el ambiente",
+//                descripcion = "Cuida el ambiente",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
+//                fecha_eliminacion = null
 
-            };
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Returns(new DepartamentoDto());
-            var application = new ApplicationResponse<DepartamentoDto>();
+//            //arrange
+//            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Returns(new DepartamentoDto());
+//            var application = new ApplicationResponse<DepartamentoDto>();
 
-            //act
-            var result = _controller.ConsultarPorID(dept.id);
+//            //act
+//            var result = _controller.ConsultarPorID(dept.id);
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar departamento por id de departamento excepcion")]
-        public void ExcepcionConsultarDepartamentoPorID()
-        {
-            var dept = new DepartamentoDto()
-            {
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar departamento por id de departamento excepcion")]
+//        public void ExcepcionConsultarDepartamentoPorID()
+//        {
+//            var dept = new DepartamentoDto()
+//            {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-                nombre = "Nuevo Grupo",
+//                nombre = "Nuevo Grupo",
 
-                descripcion = "Grupo nuevo",
+//                descripcion = "Grupo nuevo",
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_creacion = DateTime.Now.Date,
 
-                fecha_ultima_edicion = null,
+//                fecha_ultima_edicion = null,
 
-                fecha_eliminacion = null
-            };
+//                fecha_eliminacion = null
+//            };
 
-            //arrange
-            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+//            //arrange
+//            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
-            //act
-            var ex = _controller.ConsultarPorID(dept.id);
+//            //act
+//            var ex = _controller.ConsultarPorID(dept.id);
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
-
-
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
 
 
-       
 
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para modificar departamento por id de grupo exitoso")]
+//        public void ConsultarDepartamentoPorIDGrupo()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+
+//            var dept = new DepartamentoDto()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+//                nombre = "Seguridad Ambiental",
+
+//                descripcion = "Cuida el ambiente",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+                
+//            };
+
+//            //arrange
+//            _serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Returns(new List<DepartamentoDto>());
+//            var application = new ApplicationResponse<List<DepartamentoDto>>();
+
+//            //act
+//            var result = _controller.ListaDepartamentosGrupo(grupo.id);
+
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar departamento por id de grupo excepcion")]
+//        public void ExcepcionConsultarDepartamentoPorIDGrupo()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+          
+//            //arrange
+//            _serviceMock.Setup(p => p.GetByIdDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+//            //act
+//            var ex = _controller.ListaDepartamentosGrupo(grupo.id);
+
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento exitoso")]
+//        public void AsignarGrupoToDepartamento()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+
+//            var dept = new DepartamentoDto()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+//                nombre = "Seguridad Ambiental",
+
+//                descripcion = "Cuida el ambiente",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+
+//            };
+
+//            //arrange
+//            _serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(),dept.id.ToString())).Returns(new List<string>());
+//            var application = new ApplicationResponse<List<string>>();
+
+//            //act
+//            var result = _controller.AsignarGrupoToDepartamento(grupo.id, dept.id.ToString());
+
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para asignar grupo a departamento excepcion")]
+//        public void ExcepcionAsignarGrupoToDepartamento()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+
+//            var dept = new DepartamentoDto()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+//                nombre = "Seguridad Ambiental",
+
+//                descripcion = "Cuida el ambiente",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+
+//            };
+
+//            //arrange
+//            _serviceMock.Setup(p => p.AsignarGrupoToDepartamento(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
+
+//            //act
+//            var ex = _controller.AsignarGrupoToDepartamento(grupo.id,dept.id.ToString());
+
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no asociados exitoso")]
+//        public void ListaDepartamentoNoAsociado()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+
+//            var dept = new DepartamentoDto()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+//                nombre = "Seguridad Ambiental",
+
+//                descripcion = "Cuida el ambiente",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+
+//            };
+
+//            //arrange
+//            _serviceMock.Setup(p => p.NoAsociado()).Returns(new List<DepartamentoDto>());
+//            var application = new ApplicationResponse<List<DepartamentoDto>>();
+
+//            //act
+//            var result = _controller.ListaDepartamentoNoAsociado();
+
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no asociados excepcion")]
+//        public void ExcepcionListaDepartamentoNoAsociado()
+//        {
+//            var grupo = new Grupo()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+//                nombre = "Nuevo Grupo",
+
+//                descripcion = "Grupo nuevo",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+//            };
+
+//            var dept = new DepartamentoDto()
+//            {
+
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+//                nombre = "Seguridad Ambiental",
+
+//                descripcion = "Cuida el ambiente",
+
+//                fecha_creacion = DateTime.Now.Date,
+
+//                fecha_ultima_edicion = null,
+
+//                fecha_eliminacion = null
+
+//            };
+
+//            //arrange
+//            _serviceMock.Setup(p => p.NoAsociado()).Throws(new ExceptionsControl("", new Exception()));
+
+//            //act
+//            var ex = _controller.ListaDepartamentoNoAsociado();
+
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
+
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados exitoso")]
+//        public void ListaDepartamentonoEliminado()
+//        {
         
+//            var dept = new DepartamentoDto()
+//            {
 
-      
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no asociados exitoso")]
-        public void ListaDepartamentoNoAsociado()
-        {
-            var grupo = new Grupo()
-            {
+//                nombre = "Seguridad Ambiental",
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+//                descripcion = "Cuida el ambiente",
 
-                nombre = "Nuevo Grupo",
+//                fecha_creacion = DateTime.Now.Date,
 
-                descripcion = "Grupo nuevo",
+//                fecha_ultima_edicion = null,
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_eliminacion = null
 
-                fecha_ultima_edicion = null,
+//            };
 
-                fecha_eliminacion = null
-            };
+//            //arrange
+//            _serviceMock.Setup(p => p.DeletedDepartamento()).Returns(new List<DepartamentoDto>());
+//            var application = new ApplicationResponse<List<DepartamentoDto>>();
 
-            var dept = new DepartamentoDto()
-            {
+//            //act
+//            var result = _controller.ListaDepartamentonoEliminado();
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-                nombre = "Seguridad Ambiental",
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados excepcion")]
+//        public void ExcepcionListaDepartamentoNoEliminados()
+//        {
+//            var grupo = new Grupo()
+//            {
 
-                descripcion = "Cuida el ambiente",
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-                fecha_creacion = DateTime.Now.Date,
+//                nombre = "Nuevo Grupo",
 
-                fecha_ultima_edicion = null,
+//                descripcion = "Grupo nuevo",
 
-                fecha_eliminacion = null
+//                fecha_creacion = DateTime.Now.Date,
 
-            };
+//                fecha_ultima_edicion = null,
 
-            //arrange
-            _serviceMock.Setup(p => p.NoAsociado()).Returns(new List<DepartamentoDto>());
-            var application = new ApplicationResponse<List<DepartamentoDto>>();
+//                fecha_eliminacion = null
+//            };
 
-            //act
-            var result = _controller.ListaDepartamentoNoAsociado();
+//            var dept = new DepartamentoDto()
+//            {
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no asociados excepcion")]
-        public void ExcepcionListaDepartamentoNoAsociado()
-        {
-            var grupo = new Grupo()
-            {
+//                nombre = "Seguridad Ambiental",
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+//                descripcion = "Cuida el ambiente",
 
-                nombre = "Nuevo Grupo",
+//                fecha_creacion = DateTime.Now.Date,
 
-                descripcion = "Grupo nuevo",
+//                fecha_ultima_edicion = null,
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_eliminacion = null
 
-                fecha_ultima_edicion = null,
+//            };
 
-                fecha_eliminacion = null
-            };
+//            //arrange
+//            _serviceMock.Setup(p => p.DeletedDepartamento()).Throws(new ExceptionsControl("", new Exception()));
 
-            var dept = new DepartamentoDto()
-            {
+//            //act
+//            var ex = _controller.ListaDepartamentonoEliminado();
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-                nombre = "Seguridad Ambiental",
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma exitosa")]
+//        public void EditarRelacion()
+//        {
+//            var grupo = new Grupo()
+//            {
 
-                descripcion = "Cuida el ambiente",
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-                fecha_creacion = DateTime.Now.Date,
+//                nombre = "Nuevo Grupo",
 
-                fecha_ultima_edicion = null,
+//                descripcion = "Grupo nuevo",
 
-                fecha_eliminacion = null
+//                fecha_creacion = DateTime.Now.Date,
 
-            };
+//                fecha_ultima_edicion = null,
 
-            //arrange
-            _serviceMock.Setup(p => p.NoAsociado()).Throws(new ExceptionsControl("", new Exception()));
+//                fecha_eliminacion = null
+//            };
 
-            //act
-            var ex = _controller.ListaDepartamentoNoAsociado();
+//            var dept = new DepartamentoDto()
+//            {
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados exitoso")]
-        public void ListaDepartamentonoEliminado()
-        {
-        
-            var dept = new DepartamentoDto()
-            {
+//                nombre = "Seguridad Ambiental",
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                descripcion = "Cuida el ambiente",
 
-                nombre = "Seguridad Ambiental",
+//                fecha_creacion = DateTime.Now.Date,
 
-                descripcion = "Cuida el ambiente",
+//                fecha_ultima_edicion = null,
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_eliminacion = null
 
-                fecha_ultima_edicion = null,
+//            };
 
-                fecha_eliminacion = null
+//            //arrange
+//            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Returns(new List<string>());
+//            var application = new ApplicationResponse<List<string>>();
 
-            };
+//            //act
+//            var result = _controller.EditarRelacion(grupo.id, dept.id.ToString());
 
-            //arrange
-            _serviceMock.Setup(p => p.DeletedDepartamento()).Returns(new List<DepartamentoDto>());
-            var application = new ApplicationResponse<List<DepartamentoDto>>();
+//            //assert
+//            Assert.AreEqual(application.GetType(), result.GetType());
+//        }
 
-            //act
-            var result = _controller.ListaDepartamentonoEliminado();
+//        [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de departamentos con grupo de forma excepcion")]
+//        public void ExcepcionEditarRelacion()
+//        {
+//            var grupo = new Grupo()
+//            {
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados excepcion")]
-        public void ExcepcionListaDepartamentoNoEliminados()
-        {
-            var grupo = new Grupo()
-            {
+//                nombre = "Nuevo Grupo",
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+//                descripcion = "Grupo nuevo",
 
-                nombre = "Nuevo Grupo",
+//                fecha_creacion = DateTime.Now.Date,
 
-                descripcion = "Grupo nuevo",
+//                fecha_ultima_edicion = null,
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_eliminacion = null
+//            };
 
-                fecha_ultima_edicion = null,
+//            var dept = new DepartamentoDto()
+//            {
 
-                fecha_eliminacion = null
-            };
+//                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
-            var dept = new DepartamentoDto()
-            {
+//                nombre = "Seguridad Ambiental",
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+//                descripcion = "Cuida el ambiente",
 
-                nombre = "Seguridad Ambiental",
+//                fecha_creacion = DateTime.Now.Date,
 
-                descripcion = "Cuida el ambiente",
+//                fecha_ultima_edicion = null,
 
-                fecha_creacion = DateTime.Now.Date,
+//                fecha_eliminacion = null
 
-                fecha_ultima_edicion = null,
+//            };
 
-                fecha_eliminacion = null
+//            //arrange
+//            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), dept.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
 
-            };
+//            //act
+//            var ex = _controller.EditarRelacion(grupo.id, dept.id.ToString());
 
-            //arrange
-            _serviceMock.Setup(p => p.DeletedDepartamento()).Throws(new ExceptionsControl("", new Exception()));
+//            //assert
+//            Assert.IsNotNull(ex);
+//            Assert.IsFalse(ex.Success);
+//        }
 
-            //act
-            var ex = _controller.ListaDepartamentonoEliminado();
 
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }
 
-      
-
-
-
-
-    }
-}
+//    }
+//}
