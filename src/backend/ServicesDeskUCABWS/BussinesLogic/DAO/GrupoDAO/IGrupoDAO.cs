@@ -10,7 +10,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
     public interface IGrupoDAO
     {
         public GrupoDto AgregarGrupoDao(Grupo grupo);
-        public List<GrupoDto> ConsultarGruposDao();
         public GrupoDto ConsultarPorIdDao(Guid idGrupo);
         public GrupoDto EliminarGrupoDao(Guid idGrupo);
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo);

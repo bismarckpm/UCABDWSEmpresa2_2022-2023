@@ -25,7 +25,11 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         private readonly IDepartamentoDAO _departamentoDAO;
 
 
-        //Constructor
+        /// <summary>
+        /// Constructor.
+        /// Inicialización de variables.
+        /// </summary>
+        /// <param name="departamentoDAO">Objeto de la interfaz de IDepartamentoDAO.</param>
         public DepartamentoController(IDepartamentoDAO departamentoDAO)
         {
             _departamentoDAO = departamentoDAO;
@@ -33,15 +37,22 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
         }
 
 
-        //Crear Departamento
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// se pasa en el body del archivo Json los atributos del objeto Departamento.
+        /// </summary>
+        /// <param name="departamento">Objeto de tipo DepartamentoDto.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo DepartamentoDto.</returns>
+        
         [HttpPost]
         [Route("CrearDepartamento/")]
-        public ApplicationResponse<DepartamentoDto> CrearDepartamento([FromBody] DepartamentoDto dto1)
+        public ApplicationResponse<DepartamentoDto> CrearDepartamento([FromBody] DepartamentoDto departamento)
         {
             var response = new ApplicationResponse<DepartamentoDto>();
             try
             {
-                response.Data = _departamentoDAO.AgregarDepartamentoDAO(DepartamentoMapper.MapperDTOToEntity(dto1));
+                response.Data = _departamentoDAO.AgregarDepartamentoDAO(DepartamentoMapper.MapperDTOToEntity(departamento));
 
 
             }
@@ -54,6 +65,12 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        /// <summary>
+        /// Método que consulta todos los departamentos.
+        /// </summary>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y una lista de objetos de tipo DepartamentoDto.</returns>
+        
         [HttpGet]
         [Route("ConsultarDepartamento/")]
         public ApplicationResponse<List<DepartamentoDto>> ConsultarDepartamentos()
@@ -73,6 +90,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// pasa por URL/URI los atributos del objeto Departamento.
+        /// </summary>
+        /// <param name="id">Identificador de Departamento.</param>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo DepartamentoDto.</returns>
+
         [HttpGet]
         [Route("ConsultarDepartamentoPorID/{id}")]
         public ApplicationResponse<DepartamentoDto> ConsultarPorID([FromRoute] Guid id)
@@ -91,6 +116,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// pasa por URL/URI los atributos del objeto Departamento.
+        /// </summary>
+        /// <param name="id">Identificador de un Departamento.</param>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo DepartamentoDto.</returns>
+        
         [HttpDelete]
         [Route("EliminarDepartamento/{id}")]
         public ApplicationResponse<DepartamentoDto> EliminarDepartamento([FromRoute] Guid id)
@@ -108,6 +141,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             }
             return response;
         }
+
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// se pasa en el body del archivo Json los atributos del objeto Departamento.
+        /// </summary>
+        /// <param name="departamento">Objeto de tipo DepartamentoDto_Update.</param>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo DepartamentoDto_Update.</returns>
 
         [HttpPut]
         [Route("ActualizarDepartamento/")]
@@ -129,6 +170,12 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        /// <summary>
+        /// Método que consulta todos los departamentos no asociados a un grupo.
+        /// </summary>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y una lista de objetos de tipo DepartamentoDto.</returns>
+
         [HttpGet("ConsultarDepartamentoNoAsociado/")]
         public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentoNoAsociado()
         {
@@ -146,6 +193,12 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             return response;
         }
 
+        /// <summary>
+        /// Método que consulta todos los departamentos no eliminados (Con el campo fecha_eliminacion = null).
+        /// </summary>
+        /// <returns>Devuelve un AplicationResponse que contiene Acuse de recibo,
+        /// aceptación o rechazo y una lista de objetos de tipo DepartamentoDto.</returns>
+
         [HttpGet]
         [Route("ConsultarDepartamentoNoEliminado/")]
         public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentonoEliminado()
@@ -154,7 +207,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerDepartamento
             var response = new ApplicationResponse<List<DepartamentoDto>>();
             try
             {
-                response.Data = _departamentoDAO.DeletedDepartamento();
+                response.Data = _departamentoDAO.DepartamentosNoEliminados();
             }
             catch (ExceptionsControl ex)
             {

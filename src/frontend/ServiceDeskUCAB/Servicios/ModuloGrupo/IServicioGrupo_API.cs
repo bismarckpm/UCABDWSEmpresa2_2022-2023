@@ -10,7 +10,6 @@ namespace ServiceDeskUCAB.Servicios.ModuloGrupo
     public interface IServicioGrupo_API
     {
 		Task<List<GrupoModel>> ListaGrupo();
-		public Task<Tuple<List<DepartamentoModel>, DepartamentoModel, GrupoModel>> tuplaModelDepartamento();
         Task<JObject> EliminarGrupo(Guid id);
         public Task<GrupoModel> BuscarGrupo(Guid id);
         public Task<JObject> RegistrarGrupo(GrupoModel grupo, List<string> idDepartamentos);
