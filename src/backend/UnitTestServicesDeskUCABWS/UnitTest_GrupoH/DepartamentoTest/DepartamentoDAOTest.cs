@@ -622,7 +622,9 @@
 //            Assert.AreEqual(result.Count, 1);
 //        }
 
-
+        [TestMethod(displayName: "Prueba Unitaria para verificar existencia de departamento al momento de modificar exitoso primer caso")]
+        public void NoExisteDepartamentoModificar()
+        {
 
 //        [TestMethod(displayName: "Prueba Unitaria para la excepcion de editar relacion de los departamentos con los grupos")]
 //        public void ExcepcionEditarRelacion()

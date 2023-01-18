@@ -21,13 +21,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
     {
         private readonly IDataContext _dataContext;
 
-        //Constructor
+
+        /// <summary>
+        /// Constructor. Inicializa la variable _dataContext
+        /// </summary>
+        /// <param name="dataContext">Ingresa un objeto de la interfaz DataContext</param>
+
         public GrupoDAO(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
 
-        //Agregar Grupo
+        /// <summary>
+        /// Método que permite agregar un nuevo grupo,
+        /// si este tiene un nombre que ya existe devuelve un objeto nulo.
+        /// </summary>
+        /// <param name="grupo">Ingresa un objeto del tipo Grupo</param>
+        /// <returns>Devuelve un objeto del tipo GrupoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parametro sea nulo, muestra la excepción</exception>
+        
         public GrupoDto AgregarGrupoDao(Grupo grupo)
         {
             try
@@ -44,31 +56,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
         }
 
-        //Retorna la lista de grupos
-        public List<GrupoDto> ConsultarGruposDao()
-        {
-            try
-            {
-                var lista = _dataContext.Grupos.Select(
-                    d => new GrupoDto
-                    {
-                        id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_creacion = d.fecha_creacion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion,
-                        fecha_eliminacion = d.fecha_eliminacion
-                    }
-                );
-                return lista.ToList();
-            }
-			catch (Exception ex)
-			{
-				throw new ExceptionsControl("No hay grupos registrados", ex);
-			}
-		}
-
-        //Consultar grupo por ID 
+        /// <summary>
+        /// Método que busca un grupo a partir de un identificador.
+        /// </summary>
+        /// <param name="idGrupo">Ingresa el identificador de un grupo en específico</param>
+        /// <returns>Devuelve un objeto del tipo GrupoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo</exception>
+        
         public GrupoDto ConsultarPorIdDao(Guid idGrupo)
         {
             try
@@ -85,7 +79,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
         }
 
-        //Eliminar Grupo
+        /// <summary>
+        /// Método que agrega la fecha actual en la columna de fecha_eliminacion.
+        /// Consulta el grupo por su identificador, al haber hecho el cambio,
+        /// se elimina la relación con los departamentos asociados.
+        /// </summary>
+        /// <param name="idGrupo">Ingresa un identificador de un grupo</param>
+        /// <returns>Devuelve un objeto de tipo GrupoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
+        
         public GrupoDto EliminarGrupoDao(Guid idGrupo)
         {
             var grupoDto = new GrupoDto(); 
@@ -113,7 +115,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
 		}
 
-        //Modificar Grupo
+        /// <summary>
+        /// Método que modifica y almacena los valores de un grupo. 
+        /// En caso que el nombre modificado no esté registrado.
+        /// </summary>
+        /// <param name="grupo">Ingresa un objeto del tipo grupo.</param>
+        /// <returns>Devuelve un objeto del tipo GrupoDto_Update con los cambios realizados.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
+        
         public GrupoDto_Update ModificarGrupoDao(Grupo grupo)
         {
             try
@@ -125,7 +134,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 					_dataContext.DbContext.SaveChanges();
 				}
 
-                return GrupoMapper.MapperEntityToDTOModificar(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
+                return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
 			}
 			catch (DbUpdateException ex)
 			{
@@ -136,6 +145,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 				throw new ExceptionsControl("Fallo al actualizar un grupo", ex);
 			}
 		}
+        /// <summary>
+        /// Método que establece en nulo la columna de id_grupo en la tabla departamentos,
+        /// Consulta los departamentos que están asociados a un grupo.
+        /// </summary>
+        /// <param name="grupoId">Ingresa el identificador de un grupo</param>
+        /// <returns>Devuelve un valor booleano</returns>
 
         public bool QuitarAsociacion(Guid grupoId)
         {
@@ -156,7 +171,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             return false;
         }
 
-        //Retorna una lista de grupo que no están eliminados
+        /// <summary>
+        /// Método que consulta todos los grupos que están activos.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos de tipo grupoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que no haya grupos registrados.</exception>
+        
         public List<GrupoDto> ConsultarGrupoNoEliminado()
         {
             try
@@ -164,12 +184,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var lista = _dataContext.Grupos.Where(x => x.fecha_eliminacion == null).Select(
                     d => new GrupoDto
                     {
-                        id = d.id,
-                        nombre = d.nombre,
-                        descripcion = d.descripcion,
-                        fecha_creacion = d.fecha_creacion,
-                        fecha_ultima_edicion = d.fecha_ultima_edicion,
-                        fecha_eliminacion = d.fecha_eliminacion
+                        Id = d.id,
+                        Nombre = d.nombre,
+                        Descripcion = d.descripcion,
+                        Fecha_creacion = d.fecha_creacion,
+                        Fecha_ultima_edicion = d.fecha_ultima_edicion,
+                        Fecha_eliminacion = d.fecha_eliminacion
 
                     }
                 );
@@ -182,6 +202,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 throw new ExceptionsControl("No hay grupos eliminados", ex);
             }
         }
+
+        /// <summary>
+        /// Método que verifica si el grupo que se va a registrar ya esté activo.
+        /// </summary>
+        /// <param name="grupo">Ingresa un objeto de tipo de Grupo, contiene los datos a almacenar.</param>
+        /// <returns>Devuelve un tipo de dato bool.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
 
         public bool ExisteGrupo(Grupo grupo)
         {
@@ -200,8 +227,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 			return existe;
         }
 
+        /// <summary>
+        /// Método que verifica si el nuevo nombre del grupo ya está registrado.
+        /// </summary>
+        /// <param name="grupo">Ingresa un objeto de tipo de Grupo, contiene los datos a almacenar.</param>
+        /// <returns>Devuelve un tipo de dato bool.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
 
-		public bool ExisteGrupoModificar(Grupo grupo)
+        public bool ExisteGrupoModificar(Grupo grupo)
 		{
 			bool existe = false;
 
@@ -223,6 +256,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 			return existe;
 		}
 
+        /// <summary>
+        /// Método que asocia departamentos a un grupo.
+        /// Establece un identificador de un grupo en la columna id_grupo de la tabla departamentos.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <param name="idDept">Lista de identificadores de departamentos.</param>
+        /// <returns>Devuelve una lista de identificadores de departamentos.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el identificador de grupo sea nulo.</exception>
 
         public List<string> AsignarGrupoToDepartamento(Guid id, string idDept)
         {
@@ -248,6 +289,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 throw new ExceptionsControl("Fallo al asignar departamento", ex);
             }
         }
+
+        /// <summary>
+        /// Método que modifica (agrega o elimina) la relación de los departamentos con un grupo.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <param name="idDepartamentos">Lista de identificadores de departamentos.</param>
+        /// <returns>Devuelve una lista de identificadores de los departamentos.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el identificador del grupo sea nulo.</exception>
 
         public List<string> EditarRelacion(Guid id, string idDepartamentos)
         {
@@ -289,7 +338,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
         }
 
-        //Listar departamentos por el identificador de un grupo
+        /// <summary>
+        /// Método que consulta los departamentos asociados a un grupo.
+        /// </summary>
+        /// <param name="idGrupo">Ingresa un identificador de un grupo.</param>
+        /// <returns>Devuelve una lista de objetos de tipo DepartamentoDto.</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
+        
         public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
         {
             try
@@ -298,12 +353,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 var departamentos = _dataContext.Departamentos.Where(grupo => grupo.id_grupo == idGrupo).Select(
                         d => new DepartamentoDto
                         {
-                            id = d.id,
-                            nombre = d.nombre,
-                            descripcion = d.descripcion,
-                            fecha_creacion = d.fecha_creacion,
-                            fecha_ultima_edicion = d.fecha_ultima_edicion,
-                            fecha_eliminacion = d.fecha_eliminacion
+                            Id = d.id,
+                            Nombre = d.nombre,
+                            Descripcion = d.descripcion,
+                            Fecha_creacion = d.fecha_creacion,
+                            Fecha_ultima_edicion = d.fecha_ultima_edicion,
+                            Fecha_eliminacion = d.fecha_eliminacion
                         }
                      );
                 return departamentos.ToList();
@@ -314,6 +369,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             }
         }
 
+        /// <summary>
+        /// Método que consulta por el nombre de un grupo que esté activo.
+        /// </summary>
+        /// <param name="nombreGrupo">Ingresa el nombre de un grupo</param>
+        /// <returns>Devuelve un objeto de tipo GrupoDto</returns>
+        /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
+        
         public GrupoDto buscarGrupoNombre(string nombreGrupo) {
             try
             {

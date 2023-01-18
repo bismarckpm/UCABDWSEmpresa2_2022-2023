@@ -11,27 +11,46 @@ namespace ServiceDeskUCAB.Controllers
     [Authorize(Policy = "AdminAccess")]
 	public class GrupoController : Controller
     {
-		//Declaración de variables
+		/// <summary>
+		/// Declaración de variables.
+		/// </summary>
+		
 		private readonly ILogger<GrupoController> _logger;
 		private readonly IServicioGrupo_API _servicioApiGrupo;
 		private readonly IServicioDepartamento_API _servicioApiDepartamento;
 
-		//Constructor
-		public GrupoController(ILogger<GrupoController> logger, IServicioGrupo_API servicioApiGrupo, IServicioDepartamento_API servicioApiDepartamento)
+        /// <summary>
+        /// Constructor. 
+        /// Inicialización de variables.
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="servicioApiGrupo">Objeto de la interfaz que contiene los servicios de Grupo.</param>
+        /// <param name="servicioApiDepartamento">Objeto de la interfaz que contiene los servicios de Departamento.</param>
+
+        public GrupoController(ILogger<GrupoController> logger, IServicioGrupo_API servicioApiGrupo, IServicioDepartamento_API servicioApiDepartamento)
 		{
 			_logger = logger;
 			_servicioApiGrupo = servicioApiGrupo;
 			_servicioApiDepartamento = servicioApiDepartamento;
 		}
 
-		//Inicia la petición HTTP a la API para Obtener todas los grupos a traves del servicio ServicioGrupo_API
-		public async Task<IActionResult> Index()
+        /// <summary>
+        /// Inicia la petición HTTP a la API para obtener todas los grupos a traves del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <returns>Devuelve una vista con una lista de grupos activos.</returns>
+
+        public async Task<IActionResult> Index()
 		{
 
 			return View(await _servicioApiGrupo.ListaGrupo());
 		}
 
-		//Retorna el modal con la lista de departamentos y los datos del grupo seleccionado
+		/// <summary>
+		/// Método que incluye lista de departamentos y datos de un grupo seleccionado en un modal.
+		/// </summary>
+		/// <param name="id">Identificador de un grupo.</param>
+		/// <returns>Devuelve un modal con los datos de un grupo y los departamentos que están asociados a este o no.</returns>
+		
 		public async Task<IActionResult> VentanaEditarGrupo(Guid id)
 		{
 			GrupoEditarViewModel viewModel = new GrupoEditarViewModel();
@@ -49,7 +68,15 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		public async Task<IActionResult> ModificarGrupo(GrupoModel grupo, List<string> idDepartamentos)
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para modificar los datos de un grupo y sus relaciones a traves del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <param name="grupo">Objeto del tipo GrupoModel.
+        /// Contiene la información suministrada en la View.</param>
+        /// <param name="idDepartamentos">Lista de identificadores de departamentos.</param>
+        /// <returns>Redirecciona a la view principal con una notificación.</returns>
+
+        public async Task<IActionResult> ModificarGrupo(GrupoModel grupo, List<string> idDepartamentos)
 		{
 			JObject respuesta;
 			JObject respuestaDept;
@@ -61,8 +88,16 @@ namespace ServiceDeskUCAB.Controllers
             
         }
 
-		//Retorna el modal con los departamentos que serán asociados a un grupo
-		public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
+        //Retorna el modal con los departamentos que serán asociados a un grupo
+
+        /// <summary>
+        /// Inicia la petición HTTP a la API para obtener todas los departamentos asociados a un grupo.
+		/// Se hace la petición a través del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <returns>Devuelve un modal con los departamentos asociados a un grupo.</returns>
+
+        public async Task<IActionResult> VentanaVisualizarDepartamento(Guid id)
 		{
 			DepartamentoModel departamento = new DepartamentoModel();
 			GrupoModel model = new GrupoModel();
@@ -80,8 +115,13 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		//Retorna el modal de confirmación para eliminar un grupo
-		public async Task<IActionResult> VentanaEliminarGrupo(Guid id)
+        /// <summary>
+        /// Método que invoca una view para eliminar un grupo seleccionado.
+        /// </summary>
+        /// <param name="id">Identificador del grupo.</param>
+        /// <returns>Devuelve un modal con mensaje de confirmación.</returns>
+
+        public async Task<IActionResult> VentanaEliminarGrupo(Guid id)
 		{
 			try
 			{
@@ -93,7 +133,13 @@ namespace ServiceDeskUCAB.Controllers
 			}
 		}
 
-		[HttpGet]
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para eliminar un grupo a traves del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <returns>Devuelve la view principal con una notificación.</returns>
+
+        [HttpGet]
 		public async Task<IActionResult> EliminarGrupo(Guid id)
 		{
 			JObject respuesta;
@@ -101,11 +147,18 @@ namespace ServiceDeskUCAB.Controllers
 			if ((bool)respuesta["success"])
 				return RedirectToAction("Index", new { message = "Se ha eliminado correctamente" });
 			else
-				return NoContent();
+				return RedirectToAction("Index", new { message2 = "Hubo un error en la operación" });
 		}
 
-		//Retorna el modal para registrar un grupo nuevo
-		public async Task<IActionResult> VentanaAgregarGrupo()
+        //Retorna el modal para registrar un grupo nuevo
+
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para obtener los departamentos no asociados.
+		/// Se hace la petición a través del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <returns>Devuelve un modal para agregar un departamento contiene Checkbox e InputText.</returns>
+
+        public async Task<IActionResult> VentanaAgregarGrupo()
 		{
 			GrupoRegistrarViewModel viewModel = new GrupoRegistrarViewModel();
             viewModel.deptNoAsociado = await _servicioApiDepartamento.ListaDepartamentoNoAsociado();
@@ -121,8 +174,15 @@ namespace ServiceDeskUCAB.Controllers
 			return NoContent();
 		}
 
+        /// <summary>
+        /// Método que inicia la petición HTTP a la API para almacenar un grupo y sus relaciones.
+		/// Se hace a través del servicio ServicioGrupo_API.
+        /// </summary>
+        /// <param name="grupo">Objeto de tipo GrupoModel</param>
+        /// <param name="idDepartamentos">Lista de identificadores de departamentos.</param>
+        /// <returns>Devuelve la view principal con una notificación.</returns>
 
-		public async Task<IActionResult> GuardarGrupo(GrupoModel grupo, List<string> idDepartamentos)
+        public async Task<IActionResult> GuardarGrupo(GrupoModel grupo, List<string> idDepartamentos)
 		{
 
 			JObject respuestaGrupo;

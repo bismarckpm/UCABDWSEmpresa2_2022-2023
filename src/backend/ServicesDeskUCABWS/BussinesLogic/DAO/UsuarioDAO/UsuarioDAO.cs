@@ -282,7 +282,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
 
             catch (Exception ex)
             {
-                throw new ExceptionsControl("Uno de los campos esta vacio", ex);
+                throw new ExceptionsControl("Uno de los campos esta vacio o el correo ya existe", ex);
             }
         }
 
