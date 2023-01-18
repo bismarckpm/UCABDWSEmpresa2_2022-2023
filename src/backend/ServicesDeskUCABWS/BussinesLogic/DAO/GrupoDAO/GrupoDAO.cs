@@ -134,8 +134,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 					_dataContext.DbContext.SaveChanges();
 				}
 
-                return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
-			}
+
+                var data = _dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First();
+                return GrupoMapper.MapperEntityToDTOUpdate(data);
+                //return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
+            }
 			catch (DbUpdateException ex)
 			{
 				throw new ExceptionsControl("Fallo al actualizar el grupo: " + grupo.nombre, ex);
@@ -154,21 +157,31 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
         public bool QuitarAsociacion(Guid grupoId)
         {
-            var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
-
-            if (listaDept != null)
+            var asociacionQuitada = false;
+            try
             {
+                var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
 
-                foreach (var item in listaDept)
+                if (listaDept != null)
                 {
-                    item.id_grupo = null;
+
+                    foreach (var item in listaDept)
+                    {
+                        item.id_grupo = null;
+
+                    }
+                    _dataContext.DbContext.SaveChanges();
+                    return asociacionQuitada = true;
 
                 }
-                _dataContext.DbContext.SaveChanges();
-                return true;
-
+                
             }
-            return false;
+            catch (Exception ex)
+            {
+                throw new ExceptionsControl("Fallo al quitar asociacion a un grupo", ex);
+            }
+
+            return asociacionQuitada;
         }
 
         /// <summary>
