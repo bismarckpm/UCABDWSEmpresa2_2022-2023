@@ -27,8 +27,12 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<Tipo_TicketDTOSearch>> TipoTickets(Guid idDepartamento);
 
+        Task<List<TicketBasicoDTO>> TicketsEnviados(string idempleado);
+
         Task<ApplicationResponse<DepartamentoSearchDTO>> departamentoEmpleado(string empleadoId);
+
         Task<List<Estado>> DepartamentoEstados(string departamentoId);
+
         Task<JObject> TomarTicket(TicketTomarDTO objeto);
 
         Task<JObject> Finalizar(string ticketId);

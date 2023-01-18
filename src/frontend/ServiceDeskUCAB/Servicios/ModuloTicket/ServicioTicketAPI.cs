@@ -30,6 +30,7 @@ namespace ServiceDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
+
         public async Task<TicketCompletoDTO> Obtener(string ticketId)
         {
             TicketCompletoDTO objeto = new TicketCompletoDTO();
@@ -127,6 +128,37 @@ namespace ServiceDeskUCAB.Servicios
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
                 var response = await cliente.GetAsync($"Ticket/Lista/{departamentoId}/{opcion}/{empleadoId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<TicketBasicoDTO>(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene los tickets");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+        public async Task<List<TicketBasicoDTO>> TicketsEnviados(string idempleado)
+        {
+            List<TicketBasicoDTO> objeto = new List<TicketBasicoDTO>();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerTicketsEnviados/{idempleado}");
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadAsStringAsync();

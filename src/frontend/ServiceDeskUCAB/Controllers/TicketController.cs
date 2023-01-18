@@ -35,12 +35,21 @@ namespace ServiceDeskUCAB.Controllers
         {
             var idUsuario = User.Identities.First().Claims.ToList()[0].Value;
             ViewBag.opcion = opcion;
+            List<TicketBasicoDTO> lista;
             var departamento= await _servicioTicketAPI.departamentoEmpleado(idUsuario);
             if (!departamento.Success)
             {
                 return View(new List<TicketBasicoDTO>());
             }
-            List<TicketBasicoDTO> lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
+            lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
+            /*if (opcion != "Enviados")
+            {
+                lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
+            }
+            else
+            {
+                lista = await _servicioTicketAPI.TicketsEnviados(idUsuario);
+            }*/
             return View(lista);
         }
 
