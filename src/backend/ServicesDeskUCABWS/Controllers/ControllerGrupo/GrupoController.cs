@@ -228,7 +228,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             var response = new ApplicationResponse<List<DepartamentoDto>>();
             try
             {
-                response.Data = _grupoDAO.GetByIdDepartamento(idGrupo);
+                response.Data = _grupoDAO.DepartamentosAsociados(idGrupo);
             }
             catch (ExceptionsControl ex)
             {
@@ -251,7 +251,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             var response = new ApplicationResponse<GrupoDto>();
             try
             {
-                response.Data = _grupoDAO.buscarGrupoNombre(nombreGrupo);
+                response.Data = _grupoDAO.BuscarGrupoNombre(nombreGrupo);
             }
             catch (ExceptionsControl ex)
             {

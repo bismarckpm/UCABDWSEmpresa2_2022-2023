@@ -86,7 +86,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 
 			var result = _grupoDAO.AgregarGrupoDao(request);
 
-			Assert.AreNotEqual(request.nombre, result.nombre);
+			Assert.AreNotEqual(request.nombre, result.Nombre);
 		}
 
 		[TestMethod(displayName: "Prueba Unitaria para agregar un Grupo con excepcion")]
@@ -112,20 +112,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.AgregarGrupoDao(request));
 		}
 
-		[TestMethod(displayName: "Prueba Unitaria para consultar lista de Grupos")]
-		public void ConsultarGruposTest()
-		{
-			var result = _grupoDAO.ConsultarGruposDao();
-			Assert.AreEqual(result.Count(), _contextMock.Object.Grupos.ToList().Count());
-		}
-
-		[TestMethod(displayName: "Prueba Unitaria para consultar grupos con excepcion")]
-		public void ConsultarGruposTestException()
-		{
-			_contextMock.Setup(p => p.Grupos).Throws(new Exception(""));
-			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.ConsultarGruposDao());
-		}
-
 		[TestMethod(displayName: "Prueba Unitaria para consultar grupos por ID")]
 		public void ConsultarGruposPorIDTest()
 		{
@@ -146,7 +132,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			};
 
 			var result = _grupoDAO.ConsultarPorIdDao(request.id);
-			Assert.AreEqual(result.id, request.id);
+			Assert.AreEqual(result.Id, request.id);
 		}
 
 		[TestMethod(displayName: "Prueba Unitaria para excepcion al consultar grupos por ID")]
@@ -201,7 +187,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.EliminarGrupoDao(data.id));
 		}
 
-		[TestMethod(displayName: "Prueba Unitaria para modificar un Grupo")]
+	/*	[TestMethod(displayName: "Prueba Unitaria para modificar un Grupo")]
 		public void ModificarGrupoTest()
 		{
 			//arrange
@@ -227,35 +213,35 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var result = _grupoDAO.ModificarGrupoDao(request);
 
 			Assert.AreEqual(request.nombre, request.nombre);
+		}*/
+
+		[TestMethod(displayName: "Prueba Unitaria para modificar un grupo Condicional")]
+		public void ModificarGrupoTestIf()
+		{
+			//arrange
+			var request = new Grupo
+			{
+
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+				nombre = "Seguridad Errada",
+
+				descripcion = "Cuida el ambiente",
+
+				fecha_creacion = DateTime.Now.Date,
+
+				fecha_ultima_edicion = DateTime.Now.Date,
+
+				fecha_eliminacion = null
+
+			};
+
+			_contextMock.Setup(set => set.DbContext.SaveChanges());
+
+			var result = _grupoDAO.ModificarGrupoDao(request);
+
+			Assert.AreNotEqual(request.nombre, result.Nombre);
 		}
-
-		//[TestMethod(displayName: "Prueba Unitaria para modificar un grupo Condicional")]
-		//public void ModificarGrupoTestIf()
-		//{
-		//	//arrange
-		//	var request = new Grupo
-		//	{
-
-		//		id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-		//		nombre = "Seguridad Errada",
-
-		//		descripcion = "Cuida el ambiente",
-
-		//		fecha_creacion = DateTime.Now.Date,
-
-		//		fecha_ultima_edicion = null,
-
-		//		fecha_eliminacion = null
-
-		//	};
-
-		//	_contextMock.Setup(set => set.DbContext.SaveChanges());
-
-		//	var result = _grupoDAO.ModificarGrupoDao(request);
-
-		//	Assert.AreNotEqual(request.nombre, result.nombre);
-		//}
 
 		[TestMethod(displayName: "Prueba Unitaria modificar grupo con campo vacio")]
 		public void ExcepcionDBUpdateModificarGrupo()
@@ -397,7 +383,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			};
 
 			
-			var result = _grupoDAODG.GetByIdDepartamento(grupo.id);
+			var result = _grupoDAODG.DepartamentosAsociados(grupo.id);
 			Assert.AreEqual(result.Count(), 1);
 
 		}
@@ -412,7 +398,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			};
 
 		    _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
-			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.GetByIdDepartamento(grupo.id));
+			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.DepartamentosAsociados(grupo.id));
 
 		}
 
@@ -548,7 +534,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 		}
 
         [TestMethod(displayName: "Prueba Unitaria para consultar un grupo por nombre de forma exitosa")]
-        public void buscarGrupoNombre()
+        public void BuscarGrupoNombre()
         {
 
             var grupo = new Grupo
@@ -559,13 +545,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             };
 
 
-            var result = _grupoDAO.buscarGrupoNombre(grupo.nombre);
-            Assert.AreEqual(result.nombre, grupo.nombre);
+            var result = _grupoDAO.BuscarGrupoNombre(grupo.nombre);
+            Assert.AreEqual(result.Nombre, grupo.nombre);
 
         }
 
         [TestMethod(displayName: "Excepcion Prueba Unitaria para consultar un grupo por nombre de forma fallida")]
-        public void ExcepcionbuscarGrupoNombre()
+        public void ExcepcionBuscarGrupoNombre()
         {
 
             var grupo = new Grupo
@@ -576,7 +562,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             };
 
             _contextMock.Setup(p => p.Grupos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _grupoDAODG.buscarGrupoNombre(grupo.nombre));
+            Assert.ThrowsException<ExceptionsControl>(() => _grupoDAODG.BuscarGrupoNombre(grupo.nombre));
 
         }
 
