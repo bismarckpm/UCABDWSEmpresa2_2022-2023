@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@try{
 <div class="card mt-5">
     <div class="card-header p-2">
         <h1 class="fs-3 mb-0 text-center">Crear Tipo de Estado</h1>
@@ -112,6 +113,12 @@
         </div>
     </div>
 </div>
+
+}catch{
+    <div class="mb-0 text-center">
+        <a asp-action="EstadosTicket" asp-controller="EstadoTicket" class="btn btn-secondary btn-sm">Volver a la lista de Estados</a>
+    </div>
+};
 
 @section Scripts{
     <script>
