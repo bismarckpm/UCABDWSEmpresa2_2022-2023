@@ -10,25 +10,31 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 {
     public class ServicioDepartamento_API : IServicioDepartamento_API
     {
-        //Declaracion de variables
-        private static string _baseUrl;
+        /// <summary>
+        /// Declaración de variables.
+        /// </summary>
+        
         private JObject _json_respuesta;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        //Constructor
-        public ServicioDepartamento_API()
+        /// <summary>
+        /// Inicialización de variables.
+        /// </summary>
+        /// <param name="httpClientFactory">Objeto de la interfaz IHttpClientFactory.</param>
+        
+        public ServicioDepartamento_API(IHttpClientFactory httpClientFactory)
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-
-            _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
+            this._httpClientFactory = httpClientFactory;
         }
 
-        //Eliminar un departamento seleccionado
+        /// <summary>
+        /// Método para realizar una petición Http para eliminar de forma lógica un departamento y quitar su relaciones.
+        /// </summary>
+        /// <param name="id">Identificador de un departamento.</param>
+        /// <returns>Devuelve un objeto de tipo Json.</returns>
         public async Task<JObject> EliminarDepartamento(Guid id)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
             var response = await cliente.DeleteAsync($"Departamento/EliminarDepartamento/{id}");
 
             var respuesta = await response.Content.ReadAsStringAsync();
@@ -37,13 +43,14 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return json_respuesta;
         }
 
-        //Almacenar la información de un nuevo departamento
+        /// <summary>
+        /// Método que realiza un petición Http para almacenar la información de un departamento.
+        /// </summary>
+        /// <param name="departamento">Objeto de tipo DepartamentoModel, contiene atributos de un nuevo departamento.</param>
+        /// <returns>Devuelve un objeto de tipo Json.</returns>
         public async Task<JObject> RegistrarDepartamento(DepartamentoModel departamento)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(departamento), Encoding.UTF8, "application/json");
             Console.WriteLine(JsonConvert.SerializeObject(departamento));
@@ -68,15 +75,16 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return _json_respuesta;
         }
 
-        //Modificar los campos de un departamento
+        /// <summary>
+        /// Método que realiza un petición Http para mostrar la información de un departamento segun su id.
+        /// </summary>
+        /// <param name="id">Identificador de Departamento.</param>
+        /// <returns>Devuelve un objeto de tipo Json.</returns>
         public async Task<DepartamentoModel> MostrarInfoDepartamento(Guid id)
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -99,12 +107,16 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return departamento;
         }
 
+        /// <summary>
+        /// Método que realiza un petición Http para modificar los atributos (nombre y descripción) de un departamento,
+        /// que han sido alterados.
+        /// </summary>
+        /// <param name="dept">Objeto del tipo DepartamentoModel, contiene nombre y descripción de un departamento.</param>
+        /// <returns>Devuelve un objeto del tipo Json.</returns>
+
         public async Task<JObject> EditarDepartamento(DepartamentoModel dept)
         {
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             var content = new StringContent(JsonConvert.SerializeObject(dept), Encoding.UTF8, "application/json");
 
@@ -128,14 +140,15 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
             return _json_respuesta;
         }
 
+        /// <summary>
+        /// Método que realiza un petición Http para extraer departamentos activos.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos de tipo DepartamentoModel.</returns>
         public async Task<List<DepartamentoModel>> ListaDepartamento()
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
@@ -163,14 +176,15 @@ namespace ServiceDeskUCAB.Servicios.ModuloDepartamento
 			return departamento.departamentos;
         }
 
+        /// <summary>
+        /// Método que realiza un petición Http para extraer departamentos no asociados a un grupo.
+        /// </summary>
+        /// <returns>Devuelve una lista de objetos de tipo DepartamentoModel.</returns>
         public async Task<List<DepartamentoModel>> ListaDepartamentoNoAsociado()
         {
             DepartamentoModel departamento = new DepartamentoModel();
 
-            HttpClient cliente = new()
-            {
-                BaseAddress = new Uri(_baseUrl)
-            };
+            var cliente = _httpClientFactory.CreateClient("ConnectionApi");
 
             try
             {
