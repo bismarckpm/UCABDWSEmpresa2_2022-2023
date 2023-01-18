@@ -31,9 +31,10 @@ namespace ServiceDeskUCAB.Controllers
             //var current = User.Identities.First().Claims.ToList()[2].Value;
             var current = User.Identities.First().Claims;
             var boold = User.Identities.First().Claims.ToList()[0].Value;
+
             if (current == null)
             {
-                Console.WriteLine("asdasdadas");
+                Console.WriteLine(boold);
                 return View();
             }
             else

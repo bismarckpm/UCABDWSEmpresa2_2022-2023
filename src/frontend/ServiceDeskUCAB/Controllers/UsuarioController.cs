@@ -106,7 +106,7 @@ namespace ServiceDeskUCAB.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Usuarios", new { message2 = "Se ha Editado correctamente" });
+                    return RedirectToAction("Usuarios", new { message2 = (string)respuesta["message"] });
                 }
 
             }
