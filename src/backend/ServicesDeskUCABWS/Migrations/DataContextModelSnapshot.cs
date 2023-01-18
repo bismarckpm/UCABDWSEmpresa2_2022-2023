@@ -669,11 +669,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-<<<<<<< HEAD
-                            fecha_creacion = new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local),
-=======
                             fecha_creacion = new DateTime(2023, 1, 17, 0, 0, 0, 0, DateTimeKind.Local),
->>>>>>> b4238baf8b87701eab767cc14e166bb963d80000
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

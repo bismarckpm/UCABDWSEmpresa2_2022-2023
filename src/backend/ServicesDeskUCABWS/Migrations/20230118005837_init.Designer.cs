@@ -12,13 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20230104225017_initRefact.Designer.cs
-    [Migration("20230104225017_initRefact")]
-    partial class initRefact
-=======
-    [Migration("20230117214649_InitialCreate")]
-    partial class InitialCreate
->>>>>>> b4238baf8b87701eab767cc14e166bb963d80000:src/backend/ServicesDeskUCABWS/Migrations/20230117214649_InitialCreate.Designer.cs
+    [Migration("20230118005837_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -676,11 +671,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-<<<<<<< HEAD:src/backend/ServicesDeskUCABWS/Migrations/20230104225017_initRefact.Designer.cs
-                            fecha_creacion = new DateTime(2023, 1, 4, 0, 0, 0, 0, DateTimeKind.Local),
-=======
                             fecha_creacion = new DateTime(2023, 1, 17, 0, 0, 0, 0, DateTimeKind.Local),
->>>>>>> b4238baf8b87701eab767cc14e166bb963d80000:src/backend/ServicesDeskUCABWS/Migrations/20230117214649_InitialCreate.Designer.cs
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

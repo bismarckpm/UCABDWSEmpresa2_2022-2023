@@ -9,6 +9,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiquetaTipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;

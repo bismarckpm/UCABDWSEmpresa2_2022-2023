@@ -13,6 +13,7 @@ using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperPlantillaNotificacion;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiquetaTipoEstado;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificacion
 {

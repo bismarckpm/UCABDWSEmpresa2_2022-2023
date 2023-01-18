@@ -18,6 +18,7 @@ using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiquetaTipoEstado;
 
 namespace UnitTestServicesDeskUCABWS.Grupo_E.TestCargo
 {
