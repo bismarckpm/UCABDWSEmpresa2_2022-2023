@@ -103,12 +103,12 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear tipo estado
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<TipoEstadoDTO> CrearTipoEstadoCtrl( TipoEstadoCreateDTO tipoEstadoDTO)
+        public ApplicationResponse<String> CrearTipoEstadoCtrl(TipoEstadoCreateDTO tipoEstadoDTO)
         {
-            var response = new ApplicationResponse<TipoEstadoDTO>();
+            var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _tipoEstadoService.RegistroTipoEstado(tipoEstadoDTO); ;
+				response.Data = _tipoEstadoService.RegistroTipoEstado(tipoEstadoDTO).ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -122,12 +122,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar tipo estado
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<TipoEstadoDTO> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
+        public ApplicationResponse<String> ActualizarTipoEstadoCtrl([FromBody] TipoEstadoUpdateDTO tipoEstadoDTO,[FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<TipoEstadoDTO>();
-            try
+            var response = new ApplicationResponse<String>();
+			try
             {
-                response.Data = _tipoEstadoService.ActualizarTipoEstado(tipoEstadoDTO, id);
+				response.Data = _tipoEstadoService.ActualizarTipoEstado(tipoEstadoDTO, id).ToString();
             }
             catch (ExceptionsControl ex)
             {

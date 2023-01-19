@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230117214649_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230118005837_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

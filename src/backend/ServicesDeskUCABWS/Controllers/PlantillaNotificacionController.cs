@@ -125,12 +125,12 @@ namespace ServicesDeskUCABWS.Controllers
         //POST: Controlador para crear plantilla notificacion
         [HttpPost]
         [Route("Registro/")]
-        public ApplicationResponse<PlantillaNotificacionDTO> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
+        public ApplicationResponse<String> CrearPlantillaCtrl(PlantillaNotificacionDTOCreate plantillaDTO)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
+            var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _plantilla.RegistroPlantilla(plantillaDTO);
+                response.Data = _plantilla.RegistroPlantilla(plantillaDTO).ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -144,12 +144,12 @@ namespace ServicesDeskUCABWS.Controllers
         //PUT: Controlador para modificar plantilla notificacion
         [HttpPut]
         [Route("Actualizar/{id}")]
-        public ApplicationResponse<PlantillaNotificacionDTO> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
+        public ApplicationResponse<String> ActualizarPlantillaCtrl( [FromBody] PlantillaNotificacionDTOCreate plantillaDTO, [FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
+            var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO, id);
+                response.Data = _plantilla.ActualizarPlantilla(plantillaDTO, id).ToString();
             }
             catch (ExceptionsControl ex)
             {
@@ -163,12 +163,12 @@ namespace ServicesDeskUCABWS.Controllers
         //DELETE: Controlador para eliminar plantilla notificacion
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public ApplicationResponse<PlantillaNotificacionDTO> EliminarPlantillaCtrl(Guid id)
+        public ApplicationResponse<String> EliminarPlantillaCtrl(Guid id)
         {
-            var response = new ApplicationResponse<PlantillaNotificacionDTO>();
+            var response = new ApplicationResponse<String>();
             try
             {
-                response.Data = _plantilla.EliminarPlantilla(id); ;
+                response.Data = _plantilla.EliminarPlantilla(id).ToString();
             }
             catch(ExceptionsControl ex)
             {

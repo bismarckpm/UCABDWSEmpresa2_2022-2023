@@ -201,14 +201,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         {
             //arrange
             _serviceMock.Setup(p => p.RegistroPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>()));
-            var application = new ApplicationResponse<PlantillaNotificacionDTO>();
 
             //act
             var result = _controller.CrearPlantillaCtrl(It.IsAny<PlantillaNotificacionDTOCreate>());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+			//assert
+			Assert.IsTrue(result.Success);
+
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria Controlador para crear plantilla notificacion excepcion")]
@@ -235,14 +235,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         {
             //arrange
             _serviceMock.Setup(p => p.ActualizarPlantilla(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>()));
-            var application = new ApplicationResponse<PlantillaNotificacionDTO>();
 
             //act
             var result = _controller.ActualizarPlantillaCtrl(It.IsAny<PlantillaNotificacionDTOCreate>(), It.IsAny<Guid>());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+			//assert
+			Assert.IsTrue(result.Success);
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria Controlador para modificar plantilla notificacion excepcion")]
@@ -269,14 +268,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestPlantillaNotificaci
         {
             //arrange
             _serviceMock.Setup(p => p.EliminarPlantilla(It.IsAny<Guid>()));
-            var application = new ApplicationResponse<PlantillaNotificacionDTO>();
 
             //act
             var result = _controller.EliminarPlantillaCtrl(It.IsAny<Guid>());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
+			//assert
+			Assert.IsTrue(result.Success);
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria Controlador para eliminar plantilla notificacio excepción")]
