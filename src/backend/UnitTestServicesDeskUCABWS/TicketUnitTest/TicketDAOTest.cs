@@ -313,47 +313,47 @@ namespace TicketUnitTest
             
         }
 
-       
+
 
         //*
         //Prueba Unitaria para crear tickets excepcion de ticket
         //*
-      /*  [TestMethod(displayName: "Prueba Unitaria cuando la creacion de los ticket retorna TicketExcepcion")]
+        /*  [TestMethod(displayName: "Prueba Unitaria cuando la creacion de los ticket retorna TicketExcepcion")]
 
-        public void CrearTicketTestTicketException()
-        {
-            //Preparación y Prueba
-            var ticket = new TicketNuevoDTO
-            {
-                titulo = "titulo",
-                descripcion = "aaaaa",
-                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"),
-                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
-                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40")
-            };
-          
-            _validaMock.Setup(p => p.validarEmisor(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"))).Throws(new TicketEmisorException("", new Exception()));
+          public void CrearTicketTestTicketException()
+          {
+              //Preparación y Prueba
+              var ticket = new TicketNuevoDTO
+              {
+                  titulo = "titulo",
+                  descripcion = "aaaaa",
+                  empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"),
+                  prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
+                  tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
+                  departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40")
+              };
 
-           // _contextMock.Setup(p => p.Tickets).Throws(new TicketEmisorException(""));
-            //_contextMock.Setup(p => p.Empleados).Throws(new TicketEmisorException(""));
-          
-           // _contextMock.SetUpContextDataVacioEmpleado();
-           // _contextMock.SetUpContextDataVacioUsuario();
-           
-            var resultado = _TicketDAO.crearTicket(ticket);
-            
-         
+              _validaMock.Setup(p => p.validarEmisor(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"))).Throws(new TicketEmisorException("", new Exception()));
 
-            //Verificación
+             // _contextMock.Setup(p => p.Tickets).Throws(new TicketEmisorException(""));
+              //_contextMock.Setup(p => p.Empleados).Throws(new TicketEmisorException(""));
 
-          //  StringAssert.Equals(ex.GetType(), resultado.GetType());
-           // StringAssert.Equals(ex, resultado.Message);
-            Assert.ThrowsException<TicketEmisorException>(() => _TicketDAO.crearTicket(ticket));
-            //Assert.ThrowsException<Exception>(() => _TicketDAO.crearTicket(ticket));
-            // Assert.AreEqual(ex, resultado.Message);
+             // _contextMock.SetUpContextDataVacioEmpleado();
+             // _contextMock.SetUpContextDataVacioUsuario();
 
-        }*/
+              var resultado = _TicketDAO.crearTicket(ticket);
+
+
+
+              //Verificación
+
+            //  StringAssert.Equals(ex.GetType(), resultado.GetType());
+             // StringAssert.Equals(ex, resultado.Message);
+              Assert.ThrowsException<TicketEmisorException>(() => _TicketDAO.crearTicket(ticket));
+              //Assert.ThrowsException<Exception>(() => _TicketDAO.crearTicket(ticket));
+              // Assert.AreEqual(ex, resultado.Message);
+
+          }*/
 
 
 
@@ -382,6 +382,31 @@ namespace TicketUnitTest
             _validaciones.Setup(t => t.validarTicket(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"))).Throws(new TicketException("", new Exception()));
             Assert.ThrowsException<TicketException>(() => _TicketDAO.obtenerTicketPorId(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00")));
         }*/
+
+
+        //Test GetTicket
+        [TestMethod]
+        public void GetTicketCaminoFeliz()
+        {
+            var entrada = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+            var result = _TicketDAO.GetTicket(entrada);
+
+            Assert.AreEqual("titulo", result.Data.titulo);
+            Assert.AreEqual("nombre", result.Data.Estado.nombre);
+        }
+
+        [TestMethod]
+        public void GetTicketException()
+        {
+            var entrada = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+            _contextMock.Setup(x => x.Tickets).Throws(new Exception());
+
+            var result = _TicketDAO.GetTicket(entrada);
+
+            Assert.AreEqual(null, result.Data);
+            Assert.AreEqual(false, result.Success);
+        }
     }
 
 }

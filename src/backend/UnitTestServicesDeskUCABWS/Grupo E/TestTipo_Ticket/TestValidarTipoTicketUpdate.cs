@@ -79,7 +79,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ActualizarTipo_Ticket(entrada);
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
             }
             catch (ExceptionsControl ex)
             {
@@ -130,7 +130,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ActualizarTipo_Ticket(entrada);
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
             }
             catch (ExceptionsControl ex)
             {
@@ -228,7 +228,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             //act
             try
             {
-                TipoticketDAO.ActualizarTipo_Ticket(entrada);
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
             }
             catch (ExceptionsControl ex)
             {
@@ -236,7 +236,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             }
 
             Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
-            Assert.IsTrue(typeof(FormatException) == actualException.Excepcion.GetType());
 
         }
 

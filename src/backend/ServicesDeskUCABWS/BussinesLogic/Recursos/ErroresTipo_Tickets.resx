@@ -147,6 +147,12 @@
   <data name="FORMATO_NO_VALIDO" xml:space="preserve">
     <value>Al menos uno de los ID no cumple con el formato</value>
   </data>
+  <data name="MENOR_A_0_MAN_MRN_OS" xml:space="preserve">
+    <value>El minimo aprobado y maximo rechazado en cada uno de los cargos deben ser  mayor a 0 </value>
+  </data>
+  <data name="MENOR_A_0_MA_MR" xml:space="preserve">
+    <value>El minimo aprobado y el maximo rechazado deben ser mayor a 0</value>
+  </data>
   <data name="MODELO_JERARQUICO_NO_VALIDO" xml:space="preserve">
     <value>Los campos minimo aprobado y maximo recchazado no pueden ser asignados dentro de un modelo jerarquico</value>
   </data>

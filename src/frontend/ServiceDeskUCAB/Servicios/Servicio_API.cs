@@ -27,239 +27,120 @@ namespace ServiceDeskUCAB.Servicios
 
         }
 
-        // Método para consumir la lista de Tipo Ticket desde el front
-        public async Task<List<Tipo>> Lista()
+        private async Task<T> GetAsyncFromServer<T>(string Url)
         {
-            List<Tipo> lista = new List<Tipo>();
-
-
             var cliente = new HttpClient();
-
             cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync("api/Tipo_Ticket/Consulta/");  //URL de Lista en el swagger
-
+            var response = await cliente.GetAsync(Url);
             if (response.IsSuccessStatusCode)
             {
                 var json_respuesta = await response.Content.ReadAsStringAsync();
-
                 JObject dataRespuesta = JObject.Parse(json_respuesta);
-
-                string stringDataRespuesta = dataRespuesta["data"].ToString();
-                Console.WriteLine(stringDataRespuesta);
-
-                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
-                
-
-                lista = resultado;
+                string stringDataRespuesta = dataRespuesta.ToString();
+                return JsonConvert.DeserializeObject<T>(stringDataRespuesta); 
             }
+            throw new Exception("Error de conexion con el servidor");
+            //return default(T);
+        }
 
+        private async Task<T> PutAsyncFromServer<T>(string Url, StringContent content)
+        {
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var response = await cliente.PutAsync(Url, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+                string stringDataRespuesta = dataRespuesta.ToString();
+                return JsonConvert.DeserializeObject<T>(stringDataRespuesta);
+            }
+            throw new Exception("Error de conexion con el servidor");
+        }
 
-            return lista;
+        private async Task<T> PostAsyncFromServer<T>(string Url, StringContent content)
+        {
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var response = await cliente.PostAsync(Url, content);
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+                JObject dataRespuesta = JObject.Parse(json_respuesta);
+                string stringDataRespuesta = dataRespuesta.ToString();
+                return JsonConvert.DeserializeObject<T>(stringDataRespuesta);
+            }
+            throw new Exception("Error de conexion con el servidor");
+        }
+
+        private async Task<bool> DeleteAsyncFromServer(string Url)
+        {
+            bool respuesta = false;
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var response = await cliente.DeleteAsync(Url);
+            if (response.IsSuccessStatusCode)
+            {
+                respuesta = true;
+            }
+            return respuesta;
+        }
+
+        // Método para consumir la lista de Tipo Ticket desde el front
+        public async Task<List<Tipo>> Lista()
+        {
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Tipo>>>("api/Tipo_Ticket/Consulta/");
+            
+            return result.Data;
         }
 
         public async Task<List<Tipo>> ListaxDepartamento(Guid id)
         {
-            List<Tipo> lista = new List<Tipo>();
-
-
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync("api/Tipo_Ticket/ConsultaxDepartamento/"+id);  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                JObject dataRespuesta = JObject.Parse(json_respuesta);
-
-                string stringDataRespuesta = dataRespuesta["data"].ToString();
-                Console.WriteLine(stringDataRespuesta);
-
-                var resultado = JsonConvert.DeserializeObject<List<Tipo>>(stringDataRespuesta);
-
-
-                lista = resultado;
-            }
-
-
-            return lista;
-        }
-
-
-
-        // Método para consumir la lista de Ticket desde el front
-        public async Task<List<Ticket>> ListaTickets()
-        {
-            List<Ticket> lista = new List<Ticket>();
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-            var response = await cliente.GetAsync("api/Tickets");  //URL de Lista en el swagger
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-                JArray dataRespuesta = JArray.Parse(json_respuesta);
-
-                string stringDataRespuesta = dataRespuesta.ToString();
-
-                var resultado = JsonConvert.DeserializeObject<List<Ticket>>(stringDataRespuesta);
-
-                lista = resultado;
-            }
-            return lista;
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Tipo>>>("api/Tipo_Ticket/ConsultaxDepartamento/" + id);
+            
+            return result.Data;
         }
 
         public async Task<List<Votos_Ticket>> ObtenerVotos(string idUsuario)
         {
-            List<Votos_Ticket> lista = new List<Votos_Ticket>();
-            var cliente = new HttpClient();
-
-            // TODO: Obtener sesion y colocar id del usuario aqui
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Votos_Ticket>>>($"api/Votos_Ticket/Consulta/" + idUsuario);
             
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync($"api/Votos_Ticket/Consulta/" + idUsuario);  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
-                var newList = new List<Votos_Ticket>();
-               
-                lista = resultado.Data;
-            }
-
-            return lista;
+            return result.Data;
 
         }
 
         public async Task<List<Departament>> ListaDepa()
         {
-            List<Departament> lista = new List<Departament>();
-
-
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync("Departamento/ConsultarDepartamento/");  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-
-                var resultado = JsonConvert.DeserializeObject< ApplicationResponse<List<Departament>>>(json_respuesta);
-
-                lista = resultado.Data;
-            }
-
-
-            return lista;
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Departament>>>("Departamento/ConsultarDepartamento/");
+            
+            return result.Data;
         }
 
         public async Task<List<CargoDTOUpdate>> ListaCargos(Guid IdDepartamento)
         {
-            List<CargoDTOUpdate> lista = new List<CargoDTOUpdate>();
-
-
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync("Cargo/ConsultarCargoPorDepartamento/"+IdDepartamento);  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<CargoDTOUpdate>>>(json_respuesta);
-
-                lista = resultado.Data;
-            }
-
-
-            return lista;
+            var result = await GetAsyncFromServer<ApplicationResponse<List<CargoDTOUpdate>>>("Cargo/ConsultarCargoPorDepartamento/" + IdDepartamento);
+            
+            return result.Data;
         }
 
         //Método para Agregar Ticket desde el front
         public async Task<ApplicationResponse<Votos_Ticket>> VotarTicket(VotarTicket voto_ticket)
         {
-            var respuesta = new ApplicationResponse<Votos_Ticket>();
-
-
-            var cliente = new HttpClient();
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var content = new StringContent(JsonConvert.SerializeObject(voto_ticket), Encoding.UTF8, "application/json");
-
-
-            var response = await cliente.PutAsync($"api/Tickets/votos", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                JObject dataRespuesta = JObject.Parse(json_respuesta);
-
-                string stringDataRespuesta = dataRespuesta.ToString();
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Votos_Ticket>>(stringDataRespuesta);
-
-                respuesta = resultado;
-
-            }
-
-
-            return respuesta;
+            var contentstring = new StringContent(JsonConvert.SerializeObject(voto_ticket), Encoding.UTF8, "application/json");
+            return await PutAsyncFromServer<ApplicationResponse<Votos_Ticket>>($"api/Tickets/votos", contentstring);
+            
         }
 
         public async Task<ApplicationResponse<Tipo_TicketDTOCreate>> Guardar(Tipo_TicketDTOCreate tipo)
         {
-            bool respuesta = false;
-
-
-            /*if (tipo.tipo == "Modelo_No_Aprobacion")
-            {
-            tipo.flujo_Aprobacion = null;
-
-            }*/
-
             if (tipo.Departamento.Count() == 0) { tipo.Departamento = null; };
 
             if (tipo.Flujo_Aprobacion.Count() == 0) { tipo.Flujo_Aprobacion = null; };
 
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
 
             var content = new StringContent(JsonConvert.SerializeObject(tipo), Encoding.UTF8, "application/json");
 
-            Console.WriteLine(JsonConvert.SerializeObject(tipo));
-            
-
-            var response = await cliente.PostAsync("api/Tipo_Ticket/Guardar/", content);
-            
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                Console.WriteLine(JsonConvert.SerializeObject(json_respuesta));
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Tipo_TicketDTOCreate>>(json_respuesta);
-
-                return resultado;
-
-                
-            }
-            
-
-
-            return null;
+            return await PostAsyncFromServer<ApplicationResponse<Tipo_TicketDTOCreate>>("api/Tipo_Ticket/Guardar/", content);
 
         }
 
@@ -268,73 +149,45 @@ namespace ServiceDeskUCAB.Servicios
         //Método para eliminar desde el front
         public async Task<bool> Eliminar(Guid id)
         {
-            bool respuesta = false;
-
-
-            var cliente = new HttpClient();
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.DeleteAsync($"api/Tipo_Ticket/Elimina/(\"{id}\")");
-
-
-            Console.WriteLine(response);
-
-            if (response.IsSuccessStatusCode)
-            {
-                respuesta = true;
-            }
-
-            return respuesta;
+            return await DeleteAsyncFromServer($"api/Tipo_Ticket/Elimina/(\"{id}\")");
+            
         }
 
-        public async Task<Ticket> ObtenerTicket(string id)
+        public async Task<ApplicationResponse<Ticket>> ObtenerTicket(string id)
         {
-            var respuesta = new Ticket();
-
-
-            var cliente = new HttpClient();
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync($"api/Tickets/{id}");
-
-
-            Console.WriteLine(response);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                JObject dataRespuesta = JObject.Parse(json_respuesta);
-
-                string stringDataRespuesta = dataRespuesta.ToString();
-
-                var resultado = JsonConvert.DeserializeObject<Ticket>(stringDataRespuesta);
-
-                respuesta = resultado;
+                return await GetAsyncFromServer<ApplicationResponse<Ticket>>($"api/Tickets/{id}");
             }
+            catch (Exception ex)
+            {
+                return new ApplicationResponse<Ticket>() { Success = false , Message= ex.Message};
+            }
+        }
 
-            return respuesta;
+        public async Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipo)
+        {
+            var contentstring = new StringContent(JsonConvert.SerializeObject(tipo), Encoding.UTF8, "application/json");
+            return await PutAsyncFromServer<ApplicationResponse<Tipo_TicketDTOUpdate>>("api/Tipo_Ticket/Editar/" + tipo.Id, contentstring);
+            
+        }
+
+        public async Task<List<Votos_Ticket>> ObtenerVotosNoPendientes(string idUsuario)
+        {
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Votos_Ticket>>>($"api/Votos_Ticket/ConsultaNP/" + idUsuario);
+            return result.Data;
+        }
+
+        public async Task<List<Modelo_Aprobacion>> ObtenerListaModelosAprobacion()
+        {
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Modelo_Aprobacion>>>("api/Tipo_Ticket/ObtenerTipoFlujos");
+            return result.Data;
         }
 
         public async Task<List<Prioridad>> ObtenerPrioridades()
         {
-            var lista = new List<Prioridad>();
-
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync($"prioridad/getprioridades");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Prioridad>>>(json_respuesta);
-
-                lista = resultado.Data;
-            }
-            return lista;
+            var result = await GetAsyncFromServer<ApplicationResponse<List<Prioridad>>>($"prioridad/getprioridades");
+            return result.Data;
         }
 
         public async Task<bool> AgregarTicket(NuevoTicket ticket)
@@ -353,84 +206,7 @@ namespace ServiceDeskUCAB.Servicios
             }
             return respuesta;
         }
-        public async Task<ApplicationResponse<Tipo_TicketDTOUpdate>> Actualizar(Tipo_TicketDTOUpdate tipo)
-        {
-            bool respuesta = false;
-
-
-            var cliente = new HttpClient();
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var content = new StringContent(JsonConvert.SerializeObject(tipo), Encoding.UTF8, "application/json");
-
-            Console.WriteLine(JsonConvert.SerializeObject(tipo));
-
-
-            var response = await cliente.PutAsync("api/Tipo_Ticket/Editar/"+tipo.Id, content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                Console.WriteLine(JsonConvert.SerializeObject(json_respuesta));
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<Tipo_TicketDTOUpdate>>(json_respuesta);
-
-                return resultado;
-            }
-
-
-
-            return null;
-        }
-
-        public async Task<List<Votos_Ticket>> ObtenerVotosNoPendientes(string idUsuario)
-        {
-            List<Votos_Ticket> lista = new List<Votos_Ticket>();
-            var cliente = new HttpClient();
-
-            // TODO: Obtener sesion y colocar id del usuario aqui
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync($"api/Votos_Ticket/ConsultaNP/" + idUsuario);  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Votos_Ticket>>>(json_respuesta);
-                var newList = new List<Votos_Ticket>();
-
-                lista = resultado.Data;
-            }
-
-            return lista;
-
-        }
-
-        public async Task<List<Modelo_Aprobacion>> ObtenerListaModelosAprobacion()
-        {
-            List<Modelo_Aprobacion> lista = new List<Modelo_Aprobacion>();
-            var cliente = new HttpClient();
-
-            // TODO: Obtener sesion y colocar id del usuario aqui
-
-            cliente.BaseAddress = new Uri(_baseUrl);
-
-            var response = await cliente.GetAsync("api/Tipo_Ticket/ObtenerTipoFlujos");  //URL de Lista en el swagger
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json_respuesta = await response.Content.ReadAsStringAsync();
-
-                var resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<Modelo_Aprobacion>>>(json_respuesta);
-
-                lista = resultado.Data;
-            }
-
-            return lista;
-        }
+        
     }
 
 }

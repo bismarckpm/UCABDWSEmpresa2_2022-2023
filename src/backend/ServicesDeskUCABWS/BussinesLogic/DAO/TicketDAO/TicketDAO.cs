@@ -73,7 +73,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
         public Ticket ConsultaTicket(Guid id)
         {
-            var Ticket = (Ticket)_dataContext.Tickets.Where(s => s.Id == id);
+            var Ticket = (Ticket)_dataContext.Tickets
+                .Include(x=>x.Emisor)
+                .Where(s => s.Id == id);
             return Ticket;
         }
 
@@ -203,7 +205,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             }
 
             //Cambiar Estado
-            ticket.Tipo_Ticket.CambiarEstadoCreacionTicket(ticket, ListaEmpleado,_dataContext,notificacion,plantilla);
+            ticket.Tipo_Ticket.CambiarEstadoCreacionTicket(ticket, ListaEmpleado,_dataContext,notificacion);
             _dataContext.DbContext.Update(ticket);
             _dataContext.DbContext.SaveChanges();
             
@@ -1045,6 +1047,33 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 return false;
             }
             return true;
+        }
+
+        public ApplicationResponse<Ticket> GetTicket(Guid id)
+        {
+            ApplicationResponse<Ticket> respuesta = new ApplicationResponse<Ticket>();
+            try
+            {
+                respuesta.Data = _dataContext.Tickets
+                .Include(x => x.Emisor).ThenInclude(x=>x.Cargo)
+                .Include(x => x.Tipo_Ticket)
+                .Include(x => x.Prioridad)
+                .Include(x => x.Estado).ThenInclude(x=>x.Estado_Padre).ThenInclude(x=>x.etiquetaTipoEstado).ThenInclude(x=>x.etiqueta)
+                .Include(x=> x.Departamento_Destino).ThenInclude(x=> x.grupo)
+                .Where(x => x.Id == id).FirstOrDefault();
+                
+                respuesta.Message = "Ticket obtenido exitosamente";
+                respuesta.Success = true;
+            }
+            catch (Exception e)
+            {
+                respuesta.Data = null;
+                respuesta.Message = $"Ha ocurrido un error, {e.Message}";
+                respuesta.Success = false;
+            }
+            return respuesta;
+            
+            
         }
     }
 }

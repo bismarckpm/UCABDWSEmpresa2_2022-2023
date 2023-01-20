@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
+using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
@@ -26,5 +28,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO
         public Guid? id_grupo { get; set; } = null;
     }
 
-   
+    public class DepartamentoCargoDTO
+    {
+        public Guid id { get; set; }
+        public string nombre { get; set; }
+        public List<CargoDTOUpdate> Cargo { get; set; }
+    }
 }

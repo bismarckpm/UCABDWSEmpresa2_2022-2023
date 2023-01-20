@@ -1,0 +1,48 @@
+﻿@using ServiceDeskUCAB.Models.ModelsVotos
+@using ServiceDeskUCAB.Models.TipoTicketsModels
+@model ServiceDeskUCAB.Models.ModelsVotos.VotarTicket
+@{
+    ViewData["Title"] = "Consultar Ticket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card">
+    <div class="card-header">
+        Votar Ticket
+    </div>
+    <div class="card-body">
+        <div class="mb-2">
+            <p><b>Titulo:</b></p>
+            <p>@((ViewData["Ticket"] as Ticket)?.titulo)</p>
+        </div>
+        <div>
+            <p><b>Tipo Solicitud:</b></p>
+            <p>@((ViewData["Ticket"] as Ticket)?.Tipo_Ticket?.nombre)</p>
+        </div>
+        <div class="mb-2">
+            <p><b>Descripción:</b></p>
+            <p>@((ViewData["Ticket"] as Ticket)?.descripcion)</p>
+        </div>
+        <div class="mb-2">
+            <p><b>Emisor:</b></p>
+            <p>@((ViewData["Ticket"] as Ticket)?.Emisor?.primer_nombre) @((ViewData["Ticket"] as Ticket)?.Emisor?.primer_apellido)</p>
+        </div>
+        <div class="mb-2">
+            <label class="form-label"><b>Voto:</b></label>
+            <p>@Model.voto</p>
+        </div>
+        <div class="mb-2">
+            <label class="form-label"><b>Comentario:</b></label>
+            <p>@Model.comentario</p>
+        </div>
+        <a asp-action="VistaTicketNoPendiente" asp-controller="Votos" class="btn btn-warning btn-sm">Volver a lista</a>
+    </div>
+</div>

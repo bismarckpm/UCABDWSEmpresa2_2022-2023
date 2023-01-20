@@ -58,7 +58,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 
             //context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
             plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
-
+            notificacionService.Setup(x => x.EnviarNotificacion(It.IsAny<Ticket>(), It.IsAny<TipoNotificacion>(), It.IsAny<List<Empleado>>(), It.IsAny<IDataContext>())).ReturnsAsync(true);
 
             //Act
             context.Setup(a => a.DbContext.SaveChanges());

@@ -618,6 +618,19 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
                     nro_cargo_actual = 1,
                     Votos_Ticket = new HashSet<Votos_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Jerarquico", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA05"),
+                    Tipo_Ticket= ListaTipoTickets[2],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[0],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    nro_cargo_actual = 1,
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
                 }
 
             };

@@ -1,8 +1,11 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -21,13 +24,24 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
         Mock<IDataContext> context;
         private readonly Votos_TicketService VotoDAO;
         private readonly Mock<ITicketDAO> ticketDAO;
+        private readonly IMapper mapper;
+        private readonly Mock<INotificacion> notificacion;
 
         public TestVerificarAprobacionTicketJerarquico()
         {
+            var myProfile = new List<Profile>
+            {
+                new TipoEstadoMapper(),
+                new EtiquetaMapper(),
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
+            mapper = new Mapper(configuration);
             ticketDAO = new Mock<ITicketDAO>();
             context = new Mock<IDataContext>();
-            ticketDAO = new Mock<ITicketDAO>();
-            VotoDAO = new Votos_TicketService(context.Object, ticketDAO.Object);
+            notificacion = new Mock<INotificacion>();
+            VotoDAO = new Votos_TicketService(context.Object, ticketDAO.Object,mapper, notificacion.Object);
             context.SetupDbContextData();
         }
 
@@ -91,6 +105,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
                 IdUsuario = "C035D2FC-C0E2-4AE0-9568-4A3AC66BB81A",
                 comentario = "Perfecto",
                 voto = "Aprobado"
+                
             };
 
             //act
@@ -115,7 +130,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             var tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("39C1E9A1-9DDE-4F1A-8FBB-4D52D4E45A19"));
 
             //act
-            var result = tipo_Ticket.VerificarVotacion(entrada,context.Object);
+            var result = tipo_Ticket.VerificarVotacion(entrada,context.Object,notificacion.Object);
 
             //assert
             Assert.AreEqual(result, "Pendiente");
@@ -134,7 +149,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
             entrada.Votos_Ticket = null;
             //context.Setup(c => c.Tickets).Throws(new Exception());
             //act
-            var result = tipo_Ticket.VerificarVotacion(entrada, context.Object);
+            var result = tipo_Ticket.VerificarVotacion(entrada, context.Object,notificacion.Object);
 
         }
 

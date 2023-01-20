@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -24,13 +25,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
         private readonly IDataContext contexto;
         private readonly IMapper mapper;
         private readonly ITicketDAO iticket;
+        private readonly INotificacion notificacion;
 
-
-        public Votos_TicketService(IDataContext Context, ITicketDAO ticketDAO, IMapper Mapper)
+        public Votos_TicketService(IDataContext Context, ITicketDAO ticketDAO, IMapper Mapper, INotificacion Notificacion)
         {
             iticket = ticketDAO;
             contexto = Context;
             mapper = Mapper;
+            notificacion = Notificacion;
         }
 
         public Votos_TicketService(IDataContext Context, ITicketDAO ticketDAO)
@@ -65,7 +67,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO
 
                 var voto = ActualizarVoto(ticket,votoDTO);
 
-                string veredicto = ticket.Tipo_Ticket.VerificarVotacion(ticket,contexto);
+                string veredicto = ticket.Tipo_Ticket.VerificarVotacion(ticket,contexto,notificacion);
 
                 contexto.DbContext.Update(ticket);
                 contexto.DbContext.SaveChanges();

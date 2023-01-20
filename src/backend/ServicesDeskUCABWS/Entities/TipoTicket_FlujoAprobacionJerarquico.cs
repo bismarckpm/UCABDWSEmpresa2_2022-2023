@@ -11,6 +11,8 @@ using System.Net.Sockets;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -26,17 +28,10 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                
-                //Calcular Cargos
-                //var ListaCargos = CargosAsociados(contexto, ticket);
-
-                //Agregar Votos
                 AgregarVotos(contexto, EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket), ticket);
-
-
                 return EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket);
             }
-            catch (ExceptionsControl ex)
+            catch (ExceptionsControl)
             {
                 return null;
             }
@@ -44,20 +39,11 @@ namespace ServicesDeskUCABWS.Entities
 
         public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
         {
-            /*contexto.Flujos_Aprobaciones
-                    .Include(x => x.Cargo)
-                    .ThenInclude(x => x.Departamento)
-                    .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
-                    .OrderBy(x => x.OrdenAprobacion);*/
             var listacargos = contexto.Flujos_Aprobaciones
                     .Include(x => x.Cargo)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
                     .OrderBy(x => x.OrdenAprobacion).Select(x => x.Cargo).ToList();
-            /*foreach(var cargo in listacargos)
-            {
-                contexto.DbContext.Entry(cargo).State = EntityState.Detached;
-            }*/
             
             return listacargos;
         }
@@ -67,12 +53,12 @@ namespace ServicesDeskUCABWS.Entities
             return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo[ticket.nro_cargo_actual.GetValueOrDefault() - 1].id).ToList();
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public async override Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion)
         {
             try
             {
                 ticket.CambiarEstado( "Pendiente", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
+                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, ListaEmpleados);
 
                 return true;
             }
@@ -87,12 +73,10 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_Jerarquico";
         }
 
-        public override string VerificarVotacion(Ticket ticket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticket, IDataContext contexto, INotificacion notificacion)
         {
             try
             {
-                //var ticket = ConsultarDatosTicket(idTicket, contexto);
-               // contexto.DbContext.Entry(ticket).State = EntityState.Detached;
                 if (EstaAprobadoORechazado(ticket,contexto)!=null)
                 {
                     CambiarEstadoVotosPendiente(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
@@ -200,6 +184,10 @@ namespace ServicesDeskUCABWS.Entities
                 if (!HayMinimo_Aprobado_nivel(cargo) || !HayMaximo_Aprobado_nivel(cargo) || !HayOrdenAprobacion(cargo))
                 {
                     throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NULL);
+                }
+                if (cargo.Minimo_aprobado_nivel <= 0 || cargo.Maximo_Rechazado_nivel <= 0)
+                {
+                    throw new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MAN_MRN_OS);
                 }
             }
         }

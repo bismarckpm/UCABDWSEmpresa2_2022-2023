@@ -15,7 +15,7 @@
 </div>
 
 <div class="text-center" style="margin-top:30px">
-    <a asp-action="VistaTicket" asp-controller="Votos" class="btn btn-warning btn-sm">Ticket Pentientes</a>
+    <a asp-action="VistaTicket" asp-controller="Votos" class="btn btn-warning btn-sm">Ticket Pendientes</a>
 </div>
 
 <!-- LISTA DE LOS TICKETS APROBADOS Y RECHAZADOS DEL USUARIO -->
@@ -40,10 +40,21 @@
                         <td>@item.Ticket?.Tipo_Ticket?.nombre</td>
                         <td>@item.Ticket?.fecha_creacion.ToShortDateString()</td>
                         <td>@item.voto</td>
-
+                        <td>
+                            <div class="dropdown" style="float: right">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>
+                                        <a asp-action="ConsultarVoto" asp-controller="Votos" asp-route-ticket="@(item.Ticket as Ticket)" asp-route-idTicket="@item.Ticket?.Id.ToString()" asp-route-idUsuario="@item.IdUsuario.ToString()" asp-route-voto="@item.voto" asp-route-comentario="@item.comentario" class="dropdown-item">
+                                            Detalles
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                 }
-
             </tbody>
         </table>
 

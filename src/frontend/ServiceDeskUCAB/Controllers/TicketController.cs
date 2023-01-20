@@ -138,7 +138,6 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     Console.WriteLine("La respuesta fue verdadera");
                     return RedirectToAction("Index", new {opcion = "Abiertos", message = (string)respuesta["message"] });
-
                 }
                 else
                 {

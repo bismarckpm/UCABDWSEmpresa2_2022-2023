@@ -11,6 +11,8 @@ using System.Net.Sockets;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -59,12 +61,12 @@ namespace ServicesDeskUCABWS.Entities
             return ListaEmpleado;
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public async override Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion)
         {
             try
             {
                 ticket.CambiarEstado( "Pendiente", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
+                notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, ListaEmpleados, _dataContext);
 
                 return true;
             }
@@ -79,7 +81,7 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_Paralelo";
         }
 
-        public override string VerificarVotacion(Ticket ticket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticket,  IDataContext contexto, INotificacion notificacion)
         {
             try
             {
@@ -88,8 +90,8 @@ namespace ServicesDeskUCABWS.Entities
                     //Cambiar Estado y mandar votos
                     var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
                     ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
-                    //ticket.EnviarNotificacion(ticket, "Aprobado", contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
-
+                    //notificacion.EnviarNotificacion(ticket, EstaAprobadoORechazado(ticket, contexto), contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
+                    
                     CambiarEstadoVotosPendiente(ticket, contexto);
                     return EstaAprobadoORechazado(ticket, contexto);
                 }
@@ -155,6 +157,12 @@ namespace ServicesDeskUCABWS.Entities
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NO_VALIDO);
             }
+            if (Minimo_Aprobado <=0 || Maximo_Rechazado <= 0)
+            {
+                throw new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MA_MR);
+            }
         }
+
+        
     }
 }

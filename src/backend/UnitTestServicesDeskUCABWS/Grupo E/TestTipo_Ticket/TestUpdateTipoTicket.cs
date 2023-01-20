@@ -202,7 +202,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             };
 
             ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.FORMATO_ID_TICKET, new FormatException());
-            ExceptionsControl actualException = null;
+            //ExceptionsControl actualException = null;
 
             //act
             var result = TipoticketDAO.ActualizarTipo_Ticket(entrada);

@@ -2,10 +2,14 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ServicesDeskUCABWS.BussinesLogic;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -13,8 +17,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -52,7 +61,8 @@ namespace ServicesDeskUCABWS.Entities
         public Ticket? Ticket_Padre { get; set; }
 
         public Empleado Emisor { get; set; }
-        
+
+
         public Ticket() { }
 
         public Ticket(string titulo, string descripcion)
@@ -124,54 +134,6 @@ namespace ServicesDeskUCABWS.Entities
             _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Tickets.Update(this);
         }
-
-        public bool EnviarNotificacion(Ticket ticket, string Estado, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion,IPlantillaNotificacion plantilla)
-        {
-            var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-            plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
-            switch (Estado)
-            {
-                case "Aprobado":
-                    try
-                    {
-                        notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
-                    }
-                    catch (ExceptionsControl) { }
-                    break;
-                case "Siendo Procesado":
-                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
-                    foreach (var emp in empleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    break;
-                case "Pendiente":
-                    foreach (var emp in ListaEmpleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    break;
-                default:
-                    try
-                    {
-                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
-                    }
-                    catch (ExceptionsControl) { }
-                    break;
-
-            }
-            return true;
-        }
-
-        
     }
 }
 

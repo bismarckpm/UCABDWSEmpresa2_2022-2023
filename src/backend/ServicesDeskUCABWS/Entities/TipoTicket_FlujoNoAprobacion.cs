@@ -9,6 +9,8 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -43,17 +45,17 @@ namespace ServicesDeskUCABWS.Entities
             return new List<Empleado>();
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public async override Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion)
         {
             try
             {
                 ticket.CambiarEstado( "Pendiente", _dataContext);
 
                 ticket.CambiarEstado( "Aprobado", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Aprobado", ListaEmpleados, _dataContext, notificacion, plantilla);
+                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados);
 
                 ticket.CambiarEstado( "Siendo Procesado", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Siendo Procesado", ListaEmpleados, _dataContext, notificacion, plantilla);
+                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados);
 
                 return true;
             }
@@ -69,7 +71,7 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_No_Aprobacion";
         }
 
-        public override string VerificarVotacion(Ticket ticekt, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticekt, IDataContext contexto, INotificacion notificacion)
         {
             return "Aprobado";
         }

@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -80,9 +81,9 @@ namespace ServicesDeskUCABWS.Entities
 
         public abstract List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket);
 
-        public abstract bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla);
+        public abstract Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion);
 
-        public abstract string VerificarVotacion(Ticket ticket, IDataContext contexto);
+        public abstract string VerificarVotacion(Ticket ticket, IDataContext contexto, INotificacion notificacion);
 
         public abstract string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto);
 
@@ -91,7 +92,7 @@ namespace ServicesDeskUCABWS.Entities
         //public abstract void EnviarNotificaciones()
 
         public void AgregarVotos(IDataContext contexto, List<Empleado> ListaEmpleados, Ticket ticket)
-        {
+         {
             var ListaVotos = ListaEmpleados.Select(x => new Votos_Ticket
             {
                 IdTicket = ticket.Id,

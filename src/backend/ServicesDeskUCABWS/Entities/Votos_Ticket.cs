@@ -16,26 +16,6 @@ namespace ServicesDeskUCABWS.Entities
         public Empleado Empleado { get; set; }
         public Ticket Ticket { get; set; }
 
-        /*public Votos_Ticket(Empleado empleado, Ticket ticket)
-        {
-            this.Id = new Guid();
-            this.voto = "pendiente";
-            this.Empleado = empleado;
-            this.Ticket = ticket;
-
-        }*/
+        
     }
-
-
-
-    public enum aprobado
-    {
-        [EnumMember(Value = "A")]
-        aprobado,
-        [EnumMember(Value = "D")]
-        denegado,
-        [EnumMember(Value = "EE")]
-        en_espera,
-    }
-
 }

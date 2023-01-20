@@ -54,10 +54,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
         }
         public static void VerificarTurno(Votos_Ticket voto, IDataContext dataContext)
         {
-            //var ticket = dataContext.Tickets.Include(x => x.Tipo_Ticket).Where(x => x.Id == voto.IdTicket).FirstOrDefault();
             if (BuscarTicket(voto.IdTicket, dataContext).Tipo_Ticket.ObtenerTipoAprobacion() == "Modelo_Jerarquico")
             {
-                if (BuscarTicket(voto.IdTicket, dataContext).nro_cargo_actual != voto.Turno)
+                if (BuscarTicket(voto.IdTicket, dataContext).nro_cargo_actual != BuscarVoto(voto.IdTicket, voto.IdUsuario, dataContext).Turno)
                 {
                     throw new ExceptionsControl(ErroresVotos.VOTACION_EXPIRADA);
                 }
@@ -66,7 +65,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
 
         public static Ticket BuscarTicket(Guid Id, IDataContext dataContext)
         {
-            return dataContext.Tickets.Where(x => x.Id == Id).FirstOrDefault();
+            return dataContext.Tickets.Include(x=>x.Tipo_Ticket).Where(x => x.Id == Id).FirstOrDefault();
+        }
+
+        public static Votos_Ticket BuscarVoto(Guid IdTicket, Guid IdUsuario, IDataContext dataContext)
+        {
+            return dataContext.Votos_Tickets.Where(x => x.IdTicket == IdTicket && x.IdUsuario ==IdUsuario).FirstOrDefault();
         }
 
     }
