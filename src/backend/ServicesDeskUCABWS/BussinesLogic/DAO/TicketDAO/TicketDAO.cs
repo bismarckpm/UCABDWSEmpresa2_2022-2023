@@ -324,7 +324,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             ApplicationResponse<string> respuesta = new ApplicationResponse<string>();
             try
             {
-                modificarEstadoTicket(ticketId, estadoId);
+                Ticket ticket = _dataContext.Tickets.Where(t=>t.Id == ticketId).Single();
+                Estado estado = _dataContext.Estados.Include(t=>t.Estado_Padre).Where(t=>t.Id == estadoId).Single();
+                Console.WriteLine($"ESTADO 1: {estado.nombre}");
+                if (!CambiarEstado(ticket, estado.Estado_Padre.nombre, null))
+                    throw new Exception("No se pudo modificar el ticket");
+                Console.WriteLine("ÉXITOSO");
                 respuesta.Data = "Estado del ticket modificado exitosamente";
                 respuesta.Message = "Estado del ticket cambiado satisfactoriamente";
                 respuesta.Success = true;
@@ -833,7 +838,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 Id = Guid.NewGuid(),
                 Estado = ticket.Estado,
                 Ticket = ticket,
-                Fecha_Inicio = DateTime.Today,
+                Fecha_Inicio = DateTime.UtcNow,
                 Fecha_Fin = null
             };
             return nuevaBitacora;
@@ -895,6 +900,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                                 .Include(t => t.Departamento_Destino)
                                 .Include(t => t.Prioridad)
                                 .Include(t => t.Emisor)
+                                .Include(t => t.Responsable)
                                 .Where(ticket => ticket.Id == id).Single();
             Guid? idPadre;
             if (ticket.Ticket_Padre == null || ticket.Ticket_Padre.Id.Equals(Guid.Empty))
@@ -1098,17 +1104,21 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
                     .Include(x => x.Tipo_Ticket).Include(x => x.Votos_Ticket)
                     .Include(x => x.Bitacora_Tickets)
+                    .Include(x=> x.Ticket_Padre)
                     .Where(x => x.Id == ticketLlegada.Id).FirstOrDefault();
-
-                ticket.Estado = _dataContext.Estados
+                Console.WriteLine("CONSIGUE EL TICKET");
+                Estado nuevoEstado = _dataContext.Estados
                     .Include(x => x.Estado_Padre)
                     .Include(x => x.Departamento).
                     Where(s => s.Estado_Padre.nombre == Estado &&
-                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
+                    s.Departamento.id == ticket.Departamento_Destino.id)
                     .FirstOrDefault();
-
-                _dataContext.Tickets.Update(ticket);
-                _dataContext.DbContext.SaveChanges();
+                Console.WriteLine($"EL ESTADO: {nuevoEstado.nombre}");
+                if (ticket.Ticket_Padre != null)
+                    CambiarEstado(ticket.Ticket_Padre, Estado, ListaEmpleados);
+                ticket.Estado = nuevoEstado;
+                // _dataContext.Tickets.Update(ticket);
+                // _dataContext.DbContext.SaveChanges();
 
                 Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
                 if (ticket.Bitacora_Tickets.Count != 0)
@@ -1116,12 +1126,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                     ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
                 }
 
-                //ticket.Bitacora_Tickets.Add(nuevaBitacora);
+                ticket.Bitacora_Tickets.Add(nuevaBitacora);
                 _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
                 _dataContext.Tickets.Update(ticket);
                 _dataContext.DbContext.SaveChanges();
                 //vticket.State = EntityState.Modified;
-
                 if (Estado == "Aprobado")
                 {
                     try
@@ -1149,6 +1158,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                         }
                         catch (ExceptionsControl) { }
                     }
+                    Console.WriteLine("Cambiar Estado 2");
                     return true;
                 }
 
@@ -1169,17 +1179,20 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
 
                 try
                 {
+                    Console.WriteLine("ULTIMO TRY");
                     var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
                     plant.Descripcion= notificacion.ReemplazoEtiqueta(ticket, plant);
                     notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
                 }
                 catch (ExceptionsControl) { }
-
-
-
             }
             catch (ExceptionsControl ex)
             {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ENTRA EN MÍ EXCEPCIÓN " + ex.Message);
                 return false;
             }
             return true;

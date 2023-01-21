@@ -41,15 +41,15 @@ namespace ServiceDeskUCAB.Controllers
             {
                 return View(new List<TicketBasicoDTO>());
             }
-            lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
-            /*if (opcion != "Enviados")
+            //lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
+            if (opcion != "Enviados")
             {
                 lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
             }
             else
             {
                 lista = await _servicioTicketAPI.TicketsEnviados(idUsuario);
-            }*/
+            }
             return View(lista);
         }
 
@@ -134,6 +134,7 @@ namespace ServiceDeskUCAB.Controllers
                 estados = await _servicioTicketAPI.DepartamentoEstados(departamento.Data.Id)
             };
             ViewBag.responsable = idUsuario;
+            ViewBag.usuarioCorreo = User.Identities.First().Claims.ToList()[1].Value;
             return View(ticketDetailsViewModel);
         }
 

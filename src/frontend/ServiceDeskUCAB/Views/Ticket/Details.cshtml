@@ -9,9 +9,15 @@
 
 <div class="row" style="margin-top:30px">
     <div class="col-8" style="margin-bottom:30px">
-        @if(Model.ticket.responsable == null)
+        @if(Model.ticket.responsable == null )
         {
-            <a class="btn btn-primary" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@Model.ticket.ticket_id">Tomar Ticket</a>
+            @if(Model.ticket.responsable.ToString() != ViewBag.responsable && Model.ticket.empleado_correo != ViewBag.usuarioCorreo)
+            {
+                @if (Model.ticket.fecha_eliminacion == null)
+                {
+                    <a class="btn btn-primary" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@Model.ticket.ticket_id">Tomar Ticket</a>
+                }
+            }
         }
     </div>
 
