@@ -108,8 +108,26 @@ namespace ServicesDeskUCABWS.Entities
             return true;
         }
 
+        public bool CambiarEstadoUsuario(string Estado, IDataContext _dataContext)
+        {
+            try
+            {
+                this.Estado = _dataContext.Estados
+                    .Include(x => x.Estado_Padre)
+                    .Include(x => x.Departamento)
+                    .Where(s => s.Estado_Padre.nombre == Estado && s.Departamento.id == this.Departamento_Destino.id)
+                    .FirstOrDefault();
 
-        
+                ActualizarBitacora(_dataContext);
+            }
+            catch (ExceptionsControl ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
         public Bitacora_Ticket crearNuevaBitacora(Ticket ticket)
         {
             Bitacora_Ticket nuevaBitacora = new Bitacora_Ticket()

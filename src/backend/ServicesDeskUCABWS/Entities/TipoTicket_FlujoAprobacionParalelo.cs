@@ -13,6 +13,7 @@ using ServicesDeskUCABWS.BussinesLogic.Validaciones;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -90,7 +91,7 @@ namespace ServicesDeskUCABWS.Entities
                     //Cambiar Estado y mandar votos
                     var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
                     ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
-                    //notificacion.EnviarNotificacion(ticket, EstaAprobadoORechazado(ticket, contexto), contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
+                    //notificacion.EnviarNotificacion(ticket, EstaAprobadoORechazado(ticket, contexto), new List<Empleado>(), contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
                     
                     CambiarEstadoVotosPendiente(ticket, contexto);
                     return EstaAprobadoORechazado(ticket, contexto);
@@ -129,40 +130,16 @@ namespace ServicesDeskUCABWS.Entities
 
         public override void ValidarTipoticketAgregar(IDataContext contexto)
         {
-            LongitudNombre();
-            LongitudDescripcion();
-            VerificarDepartamento(contexto);
-            HayCargos();
-            VerificarCargos(contexto);
-            VerificarMinimoMaximoAprobado();
-            VerificarFlujos();
+            var validaciones = new ValidacionesFlujoParalelo(contexto, this);
+            validaciones.LongitudNombre();
+            validaciones.LongitudDescripcion();
+            validaciones.VerificarDepartamento();
+            validaciones.VerificarSiCargosExisten();
+            validaciones.VerificarCargos();
+            validaciones.VerificarMinimoMaximoAprobado();
+            validaciones.HayCargos();
+
         }
-
-
-        //Validaciones
-        public override void VerificarFlujos()
-        {
-            foreach (var cargo in ObtenerCargos())
-            {
-                if (HayMinimo_Aprobado_nivel(cargo) || HayMaximo_Aprobado_nivel(cargo) || HayOrdenAprobacion(cargo))
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NULL);
-                }
-            }
-        }
-
-        public override void VerificarMinimoMaximoAprobado()
-        {
-            if (!HayMinimoAprobado() || !HayMaximo_Rechazado())
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_PARALELO_NO_VALIDO);
-            }
-            if (Minimo_Aprobado <=0 || Maximo_Rechazado <= 0)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MA_MR);
-            }
-        }
-
         
     }
 }

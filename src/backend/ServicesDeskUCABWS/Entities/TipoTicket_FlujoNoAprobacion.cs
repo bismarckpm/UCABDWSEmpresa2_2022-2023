@@ -11,6 +11,7 @@ using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -52,10 +53,10 @@ namespace ServicesDeskUCABWS.Entities
                 ticket.CambiarEstado( "Pendiente", _dataContext);
 
                 ticket.CambiarEstado( "Aprobado", _dataContext);
-                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados);
+                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
 
                 ticket.CambiarEstado( "Siendo Procesado", _dataContext);
-                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados);
+                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
 
                 return true;
             }
@@ -93,27 +94,12 @@ namespace ServicesDeskUCABWS.Entities
 
         public override void ValidarTipoticketAgregar(IDataContext contexto)
         {
-            LongitudNombre();
-            LongitudDescripcion();
-            VerificarDepartamento(contexto);
-            VerificarMinimoMaximoAprobado();
-            VerificarFlujos();
-        }
-
-        public override void VerificarFlujos()
-        {
-            if (ObtenerCargos().Count!=0)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
-            }
-        }
-
-        public override void VerificarMinimoMaximoAprobado()
-        {
-            if (HayMinimoAprobado() || HayMaximo_Rechazado())
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_NO_VALIDO);
-            }
+            var validaciones = new ValidacionesFlujoNoAprobacion(contexto,this);
+            validaciones.LongitudNombre();
+            validaciones.LongitudDescripcion();
+            validaciones.VerificarDepartamento();
+            validaciones.VerificarMinimoMaximoAprobado();
+            validaciones.VerificarCargos();
         }
     }
     

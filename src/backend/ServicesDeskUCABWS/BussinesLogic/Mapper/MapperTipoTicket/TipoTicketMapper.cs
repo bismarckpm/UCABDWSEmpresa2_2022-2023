@@ -57,6 +57,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket
         public static Tipo_Ticket MapperTipoTicketDTOCreatetoTipoTicket(Tipo_TicketDTOCreate DTO)
         {
             var tipo_ticket = TipoTicketFactory.ObtenerInstancia(DTO.tipo);
+            tipo_ticket.Id = Guid.NewGuid();
             tipo_ticket.nombre = DTO.nombre;
             tipo_ticket.descripcion = DTO.descripcion;
             tipo_ticket.Maximo_Rechazado = DTO.Maximo_Rechazado;
@@ -77,8 +78,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket
                     IdCargo = Guid.Parse(fa.IdCargo),
                     Maximo_Rechazado_nivel = fa.Maximo_Rechazado_nivel,
                     Minimo_aprobado_nivel = fa.Minimo_aprobado_nivel,
-                    OrdenAprobacion = fa.OrdenAprobacion,
-                    
+                    OrdenAprobacion = fa.OrdenAprobacion
                 });
             }
             return tipo_ticket;

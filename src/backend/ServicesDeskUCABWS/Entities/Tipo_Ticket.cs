@@ -7,6 +7,8 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -89,7 +91,20 @@ namespace ServicesDeskUCABWS.Entities
 
         public abstract void ValidarTipoticketAgregar(IDataContext contexto);
 
-        //public abstract void EnviarNotificaciones()
+        public void ValidarTipoticketUpdate(IDataContext contexto)
+        {
+            var val = new ValidacionesActualizarTipoTicket(contexto, this);
+
+            //Verificar si el tipo ticket existe
+            val.VerificarTipoTicketExiste(Id);
+
+            //Validar si no existe Ticket Activo
+            val.VerificarTicketsPendientes(Id);
+
+            //Validaciones de Agregar
+            ValidarTipoticketAgregar(contexto);
+        }
+
 
         public void AgregarVotos(IDataContext contexto, List<Empleado> ListaEmpleados, Ticket ticket)
          {
@@ -116,18 +131,6 @@ namespace ServicesDeskUCABWS.Entities
                 .ForEach(x => x.voto = ticket.Estado.Estado_Padre.nombre);
         }
 
-        public void LlenarDatos(string nombre, string descripcion, string tipo, int? MinimoAprobado = null, int? MaximoRechazado = null)
-        {
-            Id = Guid.NewGuid();
-            this.nombre = nombre;
-            this.descripcion = descripcion;
-            Minimo_Aprobado = MinimoAprobado;
-            Maximo_Rechazado = MaximoRechazado;
-            fecha_creacion = DateTime.UtcNow;
-            fecha_ult_edic = DateTime.UtcNow;
-            Flujo_Aprobacion = new List<Flujo_Aprobacion>();
-            Departamentos = new List<DepartamentoTipo_Ticket>();
-        }
 
         public List<Flujo_Aprobacion> ObtenerCargos()
         {
@@ -157,56 +160,6 @@ namespace ServicesDeskUCABWS.Entities
         {
             return cargo.OrdenAprobacion != null;
         }
-
-        //Validaciones
-        public void LongitudNombre()
-        {
-            if (nombre.Length < 4 || nombre.Length > 150)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.NOMBRE_FUERA_DE_RANGO);
-            }
-        }
-
-        public void LongitudDescripcion()
-        {
-            if (descripcion.Length < 4 || descripcion.Length > 250)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.DESCRIPCION_FUERA_DE_RANGO);
-            }
-        }
-
-        public void VerificarDepartamento(IDataContext _dataContext)
-        {
-            foreach (var d in Departamentos.Select(x => x.DepartamentoId.ToString()).ToList() ?? new List<string>())
-            {
-                if (_dataContext.Departamentos.Find(Guid.Parse(d)) == null)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.DEPARTAMENTO_NO_VALIDO);
-                }
-            }
-        }
-
-        public void HayCargos()
-        {
-            if (ObtenerCargos().Count() == 0)
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_VACIO);
-            }
-        }
-
-        public void VerificarCargos(IDataContext contexto)
-        {
-            foreach (var cargos in ObtenerCargos())
-            {
-                if (contexto.Cargos.Find(cargos.IdCargo) == null)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.CARGO_NO_VALIDO);
-                }
-            }
-        }
-
-        public abstract void VerificarFlujos();
-        public abstract void VerificarMinimoMaximoAprobado();
     }
 
 }

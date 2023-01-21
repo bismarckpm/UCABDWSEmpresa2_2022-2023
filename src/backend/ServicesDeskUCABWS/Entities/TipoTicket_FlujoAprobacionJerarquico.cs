@@ -13,6 +13,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using System.Threading.Tasks;
 using ServicesDeskUCABWS.BussinesLogic;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -58,7 +59,7 @@ namespace ServicesDeskUCABWS.Entities
             try
             {
                 ticket.CambiarEstado( "Pendiente", _dataContext);
-                //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, ListaEmpleados);
+                await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, ListaEmpleados,_dataContext);
 
                 return true;
             }
@@ -82,6 +83,8 @@ namespace ServicesDeskUCABWS.Entities
                     CambiarEstadoVotosPendiente(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
                     if (EstaAprobadoORechazado(ticket, contexto) != "Aprobado")
                     {
+                        ticket.CambiarEstado("Rechazado", contexto);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Normal, new List<Empleado>(), contexto);
                         return EstaAprobadoORechazado(ticket, contexto);
                     }
                     else
@@ -89,6 +92,7 @@ namespace ServicesDeskUCABWS.Entities
                         if (VotosSiguienteRonda(ticket, contexto))
                         {
                             ticket.CambiarEstado( "Aprobado", contexto);
+                            notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, new List<Empleado>(), contexto);
                             return EstaAprobadoORechazado(ticket, contexto);
                         }
                         return "Pendiente";
@@ -166,51 +170,15 @@ namespace ServicesDeskUCABWS.Entities
 
         public override void ValidarTipoticketAgregar(IDataContext contexto)
         {
-            LongitudNombre();
-            LongitudDescripcion();
-            VerificarDepartamento(contexto);
-            HayCargos();
-            VerificarCargos(contexto);
-            VerificarMinimoMaximoAprobado();
-            VerificarFlujos();
-            VerificarSecuenciaOrdenAprobacion();
-        }
-
-        //Validaciones
-        public override void VerificarFlujos()
-        {
-            foreach (var cargo in ObtenerCargos())
-            {
-                if (!HayMinimo_Aprobado_nivel(cargo) || !HayMaximo_Aprobado_nivel(cargo) || !HayOrdenAprobacion(cargo))
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NULL);
-                }
-                if (cargo.Minimo_aprobado_nivel <= 0 || cargo.Maximo_Rechazado_nivel <= 0)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MAN_MRN_OS);
-                }
-            }
-        }
-
-        public override void VerificarMinimoMaximoAprobado()
-        {
-            if (HayMinimoAprobado() || HayMaximo_Rechazado())
-            {
-                throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_JERARQUICO_NO_VALIDO);
-            }
-        }
-
-        public void VerificarSecuenciaOrdenAprobacion()
-        {
-            int i = 1;
-            foreach (var c in ObtenerCargosOrdenados())
-            {
-                if (i != c.OrdenAprobacion)
-                {
-                    throw new ExceptionsControl(ErroresTipo_Tickets.ERROR_SEC_ORDEN_APROB);
-                }
-                i++;
-            }
+            var validaciones = new ValidacionesFlujoJerarquico(contexto, this);
+            validaciones.LongitudNombre();
+            validaciones.LongitudDescripcion();
+            validaciones.VerificarDepartamento();
+            validaciones.VerificarSiCargosExisten();
+            validaciones.VerificarMinimoMaximoAprobado();
+            validaciones.VerificarCargos();
+            validaciones.VerificarSecuenciaOrdenAprobacion();
+            validaciones.HayCargos();
         }
 
     }
