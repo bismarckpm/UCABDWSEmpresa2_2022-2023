@@ -187,36 +187,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.EliminarGrupoDao(data.id));
 		}
 
-	/*	[TestMethod(displayName: "Prueba Unitaria para modificar un Grupo")]
-		public void ModificarGrupoTest()
-		{
-			//arrange
-			var request = new Grupo
-			{
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Grupo Nuevo",
-
-                descripcion = "Es un grupo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-
-            };
-
-			_contextMock.Setup(set => set.DbContext.SaveChanges());
-
-			var result = _grupoDAO.ModificarGrupoDao(request);
-
-			Assert.AreEqual(request.nombre, request.nombre);
-		}*/
-
 		[TestMethod(displayName: "Prueba Unitaria para modificar un grupo Condicional")]
-		public void ModificarGrupoTestIf()
+		public void ModificarGrupoTest()
 		{
 			//arrange
 			var request = new Grupo
@@ -224,13 +196,13 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 
 				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-				nombre = "Seguridad Errada",
+				nombre = "Grupo Nuevo",
 
 				descripcion = "Cuida el ambiente",
 
 				fecha_creacion = DateTime.Now.Date,
 
-				fecha_ultima_edicion = DateTime.Now.Date,
+				fecha_ultima_edicion = null,
 
 				fecha_eliminacion = null
 
@@ -240,8 +212,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 
 			var result = _grupoDAO.ModificarGrupoDao(request);
 
-			Assert.AreNotEqual(request.nombre, result.Nombre);
+			Assert.AreEqual(request.nombre, result.Nombre);
 		}
+
 
 		[TestMethod(displayName: "Prueba Unitaria modificar grupo con campo vacio")]
 		public void ExcepcionDBUpdateModificarGrupo()
@@ -564,6 +537,135 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             _contextMock.Setup(p => p.Grupos).Throws(new Exception(""));
             Assert.ThrowsException<ExceptionsControl>(() => _grupoDAODG.BuscarGrupoNombre(grupo.nombre));
 
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para verificar existencia de grupo al momento de modificar exitoso primer caso")]
+        public void NoExisteGrupoModificar()
+        {
+
+
+            var request = new Grupo
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+
+                nombre = "Grupo Nuevo",
+
+                descripcion = "Descripcion",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null
+
+            };
+
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            var result = _grupoDAO.ExisteGrupoModificar(request);
+            Assert.IsFalse(result);
+        }
+
+		[TestMethod(displayName: "Prueba Unitaria para verificar existencia de departamento al momento de modificar exitoso segundo caso")]
+		public void ExisteGrupoModificar()
+		{
+
+
+            var request = new Grupo
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre = "Grupo Nuevo",
+
+                descripcion = "Descripcion",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null
+
+            };
+
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+			var result = _grupoDAO.ExisteGrupoModificar(request);
+			Assert.IsTrue(result);
+		}
+
+        [TestMethod(displayName: "Prueba Unitaria para verificar existencia de grupo al momento de modificar con excepcion")]
+        public void ExcepcionExisteGrupoModificar()
+        {
+
+            var request = new Grupo
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2cab"),
+
+                nombre = null,
+
+                descripcion = "Es un grupo",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null                
+
+            };
+
+            _contextMock.Setup(p => p.Grupos).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.ExisteGrupoModificar(request));
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para Quitar Asociacion de un grupo a un departamento")]
+        public void QuitarAsociacion()
+        {
+
+            var grupo = new Grupo
+            {
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+            };
+
+            
+
+
+            _contextMockDG.Setup(set => set.DbContext.SaveChanges());
+            var result = _grupoDAODG.QuitarAsociacion(grupo.id);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para Quitar Asociacion de un grupo a un departamento, return false")]
+        public void QuitarAsociacionFalso()
+        {
+
+            var grupo = new Grupo
+            {
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
+            };
+
+
+            _contextMock.Setup(set => set.DbContext.SaveChanges());
+            var result = _grupoDAO.QuitarAsociacion(grupo.id);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria para Quitar Asociacion de un grupo a un departamento, excepcion")]
+        public void ExcepcionQuitarAsociacion()
+        {
+
+            var request = new Grupo
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2cab")
+                
+
+            };
+
+            _contextMock.Setup(p => p.Grupos).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => _grupoDAO.QuitarAsociacion(request.id));
         }
 
 

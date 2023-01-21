@@ -597,7 +597,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             };
 
             _contextMock.Setup(p => p.Departamentos).Throws(new Exception(""));
-            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ExisteDepartamento(request));
+            Assert.ThrowsException<ExceptionsControl>(() => _DepartamentoDAO.ExisteDepartamentoModificar(request));
         }
 
 

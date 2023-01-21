@@ -158,12 +158,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             
                     var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
 
-                if (listaDept != null)
-                {
+            if (listaDept != null)
+            {
 
-                    foreach (var item in listaDept)
-                    {
-                        item.id_grupo = null;
+                foreach (var item in listaDept)
+                {
+                    item.id_grupo = null;
 
                     }
                     _dataContext.DbContext.SaveChanges();
