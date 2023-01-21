@@ -154,21 +154,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
         public bool QuitarAsociacion(Guid grupoId)
         {
-            var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
+            try { 
+            
+                    var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
 
-            if (listaDept != null)
-            {
-
-                foreach (var item in listaDept)
+                if (listaDept != null)
                 {
-                    item.id_grupo = null;
+
+                    foreach (var item in listaDept)
+                    {
+                        item.id_grupo = null;
+
+                    }
+                    _dataContext.DbContext.SaveChanges();
+                    return true;
 
                 }
-                _dataContext.DbContext.SaveChanges();
-                return true;
+                  return false;
 
+            }catch(Exception ex)
+            {
+                throw new ExceptionsControl("No hay grupos eliminados", ex);
             }
-            return false;
         }
 
         /// <summary>
