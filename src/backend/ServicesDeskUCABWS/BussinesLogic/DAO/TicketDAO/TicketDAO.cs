@@ -463,7 +463,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 //_dataContext.DbContext.SaveChanges();
                 var ticketviejo = _dataContext.Tickets.Include(x => x.Departamento_Destino)
                     .Where(x => x.Id == solicitudTicket.ticketPadre_Id).FirstOrDefault();
-                //ticketviejo.fecha_eliminacion = DateTime.UtcNow;
+                ticketviejo.fecha_eliminacion = DateTime.UtcNow;
                 _dataContext.Tickets.Update(ticketviejo);
                 _dataContext.DbContext.SaveChanges();
                 respuesta.Data = "Exitoso";
