@@ -26,6 +26,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using System.Net.Http;
 using System.Text;
 using System.Security.Cryptography.Xml;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperFlujoAprobacion;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
 {

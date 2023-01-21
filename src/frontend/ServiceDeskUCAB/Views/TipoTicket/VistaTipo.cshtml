@@ -1,8 +1,6 @@
 ﻿@model ServiceDeskUCAB.Models.ViewModel.TipoNuevoViewModel;
 
-<head>
-    <link rel="stylesheet" href="~/css/Sidebar.css" />
-</head>
+
 
 
 <div class="row">
@@ -43,18 +41,22 @@
                 <th>Cargos Asociados</th>
                 <th></th>
             </tr>
+        </thead>
         <tbody>
             @foreach (var item in Model.ListaTipo)
             {
                 <tr>
+
+
                     <td>@item.nombre</td>
                     <td>@item.descripcion</td>
                     <td>@item.tipo</td>
 
-                    @if(item.Departamento!= null)
+                    @if (item.Departamento != null)
                     {
                         <td>
-                            @if(item.Departamento.Count==0){
+                            @if (item.Departamento.Count == 0)
+                            {
                                 <p>Es un tipo ticket general</p>
                             }
                             @foreach (var departamento in item.Departamento)
@@ -63,11 +65,12 @@
                             }
                         </td>
                     }
-                    
+
                     @if (item.Flujo_Aprobacion != null)
                     {
                         <td>
-                            @if(item.Flujo_Aprobacion.Count==0){
+                            @if (item.Flujo_Aprobacion.Count == 0)
+                            {
                                 <p>No requiere de Aprobación</p>
                             }
                             @foreach (var cargos2 in item.Flujo_Aprobacion)
@@ -78,6 +81,8 @@
                             }
                         </td>
                     }
+
+
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -90,10 +95,14 @@
                     </td>
                 </tr>
             }
+
+
         </tbody>
     </table>
 </div>
 
+
+@*Modal para Registrar un nuevo Tipo Ticket y Modelo de Aprobacion --- Fino*@
 
 <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -104,11 +113,11 @@
             </div>
             <div class="modal-body">
                 <form asp-action="GuardarCambios" asp-controller="TipoTicket" method="post">
-                    
+
                     <div class="mb-3" style="display: none;">
-                            <label for="recipient-name" class="col-form-label">Id:</label>
+                        <label for="recipient-name" class="col-form-label">Id:</label>
                         <input required type="text" asp-for="tipo.Id" value="@Model.idDepartamento" name="idDepartOrigen" />
-                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
                         <input required type="text" minlength="4" maxlength="150" asp-for="tipo.nombre" name="nombre" />
@@ -122,9 +131,10 @@
                             <h6>Registro Modelo Aprobacion:</h6>
                             <label class="form-label">Tipo Modelo Aprobación:</label>
 
-                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" id="seleccionarModeloAgregar"  required="required" onChange="mostrarPremio(this.value)">
+                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" id="seleccionarModeloAgregar" required="required" onChange="mostrarPremio(this.value)">
                                 <option value="" selected disabled>-- Seleccionar --</option>
-                                @foreach(var modelo in Model.listaModelos){
+                                @foreach (var modelo in Model.listaModelos)
+                                {
                                     <option value="@modelo.discrimanador">@modelo.nombre</option>
                                 }
                             </select>
@@ -135,7 +145,7 @@
                                     <label class="form-label">Cargos Asociados:</label>
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
-                                        <div class="form-check form-switch" >
+                                        <div class="form-check form-switch">
                                             <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                             <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                             <br />
@@ -183,11 +193,16 @@
 
                             <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                 <label class="form-label">Departamentos Asociados:</label>
-                                    <br>
-                                    <div class="form-check form-switch">
+
+
+                                <br>
+
+                                <div class="form-check form-switch">
                                     <input name="departamentos" class="form-check-input" value="@Model.idDepartamento" type="checkbox" id="@Model.idDepartamento" checked="checked" style="position: absolute; left: 60px">
-                                        <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
-                                    </div>
+                                    <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
+
+                                </div>
+
                             </div>
                         </div>
 
@@ -197,7 +212,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -244,36 +259,40 @@
                                 <h6>Registro Modelo Aprobacion:</h6>
                                 <label class="form-label">Tipo Modelo Aprobación:</label>
                                 <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                    @foreach (var modelo in Model.listaModelos){
-                                        if(tipo.tipo == modelo.discrimanador){
+                                    @foreach (var modelo in Model.listaModelos)
+                                    {
+                                        if (tipo.tipo == modelo.discrimanador)
+                                        {
                                             <option value="@modelo.discrimanador">@modelo.nombre</option>
                                         }
                                     }
-                                    @foreach (var modelo in Model.listaModelos){
-                                        if(tipo.tipo != modelo.discrimanador){
+                                    @foreach (var modelo in Model.listaModelos)
+                                    {
+                                        if (tipo.tipo != modelo.discrimanador)
+                                        {
                                             <option value="@modelo.discrimanador">@modelo.nombre</option>
                                         }
                                     }
                                 </select>
-                                
-                                
 
 
-                                @if (tipo.tipo =="Modelo_Jerarquico")
+
+
+                                @if (tipo.tipo == "Modelo_Jerarquico")
                                 {
                                     <div class="mb-3" id="Modelo_Jerarquico-@tipo.Id" style="display: block;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                 @if(tipo.Flujo_Aprobacion.Select(x=>x.Cargo.Id).ToList().Contains(cargos2.Id))
-                                                 {
+                                                @if (tipo.Flujo_Aprobacion.Select(x => x.Cargo.Id).ToList().Contains(cargos2.Id))
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" checked="checked" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
-                                                     <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
+                                                    <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
                                                         Orden Aprobación:
                                                         <input required name="ordenaprobacion" type="number" min=1 class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().OrdenAprobacion" style="width : 60px">
                                                         Mínimo Aprobado Nivel:
@@ -281,13 +300,15 @@
                                                         Máximo Rechazado Nivel:
                                                         <input required name="maximo_rechazado_nivel" type="number" min=1 class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().maximo_rechazado_nivel" style="width : 60px">
                                                     </div>
-                                                 }   else {
+                                                }
+                                                else
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
-                                                     <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
+                                                    <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
                                                         Orden Aprobación:
                                                         <input name="ordenaprobacion" type="number" min=1 class="form-control" value="" style="width : 60px">
                                                         Mínimo Aprobado Nivel:
@@ -295,18 +316,20 @@
                                                         Máximo Rechazado Nivel:
                                                         <input name="maximo_rechazado_nivel" type="number" min=1 class="form-control" style="width : 60px">
                                                     </div>
-                                                 }
+                                                }
                                             }
                                         </div>
                                     </div>
 
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_Jerarquico-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                <div class="form-check form-switch" >
+                                                <div class="form-check form-switch">
                                                     <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                     <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                     <br />
@@ -324,7 +347,8 @@
                                     </div>
                                 }
 
-                                @if (tipo.tipo == "Modelo_Paralelo"){
+                                @if (tipo.tipo == "Modelo_Paralelo")
+                                {
                                     <div class="mb-3" id="Modelo_Paralelo-@tipo.Id" style="display: block;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
@@ -337,11 +361,13 @@
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
-                                                        <br/>
+                                                        <br />
                                                     </div>
                                                 }
                                             }
@@ -355,7 +381,9 @@
                                             <input required class="inputModelosParalelo-@tipo.Id" type="number" min=1 asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_Paralelo-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
@@ -386,7 +414,9 @@
                                             No requiere aprobacion
                                         </div>
                                     </div>
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_No_Aprobacion-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             No requiere aprobacion
@@ -416,63 +446,75 @@
     </div>
 }
 
-<!-- MODAL PARA DESHABILITAR UN TIPO TICKET Y MODELO DE APROBACION-->
-
-@foreach (var tipo in Model.ListaTipo){
+@*Modal para Eliminar Tipo Ticket --- Fino*@
+@foreach (var tipo in Model.ListaTipo)
+{
     <div class="modal fade" id="modal-@tipo.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "@tipo.nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="Eliminar" asp-controller="TipoTicket" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "@tipo.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Eliminar" asp-controller="TipoTicket" method="post">
                         <input required type="text" asp-for="@tipo.Id" value="@tipo.Id" name="id" style="display: none;" />
                         <input required type="text" asp-for="@Model.idDepartamento" value="@Model.idDepartamento" name="idDepartOrigen" style="display: none;" />
 
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "@tipo.nombre"?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Eliminar</button>
-                     </div>
-                </form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "@tipo.nombre"?</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
-<!-- SCRIPT PARA LA BARRA DE BUSQUEDA -->
-@section Scripts{
 
-        <script>
-            const searchFocus = document.getElementById('search-focus');
-            const keys = [
-                { keyCode: 'AltLeft', isTriggered: false },
-                { keyCode: 'ControlLeft', isTriggered: false },
-            ];
-            window.addEventListener('keydown', (e) => {
-                keys.forEach((obj) => {
-                    if (obj.keyCode === e.code) {
-                        obj.isTriggered = true;
+@section Scripts{
+    <script type="text/javascript">
+        function mostrar() {
+            document.getElementById('Modelo_Paralelo').style.display = 'block';
+
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron tipo tickets con esa características",
+                    "sEmptyTable": "No hay ningun tipo ticket en el sistema, registra uno para enviar tickets",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
-                });
-                const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
-                if (shortcutTriggered) {
-                    searchFocus.focus();
                 }
+
             });
-            window.addEventListener('keyup', (e) => {
-                keys.forEach((obj) => {
-                    if (obj.keyCode === e.code) {
-                        obj.isTriggered = false;
-                    }
-                });
-            });
-        </script>
+        });
+    </script>
 
     <script type="text/javascript">
 
@@ -619,29 +661,4 @@
         }
     </script>
 
-}
-        <script>
-            const buscador = document.getElementById('search');
-            buscador.addEventListener("keyup", function () {
-                var keyword = this.value;
-                keyword = keyword.toUpperCase();
-                var table = document.getElementById("table_id");
-                var all_tr = table.getElementsByTagName("tr");
-                for (var i = 0; i < all_tr.length; i++) {
-                    var name_column = all_tr[i].getElementsByTagName("td")[0];
-                    var description_column = all_tr[i].getElementsByTagName("td")[1];
-                    if (name_column && description_column) {
-                        var name_value = name_column.textContent || name_column.innerText;
-                        var description_value = description_column.textContent || description_column.innerText;
-                        name_value = name_value.toUpperCase();
-                        description_value = description_value.toUpperCase();
-                        if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
-                            all_tr[i].style.display = ""; // show
-                        } else {
-                            all_tr[i].style.display = "none"; // hide
-                        }
-                    }
-                }
-            })
-        </script>
 }
