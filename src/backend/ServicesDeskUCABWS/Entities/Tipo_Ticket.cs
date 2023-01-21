@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Recursos;
 using ServicesDeskUCABWS.BussinesLogic.Validaciones;
@@ -160,6 +161,22 @@ namespace ServicesDeskUCABWS.Entities
         {
             return cargo.OrdenAprobacion != null;
         }
+
+        public void RelacionConDepartamento(Tipo_Ticket tipo_ticket, Tipo_TicketDTOCreate Tipo_TicketDTO, IDataContext contexto)
+        {
+
+            tipo_ticket.Departamentos = contexto.Departamentos
+                    .Where(x => Tipo_TicketDTO.Departamento.Select(y => y).Contains(x.id.ToString().ToUpper()))
+                    .Select(s => new DepartamentoTipo_Ticket()
+                    {
+                        departamento = s,
+                        DepartamentoId = s.id,
+                        tipo_Ticket = tipo_ticket,
+                        Tipo_Ticekt_Id = tipo_ticket.Id
+                    }).ToList();
+        }
+
+
     }
 
 }

@@ -1,6 +1,8 @@
 ﻿@model ServiceDeskUCAB.Models.ViewModel.TipoNuevoViewModel;
 
-
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />
+</head>
 
 
 <div class="row">
@@ -41,13 +43,10 @@
                 <th>Cargos Asociados</th>
                 <th></th>
             </tr>
-        </thead>
         <tbody>
             @foreach (var item in Model.ListaTipo)
             {
                 <tr>
-
-
                     <td>@item.nombre</td>
                     <td>@item.descripcion</td>
                     <td>@item.tipo</td>
@@ -79,8 +78,6 @@
                             }
                         </td>
                     }
-                    
-
                     <td>
                         <div class="dropdown" style="float: right">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,14 +90,10 @@
                     </td>
                 </tr>
             }
-
-
         </tbody>
     </table>
 </div>
 
-
-@*Modal para Registrar un nuevo Tipo Ticket y Modelo de Aprobacion --- Fino*@
 
 <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -190,16 +183,11 @@
 
                             <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                 <label class="form-label">Departamentos Asociados:</label>
-                                
-
                                     <br>
-
                                     <div class="form-check form-switch">
                                     <input name="departamentos" class="form-check-input" value="@Model.idDepartamento" type="checkbox" id="@Model.idDepartamento" checked="checked" style="position: absolute; left: 60px">
                                         <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
-
                                     </div>
-                                
                             </div>
                         </div>
 
@@ -428,7 +416,8 @@
     </div>
 }
 
-@*Modal para Eliminar Tipo Ticket --- Fino*@
+<!-- MODAL PARA DESHABILITAR UN TIPO TICKET Y MODELO DE APROBACION-->
+
 @foreach (var tipo in Model.ListaTipo){
     <div class="modal fade" id="modal-@tipo.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -456,46 +445,34 @@
 </div>
 }
 
-
+<!-- SCRIPT PARA LA BARRA DE BUSQUEDA -->
 @section Scripts{
-    <script type="text/javascript">
-        function mostrar() {
-            document.getElementById('Modelo_Paralelo').style.display = 'block';
 
-        }
-
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable({
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron tipo tickets con esa características",
-                    "sEmptyTable": "No hay ningun tipo ticket en el sistema, registra uno para enviar tickets",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        <script>
+            const searchFocus = document.getElementById('search-focus');
+            const keys = [
+                { keyCode: 'AltLeft', isTriggered: false },
+                { keyCode: 'ControlLeft', isTriggered: false },
+            ];
+            window.addEventListener('keydown', (e) => {
+                keys.forEach((obj) => {
+                    if (obj.keyCode === e.code) {
+                        obj.isTriggered = true;
                     }
+                });
+                const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+                if (shortcutTriggered) {
+                    searchFocus.focus();
                 }
-
             });
-        });
-    </script>
+            window.addEventListener('keyup', (e) => {
+                keys.forEach((obj) => {
+                    if (obj.keyCode === e.code) {
+                        obj.isTriggered = false;
+                    }
+                });
+            });
+        </script>
 
     <script type="text/javascript">
 
@@ -642,4 +619,29 @@
         }
     </script>
 
+}
+        <script>
+            const buscador = document.getElementById('search');
+            buscador.addEventListener("keyup", function () {
+                var keyword = this.value;
+                keyword = keyword.toUpperCase();
+                var table = document.getElementById("table_id");
+                var all_tr = table.getElementsByTagName("tr");
+                for (var i = 0; i < all_tr.length; i++) {
+                    var name_column = all_tr[i].getElementsByTagName("td")[0];
+                    var description_column = all_tr[i].getElementsByTagName("td")[1];
+                    if (name_column && description_column) {
+                        var name_value = name_column.textContent || name_column.innerText;
+                        var description_value = description_column.textContent || description_column.innerText;
+                        name_value = name_value.toUpperCase();
+                        description_value = description_value.toUpperCase();
+                        if ((name_value.indexOf(keyword) > -1) || (description_value.indexOf(keyword) > -1)) {
+                            all_tr[i].style.display = ""; // show
+                        } else {
+                            all_tr[i].style.display = "none"; // hide
+                        }
+                    }
+                }
+            })
+        </script>
 }
