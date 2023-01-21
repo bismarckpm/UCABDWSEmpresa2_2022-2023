@@ -417,7 +417,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             var estados = _mapper.Map<List<EstadoDTOUpdate>>(ListaEstados);
 
             _estadoServiceMock.Setup(e => e.ConsultarEstadosPorEstadoPadre(idUpdate)).Returns(estados);
-            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
             //act
             var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);
