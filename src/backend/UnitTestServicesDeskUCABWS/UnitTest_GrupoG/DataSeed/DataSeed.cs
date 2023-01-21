@@ -187,8 +187,6 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         descripcion = "Cuando se rechaza un ticket"
                     }
                 },
-                
-                
             };
 
             //_mockContext.Estados.AddRange(ListaEstados);
