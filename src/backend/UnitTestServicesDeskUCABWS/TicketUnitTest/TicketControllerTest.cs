@@ -55,8 +55,12 @@ namespace TicketUnitTest
             var resultado = _controller.crearTicketCtrl(It.IsAny<TicketNuevoDTO>());
 
             //Verificación
-            Assert.AreEqual(ticket.GetType(), resultado.GetType());    
+            StringAssert.Equals(ticket, resultado);    
         }
+
+       
+
+
         //*
         //Prueba Unitaria para consultar tickets por id
         //*
@@ -186,8 +190,7 @@ namespace TicketUnitTest
         //Prueba Unitaria para cambiar el estado de tickets
         //*
 
-        //REVISAR LUEGO//
-        /*
+        
         [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para cambiar el estado de tickets exitosamente")]
 
         public void TestCambiarEstadoTicketCtrl()
@@ -212,9 +215,9 @@ namespace TicketUnitTest
             //Assert.IsTrue(application.Success);
             //Assert.IsTrue(resultado.Success);
            // Assert.IsNotNull(resultado.Data);
-            Assert.AreEqual(application.GetType(), resultado.GetType());
+            StringAssert.Equals(application, resultado);
 
-        }*/
+        }
 
 
         //*
@@ -416,6 +419,26 @@ namespace TicketUnitTest
 
             //Prueba
             var resultado = _controller.obtenerTicketsPropiosCtrl("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+            //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+        }
+
+        //*
+        //Prueba Unitaria para buscar tickets enviados
+        //*
+        [TestMethod(displayName: "Prueba Unitaria del Controlador de Ticket para obtener tickets enviados exitosamente")]
+        public void TestObtenerTicketsEnviadosCtrl()
+        {
+
+            //Preparación
+            _serviceMock.Setup(p => p.obtenerTicketsEnviados(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"))).Returns(new ApplicationResponse<List<TicketInfoBasicaDTO>>());
+
+
+            //Prueba
+            var resultado = _controller.obtenerTicketsEnviadosCtrl("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
             //Verificación
 
