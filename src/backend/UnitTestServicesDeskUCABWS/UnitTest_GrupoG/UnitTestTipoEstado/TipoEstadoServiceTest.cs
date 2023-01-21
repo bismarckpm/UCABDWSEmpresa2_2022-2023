@@ -377,7 +377,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         public void HabilitarTipoEstadoServiceTest()
         {
             //arrange
-            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87");
+            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
             //act
             var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);

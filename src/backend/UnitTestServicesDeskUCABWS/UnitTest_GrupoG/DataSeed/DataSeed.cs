@@ -176,6 +176,16 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.DataSeed
                         nombre = "Aprobado",
                         descripcion = "Cuando se aprueba un ticket"
                     }
+                },                
+                new Estado("Rechazado D1", "Rechazado D1")
+                {
+                    Id=new Guid("B74DF138-BA05-45A8-B890-E424CA60210D"),
+                    Estado_Padre= new Tipo_Estado()
+                    {
+                        Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+                        nombre = "Rechazado",
+                        descripcion = "Cuando se rechaza un ticket"
+                    }
                 },
                 
                 
