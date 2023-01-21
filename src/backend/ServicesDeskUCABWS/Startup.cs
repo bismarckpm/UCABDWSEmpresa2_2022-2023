@@ -49,16 +49,11 @@ namespace ServicesDeskUCABWS
         }
 
         public IConfiguration Configuration { get; }
-
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
             //JWT
             var appSettings = appSettingsSection.Get<AppSettings>();
             var llave = Encoding.ASCII.GetBytes(appSettings.Secreto);
@@ -77,7 +72,6 @@ namespace ServicesDeskUCABWS
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-
             });
 
             services.AddCors(p => p.AddPolicy("corsapp", builder =>
@@ -101,7 +95,6 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
-
 
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
@@ -139,8 +132,6 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
 
-           
-
             services.AddTransient<ICargoDAO, CargoService>();
 
             services.AddControllers().AddJsonOptions(x =>
@@ -167,9 +158,6 @@ namespace ServicesDeskUCABWS
             }
 
             //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-            /*services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
-            );*/
 
             app.UseCors("corsapp");
 			//Habilitar swagger

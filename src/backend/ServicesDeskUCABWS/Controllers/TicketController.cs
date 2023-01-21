@@ -26,9 +26,9 @@ namespace ServicesDeskUCABWS.Controllers
         }
 
         [HttpPost, Route("Guardar")]
-        public ApplicationResponse<string> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
+        public ApplicationResponse<TicketNuevoDTO> crearTicketCtrl([FromBody] TicketNuevoDTO nuevoTicket)
         {
-            return _ticketDAO.crearTicket(nuevoTicket);
+            return _ticketDAO.RegistroTicket(nuevoTicket);
         }
 
         [HttpGet, Route("Obtener/{id}")]
@@ -37,16 +37,16 @@ namespace ServicesDeskUCABWS.Controllers
             return _ticketDAO.obtenerTicketPorId(new Guid(id));
         }
 
-        [HttpGet,Route("Lista/{departamentoId}/{opcion}")]
-        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion)
-        {
-            return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion);
+        [HttpGet,Route("Lista/{departamentoId}/{opcion}/{empleadoId}")]
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamentoCtrl(string departamentoId, string opcion, string empleadoId)
+        { 
+            return _ticketDAO.obtenerTicketsPorEstadoYDepartamento(new Guid(departamentoId), opcion, new Guid(empleadoId));
         }
 
-        [HttpPut, Route("CambiarEstado")]
-        public ApplicationResponse<string> cambiarEstadoTicketCtrl([FromBody] ActualizarDTO actualizarDTO)
+        [HttpPost, Route("CambiarEstado")]
+        public ApplicationResponse<string> cambiarEstadoTicketCtrl([FromBody] ActualizarDTO actualizar)
         {
-            return _ticketDAO.cambiarEstadoTicket(new Guid(actualizarDTO.ticketId), new Guid(actualizarDTO.estadoId));
+            return _ticketDAO.cambiarEstadoTicket(new Guid(actualizar.ticketId), new Guid(actualizar.estadoId));
         }
 
         [HttpGet, Route("Bitacora/{ticketId}")]
@@ -72,8 +72,8 @@ namespace ServicesDeskUCABWS.Controllers
         {
             return _ticketDAO.obtenerFamiliaTicket(new Guid(id));
         }
-        [HttpPut, Route("Eliminar/{id}")]
-        public ApplicationResponse<string> eliminarTicket(string id)
+        [HttpPost, Route("Finalizar")]
+        public ApplicationResponse<string> eliminarTicket([FromBody] string id)
         {
             return _ticketDAO.eliminarTicket(new Guid(id));
         }
@@ -106,6 +106,22 @@ namespace ServicesDeskUCABWS.Controllers
         public ApplicationResponse<List<Estado>> obtenerEstadosPorDepartamento(string idDepartamento)
         {
             return _ticketDAO.buscarEstadosPorDepartamento(new Guid(idDepartamento));
+        }
+
+        [HttpPost, Route("Tomar/")]
+        public ApplicationResponse<string> tomarTicketCtrl([FromBody] TicketTomarDTO ticketPropio)
+        {
+            return _ticketDAO.adquirirTicket(ticketPropio);
+        }
+        [HttpGet, Route("ObtenerTicketsPropios/{idEmpleado}")]
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropiosCtrl(string idEmpleado)
+        {   
+            return _ticketDAO.obtenerTicketsPropios(new Guid(idEmpleado));
+        }
+        [HttpGet, Route("ObtenerTicketsEnviados/{idEmpleado}")]
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviadosCtrl(string idEmpleado)
+        {   
+            return _ticketDAO.obtenerTicketsEnviados(new Guid(idEmpleado));
         }
     }
 }

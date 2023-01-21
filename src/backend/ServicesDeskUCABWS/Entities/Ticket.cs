@@ -59,10 +59,11 @@ namespace ServicesDeskUCABWS.Entities
         public Familia_Ticket? Familia_Ticket { get; set; }
 
         public Ticket? Ticket_Padre { get; set; }
-
         public Empleado Emisor { get; set; }
-
-
+        public Guid EmisorId {get; set;}
+        public Empleado? Responsable {get; set;}
+        public Guid? ResponsableId {get; set;}
+        
         public Ticket() { }
 
         public Ticket(string titulo, string descripcion)

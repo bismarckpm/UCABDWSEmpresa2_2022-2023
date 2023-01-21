@@ -19,7 +19,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket
 
         public void VerificarCargos()
         {
-            if (_tipo_ticket.Flujo_Aprobacion != null)
+            if (_tipo_ticket.Flujo_Aprobacion != null && _tipo_ticket.Flujo_Aprobacion.Count != 0)
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.MODELO_NO_APROBACION_CARGO);
             }

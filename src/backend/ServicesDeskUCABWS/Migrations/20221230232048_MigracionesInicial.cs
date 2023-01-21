@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ServicesDeskUCABWS.Migrations
 {
-    public partial class initrefact : Migration
+    public partial class MigracionesInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,19 @@ namespace ServicesDeskUCABWS.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grupos", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Modelos_Aprobacion",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    discrimanador = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modelos_Aprobacion", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,12 +113,12 @@ namespace ServicesDeskUCABWS.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha_creacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_ult_edic = table.Column<DateTime>(type: "datetime2", nullable: false),
                     fecha_elim = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Minimo_Aprobado = table.Column<int>(type: "int", nullable: true),
-                    Maximo_Rechazado = table.Column<int>(type: "int", nullable: true)
+                    Maximo_Rechazado = table.Column<int>(type: "int", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -350,7 +363,8 @@ namespace ServicesDeskUCABWS.Migrations
                     Tipo_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Familia_TicketId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Ticket_PadreId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EmisorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ResponsableId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     nro_cargo_actual = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -392,6 +406,11 @@ namespace ServicesDeskUCABWS.Migrations
                     table.ForeignKey(
                         name: "FK_Tickets_Usuarios_EmisorId",
                         column: x => x.EmisorId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Tickets_Usuarios_ResponsableId",
+                        column: x => x.ResponsableId,
                         principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
@@ -464,7 +483,7 @@ namespace ServicesDeskUCABWS.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Discriminator", "NumeroDeCuentasBloqueadas", "cedula", "correo", "fecha_creacion", "fecha_eliminacion", "fecha_nacimiento", "fecha_ultima_edicion", "gender", "password", "primer_apellido", "primer_nombre", "segundo_apellido", "segundo_nombre" },
-                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 23, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
+                values: new object[] { new Guid("8c8a156b-7383-4610-8539-30ccf7298164"), "1", 0, 0, "admin@gmail.com", new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), " ", "admin", "", "", "", "" });
 
             migrationBuilder.InsertData(
                 table: "RolUsuarios",
@@ -582,6 +601,11 @@ namespace ServicesDeskUCABWS.Migrations
                 column: "PrioridadId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ResponsableId",
+                table: "Tickets",
+                column: "ResponsableId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tickets_Ticket_PadreId",
                 table: "Tickets",
                 column: "Ticket_PadreId");
@@ -633,6 +657,9 @@ namespace ServicesDeskUCABWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Flujos_Aprobaciones");
+
+            migrationBuilder.DropTable(
+                name: "Modelos_Aprobacion");
 
             migrationBuilder.DropTable(
                 name: "PlantillasNotificaciones");

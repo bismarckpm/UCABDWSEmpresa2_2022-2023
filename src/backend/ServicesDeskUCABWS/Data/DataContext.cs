@@ -69,13 +69,10 @@ namespace ServicesDeskUCABWS.Data
                 .HasValue<TipoTicket_FlujoAprobacionParalelo>("Modelo_Paralelo")
                 .HasValue<TipoTicket_FlujoAprobacionJerarquico>("Modelo_Jerarquico");
 
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Emisor).WithMany(t=>t.Lista_Ticket).HasForeignKey(t=>t.EmisorId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Responsable).WithMany(t=>t.Tickets_Propios).HasForeignKey(t=>t.ResponsableId).OnDelete(DeleteBehavior.NoAction);
         }
-
 
         //Creacion de los DbSeT
 
