@@ -88,8 +88,6 @@ namespace ServiceDeskUCAB.Controllers
             
         }
 
-        //Retorna el modal con los departamentos que serán asociados a un grupo
-
         /// <summary>
         /// Inicia la petición HTTP a la API para obtener todas los departamentos asociados a un grupo.
 		/// Se hace la petición a través del servicio ServicioGrupo_API.
@@ -149,8 +147,6 @@ namespace ServiceDeskUCAB.Controllers
 			else
 				return RedirectToAction("Index", new { message2 = "Hubo un error en la operación" });
 		}
-
-        //Retorna el modal para registrar un grupo nuevo
 
         /// <summary>
         /// Método que inicia la petición HTTP a la API para obtener los departamentos no asociados.

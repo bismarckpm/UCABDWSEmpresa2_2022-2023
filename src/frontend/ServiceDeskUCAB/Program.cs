@@ -52,6 +52,7 @@ builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 builder.Services.AddAuthorization(options =>
 {
+    
     options.AddPolicy("ClienteAccess",
          policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList().Count != 0 && c.User.Identities.First().Claims.ToList()[2].Value == "Cliente"));
 

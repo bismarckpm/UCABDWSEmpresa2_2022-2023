@@ -134,11 +134,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 					_dataContext.DbContext.SaveChanges();
 				}
 
-
-                var data = _dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First();
-                return GrupoMapper.MapperEntityToDTOUpdate(data);
-                //return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
-            }
+                return GrupoMapper.MapperEntityToDTOUpdate(_dataContext.Grupos.Where(d => d.id == grupo.id && d.nombre == grupo.nombre).First());
+			}
 			catch (DbUpdateException ex)
 			{
 				throw new ExceptionsControl("Fallo al actualizar el grupo: " + grupo.nombre, ex);
@@ -157,31 +154,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
         public bool QuitarAsociacion(Guid grupoId)
         {
-            var asociacionQuitada = false;
-            try
+            try { 
+            
+                    var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
+
+            if (listaDept != null)
             {
-                var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
 
-                if (listaDept != null)
+                foreach (var item in listaDept)
                 {
-
-                    foreach (var item in listaDept)
-                    {
-                        item.id_grupo = null;
+                    item.id_grupo = null;
 
                     }
                     _dataContext.DbContext.SaveChanges();
-                    return asociacionQuitada = true;
+                    return true;
 
                 }
-                
-            }
-            catch (Exception ex)
-            {
-                throw new ExceptionsControl("Fallo al quitar asociacion a un grupo", ex);
-            }
+                  return false;
 
-            return asociacionQuitada;
+            }catch(Exception ex)
+            {
+                throw new ExceptionsControl("No hay grupos eliminados", ex);
+            }
         }
 
         /// <summary>
