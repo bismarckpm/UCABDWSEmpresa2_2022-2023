@@ -24,7 +24,7 @@
     <div class="col-4 text-right">
         @if (Model.ticket.ticketPadre_id != null)
         {
-            <h6><span class="badge bg-primary"><a class="btn-primary" asp-controller="Ticket" asp-action="Details" asp-route-ticketId="@Model.ticket.ticketPadre_id.">Ticket Reenviado</a></span></h6>
+            <h6><span class="badge bg-primary"><a class="btn-primary">Ticket Reenviado</a></span></h6>
         }
 
         @if (Guid.Parse(ViewBag.responsable) == Model.ticket.responsable)
