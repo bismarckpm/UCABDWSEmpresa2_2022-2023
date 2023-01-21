@@ -41,15 +41,14 @@ namespace ServiceDeskUCAB.Controllers
             {
                 return View(new List<TicketBasicoDTO>());
             }
-            lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
-            /*if (opcion != "Enviados")
+            if (opcion != "Enviados")
             {
                 lista = await _servicioTicketAPI.Lista(departamento.Data.Id, opcion, idUsuario);
             }
             else
             {
                 lista = await _servicioTicketAPI.TicketsEnviados(idUsuario);
-            }*/
+            }
             return View(lista);
         }
 
