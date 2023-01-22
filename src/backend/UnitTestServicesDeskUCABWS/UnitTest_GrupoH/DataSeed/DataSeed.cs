@@ -160,7 +160,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DataSeed
 
 			_mockContext.Setup(c => c.Grupos).Returns(request.AsQueryable().BuildMockDbSet().Object);
 			_mockContext.Setup(set => set.Grupos.Add(It.IsAny<Grupo>()));
-			_mockContext.Setup(set => set.DbContext.SaveChanges());
+            _mockContext.Setup(e => e.Grupos.Update(It.IsAny<Grupo>()));
+            _mockContext.Setup(e => e.Grupos.Remove(It.IsAny<Grupo>()));
+            _mockContext.Setup(set => set.DbContext.SaveChanges());
 		}
 
 		public static void SetUpContextDataCargo(this Mock<IDataContext> _mockContext)
