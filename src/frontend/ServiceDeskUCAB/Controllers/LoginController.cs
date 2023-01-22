@@ -105,7 +105,7 @@ namespace ServiceDeskUCAB.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Login", new { message2 = (string)respuesta["message"] });
+                    return RedirectToAction("SingUp", new { message2 = (string)respuesta["message"] });
                 }
             }
             catch (Exception ex)
