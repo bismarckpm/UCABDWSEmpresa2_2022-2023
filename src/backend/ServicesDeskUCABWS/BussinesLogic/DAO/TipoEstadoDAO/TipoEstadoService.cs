@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.IdentityModel.Tokens;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 {
@@ -31,7 +32,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoDTO>>(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList());
+                var tipoEstadoSearchDTO = TipoEstadoMapper.MapperListaTipoEstadoEntityToDto(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).ToList());
                 if (tipoEstadoSearchDTO.Count() == 0)
                     throw new ExceptionsControl("No existen Tipos de estados registrados");
                 return tipoEstadoSearchDTO;
@@ -51,14 +52,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                var tipoEstadoSearchDTO = _mapper.Map<List<TipoEstadoDTO>>(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.fecha_eliminacion == null).ToList());
+                var tipoEstadoSearchDTO = TipoEstadoMapper.MapperListaTipoEstadoEntityToDto(_tipoEstadoContext.Tipos_Estados.AsNoTracking().Include(t => t.etiquetaTipoEstado).ThenInclude(e => e.etiqueta).Where(t => t.fecha_eliminacion == null).ToList());
                 if (tipoEstadoSearchDTO.Count() == 0)
                     throw new ExceptionsControl("No existen Tipos de estados habilitados");
                 return tipoEstadoSearchDTO;
             }
             catch (ExceptionsControl ex)
             {
-                throw new ExceptionsControl("No existen Tipos de estados registrados", ex);
+                throw new ExceptionsControl("No existen Tipos de estados habilitados", ex);
             }
             catch (Exception ex)
             {
@@ -71,7 +72,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                return _mapper.Map<TipoEstadoDTO>(
+                return TipoEstadoMapper.MapperTipoEstadoEntityToDto(
                     _tipoEstadoContext.Tipos_Estados.AsNoTracking()
                     .Include(t => t.etiquetaTipoEstado)
                     .ThenInclude(e => e.etiqueta)
@@ -91,7 +92,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         {
             try
             {
-                return _mapper.Map<TipoEstadoDTO>(
+                return TipoEstadoMapper.MapperTipoEstadoEntityToDto(
                     _tipoEstadoContext.Tipos_Estados.AsNoTracking()
                     .Include(t => t.etiquetaTipoEstado)
                     .ThenInclude(e => e.etiqueta)
@@ -106,11 +107,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
         }
 
         //POST: Servicio para crear tipo estado
-        public TipoEstadoDTO RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
+        public Boolean RegistroTipoEstado(TipoEstadoCreateDTO tipoEstado)
         {
             try
             {
-                var tipoEstadoEntity = _mapper.Map<Tipo_Estado>(tipoEstado);
+                var tipoEstadoEntity = TipoEstadoMapper.MapperTipoEstadoCreateDtoToTipoEstadoEntity(tipoEstado);
                 tipoEstadoEntity.Id = Guid.NewGuid();
                                
                 if (tipoEstado.etiqueta.Count() > 0)
@@ -119,10 +120,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
 
 				//Llena la entidad intermedia Estado
-				_estadoService.AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
+				AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
 
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return _mapper.Map<TipoEstadoDTO>(tipoEstadoEntity);
+                return true;
             }
             catch (ExceptionsControl ex)
             {
@@ -138,8 +139,28 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             }            
         }
 
+        //Agregar Estados de los Tipo Estados Agregados
+        public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
+        {
+            var listaEstados = new List<Estado>();
+
+            foreach (var departamento in _tipoEstadoContext.Departamentos.ToList())
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + estado.nombre, estado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = estado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _tipoEstadoContext.Estados.AddRange(listaEstados);
+        }
+
         //PUT: Servicio para actualizar tipo estado
-        public TipoEstadoDTO ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
+        public Boolean ActualizarTipoEstado(TipoEstadoUpdateDTO tipoEstadoAct, Guid id)
         {
             try
             {
@@ -159,8 +180,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
                 _tipoEstadoContext.Tipos_Estados.Update(tipoEstadoEntity);
                 _tipoEstadoContext.DbContext.SaveChanges();
-                return _mapper.Map<TipoEstadoDTO>(tipoEstadoEntity);
-            }
+				return true;
+			}
             catch (ExceptionsControl ex)
             {
                 throw new ExceptionsControl("Se esta intentando asociar a una etiqueta que no existe", ex);
@@ -178,10 +199,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
 
         //PUT: Servicio para eliminar el tipo estado
         public Boolean HabilitarDeshabilitarTipoEstado(Guid id)
-        {
+            {
             try
             {
-                var tipoEstado = _mapper.Map<Tipo_Estado>(ConsultarTipoEstadoGUID(id));
+                var tipoEstado = TipoEstadoMapper.MapperTipoEstadoDtoToTipoEstadoEntity(ConsultarTipoEstadoGUID(id));
 
                 //Si no tiene permiso, quiere decir que no podrá deshabilitar el tipo estado
                 if (!tipoEstado.permiso)

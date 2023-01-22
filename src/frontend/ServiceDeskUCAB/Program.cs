@@ -42,16 +42,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 
 
-/*builder.Services.AddHttpClient("Api", config =>
+builder.Services.AddHttpClient("ConnectionApi", config =>
 {
-    config.BaseAddress = new Uri(builder.Configuration["ApiSettings:baseUrl"]);
+    config.BaseAddress = new Uri("https://localhost:44392/");
 }
-);*/
+);
          
 builder.Services.AddScoped<IServicioGrupo_API, ServicioGrupo_API>();
 
 builder.Services.AddAuthorization(options =>
 {
+    
     options.AddPolicy("ClienteAccess",
          policy => policy.RequireAssertion(c => c.User.Identities.First().Claims.ToList().Count != 0 && c.User.Identities.First().Claims.ToList()[2].Value == "Cliente"));
 

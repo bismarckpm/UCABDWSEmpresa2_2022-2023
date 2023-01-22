@@ -53,8 +53,6 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<RolUsuario>().HasData(
                 new RolUsuario { UserId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), RolId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162") });
 
-            modelBuilder.Entity<Departamento>().HasIndex(u => u.nombre).IsUnique();
-            modelBuilder.Entity<Grupo>().HasIndex(u => u.nombre).IsUnique();
             modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdCargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
             modelBuilder.Entity<DepartamentoTipo_Ticket>().HasKey(x => new { x.Tipo_Ticekt_Id, x.DepartamentoId });

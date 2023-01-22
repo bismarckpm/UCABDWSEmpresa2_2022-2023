@@ -22,15 +22,29 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
     public class GrupoController : ControllerBase
     {
 
+        /// <summary>
+        /// Declaración de variables.
+        /// </summary>
+
         private readonly IGrupoDAO _grupoDAO;
 
-		//Constructor
+		/// <summary>
+        /// Constructor.
+        /// Inicialización de variables.
+        /// </summary>
+        /// <param name="grupoDAO">Objeto de la interfaz de IGrupoDAO.</param>
 		public GrupoController(IGrupoDAO grupoDAO)
 		{
 			_grupoDAO = grupoDAO;
 		}
 
-        //Crear Departamento
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// se pasa en el body del archivo Json los atributos del objeto Grupo.
+        /// </summary>
+        /// <param name="dto1">Objeto de tipo GrupoDto.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo GrupoDto.</returns>
         [HttpPost]
         [Route("CrearGrupo/")]
         public ApplicationResponse<GrupoDto> CrearGrupo([FromBody] GrupoDto dto1)
@@ -39,39 +53,23 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			try
             {
                 response.Data = _grupoDAO.AgregarGrupoDao(GrupoMapper.MapperDTOToEntity(dto1));
-                
 
             }
 			catch (ExceptionsControl ex)
-			{
-				response.Success = false;
+			{response.Success = false;
 				response.Message = ex.Mensaje;
 				response.Exception = ex.Excepcion.ToString();
 			}
 			return response;
 		}
 
-        
-        //Consultar Grupo
-        [HttpGet]
-        [Route("ConsultarGrupo/")]
-        public ApplicationResponse<List<GrupoDto>> ConsultarGrupos()
-        {
-            var response = new ApplicationResponse<List<GrupoDto>>();
-            try
-            {
-                response.Data = _grupoDAO.ConsultarGruposDao();
-            }
-            catch (ExceptionsControl ex)
-            {
-                response.Success = false;
-                response.Message = ex.Mensaje;
-                response.Exception = ex.Excepcion.ToString();
-            }
-            return response;
-        }
-
-        //Consultar Grupo por ID
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// pasa por URL/URI los atributos del objeto Grupo.
+        /// </summary>
+        /// <param name="id">Identificador de Grupo.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo GrupoDto.</returns>
         [HttpGet]
         [Route("ConsultarGrupoPorID/{id}")]
         public ApplicationResponse<GrupoDto> ConsultarPorID([FromRoute] Guid id)
@@ -91,7 +89,13 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             return response;
         }
 
-        //Eliminar Grupo
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// pasa por URL/URI los atributos del objeto Grupo.
+        /// </summary>
+        /// <param name="id">Identificador de un Grupo.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo GrupoDto.</returns>
         [HttpDelete]
         [Route("EliminarGrupo/{id}")]
         public ApplicationResponse<GrupoDto> EliminarGrupo([FromRoute] Guid id)
@@ -110,8 +114,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
-        
-        //Actualizar Grupo
+
+        /// <summary>
+        /// Método que recibe la petición Http,
+        /// se pasa en el body del archivo Json los atributos del objeto Grupo.
+        /// </summary>
+        /// <param name="grupo">Objeto de tipo GrupoDto_Update.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto de tipo GrupoDto_Update.</returns>
         [HttpPut]
         [Route("ActualizarGrupo/")]
         public ApplicationResponse<GrupoDto_Update> ActualizarGrupo([FromBody] GrupoDto_Update grupo)
@@ -119,7 +129,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             var response = new ApplicationResponse<GrupoDto_Update>();
             try
             {
-                response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityModificar(grupo));
+                response.Data = _grupoDAO.ModificarGrupoDao(GrupoMapper.MapperDTOToEntityUpdate(grupo));
 
             }
             catch (ExceptionsControl ex)
@@ -131,7 +141,11 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
             return response;
         }
 
-        //Mostrar todos los grupos que no están eliminados
+        /// <summary>
+        /// Método que consulta todos los grupos activos.
+        /// </summary>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y una lista de objetos de tipo GrupoDto.</returns>
         [HttpGet("ConsultarGrupoNoEliminado/")]
 		public ApplicationResponse<List<GrupoDto>> ListaGrupoNoEliminado()
 		{
@@ -149,5 +163,104 @@ namespace ServicesDeskUCABWS.Controllers.ControllerGrupo
 			return response;
 		}
 
-	}
+        /// <summary>
+        /// Método que recibe una petición Http por URL/URI y otra petición pasa por el body del archivo Json,
+        /// para asociar departamentos a un grupo.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <param name="idDepartamentos">Lista de identificadores de departamentos.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y una lista de string.</returns>
+        [HttpPut]
+        [Route("AsignarGrupoToDepartamento/{id}")]
+        public ApplicationResponse<List<string>> AsignarGrupoToDepartamento([FromRoute] Guid id, [FromBody] string idDepartamentos)
+        {
+            var response = new ApplicationResponse<List<string>>();
+            try
+            {
+                response.Data = _grupoDAO.AsignarGrupoToDepartamento(id, idDepartamentos);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Método que recibe una petición por URL/URI y otra petición pasa por el body del archivo Json,
+        /// para asociar departamentos a un grupo.
+        /// </summary>
+        /// <param name="id">Identificador de un grupo.</param>
+        /// <param name="idDepartamentos">Lista de identificadores de departamentos.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y una lista de string.</returns>
+        [HttpPut]
+        [Route("EditarRelacion/{id}")]
+        public ApplicationResponse<List<string>> EditarRelacion([FromRoute] Guid id, [FromBody] string idDepartamentos)
+        {
+            var response = new ApplicationResponse<List<string>>();
+            try
+            {
+                response.Data = _grupoDAO.EditarRelacion(id, idDepartamentos);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Método que recibe una petición Http por URL/URI y otra petición pasa por el body del archivo Json,
+        /// para editar (agregar o eliminar) la relación entre departamentos y un grupo.
+        /// </summary>
+        /// <param name="idGrupo">Identificador de un grupo.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y una lista de objetos tipo DepartamentoDto.</returns>
+        [HttpGet("ConsultarDepartamentosPorIdGrupo/{idGrupo}")]
+        public ApplicationResponse<List<DepartamentoDto>> ListaDepartamentosGrupo([FromRoute] Guid idGrupo)
+        {
+            var response = new ApplicationResponse<List<DepartamentoDto>>();
+            try
+            {
+                response.Data = _grupoDAO.GetByIdDepartamento(idGrupo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// Método que recibe una petición Http por URL/URI el nombre de un grupo.
+        /// </summary>
+        /// <param name="nombreGrupo">Identificador de un grupo.</param>
+        /// <returns>Devuelve un AplicationResponse que contien Acuse de recibo,
+        /// aceptación o rechazo y un objeto tipo GrupoDto.</returns>
+        [HttpGet("ConsultarPorNombreGrupo/{nombreGrupo}")]
+        public ApplicationResponse<GrupoDto> ConsultarNombreGrupo([FromRoute] string nombreGrupo)
+        {
+            var response = new ApplicationResponse<GrupoDto>();
+            try
+            {
+                response.Data = _grupoDAO.buscarGrupoNombre(nombreGrupo);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+    }
 }

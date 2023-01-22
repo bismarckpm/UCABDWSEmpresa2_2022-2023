@@ -5,6 +5,8 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperPlantillaNotificacion;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -29,7 +31,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var plantillaSearchDTO = _mapper.Map<List<PlantillaNotificacionDTO>>(
+                var plantillaSearchDTO = PlantillaNotificacionMapper.MapperListaPlantillaEntityToPlantillaDto(
                     _plantillaContext.PlantillasNotificaciones.AsNoTracking()
                     .Include(p => p.TipoEstado)
                     .ThenInclude(et => et.etiquetaTipoEstado)
@@ -58,7 +60,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(
+                var plantillaSearchDTO = PlantillaNotificacionMapper.MapperPlantillaEntityToPlantillaDto(
                     _plantillaContext.PlantillasNotificaciones.AsNoTracking()
                     .Include(p => p.TipoEstado)
                     .ThenInclude(et => et.etiquetaTipoEstado)
@@ -81,7 +83,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(
+                var plantillaSearchDTO = PlantillaNotificacionMapper.MapperPlantillaEntityToPlantillaDto(
                     _plantillaContext.PlantillasNotificaciones.AsNoTracking()
                     .Include(p => p.TipoEstado)
                     .ThenInclude(et => et.etiquetaTipoEstado)
@@ -102,7 +104,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(
+                var plantillaSearchDTO = PlantillaNotificacionMapper.MapperPlantillaEntityToPlantillaDto(
                     _plantillaContext.PlantillasNotificaciones.AsNoTracking()
                     .Include(p => p.TipoEstado)
                     .ThenInclude(et => et.etiquetaTipoEstado)
@@ -123,7 +125,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         {
             try
             {
-                var plantillaSearchDTO = _mapper.Map<PlantillaNotificacionDTO>(
+                var plantillaSearchDTO = PlantillaNotificacionMapper.MapperPlantillaEntityToPlantillaDto(
                     _plantillaContext.PlantillasNotificaciones.AsNoTracking()
                     .Include(p => p.TipoEstado)
                     .ThenInclude(et => et.etiquetaTipoEstado)
@@ -144,16 +146,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //POST: Servicio para crear plantilla notificacion
-        public PlantillaNotificacionDTO RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
+        public Boolean RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla)
         {
             try
             {
-                var plantillaEntity = _mapper.Map<PlantillaNotificacion>(plantilla);
+                var plantillaEntity = PlantillaNotificacionMapper.MapperPlantillaCreateDtoToPlantillaEntity(plantilla);
                 plantillaEntity.Id = Guid.NewGuid();
                 _plantillaContext.PlantillasNotificaciones.Add(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
-
-                return _mapper.Map<PlantillaNotificacionDTO>(plantillaEntity);
+                return true;
             }
             catch (DbUpdateException ex)
             {
@@ -166,15 +167,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //PUT: Servicio para modificar plantilla notificacion
-        public PlantillaNotificacionDTO ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
+        public Boolean ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id)
         {
             try
             {
-                var plantillaEntity = _mapper.Map<PlantillaNotificacion>(plantilla);
+                var plantillaEntity = PlantillaNotificacionMapper.MapperPlantillaCreateDtoToPlantillaEntity(plantilla);
                 plantillaEntity.Id = id;
                 _plantillaContext.PlantillasNotificaciones.Update(plantillaEntity);
                 _plantillaContext.DbContext.SaveChanges();
-                return _mapper.Map<PlantillaNotificacionDTO>(plantillaEntity);
+                return true;
             }
             catch (DbUpdateException ex)
             {
@@ -187,15 +188,15 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         }
 
         //DELETE: Servicio para eliminar plantilla notificacion
-        public PlantillaNotificacionDTO EliminarPlantilla(Guid id)
+        public Boolean EliminarPlantilla(Guid id)
         {
             try
             {
                 var plantilla = ConsultarPlantillaGUID(id); 
-                _plantillaContext.PlantillasNotificaciones.Remove(_mapper.Map<PlantillaNotificacion>(plantilla));
+                _plantillaContext.PlantillasNotificaciones.Remove(PlantillaNotificacionMapper.MapperPlantillaDtoToPlantillaEntity(plantilla));
                 _plantillaContext.DbContext.SaveChanges();
 
-                return plantilla; 
+                return true; 
             }
             catch (ArgumentNullException ex)
             {

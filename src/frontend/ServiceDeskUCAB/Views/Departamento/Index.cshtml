@@ -1,0 +1,120 @@
+﻿@model List<ServiceDeskUCAB.Models.DepartamentoModel>
+
+@{
+    ViewData["Title"] = "Gestion Departamento";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Sidebar.css" />    
+</head>
+
+<!--Conexion con documento JavaScript (Departamento.js)-->
+@section scripts{
+    <script src="~/js/Departamento.js"></script>
+}
+
+<!--Alerta de mensajes exitosos-->
+@if (Context.Request.Query["message"].Count() > 0)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!--Alerta de mensajes de error-->
+@if (Context.Request.Query["message2"].Count() > 0)
+{
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Placeholders de las ventanas emergentes -->
+<div id="PlaceHolderAgregarDepartamento"></div>
+<div id="PlaceHolderEliminarDepartamento"></div>
+<div id="PlaceHolderModificarDepartamento"></div>
+
+ <div class="contenedor">
+
+    <div class="arriba">
+    
+        <div class="area-boton">
+                          
+            <div>
+    
+                <!--Titulo-->
+                <div class="titulo">
+                    <h1>Departamentos</h1>
+                </div>
+    
+                <!--Buscador-->
+                <div class="p-1 rounded rounded-pill shadow-sm mb-2 wrapperBuscador">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button id="button-addon2" type="submit" class="btn primary"><i class="fa fa-search"></i></button>
+                        </div>
+                        <input type="search" id="search" placeholder="Buscar.." aria-describedby="button-addon2" class="form-control border-0 white buscador ">
+                    </div>
+                </div>
+    
+            </div>                 
+    
+            <!-- Boton Agregar Departamento -->
+            <div class="agregar">
+                <button id=btnAgregarDepartamento class="boton" type="button" data-toggle="agregarDepartamento-modal" data-target="#popUpAgregar" data-url="@Url.Action("AgregarDepartamento")">
+                    Crear Departamento
+            <i class="fas fa-plus"></i>
+                </button>
+            </div>              
+                          
+        </div>
+    
+          <!-- Tabla Departamentos -->
+        <table class="table" id="table">
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                    <th></th>
+                </tr>
+        
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="id" style="display:none";>
+                        @Html.DisplayFor(i => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(i => item.descripcion)
+                    </td>
+                    <td>
+                        <div class="dropdown">
+
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        
+                                <button id="btnEditar" type="button" class="dropdown-item" data-toggle="editarDepartamento-modal" data-target="#popUpEditar" data-url="@Url.Action("VentanaEditarDepartamento","Departamento",new { id = "idDepartamento" })">Editar</button>
+                                <button id="btnEliminar" type="button" class="dropdown-item" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","Departamento",new { id = "idDepartamento" })">Eliminar</button>
+                                <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
+                                <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
+                                <li><a class="dropdown-item" data-bs-toggle="modal" onclick="location.href='@Url.Action("VistaTipo", "TipoTicket",new{ idDepartamento =@item.id} )'">Ver Tipo tickets</a></li>
+
+                            </ul>
+                        </div>                
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>      
+</div>
+
+

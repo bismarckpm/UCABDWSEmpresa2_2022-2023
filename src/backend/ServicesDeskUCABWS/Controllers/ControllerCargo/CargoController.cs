@@ -56,8 +56,6 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             return response;
         }
 
-        
-
         [HttpGet]
         [Route("ConsultarCargos/")]
         public ApplicationResponse<List<CargoDto>> ConsultarCargos()

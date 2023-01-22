@@ -21,8 +21,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
     public class NotificacionService : INotificacion
     {
-        const string correo = "DesarrolloSoftwareUCAB2@hotmail.com";
-        const string clave = "Desarrollo_SoftwareUCAB_2";
+        const string correo = "UCAB2ENTREGADS@outlook.com";
+        const string clave = "UCAB2_ENTREGADS";
         const string alias = "ServiceDeskUCAB";
         const string host = "smtp.office365.com";
         const int puerto = 587;

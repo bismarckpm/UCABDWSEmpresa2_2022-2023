@@ -13,9 +13,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
         public PlantillaNotificacionDTO ConsultarPlantillaTitulo(string titulo);
         public PlantillaNotificacionDTO ConsultarPlantillaTipoEstadoID(Guid id);
         public PlantillaNotificacionDTO ConsultarPlantillaTipoEstadoTitulo(string tituloTipoEstado);
-        public PlantillaNotificacionDTO RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla);
-        public PlantillaNotificacionDTO ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id);
-        public PlantillaNotificacionDTO EliminarPlantilla(Guid id);
+        public Boolean RegistroPlantilla(PlantillaNotificacionDTOCreate plantilla);
+        public Boolean ActualizarPlantilla(PlantillaNotificacionDTOCreate plantilla, Guid id);
+        public Boolean EliminarPlantilla(Guid id);
         //public Boolean ValidarRelacionPlantillaTipo(Guid tipoEstadoId);
     }
 }

@@ -205,16 +205,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
         {
             try
             {
-                tipo_ticket.Flujo_Aprobacion = tipo_ticket.Flujo_Aprobacion.Select(x => new Flujo_Aprobacion()
-                {
-                    Tipo_Ticket = tipo_ticket,
-                    IdTicket= tipo_ticket.Id,
-                    IdCargo = x.IdCargo,
-                    Cargo = context.Cargos.Find(x.IdCargo),
-                    OrdenAprobacion = x.OrdenAprobacion,
-                    Minimo_aprobado_nivel = x.Minimo_aprobado_nivel,
-                    Maximo_Rechazado_nivel = x.Maximo_Rechazado_nivel
-                }).ToList();
+                tipo_ticket.Flujo_Aprobacion = 
+                    tipo_ticket.Flujo_Aprobacion.Select(x => new Flujo_Aprobacion()
+                    {
+                        Tipo_Ticket = tipo_ticket,
+                        IdTicket= tipo_ticket.Id,
+                        IdCargo = x.IdCargo,
+                        Cargo = context.Cargos.Find(x.IdCargo),
+                        OrdenAprobacion = x.OrdenAprobacion,
+                        Minimo_aprobado_nivel = x.Minimo_aprobado_nivel,
+                        Maximo_Rechazado_nivel = x.Maximo_Rechazado_nivel
+                    }).ToList();
             }
             catch (Exception) { }
         }

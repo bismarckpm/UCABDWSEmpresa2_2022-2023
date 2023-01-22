@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewData["Title"] - ServicesDeskUCAB</title>
@@ -22,7 +21,6 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 
 <body id="page-top">
@@ -51,22 +49,41 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+{
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Usuarios</span>
                 </a>
             </li>
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+{
+            
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado" )
+{
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="DepartamentoYGrupo" asp-action="DepartamentoGrupo">
+                <a class="nav-link" asp-area="" asp-controller="Departamento" asp-action="Index">
                     <i class="fas fa-city"></i>
-                    <span>Departamentos y Grupos</span>
+                    <span>Departamentos</span>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla" aria-expanded="true" aria-controls="collapsePlantilla">
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+{
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Grupo" asp-action="Index">
+                    <i class="fas fa-users"></i>
+                    <span>Grupos</span>
+                </a>
+            </li>
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla" aria-expanded="true" aria-controls="collapsePlantilla">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Plantillas de notificación</span>
                 </a>
@@ -79,9 +96,11 @@
                     </div>
                 </div>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado" aria-expanded="true" aria-controls="collapseEstado">
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado" aria-expanded="true" aria-controls="collapseEstado">
                     <i class="fas fa-fw fa-bell"></i>
                     <span>Estados de ticket</span>
                 </a>
@@ -93,16 +112,21 @@
                     </div>
                 </div>
             </li>
+            }
 
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+{
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Votos" asp-action="VistaTicket">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gestionar Votos</span>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
+}
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
                    aria-expanded="true" aria-controls="collapsePrioridad">
                     <i class="fas fa-fw fa-bell"></i>
                     <span>Prioridad</span>
@@ -115,8 +139,12 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
+            }
+
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
                    aria-expanded="true" aria-controls="collapseTicket">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Ticket</span>
@@ -129,6 +157,7 @@
                     </div>
                 </div>
             </li>
+            }
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">
                     <i class="fas fa-sign-out-alt"></i>

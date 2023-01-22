@@ -12,8 +12,8 @@ using ServicesDeskUCABWS.Data;
 namespace ServicesDeskUCABWS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221230232048_MigracionesInicial")]
-    partial class MigracionesInicial
+    [Migration("20230122005814_ArregloPKTipoTicket")]
+    partial class ArregloPKTipoTicket
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,9 +117,6 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("id_grupo");
-
-                    b.HasIndex("nombre")
-                        .IsUnique();
 
                     b.ToTable("Departamentos");
                 });
@@ -288,9 +285,6 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("nombre")
-                        .IsUnique();
 
                     b.ToTable("Grupos");
                 });
@@ -681,7 +675,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2022, 12, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",

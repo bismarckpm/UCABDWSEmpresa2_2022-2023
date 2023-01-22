@@ -60,10 +60,19 @@
     <Folder Include="Utilities\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Remove="BussinesLogic\Recursos\ErroresGrupo.resx" />
+  </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="appsettings.json" />
+    <None Include="BussinesLogic\Recursos\ErroresGrupo.resx" />
   </ItemGroup>
+
+
+  <!--<ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>-->
+
   <ItemGroup>
     <None Remove="Entities\TipoTicket_FlujoAprobacionParalelo.cs~RFa9979d7.TMP" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
