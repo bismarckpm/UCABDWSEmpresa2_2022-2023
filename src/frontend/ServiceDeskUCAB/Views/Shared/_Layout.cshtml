@@ -49,7 +49,7 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
 {
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Usuarios">
@@ -58,7 +58,7 @@
                 </a>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
 {
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="CargoYTipoCargo" asp-action="CargoTipoCargo">
@@ -67,7 +67,7 @@
                 </a>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado" )
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
 {
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Departamento" asp-action="Index">
@@ -76,7 +76,7 @@
                 </a>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
 {
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Grupo" asp-action="Index">
@@ -85,7 +85,7 @@
                 </a>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePlantilla" aria-expanded="true" aria-controls="collapsePlantilla">
@@ -102,7 +102,7 @@
                 </div>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Empleado")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstado" aria-expanded="true" aria-controls="collapseEstado">
@@ -119,7 +119,7 @@
             </li>
             }
 
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Empleado")
 {
             <li class="nav-item">
                 <a class="nav-link" asp-area="" asp-controller="Votos" asp-action="VistaTicket">
@@ -128,7 +128,7 @@
                 </a>
             </li>
 }
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrioridad"
@@ -146,7 +146,7 @@
             </li>
             }
 
-            @if (User.Identities.First().Claims.ToList()[2].Value == "Administrador" || User.Identities.First().Claims.ToList()[2].Value == "Empleado")
+            @if (User.Identities.First().Claims.ToList()[2].Value == "Empleado")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTicket"
