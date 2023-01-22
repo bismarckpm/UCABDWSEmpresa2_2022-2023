@@ -133,6 +133,7 @@ namespace ServiceDeskUCAB.Controllers
                 estados = await _servicioTicketAPI.DepartamentoEstados(departamento.Data.Id)
             };
             ViewBag.responsable = idUsuario;
+            ViewBag.usuarioCorreo = User.Identities.First().Claims.ToList()[1].Value;
             return View(ticketDetailsViewModel);
         }
 

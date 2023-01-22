@@ -12,6 +12,7 @@ namespace ServiceDeskUCAB.Models
         public DateTime? fecha_eliminacion { get; set; }
         public string tipoTicket_nombre { get; set; }
         public string estado_nombre { get; set; }
+        public Guid? ticket_padre { get; set; }
     }
 }
 

@@ -316,14 +316,11 @@ namespace TicketUnitTest
             _contextMock.Setup(p => p.Tickets).Throws(new TicketDescripcionException(""));
           
             var ex = "El formato de la descripción no es válido";
-            var resultado = _TicketDAO.crearTicket(ticket);
+            var resultado = _TicketDAO.RegistroTicket(ticket);
 
             //Verificación
 
-           
             Assert.AreEqual(ex, resultado.Message);
-
-            
         }
 
        
