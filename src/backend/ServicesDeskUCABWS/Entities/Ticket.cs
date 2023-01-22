@@ -2,10 +2,14 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using ServicesDeskUCABWS.BussinesLogic;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using System;
 using System.Collections.Generic;
@@ -13,8 +17,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Sockets;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -50,8 +59,10 @@ namespace ServicesDeskUCABWS.Entities
         public Familia_Ticket? Familia_Ticket { get; set; }
 
         public Ticket? Ticket_Padre { get; set; }
-
         public Empleado Emisor { get; set; }
+        public Guid EmisorId {get; set;}
+        public Empleado? Responsable {get; set;}
+        public Guid? ResponsableId {get; set;}
         
         public Ticket() { }
 
@@ -79,26 +90,36 @@ namespace ServicesDeskUCABWS.Entities
 
         
 
-        public bool CambiarEstado(Ticket ticketLlegada, string Estado, IDataContext _dataContext)
+        public bool CambiarEstado( string Estado, IDataContext _dataContext)
         {
             try
             {
-                var ticket = _dataContext.Tickets.Include(x => x.Departamento_Destino).ThenInclude(x => x.grupo).Include(x => x.Prioridad)
-                    .Include(x => x.Emisor).ThenInclude(x => x.Cargo).ThenInclude(x => x.Departamento)
-                    .Include(x => x.Tipo_Ticket).Include(x => x.Votos_Ticket)
-                    .Include(x => x.Bitacora_Tickets)
-                    .Where(x => x.Id == ticketLlegada.Id).FirstOrDefault();
-
-                ticket.Estado = _dataContext.Estados
+                this.Estado = _dataContext.Estados
                     .Include(x => x.Estado_Padre)
-                    .Include(x => x.Departamento).
-                    Where(s => s.Estado_Padre.nombre == Estado &&
-                    s.Departamento.id == ticket.Emisor.Cargo.Departamento.id)
+                    .Include(x => x.Departamento)
+                    .Where(s => s.Estado_Padre.nombre == Estado && s.Departamento.id == this.Emisor.Cargo.Departamento.id)
                     .FirstOrDefault();
 
-                _dataContext.Tickets.Update(ticket);
-                _dataContext.DbContext.SaveChanges();
-                ActualizarBitacora(ticket, _dataContext);
+                ActualizarBitacora( _dataContext);
+            }
+            catch (ExceptionsControl ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CambiarEstadoUsuario(string Estado, IDataContext _dataContext)
+        {
+            try
+            {
+                this.Estado = _dataContext.Estados
+                    .Include(x => x.Estado_Padre)
+                    .Include(x => x.Departamento)
+                    .Where(s => s.Estado_Padre.nombre == Estado && s.Departamento.id == this.Departamento_Destino.id)
+                    .FirstOrDefault();
+
+                ActualizarBitacora(_dataContext);
             }
             catch (ExceptionsControl ex)
             {
@@ -108,7 +129,6 @@ namespace ServicesDeskUCABWS.Entities
         }
 
 
-        
         public Bitacora_Ticket crearNuevaBitacora(Ticket ticket)
         {
             Bitacora_Ticket nuevaBitacora = new Bitacora_Ticket()
@@ -122,66 +142,36 @@ namespace ServicesDeskUCABWS.Entities
             return nuevaBitacora;
         }
 
-        internal void ActualizarBitacora(Ticket ticket, IDataContext _dataContext)
+        internal void ActualizarBitacora( IDataContext _dataContext)
         {
-            Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(ticket);
-            if (ticket.Bitacora_Tickets.Count != 0)
+            Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(this);
+            if (this.Bitacora_Tickets.Count != 0)
             {
-                ticket.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
+                this.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
             }
-
-            ticket.Bitacora_Tickets.Add(nuevaBitacora);
+            this.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
-            _dataContext.Tickets.Update(ticket);
+            _dataContext.Tickets.Update(this);
         }
 
-        public bool EnviarNotificacion(Ticket ticket, string Estado, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion,IPlantillaNotificacion plantilla)
+        public void CambiarEstadoTicketReeenviados()
         {
-            var plant = plantilla.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
-            plant.Descripcion = notificacion.ReemplazoEtiqueta(ticket, plant);
-            switch (Estado)
+            if (this.Ticket_Padre != null)
             {
-                case "Aprobado":
-                    try
-                    {
-                        notificacion.EnviarCorreo(plant, ticket.Emisor.correo);
-                    }
-                    catch (ExceptionsControl) { }
-                    break;
-                case "Siendo Procesado":
-                    var empleados = _dataContext.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList();
-                    foreach (var emp in empleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant2.Titulo, descripcionPlantilla2, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    break;
-                case "Pendiente":
-                    foreach (var emp in ListaEmpleados)
-                    {
-                        try
-                        {
-                            //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, emp.correo);
-                        }
-                        catch (ExceptionsControl) { }
-                    }
-                    break;
-                default:
-                    try
-                    {
-                        //notificacion.EnviarCorreo(plant.Titulo, descripcionPlantilla, ticket.Emisor.correo);
-                    }
-                    catch (ExceptionsControl) { }
-                    break;
-
+                this.Ticket_Padre.Estado = this.Estado;
             }
-            return true;
         }
 
-        
+        public void CambiarEstadoFamiliaTicket()
+        {
+            if (this.Familia_Ticket != null && this.Familia_Ticket.Lista_Ticket != null)
+            {
+                foreach (var t in this.Familia_Ticket.Lista_Ticket)
+                {
+                    t.Estado = this.Estado;
+                }
+            }
+        }
     }
 }
 

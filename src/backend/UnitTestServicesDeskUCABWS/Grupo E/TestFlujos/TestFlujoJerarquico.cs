@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic;
 using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
@@ -16,6 +17,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitTestServicesDeskUCABWS.DataSeed;
+using Telerik.JustMock;
+using Telerik.JustMock.Helpers;
+using Telerik.JustMock.Setup;
 
 namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 {
@@ -27,6 +31,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
         private readonly IMapper _mapper;
         private readonly Mock<IPlantillaNotificacion> plantillaNotificacionDAO;
         private readonly Mock<INotificacion> notificacionService;
+        private readonly Mock<LlamadaHttp> llamadaMock;
+
 
         public FlujoJerarquicoTest()
         {
@@ -38,6 +44,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
                 new TicketMapper()
 
             };
+            llamadaMock = new Mock<LlamadaHttp>();
             plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
             notificacionService = new Mock<INotificacion>();
 
@@ -48,28 +55,27 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             _contextMock.SetupDbContextData();
         }
 
+        /*void Mock.SetupStatic(Type staticType);
+        void Mock.SetupStatic(Type targetType, Behavior behavior);*/
 
         [TestMethod]
         public void CaminoFelizFlujoJerarquicoTest()
         {
             //arrange
-            var Ticket = _contextMock.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04"));
+            var ticket = _contextMock.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04"));
 
-
-            //context.Setup(x => x.Flujos_Aprobaciones).Returns(ListaFlujo.AsQueryable().BuildMockDbSet().Object); 
-            plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
+            notificacionService.Setup(x => x.EnviarNotificacion(It.IsAny<Ticket>(), It.IsAny<TipoNotificacion>(), It.IsAny<List<Empleado>>(), It.IsAny<IDataContext>())).ReturnsAsync(true);
 
 
             //Act
             _contextMock.Setup(a => a.DbContext.SaveChanges());
-
-            _TicketDAO.FlujoAprobacionCreacionTicket(Ticket);
+            _TicketDAO.FlujoAprobacionCreacionTicket(ticket);
 
             //Assert
-            Assert.AreEqual("Pendiente D1", Ticket.Estado.nombre);
-            Assert.AreEqual(1, Ticket.Bitacora_Tickets.Count);
-            Assert.AreEqual(1, _contextMock.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
-            Assert.AreEqual(2, _contextMock.Object.Votos_Tickets.Where(x => x.IdTicket == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA04")).Count());
+            Assert.AreEqual("Pendiente D1", ticket.Estado.nombre);
+            Assert.AreEqual(1, ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(1, ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(2, ticket.Votos_Ticket.Count);
         }
 
 
@@ -86,6 +92,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
                 Success = false,
 
             };
+            notificacionService.Setup(x => x.EnviarNotificacion(It.IsAny<Ticket>(), It.IsAny<TipoNotificacion>(), It.IsAny<List<Empleado>>(), It.IsAny<IDataContext>())).ReturnsAsync(true);
 
             //act
             _contextMock.Setup(x => x.Flujos_Aprobaciones).Throws(new ExceptionsControl(""));

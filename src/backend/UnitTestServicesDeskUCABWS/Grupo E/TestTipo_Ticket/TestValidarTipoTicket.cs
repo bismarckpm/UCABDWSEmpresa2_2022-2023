@@ -505,6 +505,111 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
         }
 
+        [TestMethod]
+        public void MinimoAprobadoMenorA0ModeloParalelo()
+        {
+
+            //arrange
+            Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
+            {
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_Paralelo",
+                Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        OrdenAprobacion=null,
+                        Minimo_aprobado_nivel=null,
+                        Maximo_Rechazado_nivel=null
+                    },
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        OrdenAprobacion=null,
+                        Minimo_aprobado_nivel=null,
+                        Maximo_Rechazado_nivel=null
+                    }
+                },
+                Departamento = new List<string>
+                {
+                    "CCACD411-1B46-4117-AA84-73EA64DEAC87",
+                    "19C117F4-9C2A-49B1-A633-969686E0B57E"
+                },
+                Minimo_Aprobado = -2,
+                Maximo_Rechazado = 1,
+            };
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MA_MR);
+            ExceptionsControl actualException = null;
+
+            //act
+            try
+            {
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket(entrada);
+            }
+            catch (ExceptionsControl ex)
+            {
+                actualException = ex;
+            }
+
+            Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
+            Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
+
+        }
+
+        [TestMethod]
+        public void MaximoRehazadoMenorA0ModeloParalelo()
+        {
+            //arrange
+            Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
+            {
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_Paralelo",
+                Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        OrdenAprobacion=null,
+                        Minimo_aprobado_nivel=null,
+                        Maximo_Rechazado_nivel=null
+                    },
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        OrdenAprobacion=null,
+                        Minimo_aprobado_nivel=null,
+                        Maximo_Rechazado_nivel=null
+                    }
+                },
+                Departamento = new List<string>
+                {
+                    "CCACD411-1B46-4117-AA84-73EA64DEAC87",
+                    "19C117F4-9C2A-49B1-A633-969686E0B57E"
+                },
+                Minimo_Aprobado = 1,
+                Maximo_Rechazado = -2,
+            };
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MA_MR);
+            ExceptionsControl actualException = null;
+
+            //act
+            try
+            {
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket(entrada);
+            }
+            catch (ExceptionsControl ex)
+            {
+                actualException = ex;
+            }
+
+            Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
+            Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
+
+        }
+
         /*arrange ModeloJerarquico
          Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
             {
@@ -638,6 +743,110 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
         }
 
         [TestMethod]
+        public void LosValoresMinimoAprobadoSonmenoresa1ModeloJerarquico()
+        {
+
+            //arrange
+            Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
+            {
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_Jerarquico",
+                Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        OrdenAprobacion=2,
+                        Minimo_aprobado_nivel=0,
+                        Maximo_Rechazado_nivel=1
+                    },
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        OrdenAprobacion=1,
+                        Minimo_aprobado_nivel=1,
+                        Maximo_Rechazado_nivel=1
+                    }
+                },
+                Departamento = new List<string>
+                {
+                    "CCACD411-1B46-4117-AA84-73EA64DEAC87",
+                    "19C117F4-9C2A-49B1-A633-969686E0B57E"
+                }
+
+            };
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MAN_MRN_OS);
+            ExceptionsControl actualException = null;
+
+            //act
+            try
+            {
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket(entrada);
+            }
+            catch (ExceptionsControl ex)
+            {
+                actualException = ex;
+            }
+
+            Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
+            Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
+
+        }
+
+        [TestMethod]
+        public void LosValoresMaximoRechazadoSonmenoresa1ModeloJerarquico()
+        {
+
+            //arrange
+            Tipo_TicketDTOCreate entrada = new Tipo_TicketDTOCreate()
+            {
+                nombre = "Mantenimiento",
+                descripcion = "Ticket para manejar el Mantenimiento de un recurso dentro de un departamento",
+                tipo = "Modelo_Jerarquico",
+                Flujo_Aprobacion = new List<FlujoAprobacionDTOCreate> {
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="DDC1A0D0-FA70-48E1-9ACE-747057B0002C",
+                        OrdenAprobacion=2,
+                        Minimo_aprobado_nivel=0,
+                        Maximo_Rechazado_nivel=1
+                    },
+                    new FlujoAprobacionDTOCreate()
+                    {
+                        IdCargo="24259113-437B-417F-9159-A8E27C34A871",
+                        OrdenAprobacion=1,
+                        Minimo_aprobado_nivel=1,
+                        Maximo_Rechazado_nivel=1
+                    }
+                },
+                Departamento = new List<string>
+                {
+                    "CCACD411-1B46-4117-AA84-73EA64DEAC87",
+                    "19C117F4-9C2A-49B1-A633-969686E0B57E"
+                }
+
+            };
+
+            ExceptionsControl expectedException = new ExceptionsControl(ErroresTipo_Tickets.MENOR_A_0_MAN_MRN_OS);
+            ExceptionsControl actualException = null;
+
+            //act
+            try
+            {
+                TipoticketDAO.ValidarDatosEntradaTipo_Ticket(entrada);
+            }
+            catch (ExceptionsControl ex)
+            {
+                actualException = ex;
+            }
+
+            Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
+            Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
+
+        }
+
+        [TestMethod]
         public void LosValoresMinimoMaximoDebenSerNullModeloNoAprobacion()
         {
 
@@ -724,6 +933,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             Assert.AreEqual(expectedException.Excepcion, actualException.Excepcion);
 
         }
+
+
 
         [TestMethod]
         public void ErrorFormatoDeIDs()

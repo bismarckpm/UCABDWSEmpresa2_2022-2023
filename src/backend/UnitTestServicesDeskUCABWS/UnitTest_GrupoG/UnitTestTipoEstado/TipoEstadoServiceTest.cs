@@ -23,6 +23,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoEstado;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiqueta;
 using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperEtiquetaTipoEstado;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 
 namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
 {
@@ -42,7 +43,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
             {
                 new TipoEstadoMapper(),
                 new EtiquetaMapper(),
-                new EtiquetaTipoEstadoMapper()
+                new EtiquetaTipoEstadoMapper(),
+                new Mappers()
             };
             var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myProfile));
             _mapper = new Mapper(configuration);
@@ -362,22 +364,59 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         [TestMethod(displayName: "Prueba Unitaria cuando se deshabilita sea exitoso")]
         public void DeshabilitarTipoEstadoServiceTest()
         {
-            //arrange
-            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+			//arrange
+			var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87");
 
-            //act
-            var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);
+            var ListaEstados = new List<Estado>()
+            {
+                new Estado("Rechazado D1", "Descripcion D1")
+                {
+                    Id=new Guid("B74DF138-BA05-45A8-B890-E424CA60210C"),
+                    Estado_Padre= new Tipo_Estado()
+                    {
+                        Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+                        nombre = "Rechazado",
+                        descripcion = "Cuando se rechaza un ticket",
+                        fecha_eliminacion = DateTime.Now
+					}
+				},
+			};
 
-            //assert
-            Assert.IsTrue(result);
-        }
+			var estados = _mapper.Map<List<EstadoDTOUpdate>>(ListaEstados);
+
+			_estadoServiceMock.Setup(e => e.ConsultarEstadosPorEstadoPadre(idUpdate)).Returns(estados);
+
+			//act
+			var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);
+
+			//assert
+			Assert.IsTrue(result);
+		}
 
 
         [TestMethod(displayName: "Prueba Unitaria cuando se habilita sea exitoso")]
         public void HabilitarTipoEstadoServiceTest()
         {
             //arrange
-            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c87");
+            var idUpdate = Guid.Parse("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+			var ListaEstados = new List<Estado>()
+			{
+				new Estado("Aprobado D1", "Descripcion D1")
+				{
+					Id=new Guid("B74DF138-BA05-45A8-B890-E424CA60210C"),
+					Estado_Padre= new Tipo_Estado()
+					{
+						Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+						nombre = "Aprobado",
+						descripcion = "Cuando se aprueba un ticket"
+					}
+				},
+			};
+
+            var estados = _mapper.Map<List<EstadoDTOUpdate>>(ListaEstados);
+
+            _estadoServiceMock.Setup(e => e.ConsultarEstadosPorEstadoPadre(idUpdate)).Returns(estados);
 
             //act
             var result = _TipoEstadoService.HabilitarDeshabilitarTipoEstado(idUpdate);

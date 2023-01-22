@@ -151,7 +151,25 @@ namespace ServicesDeskUCABWS.BussinesLogic.Recursos {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Los campos minimo aprobado y maximo recchazado no pueden ser asignados dentro de un modelo jerarquico.
+        ///   Busca una cadena traducida similar a El minimo aprobado y el maximo rechazado deben ser mayor a 0.
+        /// </summary>
+        public static string MENOR_A_0_MA_MR {
+            get {
+                return ResourceManager.GetString("MENOR_A_0_MA_MR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El minimo aprobado y maximo rechazado en cada uno de los cargos deben ser  mayor a 0 .
+        /// </summary>
+        public static string MENOR_A_0_MAN_MRN_OS {
+            get {
+                return ResourceManager.GetString("MENOR_A_0_MAN_MRN_OS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Los campos minimo aprobado y maximo recchazado no pueden ser asignados dentro de un modelo jerarquico.
         /// </summary>
         public static string MODELO_JERARQUICO_NO_VALIDO {
             get {

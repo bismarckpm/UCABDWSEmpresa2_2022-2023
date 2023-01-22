@@ -53,7 +53,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
            //Act
             context.Setup(a => a.DbContext.SaveChanges());
             plantillaNotificacionDAO.Setup(x => x.ConsultarPlantillaTipoEstadoID(It.IsAny<Guid>())).Returns(new PlantillaNotificacionDTO { Titulo = "Pantilla1", Descripcion = "Descripcion 1" });
-
+            notificacionService.Setup(x => x.EnviarNotificacion(It.IsAny<Ticket>(), It.IsAny<TipoNotificacion>(), It.IsAny<List<Empleado>>(), It.IsAny<IDataContext>())).ReturnsAsync(true);
             ticketDAO.FlujoAprobacionCreacionTicket(Ticket);
 
             //Assert

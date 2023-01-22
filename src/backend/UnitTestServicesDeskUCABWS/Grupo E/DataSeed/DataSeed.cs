@@ -546,6 +546,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Emisor= (Empleado) ListaUsuario[6],
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
+                    Votos_Ticket = new HashSet<Votos_Ticket>(),
                     Prioridad = ListaPrioridad[1]
                 },
                 new Ticket("Peticion 2", "Descripcion Peticion 2")
@@ -556,6 +557,7 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
+                    Votos_Ticket = new HashSet<Votos_Ticket>(),
                     nro_cargo_actual = 1
                 },
 
@@ -578,7 +580,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
-                    nro_cargo_actual = 1
+                    nro_cargo_actual = 1,
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
                 },
                 new Ticket("Prueba Flujo no Aprobacion", "sncsdnvoiw")
                 {
@@ -588,7 +591,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
-                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
                 },
 
                 new Ticket("Prueba Flujo Paralelo", "sncsdnvoiw")
@@ -599,7 +603,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Departamento_Destino= ListaDepartamento[1],
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
-                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>()
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
                 },
 
                 new Ticket("Prueba Flujo Jerarquico", "sncsdnvoiw")
@@ -611,7 +616,21 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Estado = ListaEstados[2],
                     Prioridad = ListaPrioridad[1],
                     Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
-                    nro_cargo_actual = 1
+                    nro_cargo_actual = 1,
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
+                },
+
+                new Ticket("Prueba Flujo Jerarquico", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA05"),
+                    Tipo_Ticket= ListaTipoTickets[2],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[0],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    nro_cargo_actual = 1,
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
                 }
 
             };
@@ -707,6 +726,17 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
 
             };
 
+            ListaTickets[0].Votos_Ticket.Add(ListaVotos[0]);
+            ListaTickets[0].Votos_Ticket.Add(ListaVotos[1]);
+            ListaTickets[0].Votos_Ticket.Add(ListaVotos[2]);
+            ListaTickets[0].Votos_Ticket.Add(ListaVotos[3]);
+
+            ListaTickets[1].Votos_Ticket.Add(ListaVotos[4]);
+            ListaTickets[1].Votos_Ticket.Add(ListaVotos[5]);
+            ListaTickets[1].Votos_Ticket.Add(ListaVotos[6]);
+
+            ListaTickets[3].Votos_Ticket.Add(ListaVotos[7]);
+            ListaTickets[3].Votos_Ticket.Add(ListaVotos[8]);
 
             var ListaBitacora = new List<Bitacora_Ticket>
             {

@@ -91,7 +91,7 @@ namespace ServiceDeskUCAB.Controllers
             JObject respuesta;
             respuesta = await _servicioApiTipoEstado.HabilitarDeshabilitar(id);
             if ((bool)respuesta["success"])
-                return RedirectToAction("EstadosTicket", new { message = "Se ha actualizado correctamente" });
+                return RedirectToAction("EstadosTicket", new { message = "Se ha actualizado correctamente", success = "true"});
             //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
                 return RedirectToAction("EstadosTicket", new { message = (string)respuesta["message"] });

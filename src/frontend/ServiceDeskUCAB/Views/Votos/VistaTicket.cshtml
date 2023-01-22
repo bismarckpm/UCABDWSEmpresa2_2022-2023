@@ -14,8 +14,16 @@
 
 @if (Context.Request.Query["message"].Count() > 0)
 {
-    <div class="alert alert-succes text-center alert-dismissible fade show p-3">
+    <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
         <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Context.Request.Query["message2"].Count() > 0)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+        <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }

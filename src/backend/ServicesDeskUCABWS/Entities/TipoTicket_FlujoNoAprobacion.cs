@@ -5,6 +5,13 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -39,17 +46,17 @@ namespace ServicesDeskUCABWS.Entities
             return new List<Empleado>();
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public async override Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion)
         {
             try
             {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
+                ticket.CambiarEstado( "Pendiente", _dataContext);
 
-                ticket.CambiarEstado(ticket, "Aprobado", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Aprobado", ListaEmpleados, _dataContext, notificacion, plantilla);
+                ticket.CambiarEstado( "Aprobado", _dataContext);
+                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
 
-                ticket.CambiarEstado(ticket, "Siendo Procesado", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Siendo Procesado", ListaEmpleados, _dataContext, notificacion, plantilla);
+                ticket.CambiarEstado( "Siendo Procesado", _dataContext);
+                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
 
                 return true;
             }
@@ -65,7 +72,7 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_No_Aprobacion";
         }
 
-        public override string VerificarVotacion(Guid idTicket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticekt, IDataContext contexto, INotificacion notificacion)
         {
             return "Aprobado";
         }
@@ -75,14 +82,24 @@ namespace ServicesDeskUCABWS.Entities
             return "Aprobado";
         }
 
-        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosAFavor(Ticket ticket, IDataContext contexto)
         {
             return 0;
         }
 
-        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+        public override int ContarVotosEnContra(Ticket ticket, IDataContext contexto)
         {
             return 0;
+        }
+
+        public override void ValidarTipoticketAgregar(IDataContext contexto)
+        {
+            var validaciones = new ValidacionesFlujoNoAprobacion(contexto,this);
+            validaciones.LongitudNombre();
+            validaciones.LongitudDescripcion();
+            validaciones.VerificarDepartamento();
+            validaciones.VerificarMinimoMaximoAprobado();
+            validaciones.VerificarCargos();
         }
     }
     

@@ -7,6 +7,7 @@ using ServiceDeskUCAB.Models.Modelos_de_Usuario;
 using ServiceDeskUCAB.Models.DTO.Usuario;
 using ServiceDeskUCAB.Models.Response;
 using ServiceDeskUCAB.Models.TipoTicketsModels;
+using ServiceDeskUCAB.Models.DTO.DepartamentoDTO;
 
 namespace ServiceDeskUCAB.Servicios
 {
@@ -405,6 +406,29 @@ namespace ServiceDeskUCAB.Servicios
             }
             resultado.Success = false;
             return resultado;
+        }
+
+        public async Task<List<DepartamentoCargoDTO>> ListaDepartamento()
+        {
+            var resultado = new ApplicationResponse<List<DepartamentoCargoDTO>>();
+
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+
+            var response = await cliente.GetAsync("Departamento/ConsultarDepartamentoCargo");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json_respuesta = await response.Content.ReadAsStringAsync();
+
+                resultado = JsonConvert.DeserializeObject<ApplicationResponse<List<DepartamentoCargoDTO>>>(json_respuesta);
+
+                return resultado.Data;
+
+
+            }
+            resultado.Success = false;
+            return resultado.Data;
         }
     }
 }

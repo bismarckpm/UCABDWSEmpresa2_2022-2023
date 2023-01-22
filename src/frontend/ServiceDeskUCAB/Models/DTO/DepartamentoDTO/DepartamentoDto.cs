@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceDeskUCAB.Models.DTO.CargoDTO;
+using System;
 using System.Text.Json.Serialization;
 
 namespace ServiceDeskUCAB.Models.DTO.DepartamentoDTO
@@ -24,5 +25,12 @@ namespace ServiceDeskUCAB.Models.DTO.DepartamentoDTO
 
         [JsonIgnore]
         public Guid? id_grupo { get; set; } = null;
+    }
+
+    public class DepartamentoCargoDTO
+    {
+        public Guid id { get; set; }
+        public string nombre { get; set; }
+        public List<CargoDTOUpdate> Cargo { get; set; }
     }
 }

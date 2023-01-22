@@ -106,7 +106,8 @@
                                 <button id="btnEliminar" type="button" class="dropdown-item" data-toggle="eliminarDepartamento-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarDepartamento","Departamento",new { id = "idDepartamento" })">Eliminar</button>
                                 <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaEstadosDepartamentos", "DepartamentoEstado",new{ id =@item.id, nombre = @item.nombre} )'">Ver Estados</button>
                                 <button type="button" class="dropdown-item" onclick="location.href='@Url.Action("VistaCargosDepartamentos", "DepartamentoCargo",new{ id =@item.id, nombre = @item.nombre} )'">Ver Cargos</button>
-        
+                                <li><a class="dropdown-item" data-bs-toggle="modal" onclick="location.href='@Url.Action("VistaTipo", "TipoTicket",new{ idDepartamento =@item.id} )'">Ver Tipo tickets</a></li>
+
                             </ul>
                         </div>                
                     </td>

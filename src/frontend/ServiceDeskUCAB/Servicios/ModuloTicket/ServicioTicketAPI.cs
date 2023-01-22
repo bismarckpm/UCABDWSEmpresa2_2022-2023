@@ -30,6 +30,7 @@ namespace ServiceDeskUCAB.Servicios
             _baseUrl = builder.GetSection("ApiSettings:baseUrl").Value;
         }
 
+
         public async Task<TicketCompletoDTO> Obtener(string ticketId)
         {
             TicketCompletoDTO objeto = new TicketCompletoDTO();
@@ -119,14 +120,14 @@ namespace ServiceDeskUCAB.Servicios
             return lista;
         }
 
-        public async Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion) 
+        public async Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion, string empleadoId) 
         {
             List<TicketBasicoDTO> objeto = new List<TicketBasicoDTO>();
             try
             {
                 var cliente = new HttpClient();
                 cliente.BaseAddress = new Uri(_baseUrl);
-                var response = await cliente.GetAsync($"Ticket/Lista/{departamentoId}/{opcion}");
+                var response = await cliente.GetAsync($"Ticket/Lista/{departamentoId}/{opcion}/{empleadoId}");
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadAsStringAsync();
@@ -135,6 +136,40 @@ namespace ServiceDeskUCAB.Servicios
                     var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
                     if (resultado == null) { resultado = new List<TicketBasicoDTO>(); }
                     objeto = resultado;
+                    Console.WriteLine("Obtiene los tickets");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+        public async Task<List<TicketBasicoDTO>> TicketsEnviados(string idempleado)
+        {
+            List<TicketBasicoDTO> objeto = new List<TicketBasicoDTO>();
+            Console.WriteLine("AQUÍ LLEGA");
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerTicketsEnviados/{idempleado}");
+                Console.WriteLine("AQUÍ LLEGA");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<TicketBasicoDTO>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<TicketBasicoDTO>(); }
+                    objeto = resultado;
+                    Console.WriteLine($"AQUÍ: {resultado}");
                     Console.WriteLine("Obtiene los tickets");
                 }
             }
@@ -243,6 +278,38 @@ namespace ServiceDeskUCAB.Servicios
             return objeto;
         }
 
+        public async Task<List<Estado>> DepartamentoEstados(string departamentoId)
+        {
+            List<Estado> objeto = new List<Estado>();
+            try
+            {
+                var cliente = new HttpClient();
+                cliente.BaseAddress = new Uri(_baseUrl);
+                var response = await cliente.GetAsync($"Ticket/ObtenerEstadosPorDepartamento/{departamentoId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var respuesta = await response.Content.ReadAsStringAsync();
+                    JObject json_respuesta = JObject.Parse(respuesta);
+                    string stringDataRespuesta = json_respuesta["data"].ToString();
+                    var resultado = JsonConvert.DeserializeObject<List<Estado>>(stringDataRespuesta);
+                    if (resultado == null) { resultado = new List<Estado>(); }
+                    objeto = resultado;
+                    Console.WriteLine("Obtiene los tipo tickets");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tipo tickets, algo ha sucedido ", e.Message);
+            }
+            return objeto;
+        }
+
+      
         public async Task<ApplicationResponse<DepartamentoSearchDTO>> departamentoEmpleado(string empleadoId)
         {
             var objeto = new ApplicationResponse<DepartamentoSearchDTO>();
@@ -274,6 +341,32 @@ namespace ServiceDeskUCAB.Servicios
             }
             
             return objeto;
+        }
+
+        public async Task<JObject> TomarTicket(TicketTomarDTO objeto)
+        {
+
+            var cliente = new HttpClient();
+            cliente.BaseAddress = new Uri(_baseUrl);
+            var content = new StringContent(JsonConvert.SerializeObject(objeto), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await cliente.PostAsync($"Ticket/Tomar/", content);
+                var respuesta = await response.Content.ReadAsStringAsync();
+                JObject _json_respuesta = JObject.Parse(respuesta);
+                return _json_respuesta;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"ERROR de conexión con la API: '{ex.Message}'");
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+                return null;
+            }
         }
 
         [HttpPost]
@@ -351,14 +444,14 @@ namespace ServiceDeskUCAB.Servicios
             return null;
         }
 
-        public async Task<JObject> Cancelar(string Objeto)
+        public async Task<JObject> Finalizar(string Objeto)
         {
             var cliente = new HttpClient();
             cliente.BaseAddress = new Uri(_baseUrl);
             var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var response = await cliente.PutAsync($"Ticket/Cancelar/{Objeto}", content);
+                var response = await cliente.PostAsync($"Ticket/Finalizar/", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;
@@ -384,7 +477,7 @@ namespace ServiceDeskUCAB.Servicios
             var content = new StringContent(JsonConvert.SerializeObject(Objeto), Encoding.UTF8, "application/json");
             try
             {
-                var response = await cliente.PostAsync($"Ticket/CambiarEstado", content);
+                var response = await cliente.PostAsync("Ticket/CambiarEstado/", content);
                 var respuesta = await response.Content.ReadAsStringAsync();
                 JObject _json_respuesta = JObject.Parse(respuesta);
                 return _json_respuesta;
@@ -396,10 +489,13 @@ namespace ServiceDeskUCAB.Servicios
             }
             catch (Exception e)
             {
-                Console.WriteLine("No obtiene los tickets, algo a sucedido ", e.Message);
+                Console.WriteLine("No cambia el estado algo sucedio ", e.Message);
             }
             return null;
         }
+
+        
+
     }
 }
 
