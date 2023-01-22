@@ -7,6 +7,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Usuario;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
 
             CreateMap<Departamento, DepartamentoSearchDTO>();
             CreateMap<DepartamentoSearchDTO, Departamento>();
+            CreateMap<DepartamentoCargoDTO, Departamento>();
+            CreateMap<Departamento, DepartamentoCargoDTO>();
 
             CreateMap<Departamento, DepartamentoDto>();
             CreateMap<DepartamentoDto, Departamento>();
@@ -65,8 +68,12 @@ namespace ServicesDeskUCABWS.BussinesLogic.Mapper
             CreateMap<TipoTicket_FlujoAprobacionParalelo, TipoTicket_FlujoNoAprobacion>();
             CreateMap<TipoTicket_FlujoNoAprobacion, TipoTicket_FlujoAprobacionParalelo>();
             CreateMap<TipoTicket_FlujoNoAprobacion, TipoTicket_FlujoAprobacionJerarquico>();
+
+            CreateMap<Votos_Ticket, Votos_TicketDTOCreate>();
+            CreateMap<Votos_TicketDTOCreate, Votos_Ticket>();
+
         }
 
-        
+
     }
 }

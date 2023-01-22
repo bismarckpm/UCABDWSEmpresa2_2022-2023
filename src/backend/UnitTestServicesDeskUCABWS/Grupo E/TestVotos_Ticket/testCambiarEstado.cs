@@ -71,7 +71,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = entrada.CambiarEstado(entrada, "Pendiente", context.Object);
+            var result = entrada.CambiarEstado( "Pendiente", context.Object);
 
             //Assert
             Assert.AreEqual(result,true);
@@ -99,7 +99,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = entrada.CambiarEstado(entrada, "Aprobado",context.Object);
+            var result = entrada.CambiarEstado( "Aprobado",context.Object);
 
             //Assert
             Assert.AreEqual(result, true);
@@ -127,7 +127,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = entrada.CambiarEstado(entrada, "Aprobado", context.Object);
+            var result = entrada.CambiarEstado( "Aprobado", context.Object);
 
             //Assert
             Assert.AreEqual(result, true);
@@ -155,7 +155,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = entrada.CambiarEstado(entrada, "Aprobado", context.Object);
+            var result = entrada.CambiarEstado( "Aprobado", context.Object);
             //Assert
             Assert.AreEqual(result, true);
 
@@ -181,7 +181,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
 
             context.Setup(a => a.DbContext.SaveChanges());
 
-            var result = entrada.CambiarEstado(entrada, "Pendiente", context.Object);
+            var result = entrada.CambiarEstado( "Pendiente", context.Object);
             //Assert
             Assert.AreEqual(result, false);
 

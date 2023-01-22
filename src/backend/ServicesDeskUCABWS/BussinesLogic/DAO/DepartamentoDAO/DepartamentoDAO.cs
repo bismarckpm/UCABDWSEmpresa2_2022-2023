@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Data;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 {
@@ -58,8 +59,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 var nuevoDepartamento = _dataContext.Departamentos.Where(u => u.id == departamento.id).First();
 
                 AgregarEstadoADepartamentoCreado(departamento);
-             //   AgregarCargosADepartamentoCreado(departamento);
-
+                _dataContext.DbContext.SaveChanges();
                 return DepartamentoMapper.MapperEntityToDto(nuevoDepartamento);
             }
             catch (Exception ex) {
@@ -335,6 +335,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
                 throw new ExceptionsControl("No se encuentra el departamento" + " " + dept.id, ex);
             }
             return existe;
+        }
+
+        public List<DepartamentoCargoDTO> ConsultarDepartamentoCargo()
+        {
+            var ListaDepartamentos = mapper.Map<List<DepartamentoCargoDTO>>(_dataContext.Departamentos.ToList());
+            foreach (var dept in ListaDepartamentos)
+            {
+                dept.Cargo = mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x=>x.Departamento.id == dept.id).ToList());
+            }
+            return ListaDepartamentos;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<ServiceDeskUCAB.Models.Modelos_de_Usuario.UsuariosRol>
+﻿@model ServiceDeskUCAB.Models.Modelos_de_Usuario.ViewModelUsuario
 @using ServiceDeskUCAB.Models.Modelos_de_Usuario
 @{
     ViewData["Title"] = "Usuarios";
@@ -49,6 +49,7 @@
 
         }
     </script>
+
     <script type="text/javascript">
         async function cargarCargos(id,idDepart) {
 
@@ -111,16 +112,19 @@
         <th>
             Genero
         </th>
+            <th>
+                Correo
+            </th>
         <th>
             Cargo
         </th>
         <th>
             Rol
         </th>
-
+        
     </tr>
 
-    @foreach (var item in Model.ToList())
+    @foreach (var item in Model.ListaUsuario.ToList())
     {
         <tr>
             <td class="id" style="display:none" ;>
@@ -137,6 +141,9 @@
             </td>
             <td>
                 @Html.DisplayFor(i => item.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.correo)
             </td>
             <td>
                 @if(item.roles.Select(x=>x.Rol.Name).Contains("Empleado")){
@@ -161,29 +168,32 @@
                 }
             </td>
             <td>
-                <button id=btnEliminar type="button" class="botonEliminar" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
-                    Eliminar
-                </button>
-                <a style="padding-top:4px" type="button" class="botonVisualizar" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
-                    Visualizar
-                </a>
-                @if (item.roles.Select(x => x.Rol.Name).Contains("Empleado"))
-                {
-                    <div class="dropdown" style="float: right">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <div class="dropdown" style="float: right">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <button id=btnEliminar type="button" class="dropdown-item" data-toggle="eliminarUsuario-modal" data-target="#popUpEliminar" data-url="@Url.Action("VentanaEliminarUsuario","Usuario",new { id = "idUsuario" })">
+                                Eliminar
+                            </button>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href='@Url.Action("ViewUsuario","Usuario",new { id = item.id })'>
+                                Visualizar
+                            </a>
+                        </li>
+                        @if (item.roles.Select(x => x.Rol.Name).Contains("Empleado"))
+                        {
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#agregarcargoModal-@item.id" onclick="cargarDepartamentos('@item.id')">Asignar Cargo</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#revocarcargoModal-@item.id">Revocar Cargo</a></li>
-                        </ul>
-                    </div>
-
-                }
+                        }
+                    </ul>
+                </div>
             </td>
         </tr>
     }
     @*@*Asignar Cargo*@
-    @foreach (var tipo in Model.ToList())
+    @foreach (var tipo in Model.ListaUsuario.ToList())
     {
         <div class="modal fade" id="agregarcargoModal-@tipo.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -221,7 +231,7 @@
     }
     
     @*Revocar Cargo*@
-    @foreach (var tipo in Model.ToList())
+    @foreach (var tipo in Model.ListaUsuario.ToList())
     {
         <div class="modal fade" id="revocarcargoModal-@tipo.id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">

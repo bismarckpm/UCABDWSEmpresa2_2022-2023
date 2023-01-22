@@ -41,16 +41,9 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(Guid id)
+        public async Task<ActionResult<ApplicationResponse<Ticket>>> GetTicket(Guid id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
-
-            if (ticket == null)
-            {
-                return NotFound();
-            }
-
-            return ticket;
+            return _ticketDAO.GetTicket(id);
         }
 
         // PUT: api/Tickets/5

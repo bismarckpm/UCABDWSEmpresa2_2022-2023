@@ -56,6 +56,27 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
 
         }
 
+        [HttpGet]
+        [Route("ConsultaxDepartamento/{id}")]
+        public ApplicationResponse<IEnumerable<Tipo_TicketDTOSearch>> ConsultarTipoTicketxDepartamento([FromRoute] Guid id)
+        {
+            var response = new ApplicationResponse<IEnumerable<Tipo_TicketDTOSearch>>();
+
+            try
+            {
+                response.Data = _ticketDAO.ConsultarTipoTicketxDepartamento(id);
+            }
+
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+
         // PUT: api/Tipo_Ticket/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("Editar/{id}")]
@@ -140,7 +161,23 @@ namespace ServicesDeskUCABWS.Controllers.Tipo_TicketCtr
             return response;
         }
 
+        [HttpGet]
+        [Route("ObtenerTipoFlujos")]
+        public ApplicationResponse<List<Modelo_Aprobacion>> ObtenerTipoFlujos()
+        {
+            var response = new ApplicationResponse<List<Modelo_Aprobacion>>();
+            try
+            {
+                response.Data = _ticketDAO.ConsultarTipoFlujos(); 
+            }
 
-     
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+            }
+            return response;
+        }
+
     }
 }

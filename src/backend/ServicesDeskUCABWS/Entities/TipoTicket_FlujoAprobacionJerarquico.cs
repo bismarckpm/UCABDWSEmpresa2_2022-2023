@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using System.Net.Sockets;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.Recursos;
+using System.Threading.Tasks;
+using ServicesDeskUCABWS.BussinesLogic;
+using ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket;
 
 namespace ServicesDeskUCABWS.Entities
 {
@@ -23,16 +29,10 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                //Calcular Cargos
-                var ListaCargos = CargosAsociados(contexto, ticket);
-
-                //Agregar Votos
-                AgregarVotos(contexto, EmpleadosVotantes(contexto, ListaCargos, ticket), ticket);
-
-
-                return EmpleadosVotantes(contexto, ListaCargos,ticket);
+                AgregarVotos(contexto, EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket), ticket);
+                return EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket);
             }
-            catch (ExceptionsControl ex)
+            catch (ExceptionsControl)
             {
                 return null;
             }
@@ -40,12 +40,13 @@ namespace ServicesDeskUCABWS.Entities
 
         public override List<Cargo> CargosAsociados(IDataContext contexto, Ticket ticket)
         {
-            var Flujos = contexto.Flujos_Aprobaciones
+            var listacargos = contexto.Flujos_Aprobaciones
                     .Include(x => x.Cargo)
                     .ThenInclude(x => x.Departamento)
                     .Where(x => x.IdTicket == ticket.Tipo_Ticket.Id)
-                    .OrderBy(x => x.OrdenAprobacion).ToList();
-            return Flujos.Select(x => x.Cargo).ToList();
+                    .OrderBy(x => x.OrdenAprobacion).Select(x => x.Cargo).ToList();
+            
+            return listacargos;
         }
 
         public override List<Empleado> EmpleadosVotantes(IDataContext contexto, List<Cargo> ListaCargo, Ticket ticket)
@@ -53,12 +54,12 @@ namespace ServicesDeskUCABWS.Entities
             return contexto.Empleados.Where(x => x.Cargo.id == ListaCargo[ticket.nro_cargo_actual.GetValueOrDefault() - 1].id).ToList();
         }
 
-        public override bool CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion, IPlantillaNotificacion plantilla)
+        public async override Task<bool> CambiarEstadoCreacionTicket(Ticket ticket, List<Empleado> ListaEmpleados, IDataContext _dataContext, INotificacion notificacion)
         {
             try
             {
-                ticket.CambiarEstado(ticket, "Pendiente", _dataContext);
-                ticket.EnviarNotificacion(ticket, "Pendiente", ListaEmpleados, _dataContext, notificacion, plantilla);
+                ticket.CambiarEstado( "Pendiente", _dataContext);
+                await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, ListaEmpleados,_dataContext);
 
                 return true;
             }
@@ -73,23 +74,25 @@ namespace ServicesDeskUCABWS.Entities
             return "Modelo_Jerarquico";
         }
 
-        public override string VerificarVotacion(Guid idTicket, IDataContext contexto)
+        public override string VerificarVotacion(Ticket ticket, IDataContext contexto, INotificacion notificacion)
         {
             try
             {
-                var ticket = ConsultarDatosTicket(idTicket, contexto);
                 if (EstaAprobadoORechazado(ticket,contexto)!=null)
                 {
                     CambiarEstadoVotosPendiente(ticket, EstaAprobadoORechazado(ticket, contexto), contexto);
                     if (EstaAprobadoORechazado(ticket, contexto) != "Aprobado")
                     {
+                        ticket.CambiarEstado("Rechazado", contexto);
+                        //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Normal, new List<Empleado>(), contexto);
                         return EstaAprobadoORechazado(ticket, contexto);
                     }
                     else
                     {
                         if (VotosSiguienteRonda(ticket, contexto))
                         {
-                            ticket.CambiarEstado(ticket, "Aprobado", contexto);
+                            ticket.CambiarEstado( "Aprobado", contexto);
+                            //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, new List<Empleado>(), contexto);
                             return EstaAprobadoORechazado(ticket, contexto);
                         }
                         return "Pendiente";
@@ -102,7 +105,6 @@ namespace ServicesDeskUCABWS.Entities
             {
                 throw new ExceptionsControl("Error en el calculo de los votos");
             }
-
             
         }
 
@@ -119,24 +121,21 @@ namespace ServicesDeskUCABWS.Entities
 
         private bool EsUltimaRonda(Ticket ticket, IDataContext contexto)
         {
-            return contexto.Flujos_Aprobaciones
-                .Where(x => x.Tipo_Ticket.Id == ticket.Tipo_Ticket.Id && x.OrdenAprobacion == ticket.nro_cargo_actual).Count() == 0;
+            return ticket.Tipo_Ticket.Flujo_Aprobacion.Where(x => x.OrdenAprobacion == ticket.nro_cargo_actual).Count() == 0;
         }
 
         public void CambiarEstadoVotosPendiente(Ticket ticket,string Estado, IDataContext contexto)
         {
-            contexto.Votos_Tickets
-                .Where(x => x.IdTicket == ticket.Id && x.voto == "Pendiente")
-                .ToList().ForEach(x => x.voto = Estado);
+            ticket.Votos_Ticket.Where(x=>x.voto == "Pendiente").ToList().ForEach(x => x.voto = Estado);
         }
 
         public override string EstaAprobadoORechazado(Ticket ticket, IDataContext contexto)
         {
-            if (ContarVotosAFavor(ticket.Id, contexto) >= ObtenerMinimoAprobado(ticket, contexto))
+            if (ContarVotosAFavor(ticket, contexto) >= ObtenerMinimoAprobado(ticket, contexto))
             {
                 return "Aprobado";
             }
-            if (ContarVotosEnContra(ticket.Id, contexto) >= ObtenerMaximoRechazado(ticket, contexto))
+            if (ContarVotosEnContra(ticket, contexto) >= ObtenerMaximoRechazado(ticket, contexto))
             {
                 return "Rechazado";
             }
@@ -157,16 +156,30 @@ namespace ServicesDeskUCABWS.Entities
                 .Select(x => x.Maximo_Rechazado_nivel).FirstOrDefault();
         }
 
-        public override int ContarVotosAFavor(Guid idTicket, IDataContext contexto)
+
+        public override int ContarVotosAFavor(Ticket ticket, IDataContext contexto)
         {
-            return contexto.Votos_Tickets.Include(x => x.Ticket).Where(x => x.IdTicket == idTicket
-                && x.voto == "Aprobado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
+            return ticket.Votos_Ticket.Where(x => x.voto == "Aprobado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
         }
 
-        public override int ContarVotosEnContra(Guid idTicket, IDataContext contexto)
+
+        public override int ContarVotosEnContra(Ticket ticket, IDataContext contexto)
         {
-            return contexto.Votos_Tickets.Include(x=>x.Ticket).Where(x => x.IdTicket == idTicket
-                && x.voto == "Rechazado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
+            return ticket.Votos_Ticket.Where(x => x.voto == "Rechazado" && x.Turno == x.Ticket.nro_cargo_actual).Count();
         }
+
+        public override void ValidarTipoticketAgregar(IDataContext contexto)
+        {
+            var validaciones = new ValidacionesFlujoJerarquico(contexto, this);
+            validaciones.LongitudNombre();
+            validaciones.LongitudDescripcion();
+            validaciones.VerificarDepartamento();
+            validaciones.VerificarSiCargosExisten();
+            validaciones.VerificarMinimoMaximoAprobado();
+            validaciones.VerificarCargos();
+            validaciones.VerificarSecuenciaOrdenAprobacion();
+            validaciones.HayCargos();
+        }
+
     }
 }

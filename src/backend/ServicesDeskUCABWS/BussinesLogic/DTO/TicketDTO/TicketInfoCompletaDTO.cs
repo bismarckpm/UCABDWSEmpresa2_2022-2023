@@ -6,6 +6,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
     {
         public Guid ticket_id { get; set; }
         public Guid? ticketPadre_id { get; set; }
+        public Guid? responsable { get; set; }
+        public string encargado_correo { get; set; }
         public DateTime fecha_creacion { get; set; }
         public DateTime? fecha_eliminacion { get; set; }
         public string titulo { get; set; }

@@ -17,11 +17,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public List<Ticket> ConsultaListaTickets();
         public Ticket ConsultaTicket(Guid id);
 
-        public bool CambiarEstado(Ticket ticket, string Estado,List<Empleado> ListaEmpleados);
         //public ApplicationResponse<Votos_TicketDTOCreate> RegistroVotos(Votos_TicketDTOCreate votos_TicketDTO);
-        public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
+        //public ApplicationResponse<string> crearTicket(TicketNuevoDTO nuevoTicket);
         public ApplicationResponse<TicketInfoCompletaDTO> obtenerTicketPorId(Guid id);
-        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado);
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPorEstadoYDepartamento(Guid idDepartamento, string estado, Guid empleadoId);
         public ApplicationResponse<string> cambiarEstadoTicket(Guid ticketId, Guid estadoId);
         public ApplicationResponse<List<TicketBitacorasDTO>> obtenerBitacoras(Guid ticketId);
         public ApplicationResponse<string> mergeTickets(Guid ticketPrincipalId, List<Guid> ticketsSecundariosId);
@@ -33,5 +32,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
         public ApplicationResponse<List<Tipo_TicketDTOSearch>> buscarTipoTickets(Guid id);
         public ApplicationResponse<List<Tipo_Ticket>> buscarTiposTickets();
         public ApplicationResponse<List<Estado>> buscarEstadosPorDepartamento(Guid idDepartamento);
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsPropios(Guid idEmpleado);
+        public ApplicationResponse<string> adquirirTicket(TicketTomarDTO ticketPropio);
+        public bool CambiarEstado(Ticket ticketLlegada, string Estado, List<Empleado> ListaEmpleados);
+        public Ticket CrearTicket(TicketNuevoDTO ticketDTO);
+        public ApplicationResponse<List<TicketInfoBasicaDTO>> obtenerTicketsEnviados(Guid idEmpleado);
+        public ApplicationResponse<Ticket> GetTicket(Guid id);
     }
 }
