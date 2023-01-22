@@ -32,7 +32,7 @@
             var select = document.getElementById("departamento-" + id);
             select.textContent = "Cargando...";
             select.innerHTML = "";
-            var response = await fetch(`https://localhost:44392/Departamento/ConsultarDepartamento`);
+            var response = await fetch(`https://localhost:44392/Departamento/ConsultarDepartamentoNoEliminado`);
             var tipos = await response.json();
             select.textContent = "Seleccione una opción";
             option = document.createElement("option");

@@ -1039,7 +1039,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
             Cargo cargo = _dataContext.Cargos.Include(t => t.Departamento).Where(t => t.id == empleado.Cargo.id).Single();
             if (!_dataContext.Departamentos.Where(t => t.id == cargo.Departamento.id).Any())
                 throw new Exception("No existen departamentos acorde al cargo del empleado");
-            List<DepartamentoSearchDTO> lista = _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id).ToList());
+            List<DepartamentoSearchDTO> lista = _mapper.Map<List<DepartamentoSearchDTO>>(_dataContext.Departamentos.Where(t => t.id != cargo.Departamento.id && t.fecha_eliminacion==null).ToList());
             Console.WriteLine($"Lista: {lista.Count()}");
             return lista;
         }

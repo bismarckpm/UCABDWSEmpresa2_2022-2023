@@ -221,7 +221,26 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             return response;
 
         }
-        
+
+        [HttpGet("ConsultarTodosCargoPorDepartamento/{id}")]
+        public ApplicationResponse<List<CargoDTOUpdate>> ConsultarTodosCargosPorDepartamento([FromRoute] Guid id)
+        {
+            var response = new ApplicationResponse<List<CargoDTOUpdate>>();
+            try
+            {
+                response.Data = _cargoDAO.ConsultarCargosDepartamentoTodos(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+
+        }
+
+
         [HttpPut("Editar/")]
         public ApplicationResponse<CargoDTOUpdate> EditarCargo(CargoDTOUpdate DTO)
         {

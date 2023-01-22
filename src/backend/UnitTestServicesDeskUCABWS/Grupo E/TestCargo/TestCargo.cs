@@ -56,6 +56,28 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestCargo
         }
 
         [TestMethod]
+        public void CaminoFelizTestConsultarTodosCargo()
+        {
+
+            var Id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC87");
+
+            var result = CargoDao.ConsultarCargosDepartamentoTodos(Id);
+
+            Assert.IsTrue(result.Count() > 0);
+        }
+
+        [TestMethod]
+        public void TestConsultarTodosCargoNOEncontroDepartamento()
+        {
+
+            var Id = new Guid("CCACD411-1B46-4117-AA84-73EA64DEAC07");
+
+            var result = CargoDao.ConsultarCargosDepartamentoTodos(Id);
+
+            Assert.IsTrue(result.Count() == 0);
+        }
+
+        [TestMethod]
         public void CaminoFelizDesHabilitarCargo()
         {
             //arrange
