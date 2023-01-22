@@ -114,7 +114,7 @@
                     {
                         if (item.Id != Model.ticket.ticket_id)
                         {
-                            if (item.ticket_padre != null)
+                            if (item.ticket_padre == null)
                             {
                                 string id = "collapse" + i.ToString();
                                 string n = "familia" + i.ToString();
