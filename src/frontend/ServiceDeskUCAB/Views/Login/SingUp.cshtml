@@ -10,7 +10,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
 
             <div class="col-lg-12 col-xl-11">
-                        @if (Context.Request.Query["message2"].Count() > 0)
+        @if (Context.Request.Query["message2"].Count() > 0)
         {
             <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
                 <p class="fs-6 m-0">@Context.Request.Query["message2"]</p>
