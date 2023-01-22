@@ -45,6 +45,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
                 if (!ExisteGrupo(grupo)) {
+                    grupo.fecha_creacion = DateTime.Now.Date;
                     _dataContext.Grupos.Add(grupo);
                     _dataContext.DbContext.SaveChanges();
                 }
@@ -130,6 +131,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
 				if (!ExisteGrupoModificar(grupo))
 				{
+                    grupo.fecha_ultima_edicion = DateTime.Now.Date;
 					_dataContext.Grupos.Update(grupo);
 					_dataContext.DbContext.SaveChanges();
 				}

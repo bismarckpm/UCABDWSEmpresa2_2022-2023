@@ -118,9 +118,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
 			var request = new Grupo
 			{
 
-//				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
+				id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-//				nombre = "La vida es bella",
+				nombre = "La vida es bella",
 
 				descripcion = "Es un grupo",
 
