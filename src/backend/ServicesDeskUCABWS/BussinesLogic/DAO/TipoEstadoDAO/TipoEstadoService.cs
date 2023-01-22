@@ -120,7 +120,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 _tipoEstadoContext.Tipos_Estados.Add(tipoEstadoEntity);
 
 				//Llena la entidad intermedia Estado
-				_estadoService.AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
+				AgregarEstadoATipoEstadoCreado(tipoEstadoEntity);
 
                 _tipoEstadoContext.DbContext.SaveChanges();
                 return true;
@@ -137,6 +137,26 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             {
                 throw new ExceptionsControl("No se pudo registrar el tipo estado", ex);
             }            
+        }
+
+        //Agregar Estados de los Tipo Estados Agregados
+        public void AgregarEstadoATipoEstadoCreado(Tipo_Estado estado)
+        {
+            var listaEstados = new List<Estado>();
+
+            foreach (var departamento in _tipoEstadoContext.Departamentos.ToList())
+            {
+                listaEstados.Add(new Estado(departamento.nombre + " " + estado.nombre, estado.descripcion)
+                {
+                    Id = Guid.NewGuid(),
+                    Departamento = departamento,
+                    Estado_Padre = estado,
+                    Bitacora_Tickets = new List<Bitacora_Ticket>(),
+                    ListaTickets = new List<Ticket>()
+                });
+            }
+
+            _tipoEstadoContext.Estados.AddRange(listaEstados);
         }
 
         //PUT: Servicio para actualizar tipo estado
@@ -183,9 +203,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
             try
             {
                 var tipoEstado = TipoEstadoMapper.MapperTipoEstadoDtoToTipoEstadoEntity(ConsultarTipoEstadoGUID(id));
+                //var estadosHijos = _tipoEstadoContext.Estados.Where(e => e.Estado_Padre.Id == tipoEstado.Id).ToList();
+                var estado = _mapper.Map<List<Estado>>(_estadoService.ConsultarEstadosPorEstadoPadre(tipoEstado.Id));
 
-                //Si no tiene permiso, quiere decir que no podrá deshabilitar el tipo estado
-                if (!tipoEstado.permiso)
+				//Si no tiene permiso, quiere decir que no podrá deshabilitar el tipo estado
+				if (!tipoEstado.permiso)
                 {
                     throw new ExceptionsControl("No se puede Deshabilitar este tipo de estado por la integridad del sistema");
                 }
@@ -193,7 +215,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 if(tipoEstado.fecha_eliminacion != null)
                 {
                     tipoEstado.fecha_eliminacion = null;  //Hablilitar el tipo estado
-                    foreach (Estado hijo in _mapper.Map<List<Estado>>(_estadoService.ConsultarEstadosPorEstadoPadre(tipoEstado.Id)))
+                    foreach (Estado hijo in estado)
                     {
                         _estadoService.HabilitarEstado(hijo.Id);
                     }
@@ -201,7 +223,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO
                 else
                 {
                     tipoEstado.fecha_eliminacion = DateTime.Now; //Deshabilitar el tipo estado 
-                    foreach (Estado hijo in _mapper.Map<List<Estado>>(_estadoService.ConsultarEstadosPorEstadoPadre(tipoEstado.Id)))
+                    foreach (Estado hijo in estado)
                     {
                         _estadoService.DeshabilitarEstado(hijo.Id);
                     }

@@ -61,7 +61,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO
             }
 
             _dataContext.Estados.AddRange(listaEstados);
-            _dataContext.DbContext.SaveChanges();
+            //_dataContext.DbContext.SaveChanges();
         }
 		
 

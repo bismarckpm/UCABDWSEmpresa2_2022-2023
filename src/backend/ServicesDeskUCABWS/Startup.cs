@@ -49,16 +49,11 @@ namespace ServicesDeskUCABWS
         }
 
         public IConfiguration Configuration { get; }
-
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
             //JWT
             var appSettings = appSettingsSection.Get<AppSettings>();
             var llave = Encoding.ASCII.GetBytes(appSettings.Secreto);
@@ -77,7 +72,6 @@ namespace ServicesDeskUCABWS
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-
             });
 
             services.AddCors(p => p.AddPolicy("corsapp", builder =>
@@ -102,7 +96,6 @@ namespace ServicesDeskUCABWS
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
 
-
 			//Se agrega en generador de Swagger
 			services.AddSwaggerGen(c =>
 			{
@@ -112,8 +105,12 @@ namespace ServicesDeskUCABWS
             services.AddTransient<IDataContext, DataContext>();
             services.AddTransient<IPrioridadDAO, PrioridadDAO>();
             //services.AddTransient<IDataContext, DataContext>();
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddDbContext<DataContext>(options => {options.UseSqlServer(
+                Configuration.GetConnectionString("DefaultConnection"));
+                    options.EnableSensitiveDataLogging();
+            });
+            //services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLJesus")));
+            
             //Se agrega en generador de Swagger
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
@@ -137,8 +134,6 @@ namespace ServicesDeskUCABWS
             services.AddTransient<ITipo_TicketDAO,Tipo_TicketService>();
 
             services.AddTransient<IVotos_TicketDAO, Votos_TicketService>();
-
-           
 
             services.AddTransient<ICargoDAO, CargoService>();
 
@@ -166,9 +161,6 @@ namespace ServicesDeskUCABWS
             }
 
             //services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-            /*services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("cadenaSQLRayner"))
-            );*/
 
             app.UseCors("corsapp");
 			//Habilitar swagger

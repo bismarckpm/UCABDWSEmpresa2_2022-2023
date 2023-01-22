@@ -3,8 +3,8 @@ namespace ServiceDeskUCAB.Models.DTO.TicketDTO
 {
 	public class ActualizarDTO
 	{
-		public string estadoId;
-		public string ticketId;
-	}
+		public string estadoId { get; set; }
+        public string ticketId { get; set; }
+    }
 }
 

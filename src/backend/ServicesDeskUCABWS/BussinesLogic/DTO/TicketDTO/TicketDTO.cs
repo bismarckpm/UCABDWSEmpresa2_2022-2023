@@ -19,6 +19,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO
         public Familia_Ticket Familia_Ticket { get; set; }
         public Ticket? Ticket_Padre { get; set; }
         public Empleado Emisor { get; set; }
+        public Empleado? Responsable { get; set; }
+        public Guid? ResponsableId { get; set; }
         public HashSet<Bitacora_Ticket> Bitacora_Tickets { get; set; }
         public int? nro_cargo_actual { get; set; }
 

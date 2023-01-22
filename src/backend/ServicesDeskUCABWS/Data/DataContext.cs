@@ -53,7 +53,7 @@ namespace ServicesDeskUCABWS.Data
             modelBuilder.Entity<RolUsuario>().HasData(
                 new RolUsuario { UserId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298164"), RolId = Guid.Parse("8C8A156B-7383-4610-8539-30CCF7298162") });
 
-            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket });
+            modelBuilder.Entity<Flujo_Aprobacion>().HasKey(x => new { x.IdTicket, x.IdCargo });
             modelBuilder.Entity<Votos_Ticket>().HasKey(x => new { x.IdUsuario, x.IdTicket });
             modelBuilder.Entity<DepartamentoTipo_Ticket>().HasKey(x => new { x.Tipo_Ticekt_Id, x.DepartamentoId });
             //LOS DE JES�S
@@ -67,11 +67,11 @@ namespace ServicesDeskUCABWS.Data
                 .HasValue<TipoTicket_FlujoAprobacionParalelo>("Modelo_Paralelo")
                 .HasValue<TipoTicket_FlujoAprobacionJerarquico>("Modelo_Jerarquico");
 
+
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Emisor).WithMany(t=>t.Lista_Ticket).HasForeignKey(t=>t.EmisorId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Ticket>().HasOne(t=>t.Responsable).WithMany(t=>t.Tickets_Propios).HasForeignKey(t=>t.ResponsableId).OnDelete(DeleteBehavior.NoAction);
         }
 
-
-
-        
         //Creacion de los DbSeT
 
         public DbSet<RolUsuario> RolUsuarios { get; set; }

@@ -198,10 +198,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO
 
                 return true; 
             }
-            catch (ArgumentNullException ex)
-            {
-                throw new ExceptionsControl("No existe ninguna plantilla con el id suministrado", ex);
-            }
             catch (Exception ex)
             {
                 throw new ExceptionsControl("No se pudo eliminar la plantilla", ex);

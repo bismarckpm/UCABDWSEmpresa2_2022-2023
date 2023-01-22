@@ -17,7 +17,7 @@ namespace ServiceDeskUCAB.ViewModel
 
         public List<Estado> estados;
 
-		public ActualizarDTO actualizarDTO;
+		public ActualizarDTO actualizar;
 	}
 }
 

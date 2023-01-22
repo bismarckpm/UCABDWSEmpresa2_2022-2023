@@ -95,6 +95,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones
             if (!emisor.Any())
                 throw new TicketEmisorException("El emisor indicado no se encuentra registrado en la Base de Datos");
         }
+        public void validarEmpleado(Guid? id)
+        {
+            if (id.Equals(Guid.Empty) || id.Equals(null))
+                throw new TicketEmpleadoException("El identificador del empleado no fué provisto");
+            IQueryable<Empleado> empleado = _dataContext.Empleados.Where( usu=> usu.Id == id);
+            if (!empleado.Any())
+                throw new TicketEmpleadoException("El empleado indicado no se encuentra registrado en la Base de Datos");
+        }
         public void validarBitacora(Guid? id)
         {
             if (id.Equals(Guid.Empty) || id.Equals(null))

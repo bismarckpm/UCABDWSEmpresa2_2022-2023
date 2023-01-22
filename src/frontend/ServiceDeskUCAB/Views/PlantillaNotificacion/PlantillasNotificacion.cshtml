@@ -9,8 +9,13 @@
     <div class="card-header">        
          <h1 class="fs-3 mb-0 text-center">Todas las plantillas de notificaciones</h1>
     </div>
-    @if (Context.Request.Query["message"].Count() > 0)
+    @if (Context.Request.Query["message"].Count() > 0 && Context.Request.Query["success"] == "true")
     {
+        <div class="alert alert-success text-center alert-dismissible fade show p-3" role="alert">
+            <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }else if (Context.Request.Query["message"].Count() > 0){
         <div class="alert alert-danger text-center alert-dismissible fade show p-3" role="alert">
             <p class="fs-6 m-0">@Context.Request.Query["message"]</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

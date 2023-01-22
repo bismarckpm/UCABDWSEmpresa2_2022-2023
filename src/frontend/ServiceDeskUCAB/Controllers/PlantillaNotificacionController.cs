@@ -124,7 +124,7 @@ namespace ServiceDeskUCAB.Controllers
             respuesta = await _servicioApiPlantillaNotificacion.Eliminar(id);
 
             if ((bool)respuesta["success"])
-                return RedirectToAction("PlantillasNotificacion", new { message = "Se ha eliminado correctamente" });
+                return RedirectToAction("PlantillasNotificacion", new { message = "Se ha eliminado correctamente", success = "true" });
             //return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });
             else
                 return RedirectToAction("PlantillasNotificacion", new { message = (string)respuesta["message"] });

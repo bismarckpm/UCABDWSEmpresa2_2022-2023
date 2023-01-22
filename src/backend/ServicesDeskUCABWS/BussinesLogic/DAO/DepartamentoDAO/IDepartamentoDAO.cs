@@ -18,5 +18,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
         public List<DepartamentoDto> DepartamentosNoEliminados();
         public List<DepartamentoDto> NoAsociado();
         public bool ExisteDepartamentoModificar(Departamento dept);
+        public List<DepartamentoCargoDTO> ConsultarDepartamentoCargo();
+
     }
 }
