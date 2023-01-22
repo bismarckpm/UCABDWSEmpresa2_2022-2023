@@ -339,10 +339,10 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
 
         public List<DepartamentoCargoDTO> ConsultarDepartamentoCargo()
         {
-            var ListaDepartamentos = mapper.Map<List<DepartamentoCargoDTO>>(_dataContext.Departamentos.ToList());
+            var ListaDepartamentos = mapper.Map<List<DepartamentoCargoDTO>>(_dataContext.Departamentos.Where(x=>x.fecha_eliminacion ==null).ToList());
             foreach (var dept in ListaDepartamentos)
             {
-                dept.Cargo = mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x=>x.Departamento.id == dept.id).ToList());
+                dept.Cargo = mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x=>x.Departamento.id == dept.id && x.fecha_eliminacion == null).ToList());
             }
             return ListaDepartamentos;
         }

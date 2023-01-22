@@ -74,7 +74,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 
 			if (ticket.Departamento_Destino.grupo != null)
 				etiquetasEstatico.Add("@Grupo", $"{ticket.Departamento_Destino.grupo.nombre}");
-		}
+			else
+                etiquetasEstatico.Add("@Grupo", "");
+        }
 
 		//Metodo para hacer el envio del correo
 		public Task EnviarCorreo(PlantillaNotificacionDTO plantilla, string correoDestino)

@@ -28,5 +28,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
         //public List<string> EditarRelacion(Guid id, string idCargos);
 
         CargoDTOUpdate DeshabilitarCargo(Guid Id);
+        List<CargoDTOUpdate> ConsultarCargosDepartamentoTodos(Guid id);
     }
 }

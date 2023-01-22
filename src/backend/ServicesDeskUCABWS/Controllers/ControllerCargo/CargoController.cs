@@ -221,15 +221,14 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             return response;
 
         }
-        /*
-        [HttpPut]
-        [Route("EditarRelacion/{id}")]
-        public ApplicationResponse<List<string>> EditarRelacion([FromRoute] Guid id, [FromBody] string idCargos)
+
+        [HttpGet("ConsultarTodosCargoPorDepartamento/{id}")]
+        public ApplicationResponse<List<CargoDTOUpdate>> ConsultarTodosCargosPorDepartamento([FromRoute] Guid id)
         {
-            var response = new ApplicationResponse<List<string>>();
+            var response = new ApplicationResponse<List<CargoDTOUpdate>>();
             try
             {
-                response.Data = _cargoDAO.EditarRelacion(id, idCargos);
+                response.Data = _cargoDAO.ConsultarCargosDepartamentoTodos(id);
             }
             catch (ExceptionsControl ex)
             {
@@ -238,9 +237,60 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
                 response.Exception = ex.Excepcion.ToString();
             }
             return response;
-        }*/
+
+        }
 
 
+        [HttpPut("Editar/")]
+        public ApplicationResponse<CargoDTOUpdate> EditarCargo(CargoDTOUpdate DTO)
+        {
+            var response = new ApplicationResponse<CargoDTOUpdate>();
+            try
+            {
+                response.Data = _cargoDAO.ModificarCargo(DTO);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPut("DeshabilitarCargo/{id}")]
+        public ApplicationResponse<CargoDTOUpdate> DeshabilitarCargo([FromRoute]Guid id)
+        {
+            var response = new ApplicationResponse<CargoDTOUpdate>();
+            try
+            {
+                response.Data = _cargoDAO.DeshabilitarCargo(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
+
+        [HttpPut("HabilitarCargo/{id}")]
+        public ApplicationResponse<CargoDTOUpdate> HabilitarCargo([FromRoute] Guid id)
+        {
+            var response = new ApplicationResponse<CargoDTOUpdate>();
+            try
+            {
+                response.Data = _cargoDAO.HabilitarCargo(id);
+            }
+            catch (ExceptionsControl ex)
+            {
+                response.Success = false;
+                response.Message = ex.Mensaje;
+                response.Exception = ex.Excepcion.ToString();
+            }
+            return response;
+        }
 
 
     }

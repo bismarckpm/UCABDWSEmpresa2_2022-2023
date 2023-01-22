@@ -153,6 +153,25 @@ namespace ServicesDeskUCABWS.Entities
             _dataContext.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Tickets.Update(this);
         }
+
+        public void CambiarEstadoTicketReeenviados()
+        {
+            if (this.Ticket_Padre != null)
+            {
+                this.Ticket_Padre.Estado = this.Estado;
+            }
+        }
+
+        public void CambiarEstadoFamiliaTicket()
+        {
+            if (this.Familia_Ticket != null && this.Familia_Ticket.Lista_Ticket != null)
+            {
+                foreach (var t in this.Familia_Ticket.Lista_Ticket)
+                {
+                    t.Estado = this.Estado;
+                }
+            }
+        }
     }
 }
 
