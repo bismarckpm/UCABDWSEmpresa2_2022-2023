@@ -48,38 +48,13 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
             try
             {
                 var tipo = context.Tipos_Tickets
-                .Include(dep => dep.Departamentos).ThenInclude(dep=>dep.departamento)
+                .Include(dep => dep.Departamentos).ThenInclude(dep => dep.departamento)
                 .Include(fa => fa.Flujo_Aprobacion)
                 .ThenInclude(fb => fb.Cargo)
                 .Where(fa => fa.fecha_elim == null)
                 .ToList();
-                var tipo_ticketsDTO = new List<Tipo_TicketDTOSearch>();
-                
-                    foreach (var r in tipo)
-                    {
-                        var listaDept = new List<DepartamentoSearchDTO>();
-                        foreach (var t in r.Departamentos)
-                        {
-                            listaDept.Add(new DepartamentoSearchDTO()
-                            {
-                                Id = t.DepartamentoId.ToString(),
-                                nombre = t.departamento.nombre
-                            });
-                        }
-                        
-                        tipo_ticketsDTO.Add(new Tipo_TicketDTOSearch
-                        {
-                            Id = r.Id,
-                            nombre = r.nombre,
-                            descripcion = r.descripcion,
-                            Minimo_Aprobado = r.Minimo_Aprobado,
-                            Maximo_Rechazado = r.Maximo_Rechazado,
-                            tipo = r.ObtenerTipoAprobacion(),
-                            Flujo_Aprobacion = _mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
-                            Departamento = listaDept
-                        }) ;    
-                    } 
-                return tipo_ticketsDTO;
+
+                return BuscaDepartamentosAsociadosATipoTickets(tipo);
             }
 
             catch (ExceptionsControl ex)
@@ -91,7 +66,35 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO
                 throw new ExceptionsControl("Hubo un problema al consultar la lista de Tipos de Tickets", ex);
             }
         }
-
+        public List<Tipo_TicketDTOSearch> BuscaDepartamentosAsociadosATipoTickets(List<Tipo_Ticket> data)
+        {
+            var tipo_ticketsDTO = new List<Tipo_TicketDTOSearch>();
+            foreach (var r in data)
+            {
+                var listaDept = new List<DepartamentoSearchDTO>();
+                foreach (var t in r.Departamentos)
+                {
+                    listaDept.Add(new DepartamentoSearchDTO()
+                    {
+                        Id = t.DepartamentoId.ToString(),
+                        nombre = t.departamento.nombre
+                    });
+                }
+                tipo_ticketsDTO.Add(new Tipo_TicketDTOSearch
+                {
+                    Id = r.Id,
+                    nombre = r.nombre,
+                    descripcion = r.descripcion,
+                    Minimo_Aprobado = r.Minimo_Aprobado,
+                    Maximo_Rechazado = r.Maximo_Rechazado,
+                    tipo = r.ObtenerTipoAprobacion(),
+                    Flujo_Aprobacion = FlujoAprobacionMapper.MapperListaFlujoEntityToFlujoDTO(r.Flujo_Aprobacion),
+                    //_mapper.Map<List<Flujo_AprobacionDTOSearch>>(r.Flujo_Aprobacion),
+                    Departamento = listaDept
+                });
+            }
+            return tipo_ticketsDTO;
+        }
         public IEnumerable<Tipo_TicketDTOSearch> ConsultarTipoTicketxDepartamento(Guid Id)
         {
             try

@@ -462,6 +462,13 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     DepartamentoId = ListaDepartamento[0].id,
                     departamento=ListaDepartamento[0]
                 },
+                 new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[3].Id,
+                    tipo_Ticket = ListaTipoTickets[3],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
 
 
             };
@@ -474,6 +481,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             ListaTipoTickets[2].Departamentos.Add(listaDepartamentoTipoTicket[3]);
 
             ListaTipoTickets[3].Departamentos.Add(listaDepartamentoTipoTicket[4]);
+
+            ListaTipoTickets[4].Departamentos.Add(listaDepartamentoTipoTicket[5]);
 
             _mockContext.Setup(c => c.DepartamentoTipo_Ticket).Returns(listaDepartamentoTipoTicket.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.DepartamentoTipo_Ticket.Add(It.IsAny<DepartamentoTipo_Ticket>())).Callback<DepartamentoTipo_Ticket>(listaDepartamentoTipoTicket.Add);

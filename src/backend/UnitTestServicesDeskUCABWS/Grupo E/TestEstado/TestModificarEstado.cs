@@ -85,6 +85,18 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEstado
 
         }
 
+        //Test para la excepcion Exception para modificar estado  
+        [TestMethod]
+        public void EntrarEnExceptionControlEstadoNullTest()
+        {
+           
+            context.Setup(a => a.Estados).Throws(new Exception(""));
+
+            //assert
+            Assert.ThrowsException<ExceptionsControl>(() => EstadoDAO.ModificarEstado(null));
+
+        }
+
         //Test para la excepcion ExceptionsControl para modificar estado  
         [TestMethod]
         public void EntrarEnExceptionControlEstado2Test()
