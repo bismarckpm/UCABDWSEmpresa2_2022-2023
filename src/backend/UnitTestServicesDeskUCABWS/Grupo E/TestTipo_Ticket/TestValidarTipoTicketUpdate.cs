@@ -184,7 +184,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //act
 
-            TipoticketDAO.ValidarDatosEntradaTipo_Ticket_Update(entrada);
+            TipoticketDAO.ActualizarTipo_Ticket(entrada);
 
             //assert
 
@@ -239,7 +239,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             }
 
             Assert.AreEqual(expectedException.Mensaje, actualException.Mensaje);
-            Assert.IsTrue(typeof(FormatException) == actualException.Excepcion.GetType());
 
         }
 

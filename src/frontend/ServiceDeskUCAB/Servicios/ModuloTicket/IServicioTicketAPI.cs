@@ -21,15 +21,21 @@ namespace ServiceDeskUCAB.Servicios
 
         Task<List<BitacoraDTO>> BitacoraTicket(string ticketId);
 
-        Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion);
+        Task<List<TicketBasicoDTO>> Lista(string departamentoId, string opcion, string empleadoId);
 
         Task<List<DepartamentoSearchDTO>> Departamentos(string empleadoId);
 
         Task<List<Tipo_TicketDTOSearch>> TipoTickets(Guid idDepartamento);
 
+        Task<List<TicketBasicoDTO>> TicketsEnviados(string idempleado);
+
         Task<ApplicationResponse<DepartamentoSearchDTO>> departamentoEmpleado(string empleadoId);
 
-        Task<JObject> Cancelar(string ticketId);
+        Task<List<Estado>> DepartamentoEstados(string departamentoId);
+
+        Task<JObject> TomarTicket(TicketTomarDTO objeto);
+
+        Task<JObject> Finalizar(string ticketId);
 
         Task<JObject> Guardar(TicketDTO Objeto);
 

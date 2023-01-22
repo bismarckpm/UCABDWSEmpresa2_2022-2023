@@ -18,6 +18,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 
 
 //* Preparación  -> Organizar las precondiciones
@@ -54,36 +55,8 @@ namespace TicketUnitTest
             _contextMock.SetupDbContextDataTicket();
         }
 
-        //*
-        //Prueba Unitaria para crear los tickets
-        //*
-        /*[TestMethod(displayName: "Prueba Unitaria para crear los tickets")]
-        public void crearTicketTest()
-        {
-
-            //Prueba
-            var ticket = new TicketNuevoDTO
-            {
-                titulo = "titulo",
-                descripcion = "aaaaaaaa",
-                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c70"),
-                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
-                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40"),
-                nro_cargo_actual = 1
-            };
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
-            var application = "Ticket creado satisfactoriamente";
-            var result = new ApplicationResponse<string>();
-            result.Success = true;
-            var resultado = _TicketDAO.crearTicket(ticket);
-            //Verificación
-
-            Assert.IsTrue(result.Success);
-           
-
-        }
-        */
+       
+        
 
         //*
         //Prueba Unitaria para consultar tickets por id
@@ -108,10 +81,34 @@ namespace TicketUnitTest
 
 
 
-        //*
+        //Prueba Unitaria para consultar tickets por estado y departamento
+
+        [TestMethod(displayName: "Prueba Unitaria para consultar los tickets por estado y departamento")]
+        public void ObtenerTicketPorEstadoYDepartamentoTest()
+        {
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+            var id2 = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87");
+            var estado = "Habilitado";
+            var application = new ApplicationResponse<List<TicketInfoBasicaDTO>>();
+
+
+            //Prueba
+            var resultado = _TicketDAO.obtenerTicketsPorEstadoYDepartamento(id, estado, id2);
+
+            //Verificación
+
+
+            Assert.AreEqual(application.GetType(), resultado.GetType());
+          
+        }
+
+
+
+        /*
         //Prueba Unitaria para consultar tickets por estado y departamento
         //*
-        [TestMethod(displayName: "Prueba Unitaria para consultar los tickets por estado y departamento")]
+        /*[TestMethod(displayName: "Prueba Unitaria para consultar los tickets por estado y departamento")]
         public void ObtenerTicketPorEstadoYDepartamentoTest()
         {
             //Preparación
@@ -128,13 +125,13 @@ namespace TicketUnitTest
             StringAssert.Equals(application.GetType(), resultado.GetType());
             /*StringAssert.Equals(application, resultado);
             Assert.Equals(application, resultado);
-            Assert.IsTrue(resultado.Success);*/
-        }
+            Assert.IsTrue(resultado.Success);
+        }*/
 
-        //*
-        //Prueba Unitaria para cambiar el estado del ticket
-        //*
-        [TestMethod(displayName: "Prueba Unitaria para cambiar el estado del ticket")]
+            //*
+            //Prueba Unitaria para cambiar el estado del ticket
+            //*
+            [TestMethod(displayName: "Prueba Unitaria para cambiar el estado del ticket")]
         public void CambiarEstadoTicketTest()
         {
             //Preparación
@@ -152,29 +149,7 @@ namespace TicketUnitTest
 
         }
 
-        //*
-        //Prueba Unitaria para obtener las bitacoras del ticket
-        //*
-        /*[TestMethod(displayName: "Prueba Unitaria para obtener las bitacoras del ticket")]
-        public void ObtenerBitacorasTest()
-        {
-            //Preparación
-            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
-            var result = new ApplicationResponse<List<TicketBitacorasDTO>>();
-            result.Success = true;
-
-
-
-
-            //Prueba
-            var resultado = _TicketDAO.obtenerBitacoras(id);
-
-            //Verificación
-
-            //StringAssert.Equals(result.GetType(), resultado.GetType());
-            Assert.IsTrue(result.Success);
-
-        }*/
+        
 
 
         //*
@@ -244,6 +219,45 @@ namespace TicketUnitTest
         }
 
         //*
+        //Prueba Unitaria para obtener tickets propios
+        //*
+        [TestMethod(displayName: "Prueba Unitaria para obtener tickets propios")]
+        public void ObtenerTicketsPropiosTest()
+        {
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+
+            //Prueba
+            var resultado = _TicketDAO.obtenerTicketsPropios(id);
+
+            //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+        }
+
+        //*
+        //Prueba Unitaria para obtener tickets enviados
+        //*
+        [TestMethod(displayName: "Prueba Unitaria para obtener tickets enviados")]
+        public void ObtenerTicketsEnviadosTest()
+        {
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+
+
+            //Prueba
+            var resultado = _TicketDAO.obtenerTicketsEnviados(id);
+
+            //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+        }
+
+
+        //*
         //Prueba Unitaria para eliminar tickets
         //*
         [TestMethod(displayName: "Prueba Unitaria para eliminar tickets")]
@@ -263,125 +277,140 @@ namespace TicketUnitTest
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         //*
-        //Pruebas Unitarias EXCEPCIONES
+        //Prueba Unitaria para adquirir tickets
         //*
-
-
-        //*
-        //Prueba Unitaria para crear tickets excepcion de descripcion
-        //*
-        [TestMethod(displayName: "Prueba Unitaria cuando la creacion de los ticket retorna TicketDescripcionExcepcion")]
-
-        public void CrearTicketDescripcionExceptionTest()
+        [TestMethod(displayName: "Prueba Unitaria para adquirir tickets")]
+        public void AdquirirTicketTest()
         {
-            //Preparación y Prueba
-            var ticket = new TicketNuevoDTO
+            //Preparación
+            var ticket = new TicketTomarDTO
             {
-                titulo = "titulo",
-                descripcion = "a",
-                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c70"),
-                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
-                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40")
+               
+                empleadoId ="0F636FB4-7F04-4A2E-B2C2-359B99BE85D1",
+                ticketId = "2DF5B096-DC5A-421F-B109-2A1D1E650812"
+                
             };
-           
 
-           // var _validaciones = new Mock<TicketValidaciones>(_contextMock.Object);
-            _contextMock.Setup(p => p.Tickets).Throws(new TicketDescripcionException(""));
-          
-            var ex = "El formato de la descripción no es válido";
-            var resultado = _TicketDAO.crearTicket(ticket);
+
+            //Prueba
+            var resultado = _TicketDAO.adquirirTicket(ticket);
 
             //Verificación
 
-           
-            Assert.AreEqual(ex, resultado.Message);
 
-            
+            Assert.IsTrue(resultado.Success);
         }
 
-       
+
 
         //*
-        //Prueba Unitaria para crear tickets excepcion de ticket
+        //Prueba Unitaria para buscar estados por dept
         //*
-      /*  [TestMethod(displayName: "Prueba Unitaria cuando la creacion de los ticket retorna TicketExcepcion")]
-
-        public void CrearTicketTestTicketException()
+        [TestMethod(displayName: "Prueba Unitaria para buscar estados por dept")]
+        public void BuscarEstadosPorDeptTest()
         {
-            //Preparación y Prueba
-            var ticket = new TicketNuevoDTO
-            {
-                titulo = "titulo",
-                descripcion = "aaaaa",
-                empleado_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"),
-                prioridad_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c60"),
-                tipoTicket_id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c50"),
-                departamentoDestino_Id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c40")
-            };
-          
-            _validaMock.Setup(p => p.validarEmisor(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb0101"))).Throws(new TicketEmisorException("", new Exception()));
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
-           // _contextMock.Setup(p => p.Tickets).Throws(new TicketEmisorException(""));
-            //_contextMock.Setup(p => p.Empleados).Throws(new TicketEmisorException(""));
-          
-           // _contextMock.SetUpContextDataVacioEmpleado();
-           // _contextMock.SetUpContextDataVacioUsuario();
+
+            //Prueba
+            var resultado = _TicketDAO.buscarEstadosPorDepartamento(id);
+
+            //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+        }
+
+
+        //*
+        //Prueba Unitaria para buscar tipos tickets
+        //*
+        [TestMethod(displayName: "Prueba Unitaria para buscar tipos tickets")]
+        public void BuscarTiposTicketsTest()
+        {
+            //Preparación
            
-            var resultado = _TicketDAO.crearTicket(ticket);
-            
-         
+
+
+            //Prueba
+            var resultado = _TicketDAO.buscarTiposTickets();
 
             //Verificación
 
-          //  StringAssert.Equals(ex.GetType(), resultado.GetType());
-           // StringAssert.Equals(ex, resultado.Message);
-            Assert.ThrowsException<TicketEmisorException>(() => _TicketDAO.crearTicket(ticket));
-            //Assert.ThrowsException<Exception>(() => _TicketDAO.crearTicket(ticket));
-            // Assert.AreEqual(ex, resultado.Message);
 
-        }*/
-
-
-
-
-
-
-
-
-
+            Assert.IsTrue(resultado.Success);
+        }
 
 
         //*
-        //Prueba Unitaria para consultar tickets por id excepcion
+        //Prueba Unitaria para buscar tipo tickets
         //*
-        /*[TestMethod(displayName: "Prueba Unitaria cuando la consulta por id de los ticket retorna TicketExcepcion")]
-
-        public void ObtenerTicketPorIdTestException()
+        [TestMethod(displayName: "Prueba Unitaria para buscar tipo tickets")]
+        public void BuscarTipoTicketTest()
         {
-            //Preparación y Prueba
-            var  _validaciones = new Mock<TicketValidaciones>(_contextMock.Object);
-            _contextMock.Setup(p => p.Prioridades).Throws(new TicketException(""));
-          
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
 
+
+            //Prueba
+            var resultado = _TicketDAO.buscarTipoTickets(id);
+
+              //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+        }
+
+
+        //*
+        //Prueba Unitaria para buscar dept-empleado
+        //*
+        [TestMethod(displayName: "Prueba Unitaria para buscar dept-empleado")]
+        public void BuscarDeptEmpleadoTest()
+        {
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+            var application = new ApplicationResponse<DepartamentoSearchDTO>();
+
+
+            //Prueba
+            var resultado = _TicketDAO.buscarDepartamentoEmpleado(id);
 
             //Verificación
-            _validaciones.Setup(t => t.validarTicket(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00"))).Throws(new TicketException("", new Exception()));
-            Assert.ThrowsException<TicketException>(() => _TicketDAO.obtenerTicketPorId(new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c00")));
-        }*/
+
+
+        
+            StringAssert.Equals(application.GetType(), resultado.GetType());
+        }
+
+
+
+        //*
+        //Prueba Unitaria para buscar depts
+        //*
+        [TestMethod(displayName: "Prueba Unitaria para buscar depts")]
+        public void BuscarDeptsTest()
+        {
+            //Preparación
+            var id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86");
+           
+
+
+            //Prueba
+            var resultado = _TicketDAO.buscarDepartamentos(id);
+
+            //Verificación
+
+
+            Assert.IsTrue(resultado.Success);
+           
+        }
+
+
+
+
     }
 
 }

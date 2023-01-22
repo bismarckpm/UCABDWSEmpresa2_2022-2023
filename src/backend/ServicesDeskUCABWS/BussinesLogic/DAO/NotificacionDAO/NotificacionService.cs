@@ -8,6 +8,14 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using ServicesDeskUCABWS.BussinesLogic.Response;
+using ServicesDeskUCABWS.Data;
+using System.Net.Http;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
@@ -101,5 +109,32 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 				throw new ExceptionsControl("No se pudo enviar el correo. Verifica el correo electrónico que ingresó", ex);
 			}
 		}
-	}
+
+
+        //Samuel agrego esto
+        private readonly IDataContext _dataContext;
+        private readonly IPlantillaNotificacion _plantillaNotificacion;
+
+        public NotificacionService(IDataContext dataContext, IPlantillaNotificacion plantillaNotificacion)
+        {
+            _dataContext= dataContext;
+            _plantillaNotificacion = plantillaNotificacion;
+        }
+        public NotificacionService()
+        {
+        }
+        public async Task<bool> EnviarNotificacion(Ticket ticket, TipoNotificacion Estado, List<Empleado> ListaEmpleados, IDataContext contexto)
+        {
+            var plant = _plantillaNotificacion.ConsultarPlantillaTipoEstadoID(ticket.Estado.Estado_Padre.Id);
+            plant.Descripcion = ReemplazoEtiqueta(ticket,plant);
+            var notificacion=Notificacion.GetInstance(Estado);
+            var EmpleadosCorreo = notificacion.ObtenerUsuariosAEnviarCorreo(ticket, ListaEmpleados, contexto);
+            foreach (var emp in EmpleadosCorreo){
+                try{
+                    await EnviarCorreo(plant, emp.correo);
+                }catch (ExceptionsControl) { }
+            }
+            return true;
+        }
+    }
 }

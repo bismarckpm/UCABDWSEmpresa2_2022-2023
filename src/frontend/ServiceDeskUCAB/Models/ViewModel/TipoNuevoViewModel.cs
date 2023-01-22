@@ -18,5 +18,7 @@ namespace ServiceDeskUCAB.Models.ViewModel
 
         public string idDepartamento { get; set; }
 
+        public List<Modelo_Aprobacion> listaModelos { get; set; }
+
     }
 }

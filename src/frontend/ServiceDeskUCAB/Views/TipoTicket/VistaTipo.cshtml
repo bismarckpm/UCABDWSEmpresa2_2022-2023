@@ -52,10 +52,11 @@
                     <td>@item.descripcion</td>
                     <td>@item.tipo</td>
 
-                    @if(item.Departamento!= null)
+                    @if (item.Departamento != null)
                     {
                         <td>
-                            @if(item.Departamento.Count==0){
+                            @if (item.Departamento.Count == 0)
+                            {
                                 <p>Es un tipo ticket general</p>
                             }
                             @foreach (var departamento in item.Departamento)
@@ -64,11 +65,12 @@
                             }
                         </td>
                     }
-                    
+
                     @if (item.Flujo_Aprobacion != null)
                     {
                         <td>
-                            @if(item.Flujo_Aprobacion.Count==0){
+                            @if (item.Flujo_Aprobacion.Count == 0)
+                            {
                                 <p>No requiere de Aprobación</p>
                             }
                             @foreach (var cargos2 in item.Flujo_Aprobacion)
@@ -79,7 +81,7 @@
                             }
                         </td>
                     }
-                    
+
 
                     <td>
                         <div class="dropdown" style="float: right">
@@ -111,29 +113,30 @@
             </div>
             <div class="modal-body">
                 <form asp-action="GuardarCambios" asp-controller="TipoTicket" method="post">
-                    
+
                     <div class="mb-3" style="display: none;">
-                            <label for="recipient-name" class="col-form-label">Id:</label>
-                            <input required type="text" asp-for="tipo.Id" value="@Model.idDepartamento" name="idDepartOrigen" />
-                        </div>
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input required type="text" asp-for="tipo.Id" value="@Model.idDepartamento" name="idDepartOrigen" />
+                    </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre:</label>
-                        <input required type="text" asp-for="tipo.nombre" name="nombre" />
+                        <input required type="text" minlength="4" maxlength="150" asp-for="tipo.nombre" name="nombre" />
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Descripción:</label>
-                        <textarea required class="form-control" id="message-text" asp-for="tipo.descripcion" name="descripcion"></textarea>
+                        <textarea required class="form-control" minlength="4" maxlength="250" id="message-text" asp-for="tipo.descripcion" name="descripcion"></textarea>
                     </div>
                     <div class="container p-2 my-2 border">
                         <div class="mb-3">
                             <h6>Registro Modelo Aprobacion:</h6>
                             <label class="form-label">Tipo Modelo Aprobación:</label>
 
-                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" id="seleccionarModeloAgregar"  required="required" onChange="mostrarPremio(this.value)">
+                            <select required class="form-select form-select-sm" asp-for="tipo.tipo" name="tipo" id="seleccionarModeloAgregar" required="required" onChange="mostrarPremio(this.value)">
                                 <option value="" selected disabled>-- Seleccionar --</option>
-                                <option value="Modelo_Paralelo">Modelo_Paralelo</option>
-                                <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
-                                <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
+                                @foreach (var modelo in Model.listaModelos)
+                                {
+                                    <option value="@modelo.discrimanador">@modelo.nombre</option>
+                                }
                             </select>
 
 
@@ -142,18 +145,18 @@
                                     <label class="form-label">Cargos Asociados:</label>
                                     @foreach (var cargos2 in Model.ListaCargos)
                                     {
-                                        <div class="form-check form-switch" >
+                                        <div class="form-check form-switch">
                                             <input name="cargos2" class="form-check-input inputModelos" value="@cargos2.Id" type="checkbox" onChange="OcultarCampos(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                             <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                             <br />
                                         </div>
                                         <div class="form-check form-switch inputJerarquico" style="display: none" id="@cargos2.posicion">
                                             Orden Aprobación:
-                                            <input name="ordenaprobacion" type="number" class="form-control inputJerarquico" style="width : 60px">
+                                            <input name="ordenaprobacion" type="number" min=1 class="form-control inputJerarquico" style="width : 60px">
                                             Mínimo Aprobado Nivel:
-                                            <input name="minimo_aprobado_nivel" type="number" class="form-control inputJerarquico" style="width : 60px">
+                                            <input name="minimo_aprobado_nivel" type="number" min=1 class="form-control inputJerarquico" style="width : 60px">
                                             Máximo Rechazado Nivel:
-                                            <input name="maximo_rechazado_nivel" type="number" class="form-control inputJerarquico" style="width : 60px">
+                                            <input name="maximo_rechazado_nivel" type="number" min=1 class="form-control inputJerarquico" style="width : 60px">
                                         </div>
                                     }
                                 </div>
@@ -173,11 +176,11 @@
 
                                     <br />
                                     Mínimo Aprobado:
-                                    <input class="inputModelosParalelo" type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado" style="width : 60px">
+                                    <input class="inputModelosParalelo" type="number" min=1 asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado" style="width : 60px">
                                     <br />
                                     <br />
                                     Máximo Rechazado:
-                                    <input class="inputModelosParalelo" type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado" style="width : 60px">
+                                    <input class="inputModelosParalelo" type="number" min=1 asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado" style="width : 60px">
                                 </div>
                             </div>
 
@@ -190,16 +193,16 @@
 
                             <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                 <label class="form-label">Departamentos Asociados:</label>
-                                
 
-                                    <br>
 
-                                    <div class="form-check form-switch">
+                                <br>
+
+                                <div class="form-check form-switch">
                                     <input name="departamentos" class="form-check-input" value="@Model.idDepartamento" type="checkbox" id="@Model.idDepartamento" checked="checked" style="position: absolute; left: 60px">
-                                        <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
+                                    <label class="form-check-label" style="position: absolute; left: 60px">@Model.idDepartamento</label>
 
-                                    </div>
-                                
+                                </div>
+
                             </div>
                         </div>
 
@@ -209,169 +212,14 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    
-    
-    
 
-    function mostrarPremio(id) 
-    {
-        @*let model = JSON.parse('@Model.ListaCargos.Select(x=>x.Id).ToList()');*@
-
-        var listainputs = document.querySelectorAll(".inputModelos")
-        
-        listainputs.forEach((input) => {
-            if (input.checked == true){
-                input.click();
-            }
-        });
-        
-        
-
-        if (id == "Modelo_Jerarquico") 
-        {
-            document.getElementById('Modelo_Jerarquico').style.display = 'block';
-            document.getElementById('Modelo_Paralelo').style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input)=>{
-                input.removeAttribute('required');
-                input.value = '';
-            });
-            
-        }
-
-        if (id == "Modelo_Paralelo") {
-            document.getElementById('Modelo_Paralelo').style.display = 'block';
-            document.getElementById('Modelo_Jerarquico').style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input)=>{
-                input.required = 'true';
-                input.value = '';
-            });
-        }
-
-        if (id == "Modelo_No_Aprobacion") {
-            document.getElementById('Modelo_No_Aprobacion').style.display = 'block';
-            document.getElementById('Modelo_Jerarquico').style.display = 'none';
-            document.getElementById('Modelo_Paralelo').style.display = 'none';
-
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-    }
-
-    function OcultarCampos(cb, id) 
-    {
-        if (cb.checked == true) {
-            document.getElementById(id).style.display = 'block';
-            const hijos = document.getElementById(id).children;
-            hijos[0].required = 'true';
-            hijos[1].required = 'true';
-            hijos[2].required = 'true';
-        }
-
-        if (cb.checked == false) {
-            
-            const hijos = document.getElementById(id).children;
-
-            hijos[0].removeAttribute('required');
-            hijos[0].value = '';
-            hijos[1].removeAttribute('required');
-            hijos[1].value = '';
-            hijos[2].removeAttribute('required');
-            hijos[2].value = '';
-            document.getElementById(id).style.display = 'none';
-        }
-
-    }
-
-    function SelectTipoCambios(select,value) {
-
-        var listainputs = document.querySelectorAll(".inputModelos-"+select.id)
-        
-        listainputs.forEach((input) => {
-            if (input.checked == true){
-                input.click();
-            }
-        });
-
-        if (select.value == "Modelo_Jerarquico") {
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-
-        if (select.value == "Modelo_Paralelo") {
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.required = 'true';
-                input.value = '';
-            });
-        }
-
-        if (select.value == "Modelo_No_Aprobacion") {
-            document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'block';
-            document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
-            document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
-            var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
-            listainputsParalelos.forEach((input) => {
-                input.removeAttribute('required');
-                input.value = '';
-            });
-        }
-        
-    }
-
-    function OcultarCamposModificar(cb, id) {
-
-        if (cb.checked == true) {
-            document.getElementById(cb.id+"-"+id).style.display = 'block';
-            const hijos = document.getElementById(cb.id + "-" + id).children;
-            hijos[0].required = 'true';
-            hijos[1].required = 'true';
-            hijos[2].required = 'true';
-        }
-
-        if (cb.checked == false) {
-            
-            const hijos = document.getElementById(cb.id + "-" + id).children;
-            hijos[0].removeAttribute('required');
-            hijos[0].value = '';
-            hijos[1].removeAttribute('required');
-            hijos[1].value = '';
-            hijos[2].removeAttribute('required');
-            hijos[2].value = '';
-            document.getElementById(cb.id + "-" + id).style.display = 'none';
-        }
-
-    }
-
-        
-
-
-</script>
 
 @*Modificar Tipo Ticket*@
 @foreach (var tipo in Model.ListaTipo)
@@ -394,11 +242,11 @@
 
                         <div class="mb-3" style="display: none;">
                             <label for="recipient-name" class="col-form-label">Id:</label>
-                            <input required type="text" asp-for="tipoActualizar.Id" value="@tipo.Id" name="id" />
+                            <input required type="text" minlength="4" maxlength="150" asp-for="tipoActualizar.Id" value="@tipo.Id" name="id" />
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Nombre:</label>
-                            <input required type="text" asp-for="tipoActualizar.nombre" value="@tipo.nombre" name="nombre" />
+                            <input required type="text" minlength="4" maxlength="250" asp-for="tipoActualizar.nombre" value="@tipo.nombre" name="nombre" />
                         </div>
 
                         <div class="mb-3">
@@ -410,109 +258,97 @@
                             <div class="mb-3">
                                 <h6>Registro Modelo Aprobacion:</h6>
                                 <label class="form-label">Tipo Modelo Aprobación:</label>
-                                
-                                @*<select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                        <option value="@tipo.tipo">@tipo.tipo</option>
-                                        <option value="Modelo_Paralelo">Modelo_Paralelo</option>
-                                        <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
-                                        <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
-                                    </select>*@
+                                <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
+                                    @foreach (var modelo in Model.listaModelos)
+                                    {
+                                        if (tipo.tipo == modelo.discrimanador)
+                                        {
+                                            <option value="@modelo.discrimanador">@modelo.nombre</option>
+                                        }
+                                    }
+                                    @foreach (var modelo in Model.listaModelos)
+                                    {
+                                        if (tipo.tipo != modelo.discrimanador)
+                                        {
+                                            <option value="@modelo.discrimanador">@modelo.nombre</option>
+                                        }
+                                    }
+                                </select>
 
-                                @if (tipo.tipo =="Modelo_Jerarquico"){
-                                    <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                        <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
-                                        <option value="Modelo_Paralelo">Modelo_Paralelo</option>
-                                        <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
-                                    </select>
-                                }
 
-                                @if (tipo.tipo == "Modelo_Paralelo")
+
+
+                                @if (tipo.tipo == "Modelo_Jerarquico")
                                 {
-                                    <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                        <option value="Modelo_Paralelo">Modelo_Paralelo</option>
-                                        <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
-                                        <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
-                                    </select>
-                                }
-
-                                @if (tipo.tipo == "Modelo_No_Aprobacion")
-                                {
-                                    <select required class="form-select form-select-sm" name="tipot" required="required" id="@tipo.Id" onChange="SelectTipoCambios(this,@tipo.tipo);">
-                                        <option value="Modelo_No_Aprobacion">Modelo_No_Aprobacion</option>
-                                        <option value="Modelo_Jerarquico">Modelo_Jerarquico</option>
-                                        <option value="Modelo_Paralelo">Modelo_Paralelo</option>
-                                    </select>
-                                }
-
-
-                                @if (tipo.tipo =="Modelo_Jerarquico")
-                                {
-                                    
-
                                     <div class="mb-3" id="Modelo_Jerarquico-@tipo.Id" style="display: block;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                 @if(tipo.Flujo_Aprobacion.Select(x=>x.Cargo.Id).ToList().Contains(cargos2.Id))
-                                                 {
+                                                @if (tipo.Flujo_Aprobacion.Select(x => x.Cargo.Id).ToList().Contains(cargos2.Id))
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" checked="checked" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
-                                                     <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
+                                                    <div class="form-check form-switch" style="display: block" id="@tipo.Id-@cargos2.posicion">
                                                         Orden Aprobación:
-                                                        <input required name="ordenaprobacion" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().OrdenAprobacion" style="width : 60px">
+                                                        <input required name="ordenaprobacion" type="number" min=1 class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().OrdenAprobacion" style="width : 60px">
                                                         Mínimo Aprobado Nivel:
-                                                        <input required name="minimo_aprobado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().minimo_aprobado_nivel" style="width : 60px">
+                                                        <input required name="minimo_aprobado_nivel" type="number" min=1 class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().minimo_aprobado_nivel" style="width : 60px">
                                                         Máximo Rechazado Nivel:
-                                                        <input required name="maximo_rechazado_nivel" type="number" class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().maximo_rechazado_nivel" style="width : 60px">
+                                                        <input required name="maximo_rechazado_nivel" type="number" min=1 class="form-control" value="@tipo.Flujo_Aprobacion.Where(x=>x.Cargo.Id==cargos2.Id).FirstOrDefault().maximo_rechazado_nivel" style="width : 60px">
                                                     </div>
-                                                 }   else {
+                                                }
+                                                else
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
                                                     </div>
-                                                     <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
+                                                    <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
                                                         Orden Aprobación:
-                                                        <input name="ordenaprobacion" type="number" class="form-control" value="" style="width : 60px">
+                                                        <input name="ordenaprobacion" type="number" min=1 class="form-control" value="" style="width : 60px">
                                                         Mínimo Aprobado Nivel:
-                                                        <input name="minimo_aprobado_nivel" type="number" class="form-control" style="width : 60px">
+                                                        <input name="minimo_aprobado_nivel" type="number" min=1 class="form-control" style="width : 60px">
                                                         Máximo Rechazado Nivel:
-                                                        <input name="maximo_rechazado_nivel" type="number" class="form-control" style="width : 60px">
+                                                        <input name="maximo_rechazado_nivel" type="number" min=1 class="form-control" style="width : 60px">
                                                     </div>
-                                                 }
+                                                }
                                             }
                                         </div>
                                     </div>
 
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_Jerarquico-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-                                                <div class="form-check form-switch" >
+                                                <div class="form-check form-switch">
                                                     <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" id="@tipo.Id" type="checkbox" onChange="OcultarCamposModificar(this,@cargos2.posicion)" style="position: absolute; left: 60px">
                                                     <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                     <br />
                                                 </div>
                                                 <div class="form-check form-switch" style="display: none" id="@tipo.Id-@cargos2.posicion">
                                                     Orden Aprobación:
-                                                    <input name="ordenaprobacion" type="number" class="form-control" value="" style="width : 60px">
+                                                    <input name="ordenaprobacion" type="number" min=1 class="form-control" value="" style="width : 60px">
                                                     Mínimo Aprobado Nivel:
-                                                    <input name="minimo_aprobado_nivel" type="number" class="form-control" style="width : 60px">
+                                                    <input name="minimo_aprobado_nivel" type="number" min=1 class="form-control" style="width : 60px">
                                                     Máximo Rechazado Nivel:
-                                                    <input name="maximo_rechazado_nivel" type="number" class="form-control" style="width : 60px">
+                                                    <input name="maximo_rechazado_nivel" type="number" min=1 class="form-control" style="width : 60px">
                                                 </div>
                                             }
                                         </div>
                                     </div>
                                 }
 
-                                @if (tipo.tipo == "Modelo_Paralelo"){
+                                @if (tipo.tipo == "Modelo_Paralelo")
+                                {
                                     <div class="mb-3" id="Modelo_Paralelo-@tipo.Id" style="display: block;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
@@ -524,34 +360,35 @@
                                                         <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" type="checkbox" checked="checked" id="@cargos2.Id" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
-
                                                     </div>
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     <div class="form-check form-switch">
                                                         <input name="cargos2" class="form-check-input" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
                                                         <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
                                                         <br />
-
                                                     </div>
                                                 }
                                             }
 
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Minimo_Aprobado" value="@tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" min=1 asp-for="tipo.Minimo_Aprobado" value="@tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" min=1 asp-for="tipo.Maximo_Rechazado" value="@tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_Paralelo-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             <label class="form-label">Cargos Asociados:</label>
                                             @foreach (var cargos2 in Model.ListaCargos)
                                             {
-
                                                 <div class="form-check form-switch">
                                                     <input name="cargos2" class="form-check-input inputModelos-@tipo.Id" value="@cargos2.Id" type="checkbox" id="@cargos2.Id" style="position: absolute; left: 60px">
                                                     <label class="form-check-label" style="position: absolute; left: 60px">@cargos2.nombre_departamental</label>
@@ -559,14 +396,13 @@
 
                                                 </div>
                                             }
-
                                             <br />
                                             Mínimo Aprobado:
-                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
+                                            <input class="inputModelosParalelo-@tipo.Id" type="number" min=1 asp-for="tipo.Minimo_Aprobado" name="Minimo_Aprobado">
                                             <br />
                                             <br />
                                             Máximo Rechazado:
-                                            <input required class="inputModelosParalelo-@tipo.Id" type="number" asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
+                                            <input class="inputModelosParalelo-@tipo.Id" type="number" min=1 asp-for="tipo.Maximo_Rechazado" name="Maximo_Rechazado">
                                         </div>
                                     </div>
                                 }
@@ -578,15 +414,15 @@
                                             No requiere aprobacion
                                         </div>
                                     </div>
-                                } else {
+                                }
+                                else
+                                {
                                     <div class="mb-3" id="Modelo_No_Aprobacion-@tipo.Id" style="display: none;">
                                         <div class="mb-3">
                                             No requiere aprobacion
                                         </div>
                                     </div>
                                 }
-                                
-
                                 <div class="mb-2" id="ListaDepartamentos" style="display: none;">
                                     <label class="form-label">Departamentos Asociados:</label>
                                     <br>
@@ -600,7 +436,7 @@
                         </div>
 
                         <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </div>
                     </form>
@@ -610,38 +446,33 @@
     </div>
 }
 
-
-
-
-                            
-
 @*Modal para Eliminar Tipo Ticket --- Fino*@
-@foreach (var tipo in Model.ListaTipo){
+@foreach (var tipo in Model.ListaTipo)
+{
     <div class="modal fade" id="modal-@tipo.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "@tipo.nombre"</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "@tipo.nombre"?</label>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Eliminar", "TipoTicket",new{ id =tipo.Id, idDepartOrigen= Model.idDepartamento} )'">Eliminar</button>
-                            @*onclick="location.href='@Url.Action("VistaTipo", "TipoTicket",new{ idDepartamento =@item.id} )'"
-                        <button type="submit" class="btn btn-primary" asp-action="Eliminar" asp-controller="TipoTicket" asp-route-id="@tipo.Id" asp-route-idDepartOrigen="@Model.idDepartamento">Eliminar</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Eliminar Tipo Ticket "@tipo.nombre"</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="Eliminar" asp-controller="TipoTicket" method="post">
+                        <input required type="text" asp-for="@tipo.Id" value="@tipo.Id" name="id" style="display: none;" />
+                        <input required type="text" asp-for="@Model.idDepartamento" value="@Model.idDepartamento" name="idDepartOrigen" style="display: none;" />
 
-                            *@
-                     </div>
-                </form>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">¿Seguro que desea eliminar este tipo de ticket "@tipo.nombre"?</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 
@@ -685,6 +516,149 @@
         });
     </script>
 
+    <script type="text/javascript">
 
+        function mostrarPremio(id) {
+            var listainputs = document.querySelectorAll(".inputModelos")
+
+            listainputs.forEach((input) => {
+                if (input.checked == true) {
+                    input.click();
+                }
+            });
+
+
+
+            if (id == "Modelo_Jerarquico") {
+                document.getElementById('Modelo_Jerarquico').style.display = 'block';
+                document.getElementById('Modelo_Paralelo').style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+
+            }
+
+            if (id == "Modelo_Paralelo") {
+                document.getElementById('Modelo_Paralelo').style.display = 'block';
+                document.getElementById('Modelo_Jerarquico').style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.required = 'true';
+                    input.value = '';
+                });
+            }
+
+            if (id == "Modelo_No_Aprobacion") {
+                document.getElementById('Modelo_No_Aprobacion').style.display = 'block';
+                document.getElementById('Modelo_Jerarquico').style.display = 'none';
+                document.getElementById('Modelo_Paralelo').style.display = 'none';
+
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo");
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+        }
+
+        function OcultarCampos(cb, id) {
+            if (cb.checked == true) {
+                document.getElementById(id).style.display = 'block';
+                const hijos = document.getElementById(id).children;
+                hijos[0].required = 'true';
+                hijos[1].required = 'true';
+                hijos[2].required = 'true';
+            }
+
+            if (cb.checked == false) {
+
+                const hijos = document.getElementById(id).children;
+
+                hijos[0].removeAttribute('required');
+                hijos[0].value = '';
+                hijos[1].removeAttribute('required');
+                hijos[1].value = '';
+                hijos[2].removeAttribute('required');
+                hijos[2].value = '';
+                document.getElementById(id).style.display = 'none';
+            }
+
+        }
+
+        function SelectTipoCambios(select, value) {
+
+            var listainputs = document.querySelectorAll(".inputModelos-" + select.id)
+
+            listainputs.forEach((input) => {
+                if (input.checked == true) {
+                    input.click();
+                }
+            });
+
+            if (select.value == "Modelo_Jerarquico") {
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+
+            if (select.value == "Modelo_Paralelo") {
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.required = 'true';
+                    input.value = '';
+                });
+            }
+
+            if (select.value == "Modelo_No_Aprobacion") {
+                document.getElementById('Modelo_No_Aprobacion-' + select.id).style.display = 'block';
+                document.getElementById('Modelo_Jerarquico-' + select.id).style.display = 'none';
+                document.getElementById('Modelo_Paralelo-' + select.id).style.display = 'none';
+                var listainputsParalelos = document.querySelectorAll(".inputModelosParalelo-" + select.id);
+                listainputsParalelos.forEach((input) => {
+                    input.removeAttribute('required');
+                    input.value = '';
+                });
+            }
+
+        }
+
+        function OcultarCamposModificar(cb, id) {
+
+            if (cb.checked == true) {
+                document.getElementById(cb.id + "-" + id).style.display = 'block';
+                const hijos = document.getElementById(cb.id + "-" + id).children;
+                hijos[0].required = 'true';
+                hijos[1].required = 'true';
+                hijos[2].required = 'true';
+            }
+
+            if (cb.checked == false) {
+
+                const hijos = document.getElementById(cb.id + "-" + id).children;
+                hijos[0].removeAttribute('required');
+                hijos[0].value = '';
+                hijos[1].removeAttribute('required');
+                hijos[1].value = '';
+                hijos[2].removeAttribute('required');
+                hijos[2].value = '';
+                document.getElementById(cb.id + "-" + id).style.display = 'none';
+            }
+
+        }
+    </script>
 
 }

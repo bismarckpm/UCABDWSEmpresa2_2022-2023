@@ -424,17 +424,22 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
                 .Include(x=> x.Tipo_Ticket)
                 .ThenInclude(x=>x.Flujo_Aprobacion)
                 .Where(x=>x.Estado.Estado_Padre.nombre == "Pendiente").ToList();
+            
+            TicketsPendiente = TicketsPendiente
+            .Where(ticket => ticket.Tipo_Ticket.Flujo_Aprobacion.Where(flujo=> flujo.OrdenAprobacion == null || flujo.OrdenAprobacion==ticket.nro_cargo_actual)
+                        .Select(x => x.IdCargo).Contains( usuario.Cargo.id ))
+            .ToList();
 
-            TicketsPendiente = TicketsPendiente.Where(x => x.Tipo_Ticket.Flujo_Aprobacion
-            .Select(x => x.IdCargo).Contains(usuario.Cargo.id)).ToList();
+            
 
-            var ListaVotos = TicketsPendiente.Select(x=> new Votos_Ticket()
+            var ListaVotos = TicketsPendiente.Select(x => new Votos_Ticket()
             {
                 IdTicket = x.Id,
-                IdUsuario=usuario.Id,
+                IdUsuario = usuario.Id,
                 Ticket = x,
-                Empleado=usuario,
-                voto = "Pendiente"
+                Empleado = usuario,
+                voto = "Pendiente",
+                Turno = x.nro_cargo_actual
             });
             _dataContext.Votos_Tickets.AddRange(ListaVotos);
 

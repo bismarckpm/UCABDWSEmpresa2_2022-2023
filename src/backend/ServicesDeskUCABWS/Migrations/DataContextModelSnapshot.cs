@@ -228,13 +228,12 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Flujo_Aprobacion", b =>
                 {
                     b.Property<Guid>("IdTicket")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Cargoid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdCargo")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("Cargoid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("Maximo_Rechazado_nivel")
@@ -249,7 +248,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid?>("Tipo_TicketId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("IdTicket");
+                    b.HasKey("IdTicket", "IdCargo");
 
                     b.HasIndex("Cargoid");
 
@@ -429,7 +428,7 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Property<Guid>("Departamento_Destinoid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("EmisorId")
+                    b.Property<Guid>("EmisorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("EstadoId")
@@ -439,6 +438,9 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PrioridadId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ResponsableId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Ticket_PadreId")
@@ -477,6 +479,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.HasIndex("Familia_TicketId");
 
                     b.HasIndex("PrioridadId");
+
+                    b.HasIndex("ResponsableId");
 
                     b.HasIndex("Ticket_PadreId");
 
@@ -669,7 +673,7 @@ namespace ServicesDeskUCABWS.Migrations
                             Id = new Guid("8c8a156b-7383-4610-8539-30ccf7298164"),
                             cedula = 0,
                             correo = "admin@gmail.com",
-                            fecha_creacion = new DateTime(2023, 1, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            fecha_creacion = new DateTime(2023, 1, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             fecha_eliminacion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             fecha_ultima_edicion = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             gender = " ",
@@ -867,7 +871,9 @@ namespace ServicesDeskUCABWS.Migrations
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Empleado", "Emisor")
                         .WithMany("Lista_Ticket")
-                        .HasForeignKey("EmisorId");
+                        .HasForeignKey("EmisorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Estado", "Estado")
                         .WithMany("ListaTickets")
@@ -882,6 +888,11 @@ namespace ServicesDeskUCABWS.Migrations
                         .HasForeignKey("PrioridadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ServicesDeskUCABWS.Entities.Empleado", "Responsable")
+                        .WithMany("Tickets_Propios")
+                        .HasForeignKey("ResponsableId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ServicesDeskUCABWS.Entities.Ticket", "Ticket_Padre")
                         .WithMany()
@@ -902,6 +913,8 @@ namespace ServicesDeskUCABWS.Migrations
                     b.Navigation("Familia_Ticket");
 
                     b.Navigation("Prioridad");
+
+                    b.Navigation("Responsable");
 
                     b.Navigation("Ticket_Padre");
 
@@ -996,6 +1009,8 @@ namespace ServicesDeskUCABWS.Migrations
             modelBuilder.Entity("ServicesDeskUCABWS.Entities.Empleado", b =>
                 {
                     b.Navigation("Lista_Ticket");
+
+                    b.Navigation("Tickets_Propios");
 
                     b.Navigation("Votos_Ticket");
                 });

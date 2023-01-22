@@ -59,6 +59,11 @@ namespace ServicesDeskUCABWS.BussinesLogic.Excepciones
         public TicketEmisorException(string mensaje) : base(mensaje) { }
         public TicketEmisorException(string mensaje, Exception excepcionInterna) : base(mensaje, excepcionInterna) { }
     }
+    public class TicketEmpleadoException : ApplicationException
+    {
+        public TicketEmpleadoException(string mensaje) : base(mensaje) { }
+        public TicketEmpleadoException(string mensaje, Exception excepcionInterna) : base(mensaje, excepcionInterna) { }
+    }
     public class TicketPadreException : ApplicationException
     {
         public TicketPadreException(string mensaje) : base(mensaje) { }

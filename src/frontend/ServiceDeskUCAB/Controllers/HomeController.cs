@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Dynamic;
 using ServiceDeskUCAB.Servicios.ModuloPlantillaNotificacion;
+using ServiceDeskUCAB.Models.Modelos_de_Usuario;
+using ServiceDeskUCAB.Servicios;
 
 namespace ServiceDeskUCAB.Controllers
 {
@@ -19,29 +21,39 @@ namespace ServiceDeskUCAB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServicioPlantillaNotificacion_API _servicioApi;
+        private readonly IServicioUsuario_API _servicioUsuarioApi;
 
-        public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi)
+        public HomeController(ILogger<HomeController> logger, IServicioPlantillaNotificacion_API servicioApi, IServicioUsuario_API servicioApiUsuarios)
         {
             _logger = logger;
             _servicioApi = servicioApi;
+            _servicioUsuarioApi = servicioApiUsuarios;
         }
         
         public async Task<IActionResult> Index()
         {
-            //var current = User.Identities.First().Claims.ToList()[2].Value;
-            var current = User.Identities.First().Claims;
-            var boold = User.Identities.First().Claims.ToList()[0].Value;
-
-            if (current == null)
+            try
             {
-                Console.WriteLine(boold);
-                return View();
-            }
-            else
-            {
-                return View();
-            }
+                //var current = User.Identities.First().Claims.ToList()[2].Value;
+                var current = User.Identities.First().Claims.ToList()[0].Value;
+                UsuariosRol usuario = new UsuariosRol();
 
+                usuario = await _servicioUsuarioApi.MostrarInfoUsuario(Guid.Parse(current));
+                var boold = User.Identities.First().Claims.ToList()[2].Value == "Cliente";
+                if (current == null)
+                {
+                    return View(usuario);
+                }
+                else
+                {
+                    return View(usuario);
+                }
+            }
+            catch(Exception ex)
+            {
+                return View("Error", new ErrorViewModel() { RequestId = ex.Message});
+            }
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
