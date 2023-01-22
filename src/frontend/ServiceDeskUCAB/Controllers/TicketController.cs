@@ -230,6 +230,7 @@ namespace ServiceDeskUCAB.Controllers
                 {
                     Console.WriteLine("La respuesta fue verdadera");
                     // Falta la ruta buena de Index
+                    Console.WriteLine($"REENVIO: {(string)respuesta["message"]}");
                     return RedirectToAction("Index",new {opcion = "Abiertos", message = (string)respuesta["message"] });
                 }
                 else
