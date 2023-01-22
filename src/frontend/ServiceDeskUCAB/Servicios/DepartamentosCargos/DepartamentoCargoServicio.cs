@@ -59,7 +59,7 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 
             var content = new StringContent(JsonConvert.SerializeObject(estadoDTO), Encoding.UTF8, "application/json");
 
-            var response = await cliente.PutAsync("api/Cargo/Editar", content);  //URL de Lista en el swagger
+            var response = await cliente.PutAsync("Cargo/Editar", content);  //URL de Lista en el swagger
 
             if (response.IsSuccessStatusCode)
             {
@@ -114,7 +114,7 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.PutAsync("api/Cargo/DeshabilitarCargo/" + Id, null);
+            var response = await cliente.PutAsync("Cargo/DeshabilitarCargo/" + Id, null);
 
             if (response.IsSuccessStatusCode)
             {
@@ -137,7 +137,7 @@ namespace ServiceDeskUCAB.Servicios.DepartamentosCargos
 
             cliente.BaseAddress = new Uri(_baseUrl);
 
-            var response = await cliente.PutAsync("api/Cargo/HabilitarCargo/" + Id, null);
+            var response = await cliente.PutAsync("Cargo/HabilitarCargo/" + Id, null);
 
             if (response.IsSuccessStatusCode)
             {
