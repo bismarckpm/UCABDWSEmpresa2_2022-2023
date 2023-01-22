@@ -225,6 +225,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.UsuarioDAO
             try
             {
                 var listaGeneral = new List<UsuarioGeneralDTO>();
+                var listaClientes = _dataContext.Clientes.Include(r => r.Roles).ThenInclude(x => x.Rol).Where(x => x.fecha_eliminacion == default(DateTime)).ToList();
+                listaGeneral.AddRange(_mapper.Map<List<UsuarioGeneralDTO>>(listaClientes));
                 var listaEmpleados = _dataContext.Empleados.Include(x=>x.Cargo).Include(r => r.Roles).ThenInclude(x=>x.Rol).Where(x => x.fecha_eliminacion == default(DateTime)).ToList();
                 listaGeneral.AddRange(_mapper.Map<List<UsuarioGeneralDTO>>(listaEmpleados));
                 var listaAdministrador = _dataContext.Administradores.Include(r => r.Roles).ThenInclude(x => x.Rol).Where(x => x.fecha_eliminacion == default(DateTime)).ToList();
