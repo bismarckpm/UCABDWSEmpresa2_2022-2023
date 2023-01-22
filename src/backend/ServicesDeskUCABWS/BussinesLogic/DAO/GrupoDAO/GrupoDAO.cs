@@ -167,7 +167,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                 {
                     item.id_grupo = null;
 
-                    }
+                }
                     _dataContext.DbContext.SaveChanges();
                     return true;
 

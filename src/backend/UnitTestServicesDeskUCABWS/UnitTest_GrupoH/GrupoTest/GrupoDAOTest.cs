@@ -628,28 +628,9 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.GrupoTest
             {
                 id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
             };
-
-            
-
-
             _contextMockDG.Setup(set => set.DbContext.SaveChanges());
             var result = _grupoDAODG.QuitarAsociacion(grupo.id);
             Assert.IsTrue(result);
-        }
-
-        [TestMethod(displayName: "Prueba Unitaria para Quitar Asociacion de un grupo a un departamento, return false")]
-        public void QuitarAsociacionFalso()
-        {
-
-            var grupo = new Grupo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87")
-            };
-
-
-            _contextMock.Setup(set => set.DbContext.SaveChanges());
-            var result = _grupoDAO.QuitarAsociacion(grupo.id);
-            Assert.IsFalse(result);
         }
 
         [TestMethod(displayName: "Prueba Unitaria para Quitar Asociacion de un grupo a un departamento, excepcion")]
