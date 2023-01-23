@@ -6,8 +6,10 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Plantilla;
 using ServicesDeskUCABWS.BussinesLogic.DTO.TicketsDTO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
+using ServicesDeskUCABWS.BussinesLogic.Mapper.MapperTipoTicket;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
@@ -97,6 +99,36 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 
             //assert
             //Assert.IsTrue(result != "Exitoso");
+
+        }
+
+        [TestMethod]
+        public void FlujoParaleloPendiente()
+        {
+            //Arrage
+            var Ticket = context.Object.Tickets.Find(Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA95"));
+            var Tipo_Ticket = new TipoTicket_FlujoAprobacionParalelo();
+            //act
+
+            var result =Tipo_Ticket.VerificarVotacion(Ticket, context.Object,notificacionService.Object);
+
+            //assert
+            Assert.IsTrue(result == "Pendiente");
+
+        }
+
+        [TestMethod]
+        public void TestRelacionConDepartamento()
+        {
+            //Arrage
+            var Tipo_Ticket = context.Object.Tipos_Tickets.Find(Guid.Parse("F863DBA2-5093-4E89-917A-03B5F585B3E7"));
+            var Tipo_TicketDTO = TipoTicketMapper.MapperTipoTicketToTipoTicketDTOCreate(Tipo_Ticket);
+            //act
+
+            Tipo_Ticket.RelacionConDepartamento(Tipo_Ticket, Tipo_TicketDTO, context.Object );
+
+            //assert
+            //Assert.IsTrue(Tipo_Ticket.Departamentos.FirstOrDefault().nombre);
 
         }
 

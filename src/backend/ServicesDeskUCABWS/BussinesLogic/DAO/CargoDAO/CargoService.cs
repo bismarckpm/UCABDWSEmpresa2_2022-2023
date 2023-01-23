@@ -36,7 +36,17 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             var lista = new List<CargoDTOUpdate>();
             if (_dataContext.Departamentos.Find(IdDepartamento) != null)
             {
-                lista = _mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x => x.Departamento.id == IdDepartamento).ToList());
+                lista = _mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x => x.Departamento.id == IdDepartamento && x.fecha_eliminacion ==null).ToList());
+            }
+            return lista;
+        }
+
+        public List<CargoDTOUpdate> ConsultarCargosDepartamentoTodos(Guid id)
+        {
+            var lista = new List<CargoDTOUpdate>();
+            if (_dataContext.Departamentos.Find(id) != null)
+            {
+                lista = _mapper.Map<List<CargoDTOUpdate>>(_dataContext.Cargos.Where(x => x.Departamento.id == id).ToList());
             }
             return lista;
         }
@@ -336,6 +346,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO
             }
             return existe;
         }
+
+        
 
 
         //Retorna una lista de departamentos que no están asociados a un grupo

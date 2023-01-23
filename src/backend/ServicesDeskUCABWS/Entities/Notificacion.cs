@@ -52,7 +52,7 @@ namespace ServicesDeskUCABWS.Entities
     {
         public override List<Empleado> ObtenerUsuariosAEnviarCorreo(Ticket ticket, List<Empleado> EmpleadosVotantes, IDataContext contexto)
         {
-            return contexto.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList(); ;
+            return contexto.Empleados.Include(x => x.Cargo).ThenInclude(x => x.Departamento).Where(x => x.Cargo.Departamento.id == ticket.Departamento_Destino.id).ToList(); 
         }
     }
 

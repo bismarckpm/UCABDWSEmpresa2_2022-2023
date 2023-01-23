@@ -31,7 +31,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
         private readonly IMapper _mapper;
         private readonly Mock<IPlantillaNotificacion> plantillaNotificacionDAO;
         private readonly Mock<INotificacion> notificacionService;
-        private readonly Mock<LlamadaHttp> llamadaMock;
 
 
         public FlujoJerarquicoTest()
@@ -44,7 +43,6 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
                 new TicketMapper()
 
             };
-            llamadaMock = new Mock<LlamadaHttp>();
             plantillaNotificacionDAO = new Mock<IPlantillaNotificacion>();
             notificacionService = new Mock<INotificacion>();
 

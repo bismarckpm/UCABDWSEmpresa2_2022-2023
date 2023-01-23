@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using ServicesDeskUCABWS.Entities;
 using System;
 
 namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
@@ -16,6 +17,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DTO.TicketDTO
         public string estado_nombre { get; set; }
         public int? jerarquia { get; set; }
         public int? nro_cargo_actual { get; set; }
+        public Familia_Ticket Familia_Ticket { get; set; }
 
     }
 }

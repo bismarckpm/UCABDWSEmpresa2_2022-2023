@@ -5,6 +5,8 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.TipoEstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
+using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
+using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
 using ServicesDeskUCABWS.Entities;
 using System;
@@ -25,12 +27,18 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoG.UnitTestTipoEstado
         private IMapper mapper;
         public TestAgregarEstadoATipoEstado()
         {
+            var myprofile = new List<Profile>
+            {
+                new Mappers()
+            };
+            var configuration = new MapperConfiguration(cfg => cfg.AddProfiles(myprofile));
+            mapper = new Mapper(configuration);
             context = new Mock<IDataContext>();
             EstadoDAO= new EstadoService(context.Object);
             context.SetupDbContextData();
         }
 
-        //Test camino feliz para hacer el consultar estado
+        //Test camino feliz para hacer el agregar estado
 
         [TestMethod]
         public void AgregarEstadoATipoEstadoTest()

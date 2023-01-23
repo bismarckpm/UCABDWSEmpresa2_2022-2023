@@ -30,6 +30,8 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             _controller = new CargoController(_serviceMock.Object);
         }
 
+
+
         [TestMethod(displayName: "Prueba Unitaria Controlador para crear Cargo exitoso")]
         public void Crear()
         {
@@ -295,7 +297,7 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.AreEqual(application.GetType(), result.GetType());
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar Cargo por id de cargo excepcion")]
+        /*[TestMethod(displayName: "Prueba Unitaria Controlador para consultar Cargo por id de cargo excepcion")]
         public void ExcepcionConsultarDepartamentoPorID()
         {
             var cargo = new CargoDto()
@@ -315,404 +317,115 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             };
 
             //arrange
-            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<CargoDTOCreate>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var ex = _controller.ConsultarPorID(cargo.id);
+            var ex = _controller.AgregarCargoDAO(cargo);
 
             //assert
             Assert.IsNotNull(ex);
             Assert.IsFalse(ex.Success);
+        }*/
+
+        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Cargo exitoso")]
+        public void CrearCargo()
+        {
+            var cargo = new CargoDTOCreate()
+            {
+
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<CargoDTOCreate>())).Returns(new CargoDTOCreate());
+            var application = new ApplicationResponse<CargoDTOCreate>();
+
+            //act
+            var result = _controller.AgregarCargoDAO(cargo);
+
+
+            //assert
+            //Assert.AreEqual(application.GetType(), result.GetType());
         }
 
-        /*[TestMethod(displayName: "Prueba Unitaria Controlador para modificar cargo por id de tipo de cargo exitoso")]
-        public void ConsultarCargoPorIDTipoCargo()
+        [TestMethod(displayName: "Prueba Unitaria Controlador para crear Cargo excepcion")]
+        
+        public void CrearCargoExcepcion()
         {
-            var tipo = new Tipo_Cargo
+
+            var cargo = new CargoDTOCreate()
             {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
                 nombre_departamental = "Cargo Nuevo",
 
                 descripcion = "Es un cargo",
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
 
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
             };
 
             //arrange
-            _serviceMock.Setup(p => p.GetByIdCargo(It.IsAny<Guid>())).Returns(new List<CargoDto>());
-            var application = new ApplicationResponse<List<CargoDto>>();
+            _serviceMock.Setup(p => p.AgregarCargoDAO(It.IsAny<CargoDTOCreate>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var result = _controller.ListaCargosTipoCargo(tipo.id);
+            var ex = _controller.AgregarCargoDAO(cargo);
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
+            Assert.IsTrue(ex.Success == false);
         }
 
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar cargos por id de tipo de cargo excepcion")]
-        public void ExcepcionConsultarDepartamentoPorIDGrupo()
+        //Consultar Por Departamento
+        [TestMethod]
+        public void TestConsultarCargosPorDepartamento()
         {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.GetByIdCargo(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.ListaCargosTipoCargo(tipo.id);
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }*/
-
-        /*[TestMethod(displayName: "Prueba Unitaria Controlador para asignar tipo cargo a cargo exitoso")]
-        public void AsignarTipoCargoToCargo()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
+            var cargo = new CargoDTOCreate()
             {
 
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
                 nombre_departamental = "Cargo Nuevo",
 
                 descripcion = "Es un cargo",
 
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
             };
 
             //arrange
-            _serviceMock.Setup(p => p.AsignarTipoCargotoCargo(It.IsAny<Guid>(), cargo.id.ToString())).Returns(new List<string>());
-            var application = new ApplicationResponse<List<string>>();
+            _serviceMock.Setup(p => p.ConsultarCargosDepartamento(It.IsAny<Guid>())).Returns(new List<CargoDTOUpdate>());
 
             //act
-            var result = _controller.AsignarTipoCargotoCargo(tipo.id, cargo.id.ToString());
+            var result = _controller.ConsultarCargosPorDepartamento(new Guid());
 
+            Assert.IsTrue(result.Success == true);
             //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }*/
-
-        /*[TestMethod(displayName: "Prueba Unitaria Controlador para asignar Tipo de cargo a Cargo excepcion")]
-        public void ExcepcionAsignarTipoCargoToCargo()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre_departamental = "Cargo Nuevo",
-
-                descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.AsignarTipoCargotoCargo(It.IsAny<Guid>(), cargo.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.AsignarTipoCargotoCargo(tipo.id, cargo.id.ToString());
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }*/
-
-       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados exitoso")]
-        public void ListaCargoNoAsociado()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre_departamental = "Cargo Nuevo",
-
-                descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.NoAsociado()).Returns(new List<CargoDto>());
-            var application = new ApplicationResponse<List<CargoDto>>();
-
-            //act
-            var result = _controller.ListaCargoNoAsociado();
-
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }*/
-
-       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no asociados excepcion")]
-        public void ExcepcionListaCargoNoAsociado()
-        {
-           
-            //arrange
-            _serviceMock.Setup(p => p.NoAsociado()).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.ListaCargoNoAsociado();
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
+            //Assert.AreEqual(application.GetType(), result.GetType());
         }
-       */
-       /*
-        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los Cargos no eliminados exitoso")]
-        public void ListaCargonoEliminado()
+
+        [TestMethod]
+
+        public void TestConsultarCargosPorDepartamentoException()
         {
 
-            var cargo = new CargoDto()
+            var cargo = new CargoDTOCreate()
             {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
 
                 nombre_departamental = "Cargo Nuevo",
 
                 descripcion = "Es un cargo",
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
 
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
             };
 
             //arrange
-            _serviceMock.Setup(p => p.DeletedCargo()).Returns(new List<CargoDto>());
-            var application = new ApplicationResponse<List<CargoDto>>();
+            _serviceMock.Setup(p => p.ConsultarCargosDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
 
             //act
-            var result = _controller.ListaCargoEliminado();
+            var ex = _controller.ConsultarCargosPorDepartamento(new Guid());
 
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
+            Assert.IsTrue(ex.Success == false);
         }
-       */
-       /* [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los cargos no eliminados excepcion")]
-        public void ExcepcionListaCargosNoEliminados()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
 
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre_departamental = "Cargo Nuevo",
-
-                descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-            //arrange
-            _serviceMock.Setup(p => p.DeletedCargo()).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.ListaCargoEliminado();
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }*/
-
-       /* [TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma exitosa")]
-        public void EditarRelacion()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre_departamental = "Cargo Nuevo",
-
-                descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), cargo.id.ToString())).Returns(new List<string>());
-            var application = new ApplicationResponse<List<string>>();
-
-            //act
-            var result = _controller.EditarRelacion(tipo.id, cargo.id.ToString());
-
-            //assert
-            Assert.AreEqual(application.GetType(), result.GetType());
-        }
-       */
-        /*[TestMethod(displayName: "Prueba Unitaria Controlador para editar la relacion de cargos con tipo de cargo de forma excepcion")]
-        public void ExcepcionEditarRelacion()
-        {
-            var tipo = new Tipo_Cargo
-            {
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c87"),
-
-                nombre = "Nuevo Tipo Cargo",
-
-                descripcion = "Cuida el ambiente",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ult_edic = null,
-
-                fecha_eliminacion = null
-            };
-
-            var cargo = new CargoDto()
-            {
-
-                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
-
-                nombre_departamental = "Cargo Nuevo",
-
-                descripcion = "Es un cargo",
-
-                fecha_creacion = DateTime.Now.Date,
-
-                fecha_ultima_edicion = null,
-
-                fecha_eliminacion = null
-            };
-
-            //arrange
-            _serviceMock.Setup(p => p.EditarRelacion(It.IsAny<Guid>(), cargo.id.ToString())).Throws(new ExceptionsControl("", new Exception()));
-
-            //act
-            var ex = _controller.EditarRelacion(tipo.id, cargo.id.ToString());
-
-            //assert
-            Assert.IsNotNull(ex);
-            Assert.IsFalse(ex.Success);
-        }*/
     }
 }

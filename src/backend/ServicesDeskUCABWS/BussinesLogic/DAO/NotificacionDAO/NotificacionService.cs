@@ -39,7 +39,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                 {
 					Plantilla.Descripcion = Regex.Replace(Plantilla.Descripcion, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
                 }
-
+				etiquetasEstatico.Clear();
                 return Plantilla.Descripcion;
             }
             catch (Exception ex)

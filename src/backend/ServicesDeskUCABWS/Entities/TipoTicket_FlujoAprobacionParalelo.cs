@@ -88,11 +88,19 @@ namespace ServicesDeskUCABWS.Entities
             {
                 if (EstaAprobadoORechazado(ticket, contexto)!=null)
                 {
-                    //Cambiar Estado y mandar votos
-                    var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
-                    ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
-                    //notificacion.EnviarNotificacion(ticket, EstaAprobadoORechazado(ticket, contexto), new List<Empleado>(), contexto); //Cuando refactorizen el codigo de Estadp se podra descomentar
-                    
+                    if (EstaAprobadoORechazado(ticket, contexto)== "Aprobado")
+                    {
+                        var empleados = contexto.Empleados.Where(x => x.Id == ticket.Departamento_Destino.id).ToList();
+                        ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, new List<Empleado>(), contexto); 
+                        ticket.CambiarEstado("Siendo Procesado", contexto);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.SiendoProcesado, new List<Empleado>(), contexto); 
+                    } else
+                    {
+                        ticket.CambiarEstado(EstaAprobadoORechazado(ticket, contexto), contexto);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Normal, new List<Empleado>(), contexto);
+                    }
+
                     CambiarEstadoVotosPendiente(ticket, contexto);
                     return EstaAprobadoORechazado(ticket, contexto);
                 }

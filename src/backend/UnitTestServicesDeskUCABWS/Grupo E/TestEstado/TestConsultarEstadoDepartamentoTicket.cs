@@ -5,6 +5,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.EstadoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Mapper;
 using ServicesDeskUCABWS.Data;
+using ServicesDeskUCABWS.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,34 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
         [TestMethod]
         public void ConsultarEstadoDepartamentoTest()
         {
-
+            //Arrage
             var Id = new Guid("B74DF138-BA05-45A8-B890-E424CA60210C");
 
+            //Act
             var result = EstadoDAO.ConsultarEstadosDepartamentoTicket(Id);
 
+            //Assert
             Assert.IsTrue(result.Count() > 0);
 
         }
+
+
+
+        //Test para la excepcion Exception para deshabilitar estado  
+        [TestMethod]
+        public void ConsultarEstadoPorEstadoPadreTest()
+        {
+            //Arrage
+            var Id = new Guid("B74DF138-BA05-45A8-B890-E424CA60210C");
+
+            //Act
+            var result = EstadoDAO.ConsultarEstadosPorEstadoPadre(Id);
+
+            //Assert
+            Assert.AreEqual(typeof(List<EstadoDTOUpdate>), result.GetType());
+
+        }
+
     }
 }
 

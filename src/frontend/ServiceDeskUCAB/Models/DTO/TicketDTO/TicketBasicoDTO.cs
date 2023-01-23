@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceDeskUCAB.Models.ModelsVotos;
+using System;
 namespace ServiceDeskUCAB.Models
 {
 	public class TicketBasicoDTO
@@ -12,6 +13,7 @@ namespace ServiceDeskUCAB.Models
         public DateTime? fecha_eliminacion { get; set; }
         public string tipoTicket_nombre { get; set; }
         public string estado_nombre { get; set; }
+        public Familia_Ticket Familia_Ticket { get; set; }
     }
 }
 

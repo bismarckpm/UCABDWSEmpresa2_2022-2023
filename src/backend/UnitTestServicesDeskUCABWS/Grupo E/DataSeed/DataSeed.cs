@@ -390,6 +390,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Administradores.Add(It.IsAny<Administrador>())).Callback<Administrador>(ListaAdministradores.Add);
             _mockContext.Setup(set => set.Administradores.AddRange(It.IsAny<IEnumerable<Administrador>>())).Callback<IEnumerable<Administrador>>(ListaAdministradores.AddRange);
 
+            var ListaCliente = new List<Cliente>();
+            _mockContext.Setup(c => c.Clientes).Returns(ListaCliente.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Clientes.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCliente.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Clientes.Add(It.IsAny<Cliente>())).Callback<Cliente>(ListaCliente.Add);
+            _mockContext.Setup(set => set.Clientes.AddRange(It.IsAny<IEnumerable<Cliente>>())).Callback<IEnumerable<Cliente>>(ListaCliente.AddRange);
 
 
             var ListaTipoTickets = new List<Tipo_Ticket>
@@ -462,6 +467,13 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     DepartamentoId = ListaDepartamento[0].id,
                     departamento=ListaDepartamento[0]
                 },
+                 new DepartamentoTipo_Ticket()
+                {
+                    Tipo_Ticekt_Id= ListaTipoTickets[3].Id,
+                    tipo_Ticket = ListaTipoTickets[3],
+                    DepartamentoId = ListaDepartamento[0].id,
+                    departamento=ListaDepartamento[0]
+                },
 
 
             };
@@ -474,6 +486,8 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             ListaTipoTickets[2].Departamentos.Add(listaDepartamentoTipoTicket[3]);
 
             ListaTipoTickets[3].Departamentos.Add(listaDepartamentoTipoTicket[4]);
+
+            ListaTipoTickets[4].Departamentos.Add(listaDepartamentoTipoTicket[5]);
 
             _mockContext.Setup(c => c.DepartamentoTipo_Ticket).Returns(listaDepartamentoTipoTicket.AsQueryable().BuildMockDbSet().Object);
             _mockContext.Setup(set => set.DepartamentoTipo_Ticket.Add(It.IsAny<DepartamentoTipo_Ticket>())).Callback<DepartamentoTipo_Ticket>(listaDepartamentoTipoTicket.Add);
@@ -631,7 +645,19 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
                     Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
                     nro_cargo_actual = 1,
                     Votos_Ticket = new HashSet<Votos_Ticket>()
-                }
+                },
+
+                new Ticket("Prueba Flujo Paralelo", "sncsdnvoiw")
+                {
+                    Id = Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA95"),
+                    Tipo_Ticket= ListaTipoTickets[1],
+                    Emisor= (Empleado) ListaUsuario[7],
+                    Departamento_Destino= ListaDepartamento[1],
+                    Estado = ListaEstados[2],
+                    Prioridad = ListaPrioridad[1],
+                    Bitacora_Tickets = new HashSet<Bitacora_Ticket>(),
+                    Votos_Ticket = new HashSet<Votos_Ticket>()
+                },
 
             };
 

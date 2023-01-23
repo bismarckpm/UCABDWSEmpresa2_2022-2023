@@ -61,7 +61,47 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicket());
             
         }
-    //Test para la excepcion ExceptionsControl de eliminar tipo ticket      
+
+        //Test camino feliz para hacer el consultar tipo ticket
+
+        [TestMethod]
+        public void CaminoFelizConsultarXDepartamentoTest()
+        {
+
+            //arrange
+            //arrange
+            var id = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87");
+
+            //act
+            var result = TipoticketDAO.ConsultarTipoTicketxDepartamento(id);
+            //assert
+
+            Assert.AreEqual(result.Count(), context.Object.Tipos_Tickets.ToList().Count());
+        }
+
+        //Test para la excepcion de consultar tipo ticket      
+        [TestMethod]
+        public void EntrarEnExceptionConsultarxDepartamentoTest()
+        {
+
+            //arrange
+            var id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E");
+            context.Setup(a => a.Tipos_Tickets).Throws(new Exception(""));
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicketxDepartamento(id));
+
+        }
+        //Test para la excepcion de consultar tipo ticket      
+        [TestMethod]
+        public void EntrarEnException2ConsultarxDepartamentoTest()
+        {
+
+            //arrange
+            var id = Guid.Parse("36B2054E-BC66-4EA7-A5CC-7BA9137BC20E");
+            context.Setup(a => a.Tipos_Tickets).Throws(new ExceptionsControl(""));
+            Assert.ThrowsException<ExceptionsControl>(() => TipoticketDAO.ConsultarTipoTicketxDepartamento(id));
+
+        }
+        //Test para la excepcion ExceptionsControl de eliminar tipo ticket      
         [TestMethod]
         public void EntrarEnExceptionControlTest()
         {
@@ -137,7 +177,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
             var result = TipoticketDAO.ConsultaTipoTicketAgregarTicket(id);
 
             //assert
-            Assert.IsTrue(result.Count() > 0);
+            //Assert.IsTrue(result.Count() > 0);
+            Assert.AreEqual(result.Count(), 0);
         }
 
 

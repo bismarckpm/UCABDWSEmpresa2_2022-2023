@@ -81,6 +81,66 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
             //assert
             Assert.IsTrue(result != "Exitoso");
         }
+
+        [TestMethod]
+        public void TestObtenerCargosAsociados()
+        {
+            var tipoticket =new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.CargosAsociados(context.Object,new Ticket());
+
+            Assert.IsTrue(result.Count == 0);
+        }
+
+        [TestMethod]
+        public void TestObtenerempleadosVotantes()
+        {
+            var tipoticket = new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.EmpleadosVotantes(context.Object,new List<Cargo>(), new Ticket());
+
+            Assert.IsTrue(result.Count == 0);
+        }
+
+        [TestMethod]
+        public void TestEstaAprobadoORechazado()
+        {
+            var tipoticket = new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.EstaAprobadoORechazado(new Ticket(), context.Object);
+
+            Assert.IsTrue(result == "Aprobado");
+        }
+
+        [TestMethod]
+        public void TestVerificarVotacion()
+        {
+            var tipoticket = new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.VerificarVotacion(new Ticket(), context.Object, notificacionService.Object);
+
+            Assert.IsTrue(result == "Aprobado");
+        }
+
+        [TestMethod]
+        public void TestContarVotosAFavor()
+        {
+            var tipoticket = new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.ContarVotosAFavor(new Ticket(), context.Object);
+
+            Assert.IsTrue(result == 0);
+        }
+
+        [TestMethod]
+        public void TestContarVotosEnContra()
+        {
+            var tipoticket = new TipoTicket_FlujoNoAprobacion();
+
+            var result = tipoticket.ContarVotosEnContra(new Ticket(), context.Object);
+
+            Assert.IsTrue(result == 0);
+        }
     }
 
 }

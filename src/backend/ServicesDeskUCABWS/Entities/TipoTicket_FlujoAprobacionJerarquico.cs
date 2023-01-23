@@ -84,7 +84,7 @@ namespace ServicesDeskUCABWS.Entities
                     if (EstaAprobadoORechazado(ticket, contexto) != "Aprobado")
                     {
                         ticket.CambiarEstado("Rechazado", contexto);
-                        //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Normal, new List<Empleado>(), contexto);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Normal, new List<Empleado>(), contexto);
                         return EstaAprobadoORechazado(ticket, contexto);
                     }
                     else
@@ -92,9 +92,14 @@ namespace ServicesDeskUCABWS.Entities
                         if (VotosSiguienteRonda(ticket, contexto))
                         {
                             ticket.CambiarEstado( "Aprobado", contexto);
-                            //notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, new List<Empleado>(), contexto);
+                            notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, new List<Empleado>(), contexto);
+
+                            ticket.CambiarEstado("Siendo Procesado", contexto);
+                            notificacion.EnviarNotificacion(ticket, TipoNotificacion.SiendoProcesado, new List<Empleado>(), contexto);
                             return EstaAprobadoORechazado(ticket, contexto);
                         }
+                        var EmpleadosVotantesd = EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, EmpleadosVotantesd, contexto);
                         return "Pendiente";
                     }
                 }
