@@ -140,11 +140,15 @@
                                         {
                                         @if (ViewBag.opcion == "Abiertos")
                                             {
-                                            <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@item.Id">Tomar Ticket</a></li>
+                                                <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="TomarTicket" asp-route-ticketId="@item.Id">Tomar Ticket</a></li>
                                             }
                                             else if (ViewBag.opcion == "Mis-Tickets")
                                             {
-                                            <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-ticketPadre_Id="@item.Id">Reenviar</a></li>
+                                                @if(item.Familia_Ticket == null)
+                                                {
+                                                    <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Reenviar" asp-route-ticketPadre_Id="@item.Id">Reenviar</a></li>
+                                                }
+                                                
                                             <li><a class="dropdown-item" asp-area="" asp-controller="Ticket" asp-action="Merge" asp-route-ticketId="@item.Id">Merge</a></li>
                                             @if (item.fecha_eliminacion == null)
                                                 {

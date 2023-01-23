@@ -21,8 +21,8 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
 {
     public class NotificacionService : INotificacion
     {
-        const string correo = "UCAB2ENTREGADS@outlook.com";
-        const string clave = "UCAB2_ENTREGADS";
+        const string correo = "OJALA_ESTE_EL_ULTIMO_CORREO@outlook.com";
+        const string clave = "OJALA_ESTE_ELULTIMO_CORREO_ennombrededios";
         const string alias = "ServiceDeskUCAB";
         const string host = "smtp.office365.com";
         const int puerto = 587;
@@ -39,7 +39,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.NotificacionDAO
                 {
 					Plantilla.Descripcion = Regex.Replace(Plantilla.Descripcion, etiqueta.Nombre, etiquetasEstatico.GetValueOrDefault(etiqueta.Nombre));
                 }
-
+				etiquetasEstatico.Clear();
                 return Plantilla.Descripcion;
             }
             catch (Exception ex)

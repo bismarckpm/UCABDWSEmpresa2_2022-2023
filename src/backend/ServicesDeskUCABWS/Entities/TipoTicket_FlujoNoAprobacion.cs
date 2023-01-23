@@ -53,10 +53,10 @@ namespace ServicesDeskUCABWS.Entities
                 ticket.CambiarEstado( "Pendiente", _dataContext);
 
                 ticket.CambiarEstado( "Aprobado", _dataContext);
-                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
+                await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
 
                 ticket.CambiarEstado( "Siendo Procesado", _dataContext);
-                //await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);
+                await notificacion.EnviarNotificacion(ticket, TipoNotificacion.SiendoProcesado, ListaEmpleados,_dataContext);
 
                 return true;
             }

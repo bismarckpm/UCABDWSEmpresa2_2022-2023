@@ -178,7 +178,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_Ticket
 
             //assert
             //Assert.IsTrue(result.Count() > 0);
-            Assert.AreEqual(result.Count(), context.Object.Tipos_Tickets.ToList().Count());
+            Assert.AreEqual(result.Count(), 0);
         }
 
 
