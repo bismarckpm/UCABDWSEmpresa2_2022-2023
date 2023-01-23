@@ -391,8 +391,146 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoI.UnitTestUsuario
             Assert.IsFalse(ex.Success);
         }
 
+        //Consultar Empleado
 
+        [TestMethod]
+        public void ConsultarEmpleado()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.ObtenerEmpleados()).Returns(new List<UsuarioGeneralDTO>());
+            var application = new ApplicationResponse<UsuarioDto>();
 
+            //act
+            var result = _controller.ConsultarEmpleados();
+
+            //assert
+            Assert.AreEqual(true, result.Success);
+        }
+
+        [TestMethod]
+        public void ConsultarEmpleadoException()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.ObtenerEmpleados()).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.ConsultarEmpleados();
+
+            //assert
+            Assert.AreEqual(false, ex.Success);
+        }
+
+        //Obtener Empleado por Id
+        [TestMethod]
+        public void GetByTipoEmpleadoId()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.consularEmpleadoID(It.IsAny<Guid>())).Returns(new Empleado());
+            //var application = new ApplicationResponse<UsuarioDto>();
+
+            //act
+            var result = _controller.GetByTipoEmpleadoId(new Guid());
+
+            //assert
+            Assert.AreEqual(true, result.Success);
+        }
+
+        [TestMethod]
+        public void GetByTipoEmpleadoIdException()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.consularEmpleadoID(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.GetByTipoEmpleadoId(new Guid());
+
+            //assert
+            Assert.AreEqual(false, ex.Success);
+        }
+
+        //login
+        [TestMethod]
+        public void UserLogin()
+        {
+            //arrange
+            _serviceMockLogin.Setup(p => p.UserLogin(It.IsAny<UserLoginDto>())).Returns(new UserResponseLoginDTO());
+            //var application = new ApplicationResponse<UsuarioDto>();
+
+            //act
+            var result = _controller.UserLogin(new UserLoginDto());
+
+            //assert
+            Assert.AreEqual(true, result.Success);
+        }
+
+        [TestMethod]
+        public void UserLoginException()
+        {
+            //arrange
+            _serviceMockLogin.Setup(p => p.UserLogin(It.IsAny<UserLoginDto>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.UserLogin(new UserLoginDto());
+
+            //assert
+            Assert.AreEqual(false, ex.Success);
+        }
+
+        //Asignar Cargo
+        [TestMethod]
+        public void AsignarCargo()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.AsignarCargo(It.IsAny<UsuarioDTOAsignarCargo>())).Returns(new UsuarioDTOAsignarCargo());
+            //var application = new ApplicationResponse<UsuarioDto>();
+
+            //act
+            var result = _controller.AsignarCargo(new UsuarioDTOAsignarCargo());
+
+            //assert
+            Assert.AreEqual(true, result.Success);
+        }
+
+        [TestMethod]
+        public void AsignarCargoException()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.AsignarCargo(It.IsAny<UsuarioDTOAsignarCargo>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.AsignarCargo(new UsuarioDTOAsignarCargo());
+
+            //assert
+            Assert.AreEqual(false, ex.Success);
+        }
+
+        //Revocar Cargo
+        [TestMethod]
+        public void RevocarCargo()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.RevocarCargo(It.IsAny<Guid>())).Returns("Respuesta");
+            //var application = new ApplicationResponse<UsuarioDto>();
+
+            //act
+            var result = _controller.RevocarCargo(new Guid());
+
+            //assert
+            Assert.AreEqual(true, result.Success);
+        }
+
+        [TestMethod]
+        public void RevocarCargoException()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.RevocarCargo(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.RevocarCargo(new Guid());
+
+            //assert
+            Assert.AreEqual(false, ex.Success);
+        }
 
     }
 }

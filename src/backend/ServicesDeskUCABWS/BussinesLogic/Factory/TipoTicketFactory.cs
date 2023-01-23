@@ -24,7 +24,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.Factory
             }
         }
 
-        public static Tipo_Ticket CambiarFlujoTipoTicket(Tipo_Ticket llegada, string tipo_aprobacion, IMapper mapper)
+        /*public static Tipo_Ticket CambiarFlujoTipoTicket(Tipo_Ticket llegada, string tipo_aprobacion, IMapper mapper)
         {
             switch (tipo_aprobacion)
             {
@@ -37,6 +37,6 @@ namespace ServicesDeskUCABWS.BussinesLogic.Factory
                 default:
                     return llegada;
             }
-        }
+        }*/
     }
 }

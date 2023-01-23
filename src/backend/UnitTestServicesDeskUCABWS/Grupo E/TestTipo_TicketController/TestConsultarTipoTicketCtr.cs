@@ -4,6 +4,7 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
+using ServicesDeskUCABWS.BussinesLogic.Factory;
 using ServicesDeskUCABWS.BussinesLogic.Response;
 using ServicesDeskUCABWS.Controllers.Tipo_TicketCtr;
 using ServicesDeskUCABWS.Entities;
@@ -125,6 +126,40 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestTipo_TicketController
             Assert.IsFalse(ex.Success);
         }
 
+
+        //Consulta por Departamento
+
+        /*[TestMethod]
+        public void ConsultarporDepartamentoCtrlTest()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarTipoTicketxDepartamento(It.IsAny<Guid>())).Returns(IEnumerable<Tipo_TicketDTOSearch>);
+            //var application = new ApplicationResponse<IEnumerable<Tipo_TicketDTOSearch>>();
+
+            //act
+            var result = _controller.ConsultarTipoTicketxDepartamento(new Guid());
+
+            //assert
+            Assert.IsTrue(result.Success);
+        }*/
+
+        //Prueba Unitaria de la excepcion en el controlador para consultar todos los tipos tickets 
+
+        [TestMethod]
+        public void ConsultarporDepartamentoCtrlTestException()
+        {
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarTipoTicketxDepartamento(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.ConsultarTipoTicketxDepartamento(new Guid());
+
+            //assert
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+        }
+
+        
 
     }
 }

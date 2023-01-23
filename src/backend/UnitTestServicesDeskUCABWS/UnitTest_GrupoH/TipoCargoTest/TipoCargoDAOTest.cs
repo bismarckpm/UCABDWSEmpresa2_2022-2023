@@ -3,7 +3,6 @@ using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Tipo_CargoDTO;

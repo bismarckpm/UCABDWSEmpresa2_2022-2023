@@ -20,24 +20,23 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
     [ApiController]
     public class TicketsController : Controller
     {
-        private readonly DataContext _context;
-        private readonly ITicketDAO _ticketDAO;
         private readonly IVotos_TicketDAO _votos_ticketDAO;
+        private readonly ITicketDAO _ticketDAO;
 
-        public TicketsController(ITicketDAO ticketDAO, IVotos_TicketDAO votosticketDao, DataContext context)
+        public TicketsController( IVotos_TicketDAO votosticketDao, ITicketDAO ticketDAO)
         {
-            _ticketDAO = ticketDAO;
-            _context = context;
             _votos_ticketDAO = votosticketDao;
+            _ticketDAO = ticketDAO;
         }
 
+
         // GET: api/Tickets
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
         {
 
             return await _context.Tickets.ToListAsync();
-        }
+        }*/
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
@@ -89,7 +88,7 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
         }*/
 
         // DELETE: api/Tickets/5
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTicket(Guid id)
         {
             var ticket = await _context.Tickets.FindAsync(id);
@@ -108,7 +107,7 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
         {
             return _context.Tickets.Any(e => e.Id == id);
         }
-
+        */
 
         //  api/Tickets/votos
         [HttpPut("votos")]
@@ -117,6 +116,9 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
             var response = _votos_ticketDAO.Votar(votos_TicketDTO);
             return response;
         }
+
+        // GET: api/Tickets/5
+        
 
     }
 }

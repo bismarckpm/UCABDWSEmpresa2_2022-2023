@@ -18,7 +18,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 
 namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEnviarNotificacion
 {
-    /*[TestClass]
+    [TestClass]
     public class TestNotificacionEnviar
     {
         private readonly NotificacionService _notificacionDAO;
@@ -145,5 +145,5 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEnviarNotificacion
             Assert.IsTrue(result.Result);
         }
 
-    }*/
+    }
 }

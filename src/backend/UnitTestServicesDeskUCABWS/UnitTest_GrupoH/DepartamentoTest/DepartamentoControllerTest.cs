@@ -524,7 +524,37 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.DepartamentoTest
             Assert.IsFalse(ex.Success);
         }
 
-      
+        [TestMethod]
+        //Consultar Departamento por Cargo
+        public void ListaDepartamentoCargo()
+        {
+
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarDepartamentoCargo()).Returns(new List<DepartamentoCargoDTO>());
+            //ar application = new ApplicationResponse<List<DepartamentoDto>>();
+
+            //act
+            var result = _controller.ListaDepartamentonoCargo();
+
+            //assert
+            Assert.IsTrue(result.Success);
+        }
+
+        [TestMethod(displayName: "Prueba Unitaria Controlador para consultar los departamentos no eliminados excepcion")]
+        public void ExcepcionListaDepartamentoCargo()
+        {
+            
+
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarDepartamentoCargo()).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.ListaDepartamentonoCargo();
+
+            //assert
+            Assert.IsNotNull(ex);
+            Assert.IsFalse(ex.Success);
+        }
 
 
 

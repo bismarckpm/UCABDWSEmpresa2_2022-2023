@@ -211,5 +211,53 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestCargo
             Assert.ThrowsException<ExceptionsControl>(() => CargoDao.ModificarCargo(expected));
 
         }
+
+
+        //Agregar Cargo DAO
+        [TestMethod]
+        public void CaminoFelizAgregarCargo()
+        {
+            var CargoDTO = new CargoDTOCreate()
+            {
+                nombre_departamental = "Prueba 1",
+                descripcion =  "Descripcion",
+                idDepartamento= Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
+            };
+
+            var result = CargoDao.AgregarCargoDAO(CargoDTO);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(CargoDTO, result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionsControl))]
+        public void AgregarCargoDepartamentoNoExiste()
+        {
+            var CargoDTO = new CargoDTOCreate()
+            {
+                nombre_departamental = "Prueba 1",
+                descripcion = "Descripcion",
+                idDepartamento = Guid.Parse("CCACD411-1B46-4118-AA84-73EA64DEAC87")
+            };
+
+            var result = CargoDao.AgregarCargoDAO(CargoDTO);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ExceptionsControl))]
+        public void AgregarCargoException()
+        {
+            var CargoDTO = new CargoDTOCreate()
+            {
+                nombre_departamental = "Prueba 1",
+                descripcion = "Descripcion",
+                idDepartamento = Guid.Parse("CCACD411-1B46-4118-AA84-73EA64DEAC87")
+            };
+
+            context.Setup(x => x.Departamentos).Throws(new Exception());
+
+            var result = CargoDao.AgregarCargoDAO(CargoDTO);
+        }
     }
 }

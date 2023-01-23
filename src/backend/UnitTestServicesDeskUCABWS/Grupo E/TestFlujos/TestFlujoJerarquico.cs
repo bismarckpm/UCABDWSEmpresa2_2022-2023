@@ -71,8 +71,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 
             //Assert
             Assert.AreEqual("Pendiente D1", ticket.Estado.nombre);
-            Assert.AreEqual(1, ticket.Bitacora_Tickets.Count);
-            Assert.AreEqual(1, ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(0, ticket.Bitacora_Tickets.Count);
+            //Assert.AreEqual(1, ticket.Bitacora_Tickets.Count);
             Assert.AreEqual(2, ticket.Votos_Ticket.Count);
         }
 

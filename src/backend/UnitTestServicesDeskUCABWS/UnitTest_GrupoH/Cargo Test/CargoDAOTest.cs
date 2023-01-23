@@ -3,7 +3,6 @@ using Moq;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.CargoDTO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.DepartamentoDTO;
 using ServicesDeskUCABWS.BussinesLogic.Exceptions;
@@ -24,14 +23,14 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
         private readonly CargoService _CargoDAO;
         private readonly Mock<IDataContext> _contextMock;
         private readonly Mock<IDataContext> _contextMockCTC;
-        private readonly ITipo_CargoDAO _servicioTipoCargo;
+        /*private readonly ITipo_CargoDAO _servicioTipoCargo;
         private readonly ITipo_CargoDAO _servicioCargo;
-        
+        */
         public CargoDAOTest()
         {
             _contextMock = new Mock<IDataContext>();
             _contextMockCTC = new Mock<IDataContext>();
-            _servicioCargo = new Tipo_CargoDAO(_contextMockCTC.Object);
+            //_servicioCargo = new Tipo_CargoDAO(_contextMockCTC.Object);
             _CargoDAO = new CargoService(_contextMock.Object);
             _contextMock.SetUpContextDataCargo();
             _contextMockCTC.SetUpContextDataCargo_TipoCargo();                    
