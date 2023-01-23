@@ -50,7 +50,7 @@ namespace ServicesDeskUCABWS.Entities
         {
             try
             {
-                ticket.CambiarEstado( "Pendiente", _dataContext);
+                //ticket.CambiarEstado( "Pendiente", _dataContext);
 
                 ticket.CambiarEstado( "Aprobado", _dataContext);
                 await notificacion.EnviarNotificacion(ticket, TipoNotificacion.Aprobado, ListaEmpleados,_dataContext);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Moq;
+using ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DTO.Votos_TicketDTO;
 using ServicesDeskUCABWS.BussinesLogic.Response;
@@ -21,11 +22,13 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestVotos_Ticket
     {
         private readonly TicketsController _controller;
         private readonly Mock<IVotos_TicketDAO> _serviceMock;
+        private readonly Mock<ITicketDAO> _mockTicket;
 
         public TestVotosController()
         {
             _serviceMock = new Mock<IVotos_TicketDAO>();
-            _controller = new TicketsController(_serviceMock.Object);
+            _mockTicket = new Mock<ITicketDAO>();
+            _controller = new TicketsController(_serviceMock.Object, _mockTicket.Object);
 
             _serviceMock.Setup(x => x.ConsultaVotos(It.IsAny<Guid>())).Returns(new ApplicationResponse<List<Votos_Ticket>>()
             {

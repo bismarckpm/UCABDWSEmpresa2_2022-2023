@@ -58,8 +58,8 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestFlujos
 
             //Assert
             Assert.AreEqual("Siendo Procesado", Ticket.Estado.nombre);
-            Assert.AreEqual(3, Ticket.Bitacora_Tickets.Count);
-            Assert.AreEqual(3 , context.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02")).Count());
+            Assert.AreEqual(2, Ticket.Bitacora_Tickets.Count);
+            Assert.AreEqual(2 , context.Object.Bitacora_Tickets.Where(x => x.Ticket.Id == Guid.Parse("7060BA23-7E03-4084-B496-527ABAA0AA02")).Count());
         }
 
         //Test para el servicio de un excepcion para flujo no aprobacion

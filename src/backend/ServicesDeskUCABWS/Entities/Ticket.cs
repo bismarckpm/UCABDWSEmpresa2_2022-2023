@@ -147,7 +147,13 @@ namespace ServicesDeskUCABWS.Entities
             Bitacora_Ticket nuevaBitacora = crearNuevaBitacora(this);
             if (this.Bitacora_Tickets.Count != 0)
             {
-                this.Bitacora_Tickets.Last().Fecha_Fin = DateTime.UtcNow;
+                foreach (var bitacora in this.Bitacora_Tickets)
+                {
+                    if(bitacora.Fecha_Fin == null)
+                    {
+                        bitacora.Fecha_Fin = DateTime.UtcNow;
+                    }
+                }
             }
             this.Bitacora_Tickets.Add(nuevaBitacora);
             _dataContext.Bitacora_Tickets.Add(nuevaBitacora);

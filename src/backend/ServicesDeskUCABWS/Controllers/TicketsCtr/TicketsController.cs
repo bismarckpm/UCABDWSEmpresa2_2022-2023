@@ -21,11 +21,14 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
     public class TicketsController : Controller
     {
         private readonly IVotos_TicketDAO _votos_ticketDAO;
+        private readonly ITicketDAO _ticketDAO;
 
-        public TicketsController( IVotos_TicketDAO votosticketDao)
+        public TicketsController( IVotos_TicketDAO votosticketDao, ITicketDAO ticketDAO)
         {
             _votos_ticketDAO = votosticketDao;
+            _ticketDAO = ticketDAO;
         }
+
 
         // GET: api/Tickets
         /*[HttpGet]
@@ -33,7 +36,7 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
         {
 
             return await _context.Tickets.ToListAsync();
-        }
+        }*/
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
@@ -113,6 +116,9 @@ namespace ServicesDeskUCABWS.Controllers.TicketsCtr
             var response = _votos_ticketDAO.Votar(votos_TicketDTO);
             return response;
         }
+
+        // GET: api/Tickets/5
+        
 
     }
 }

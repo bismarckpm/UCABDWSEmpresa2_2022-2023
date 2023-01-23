@@ -163,7 +163,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.TicketDAO
                 .Where(s => s.Id == ticketDTO.empleado_id).FirstOrDefault();
             ticket.Departamento_Destino = _dataContext.Departamentos.Find(ticketDTO.departamentoDestino_Id);
             ticket.Tipo_Ticket = _dataContext.Tipos_Tickets.Find(ticketDTO.tipoTicket_id);
-            ticket.Estado = _dataContext.Estados.Where(x => x.Estado_Padre.nombre == "Pendiente" &&
+            ticket.Estado = _dataContext.Estados.Include(x=>x.Estado_Padre).Where(x => x.Estado_Padre.nombre == "Pendiente" &&
             x.Departamento.id == ticket.Emisor.Cargo.Departamento.id).FirstOrDefault();
             ticket.Votos_Ticket = new HashSet<Votos_Ticket>();
             try
