@@ -297,6 +297,37 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
             Assert.AreEqual(application.GetType(), result.GetType());
         }
 
+        [TestMethod]
+        public void ConsultarCargoPorIDException()
+        {
+
+            var cargo = new CargoDto()
+            {
+
+                id = new Guid("38f401c9-12aa-46bf-82a2-05ff65bb2c86"),
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+                fecha_creacion = DateTime.Now.Date,
+
+                fecha_ultima_edicion = null,
+
+                fecha_eliminacion = null
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarPorID(It.IsAny<Guid>())).Throws(new ExceptionsControl("de",new Exception()));
+            var application = new ApplicationResponse<CargoDto>();
+
+            //act
+            var result = _controller.ConsultarPorID(cargo.id);
+
+            //assert
+            Assert.IsTrue(result.Success == false);
+        }
+
         /*[TestMethod(displayName: "Prueba Unitaria Controlador para consultar Cargo por id de cargo excepcion")]
         public void ExcepcionConsultarDepartamentoPorID()
         {
@@ -423,6 +454,194 @@ namespace UnitTestServicesDeskUCABWS.UnitTest_GrupoH.Cargo_Test
 
             //act
             var ex = _controller.ConsultarCargosPorDepartamento(new Guid());
+
+            Assert.IsTrue(ex.Success == false);
+        }
+
+        //Consultar Todo Por Departamento
+        [TestMethod]
+        public void TestConsultarTodosCargosPorDepartamento()
+        {
+            var cargo = new CargoDTOCreate()
+            {
+
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarCargosDepartamentoTodos(It.IsAny<Guid>())).Returns(new List<CargoDTOUpdate>());
+
+            //act
+            var result = _controller.ConsultarTodosCargosPorDepartamento(new Guid());
+
+            Assert.IsTrue(result.Success == true);
+            //assert
+            //Assert.AreEqual(application.GetType(), result.GetType());
+        }
+
+        [TestMethod]
+
+        public void TestConsultarTodosCargosPorDepartamentoException()
+        {
+
+            var cargo = new CargoDTOCreate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+                idDepartamento = Guid.Parse("CCACD411-1B46-4117-AA84-73EA64DEAC87")
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.ConsultarCargosDepartamentoTodos(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.ConsultarTodosCargosPorDepartamento(new Guid());
+
+            Assert.IsTrue(ex.Success == false);
+        }
+
+        //Editar Cargo
+        [TestMethod]
+        public void TestEditarCargo()
+        {
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.ModificarCargo(It.IsAny<CargoDTOUpdate>())).Returns(new CargoDTOUpdate());
+
+            //act
+            var result = _controller.EditarCargo(cargo);
+            Assert.IsTrue(result.Success == true);
+            //assert
+            //Assert.AreEqual(application.GetType(), result.GetType());
+        }
+
+        [TestMethod]
+
+        public void TestEditarCargoException()
+        {
+
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+                
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.ModificarCargo(It.IsAny<CargoDTOUpdate>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.EditarCargo(cargo);
+
+            Assert.IsTrue(ex.Success == false);
+        }
+
+        //Deshabilitar Cargo
+        [TestMethod]
+        public void TestDeshabillitarCargo()
+        {
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.DeshabilitarCargo(It.IsAny<Guid>())).Returns(new CargoDTOUpdate());
+
+            //act
+            var result = _controller.DeshabilitarCargo(new Guid());
+            Assert.IsTrue(result.Success == true);
+            //assert
+            //Assert.AreEqual(application.GetType(), result.GetType());
+        }
+
+        [TestMethod]
+
+        public void TestDeshabillitarCargoException()
+        {
+
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.DeshabilitarCargo(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.DeshabilitarCargo(new Guid());
+
+            Assert.IsTrue(ex.Success == false);
+        }
+
+        //Habilitar Cargo
+        [TestMethod]
+        public void TesthabillitarCargo()
+        {
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.HabilitarCargo(It.IsAny<Guid>())).Returns(new CargoDTOUpdate());
+
+            //act
+            var result = _controller.HabilitarCargo(new Guid());
+            Assert.IsTrue(result.Success == true);
+            //assert
+            //Assert.AreEqual(application.GetType(), result.GetType());
+        }
+
+        [TestMethod]
+
+        public void TesthabillitarCargoException()
+        {
+
+            var cargo = new CargoDTOUpdate()
+            {
+
+                nombre_departamental = "Cargo Nuevo",
+
+                descripcion = "Es un cargo",
+
+            };
+
+            //arrange
+            _serviceMock.Setup(p => p.HabilitarCargo(It.IsAny<Guid>())).Throws(new ExceptionsControl("", new Exception()));
+
+            //act
+            var ex = _controller.HabilitarCargo(new Guid());
 
             Assert.IsTrue(ex.Success == false);
         }

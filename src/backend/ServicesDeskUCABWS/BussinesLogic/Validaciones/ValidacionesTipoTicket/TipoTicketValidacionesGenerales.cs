@@ -33,14 +33,14 @@ namespace ServicesDeskUCABWS.BussinesLogic.Validaciones.ValidacionesTipoTicket
             }
         }
 
-        public void VerificarTipoFlujo()
+        /*public void VerificarTipoFlujo()
         {
             if (!_dataContext.Modelos_Aprobacion.Select(x => x.discrimanador).Contains(_tipo_ticket.ObtenerTipoAprobacion()))
             {
                 throw new ExceptionsControl(ErroresTipo_Tickets.TIPO_NO_VALIDO);
             }
-        }
-
+        }*/
+        
         public void VerificarDepartamento()
         {
 

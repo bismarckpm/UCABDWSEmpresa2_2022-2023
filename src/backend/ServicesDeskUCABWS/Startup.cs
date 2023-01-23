@@ -26,7 +26,6 @@ using ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.PlantillaNotificacionDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_TicketDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.Votos_TicketDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.EstadoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
 using ServicesDeskUCABWS.BussinesLogic.DAO.LoginDAO;
@@ -36,7 +35,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ServicesDeskUCABWS.BussinesLogic.DAO.CargoDAO;
-using ServicesDeskUCABWS.BussinesLogic.DAO.Tipo_CargoDAO;
 
 namespace ServicesDeskUCABWS
 {
@@ -91,7 +89,7 @@ namespace ServicesDeskUCABWS
             x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             services.AddTransient<ICargoDAO, CargoService>();
-            services.AddScoped<ITipo_CargoDAO, Tipo_CargoDAO>();
+            //services.AddScoped<ITipo_CargoDAO, Tipo_CargoDAO>();
             services.AddTransient<IDepartamentoDAO,DepartamentoDAO>();
 			services.AddScoped<IGrupoDAO, GrupoDAO>();
 			services.AddAutoMapper(typeof(Startup).Assembly);
@@ -129,7 +127,7 @@ namespace ServicesDeskUCABWS
 
             services.AddTransient<ITicketDAO, TicketDAO>();
 
-            services.AddTransient<ITipo_CargoDAO, Tipo_CargoDAO>();
+            //services.AddTransient<ITipo_CargoDAO, Tipo_CargoDAO>();
 
             services.AddTransient<ITipo_TicketDAO,Tipo_TicketService>();
 
