@@ -98,6 +98,8 @@ namespace ServicesDeskUCABWS.Entities
                             notificacion.EnviarNotificacion(ticket, TipoNotificacion.SiendoProcesado, new List<Empleado>(), contexto);
                             return EstaAprobadoORechazado(ticket, contexto);
                         }
+                        var EmpleadosVotantesd = EmpleadosVotantes(contexto, CargosAsociados(contexto, ticket), ticket);
+                        notificacion.EnviarNotificacion(ticket, TipoNotificacion.Pendiente, EmpleadosVotantesd, contexto);
                         return "Pendiente";
                     }
                 }

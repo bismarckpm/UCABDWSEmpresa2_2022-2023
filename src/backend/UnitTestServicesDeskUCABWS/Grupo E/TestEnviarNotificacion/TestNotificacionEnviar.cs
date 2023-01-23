@@ -18,7 +18,7 @@ using ServicesDeskUCABWS.BussinesLogic.DTO.Etiqueta;
 
 namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEnviarNotificacion
 {
-    [TestClass]
+    /*[TestClass]
     public class TestNotificacionEnviar
     {
         private readonly NotificacionService _notificacionDAO;
@@ -34,7 +34,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEnviarNotificacion
             _notificacionDAO = new NotificacionService(_contextMock.Object,plantillaNotificacionDAO.Object);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void TicketAprobado()
         {
             //Arrange
@@ -143,7 +143,7 @@ namespace UnitTestServicesDeskUCABWS.Grupo_E.TestEnviarNotificacion
 
             //Assert
             Assert.IsTrue(result.Result);
-        }*/
+        }
 
-    }
+    }*/
 }

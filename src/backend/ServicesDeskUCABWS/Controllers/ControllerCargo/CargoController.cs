@@ -91,7 +91,7 @@ namespace ServicesDeskUCABWS.Controllers.ControllerCargo
             }
             return response;
         }
-        [HttpDelete]
+        //[HttpDelete]
         /*[Route("eliminarCargo/{id}")]
         public ApplicationResponse<CargoDto> eliminarCargo([FromRoute] Guid id)
         {

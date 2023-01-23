@@ -101,11 +101,11 @@ namespace ServiceDeskUCAB.Controllers
 
                 if ((bool)respuesta["success"])
                 {
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Login", new { message3 = "El usuario ha sido registrado" });
                 }
                 else
                 {
-                    return RedirectToAction("Login", new { message = (string)respuesta["message"] });
+                    return RedirectToAction("SingUp", new { message2 = (string)respuesta["message"] });
                 }
             }
             catch (Exception ex)

@@ -45,6 +45,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
             try
             {
                 if (!ExisteGrupo(grupo)) {
+                    grupo.fecha_creacion = DateTime.Now.Date;
                     _dataContext.Grupos.Add(grupo);
                     _dataContext.DbContext.SaveChanges();
                 }
@@ -130,6 +131,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
 				if (!ExisteGrupoModificar(grupo))
 				{
+                    grupo.fecha_ultima_edicion = DateTime.Now.Date;
 					_dataContext.Grupos.Update(grupo);
 					_dataContext.DbContext.SaveChanges();
 				}
@@ -154,7 +156,9 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
 
         public bool QuitarAsociacion(Guid grupoId)
         {
-            var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
+            try { 
+            
+                    var listaDept = _dataContext.Departamentos.Where(x => x.id_grupo == grupoId);
 
             if (listaDept != null)
             {
@@ -164,11 +168,16 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
                     item.id_grupo = null;
 
                 }
-                _dataContext.DbContext.SaveChanges();
-                return true;
+                    _dataContext.DbContext.SaveChanges();
+                    return true;
 
+                }
+                  return false;
+
+            }catch(Exception ex)
+            {
+                throw new ExceptionsControl("No hay grupos eliminados", ex);
             }
-            return false;
         }
 
         /// <summary>
@@ -345,7 +354,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         /// <returns>Devuelve una lista de objetos de tipo DepartamentoDto.</returns>
         /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         
-        public List<DepartamentoDto> GetByIdDepartamento(Guid idGrupo)
+        public List<DepartamentoDto> DepartamentosAsociados(Guid idGrupo)
         {
             try
             {
@@ -376,7 +385,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.GrupoDAO
         /// <returns>Devuelve un objeto de tipo GrupoDto</returns>
         /// <exception cref="ExceptionsControl">En caso que el parámetro sea nulo.</exception>
         
-        public GrupoDto buscarGrupoNombre(string nombreGrupo) {
+        public GrupoDto BuscarGrupoNombre(string nombreGrupo) {
             try
             {
                 var resultado = _dataContext.Grupos.Where(grupo => grupo.nombre == nombreGrupo && grupo.fecha_eliminacion == null).First();

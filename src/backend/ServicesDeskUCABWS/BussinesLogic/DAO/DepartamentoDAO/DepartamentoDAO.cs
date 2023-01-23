@@ -52,6 +52,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                 if (!ExisteDepartamento(departamento)) {
+                    departamento.fecha_creacion = DateTime.Now.Date;
                     _dataContext.Departamentos.Add(departamento);
                     _dataContext.DbContext.SaveChanges();
                 }
@@ -149,6 +150,7 @@ namespace ServicesDeskUCABWS.BussinesLogic.DAO.DepartamentoDAO
             try
             {
                 if (!ExisteDepartamentoModificar(departamento)) {
+                    departamento.fecha_ultima_edicion = DateTime.Now.Date;
                     _dataContext.Departamentos.Update(departamento);
                     _dataContext.DbContext.SaveChanges();
                 }

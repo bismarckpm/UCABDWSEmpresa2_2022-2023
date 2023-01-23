@@ -390,6 +390,11 @@ namespace UnitTestServicesDeskUCABWS.DataSeed
             _mockContext.Setup(set => set.Administradores.Add(It.IsAny<Administrador>())).Callback<Administrador>(ListaAdministradores.Add);
             _mockContext.Setup(set => set.Administradores.AddRange(It.IsAny<IEnumerable<Administrador>>())).Callback<IEnumerable<Administrador>>(ListaAdministradores.AddRange);
 
+            var ListaCliente = new List<Cliente>();
+            _mockContext.Setup(c => c.Clientes).Returns(ListaCliente.AsQueryable().BuildMockDbSet().Object);
+            _mockContext.Setup(c => c.Clientes.Find(It.IsAny<object[]>())).Returns((object[] input) => ListaCliente.Where(x => x.Id == (Guid)input.First()).FirstOrDefault());
+            _mockContext.Setup(set => set.Clientes.Add(It.IsAny<Cliente>())).Callback<Cliente>(ListaCliente.Add);
+            _mockContext.Setup(set => set.Clientes.AddRange(It.IsAny<IEnumerable<Cliente>>())).Callback<IEnumerable<Cliente>>(ListaCliente.AddRange);
 
 
             var ListaTipoTickets = new List<Tipo_Ticket>
